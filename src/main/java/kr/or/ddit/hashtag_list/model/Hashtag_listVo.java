@@ -2,6 +2,7 @@ package kr.or.ddit.hashtag_list.model;
 
 public class Hashtag_listVo {
 	
+	private String taglist_code; 	// 해시태그 목록 코드
 	private String hashtag_name;	// 해시태그명
 	private String ref_code;		// 참조코드
 	private String division;		// 구분
@@ -10,6 +11,16 @@ public class Hashtag_listVo {
 	public Hashtag_listVo() {
 		
 	}
+
+	public String getTaglist_code() {
+		return taglist_code;
+	}
+
+
+	public void setTaglist_code(String taglist_code) {
+		this.taglist_code = taglist_code;
+	}
+
 
 	public String getHashtag_name() {
 		return hashtag_name;
@@ -45,8 +56,8 @@ public class Hashtag_listVo {
 
 	@Override
 	public String toString() {
-		return "Hashtag_listVo [hashtag_name=" + hashtag_name + ", ref_code=" + ref_code + ", division=" + division
-				+ ", reg_date=" + reg_date + "]";
+		return "Hashtag_listVo [taglist_code=" + taglist_code + ", hashtag_name=" + hashtag_name + ", ref_code="
+				+ ref_code + ", division=" + division + ", reg_date=" + reg_date + "]";
 	}
-	
+
 }
