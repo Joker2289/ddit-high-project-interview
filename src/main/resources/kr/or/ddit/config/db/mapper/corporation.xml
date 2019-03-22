@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="corporation">
+
+	<!-- 회사페이지생성 -->
+	<insert id="insertCorporation" parameterType="corporationVo">
+		insert into corporation
+			(
+				corp_id,			
+				corp_name,		
+				bg_img,			
+				bg_path,			
+				corp_logo,		
+				logo_path,		
+				addr1,			
+				addr2,			
+				zipcode,			
+				corp_birth,		
+				corp_type,		
+				industry_type,	
+				corp_url,		
+				corp_size,		
+				corp_profile,	
+				corp_code,		
+			)
+		values 
+			(
+				corp_id,			
+				corp_name,		
+				bg_img,			
+				bg_path,			
+				corp_logo,		
+				logo_path,		
+				addr1,			
+				addr2,			
+				zipcode,			
+				corp_birth,		
+				corp_type,		
+				industry_type,	
+				corp_url,		
+				corp_size,		
+				corp_profile,	
+				corp_code,		
+			)
+			</insert>
+</mapper>
+
+	 
+	<!-- 게시판 조회 -->
+<!-- 	<select id="getBoardList" resultType="boardVo"> -->
+<!-- 		select * -->
+<!-- 		from board -->
+<!-- 	</select> -->
+	
+	
+	<!-- 전체 게시판 수 조회 -->
+<!-- 	<select id="getBoardCnt" resultType="Integer"> -->
+<!-- 		select count(*) -->
+<!--  		  from board -->
+<!-- 	</select> -->
+	
+
+
+
+

@@ -10,6 +10,7 @@
 		<typeAlias alias="lprodVO" type="kr.or.ddit.prod.model.LprodVO"/>
 		<typeAlias alias="prodVO" type="kr.or.ddit.prod.model.ProdVO"/>
 		<typeAlias alias="pageVO" type="kr.or.ddit.util.model.PageVO"/> -->
+		<typeAlias alias="corporationVO" type="kr.or.ddit.corporation.model.CorporationVO"/> 
 	</typeAliases>
 	
   
@@ -19,6 +20,7 @@
     <mapper resource="kr/or/ddit/config/db/mapper/lprod.xml"/>
     <mapper resource="kr/or/ddit/config/db/mapper/prod.xml"/>
     <mapper resource="kr/or/ddit/config/db/mapper/ranger.xml"/> -->
+    <mapper resource="kr/or/ddit/config/db/mapper/corporation.xml"/>
   </mappers>
 </configuration>
 
