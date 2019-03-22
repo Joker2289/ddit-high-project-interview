@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post">
+	
+	<!-- 게시글 작성 -->
+	<insert id="insert_post" parameterType="postVO">
+		insert into post
+		values (
+		    post_code_seq.nextval, 
+		    #{user_id},
+		    #{post_title},
+		    #{post_contents},
+		    sysdate
+		)
+	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="update_post" parameterType="postVO">
+		update post
+		   set post_title 	 = #{post_title},
+		   	   post_contents = #{post_contents}
+		 where post_code = #{post_code}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delete_post" parameterType="String">
+		delete post
+		 where post_code = #{post_code}
+	</delete>
+	
+	<!-- 특정회원 글  조회 -->
+	<select id="select_memberPost" parameterType="String" resultType="postVO">
+		select post_code, user_id, post_title, post_contents, post_date
+		  from post
+		 where user_id = #{user_id} 
+	</select>
+	
+	
+</mapper>

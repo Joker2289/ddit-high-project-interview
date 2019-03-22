@@ -1,67 +1,66 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="corporation">
+<mapper namespace="corp">
 
-	<!-- 회사페이지생성 -->
-	<insert id="insertCorporation" parameterType="corporationVo">
+	<!-- 회사 정보 등록 -->
+	<insert id="insert_corp" parameterType="corporationVO">
 		insert into corporation
-			(
-				corp_id,			
-				corp_name,		
-				bg_img,			
-				bg_path,			
-				corp_logo,		
-				logo_path,		
-				addr1,			
-				addr2,			
-				zipcode,			
-				corp_birth,		
-				corp_type,		
-				industry_type,	
-				corp_url,		
-				corp_size,		
-				corp_profile,	
-				corp_code,		
-			)
-		values 
-			(
-				corp_id,			
-				corp_name,		
-				bg_img,			
-				bg_path,			
-				corp_logo,		
-				logo_path,		
-				addr1,			
-				addr2,			
-				zipcode,			
-				corp_birth,		
-				corp_type,		
-				industry_type,	
-				corp_url,		
-				corp_size,		
-				corp_profile,	
-				corp_code,		
-			)
-			</insert>
+		values(
+			#{corp_id},
+			#{corp_name},
+			nvl(#{bg_img, jdbcType=VARCHAR}, null),
+			nvl(#{bg_path, jdbcType=VARCHAR}, null),
+			nvl(#{corp_logo, jdbcType=VARCHAR}, null),
+			nvl(#{logo_path, jdbcType=VARCHAR}, null),
+			nvl(#{addr1, jdbcType=VARCHAR}, null),
+			nvl(#{addr2, jdbcType=VARCHAR}, null),
+			nvl(#{zipcode, jdbcType=VARCHAR}, null),
+			#{corp_birth},
+			nvl(#{corp_type, jdbcType=VARCHAR}, null),
+			nvl(#{industry_type, jdbcType=VARCHAR}, null),
+			nvl(#{corp_url, jdbcType=VARCHAR}, null),
+			nvl(#{corp_size, jdbcType=VARCHAR}, null),
+			nvl(#{corp_profile, jdbcType=VARCHAR}, null),
+			#{corp_code}
+		)
+	</insert>
+	
+	<!-- 전체회사 조회 -->
+	<select id="select_allCorps" resultType="corporationVO">
+		select corp_id, corp_name, bg_img, bg_path, corp_logo, logo_path, addr1, addr2, zipcode, 
+			   corp_birth, corp_type, industry_type, corp_url, corp_size, corp_profile, corp_code
+		  from corporation
+	</select>
+	
+	<!-- 회원정보 조회 -->
+	<select id="select_corpInfo" parameterType="String" resultType="corporationVO">
+		select corp_id, corp_name, bg_img, bg_path, corp_logo, logo_path, addr1, addr2, zipcode, 
+			   corp_birth, corp_type, industry_type, corp_url, corp_size, corp_profile, corp_code
+		  from corporation
+		 where corp_id = #{corp_id}
+	</select>
+	
+	<!-- 회사정보 수정 -->
+	<update id="update_corpInfo" parameterType="corporationVO">
+		update users
+		   set corp_name 	 = #{corp_name},
+		       bg_img	 	 = #{bg_img},
+		       bg_path	 	 = #{bg_path},
+		       corp_logo  	 = #{corp_logo},
+		       logo_path	 = #{logo_path},
+		       addr1		 = #{addr1},
+		       addr2		 = #{addr2},
+		       zipcode		 = #{zipcode},
+		       corp_birth	 = #{corp_birth},
+		       corp_type	 = #{corp_type},
+		       industry_type = #{industry_type},
+		       corp_url		 = #{corp_url},
+		       corp_size	 = #{corp_size},
+		       corp_profile	 = #{corp_profile},
+		       corp_code	 = #{corp_code}
+		 where corp_id = #{corp_id}  
+	</update>
+	
 </mapper>
-
-	 
-	<!-- 게시판 조회 -->
-<!-- 	<select id="getBoardList" resultType="boardVo"> -->
-<!-- 		select * -->
-<!-- 		from board -->
-<!-- 	</select> -->
-	
-	
-	<!-- 전체 게시판 수 조회 -->
-<!-- 	<select id="getBoardCnt" resultType="Integer"> -->
-<!-- 		select count(*) -->
-<!--  		  from board -->
-<!-- 	</select> -->
-	
-
-
-
-
