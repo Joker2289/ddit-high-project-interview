@@ -6,19 +6,19 @@
 
 
 	<typeAliases>
-		<typeAlias alias="userVO" type="kr.or.ddit.user.model.UserVO"/>
+	<!--<typeAlias alias="userVO" type="kr.or.ddit.user.model.UserVO"/>
 		<typeAlias alias="lprodVO" type="kr.or.ddit.prod.model.LprodVO"/>
 		<typeAlias alias="prodVO" type="kr.or.ddit.prod.model.ProdVO"/>
-		<typeAlias alias="pageVO" type="kr.or.ddit.util.model.PageVO"/>
+		<typeAlias alias="pageVO" type="kr.or.ddit.util.model.PageVO"/> -->
 	</typeAliases>
 	
   
   
   <mappers>
-    <mapper resource="kr/or/ddit/config/db/mapper/user.xml"/>
+   <!--<mapper resource="kr/or/ddit/config/db/mapper/user.xml"/>
     <mapper resource="kr/or/ddit/config/db/mapper/lprod.xml"/>
     <mapper resource="kr/or/ddit/config/db/mapper/prod.xml"/>
-    <mapper resource="kr/or/ddit/config/db/mapper/ranger.xml"/>
+    <mapper resource="kr/or/ddit/config/db/mapper/ranger.xml"/> -->
   </mappers>
 </configuration>
 
