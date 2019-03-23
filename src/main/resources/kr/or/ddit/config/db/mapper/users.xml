@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="users">
+	
+	<!-- 일반회원 정보 등록 -->
+	<insert id="insert_users" parameterType="usersVO">
+		insert into users
+		values(
+			#{user_id},
+			#{user_name},
+			nvl(#{bg_img, jdbcType=VARCHAR}, null),
+			nvl(#{bg_path, jdbcType=VARCHAR}, null),
+			nvl(#{profile_img, jdbcType=VARCHAR}, null),
+			nvl(#{profile_path, jdbcType=VARCHAR}, null),
+			nvl(#{addr1, jdbcType=VARCHAR}, null),
+			nvl(#{addr2, jdbcType=VARCHAR}, null),
+			nvl(#{zipcode, jdbcType=VARCHAR}, null),
+			#{email},
+			#{telno},
+			#{user_birth},
+			nvl(#{persnal_url, jdbcType=VARCHAR}, null)
+		)
+	</insert>
+	
+	<!-- 전체회원 조회 -->
+	<select id="select_allUsers" resultType="usersVO">
+		select user_id, user_name, bg_img, bg_path, profile_img, profile_path, addr1, addr2, zipcode, email, telno, user_birth, persnal_url
+		  from users
+	</select>
+	
+	<!-- 회원정보 조회 -->
+	<select id="select_userInfo" parameterType="String" resultType="usersVO">
+		select user_id, user_name, bg_img, bg_path, profile_img, profile_path, addr1, addr2, zipcode, email, telno, user_birth, persnal_url
+		  from users
+		 where user_id = #{user_id}
+	</select>
+	
+	<!-- 회원정보 수정 -->
+	<update id="update_userInfo" parameterType="usersVO">
+		update users
+		   set user_name 	= #{user_name},
+		       bg_img	 	= #{bg_img},
+		       bg_path	 	= #{bg_path},
+		       profile_img  = #{profile_img},
+		       profile_path	= #{profile_path},
+		       addr1		= #{addr1},
+		       addr2		= #{addr2},
+		       zipcode		= #{zipcode},
+		       email		= #{email},
+		       telno		= #{telno},
+		       persnal_url	= #{persnal_url}
+		 where user_id = #{user_id}  
+	</update>
+	
+</mapper>

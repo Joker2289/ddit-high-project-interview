@@ -2,6 +2,7 @@ package kr.or.ddit.corporation.model;
 
 public class CorporationVo {
 	
+	private String corp_code;		// 회사코드
 	private String corp_id;			// 회사아이디
 	private String corp_name;		// 회사명
 	private String bg_img;			// 배경사진
@@ -17,7 +18,8 @@ public class CorporationVo {
 	private String corp_url;		// 회사URL
 	private String corp_size;		// 회사규모
 	private String corp_profile;	// 소개문구
-	private String corp_code;		// 회사코드
+	private String email;			// 이메일
+	private String telno;			// 전화번호
 	
 	public CorporationVo() {
 		
@@ -151,13 +153,30 @@ public class CorporationVo {
 		this.corp_code = corp_code;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelno() {
+		return telno;
+	}
+
+	public void setTelno(String telno) {
+		this.telno = telno;
+	}
+
 	@Override
 	public String toString() {
-		return "CorporationVo [corp_id=" + corp_id + ", corp_name=" + corp_name + ", bg_img=" + bg_img + ", bg_path="
-				+ bg_path + ", corp_logo=" + corp_logo + ", logo_path=" + logo_path + ", addr1=" + addr1 + ", addr2="
-				+ addr2 + ", zipcode=" + zipcode + ", corp_birth=" + corp_birth + ", corp_type=" + corp_type
-				+ ", industry_type=" + industry_type + ", corp_url=" + corp_url + ", corp_size=" + corp_size
-				+ ", corp_profile=" + corp_profile + ", corp_code=" + corp_code + "]";
+		return "CorporationVo [corp_code=" + corp_code + ", corp_id=" + corp_id + ", corp_name=" + corp_name
+				+ ", bg_img=" + bg_img + ", bg_path=" + bg_path + ", corp_logo=" + corp_logo + ", logo_path="
+				+ logo_path + ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", corp_birth="
+				+ corp_birth + ", corp_type=" + corp_type + ", industry_type=" + industry_type + ", corp_url="
+				+ corp_url + ", corp_size=" + corp_size + ", corp_profile=" + corp_profile + ", email=" + email
+				+ ", telno=" + telno + "]";
 	}
-	
+
 }

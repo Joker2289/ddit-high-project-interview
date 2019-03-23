@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	<!-- 
+		회원 구분 			회원 상태
+		1 : 일반회원		1 : 활동
+		2 : 기업회원		2 : 정지
+		3 : 관리자
+	-->
+	
+	<!-- 회원정보 등록 -->
+	<insert id="insert_member" parameterType="memberVO">
+		insert into member
+		values (
+		    #{mem_id}, 
+		    #{mem_division}, 
+		    #{pass}, 
+		    #{report_count}, 
+		    '1'
+		)
+	</insert>
+	
+	<!-- 비밀번호 번경 -->
+	<update id="update_memberPass" parameterType="memberVO">
+		update member 
+		   set pass = #{pass}
+		 where mem_id = #{mem_id}  
+	</update>
+	
+	<!-- 회원상태 변경(활동 <-> 정지) -->
+	<update id="update_memberStatus" parameterType="memberVO">
+		update memeber
+		   set mem_status = #{mem_status}
+		 where mem_id = #{mem_id}  
+	</update>
+	
+	<!-- 회원 신고횟수 누적 -->
+	<update id="update_memberReport" parameterType="memberVO">
+		update member
+		   set report_count = #{report_count}
+		 where mem_id = #{mem_id}
+	</update>
+	
+	<!-- 회원 탈퇴(회원아이디 삭제) -->
+	<delete id="delete_member" parameterType="String">
+		delete member
+		 where mem_id = #{mem_id}
+	</delete>
+	
+	<select id="select_memberInfo" parameterType="String" resultType="memberVO">
+		select mem_id, mem_division, pass, report_count, mem_status
+		  from member
+		 where mem_id = #{mem_id} 
+	</select>
+
+</mapper>
