@@ -10,6 +10,7 @@
 		3 : 관리자
 	-->
 	
+	
 	<!-- 회원정보 등록 -->
 	<insert id="insert_member" parameterType="memberVO">
 		insert into member
@@ -17,7 +18,7 @@
 		    #{mem_id}, 
 		    #{mem_division}, 
 		    #{pass}, 
-		    #{report_count}, 
+		    '0', 
 		    '1'
 		)
 	</insert>
@@ -49,10 +50,18 @@
 		 where mem_id = #{mem_id}
 	</delete>
 	
+	<!-- 특정 멤버 정보 검색 -->
 	<select id="select_memberInfo" parameterType="String" resultType="memberVO">
 		select mem_id, mem_division, pass, report_count, mem_status
 		  from member
 		 where mem_id = #{mem_id} 
 	</select>
+	
+	<!-- 멤버 전체 리스트 -->
+	<select id="select_memberAllList" resultType="memberVO">
+		select *
+		  from member
+	</select>
+	
 
 </mapper>
