@@ -1,3 +1,8 @@
+body {
+   background-color: #F5F5F5;
+
+}
+
 #search {
 	width: 244px;
 	height: 34px;
@@ -126,13 +131,66 @@
   	min-width: 30px;
   }
   
-  .activeOn{
-	  border-bottom: 3px solid;
+  .activeOn>a{
+  
+  	  outline: none;
+      opacity: 1;
+	  border-bottom: 3px solid white;
 	  
-	  -webkit-transition: all .55s ease;
-	  -moz-transition: all .55s ease;
-	  -ms-transition: all .55s ease;
-	  -o-transition: all .55s ease;
-	  transition: all .55s ease;
+	  -webkit-transition: all .33s ease;
+	  -moz-transition: all .33s ease;
+	  -ms-transition: all .33s ease;
+	  -o-transition: all .33s ease;
+	  transition: all .33s ease;
   }
+  
+  .activeOn>a>div>span{
+  	color:white;
+  }
+  .activeOn>a>div{
+  	color:white;
+  }
+  .menugroup{
+  	  width: 80px;
+	  font-size: 9px; 
+	  height: 50px; 
+	  text-align: center; 
+	  padding-bottom: 0px; 
+  }
+  
+  #profilemenu{
+ 	
+ 	position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    float: left;
+    min-width: 400px;
+    min-height: 300px;
+    padding: 5px 0;
+    margin: 10px 0 0;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    
+  }
+  #profilemenu>thead>tr>td{
+ 	vertical-align:middle;
+  	font-weight:bold;
+  	padding: 10px;
+	font-size: 16px;
+  }
+  #profilemenu>tbody>tr>td{
+  	vertical-align:middle;
+  	padding-left: 10px;
+  	padding-bottom: 5px;
+  	padding-top: 5px;
+	font-size: 16px;	
+	
+  }
+  
   
