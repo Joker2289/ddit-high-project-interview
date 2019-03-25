@@ -49,6 +49,7 @@
 		 where mem_id = #{mem_id}
 	</delete>
 	
+	<!-- 회원정보 조회 -->
 	<select id="select_memberInfo" parameterType="String" resultType="memberVO">
 		select mem_id, mem_division, pass, report_count, mem_status
 		  from member
