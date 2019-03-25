@@ -26,4 +26,27 @@ public interface IMemberDao {
 	 * Method 설명 : 전체 Member 리스트 출력
 	 */
 	List<MemberVo> select_memberAllList();
+	
+	
+	/**
+	 * 
+	 * Method : select_memberInfo
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 특정 멤버 정보검색
+	 */
+	MemberVo select_memberInfo(String mem_id);
+	
+	/**
+	 * 
+	 * Method : delete_member
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 회원탈퇴
+	 */
+	int delete_member(String mem_id);
 }

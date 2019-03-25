@@ -4,21 +4,29 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-
 	<typeAliases>
-		<typeAlias alias="memberVO" type="kr.or.ddit.member.model.MemberVo"/>
-		<typeAlias alias="usersVO" type="kr.or.ddit.users.model.UsersVo"/>
-		<typeAlias alias="corporationVO" type="kr.or.ddit.corporation.model.CorporationVo"/>
-		<typeAlias alias="postVO" type="kr.or.ddit.post.model.PostVo"/>
+		<typeAlias alias="memberVo" type="kr.or.ddit.member.model.MemberVo"/>
+		<typeAlias alias="usersVo" type="kr.or.ddit.users.model.UsersVo"/>
+		<typeAlias alias="corporationVo" type="kr.or.ddit.corporation.model.CorporationVo"/>
+		<typeAlias alias="postVo" type="kr.or.ddit.post.model.PostVo"/>
+		<typeAlias alias="goodVo" type="kr.or.ddit.good.model.GoodVo"/>
+		<typeAlias alias="hashtagVo" type="kr.or.ddit.hashtag.model.HashtagVo"/>
+		<typeAlias alias="hashtag_listVo" type="kr.or.ddit.hashtag_list.model.Hashtag_listVo"/>
+		<typeAlias alias="post_commentVo" type="kr.or.ddit.post_comment.model.Post_commentVo"/>
+		<typeAlias alias="followVo" type="kr.or.ddit.follow.model.FollowVo"/>
 	</typeAliases>
 	
   
-	
 	<mappers>
 		<mapper resource="kr/or/ddit/config/db/mapper/member.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/users.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/corporation.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/post.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/good.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/hashtag.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/hashtag_list.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/comment.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/follow.xml"/>
 	</mappers>
 </configuration>
 

@@ -12,7 +12,7 @@
 	
 	
 	<!-- 회원정보 등록 -->
-	<insert id="insert_member" parameterType="memberVO">
+	<insert id="insert_member" parameterType="memberVo">
 		insert into member
 		values (
 		    #{mem_id}, 
@@ -24,21 +24,21 @@
 	</insert>
 	
 	<!-- 비밀번호 번경 -->
-	<update id="update_memberPass" parameterType="memberVO">
+	<update id="update_memberPass" parameterType="memberVo">
 		update member 
 		   set pass = #{pass}
 		 where mem_id = #{mem_id}  
 	</update>
 	
 	<!-- 회원상태 변경(활동 <-> 정지) -->
-	<update id="update_memberStatus" parameterType="memberVO">
+	<update id="update_memberStatus" parameterType="memberVo">
 		update memeber
 		   set mem_status = #{mem_status}
 		 where mem_id = #{mem_id}  
 	</update>
 	
 	<!-- 회원 신고횟수 누적 -->
-	<update id="update_memberReport" parameterType="memberVO">
+	<update id="update_memberReport" parameterType="memberVo">
 		update member
 		   set report_count = #{report_count}
 		 where mem_id = #{mem_id}
@@ -51,17 +51,20 @@
 	</delete>
 	
 	<!-- 특정 멤버 정보 검색 -->
-	<select id="select_memberInfo" parameterType="String" resultType="memberVO">
+	<select id="select_memberInfo" parameterType="String" resultType="memberVo">
 		select mem_id, mem_division, pass, report_count, mem_status
 		  from member
 		 where mem_id = #{mem_id} 
 	</select>
 	
 	<!-- 멤버 전체 리스트 -->
-	<select id="select_memberAllList" resultType="memberVO">
+	<select id="select_memberAllList" resultType="memberVo">
 		select *
 		  from member
 	</select>
+	
+	
+	
 	
 
 </mapper>
