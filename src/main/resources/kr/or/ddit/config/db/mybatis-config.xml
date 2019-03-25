@@ -14,7 +14,7 @@
 		<typeAlias alias="hashtag_listVo" type="kr.or.ddit.hashtag_list.model.Hashtag_listVo"/>
 		<typeAlias alias="post_commentVo" type="kr.or.ddit.post_comment.model.Post_commentVo"/>
 		<typeAlias alias="followVo" type="kr.or.ddit.follow.model.FollowVo"/>
-	</typeAliases>
+	</typeAliases> 
 	
   
 	<mappers>
