@@ -14,6 +14,7 @@
 		<typeAlias alias="hashtag_listVo" type="kr.or.ddit.hashtag_list.model.Hashtag_listVo"/>
 		<typeAlias alias="post_commentVo" type="kr.or.ddit.post_comment.model.Post_commentVo"/>
 		<typeAlias alias="followVo" type="kr.or.ddit.follow.model.FollowVo"/>
+		<typeAlias alias="search_logVo" type="kr.or.ddit.search_log.model.Search_logVo"/>
 	</typeAliases> 
 	
   
@@ -27,6 +28,7 @@
 		<mapper resource="kr/or/ddit/config/db/mapper/hashtag_list.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/comment.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/follow.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/search_log.xml"/>
 	</mappers>
 </configuration>
 
