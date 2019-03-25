@@ -50,11 +50,7 @@
 		 where mem_id = #{mem_id}
 	</delete>
 	
-<<<<<<< HEAD
-	<!-- 회원정보 조회 -->
-=======
 	<!-- 특정 멤버 정보 검색 -->
->>>>>>> branch 'master' of https://gitlab.com/500dditError/interview.git
 	<select id="select_memberInfo" parameterType="String" resultType="memberVO">
 		select mem_id, mem_division, pass, report_count, mem_status
 		  from member
