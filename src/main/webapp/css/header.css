@@ -1,0 +1,138 @@
+#search {
+	width: 244px;
+	height: 34px;
+	padding-top: 6px;
+	background-color: #E1E9EE;
+}
+
+.searchgroup{
+  width: 288px;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.searchgroup input#search{
+  width: 288px;
+  height: 34px;
+  background: #E1E9EE;
+  border: none;
+  font-size: 11pt;
+  float: left;
+  color: #7E8E96;
+  padding-left: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  
+   -webkit-transition: background .55s ease;
+  -moz-transition: background .55s ease;
+  -ms-transition: background .55s ease;
+  -o-transition: background .55s ease;
+  transition: background .55s ease;
+}
+.searchbox{
+  width: 288px;
+  height: 34px;
+}
+.searchgroup input#search::-webkit-input-placeholder {
+   color: #697A84;
+}
+ 
+.searchgroup input#search:-moz-placeholder { /* Firefox 18- */
+   color: #697A84;  
+}
+ 
+.searchgroup input#search::-moz-placeholder {  /* Firefox 19+ */
+   color: #697A84;  
+}
+ 
+.searchgroup input#search:-ms-input-placeholder {  
+   color: #697A84;  
+}
+.searchgroup .icon{
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+ 
+  border: none;
+  background: white;
+  height: 33px;
+  width: 50px;
+  color: #697A84;
+  opacity: 0;
+  font-size: 10pt;
+ 
+  -webkit-transition: all .55s ease;
+  -moz-transition: all .55s ease;
+  -ms-transition: all .55s ease;
+  -o-transition: all .55s ease;
+  transition: all .55s ease;
+}
+.searchgroup:hover button.icon, .searchgroup:active button.icon, .searchgroup:focus button.icon{
+    outline: none;
+    opacity: 1;
+    margin-left: -50px;
+  }
+ 
+.searchgroup:hover button.icon:hover{
+    background: #E1E9EE;
+  }
+  
+.searchgroup input#search:hover, .searchgroup input#search:focus, .searchgroup input#search:active{
+    outline:none;
+    background: white;
+}
+  
+ #searchmenu{
+ 	
+ 	position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    float: left;
+    min-width: 760px;
+    min-height: 150px;
+    padding: 5px 0;
+    margin: 10px 0 0;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    
+  }
+  #searchmenu>thead>tr>td{
+ 	vertical-align:middle;
+  	font-weight:bold;
+  	padding: 10px;
+	font-size: 16px;	
+  }
+  #searchmenu>tbody>tr>td{
+  	vertical-align:middle;
+  	padding-left: 10px;
+  	padding-bottom: 5px;
+  	padding-top: 5px;
+	font-size: 16px;	
+  }
+  #searchmenu>tbody>tr>td>span>i{
+  	vertical-align:middle;
+  	color : #0073B1;
+  	max-width: 30px;
+  	min-width: 30px;
+  }
+  
+  .activeOn{
+	  border-bottom: 3px solid;
+	  
+	  -webkit-transition: all .55s ease;
+	  -moz-transition: all .55s ease;
+	  -ms-transition: all .55s ease;
+	  -o-transition: all .55s ease;
+	  transition: all .55s ease;
+  }
+  

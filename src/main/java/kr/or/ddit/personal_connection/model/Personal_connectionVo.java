@@ -1,11 +1,11 @@
-package kr.or.ddit.persnal_connection.model;
+package kr.or.ddit.personal_connection.model;
 
-public class Persnal_connectionVo {
+public class Personal_connectionVo {
 	private String user_id;			// 신청회원아이디
 	private String receive_id;		// 수신회원아이디
 	private String receive_accept;	// 수락여부
 	
-	public Persnal_connectionVo() {
+	public Personal_connectionVo() {
 		// TODO Auto-generated constructor stub
 	}
 
