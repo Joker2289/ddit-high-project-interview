@@ -44,7 +44,7 @@ public class RecruitController {
 		sVo.setSearch_local(search_local);
 		sVo.setSearch_code(String.valueOf(search_logService.getAllCnt()+1));
 		
-//		search_logService.insertSearch_log(sVo);
+		search_logService.insertSearch_log(sVo);
 		
 		return "redirect:"+req.getContextPath()+"/recruit";
 	}	
