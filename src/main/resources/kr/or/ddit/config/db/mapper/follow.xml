@@ -43,4 +43,4 @@
 		 where mem_id = #{mem_id}
 	</select>
 	
-</mapper>
+</mapper> 
