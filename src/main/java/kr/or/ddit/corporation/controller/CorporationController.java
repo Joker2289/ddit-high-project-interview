@@ -19,11 +19,11 @@ public class CorporationController {
 	
 	
 	
-	@RequestMapping(path={"/corporation"},method={RequestMethod.GET})
+	@RequestMapping(path={"/corporationUpdate"},method={RequestMethod.GET})
 	public String corporation(HttpSession session){
-		return "corporation/corporation";
+		return "corporation/corporationUpdate";
+		
+		
+		
 	}
-	
-	
-
 }
