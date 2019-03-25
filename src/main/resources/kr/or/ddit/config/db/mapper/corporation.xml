@@ -5,7 +5,7 @@
 <mapper namespace="corp">
 
 	<!-- 회사 정보 등록 -->
-	<insert id="insert_corp" parameterType="corporationVO">
+	<insert id="insert_corp" parameterType="corporationVo">
 		insert into corporation
 		values(
 			#{corp_id},
@@ -28,14 +28,14 @@
 	</insert>
 	
 	<!-- 전체회사 조회 -->
-	<select id="select_allCorps" resultType="corporationVO">
+	<select id="select_allCorps" resultType="corporationVo">
 		select corp_id, corp_name, bg_img, bg_path, corp_logo, logo_path, addr1, addr2, zipcode, 
 			   corp_birth, corp_type, industry_type, corp_url, corp_size, corp_profile, corp_code
 		  from corporation
 	</select>
 	
 	<!-- 회원정보 조회 -->
-	<select id="select_corpInfo" parameterType="String" resultType="corporationVO">
+	<select id="select_corpInfo" parameterType="String" resultType="corporationVo">
 		select corp_id, corp_name, bg_img, bg_path, corp_logo, logo_path, addr1, addr2, zipcode, 
 			   corp_birth, corp_type, industry_type, corp_url, corp_size, corp_profile, corp_code
 		  from corporation
@@ -43,7 +43,7 @@
 	</select>
 	
 	<!-- 회사정보 수정 -->
-	<update id="update_corpInfo" parameterType="corporationVO">
+	<update id="update_corpInfo" parameterType="corporationVo">
 		update users
 		   set corp_name 	 = #{corp_name},
 		       bg_img	 	 = #{bg_img},

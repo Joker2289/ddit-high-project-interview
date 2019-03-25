@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="follow">
+
+	<!-- 
+		*** 팔로우 구분 종류 
+		1 : 회원 팔로우
+		2 : 해시태그 팔로우
+	 -->
+
+	<!-- 팔로우 정보 등록 -->
+	<insert id="insert_follow" parameterType="followVo">
+		insert into follow
+		values (
+			follow_code_seq.nextval,
+			#{mem_id},
+			#{ref_keyword},
+			#{division}
+		)
+	</insert>
+	
+	<!-- 팔로우 정보 삭제 -->
+	<delete id="delete_follow" parameterType="followVo">
+		delete follow
+		 where follow_code = #{follow_code}
+	</delete>
+
+
+	<!-- 종류별 팔로우 목록 조회 -->
+	<select id="select_followKindList" parameterType="followVo" resultType="followVo">
+		select follow_code, mem_id, ref_keyword, division
+		  from follow
+		 where mem_id = #{mem_id}
+		   and ref_keyword = #{ref_keyword}
+		   and division = #{division} 
+	</select>
+	
+	<select id="select_followList" parameterType="String" resultType="followVo">
+		select follow_code, mem_id, ref_keyword, division
+		  from follow
+		 where mem_id = #{mem_id}
+	</select>
+	
+</mapper>

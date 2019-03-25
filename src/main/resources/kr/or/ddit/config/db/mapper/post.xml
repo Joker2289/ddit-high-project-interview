@@ -5,22 +5,20 @@
 <mapper namespace="post">
 	
 	<!-- 게시글 작성 -->
-	<insert id="insert_post" parameterType="postVO">
+	<insert id="insert_post" parameterType="postVo">
 		insert into post
 		values (
 		    post_code_seq.nextval, 
 		    #{user_id},
-		    #{post_title},
 		    #{post_contents},
 		    sysdate
 		)
 	</insert>
 	
 	<!-- 게시글 수정 -->
-	<update id="update_post" parameterType="postVO">
+	<update id="update_post" parameterType="postVo">
 		update post
-		   set post_title 	 = #{post_title},
-		   	   post_contents = #{post_contents}
+		   set post_contents = #{post_contents}
 		 where post_code = #{post_code}
 	</update>
 	
@@ -31,10 +29,11 @@
 	</delete>
 	
 	<!-- 특정회원 글  조회 -->
-	<select id="select_memberPost" parameterType="String" resultType="postVO">
-		select post_code, user_id, post_title, post_contents, post_date
+	<select id="select_memberPost" parameterType="String" resultType="postVo">
+		select post_code, user_id, post_contents, post_date
 		  from post
 		 where user_id = #{user_id} 
+		order by post_date desc 
 	</select>
 	
 	

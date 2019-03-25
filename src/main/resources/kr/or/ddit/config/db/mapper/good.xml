@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="good">
+	
+	<!-- 
+		*** 좋아요 구분 종류
+		1 : 타임라인 게시물
+		2 : 블로그 페이지
+	 -->
+	
+	<!-- 좋아요 정보 등록 -->	
+	<insert id="insert_goodInfo" parameterType="goodVo">
+		insert into good
+		values(
+			good_code_seq.nextval,
+			#{mem_id},
+			#{ref_code},
+			#{division},
+			sysdate
+		)
+	</insert>
+	
+	<!-- 좋아요 정보 삭제 -->
+	<delete id="delete_goodInfo" parameterType="String">
+		delete good
+		 where good_code = #{good_code}
+	</delete>
+	
+	<!-- 좋아요 정보 조회 -->
+	<select id="select_goodInfo" parameterType="String" resultType="goodVo">
+		select good_code, mem_id, ref_code, division, good_date
+		  from good
+		 where mem_id = #{mem_id}
+		order by good_date desc
+	</select>
+	
+</mapper>

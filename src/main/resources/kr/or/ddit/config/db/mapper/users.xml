@@ -5,7 +5,7 @@
 <mapper namespace="users">
 	
 	<!-- 일반회원 정보 등록 -->
-	<insert id="insert_users" parameterType="usersVO">
+	<insert id="insert_users" parameterType="usersVo">
 		insert into users
 		values(
 			#{user_id},
@@ -25,20 +25,20 @@
 	</insert>
 	
 	<!-- 전체회원 조회 -->
-	<select id="select_allUsers" resultType="usersVO">
+	<select id="select_allUsers" resultType="usersVo">
 		select user_id, user_name, bg_img, bg_path, profile_img, profile_path, addr1, addr2, zipcode, email, telno, user_birth, persnal_url
 		  from users
 	</select>
 	
 	<!-- 회원정보 조회 -->
-	<select id="select_userInfo" parameterType="String" resultType="usersVO">
+	<select id="select_userInfo" parameterType="String" resultType="usersVo">
 		select user_id, user_name, bg_img, bg_path, profile_img, profile_path, addr1, addr2, zipcode, email, telno, user_birth, persnal_url
 		  from users
 		 where user_id = #{user_id}
 	</select>
 	
 	<!-- 회원정보 수정 -->
-	<update id="update_userInfo" parameterType="usersVO">
+	<update id="update_userInfo" parameterType="usersVo">
 		update users
 		   set user_name 	= #{user_name},
 		       bg_img	 	= #{bg_img},
