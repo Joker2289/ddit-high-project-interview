@@ -13,11 +13,8 @@ import kr.or.ddit.post.model.PostVo;
 public class PostServiceImpl implements IPostService {
 	
 	@Resource(name="postDao")
-	IPostDao postDao;
+	private IPostDao postDao;
 	
-	public PostServiceImpl() {
-	
-	}
 	
 	@Override
 	public int insert_post(PostVo postVo) {
