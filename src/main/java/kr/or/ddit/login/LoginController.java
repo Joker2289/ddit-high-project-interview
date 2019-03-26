@@ -58,8 +58,6 @@ public class LoginController {
 		
 		MemberVo dbMemberVo = memberService.select_memberInfo(memVo.getMem_id());
 		
-		
-		
 		//로그인 성공
 		if(dbMemberVo.getMem_id().equals(memVo.getMem_id()) &&
 				dbMemberVo.getPass().equals(KISA_SHA256.encrypt(memVo.getPass()))){
@@ -67,17 +65,21 @@ public class LoginController {
 			//일반회원 로그인
 			if(dbMemberVo.getMem_division().equals("1")) {
 				UsersVo uVo = usersService.select_userInfo(dbMemberVo.getMem_id());
+				req.getSession().setAttribute("detailVO", uVo);
 			} 
 			
 			//기업 로그인
 			else if(dbMemberVo.getMem_division().equals("2")) {
 				CorporationVo cVo = corpService.select_corpInfo(dbMemberVo.getMem_id());
+				req.getSession().setAttribute("detailVO", cVo);
 			}
 			
 			//관리자 로그인
 			else {
 				
 			}
+		
+			req.getSession().setAttribute("memberVO", dbMemberVo);
 			
 			return "timeLineTiles";
 		}
