@@ -33,9 +33,9 @@
         <!-- post form -->
         <form method="post" action="">
           <div class="input-group">
-            <span class="input-group-btn">
-              		<i class="far fa-edit"></i> 
-            </span>
+          	<a href="#">
+          		<i class="far fa-edit"></i>타임라인에 소식을 전하세요!
+          	</a>
           </div>
         </form><hr>
       
