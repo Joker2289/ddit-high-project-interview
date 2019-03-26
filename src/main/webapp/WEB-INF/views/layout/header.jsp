@@ -59,24 +59,7 @@
             		<div>나</div>
            		</a>
 			  	<div id="dropdownProfile">
-				  	<table id="profilemenu">
-				  		<thead>
-				  			<tr>
-				  				<td>프로필 보기</td>
-				  			</tr>
-				  		</thead>
-				  		<tbody>
-				  			<tr>
-				  				<td>사람</td>
-				  			</tr>
-				  			<tr>
-				  				<td>채용</td>
-				  			</tr>
-				  			<tr>
-				  				<td>내용</td>
-				  			</tr>
-				  		</tbody>
-				  	</table>
+				  	
 				</div>
           	</li>
           </ul>

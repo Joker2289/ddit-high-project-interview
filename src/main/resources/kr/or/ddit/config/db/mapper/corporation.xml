@@ -34,7 +34,7 @@
 		  from corporation
 	</select>
 	
-	<!-- 회원정보 조회 -->
+	<!-- 특정 회사 정보 조회 -->
 	<select id="select_corpInfo" parameterType="String" resultType="corporationVo">
 		select corp_id, corp_name, bg_img, bg_path, corp_logo, logo_path, addr1, addr2, zipcode, 
 			   corp_birth, corp_type, industry_type, corp_url, corp_size, corp_profile, corp_code

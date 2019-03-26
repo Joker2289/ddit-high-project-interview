@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.post.model.PostVo;
 
-@Repository("postDao")
+@Repository("postDao")	
 public class PostDaoImpl implements IPostDao {
 
 	@Resource(name="sqlSessionTemplate")

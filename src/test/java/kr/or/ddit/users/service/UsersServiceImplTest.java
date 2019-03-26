@@ -7,19 +7,20 @@ import javax.annotation.Resource;
 import org.junit.Test;
 
 import kr.or.ddit.test.LogicTestConfig;
+import kr.or.ddit.users.dao.IUsersDao;
 import kr.or.ddit.users.model.UsersVo;
 
 public class UsersServiceImplTest extends LogicTestConfig{
 
-	@Resource(name="usersService")
-	private IUsersService usersService;
+	@Resource(name="usersDao")
+	private IUsersDao usersDao;
 	
 	@Test
 	public void testSelect_userInfo() {
 		/***Given***/
 		
 		/***When***/
-		UsersVo uVo = usersService.select_userInfo("brown");
+		UsersVo uVo = usersDao.select_userInfo("brown");
 
 		/***Then***/
 		assertNotNull(uVo);
