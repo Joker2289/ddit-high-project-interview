@@ -14,19 +14,14 @@
 	<%@ include file="/WEB-INF/views/corporation/module/top.jsp"%>
 	<br>
 	<%@ include file="/WEB-INF/views/corporation/module/left.jsp"%>
-<!-- 	------------- -->
-<!-- 	업데이트 -->
-<!-- 	------------- -->
-<!-- 	<table> -->
-<!-- 		<thead> -->
-<!-- 			<tr> -->
-<!-- 				<th>사진공유</th> -->
-<!-- 				<th>동영상공유</th> -->
-<!-- 				<th>문서공유</th> -->
-<!-- 				<th>글쓰기</th> -->
-<!-- 			</tr> -->
-<!-- 		</thead> -->
-<!-- 	</table> -->
+	<br>
+	<%@ include file="/WEB-INF/views/corporation/module/write.jsp"%>
+	
+	-------------
+	회사 타임라인
+	-------------
+	<br>
+	
 	${postList.get(0).post_contents }
 </body>
 </html>
