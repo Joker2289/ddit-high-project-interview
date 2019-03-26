@@ -12,5 +12,5 @@ public interface IPostService {
 	
 	int delete_post(String post_code);
 	
-	List<PostVo> select_memberPost(String mem_id);
+	List<PostVo> select_memberPost(String writer_name);
 }

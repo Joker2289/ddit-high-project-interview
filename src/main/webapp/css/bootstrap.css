@@ -10,12 +10,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
-.btn_postWrite {
-    display: flex;
-    flex-grow: 1;
-    margin: 0;
-    align-items: center;
-}
  
 .btn-success,
 	.btn-warning {

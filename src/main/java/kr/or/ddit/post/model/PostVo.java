@@ -8,9 +8,18 @@ public class PostVo {
 	private String mem_id; 			// 작성자
 	private String post_contents;	// 내용
 	private Date post_date; 		// 작성일
+	private String writer_name;		// 작성자 이름
 	
 	public PostVo() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public String getWriter_name() {
+		return writer_name;
+	}
+
+	public void setWriter_name(String writer_name) {
+		this.writer_name = writer_name;
 	}
 
 	public String getPost_code() {
@@ -48,7 +57,7 @@ public class PostVo {
 	@Override
 	public String toString() {
 		return "PostVo [post_code=" + post_code + ", mem_id=" + mem_id + ", post_contents=" + post_contents
-				+ ", post_date=" + post_date + "]";
+				+ ", post_date=" + post_date + "writer_name=" +  writer_name + "]";
 	}
 	
 }

@@ -32,8 +32,8 @@ public class PostServiceImpl implements IPostService {
 	}
 
 	@Override
-	public List<PostVo> select_memberPost(String mem_id) {
-		return postDao.select_memberPost(mem_id);
+	public List<PostVo> select_memberPost(String writer_name) {
+		return postDao.select_memberPost(writer_name);
 	}
 
 }

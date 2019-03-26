@@ -31,8 +31,8 @@ public class PostDaoImpl implements IPostDao {
 	}
 
 	@Override
-	public List<PostVo> select_memberPost(String mem_id) {
-		return sqlSession.selectList("post.select_memberPost", mem_id);
+	public List<PostVo> select_memberPost(String writer_name) {
+		return sqlSession.selectList("post.select_memberPost", writer_name);
 	}
 
 
