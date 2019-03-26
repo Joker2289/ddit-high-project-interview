@@ -11,6 +11,9 @@
 		<put-attribute name="content" value="/WEB-INF/views/home.jsp" />
 	</definition>
 	
+	<definition name="timeLineTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/timeline/timeline.jsp"/>
+	</definition>
 	<definition name="personalTiles" extends="layout" >
 		<put-attribute name="content" value="/WEB-INF/views/personalConnection/personalConnection.jsp" />
 	</definition>

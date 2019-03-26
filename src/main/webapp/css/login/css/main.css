@@ -215,6 +215,12 @@ iframe {
   border-bottom: 2px solid #d9d9d9;
 }
 
+.wrap-input-custom {
+  width: 50%;
+  position: relative;
+  border-bottom: 2px solid #d9d9d9;
+}
+
 .label-input100 {
   font-family: Poppins-Regular;
   font-size: 14px;
