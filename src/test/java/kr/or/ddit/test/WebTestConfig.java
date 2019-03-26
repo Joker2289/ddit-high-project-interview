@@ -12,6 +12,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:kr/or/ddit/config/spring/servlet-context.xml",
+					   "classpath:kr/or/ddit/config/spring/context-datasource.xml",
+					   "classpath:kr/or/ddit/config/spring/context-transaction.xml",
 					   "classpath:kr/or/ddit/config/spring/application-context.xml"})
 @WebAppConfiguration	// 스프링 컨테이너를 만들때 WebApplicationContext로 생성
 						// 미적용시 applicationContext
