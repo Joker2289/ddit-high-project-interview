@@ -24,11 +24,61 @@
 				</div>
           	</li>
             <li class="menu">
-            	<a href="#" style="font-size: 9px; height: 50px; text-align: center; padding-bottom: 0px; padding-top: 10px;">
+            	<a href="#" class="menugroup" style="padding-top: 7px;">
             		<div><span style="font-size: 20px;"><i class="fas fa-home"></i></span></div>
             		<div>홈</div>
             	</a>
             </li>
+            <li class="menu">
+            	<a href="#" class="menugroup" style="padding-top: 7px;">
+            		<div><span style="font-size: 20px;"><i class="fas fa-users"></i></span></div>
+            		<div>인맥</div>
+            	</a>
+            </li>
+            <li class="menu">
+            	<a href="#" class="menugroup" style="padding-top: 7px;">
+            		<div><span style="font-size: 20px;"><i class="fas fa-briefcase"></i></span></div>
+            		<div>채용공고</div>
+            	</a>
+            </li>
+            <li class="menu">
+            	<a href="#" class="menugroup" style="padding-top: 7px;">
+            		<div><span style="font-size: 20px;"><i class="far fa-comment-dots"></i></span></div>
+            		<div>메일</div>
+            	</a>
+            </li>
+            <li class="menu">
+            	<a href="#" class="menugroup" style="padding-top: 7px;">
+            		<div><span style="font-size: 20px;"><i class="fas fa-bell"></i></span></div>
+            		<div>알람</div>
+            	</a>
+            </li>
+            <li class="menu">
+			  	<a href="#" id="profile" class="menugroup" style="padding-top: 7px;">
+            		<div><span style="font-size: 20px;"><i class="fas fa-user-circle"></i></span></div>
+            		<div>나</div>
+           		</a>
+			  	<div id="dropdownProfile">
+				  	<table id="profilemenu">
+				  		<thead>
+				  			<tr>
+				  				<td>프로필 보기</td>
+				  			</tr>
+				  		</thead>
+				  		<tbody>
+				  			<tr>
+				  				<td>사람</td>
+				  			</tr>
+				  			<tr>
+				  				<td>채용</td>
+				  			</tr>
+				  			<tr>
+				  				<td>내용</td>
+				  			</tr>
+				  		</tbody>
+				  	</table>
+				</div>
+          	</li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

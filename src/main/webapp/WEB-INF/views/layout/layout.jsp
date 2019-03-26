@@ -12,6 +12,8 @@
 <link href="/css/header.css" rel="stylesheet">
 <script>
 $(document).ready(function() {
+	
+	// 검색창
 	$("#search").on("click", function(){
 		$("#dropdownSearch").empty();
 		$("#dropdownSearch").append('<table id="searchmenu"><thead><tr><td>검색어 :</td></tr></thead><tbody><tr><td><span style="font-size: 20px;"><i class="fas fa-users"></i></span>사람</td></tr><tr><td><span style="font-size: 20px;"><i class="fas fa-briefcase"></i></span>채용</td></tr><tr><td><span style="font-size: 20px;"><i class="far fa-newspaper"></i></span>내용</td></tr></tbody></table>');
@@ -22,29 +24,48 @@ $(document).ready(function() {
 			$("#dropdownSearch").empty();
 		});
 	});
+	// 프로필 보기
+	$("#profile").on("click", function(){
+		$("#dropdownProfile").empty();
+		$("#dropdownProfile").append('');
+	});
+	
+	$("#profile").on("mouseleave", function(){
+		$(document).on("mouseup", function(){
+			$("#dropdownProfile").empty();
+		});
+	});
 	
 	
 	// append이후에 #search.on 메서드 실행이 안되므로 
 	// document.on 메서드로 실행
 	$(document).on('mouseover', '#searchmenu tbody tr', function(e) {
-
 		$( this ).css( "background-color", "#F3F6F8" ); 
 	    $( this).children("td").css( "cursor", "pointer" ); 
 
 	});
 	
 	$(document).on('mouseleave', '#searchmenu tbody tr', function(e) {
-
 		$( this ).css( "background-color", "white" ); 
-
 	});
 	
+	$(".menu").on("click", function(){
+		$(".activeOn").attr('class','menu');
+		$(this).removeClass();
+        $(this).addClass("activeOn");
+	});
 	
 });
 </script>
 </head>
 <body>
 <tiles:insertAttribute name="header" />
-<tiles:insertAttribute name="content" />
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="margin-top: 51px;">
+			<tiles:insertAttribute name="content" />
+		</div>
+	</div>
+</div>
 </body>
 </html>

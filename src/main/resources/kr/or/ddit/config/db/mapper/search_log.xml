@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="search_log">
+	
+	<!-- 전체 검색내역 수 조회. -->
+	<select id="getAllCnt" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM SEARCH_LOG
+	</select>
+	
+	<!-- 검색내역 등록. -->
+	<insert id="insertSearch_log">
+		INSERT INTO SEARCH_LOG(search_code, user_id, search_word, search_local) 
+		VALUES(#{search_code}, #{user_id}, #{search_word}, #{search_local})	
+	</insert>
+	
+  	
+  	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
