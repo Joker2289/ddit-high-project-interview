@@ -59,39 +59,7 @@
             		<div>나</div>
            		</a>
 			  	<div id="dropdownProfile">
-				  	<table id="profilemenu">
-				  		<thead>
-				  			<tr>
-				  				<td>
-				  					<div class="col-md-3"><span style="font-size: 50px;"><i class="fas fa-user-circle"></i></span></div>
-				  					<div class="col-md-6">
-				  						<div class="col-md-6">사용자이름</div>
-				  						<div class="col-md-6">간단프로필</div>
-				  					</div>
-				  				</td>
-				  			</tr>
-				  			<tr>
-				  				<td style="color: #0073B1; text-align: center;">프로필 보기</td>
-				  			</tr>
-				  			<tr style="border-top: 1px solid #CFD1D3; border-bottom: 1px solid #CFD1D3;">
-				  				<td style="color: #666666;">프리미엄 1개월 무료 이용</td>
-				  			</tr>
-				  		</thead>
-				  		<tbody>
-				  			<tr>
-				  				<td style="color: #666666;">개인정보설정</td>
-				  			</tr>
-				  			<tr>
-				  				<td style="color: #666666;">글 & 활동</td>
-				  			</tr>
-				  			<tr>
-				  				<td style="color: #666666;">채용공고</td>
-				  			</tr>
-				  			<tr style="border-top: 1px solid #CFD1D3;">
-				  				<td style="color: #666666;">로그아웃</td>
-				  			</tr>
-				  		</tbody>
-				  	</table>
+				  	
 				</div>
           	</li>
           </ul>
