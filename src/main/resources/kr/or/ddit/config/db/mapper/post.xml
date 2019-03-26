@@ -9,7 +9,7 @@
 		insert into post
 		values (
 		    post_code_seq.nextval, 
-		    #{user_id},
+		    #{mem_id},
 		    #{post_contents},
 		    sysdate
 		)
@@ -30,9 +30,9 @@
 	
 	<!-- 특정회원 글  조회 -->
 	<select id="select_memberPost" parameterType="String" resultType="postVo">
-		select post_code, user_id, post_contents, post_date
+		select post_code, mem_id, post_contents, post_date
 		  from post
-		 where user_id = #{user_id} 
+		 where mem_id = #{mem_id} 
 		order by post_date desc 
 	</select>
 	

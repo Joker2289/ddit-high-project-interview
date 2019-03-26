@@ -63,4 +63,61 @@ public class Search_logServiceImpl implements ISearch_logService{
 		return saveList;
 	}
 
+	/**
+	 * 
+	 * Method : getSearch_log
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param search_code
+	 * @return
+	 * Method 설명 : 특정 검색내역 조회.
+	 */
+	@Override
+	public Search_logVo getSearch_log(String search_code) {
+		Search_logVo sVo = search_logDao.getSearch_log(search_code);
+		
+		return sVo;
+	}
+
+	/**
+	 * 
+	 * Method : deleteSearch_logForTest
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param search_code
+	 * @return
+	 * Method 설명 : 테스트 코드를 위한 검색내역 삭제.
+	 */
+	@Override
+	public int deleteSearch_logForTest(String search_code) {
+		int deleteCnt = search_logDao.deleteSearch_logForTest(search_code);
+		
+		return deleteCnt;
+	}
+
+	/**
+	 * 
+	 * Method : updateSearch_log
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param sVo
+	 * @return
+	 * Method 설명 : 검색내역 수정.
+	 */
+	@Override
+	public int updateSearch_log(Search_logVo sVo) {
+		int updateCnt = search_logDao.updateSearch_log(sVo);
+		
+		return updateCnt;
+	}
+
+	
+	
+	
 }
+
+
+
+
+
+

@@ -34,9 +34,17 @@ public class RecruitController {
 	private List<List<String>> com_list;
 	
 	@RequestMapping("/recruit")
-	public String recruit(HttpSession session, Model model){
+	public String recruit(HttpSession session, String alarm_flag, String search_code, Model model){
 		
 //		model.addAttribute("companyList", companyList);
+		
+		// alarm_flag - 저장한 검색어 제거하기. - search_save를 '1'로 변경.
+		if(alarm_flag != null && alarm_flag.equals("t")){
+			Search_logVo sVo = search_logService.getSearch_log(search_code);
+			sVo.setSearch_save("1");
+			
+			search_logService.updateSearch_log(sVo);
+		}
 		
 		// 임시로 session에 user값 넣기.
 		session.setAttribute("usersVo", usersService.select_userInfo("brown"));

@@ -21,7 +21,7 @@ import kr.or.ddit.post.service.IPostService;
 public class CorporationController {
 	
 
-	@Resource(name = "postService")
+	@Resource(name="postService")
 	private IPostService postService;
 	
 	

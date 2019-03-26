@@ -27,7 +27,7 @@ public class PostServiceTest extends LogicTestConfig {
 		
 		/***When***/
 		postVo.setPost_contents("테스트 코드로 작성된 타임라인 게시글 2");
-		postVo.setUser_id("goo8455");
+		postVo.setMem_id("goo8455");
 		
 		int insertCnt = postService.insert_post(postVo);
 		
@@ -69,7 +69,7 @@ public class PostServiceTest extends LogicTestConfig {
 		/***When***/
 		List<PostVo> mem_postList = postService.select_memberPost("goo8455");
 		for(PostVo post : mem_postList){
-			logger.debug("post contents : {} {}", post.getPost_contents(), post.getUser_id());
+			logger.debug("post contents : {} {}", post.getPost_contents(), post.getMem_id());
 		}
 		
 		/***Then***/
