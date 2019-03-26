@@ -19,4 +19,8 @@
 		<put-attribute name="content" value="/WEB-INF/views/personalConnection/personalConnection.jsp" />
 	</definition>
 	
+	<definition name="corporationTiles" extends="layout" >
+		<put-attribute name="content" value="/WEB-INF/views/corporation/corporationHome.jsp" />
+	</definition>
+	
 </tiles-definitions>

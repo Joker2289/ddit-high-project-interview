@@ -23,7 +23,9 @@
 			nvl(#{corp_url, jdbcType=VARCHAR}, null),
 			nvl(#{corp_size, jdbcType=VARCHAR}, null),
 			nvl(#{corp_profile, jdbcType=VARCHAR}, null),
-			#{corp_code}
+			#{corp_code},
+			#{telno},
+			#{email}
 		)
 	</insert>
 	
@@ -62,5 +64,26 @@
 		       corp_code	 = #{corp_code}
 		 where corp_id = #{corp_id}  
 	</update>
+	
+	<!-- 회사이름으로 특정 회사 조회. -->
+	<select id="getCorp" parameterType="String" resultType="corporationVo">
+		SELECT *
+		  FROM CORPORATION
+		 WHERE CORP_NAME = #{corp_name, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 테스트 코드를 위한 회사 삭제 -->
+	<delete id="deleteForTest">
+		DELETE FROM CORPORATION
+		 WHERE CORP_NAME = #{corp_name}	
+	</delete>
+	
+	<!-- 전체 회사 수 조회. -->
+	<select id="getCorpCnt" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM CORPORATION	
+	</select>
+	
+	
 	
 </mapper>
