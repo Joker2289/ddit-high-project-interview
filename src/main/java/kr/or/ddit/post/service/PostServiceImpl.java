@@ -13,11 +13,8 @@ import kr.or.ddit.post.model.PostVo;
 public class PostServiceImpl implements IPostService {
 	
 	@Resource(name="postDao")
-	IPostDao postDao;
+	private IPostDao postDao;
 	
-	public PostServiceImpl() {
-	
-	}
 	
 	@Override
 	public int insert_post(PostVo postVo) {
@@ -35,8 +32,8 @@ public class PostServiceImpl implements IPostService {
 	}
 
 	@Override
-	public List<PostVo> select_memberPost(String user_id) {
-		return postDao.select_memberPost(user_id);
+	public List<PostVo> select_memberPost(String writer_name) {
+		return postDao.select_memberPost(writer_name);
 	}
 
 }

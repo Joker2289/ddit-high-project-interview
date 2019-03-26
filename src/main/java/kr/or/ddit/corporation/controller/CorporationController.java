@@ -21,7 +21,7 @@ import kr.or.ddit.post.service.IPostService;
 public class CorporationController {
 	
 
-	@Resource(name = "postService")
+	@Resource(name="postService")
 	private IPostService postService;
 	
 	
@@ -30,20 +30,15 @@ public class CorporationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/postList")
-	public List<PostVo> postList(@RequestParam("userId") String userId, Model model){
+	@RequestMapping("/corporationHome")
+	public String postList( Model model){
+		// 임시 아이디(jocker) -> 로그인하고 연동되면 로그인한(회사아이디) 계정으로 게시물 호출
+		List<PostVo> postList = postService.select_memberPost("joker");
+		model.addAttribute("postList", postList);
 		
-		List<PostVo> postList = postService.select_memberPost(userId);
-		return postList;
+		return "corporation/corporationHome";
 		
 	}
-	
-	@RequestMapping(path={"/corporationHome"},method={RequestMethod.GET})
-	public String corporation(HttpSession session){
-		
-	return "corporation/corporationHome";
-	}
-	
 	
 }
 

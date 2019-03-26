@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.post.model.PostVo;
 
-@Repository("postDao")	
+@Repository("postDao")
 public class PostDaoImpl implements IPostDao {
 
 	@Resource(name="sqlSessionTemplate")
@@ -31,8 +31,8 @@ public class PostDaoImpl implements IPostDao {
 	}
 
 	@Override
-	public List<PostVo> select_memberPost(String user_id) {
-		return sqlSession.selectList("post.select_memberPost", user_id);
+	public List<PostVo> select_memberPost(String writer_name) {
+		return sqlSession.selectList("post.select_memberPost", writer_name);
 	}
 
 

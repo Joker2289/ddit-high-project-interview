@@ -29,21 +29,22 @@
         </div>
         <!-- ./friend requests -->
       </div>
+      
       <div class="col-md-6">
         <!-- post form -->
         <form method="post" action="">
           <div class="input-group">
-          	<a href="#">
-          		<i class="far fa-edit"></i>타임라인에 소식을 전하세요!
-          	</a>
+          	<button class="btn-write_modal" data-toggle="modal" data-target="write-modal"><a><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></button>
+          	<button class="btn-upload"><a><i class="far fa-images"></i></a></button>
+          	<button class="btn-upload"><a><i class="far fa-play-circle"></i></a></button>
+          	<button class="btn-upload"><a><i class="far fa-file-alt"></i></a></button>
           </div>
         </form><hr>
-      
         
         <c:forEach items="${testPost }" var="post">
 		  <div>
 			<div class="panel-body">
-			  ${post.user_id }<br><br>
+			  <a>${post.mem_id }</a><br><br>
 			  ${post.post_contents }<br>
 			</div>
 			<div class="panel-footer">
@@ -52,9 +53,8 @@
 			</div>
 		  </div>
 		</c:forEach>
-        
-        
       </div>
+      
       <div class="col-md-3">
         <div class="panel panel-default">
           <div class="panel-body">
@@ -78,6 +78,27 @@
         <!-- ./friends -->
       </div>
     </div>
+    
+    <div class="modal fade" id="write-modal" tabindex="-1" role="dialog" aria-labelledby="writeModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+      	<div class="modal-content">
+      	  
+      	  <div class="modal-header">
+      	  	<label>대가리입니다.</label>
+      	  </div>
+      	  
+      	  <div class="modal-body">
+      	  	<label>몸뚱아리입니다.</label>
+      	  </div>
+      	  
+      	  <div class="modal-foot">
+      	  	<label>발바닥입니다.</label>
+      	  </div>
+      	  
+      	</div>
+      </div>
+    </div>
+    
   </main>
   <!-- ./main -->
 

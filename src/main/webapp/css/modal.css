@@ -1,35 +1,99 @@
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+.modal-dialog.modal-fullsize {
+	width: 100%;
+  	height: 100%;
 }
 
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%; /* Could be more or less, depending on screen size */                          
+
+.jk-modalsasun{
+	position:absolute;
+	top:0;
+	display:none;
+	width:100%;
+	height:100%;
+	
+	background-color: rgba(0, 0, 0, 0.7);
+	
+	z-index:500;
+
 }
-/* The Close Button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+
+.jk-modal {
+	position:absolute;
+	display:table;
+	top:100px;
+	left:50%;
+	margin-left:-300px;
+	
+	
+	width:100%;
+	max-width:600px;
+	min-height:500px;
+	background:#fff;
+	
+	border-radius:20px;
+	/* overflow:hidden; */
+	
 }
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+
+
+.jk-row{
+	display:table-row;
 }
+
+.jk-modal-head{
+	width:100%;
+	display:table-cell;
+	height:50px;
+	vertical-align:middle;
+	text-align:center;
+	
+/* 	위, 오른쪽, 아래, 왼 */
+	padding:50px 0 0 0;
+/* 	padding-top:50px; */
+	
+}
+
+.jk-modal-head h1{
+	font-weight:800;
+}
+
+
+.jk-modal-body{
+	width:100%;
+	display:block;
+	vertical-align:middle;
+	width:100%;
+	height:500px;
+	overflow:auto;
+}
+
+
+.jk-modal-footer{
+	width:100%;
+	height:100px;
+	display:table-cell;
+	vertical-align:middle;
+	text-align:center;
+	
+}
+
+.jk-modal-footer button{
+	margin:0 10px;
+	padding:10px 30px 10px 30px;
+	background: #000;
+	opacity:0.9;
+	color:#fff;
+	border-radius:5px;
+}
+
+.jk-join-btn{
+	background:#323ad3;
+}
+
+.jk-modal-footer button:hover{
+	background:#8546B3;
+	/* opacity:0.4; */
+}
+
+
+

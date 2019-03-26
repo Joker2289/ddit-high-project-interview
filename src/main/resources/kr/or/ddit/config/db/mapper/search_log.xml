@@ -24,6 +24,26 @@
 		   AND SEARCH_SAVE=#{search_save}	
 	</select>
 	
+	<!-- 특정 검색내역 조회. -->
+	<select id="getSearch_log" parameterType="String" resultType="search_logVo">
+		SELECT *
+		  FROM SEARCH_LOG
+		 WHERE SEARCH_CODE = #{search_code}	
+	</select>
+	
+	<!-- 검색내역 삭제(데이터 삭제 - 테스트 코드) -->
+	<delete id="deleteSearch_logForTest" parameterType="String">
+		DELETE FROM SEARCH_LOG
+		 WHERE SEARCH_CODE = #{search_code}	
+	</delete>
+	
+	<!-- 검색내역 수정. -->
+	<update id="updateSearch_log" parameterType="search_logVo">
+		UPDATE SEARCH_LOG
+		   SET SEARCH_SAVE = #{search_save}
+		 WHERE SEARCH_CODE = #{search_code}	
+	</update>
+	
   	
   	
 </mapper>
