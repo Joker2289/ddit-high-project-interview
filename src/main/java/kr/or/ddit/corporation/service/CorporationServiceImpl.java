@@ -18,4 +18,52 @@ public class CorporationServiceImpl implements ICorporationService{
 		return corporationDao.select_corpInfo(corp_id);
 	}
 
+	/**
+	 * 
+	 * Method : getCorp
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param corp_name
+	 * @return
+	 * Method 설명 : 회사이름으로 특정 회사 조회.
+	 */
+	@Override
+	public CorporationVo getCorp(String corp_name) {
+		CorporationVo cVo = corporationDao.getCorp(corp_name);
+		
+		return cVo;
+	}
+
+	/**
+	 * 
+	 * Method : insert_corp
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param cVo
+	 * @return
+	 * Method 설명 : 회사 등록.
+	 */
+	@Override
+	public int insert_corp(CorporationVo cVo) {
+		int insertCnt = corporationDao.insert_corp(cVo);
+		
+		return insertCnt;
+	}
+
+	/**
+	 * 
+	 * Method : deleteForTest
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param corp_name
+	 * @return
+	 * Method 설명 : 테스트 코드를 위한 회사 삭제.
+	 */
+	@Override
+	public int deleteForTest(String corp_name) {
+		int deleteCnt = corporationDao.deleteForTest(corp_name);
+		
+		return deleteCnt;
+	}
+
 }
