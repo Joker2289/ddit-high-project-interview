@@ -165,10 +165,10 @@ body {
     left: 0;
     z-index: 1000;
     float: left;
-    min-width: 400px;
-    min-height: 300px;
+    min-width: 288px;
+    min-height: 250px;
     padding: 5px 0;
-    margin: 10px 0 0;
+    margin: 2px 0 0 -240px;
     text-align: left;
     list-style: none;
     background-color: #fff;
@@ -187,8 +187,6 @@ body {
   #profilemenu>tbody>tr>td{
   	vertical-align:middle;
   	padding-left: 10px;
-  	padding-bottom: 5px;
-  	padding-top: 5px;
 	font-size: 16px;	
 	
   }
