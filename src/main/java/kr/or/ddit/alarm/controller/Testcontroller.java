@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class Testcontroller {
 	
-	@RequestMapping(path={"/layout"})
+	@RequestMapping(path={"/home"})
 	public String loginView() {
-		return "layout";
+		return "homeTiles";
 	}
 }
