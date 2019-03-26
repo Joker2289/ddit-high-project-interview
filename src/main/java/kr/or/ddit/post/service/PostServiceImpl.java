@@ -15,9 +15,7 @@ public class PostServiceImpl implements IPostService{
 	@Resource(name="postDao")
 	private IPostDao postDao;
 	
-	public PostServiceImpl(){
-		
-	}
+
 
 	/**
 	 * 
