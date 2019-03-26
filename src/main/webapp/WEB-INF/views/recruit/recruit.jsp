@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>recruit</title>
+	<title>recruit / ${corpList.size() }</title>
 	<style type="text/css">
 		table.tb_recruit{
 /*  style="width: 700px; height: 500px; border: 1px solid; border-spacing: 15px;" */
@@ -108,11 +108,11 @@
 				<c:forEach begin="1" end="4" varStatus="i">
 					<td style="width: 5px; height: 5px;">
 						<div class="table_div">
-<%-- 							${companyList.get(i.index-1).alias } --%>
+							${corpList.get(i.index-1).logo_path }
 						</div> <br>
 						<i class="fas fa-bookmark" style="margin-top: 5px; margin-left: 10px; font-size: large;"></i><br>
 						2019년 상반기 신입사원 모집 <br>
-<%-- 						${companyList.get(i.index-1).userId } <br> --%>
+						${corpList.get(i.index-1).corp_name } <br>
 						Seoul, KR
 					</td>								
 				</c:forEach>
@@ -128,11 +128,11 @@
 				<c:forEach begin="1" end="4" varStatus="i">
 					<td style="width: 5px; height: 5px;">
 						<div class="table_div">
-<%-- 							${companyList.get(i.index-1).alias } --%>
+							${corpList.get(i.index-1).logo_path }
 						</div> <br>
 						<i class="fas fa-bookmark" style="margin-top: 5px; margin-left: 10px; font-size: large;"></i><br>
 						2019년 상반기 신입사원 모집 <br>
-<%-- 						${companyList.get(i.index-1).userId } <br> --%>
+						${corpList.get(i.index-1).corp_name } <br>
 						Seoul, KR
 					</td>								
 				</c:forEach>
@@ -141,11 +141,11 @@
 				<c:forEach begin="5" end="8" varStatus="i">
 					<td style="width: 5px; height: 5px;">
 						<div class="table_div">
-<%-- 							${companyList.get(i.index-1).alias } --%>
+							${corpList.get(i.index-1).logo_path }
 						</div> <br>
 						<i class="fas fa-bookmark" style="margin-top: 5px; margin-left: 10px; font-size: large;"></i><br>
 						2019년 상반기 신입사원 모집 <br>
-<%-- 						${companyList.get(i.index-1).userId } <br> --%>
+						${corpList.get(i.index-1).corp_name } <br>
 						Seoul, KR
 					</td>								
 				</c:forEach>							

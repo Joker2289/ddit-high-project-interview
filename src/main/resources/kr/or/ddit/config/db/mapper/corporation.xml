@@ -69,7 +69,7 @@
 	<select id="getCorp" parameterType="String" resultType="corporationVo">
 		SELECT *
 		  FROM CORPORATION
-		 WHERE CORP_NAME = #{corp_name}	
+		 WHERE CORP_NAME = #{corp_name, jdbcType=VARCHAR}
 	</select>
 	
 	<!-- 테스트 코드를 위한 회사 삭제 -->
@@ -77,6 +77,12 @@
 		DELETE FROM CORPORATION
 		 WHERE CORP_NAME = #{corp_name}	
 	</delete>
+	
+	<!-- 전체 회사 수 조회. -->
+	<select id="getCorpCnt" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM CORPORATION	
+	</select>
 	
 	
 	

@@ -1,5 +1,7 @@
 package kr.or.ddit.corporation.dao;
 
+import java.util.List;
+
 import kr.or.ddit.corporation.model.CorporationVo;
 
 public interface ICorporationDao {
@@ -47,6 +49,26 @@ public interface ICorporationDao {
 	 * Method 설명 : 테스트 코드를 위한 회사 삭제.
 	 */
 	int deleteForTest(String corp_name);
+
+	/**
+	 * 
+	 * Method : select_allCorps
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 전체 회사 목록 조회.
+	 */
+	List<CorporationVo> select_allCorps();
+
+	/**
+	 * 
+	 * Method : getCorpCnt
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 전체 회사 수 조회.
+	 */
+	int getCorpCnt();
 	
 }
 

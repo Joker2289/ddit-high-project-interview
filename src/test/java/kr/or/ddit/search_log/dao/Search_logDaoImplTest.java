@@ -24,8 +24,8 @@ public class Search_logDaoImplTest extends LogicTestConfig{
 	
 	@Before
 	public void setup(){
-		// insert 테스트를 위해 먼저 delete를 실행.
-		search_logDao.deleteSearch_logForTest("2");
+		// insert 테스트를 위해 먼저 delete를 실행. - insert 테스트 메서드 안으로 이동.
+		//search_logDao.deleteSearch_logForTest("2");
 	}
 	
 	/**
@@ -56,6 +56,8 @@ public class Search_logDaoImplTest extends LogicTestConfig{
 	@Test
 	public void testInsertSearch_log(){
 		/***Given***/
+		search_logDao.deleteSearch_logForTest("2");
+		
 		Search_logVo sVo = new Search_logVo();
 		sVo.setSearch_code("2");
 		sVo.setSearch_word("google");

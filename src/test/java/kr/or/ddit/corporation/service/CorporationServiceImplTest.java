@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.test.LogicTestConfig;
+import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
 
 public class CorporationServiceImplTest extends LogicTestConfig{
 	private Logger logger = LoggerFactory.getLogger(CorporationServiceImplTest.class);
@@ -22,7 +23,8 @@ public class CorporationServiceImplTest extends LogicTestConfig{
 	
 	@Before
 	public void setup(){
-		corpService.deleteForTest("삼성전자");
+		// insert 테스트 메서드 안에 쓰는 게 낫겠다.
+		//corpService.deleteForTest("삼성전자");
 	}
 	
 	@Test
@@ -47,7 +49,7 @@ public class CorporationServiceImplTest extends LogicTestConfig{
 		/***Given***/
 
 		/***When***/
-		CorporationVo cVo = corpService.getCorp("joker's codeFactory");
+		CorporationVo cVo = corpService.getCorp("삼성전기");
 
 		/***Then***/
 		assertNotNull(cVo);
@@ -63,6 +65,8 @@ public class CorporationServiceImplTest extends LogicTestConfig{
 	@Test
 	public void testInsert_corp() {
 		/***Given***/
+		corpService.deleteForTest("삼성전자");
+		
 		CorporationVo cVo = new CorporationVo();
 		cVo.setCorp_id("samsung");
 		cVo.setCorp_name("삼성전자");
@@ -89,6 +93,19 @@ public class CorporationServiceImplTest extends LogicTestConfig{
 		
 		/***Then***/
 		assertNotNull(uuid);
+	}
+	
+	// 암호화 테스트
+	@Test
+	public void testEncrypt() {
+		/***Given***/
+
+		/***When***/
+		String encryptedStr = KISA_SHA256.encrypt("1234");
+		logger.debug(encryptedStr);
+		
+		/***Then***/
+		assertNotNull(encryptedStr);
 	}
 	
 

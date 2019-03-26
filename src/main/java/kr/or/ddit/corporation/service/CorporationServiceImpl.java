@@ -1,5 +1,7 @@
 package kr.or.ddit.corporation.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -64,6 +66,36 @@ public class CorporationServiceImpl implements ICorporationService{
 		int deleteCnt = corporationDao.deleteForTest(corp_name);
 		
 		return deleteCnt;
+	}
+
+	/**
+	 * 
+	 * Method : select_allCorps
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 전체 회사 목록 조회.
+	 */
+	@Override
+	public List<CorporationVo> select_allCorps() {
+		List<CorporationVo> corpList = corporationDao.select_allCorps();
+		
+		return corpList;
+	}
+
+	/**
+	 * 
+	 * Method : getCorpCnt
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 전체 회사 수 조회.
+	 */
+	@Override
+	public int getCorpCnt() {
+		int corpCnt = corporationDao.getCorpCnt();
+		
+		return corpCnt;
 	}
 
 }
