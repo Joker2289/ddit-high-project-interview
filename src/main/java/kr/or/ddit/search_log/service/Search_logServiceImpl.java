@@ -1,5 +1,7 @@
 package kr.or.ddit.search_log.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -43,6 +45,22 @@ public class Search_logServiceImpl implements ISearch_logService{
 		int insertCnt = search_logDao.insertSearch_log(sVo);
 		
 		return insertCnt;
+	}
+
+	/**
+	 * 
+	 * Method : getSaveList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param sVo
+	 * @return
+	 * Method 설명 : 저장한 검색어 리스트 조회.
+	 */
+	@Override
+	public List<Search_logVo> getSaveList(Search_logVo sVo) {
+		List<Search_logVo> saveList = search_logDao.getSaveList(sVo);
+		
+		return saveList;
 	}
 
 }

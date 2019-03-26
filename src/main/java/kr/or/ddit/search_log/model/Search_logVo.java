@@ -5,6 +5,9 @@ public class Search_logVo {
 	private String user_id;			// 회원아이디
 	private String search_word;		// 검색어
 	private String search_local;	// 검색지역
+	private String search_save;		// 검색어 저장여부
+	
+	// search_save : 1-저장안함, 2-저장함.
 	
 	public Search_logVo() {
 		// TODO Auto-generated constructor stub
@@ -13,7 +16,7 @@ public class Search_logVo {
 	@Override
 	public String toString() {
 		return "Search_logVo [search_code=" + search_code + ", user_id=" + user_id + ", search_word=" + search_word
-				+ ", search_local=" + search_local + "]";
+				+ ", search_local=" + search_local + ", search_save=" + search_save + "]";
 	}
 
 	public String getSearch_code() {
@@ -47,5 +50,14 @@ public class Search_logVo {
 	public void setSearch_local(String search_local) {
 		this.search_local = search_local;
 	}
+
+	public String getSearch_save() {
+		return search_save;
+	}
+
+	public void setSearch_save(String search_save) {
+		this.search_save = search_save;
+	}
+
 	
 }

@@ -1,5 +1,7 @@
 package kr.or.ddit.search_log.dao;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -42,6 +44,22 @@ public class Search_logDaoImpl implements ISearch_logDao{
 		int insertCnt = sqlSessionTemplate.insert("search_log.insertSearch_log", sVo);
 		
 		return insertCnt;
+	}
+
+	/**
+	 * 
+	 * Method : getSaveList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param sVo
+	 * @return
+	 * Method 설명 : 저장한 검색어 리스트 조회.
+	 */
+	@Override
+	public List<Search_logVo> getSaveList(Search_logVo sVo) {
+		List<Search_logVo> saveList = sqlSessionTemplate.selectList("search_log.getSaveList", sVo);
+		
+		return saveList;
 	}	
 
 }

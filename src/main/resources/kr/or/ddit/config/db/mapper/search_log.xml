@@ -11,10 +11,18 @@
 	</select>
 	
 	<!-- 검색내역 등록. -->
-	<insert id="insertSearch_log">
-		INSERT INTO SEARCH_LOG(search_code, user_id, search_word, search_local) 
-		VALUES(#{search_code}, #{user_id}, #{search_word}, #{search_local})	
+	<insert id="insertSearch_log" parameterType="search_logVo">
+		INSERT INTO SEARCH_LOG(SEARCH_CODE, USER_ID, SEARCH_WORD, SEARCH_LOCAL, SEARCH_SAVE) 
+		VALUES(#{search_code}, #{user_id}, #{search_word}, #{search_local}, #{search_save})	
 	</insert>
+	
+	<!-- 저장한 검색어 리스트 조회. -->
+	<select id="getSaveList" parameterType="search_logVo" resultType="search_logVo">
+		SELECT *
+		  FROM SEARCH_LOG
+		 WHERE USER_ID=#{user_id}
+		   AND SEARCH_SAVE=#{search_save}	
+	</select>
 	
   	
   	
