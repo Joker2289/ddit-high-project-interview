@@ -51,7 +51,7 @@
         <c:forEach items="${testPost }" var="post">
 		  <div>
 			<div class="panel-body">
-			  ${post.user_id }<br><br>
+			  ${post.mem_id }<br><br>
 			  ${post.post_contents }<br>
 			</div>
 			<div class="panel-footer">
