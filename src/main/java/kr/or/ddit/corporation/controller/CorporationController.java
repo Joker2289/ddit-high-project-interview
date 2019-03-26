@@ -8,14 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class CorporationController {
-   
-   
-   
+
    @RequestMapping(path={"/corporationUpdate"},method={RequestMethod.GET})
    public String corporation(HttpSession session){
       return "corporation/corporationUpdate";
-      
-      
-      
+  
    }
 }
