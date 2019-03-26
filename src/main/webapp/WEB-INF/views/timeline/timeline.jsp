@@ -33,7 +33,6 @@
         <!-- post form -->
         <form method="post" action="">
           <div class="input-group">
-<!--             <input class="form-control" type="text" name="content" placeholder="Make a post..."> -->
             <span class="input-group-btn">
               		<i class="far fa-edit"></i> 
             </span>
