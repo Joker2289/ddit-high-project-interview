@@ -22,6 +22,7 @@
 		.t_alarm{
 			
 		}
+		
 	</style>
 	
 </head>
@@ -52,7 +53,7 @@
 	
 	<form action="${pageContext.request.contextPath }/temp_search" id="frm_search" method="post">
 		<input type="hidden" id="search_word" name="search_word">
-		<input type="hidden" id="search_local" name="local">
+		<input type="hidden" id="search_local" name="search_local">
 	
 		<div style="border: 1px solid; padding: 10px;">
 			<span style="margin: 80px; padding-left: 100px;">
@@ -80,30 +81,23 @@
 		</span>		
 		
 		<div>		
-			<div class="div_alarm">
-				<table class="tb_alarm">
-					<tr>
-						<td class="t_alarm">lg</td>
-						<td rowspan="2"><i id="t_alarm_alarm" class="far fa-bell"></i></td>
-					</tr>
-					<tr>
-						<td class="t_alarm">대한민국</td>
-					</tr>
-				</table>
-			</div>			
-			<div class="div_alarm">
-				<table class="tb_alarm">
-					<tr>
-						<td>lg</td>
-						<td rowspan="2"><i class="far fa-bell"></i></td>
-					</tr>
-					<tr>
-						<td>대한민국</td>
-					</tr>
-				</table>
-			</div>			
+			<c:forEach items="${saveList }" var="search" varStatus="i">
+				<div class="div_alarm">
+					<table class="tb_alarm">
+						<tr>
+							<td class="t_alarm${i.index }">${search.search_word }</td>
+							<td rowspan="2"><i id="t_alarm_alarm${i.index }" class="fas fa-bell"></i></td>
+						</tr>
+						<tr>
+							<td class="t_alarm${i.index }">${search.search_local }</td>
+						</tr>
+					</table>
+				</div>			
+			</c:forEach>
+			<!-- 비어있는 종 아이콘. -->		
+<!-- 			<i class="far fa-bell"></i> -->
+		
 			
-			<i class="fas fa-bell"></i>
 			
 		</div>
 	</div>
@@ -180,13 +174,18 @@
 				alert(2);
 			});
 			
-			$(".t_alarm").on("click", function(){
-				alert("t_alarm");
-			});
+			<c:forEach items="${saveList }" varStatus="i">
+				$(".t_alarm${i.index }").on("click", function(){
+					alert("t_alarm${i.index }");
+				});
+				
+				$("#t_alarm_alarm${i.index }").on("click", function(){
+// 					alert("t_alarm_alarm${i.index }");
+					
+
+				});
+			</c:forEach>
 			
-			$("#t_alarm_alarm").on("click", function(){
-				alert("t_alarm_alarm");
-			});
 			
 			$("#btn_search").on("click", function(){
 // 				alert($("#txt_name").val() + " / " + $("#txt_location").val());

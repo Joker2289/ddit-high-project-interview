@@ -1,6 +1,9 @@
 package kr.or.ddit.search_log.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -55,4 +58,38 @@ public class Search_logDaoImplTest extends LogicTestConfig{
 		assertEquals(1, insertCnt);
 	}
 
+	/**
+	 * 
+	 * Method : testGetSaveList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 저장한 검색어 리스트 조회 테스트.
+	 */
+	@Test
+	public void testGetSaveList(){
+		/***Given***/
+		Search_logVo sVo = new Search_logVo();
+		sVo.setUser_id("brown");
+		sVo.setSearch_save("2");
+		
+		/***When***/
+		List<Search_logVo> saveList = search_logDao.getSaveList(sVo);
+		
+		/***Then***/
+		assertNotNull(saveList);
+	}
+	
+	
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
