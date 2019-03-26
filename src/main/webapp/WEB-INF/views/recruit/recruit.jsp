@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>recruit / ${corpList.size() }</title>
+	<title>recruit</title>
 	<style type="text/css">
 		table.tb_recruit{
 /*  style="width: 700px; height: 500px; border: 1px solid; border-spacing: 15px;" */
@@ -105,7 +105,7 @@
    		조회하신 항목을 참고하여.. <br> [조회한 항목이름 - 지역] <br>
 		<table class="tb_recruit">
 			<tr style="width: 100px; height: 100px;">
-				<c:forEach begin="1" end="4" varStatus="i">
+				<c:forEach begin="2" end="5" varStatus="i">
 					<td style="width: 5px; height: 5px;">
 						<div class="table_div">
 							${corpList.get(i.index-1).logo_path }
@@ -125,7 +125,7 @@
 		
 		<table class="tb_recruit">
 			<tr style="width: 100px; height: 100px;">
-				<c:forEach begin="1" end="4" varStatus="i">
+				<c:forEach begin="9" end="12" varStatus="i">
 					<td style="width: 5px; height: 5px;">
 						<div class="table_div">
 							${corpList.get(i.index-1).logo_path }
