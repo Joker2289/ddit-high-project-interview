@@ -29,7 +29,7 @@ $(document).ready(function() {
 	// 프로필 보기
 	$("#profile").on("click", function(){
 		$("#dropdownProfile").empty();
-		$("#dropdownProfile").append('');
+		$("#dropdownProfile").append('<table id="profilemenu"><thead><tr><td style="padding-bottom: 0px;"><div class="col-md-3"style="padding-right: 0px; padding-left: 30px;"><span style="font-size: 50px;"><i class="fas fa-user-circle"></i></span></div><div class="col-md-6"style="padding-left: 30px;"><div class="col-md-6"style="width: 180px; padding-top: 12px; padding-left: 0px;">사용자이름</div><div class="col-md-6"style="width: 180px; padding-left: 0px;">간단프로필</div></div></td></tr><tr class="profiletr"><td style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;">프로필보기</td></tr><tr class="profiletr"style="border-top: 1px solid #CFD1D3; border-bottom: 1px solid #CFD1D3;"><td style="color: #666666; text-align: center;">프리미엄1개월무료이용</td></tr></thead><tbody><tr class="profiletr"><td style="color: #666666;">개인정보설정</td></tr><tr class="profiletr"><td style="color: #666666;">글&amp;활동</td></tr><tr class="profiletr"><td style="color: #666666;">채용공고</td></tr><tr class="profiletr"style="border-top: 1px solid #CFD1D3;"><td style="color: #666666;">로그아웃</td></tr></tbody></table>');
 	});
 	
 	$("#profile").on("mouseleave", function(){
@@ -44,10 +44,18 @@ $(document).ready(function() {
 	$(document).on('mouseover', '#searchmenu tbody tr', function(e) {
 		$( this ).css( "background-color", "#F3F6F8" ); 
 	    $( this).children("td").css( "cursor", "pointer" ); 
-
 	});
 	
-	$(document).on('mouseleave', '#searchmenu tbody tr', function(e) {
+	$(document).on('mouseleave', '.profiletr', function(e) {
+		$( this ).css( "background-color", "white" ); 
+	});
+	
+	$(document).on('mouseover', '.profiletr', function(e) {
+		$( this ).css( "background-color", "#E5E5E5" ); 
+	    $( this).children("td").css( "cursor", "pointer" ); 
+	});
+	
+	$(document).on('mouseleave', '#profilemenu  tr', function(e) {
 		$( this ).css( "background-color", "white" ); 
 	});
 	
@@ -64,7 +72,7 @@ $(document).ready(function() {
 <tiles:insertAttribute name="header" />
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="margin-top: 51px;">
+		<div style="margin-top: 101px;">
 			<tiles:insertAttribute name="content" />
 		</div>
 	</div>

@@ -33,12 +33,11 @@
 <body>
 	
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('login/images/bg-01.jpg');">
+		<div class="container-login100" style="background-image: url('/css/login/images/code.jpeg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="login100-form validate-form" action="/login" method="post">
 					<span class="login100-form-title p-b-49">
-						InterView<br>
-						<span>SNS</span>
+						InterView
 					</span>
 					
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
@@ -72,7 +71,7 @@
 					<div class="flex-col-c p-t-70">
 					
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myLargeModal">
-						  Sign Up
+						  Sign Up User
 						</button>
 						
 					
@@ -86,6 +85,10 @@
 <!-- 						<a href="#" class="txt3"> -->
 <!-- 							Forgot ID & PW? -->
 <!-- 						</a> -->
+
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myLargeModal">
+						  Sign Up Corp
+						</button>
 					</div>
 
 					<div class="txt1 text-center p-t-54 p-b-20">
@@ -107,7 +110,7 @@
 							<i class="fa fa-google"></i>
 						</a>
 					</div>
-
+					
 				</form>
 			</div>
 		</div>

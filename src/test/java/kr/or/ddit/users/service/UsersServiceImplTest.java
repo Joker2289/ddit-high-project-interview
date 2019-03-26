@@ -1,4 +1,4 @@
-package kr.or.ddit.users.dao;
+package kr.or.ddit.users.service;
 
 import static org.junit.Assert.*;
 
@@ -7,9 +7,10 @@ import javax.annotation.Resource;
 import org.junit.Test;
 
 import kr.or.ddit.test.LogicTestConfig;
+import kr.or.ddit.users.dao.IUsersDao;
 import kr.or.ddit.users.model.UsersVo;
 
-public class UsersDaoImplTest extends LogicTestConfig{
+public class UsersServiceImplTest extends LogicTestConfig{
 
 	@Resource(name="usersDao")
 	private IUsersDao usersDao;
