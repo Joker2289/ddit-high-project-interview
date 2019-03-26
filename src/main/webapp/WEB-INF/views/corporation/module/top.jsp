@@ -5,8 +5,7 @@
 		src="${pageContext.request.contextPath }/">
 	<br>
 	<label for="logo">corp_logo사진</label>
-	<img
-		src="${pageContext.request.contextPath }/">
+	<img src="${pageContext.request.contextPath }/">
 	<br>
 	<label for="corporationNm">회사 이름 : </label>
 	<label>${corporationVo.corp_name }</label>

@@ -9,29 +9,34 @@ import org.springframework.stereotype.Service;
 import kr.or.ddit.post.dao.IPostDao;
 import kr.or.ddit.post.model.PostVo;
 
-@Service("postSErvice")
-public class PostServiceImpl implements IPostService{
+@Service("postService")
+public class PostServiceImpl implements IPostService {
 	
 	@Resource(name="postDao")
-	private IPostDao postDao;
+	IPostDao postDao;
 	
-
-
-	/**
-	 * 
-	 * Method : select_memberPost
-	 * 작성자 : khk
-	 * 변경이력 :
-	 * @param userId
-	 * @return
-	 * Method 설명 : 특정 userId의 게시물 조회
-	 */
+	public PostServiceImpl() {
+	
+	}
+	
 	@Override
-	public List<PostVo> select_memberPost(String userId) {
-		
-		List<PostVo> postList = postDao.select_memberPost(userId);
-		
-		return postList;
+	public int insert_post(PostVo postVo) {
+		return postDao.insert_post(postVo);
+	}
+
+	@Override
+	public int update_post(PostVo postVo) {
+		return postDao.update_post(postVo);
+	}
+
+	@Override
+	public int delete_post(String post_code) {
+		return postDao.delete_post(post_code);
+	}
+
+	@Override
+	public List<PostVo> select_memberPost(String user_id) {
+		return postDao.select_memberPost(user_id);
 	}
 
 }

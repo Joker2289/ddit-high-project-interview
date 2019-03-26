@@ -1,6 +1,6 @@
 package kr.or.ddit.search_log.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import javax.annotation.Resource;
 

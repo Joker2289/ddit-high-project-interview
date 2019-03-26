@@ -33,23 +33,22 @@
 <body>
 	
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('login/images/bg-01.jpg');">
+		<div class="container-login100" style="background-image: url('/css/login/images/code.jpeg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="login100-form validate-form" action="/login" method="post">
 					<span class="login100-form-title p-b-49">
-						InterView<br>
-						<span>SNS</span>
+						InterView
 					</span>
 					
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
 						<span class="label-input100">ID</span>
-						<input class="input100" type="text" id="userId" name="userId" placeholder=" Your ID">
+						<input class="input100" type="text" id="mem_id" name="mem_id" placeholder=" Your ID">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Password is required">
 						<span class="label-input100">Pass word</span>
-						<input class="input100" type="password" id="userNm" name="pass" placeholder=" Your Password">
+						<input class="input100" type="password" id="pass" name="pass" placeholder=" Your Password">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 					
@@ -72,7 +71,7 @@
 					<div class="flex-col-c p-t-70">
 					
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myLargeModal">
-						  Sign Up
+						  Sign Up User
 						</button>
 						
 					
@@ -86,6 +85,10 @@
 <!-- 						<a href="#" class="txt3"> -->
 <!-- 							Forgot ID & PW? -->
 <!-- 						</a> -->
+
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myLargeModal">
+						  Sign Up Corp
+						</button>
 					</div>
 
 					<div class="txt1 text-center p-t-54 p-b-20">
@@ -107,7 +110,7 @@
 							<i class="fa fa-google"></i>
 						</a>
 					</div>
-
+					
 				</form>
 			</div>
 		</div>
@@ -142,19 +145,19 @@
 	<script>
   	$(document).ready(function(){
   		//쿠키 설정
-  		if(Cookies.get("userId")){
-  			$("#userId").val(Cookies.get("userId"));
+  		if(Cookies.get("mem_id")){
+  			$("#mem_id").val(Cookies.get("userId"));
   			$("#md_3").prop("checked", true);		
   		}
   		
   		$("#signin").click(function(){
   			
   			if($("#md_3").prop("checked")){
-  				Cookies.set("userId", $("#userId").val(), {expires : 30});
+  				Cookies.set("mem_id", $("#mem_id").val(), {expires : 30});
   				Cookies.set("md_3", "y", {expires : 30});			
   			} 
   			else {
-  				Cookies.remove("userId");
+  				Cookies.remove("mem_id");
   				Cookies.remove("md_3");
   			}
   		

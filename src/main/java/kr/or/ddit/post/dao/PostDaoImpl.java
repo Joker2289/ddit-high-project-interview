@@ -9,26 +9,31 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.post.model.PostVo;
 
-@Repository("postDao")
-public class PostDaoImpl implements IPostDao{
+@Repository("postDao")	
+public class PostDaoImpl implements IPostDao {
 
 	@Resource(name="sqlSessionTemplate")
-	private SqlSessionTemplate sqlSessionTemplate;
+	private SqlSessionTemplate sqlSession;
 	
-	/**
-	 * 
-	 * Method : select_memberPost
-	 * 작성자 : khk
-	 * 변경이력 :
-	 * @param userId
-	 * @return
-	 * Method 설명 : 특정 userId의 게시물 조회
-	 */
 	@Override
-	public List<PostVo> select_memberPost(String userId) {
-
-		List<PostVo> postList = sqlSessionTemplate.selectList("post.select_memberPost");
-		return postList;
+	public int insert_post(PostVo postVo) {
+		return sqlSession.insert("post.insert_post",postVo);
 	}
+
+	@Override
+	public int update_post(PostVo postVo) {
+		return sqlSession.update("post.update_post",postVo);
+	}
+
+	@Override
+	public int delete_post(String post_code) {
+		return sqlSession.delete("post.delete_post", post_code);
+	}
+
+	@Override
+	public List<PostVo> select_memberPost(String user_id) {
+		return sqlSession.selectList("post.select_memberPost", user_id);
+	}
+
 
 }
