@@ -42,13 +42,13 @@
 					
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
 						<span class="label-input100">ID</span>
-						<input class="input100" type="text" id="userId" name="userId" placeholder=" Your ID">
+						<input class="input100" type="text" id="mem_id" name="mem_id" placeholder=" Your ID">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Password is required">
 						<span class="label-input100">Pass word</span>
-						<input class="input100" type="password" id="userNm" name="pass" placeholder=" Your Password">
+						<input class="input100" type="password" id="pass" name="pass" placeholder=" Your Password">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 					
@@ -145,19 +145,19 @@
 	<script>
   	$(document).ready(function(){
   		//쿠키 설정
-  		if(Cookies.get("userId")){
-  			$("#userId").val(Cookies.get("userId"));
+  		if(Cookies.get("mem_id")){
+  			$("#mem_id").val(Cookies.get("userId"));
   			$("#md_3").prop("checked", true);		
   		}
   		
   		$("#signin").click(function(){
   			
   			if($("#md_3").prop("checked")){
-  				Cookies.set("userId", $("#userId").val(), {expires : 30});
+  				Cookies.set("mem_id", $("#mem_id").val(), {expires : 30});
   				Cookies.set("md_3", "y", {expires : 30});			
   			} 
   			else {
-  				Cookies.remove("userId");
+  				Cookies.remove("mem_id");
   				Cookies.remove("md_3");
   			}
   		
