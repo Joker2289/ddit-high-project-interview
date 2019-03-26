@@ -33,12 +33,20 @@
         <!-- post form -->
         <form method="post" action="">
           <div class="input-group">
-          	<a href="#">
-          		<i class="far fa-edit"></i>타임라인에 소식을 전하세요!
-          	</a>
+          	<button class="btn_postWrite"><i class="far fa-edit"></i>&nbsp;타임라인에 소식을 전하세요!</button>
+          	<a href="#"><i class="far fa-edit"></i>&nbsp;타임라인에 소식을 전하세요!</a>
+          	
+          	
+          	<button class="btn-primary"><i class="fas fa-camera"></i></button>
+          	<button class="btn-primary"><i class="fas fa-video"></i></button>
+          	<button class="btn-primary"><i class="far fa-file-alt"></i></button>
+          	
+<!--           	<a href="#"><i class="fas fa-camera"></i></a>&nbsp;&nbsp; -->
+<!--           	<a href="#"><i class="fas fa-video"></i></a>&nbsp;&nbsp; -->
+<!--           	<a href="#"><i class="far fa-file-alt"></i></a>&nbsp;&nbsp; -->
           </div>
         </form><hr>
-      
+      	
         
         <c:forEach items="${testPost }" var="post">
 		  <div>

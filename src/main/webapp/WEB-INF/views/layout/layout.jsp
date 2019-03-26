@@ -10,8 +10,6 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link href="/css/bootstrap.css" rel="stylesheet">
 <link href="/css/header.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="/facebook/faceclone-html-template-master/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="/facebook/faceclone-html-template-master/css/style.css">
 <script>
 $(document).ready(function() {
 	

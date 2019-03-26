@@ -13,6 +13,6 @@ public interface IPostDao {
 	
 	int delete_post(String post_code);
 	
-	List<PostVo> select_memberPost(String user_id);
+	List<PostVo> select_memberPost(String mem_id);
 
 }
