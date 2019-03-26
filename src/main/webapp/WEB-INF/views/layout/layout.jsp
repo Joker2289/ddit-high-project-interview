@@ -10,8 +10,6 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link href="/css/bootstrap.css" rel="stylesheet">
 <link href="/css/header.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="/facebook/faceclone-html-template-master/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="/facebook/faceclone-html-template-master/css/style.css">
 <script>
 $(document).ready(function() {
 	
@@ -65,12 +63,35 @@ $(document).ready(function() {
         $(this).addClass("activeOn");
 	});
 	
+	var divWidth  = "511"; 
+	$("#btnslidelt").on("click",function(){
+		$("#content").stop(true,true);
+		
+		   var moveX   = parseInt($("#content").css("margin-left"));
+
+		   if( moveX < 0 )
+		   {
+		    $("#content").animate({"margin-left":"+=" + divWidth + "px"},500);
+		   }
+	});
+
+	$("#btnSlidegt").on("click",function(){
+		 $("#content").stop(true,true);
+
+		   var moveX   = parseInt($("#content").css("margin-left"));
+
+		   if( -1022 < moveX )
+		   {
+		    $("#content").animate({"margin-left":"-=" + divWidth + "px"},500);
+		   }
+	});
+	
 });
 </script>
 </head>
 <body>
 <tiles:insertAttribute name="header" />
-<div class="container-fluid">
+<div class="container">
 	<div class="row">
 		<div style="margin-top: 101px;">
 			<tiles:insertAttribute name="content" />
