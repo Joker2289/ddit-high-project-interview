@@ -9,13 +9,15 @@ import kr.or.ddit.users.model.UsersVo;
 
 @Repository("usersDao")
 public class UsersDaoImpl implements IUsersDao{
-
+	
 	@Resource(name="sqlSessionTemplate")
 	private SqlSessionTemplate sqlSessionTemplate;
-	
+
 	@Override
 	public UsersVo select_userInfo(String user_id) {
-		return sqlSessionTemplate.selectOne("users.select_userInfo", user_id);
+		UsersVo uVo = sqlSessionTemplate.selectOne("users.select_userInfo", user_id);
+		
+		return uVo;
 	}
 
 }

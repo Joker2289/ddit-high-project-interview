@@ -1,6 +1,6 @@
 package kr.or.ddit.users.dao;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import javax.annotation.Resource;
 
@@ -9,8 +9,8 @@ import org.junit.Test;
 import kr.or.ddit.test.LogicTestConfig;
 import kr.or.ddit.users.model.UsersVo;
 
-public class usersDaoImplTest extends LogicTestConfig{
-	
+public class UsersDaoImplTest extends LogicTestConfig{
+
 	@Resource(name="usersDao")
 	private IUsersDao usersDao;
 	
@@ -19,12 +19,10 @@ public class usersDaoImplTest extends LogicTestConfig{
 		/***Given***/
 		
 		/***When***/
-		UsersVo userVO = usersDao.select_userInfo("joker");
-		
+		UsersVo uVo = usersDao.select_userInfo("brown");
+
 		/***Then***/
-		assertEquals("박정권", userVO.getUser_name());
+		assertNotNull(uVo);
 	}
-	
-	
 
 }
