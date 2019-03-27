@@ -2,28 +2,51 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-var divWidth  = "511"; 
-$("#btnslidelt").on("click",function(){
-	$("#content").stop(true,true);
+	var divWidth  = "511"; 
+	$("#btnslidelt").on("click",function(){
+		$("#content").stop(true,true);
+		
+		   var moveX   = parseInt($("#content").css("margin-left"));
 	
-	   var moveX   = parseInt($("#content").css("margin-left"));
+		   if( moveX < 0 )
+		   {
+		    $("#content").animate({"margin-left":"+=" + divWidth + "px"},500);
+		   }
+	});
 
-	   if( moveX < 0 )
-	   {
-	    $("#content").animate({"margin-left":"+=" + divWidth + "px"},500);
-	   }
-});
+	$("#btnSlidegt").on("click",function(){
+		 $("#content").stop(true,true);
+	
+		   var moveX   = parseInt($("#content").css("margin-left"));
+	
+		   if( -1022 < moveX )
+		   {
+		    $("#content").animate({"margin-left":"-=" + divWidth + "px"},500);
+		   }
+	});
+	
+	$(document).scroll(function() {
+	    var maxHeight = $(document).height();
+	    var currentScroll = $(window).scrollTop() + $(window).height();
 
-$("#btnSlidegt").on("click",function(){
-	 $("#content").stop(true,true);
+	    if (maxHeight <= currentScroll + 100) {
+	    	$.ajax({
+	    		type : "POST",
+ 	    		url : "/personalConnection",
+//  	    		dataType : "JSON",    //옵션이므로 JSON으로 받을게 아니면 안써도 됨
+ 	    		data : {},
+	    		success : function(result) {
+	    		//통신이 성공적으로 이루어졌을 때 처리하고 싶은 함수
+	    			console.log("되요~~");
+	    			$("#content2").append('<li><div class="whiteBox">1sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">2sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">3sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">4sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">5sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">6sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">7sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">8sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">9sdfgsdfgsdfgsdfg<br>sadf</div></li>');
+	    		},
+	    		complete : function(result){
+	    		//통신이 실패했어도 완료가 되었을 때 처리하고 싶은 함수
+	    		}
 
-	   var moveX   = parseInt($("#content").css("margin-left"));
-
-	   if( -1022 < moveX )
-	   {
-	    $("#content").animate({"margin-left":"-=" + divWidth + "px"},500);
-	   }
-});
+	    	});
+	    }
+	});
 });
 
 </script>
@@ -54,20 +77,33 @@ $("#btnSlidegt").on("click",function(){
 								<button id="btnslidelt" class="btn btn-default" style="border: 0px;">&lt;</button>
 								<button id="btnSlidegt" class="btn btn-default" style="border: 0px;">&gt;</button><br/>
 								<ul  id="content" style="list-style:none;width:3000px; padding-left: 5px;">
-									<li><div class="whiteBox">1</div></li>
-									<li><div class="whiteBox">2</div></li>
-									<li><div class="whiteBox">3</div></li>
-									<li><div class="whiteBox">4</div></li>
-									<li><div class="whiteBox">5</div></li>
-									<li><div class="whiteBox">6</div></li>
-									<li><div class="whiteBox">7</div></li>
-									<li><div class="whiteBox">8</div></li>
-									<li><div class="whiteBox">9</div></li>
+									<li><div class="whiteBox">1sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">2sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">3sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">4sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">5sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">6sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">7sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">8sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">9sdfgsdfgsdfgsdfg<br>sadf</div></li>
 								</ul>
 							</div>
 						</div>
 						<div class="col-md-12">
-							<div class="whiteBox" style="width:553px;">회원님을 위한 맞춤 추천</div>
+							<div id="pc_find" class="whiteBox" style="width:512px;height:auto; box-sizing: content-box; ">
+								<label style="font-size: 17px;">회원님을 위한 맞춤 추천</label>
+								<ul  id="content2" style="list-style:none;width:553px; padding-left: 0px; padding-top: 10px">
+									<li><div class="whiteBox">1sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">2sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">3sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">4sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">5sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">6sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">7sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">8sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<li><div class="whiteBox">9sdfgsdfgsdfgsdfg<br>sadf</div></li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
