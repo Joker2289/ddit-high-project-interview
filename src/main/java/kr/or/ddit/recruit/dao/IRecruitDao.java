@@ -1,5 +1,7 @@
 package kr.or.ddit.recruit.dao;
 
+import java.util.List;
+
 import kr.or.ddit.recruit.model.RecruitVo;
 
 public interface IRecruitDao {
@@ -35,6 +37,16 @@ public interface IRecruitDao {
 	 * Method 설명 : 전체 채용공고 수 조회.
 	 */
 	int getRecrCnt();
+
+	/**
+	 * 
+	 * Method : getAllRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 전체 채용공고 조회.
+	 */
+	List<RecruitVo> getAllRecr();
 	
 	
 	

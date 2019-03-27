@@ -1,5 +1,7 @@
 package kr.or.ddit.recruit.dao;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -58,6 +60,21 @@ public class RecruitDaoImpl implements IRecruitDao{
 		int recrCnt = sqlSessionTemplate.selectOne("recr.getRecrCnt");
 		
 		return recrCnt;
+	}
+
+	/**
+	 * 
+	 * Method : getAllRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 전체 채용공고 조회.
+	 */
+	@Override
+	public List<RecruitVo> getAllRecr() {
+		List<RecruitVo> recrList = sqlSessionTemplate.selectList("recr.getAllRecr");
+		
+		return recrList;
 	}
 
 }

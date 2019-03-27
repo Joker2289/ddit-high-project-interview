@@ -4,12 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="recr">
 	
-	<!-- 검색내역 등록. -->
+	<!-- 채용공고 등록. -->
 	<insert id="insertRecr" parameterType="recruitVo">
 		INSERT INTO RECRUIT(RECRUIT_CODE, CORP_ID, RECRUIT_TITLE, JOB_TYPE, RECRUIT_CONTENTS, START_DATE,
-			END_DATE, PERSONNEL, JOB_RANK, EMP_TYPE, APP_TYPE, APP_COUNT) 
+			END_DATE, PERSONNEL, JOB_RANK, EMP_TYPE, APP_TYPE, APP_COUNT, JOB_LOCAL) 
 		VALUES(#{recruit_code}, #{corp_id}, #{recruit_title}, #{job_type}, #{recruit_contents}, 
-			#{start_date}, #{end_date}, #{personnel}, #{job_rank}, #{emp_type}, #{app_type}, #{app_count})	
+			#{start_date}, #{end_date}, #{personnel}, #{job_rank}, #{emp_type}, #{app_type}, #{app_count},
+			#{job_local})	
 	</insert>
 	
 	<!-- 테스트를 위한 채용공고 삭제. -->
@@ -21,6 +22,12 @@
 	<!-- 전체 채용공고 수 조회. -->
 	<select id="getRecrCnt" resultType="Integer">
 		SELECT COUNT(*)
+		  FROM RECRUIT	
+	</select>
+	
+	<!-- 전체 채용공고 조회. -->
+	<select id="getAllRecr" resultType="recruitVo">
+		SELECT *
 		  FROM RECRUIT	
 	</select>
 	

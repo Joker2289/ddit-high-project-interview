@@ -9,7 +9,7 @@
 		insert into users
 		values(
 			#{user_id},
-			#{user_name},
+			nvl(#{user_name, jdbcType=VARCHAR}, null),
 			nvl(#{bg_img, jdbcType=VARCHAR}, null),
 			nvl(#{bg_path, jdbcType=VARCHAR}, null),
 			nvl(#{profile_img, jdbcType=VARCHAR}, null),
@@ -17,10 +17,10 @@
 			nvl(#{addr1, jdbcType=VARCHAR}, null),
 			nvl(#{addr2, jdbcType=VARCHAR}, null),
 			nvl(#{zipcode, jdbcType=VARCHAR}, null),
-			#{email},
-			#{telno},
-			#{user_birth},
-			nvl(#{persnal_url, jdbcType=VARCHAR}, null)
+			nvl(#{email, jdbcType=VARCHAR}, null),
+			nvl(#{telno, jdbcType=VARCHAR}, null),
+			nvl(#{user_birth, jdbcType=VARCHAR}, null),
+			nvl(#{persnal_url, jdbcType=VARCHAR}, null),
 			nvl(#{profile_contents, jdbcType=VARCHAR}, null)
 		)
 	</insert>
@@ -41,18 +41,19 @@
 	<!-- 회원정보 수정 -->
 	<update id="update_userInfo" parameterType="usersVo">
 		update users
-		   set user_name 	= #{user_name},
-		       bg_img	 	= #{bg_img},
-		       bg_path	 	= #{bg_path},
-		       profile_img  = #{profile_img},
-		       profile_path	= #{profile_path},
-		       addr1		= #{addr1},
-		       addr2		= #{addr2},
-		       zipcode		= #{zipcode},
-		       email		= #{email},
-		       telno		= #{telno},
-		       persnal_url	= #{persnal_url}
-		       profile_contents = #{profile_contents}
+		   set user_name 	= nvl(#{user_name, jdbcType=VARCHAR}, user_name),
+		       bg_img	 	= nvl(#{bg_img, jdbcType=VARCHAR}, bg_img),
+		       bg_path	 	= nvl(#{bg_path, jdbcType=VARCHAR}, bg_path),
+		       profile_img  = nvl(#{profile_img, jdbcType=VARCHAR}, profile_img),
+		       profile_path	= nvl(#{profile_path, jdbcType=VARCHAR}, profile_path),
+		       addr1		= nvl(#{addr1, jdbcType=VARCHAR}, addr1),
+		       addr2		= nvl(#{addr2, jdbcType=VARCHAR}, addr2),
+		       zipcode		= nvl(#{zipcode, jdbcType=VARCHAR}, zipcode),
+		       email		= nvl(#{email, jdbcType=VARCHAR}, email),
+		       telno		= nvl(#{telno, jdbcType=VARCHAR}, telno),
+		       user_birth	= nvl(#{user_birth, jdbcType=VARCHAR}, user_birth),
+		       persnal_url	= nvl(#{persnal_url, jdbcType=VARCHAR}, persnal_url),
+		       profile_contents = nvl(#{profile_contents, jdbcType=VARCHAR}, profile_contents)
 		 where user_id = #{user_id}  
 	</update>
 	
