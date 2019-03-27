@@ -20,4 +20,15 @@ public class UsersDaoImpl implements IUsersDao{
 		return uVo;
 	}
 
+	@Override
+	public int insert_users(UsersVo vo) {
+		return sqlSessionTemplate.insert("users.insert_users", vo);
+	}
+
+	@Override
+	public int update_userInfo(UsersVo vo) {
+		return sqlSessionTemplate.update("users.update_userInfo", vo);
+	}
+	
+
 }

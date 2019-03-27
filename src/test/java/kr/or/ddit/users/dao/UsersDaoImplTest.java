@@ -4,16 +4,35 @@ import static org.junit.Assert.*;
 
 import javax.annotation.Resource;
 
+import org.junit.After;
 import org.junit.Test;
 
+import kr.or.ddit.member.dao.IMemberDao;
+import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.test.LogicTestConfig;
 import kr.or.ddit.users.model.UsersVo;
+import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
 
 public class UsersDaoImplTest extends LogicTestConfig{
 
 	@Resource(name="usersDao")
 	private IUsersDao usersDao;
 	
+	@Resource(name="memberDao")
+	private IMemberDao memberDao;
+	
+	@After
+	public void tearDown() {
+		memberDao.delete_member("test");
+	}
+	
+	/**
+	 * 
+	 * Method : testSelect_userInfo
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * Method 설명 : 특정 유저 조회 테스트
+	 */
 	@Test
 	public void testSelect_userInfo() {
 		/***Given***/
@@ -23,6 +42,59 @@ public class UsersDaoImplTest extends LogicTestConfig{
 
 		/***Then***/
 		assertNotNull(uVo);
+	}
+	
+	/**
+	 * 
+	 * Method : testInsert_users
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * Method 설명 : 유저 등록 테스트
+	 */
+	@Test
+	public void testInsert_users() {
+		/***Given***/
+		MemberVo mVo = new MemberVo();
+		mVo.setMem_id("test");
+		mVo.setMem_division("1");
+		mVo.setPass(KISA_SHA256.encrypt("1234"));
+		memberDao.insert_member(mVo);
+		
+		UsersVo uVo = new UsersVo();
+		uVo.setUser_id("test");
+		/***When***/
+		int insertCnt = usersDao.insert_users(uVo);
+		
+		/***Then***/
+		assertEquals(1, insertCnt);
+	}
+	
+	/**
+	 * 
+	 * Method : testUpdate_userInfo
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * Method 설명 : 유저 수정 테스트
+	 */
+	@Test
+	public void testUpdate_userInfo() {
+		/***Given***/
+		MemberVo mVo = new MemberVo();
+		mVo.setMem_id("test");
+		mVo.setMem_division("1");
+		mVo.setPass(KISA_SHA256.encrypt("1234"));
+		memberDao.insert_member(mVo);
+		
+		UsersVo uVo = new UsersVo();
+		uVo.setUser_id("test");
+		usersDao.insert_users(uVo);
+		
+		/***When***/
+		uVo.setEmail("test");
+		int updateCnt = usersDao.update_userInfo(uVo);
+		
+		/***Then***/
+		assertEquals(1, updateCnt);
 	}
 
 }
