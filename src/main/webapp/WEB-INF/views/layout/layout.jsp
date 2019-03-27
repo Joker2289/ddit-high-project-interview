@@ -69,7 +69,7 @@ $(document).ready(function() {
 </head>
 <body>
 <tiles:insertAttribute name="header" />
-<div class="container-fluid">
+<div class="container">
 	<div class="row">
 		<div style="margin-top: 101px;">
 			<tiles:insertAttribute name="content" />
