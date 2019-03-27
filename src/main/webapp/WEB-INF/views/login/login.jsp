@@ -28,6 +28,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/login/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/css/login/css/main.css">
 	<link rel="stylesheet" type="text/css" href="/css/login/css/item.css">
+	<link rel="stylesheet" type="text/css" href="/css/modal.css">
 <!--===============================================================================================-->
 </head>
 <body>
@@ -70,7 +71,7 @@
 					
 					<div class="flex-col-c p-t-70">
 					
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myLargeModal">
+						<button type="button" id="signupUser" class="btn btn-primary jk-sign-btn">
 						  Sign Up User
 						</button>
 						
@@ -86,7 +87,7 @@
 <!-- 							Forgot ID & PW? -->
 <!-- 						</a> -->
 
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myLargeModal">
+						<button type="button" id="signupCorp" class="btn btn-primary jk-join-btn" >
 						  Sign Up Corp
 						</button>
 					</div>
@@ -135,18 +136,22 @@
 	<script src="/css/login/vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="/css/login/js/main.js"></script>
+	
+	<script src="<%=request.getContextPath()%>/js/jquery-3.3.1.min.js"></script>
 
 	<!-- 쿠키 관련 -->
 	<script src="<%=request.getContextPath()%>/js/cookieUtil.js"></script>
 	<script src="<%=request.getContextPath()%>/js/js.cookie.js"></script>
 	
 	<%@ include file="/WEB-INF/views/login/signup_modal.jsp" %>
-
+	
 	<script>
   	$(document).ready(function(){
+  		
+  		
   		//쿠키 설정
   		if(Cookies.get("mem_id")){
-  			$("#mem_id").val(Cookies.get("userId"));
+  			$("#mem_id").val(Cookies.get("mem_id"));
   			$("#md_3").prop("checked", true);		
   		}
   		
@@ -162,10 +167,31 @@
   			}
   		
   			$("form").submit();
-  		})
+  			
+  		});
   		
-  	})
+  		
+  		//회원가입 유저 클릭
+  		$('#signupUser').on('click',function(){
+  			$('.jk-modalsasun').css('display','block');
+  			$('#modal-head').html('<h1>User - STEP 1</h1>');
+  			$('#modal-body').html('<form id="step1"><div class="wrap-input-custom validate-input m-b-50"data-validate="Username is reauired"><span class="label-input100">ID</span><input class="input100"type="text"name="id"placeholder=" Your ID"><span class="focus-input100"data-symbol="&#xf206;"></span></div><div class="wrap-input-custom validate-input m-b-50"data-validate="Password is required"><span class="label-input100">Pass word</span><input class="input100"type="password"name="pass"placeholder=" Your Password"><span class="focus-input100"data-symbol="&#xf190;"></span></div><div class="wrap-input-custom validate-input m-b-50"data-validate="Username is reauired"><span class="label-input100">Your Name</span><input class="input100"type="text"name="name"placeholder=" Your Name"><span class="focus-input100"data-symbol="&#xf206;"></span></div><div class="wrap-input-custom validate-input m-b-50"data-validate="Username is reauired"><span class="label-input100">e-mail</span><input class="input100"type="text"name="email"placeholder=" e-mail"><span class="focus-input100"data-symbol="&#xf206;"></span></div><input type="hidden"name="division"value="1"><input type="hidden"name="step"value="1"></form>');
+  			//$('#modal-footer').html('<button id="nextStep"class="jk-join-btn"type="button">다음</button><button id="close"class="jk-close-btn"type="button">닫기</button>');
+  			
+  		});
+  		
+  		//회원가입 기업 클릭
+  		$('#signupCorp').on('click',function(){
+  			
+  		});
+  		
+  		
+  		
+  	});
   
+
+  	
+  	
   </script>
 
 

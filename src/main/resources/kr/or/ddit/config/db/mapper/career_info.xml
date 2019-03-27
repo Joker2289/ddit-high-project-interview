@@ -5,8 +5,8 @@
 <mapper namespace="career_info">
 	
 	<!-- 경력 정보 등록 -->
-	<insert id="insert_carrer_info" parameterType="career_infoVo">
-		insert into carrer_info
+	<insert id="insert_career_info" parameterType="career_infoVo">
+		insert into career_info
 		values(
 			career_code_seq.nextval,
 			#{user_id},
