@@ -104,7 +104,7 @@
    			조회하신 항목을 참고하여.. <br> [조회한 항목이름 - 지역] <br>
    		</div>
 		<table class="tb_recruit">
-			<tr style="width: 100px; height: 100px; text-align: left;">
+			<tr style="width: 100px; height: 140px; text-align: left;">
 				<c:forEach begin="1" end="4" varStatus="i">
 					<td style="width: 5px; height: 5px;">
 						<div class="table_div">
@@ -128,7 +128,7 @@
 		</div>
 		
 		<table class="tb_recruit">
-			<tr style="width: 100px; height: 100px; text-align: left;">
+			<tr style="width: 100px; height: 140px; text-align: left;">
 				<c:forEach begin="5" end="8" varStatus="i">
 					<td style="width: 5px; height: 5px;">
 						<div class="table_div">
@@ -141,7 +141,7 @@
 					</td>								
 				</c:forEach>
 			</tr>
-			<tr style="width: 100px; height: 100px; text-align: left;">
+			<tr style="width: 100px; height: 140px; text-align: left;">
 				<c:forEach begin="9" end="12" varStatus="i">
 					<td style="width: 5px; height: 5px;">
 						<div class="table_div">

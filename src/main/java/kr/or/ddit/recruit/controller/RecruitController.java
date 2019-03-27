@@ -324,7 +324,8 @@ public class RecruitController {
 		sVo.setSearch_word(search_word);
 		sVo.setSearch_local(search_local);
 		sVo.setSearch_code(String.valueOf(search_logService.getAllCnt()+1));
-		sVo.setSearch_save("1");
+		// search_save 임시로 2로 설정. -> 나중에 1로 바꾸기. 순서도 역순으로 해놓았음.
+		sVo.setSearch_save("2");
 		
 		UsersVo uVo = (UsersVo) session.getAttribute("usersVo");
 		sVo.setUser_id(uVo.getUser_id());
