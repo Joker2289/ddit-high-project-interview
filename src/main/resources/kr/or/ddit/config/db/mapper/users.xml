@@ -16,19 +16,12 @@
 			nvl(#{profile_path, jdbcType=VARCHAR}, null),
 			nvl(#{addr1, jdbcType=VARCHAR}, null),
 			nvl(#{addr2, jdbcType=VARCHAR}, null),
-<<<<<<< HEAD
-			nvl(#{email, jdbcType=VARCHAR}, null),
-			nvl(#{telno, jdbcType=VARCHAR}, null),
-			nvl(#{user_birth, jdbcType=VARCHAR}, null),
-			nvl(#{persnal_url, jdbcType=VARCHAR}, null),
-=======
 			nvl(#{zipcode, jdbcType=VARCHAR}, null),
 			#{email},
 			#{telno},
 			#{user_birth},
 			nvl(#{persnal_url, jdbcType=VARCHAR}, null)
 			nvl(#{profile_contents, jdbcType=VARCHAR}, null)
->>>>>>> branch 'master' of https://gitlab.com/500dditError/interview.git
 		)
 	</insert>
 	
