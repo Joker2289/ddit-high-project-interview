@@ -7,15 +7,15 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.career_info.model.Career_infoVo;
 
-@Repository("carrer_infoDao")
-public class Carrer_infoDaoImpl implements ICarrer_infoDao{
+@Repository("career_infoDao")
+public class Career_infoDaoImpl implements ICareer_infoDao{
 
 	@Resource(name="sqlSessionTemplate")
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	@Override
-	public int insert_carrer_info(Career_infoVo vo) {
-		return sqlSessionTemplate.insert("career_info.insert_carrer_info", vo);
+	public int insert_career_info(Career_infoVo vo) {
+		return sqlSessionTemplate.insert("career_info.insert_career_info", vo);
 	}
 
 }
