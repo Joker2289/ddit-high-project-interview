@@ -101,7 +101,7 @@
 	
    	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px; margin-top: 20px;">
    		<div style="text-align: left;">
-   			조회하신 항목을 참고하여.. <br> [조회한 항목이름 - 지역] <br>
+   			<strong>조회하신 항목을 참고하여..</strong> <br> [조회한 항목이름 - 지역] <br>
    		</div>
 		<table class="tb_recruit">
 			<tr style="width: 100px; height: 140px; text-align: left;">
@@ -123,7 +123,7 @@
 	           		
 		<br><br> 
 		<div style="text-align: left;">
-			회원님의 프로필과 커리어 관심분야를 참고함 <br> [관심 분야 · 관심 분야 · 관심 분야 ...] 
+			<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br> [관심 분야 · 관심 분야 · 관심 분야 ...] 
 			<a href="">관심 분야 설정</a><br>
 		</div>
 		
