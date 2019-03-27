@@ -9,7 +9,6 @@
 <title>회사 페이지</title>
 </head>
 <body>
-	<%@ include file="/WEB-INF/views/layout/header.jsp"%>
 	<br>
 	<%@ include file="/WEB-INF/views/corporation/module/top.jsp"%>
 	<br>

@@ -16,7 +16,7 @@ import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
 
 
-@RequestMapping("/corporation")
+
 @Controller
 public class CorporationController {
 	
@@ -36,19 +36,27 @@ public class CorporationController {
 		List<PostVo> postList = postService.select_memberPost("joker");
 		model.addAttribute("postList", postList);
 		
-		return "corporation/corporationHome";
+		return "corporationTiles";
 		
 	}
 	
-	@RequestMapping(path="/write")
-	public String post(MemberVo memberVo,PostVo postVo,  Model model){
-		String mem_id = "";
-		String post_contents = "";
+	/**
+	 * 회사타임라인게시글생성
+	 * @param memberVo
+	 * @param postVo
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(path="/write",method={RequestMethod.POST})
+	public String post(String mem_id,PostVo postVo, String post_contents, Model model){
+		String writer_name= "";
 		postVo.setMem_id(mem_id);
+		postVo.setWriter_name(writer_name);
+		postVo.setPost_contents(post_contents);
 		
 		int insertCnt=0;
 		insertCnt=postService.insert_post(postVo);
-		return "corporation/corporationHome";
+		return "corporationTiles";
 	}
 }
 
