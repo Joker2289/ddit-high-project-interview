@@ -4,6 +4,8 @@ package kr.or.ddit.login;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
 
 @Controller
 public class LoginController {
+	private Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	@Resource(name="memberService")
 	private IMemberService memberService;
@@ -40,6 +43,7 @@ public class LoginController {
 	 */
 	@RequestMapping(path= {"/login"}, method=RequestMethod.GET)
 	public String loginView() {
+		logger.debug("req login!");
 		return "login/login";
 	}
 	
