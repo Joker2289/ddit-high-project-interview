@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -42,8 +44,18 @@ public class LoginController {
 	 * Method 설명 : 로그인 화면을 요청
 	 */
 	@RequestMapping(path= {"/login"}, method=RequestMethod.GET)
-	public String loginView() {
-		logger.debug("req login!");
+	public String loginView(HttpServletRequest req, Model model) {
+		// 홈 화면 클릭시 session에 memberVO가 있으면 홈으로, 없으면 로그인.
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("memberVO");
+		if(mVo == null){
+			return "login/login";
+		}
+		
+		String mem_id = mVo.getMem_id();
+		if(mem_id != null){
+			req.getSession().setAttribute("memberVO", mVo);
+			return "timeLineTiles";
+		}
 		return "login/login";
 	}
 	
