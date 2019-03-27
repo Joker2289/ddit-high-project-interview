@@ -10,18 +10,23 @@
         <div class="panel panel-default">
            
           <div class="panel-body">
-<%--           	<c:choose> --%>
-<%--           	  <c:when test="${detailVO }"> --%>
-          	    <div class="col-user-bgimg"></div>
-          	    <div class="col-user-profileimg">
-            		<span><a>${sessionScope.detailVO.user_name }</a>님 어서오세요!</span><br>
-          	    	<a href="#">사진올리기</a>
-          	    </div>
-            	<div class="col-member-info">
-            		
-            	</div>
-<%--           	  </c:when> --%>
-<%--           	</c:choose> --%>
+			<div class="col-user-bgimg"></div>
+          	<div class="col-user-profileimg">
+              <span><a>${sessionScope.detailVO.user_name }</a>님 어서오세요!</span><br>
+              	<c:choose>
+              	  <!-- 프로필 사진이 있는 경우 -->
+              	  <c:when test="${sessionScope.detailVO.profile_img == null }">
+	          	    <a href="#">사진올리기</a>
+              	  </c:when>
+              	  <!-- 프로필 사진이 없는 경우 -->
+              	  <c:otherwise>
+              	  	<a href="#"><img src="${sessionScope.detailVO.profile_path }"></a>
+              	  </c:otherwise>
+              	</c:choose>
+          	</div>
+            <div class="col-member-info">
+			  <a href="#">끄아ㅏㅏ아앗</a>
+            </div>
           
             <div class="col"></div>
             <div class="col-member-info">
@@ -98,7 +103,6 @@
         <!-- ./friends -->
       </div>
     </div>
-    
-
   <!-- ./main -->
+  <%@ include file="/WEB-INF/views/timeline/writeModal.jsp" %>
 
