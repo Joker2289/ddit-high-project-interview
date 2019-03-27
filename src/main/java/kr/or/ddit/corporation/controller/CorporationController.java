@@ -30,7 +30,7 @@ public class CorporationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/corporationHome")
+	@RequestMapping(path="/corporationHome", method={RequestMethod.GET})
 	public String postList( Model model){
 		// 임시 아이디(jocker) -> 로그인하고 연동되면 로그인한(회사아이디) 계정으로 게시물 호출
 		List<PostVo> postList = postService.select_memberPost("joker");
@@ -40,5 +40,10 @@ public class CorporationController {
 		
 	}
 	
+//	@RequestMapping(path="/write")
+//	public String post(String mem_id, String post_contents, String writer_name, Model model){
+//		
+//		return "corporation/corporationHome";
+//	}
 }
 
