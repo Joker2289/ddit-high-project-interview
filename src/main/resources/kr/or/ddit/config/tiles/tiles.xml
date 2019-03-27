@@ -35,4 +35,8 @@
 		<put-attribute name="content" value="/WEB-INF/views/recruit/recruit.jsp"/>
 	</definition>	
 	
+	<definition name="recr_detailTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/recruit/recr_detail.jsp"/>
+	</definition>	
+	
 </tiles-definitions>
