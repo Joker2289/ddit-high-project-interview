@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
+import kr.or.ddit.users.model.UsersVo;
 
 public interface IPersonal_connectionDao {
 	
@@ -17,7 +18,7 @@ public interface IPersonal_connectionDao {
 	* @return
 	* Method 설명 : 일촌 리스트 출력
 	*/
-	List<Personal_connectionVo> select_connections(MemberVo memberVo);
+	List<UsersVo> select_connections(MemberVo memberVo);
 	
 	
 	/**
@@ -29,5 +30,6 @@ public interface IPersonal_connectionDao {
 	* Method 설명 : 일촌 수 조회
 	*/
 	int connections_count(MemberVo memberVo);
-
+	
+	
 }

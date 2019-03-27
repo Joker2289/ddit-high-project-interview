@@ -5,6 +5,7 @@ public class Personal_connectionVo {
 	private String receive_id;		// 수신회원아이디
 	private String receive_accept;	// 수락여부
 	
+	
 	public Personal_connectionVo() {
 		// TODO Auto-generated constructor stub
 	}

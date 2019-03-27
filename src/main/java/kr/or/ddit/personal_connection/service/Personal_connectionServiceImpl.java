@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.dao.IPersonal_connectionDao;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
+import kr.or.ddit.users.model.UsersVo;
 
 @Service("personalService")
 public class Personal_connectionServiceImpl implements IPersonal_connectionService {
@@ -17,7 +18,7 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	private IPersonal_connectionDao personalDao;
 
 	@Override
-	public List<Personal_connectionVo> select_connections(MemberVo memberVo) {
+	public List<UsersVo> select_connections(MemberVo memberVo) {
 		return personalDao.select_connections(memberVo);
 	}
 

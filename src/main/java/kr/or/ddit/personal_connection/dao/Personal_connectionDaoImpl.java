@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
+import kr.or.ddit.users.model.UsersVo;
 
 @Repository("personalDao")
 public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
@@ -17,8 +18,8 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	@Override
-	public List<Personal_connectionVo> select_connections(MemberVo memberVo) {
-		List<Personal_connectionVo> personalList =
+	public List<UsersVo> select_connections(MemberVo memberVo) {
+		List<UsersVo> personalList =
 				sqlSessionTemplate.selectList("personal.select_connections",memberVo);
 		return personalList;
 	}
@@ -28,5 +29,6 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 		int connections_count = sqlSessionTemplate.selectOne("personal.connections_count" , memberVo);
 		return connections_count;
 	}
+
 
 }
