@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.post.model.PostVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 @Repository("postDao")
 public class PostDaoImpl implements IPostDao {
@@ -33,6 +34,11 @@ public class PostDaoImpl implements IPostDao {
 	@Override
 	public List<PostVo> select_memberPost(String writer_name) {
 		return sqlSession.selectList("post.select_memberPost", writer_name);
+	}
+
+	@Override
+	public List<PostVo> select_timelinePost(PaginationVo paginationVo) {
+		return sqlSession.selectList("post.select_timelinePost", paginationVo);
 	}
 
 

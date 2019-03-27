@@ -38,7 +38,7 @@
 	</select>
 	
 	<!-- 타임라인 게시물 목록 출력(page적용) -->
-	<select id="select_timelinePost" parameterType="pageVo" resultType="postVo">
+	<select id="select_timelinePost" parameterType="paginationVo" resultType="postVo">
 		select *
 		  from
 		  (select post.*, rownum rn
@@ -61,7 +61,7 @@
 		            and (division='43' or division='11') ) a
 		  where mem_id = a.user_id
 		  order by post_date desc)
-		  where rn between (#{page}-1) * #{pageSize}+1 and #{page}*#{pageSize};
+		  where rn between (#{page}-1) * #{pageSize}+1 and #{page}*#{pageSize}
 	</select>
 	
 </mapper>
