@@ -1,14 +1,14 @@
-package kr.or.ddit.util.page;
+package kr.or.ddit.util.pagination;
 
-public class PageVo {
+public class PaginationVo {
 	private int page;		//page번호
 	private int pageSize;	//page당 사이즈
 	private String mem_id;
 	
-	public PageVo() {
+	public PaginationVo() {
 		
 	}
-	public PageVo(int page, int pageSize) {
+	public PaginationVo(int page, int pageSize) {
 		this.page = page;
 		this.pageSize = pageSize;
 	}
