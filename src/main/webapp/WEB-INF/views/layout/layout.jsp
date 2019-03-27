@@ -44,6 +44,9 @@ $(document).ready(function() {
 		$( this ).css( "background-color", "#F3F6F8" ); 
 	    $( this).children("td").css( "cursor", "pointer" ); 
 	});
+	$(document).on('mouseleave', '#searchmenu tbody  tr', function(e) {
+		$( this ).css( "background-color", "white" ); 
+	});
 	
 	$(document).on('mouseleave', '.profiletr', function(e) {
 		$( this ).css( "background-color", "white" ); 
@@ -54,9 +57,6 @@ $(document).ready(function() {
 	    $( this).children("td").css( "cursor", "pointer" ); 
 	});
 	
-	$(document).on('mouseleave', '#profilemenu  tr', function(e) {
-		$( this ).css( "background-color", "white" ); 
-	});
 	
 	$(".menu").on("click", function(){
 		$(".activeOn").attr('class','menu');
@@ -102,3 +102,9 @@ $(document).ready(function() {
 </div>
 </body>
 </html>
+
+
+
+
+
+

@@ -8,12 +8,17 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.test.LogicTestConfig;
+import kr.or.ddit.users.model.UsersVo;
 
 public class Personal_connectionServiceImplTest extends LogicTestConfig {
+	
+	private Logger logger = LoggerFactory.getLogger(Personal_connectionServiceImplTest.class);
 	
 	@Resource(name="personalService")
 	private IPersonal_connectionService personalService;
@@ -33,10 +38,13 @@ public class Personal_connectionServiceImplTest extends LogicTestConfig {
 		membervo.setMem_id("lhh");
 		
 		/***When***/
-		List<Personal_connectionVo> personalList =
+		List<UsersVo> personalList =
 				personalService.select_connections(membervo);
 
 		/***Then***/
+		for(UsersVo usersvoList : personalList) {
+			logger.debug("usersvoList  {}" , usersvoList);
+		}
 		assertTrue(1 <= personalList.size());
 		
 	}
