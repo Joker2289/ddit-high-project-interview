@@ -23,7 +23,7 @@
 				</div>
           	</li>
             <li class="menu">
-            	<a href="login" class="menugroup" style="padding-top: 7px;">
+            	<a href="/login" class="menugroup" style="padding-top: 7px;">
             		<div><span style="font-size: 20px;"><i class="fas fa-home"></i></span></div>
             		<div>홈</div>
             	</a>

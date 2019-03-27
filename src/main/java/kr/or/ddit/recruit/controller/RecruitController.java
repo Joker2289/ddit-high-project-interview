@@ -263,6 +263,7 @@ public class RecruitController {
 		insertList();		
 	}
 
+	// 회사 insert
 	private void insertList() {
 		for(int i=0; i<img_list.size(); i++){
 			CorporationVo cVo = new CorporationVo();
@@ -344,7 +345,16 @@ public class RecruitController {
 		return "redirect:"+req.getContextPath()+"/recruit";
 	}	
 	
-	
+	// 채용공고 상세화면.
+	@RequestMapping("/recr_detail")
+	public String recr_detail(String recruit_code, Model model){
+		RecruitVo recr = recrService.getRecr(recruit_code);
+		CorporationVo corp = corpService.select_corpInfo(recr.getCorp_id());
+		model.addAttribute("recr", recr);
+		model.addAttribute("corp", corp);
+		
+		return "recr_detailTiles";
+	}
 	
 
 }

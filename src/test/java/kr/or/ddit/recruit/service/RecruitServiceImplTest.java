@@ -61,7 +61,23 @@ public class RecruitServiceImplTest extends LogicTestConfig{
 		assertNotNull(ridx);
 	}
 	
-	
+	/**
+	 * 
+	 * Method : testGetRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 특정 채용공고 조회 테스트.
+	 */
+	@Test
+	public void testGetRecr() {
+		/***Given***/
+
+		/***When***/
+		RecruitVo rVo = recrService.getRecr("1");
+
+		/***Then***/
+		assertNotNull(rVo);
+	}
 	
 	
 }
