@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.post.dao.IPostDao;
 import kr.or.ddit.post.model.PostVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 @Service("postService")
 public class PostServiceImpl implements IPostService {
@@ -32,8 +33,13 @@ public class PostServiceImpl implements IPostService {
 	}
 
 	@Override
-	public List<PostVo> select_memberPost(String user_id) {
-		return postDao.select_memberPost(user_id);
+	public List<PostVo> select_memberPost(String writer_name) {
+		return postDao.select_memberPost(writer_name);
+	}
+
+	@Override
+	public List<PostVo> select_timelinePost(PaginationVo paginationVo) {
+		return postDao.select_timelinePost(paginationVo);
 	}
 
 }

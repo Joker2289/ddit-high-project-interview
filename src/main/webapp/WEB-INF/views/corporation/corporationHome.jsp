@@ -9,9 +9,19 @@
 <title>회사 페이지</title>
 </head>
 <body>
-   <%@ include file="/WEB-INF/views/corporation/module/top.jsp" %>
-   <br>
-   <%@ include file="/WEB-INF/views/corporation/module/left.jsp" %>
-	업데이트
+	<%@ include file="/WEB-INF/views/layout/header.jsp"%>
+	<br>
+	<%@ include file="/WEB-INF/views/corporation/module/top.jsp"%>
+	<br>
+	<%@ include file="/WEB-INF/views/corporation/module/left.jsp"%>
+	<br>
+	<%@ include file="/WEB-INF/views/corporation/module/write.jsp"%>
+	
+	-------------
+	회사 타임라인
+	-------------
+	<br>
+	
+	${postList.get(0).post_contents }
 </body>
 </html>

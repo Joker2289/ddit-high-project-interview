@@ -4,15 +4,15 @@
     
     	<table border="1">
 		<tr>
-			<td>홈</td>
+			<td><a href="<%=request.getContextPath()%>/corporation/corporationHome">홈</a></td>
 		</tr>
 		<tr>
-			<td>소개</td>
+			<td><a href="<%=request.getContextPath()%>/corporation/corporationIntroduction">소개</a></td>
 		</tr>
 		<tr>		
-			<td>채용</td>
+			<td><a href="<%=request.getContextPath()%>/corporation/corporationRectuitment">채용</a></td>
 		</tr>
 		<tr>
-			<td>직원</td>
+			<td><a href="<%=request.getContextPath()%>/corporation/corporationEmployee">직원</a></td>
 		</tr>
 		</table>

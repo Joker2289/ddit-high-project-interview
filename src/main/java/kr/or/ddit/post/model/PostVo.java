@@ -1,19 +1,25 @@
 package kr.or.ddit.post.model;
 
+import java.util.Date;
+
 public class PostVo {
-	private String post_code;		// 글코드
-	private String user_id;			// 작성자
+
+	private String post_code;		// 글 코드
+	private String mem_id; 			// 작성자
 	private String post_contents;	// 내용
-	private String post_date;		// 작성일
+	private Date post_date; 		// 작성일
+	private String writer_name;		// 작성자 이름
 	
 	public PostVo() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	@Override
-	public String toString() {
-		return "PostVo [post_code=" + post_code + ", user_id=" + user_id + ", post_contents=" + post_contents
-				+ ", post_date=" + post_date + "]";
+	public String getWriter_name() {
+		return writer_name;
+	}
+
+	public void setWriter_name(String writer_name) {
+		this.writer_name = writer_name;
 	}
 
 	public String getPost_code() {
@@ -24,12 +30,12 @@ public class PostVo {
 		this.post_code = post_code;
 	}
 
-	public String getUser_id() {
-		return user_id;
+	public String getMem_id() {
+		return mem_id;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
 	}
 
 	public String getPost_contents() {
@@ -40,12 +46,18 @@ public class PostVo {
 		this.post_contents = post_contents;
 	}
 
-	public String getPost_date() {
+	public Date getPost_date() {
 		return post_date;
 	}
 
-	public void setPost_date(String post_date) {
+	public void setPost_date(Date post_date) {
 		this.post_date = post_date;
+	}
+
+	@Override
+	public String toString() {
+		return "PostVo [post_code=" + post_code + ", mem_id=" + mem_id + ", post_contents=" + post_contents
+				+ ", post_date=" + post_date + "writer_name=" +  writer_name + "]";
 	}
 	
 }

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.test.LogicTestConfig;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 public class PostServiceTest extends LogicTestConfig {
 	
@@ -26,8 +27,9 @@ public class PostServiceTest extends LogicTestConfig {
 		PostVo postVo = new PostVo();
 		
 		/***When***/
-		postVo.setPost_contents("테스트 코드로 작성된 타임라인 게시글 2");
-		postVo.setUser_id("goo8455");
+		postVo.setPost_contents("테스트 코드로 작성된 타임라인 게시글 111");
+		postVo.setMem_id("goo8455");
+		postVo.setWriter_name("장구현");
 		
 		int insertCnt = postService.insert_post(postVo);
 		
@@ -56,7 +58,7 @@ public class PostServiceTest extends LogicTestConfig {
 		/***Given***/
 		
 		/***When***/
-		int deleteCnt = postService.delete_post("2");
+		int deleteCnt = postService.delete_post("3");
 		
 		/***Then***/
 		assertEquals(1, deleteCnt);
@@ -69,11 +71,27 @@ public class PostServiceTest extends LogicTestConfig {
 		/***When***/
 		List<PostVo> mem_postList = postService.select_memberPost("goo8455");
 		for(PostVo post : mem_postList){
-			logger.debug("post contents : {} {}", post.getPost_contents(), post.getUser_id());
+			logger.debug("post contents : {} {}", post.getPost_contents(), post.getMem_id());
 		}
 		
 		/***Then***/
 		assertTrue(mem_postList.size() > 0);
+	}
+	
+	@Test
+	public void testSelect_timelinePost(){
+		/***Given***/
+		PaginationVo paginationVo = new PaginationVo(1, 10);
+		paginationVo.setMem_id("goo8455");
+		
+		/***When***/
+		List<PostVo> timelinePosts = postService.select_timelinePost(paginationVo);
+		for(PostVo post : timelinePosts){
+			logger.debug("post info {} {} {}", post.getWriter_name(), post.getPost_contents(), post.getPost_date());
+		}
+		
+		/***Then***/
+		assertTrue(timelinePosts.size() > 0);
 	}
 
 }
