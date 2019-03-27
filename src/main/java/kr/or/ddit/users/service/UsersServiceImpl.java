@@ -29,4 +29,14 @@ public class UsersServiceImpl implements IUsersService{
 		return uVo;
 	}
 
+	@Override
+	public int insert_users(UsersVo vo) {
+		return usersDao.insert_users(vo);
+	}
+
+	@Override
+	public int update_userInfo(UsersVo vo) {
+		return usersDao.update_userInfo(vo);
+	}
+
 }

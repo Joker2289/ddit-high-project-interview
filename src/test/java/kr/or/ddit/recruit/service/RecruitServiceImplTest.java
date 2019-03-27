@@ -35,6 +35,7 @@ public class RecruitServiceImplTest extends LogicTestConfig{
 		rVo.setEmp_type("정규직");
 		rVo.setApp_type("t");
 		rVo.setApp_count("0");
+		rVo.setJob_local("서울");
 		
 		/***When***/
 		int insertCnt = recrService.insertRecr(rVo);

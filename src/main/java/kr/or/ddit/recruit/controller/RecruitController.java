@@ -64,9 +64,6 @@ public class RecruitController {
 		// 채용공고 등록해보자.
 //		insert_recr();
 		
-		List<CorporationVo> corpList = corpService.select_allCorps();
-		model.addAttribute("corpList", corpList);
-		
 		// alarm_flag - 저장한 검색어 제거하기. - search_save를 '1'로 변경.
 		if(alarm_flag != null && alarm_flag.equals("t")){
 			Search_logVo sVo = search_logService.getSearch_log(search_code);
@@ -89,48 +86,103 @@ public class RecruitController {
 		logger.debug("check1");
 		model.addAttribute("saveList", saveList);
 		
-		return "recruit/recruit";
+		List<RecruitVo> recrList = recrService.getAllRecr();
+		model.addAttribute("recrList", recrList);
+		
+		// 회사 리스트 - 혹시 나중에 느려지면 필요한 정보만 가져오는 쿼리 새로 만들기.
+		List<CorporationVo> corpList = corpService.select_allCorps();
+		List<String> corpImgList = new ArrayList<>();
+		List<String> corpNmList = new ArrayList<>();
+		
+		for(int i=0; i < recrList.size(); i++){
+			RecruitVo rVo = recrList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			corpImgList.add(cVo.getLogo_path());
+			corpNmList.add(cVo.getCorp_name());
+		}
+		
+		model.addAttribute("corpImgList", corpImgList);		
+		model.addAttribute("corpNmList", corpNmList);		
+		
+		return "recruitTiles";
 	}	
 	
 	// 채용공고 등록
 	private void insert_recr() {
-		RecruitVo rVo = new RecruitVo();
-		rVo.setRecruit_code(String.valueOf(recrService.getRecrCnt()+1));
-		
-		// 전체 회사 수 - random pick - 'select_corpInfo' ... 먼저 corpList를 만들어놓고 random index로 
-		// 픽을 해야겠다.
-		List<CorporationVo> corpList = corpService.select_allCorps();
-		
-		int ridx = ran_i(corpList.size());
-		rVo.setCorp_id(corpList.get(ridx-1).getCorp_id());
-		
-		String[] arr_title = new String[]{"2019년 상반기 신입/경력 채용", "2019 프론트엔드 개발직 경력사원 수시채용", "연구소(Software) 신입/경력 채용공고", "2019 상반기 클라이언트개발/백엔드 모집", "2019년 신입/경력/채용전제형인턴 채용", "SW QA엔지니어 채용[신입/경력] ", "보안엔지니어 신입 및 경력사원 모집", "웹(JAVA)/앱(AND", "IOS) 개발자 부문 상반기 대규모 채용 진행", "2019년 경력직원 모집(네트워크운영/DBA)", "신입(석/박사) 및 경력사원 채용"};
-		String rstr = ran_arr(arr_title);
-		rVo.setRecruit_title(rstr);
-		
-		String[] arr_jobtype = new String[]{"소프트웨어개발", "백엔드", "모바일앱개발", "웹마스터", "데이터베이스", "클라이언트개발", "네트워크구축", "DBMS", "솔루션", "DataMining", "네트워크보안", "유지보수", "공공기관", "전자상거래", "웹컨텐츠", "웹테스터", "소프트웨어QA", "리눅스", "안드로이드", "C++", "Java", "HTTP·TCP", "통신", "POS", "모바일기획", "서버관리", "시스템운영", "Framework", "springboot", "Nodejs", "알고리즘", ".NET", "웹프로그래밍", "Python", "빅데이터", "머신러닝", "asp", "Oracle", "MS-SQL", "SM", "SI", "WAS", "jsp", "DBA"};
-		int num = 3;
-		List<String> strList = ran_arr_arr(arr_jobtype, num);
-		
-		rVo.setJob_type("소프트웨어개발/백엔드");
-		rVo.setRecruit_contents("xxx일을 해주세용");
-		rVo.setStart_date("19/02/20");
-		rVo.setEnd_date("19/02/27");
-		rVo.setPersonnel("O명");
-		rVo.setJob_rank("사원/대리");
-		rVo.setEmp_type("정규직");
-		rVo.setApp_type("t");
-		rVo.setApp_count("0");
-		
-		recrService.insertRecr(rVo);
+		for(int k=0; k<30; k++){
+			RecruitVo rVo = new RecruitVo();
+			rVo.setRecruit_code(String.valueOf(recrService.getRecrCnt()+1));
+			
+			// 전체 회사 수 - random pick - 'select_corpInfo' ... 먼저 corpList를 만들어놓고 random index로 
+			// 픽을 해야겠다.
+			List<CorporationVo> corpList = corpService.select_allCorps();
+			
+			int ridx = ran_i(corpList.size());
+			rVo.setCorp_id(corpList.get(ridx-1).getCorp_id());
+			
+			String[] arr_title = new String[]{"2019년 상반기 신입/경력 채용", "2019 프론트엔드 개발직 경력사원 수시채용", "연구소(Software) 신입/경력 채용공고", "2019 상반기 클라이언트개발/백엔드 모집", "2019년 신입/경력/채용전제형인턴 채용", "SW QA엔지니어 채용[신입/경력] ", "보안엔지니어 신입 및 경력사원 모집", "웹(JAVA)/앱(AND,IOS) 개발자 부문 상반기 채용", "2019년 경력직원 모집(네트워크운영/DBA)", "신입(석/박사) 및 경력사원 채용"};
+			String rstr = ran_arr(arr_title);
+			rVo.setRecruit_title(rstr);
+			
+			String[] arr_jobtype = new String[]{"소프트웨어개발", "백엔드", "모바일앱개발", "웹마스터", "데이터베이스", "클라이언트개발", "네트워크구축", "DBMS", "솔루션", "DataMining", "네트워크보안", "유지보수", "공공기관", "전자상거래", "웹컨텐츠", "웹테스터", "소프트웨어QA", "리눅스", "안드로이드", "C++", "Java", "HTTP·TCP", "통신", "POS", "모바일기획", "서버관리", "시스템운영", "Framework", "springboot", "Nodejs", "알고리즘", ".NET", "웹프로그래밍", "Python", "빅데이터", "머신러닝", "asp", "Oracle", "MS-SQL", "SM", "SI", "WAS", "jsp", "DBA"};
+			int num = 3;
+			List<String> strList = ran_arr_arr(arr_jobtype, num);
+			String str_input = strList.get(0);
+			for(int i=0; i < strList.size()-1; i++){
+				str_input += " / " +strList.get(i+1);
+			}
+			rVo.setJob_type(str_input);
+			
+			rVo.setRecruit_contents("xxx일을 해주세용");
+			rVo.setStart_date("19/03/20");
+			rVo.setEnd_date("19/04/27");
+			
+			String[] arr_per = new String[]{"O명", "O명", "OO명"};
+			String rper = ran_arr(arr_per);
+			rVo.setPersonnel(rper);
+			
+			rVo.setJob_rank("사원");
+			
+			String[] arr_emptype = new String[]{"정규직", "정규직", "정규직", "정규직", "계약직", "계약직", "인턴", "파견직", "도급", "프리랜서"};
+			String remp = ran_arr(arr_emptype);
+			rVo.setEmp_type(remp);
+			
+			String[] arr_apptype = new String[]{"t", "f"};
+			String rapp = ran_arr(arr_apptype);
+			rVo.setApp_type(rapp);
+			
+			rVo.setApp_count("0");
+			
+			String[] arr_local = new String[]{"서울", "서울", "서울", "서울", "서울", "서울", "경기", "경기", "경기", "경기", "경기", "인천", "인천", "대전", "대전", "세종", "충남", "충북", "광주", "전남", "전북", "대구", "경북", "부산", "부산", "울산", "경남", "강원", "제주"};
+			String rlocal = ran_arr(arr_local);
+			rVo.setJob_local(rlocal);
+			
+			recrService.insertRecr(rVo);
+		}
 	}
 	
 	// String[]을 넣으면 num개를 골라서 strList를 반환
 	private List<String> ran_arr_arr(String[] arr_jobtype, int num) {
 		List<String> strList = new ArrayList<>();
-		for(int i=0; i < num; i++){
-			String rstr = arr_jobtype[(int) (Math.random() * arr_jobtype.length)];
-			
+		List<Integer> numList = new ArrayList<>();
+		numList.add((int) (Math.random() * arr_jobtype.length));
+		
+		// 먼저 numList에 중복되지 않게 숫자를 num개 뽑아서 넣음.
+		while(true){
+			int rnum = (int) (Math.random() * arr_jobtype.length);
+			for(int j=0; j < numList.size(); j++){
+				if(rnum == numList.get(j)){
+					continue;
+				}
+			}
+			numList.add(rnum);
+			if(numList.size() == num){
+				break;
+			}
+		}
+		
+		for(int i=0; i < numList.size(); i++){
+			strList.add(arr_jobtype[numList.get(i)]);
 		}
 		return strList;
 	}
@@ -270,13 +322,23 @@ public class RecruitController {
 		Search_logVo sVo = new Search_logVo();
 //		logger.debug("search_local? : {}", search_local);
 		sVo.setSearch_word(search_word);
-		sVo.setSearch_local(search_local);
+		
+		if(search_local == null){
+			sVo.setSearch_local("전국");
+		}else{
+			sVo.setSearch_local(search_local);			
+		}
 		sVo.setSearch_code(String.valueOf(search_logService.getAllCnt()+1));
-		sVo.setSearch_save("1");
+		// search_save 임시로 2로 설정. -> 나중에 1로 바꾸기. 순서도 역순으로 해놓았음.
+		sVo.setSearch_save("2");
 		
 		UsersVo uVo = (UsersVo) session.getAttribute("usersVo");
-		sVo.setUser_id(uVo.getUser_id());
-		
+		if(uVo != null){
+			sVo.setUser_id(uVo.getUser_id());
+		}else{
+			// 임시로 아이디 brown 입력.
+			sVo.setUser_id("brown");
+		}
 		search_logService.insertSearch_log(sVo);
 		
 		return "redirect:"+req.getContextPath()+"/recruit";
