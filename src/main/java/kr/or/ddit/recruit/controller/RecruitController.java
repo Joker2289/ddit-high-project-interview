@@ -328,8 +328,11 @@ public class RecruitController {
 		sVo.setSearch_save("2");
 		
 		UsersVo uVo = (UsersVo) session.getAttribute("usersVo");
-		sVo.setUser_id(uVo.getUser_id());
-		
+		if(uVo != null){
+			sVo.setUser_id(uVo.getUser_id());
+		}else{
+			sVo.setUser_id("brown");
+		}
 		search_logService.insertSearch_log(sVo);
 		
 		return "redirect:"+req.getContextPath()+"/recruit";
