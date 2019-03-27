@@ -9,7 +9,7 @@
 		<typeAlias alias="usersVo" type="kr.or.ddit.users.model.UsersVo"/>
 		<typeAlias alias="corporationVo" type="kr.or.ddit.corporation.model.CorporationVo"/>
 		<typeAlias alias="postVo" type="kr.or.ddit.post.model.PostVo"/>
-		<typeAlias alias="pageVo" type="kr.or.ddit.util.page.PageVo"/>
+		<typeAlias alias="paginationVo" type="kr.or.ddit.util.pagination.PaginationVo"/>
 		<typeAlias alias="goodVo" type="kr.or.ddit.good.model.GoodVo"/>
 		<typeAlias alias="hashtagVo" type="kr.or.ddit.hashtag.model.HashtagVo"/>
 		<typeAlias alias="hashtag_listVo" type="kr.or.ddit.hashtag_list.model.Hashtag_listVo"/>
