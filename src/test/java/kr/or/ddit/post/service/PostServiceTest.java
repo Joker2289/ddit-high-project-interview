@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.test.LogicTestConfig;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 public class PostServiceTest extends LogicTestConfig {
 	
@@ -75,6 +76,22 @@ public class PostServiceTest extends LogicTestConfig {
 		
 		/***Then***/
 		assertTrue(mem_postList.size() > 0);
+	}
+	
+	@Test
+	public void testSelect_timelinePost(){
+		/***Given***/
+		PaginationVo paginationVo = new PaginationVo(1, 10);
+		paginationVo.setMem_id("goo8455");
+		
+		/***When***/
+		List<PostVo> timelinePosts = postService.select_timelinePost(paginationVo);
+		for(PostVo post : timelinePosts){
+			logger.debug("post info {} {} {}", post.getWriter_name(), post.getPost_contents(), post.getPost_date());
+		}
+		
+		/***Then***/
+		assertTrue(timelinePosts.size() > 0);
 	}
 
 }
