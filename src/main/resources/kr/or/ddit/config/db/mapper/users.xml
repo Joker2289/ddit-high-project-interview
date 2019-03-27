@@ -9,18 +9,17 @@
 		insert into users
 		values(
 			#{user_id},
-			#{user_name},
+			nvl(#{user_name, jdbcType=VARCHAR}, null),
 			nvl(#{bg_img, jdbcType=VARCHAR}, null),
 			nvl(#{bg_path, jdbcType=VARCHAR}, null),
 			nvl(#{profile_img, jdbcType=VARCHAR}, null),
 			nvl(#{profile_path, jdbcType=VARCHAR}, null),
 			nvl(#{addr1, jdbcType=VARCHAR}, null),
 			nvl(#{addr2, jdbcType=VARCHAR}, null),
-			nvl(#{zipcode, jdbcType=VARCHAR}, null),
-			#{email},
-			#{telno},
-			#{user_birth},
-			nvl(#{persnal_url, jdbcType=VARCHAR}, null)
+			nvl(#{email, jdbcType=VARCHAR}, null),
+			nvl(#{telno, jdbcType=VARCHAR}, null),
+			nvl(#{user_birth, jdbcType=VARCHAR}, null),
+			nvl(#{persnal_url, jdbcType=VARCHAR}, null),
 		)
 	</insert>
 	
