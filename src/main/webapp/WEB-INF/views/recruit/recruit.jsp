@@ -75,7 +75,7 @@
 	   	<div class="main_blog_details" style="padding: 10px; border-top: 0px; border-bottom: 1px solid; 
 	   			border-left: 1px solid; border-right: 1px solid;">
 			<span style="margin: 60px;">
-				채용공고 검색어 / ${saveList.size() }
+				채용공고 검색어
 			</span>
 			<span class="button-group-area mt-10" style="margin-left: 100px;">
 				<a href="#" class="genric-btn info-border">관리</a>

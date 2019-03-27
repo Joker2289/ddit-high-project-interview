@@ -23,6 +23,8 @@ import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.recruit.model.RecruitVo;
+import kr.or.ddit.recruit.service.IRecruitService;
 import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.users.model.UsersVo;
@@ -45,6 +47,9 @@ public class RecruitController {
 	
 	@Resource(name="memberService")
 	private IMemberService memService;
+	
+	@Resource(name="recruitService")
+	private IRecruitService recrService;
 
 	private List<String> img_list;
 	private List<String> str_list;
@@ -55,6 +60,9 @@ public class RecruitController {
 	public String recruit(HttpSession session, String alarm_flag, String search_code, Model model) throws IOException{
 		// 크롤링해서 값 넣기 어떻게 했더라. 삼성전자 데이터 있으면 리턴. 일단 비활성화.
 //		crawling_company();
+		
+		// 채용공고 등록해보자.
+		insert_recr();
 		
 		List<CorporationVo> corpList = corpService.select_allCorps();
 		model.addAttribute("corpList", corpList);
@@ -84,6 +92,63 @@ public class RecruitController {
 		return "recruit/recruit";
 	}	
 	
+	// 채용공고 등록
+	private void insert_recr() {
+		RecruitVo rVo = new RecruitVo();
+		rVo.setRecruit_code(String.valueOf(recrService.getRecrCnt()+1));
+		
+		// 전체 회사 수 - random pick - 'select_corpInfo' ... 먼저 corpList를 만들어놓고 random index로 
+		// 픽을 해야겠다.
+		List<CorporationVo> corpList = corpService.select_allCorps();
+		
+		int ridx = ran_i(corpList.size());
+		rVo.setCorp_id(corpList.get(ridx-1).getCorp_id());
+		
+		String[] arr_title = new String[]{"2019년 상반기 신입/경력 채용", "2019 프론트엔드 개발직 경력사원 수시채용", "연구소(Software) 신입/경력 채용공고", "2019 상반기 클라이언트개발/백엔드 모집", "2019년 신입/경력/채용전제형인턴 채용", "SW QA엔지니어 채용[신입/경력] ", "보안엔지니어 신입 및 경력사원 모집", "웹(JAVA)/앱(AND", "IOS) 개발자 부문 상반기 대규모 채용 진행", "2019년 경력직원 모집(네트워크운영/DBA)", "신입(석/박사) 및 경력사원 채용"};
+		String rstr = ran_arr(arr_title);
+		rVo.setRecruit_title(rstr);
+		
+		String[] arr_jobtype = new String[]{"소프트웨어개발", "백엔드", "모바일앱개발", "웹마스터", "데이터베이스", "클라이언트개발", "네트워크구축", "DBMS", "솔루션", "DataMining", "네트워크보안", "유지보수", "공공기관", "전자상거래", "웹컨텐츠", "웹테스터", "소프트웨어QA", "리눅스", "안드로이드", "C++", "Java", "HTTP·TCP", "통신", "POS", "모바일기획", "서버관리", "시스템운영", "Framework", "springboot", "Nodejs", "알고리즘", ".NET", "웹프로그래밍", "Python", "빅데이터", "머신러닝", "asp", "Oracle", "MS-SQL", "SM", "SI", "WAS", "jsp", "DBA"};
+		int num = 3;
+		List<String> strList = ran_arr_arr(arr_jobtype, num);
+		
+		rVo.setJob_type("소프트웨어개발/백엔드");
+		rVo.setRecruit_contents("xxx일을 해주세용");
+		rVo.setStart_date("19/02/20");
+		rVo.setEnd_date("19/02/27");
+		rVo.setPersonnel("O명");
+		rVo.setJob_rank("사원/대리");
+		rVo.setEmp_type("정규직");
+		rVo.setApp_type("t");
+		rVo.setApp_count("0");
+		
+		recrService.insertRecr(rVo);
+	}
+	
+	// String[]을 넣으면 num개를 골라서 strList를 반환
+	private List<String> ran_arr_arr(String[] arr_jobtype, int num) {
+		List<String> strList = new ArrayList<>();
+		for(int i=0; i < num; i++){
+			String rstr = arr_jobtype[(int) (Math.random() * arr_jobtype.length)];
+			
+		}
+		return strList;
+	}
+
+	// String[]을 넣으면 그중 하나를 골라서 random string 반환.
+	private String ran_arr(String[] arr_title) {
+		String rstr = arr_title[(int) (Math.random() * arr_title.length)];
+		
+		return rstr;
+	}
+
+	// size를 넣으면 random index 반환.
+	private int ran_i(int size) {
+		int ridx = (int) (Math.random() * size) + 1;
+		
+		return ridx;
+	}
+
 	// 잡코리아 - 연봉정보 - 직무별 - IT·인터넷 - 사원 많은순 - 1 page 크롤링.
 	private void crawling_company() throws IOException {
 		// corp_name - 삼성전자가 있으면 insert하지 않도록 return.
