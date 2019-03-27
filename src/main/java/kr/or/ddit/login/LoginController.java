@@ -66,6 +66,7 @@ public class LoginController {
 			if(dbMemberVo.getMem_division().equals("1")) {
 				UsersVo uVo = usersService.select_userInfo(dbMemberVo.getMem_id());
 				req.getSession().setAttribute("detailVO", uVo);
+				
 			} 
 			
 			//기업 로그인
@@ -78,7 +79,7 @@ public class LoginController {
 			else {
 				
 			}
-		
+			
 			req.getSession().setAttribute("memberVO", dbMemberVo);
 			
 			return "timeLineTiles";
