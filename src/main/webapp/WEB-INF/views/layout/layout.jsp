@@ -17,7 +17,7 @@ $(document).ready(function() {
 	// 검색창
 	$("#search").on("click", function(){
 		$("#dropdownSearch").empty();
-		$("#dropdownSearch").append('<table id="searchmenu"><thead><tr><td>검색어 :</td></tr></thead><tbody><tr><td><span style="font-size: 20px;"><i class="fas fa-users"></i></span>사람</td></tr><tr><td><span style="font-size: 20px;"><i class="fas fa-briefcase"></i></span>채용</td></tr><tr><td><span style="font-size: 20px;"><i class="far fa-newspaper"></i></span>내용</td></tr></tbody></table>');
+		$("#dropdownSearch").append('');
 	});
 	
 	$("#search").on("mouseleave", function(){
