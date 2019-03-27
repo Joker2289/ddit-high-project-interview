@@ -62,7 +62,7 @@ public class RecruitController {
 //		crawling_company();
 		
 		// 채용공고 등록해보자.
-		insert_recr();
+//		insert_recr();
 		
 		List<CorporationVo> corpList = corpService.select_allCorps();
 		model.addAttribute("corpList", corpList);
