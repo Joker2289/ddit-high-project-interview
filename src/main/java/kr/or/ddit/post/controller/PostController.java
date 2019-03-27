@@ -39,6 +39,7 @@ public class PostController {
 	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
 	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request){
+		// 작업 완류 후 loginController로 이동시켜야 함
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("memberVO");
 		
