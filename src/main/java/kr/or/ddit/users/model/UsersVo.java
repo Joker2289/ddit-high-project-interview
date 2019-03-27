@@ -14,7 +14,9 @@ public class UsersVo {
 	private String telno;			// 전화번호
 	private String user_birth;		// 생년월일
 	private String persnal_url;		// 외부URL
-
+	private String introduce;		// 소개
+	private String profile_contents;// 간단 소개글
+	
 	public UsersVo() {
 		// TODO Auto-generated constructor stub
 	}
@@ -122,15 +124,32 @@ public class UsersVo {
 	public void setPersnal_url(String persnal_url) {
 		this.persnal_url = persnal_url;
 	}
+	
+	public String getIntroduce() {
+		return introduce;
+	}
+
+	public void setIntroduce(String introduce) {
+		this.introduce = introduce;
+	}
+
+	public String getProfile_contents() {
+		return profile_contents;
+	}
+
+	public void setProfile_contents(String profile_contents) {
+		this.profile_contents = profile_contents;
+	}
 
 	@Override
 	public String toString() {
 		return "UsersVo [user_id=" + user_id + ", user_name=" + user_name + ", bg_img=" + bg_img + ", bg_path="
 				+ bg_path + ", profile_img=" + profile_img + ", profile_path=" + profile_path + ", addr1=" + addr1
 				+ ", addr2=" + addr2 + ", zipcode=" + zipcode + ", email=" + email + ", telno=" + telno
-				+ ", user_birth=" + user_birth + ", persnal_url=" + persnal_url + "]";
+				+ ", user_birth=" + user_birth + ", persnal_url=" + persnal_url + ", introduce=" + introduce
+				+ ", profile_contents=" + profile_contents + "]";
 	}
+
 	
-
-
+	
 }

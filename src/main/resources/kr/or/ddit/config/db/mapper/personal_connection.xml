@@ -5,28 +5,27 @@
 <mapper namespace="personal">
 
 	<!-- 일촌 리스트 조회 -->
-	<select id="select_connections" parameterType="memberVo" resultType="personalVo">
-		select
-			user_id
-		from
-			personal_connection
-		where
-			(user_id = #{mem_id} or receive_id = #{mem_id})
-		and
-			receive_accept='Y'
-		and
-			user_id != #{mem_id}
-		union
-		select
-			receive_id
-		from
-			personal_connection
-		where
-			(user_id = #{mem_id} or receive_id = #{mem_id})
-		and
-			receive_accept='Y'
-		and
-			receive_id != #{mem_id}
+	<select id="select_connections" parameterType="memberVo" resultType="usersVo">
+		select users.user_id,
+		users.user_name,
+		users.profile_img,
+		users.profile_path,
+		decode(c_info.resign_date,null,c_info.corporate_name||' '|| c_info.job_position, e_info.school_name||' '||'학생') as introduce
+		from users, career_info c_info,education_info e_info,(
+															  select user_id
+				                                                from personal_connection
+				                                               where (user_id = #{mem_id} or receive_id = #{mem_id})
+				                                                 and receive_accept='Y'
+				                                                 and user_id != #{mem_id}
+				                                               union
+				                                              select receive_id
+				                                                from personal_connection
+				                                               where (user_id = #{mem_id} or receive_id = #{mem_id})
+				                                                 and receive_accept='Y'
+				                                                 and receive_id != #{mem_id}) a
+		where users.user_id = a.user_id
+		and c_info.user_id = e_info.user_id
+		and c_info.user_id = a.user_id
 	</select>
 	
 	
@@ -42,6 +41,11 @@
 			receive_accept='Y'
 	</select>
 
+
+
+	<select id="connections_list" parameterType="memberVo" resultType="personalVo">
+		
+	</select>
 
 
 
