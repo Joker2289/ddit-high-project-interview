@@ -17,6 +17,7 @@
 		<typeAlias alias="followVo" type="kr.or.ddit.follow.model.FollowVo"/>
 		<typeAlias alias="search_logVo" type="kr.or.ddit.search_log.model.Search_logVo"/>
 		<typeAlias alias="recruitVo" type="kr.or.ddit.recruit.model.RecruitVo"/>
+		<typeAlias alias="personalVo" type="kr.or.ddit.personal_connection.model.Personal_connectionVo"/>
 	</typeAliases> 
 	
   
@@ -32,6 +33,7 @@
 		<mapper resource="kr/or/ddit/config/db/mapper/follow.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/search_log.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/recruit.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/personal_connection.xml"/>
 	</mappers>
 </configuration>
 

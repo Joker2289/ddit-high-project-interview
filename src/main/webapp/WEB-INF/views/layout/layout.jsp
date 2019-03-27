@@ -86,6 +86,7 @@ $(document).ready(function() {
 		    $("#content").animate({"margin-left":"-=" + divWidth + "px"},500);
 		   }
 	});
+
 	
 });
 </script>
