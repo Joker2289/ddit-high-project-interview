@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
 
@@ -40,10 +40,15 @@ public class CorporationController {
 		
 	}
 	
-//	@RequestMapping(path="/write")
-//	public String post(String mem_id, String post_contents, String writer_name, Model model){
-//		
-//		return "corporation/corporationHome";
-//	}
+	@RequestMapping(path="/write")
+	public String post(MemberVo memberVo,PostVo postVo,  Model model){
+		String mem_id = "";
+		String post_contents = "";
+		postVo.setMem_id(mem_id);
+		
+		int insertCnt=0;
+		insertCnt=postService.insert_post(postVo);
+		return "corporation/corporationHome";
+	}
 }
 
