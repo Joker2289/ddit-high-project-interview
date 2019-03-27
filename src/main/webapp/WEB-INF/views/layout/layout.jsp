@@ -64,6 +64,30 @@ $(document).ready(function() {
         $(this).addClass("activeOn");
 	});
 	
+	var divWidth  = "511"; 
+	$("#btnslidelt").on("click",function(){
+		$("#content").stop(true,true);
+		
+		   var moveX   = parseInt($("#content").css("margin-left"));
+
+		   if( moveX < 0 )
+		   {
+		    $("#content").animate({"margin-left":"+=" + divWidth + "px"},500);
+		   }
+	});
+
+	$("#btnSlidegt").on("click",function(){
+		 $("#content").stop(true,true);
+
+		   var moveX   = parseInt($("#content").css("margin-left"));
+
+		   if( -1022 < moveX )
+		   {
+		    $("#content").animate({"margin-left":"-=" + divWidth + "px"},500);
+		   }
+	});
+
+	
 });
 </script>
 </head>
