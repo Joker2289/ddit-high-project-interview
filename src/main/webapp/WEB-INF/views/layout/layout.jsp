@@ -17,7 +17,7 @@ $(document).ready(function() {
 	// 검색창
 	$("#search").on("click", function(){
 		$("#dropdownSearch").empty();
-		$("#dropdownSearch").append('<table id="searchmenu"><thead><tr><td>검색어 :</td></tr></thead><tbody><tr><td><span style="font-size: 20px;"><i class="fas fa-users"></i></span>사람</td></tr><tr><td><span style="font-size: 20px;"><i class="fas fa-briefcase"></i></span>채용</td></tr><tr><td><span style="font-size: 20px;"><i class="far fa-newspaper"></i></span>내용</td></tr></tbody></table>');
+		$("#dropdownSearch").append('');
 	});
 	
 	$("#search").on("mouseleave", function(){
@@ -44,6 +44,9 @@ $(document).ready(function() {
 		$( this ).css( "background-color", "#F3F6F8" ); 
 	    $( this).children("td").css( "cursor", "pointer" ); 
 	});
+	$(document).on('mouseleave', '#searchmenu tbody  tr', function(e) {
+		$( this ).css( "background-color", "white" ); 
+	});
 	
 	$(document).on('mouseleave', '.profiletr', function(e) {
 		$( this ).css( "background-color", "white" ); 
@@ -54,9 +57,6 @@ $(document).ready(function() {
 	    $( this).children("td").css( "cursor", "pointer" ); 
 	});
 	
-	$(document).on('mouseleave', '#profilemenu  tr', function(e) {
-		$( this ).css( "background-color", "white" ); 
-	});
 	
 	$(".menu").on("click", function(){
 		$(".activeOn").attr('class','menu');
@@ -102,3 +102,9 @@ $(document).ready(function() {
 </div>
 </body>
 </html>
+
+
+
+
+
+
