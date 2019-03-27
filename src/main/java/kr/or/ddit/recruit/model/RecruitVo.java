@@ -13,6 +13,7 @@ public class RecruitVo {
 	private String emp_type;			// 고용형태
 	private String app_type;			// 간편지원여부
 	private String app_count;			// 지원자 수
+	private String job_local;			// 업무지역
 	
 	public RecruitVo() {
 		// TODO Auto-generated constructor stub
@@ -23,7 +24,7 @@ public class RecruitVo {
 		return "RecruitVo [recruit_code=" + recruit_code + ", corp_id=" + corp_id + ", recruit_title=" + recruit_title
 				+ ", job_type=" + job_type + ", recruit_contents=" + recruit_contents + ", start_date=" + start_date
 				+ ", end_date=" + end_date + ", personnel=" + personnel + ", job_rank=" + job_rank + ", emp_type="
-				+ emp_type + ", app_type=" + app_type + ", app_count=" + app_count + "]";
+				+ emp_type + ", app_type=" + app_type + ", app_count=" + app_count + ", job_local=" + job_local + "]";
 	}
 
 	public String getRecruit_code() {
@@ -121,5 +122,15 @@ public class RecruitVo {
 	public void setApp_count(String app_count) {
 		this.app_count = app_count;
 	}
+
+	public String getJob_local() {
+		return job_local;
+	}
+
+	public void setJob_local(String job_local) {
+		this.job_local = job_local;
+	}
+
+	
 	
 }

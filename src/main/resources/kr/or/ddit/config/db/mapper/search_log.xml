@@ -22,6 +22,7 @@
 		  FROM SEARCH_LOG
 		 WHERE USER_ID=#{user_id}
 		   AND SEARCH_SAVE=#{search_save}	
+		ORDER BY SEARCH_CODE DESC
 	</select>
 	
 	<!-- 특정 검색내역 조회. -->

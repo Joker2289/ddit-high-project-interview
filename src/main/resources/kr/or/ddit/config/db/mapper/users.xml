@@ -9,7 +9,7 @@
 		insert into users
 		values(
 			#{user_id},
-			#{user_name},
+			nvl(#{user_name, jdbcType=VARCHAR}, null),
 			nvl(#{bg_img, jdbcType=VARCHAR}, null),
 			nvl(#{bg_path, jdbcType=VARCHAR}, null),
 			nvl(#{profile_img, jdbcType=VARCHAR}, null),
@@ -21,18 +21,19 @@
 			#{telno},
 			#{user_birth},
 			nvl(#{persnal_url, jdbcType=VARCHAR}, null)
+			nvl(#{profile_contents, jdbcType=VARCHAR}, null)
 		)
 	</insert>
 	
 	<!-- 전체회원 조회 -->
 	<select id="select_allUsers" resultType="usersVo">
-		select user_id, user_name, bg_img, bg_path, profile_img, profile_path, addr1, addr2, zipcode, email, telno, user_birth, persnal_url
+		select user_id, user_name, bg_img, bg_path, profile_img, profile_path, addr1, addr2, zipcode, email, telno, user_birth, persnal_url, profile_contents
 		  from users
 	</select>
 	
 	<!-- 회원정보 조회 -->
 	<select id="select_userInfo" parameterType="String" resultType="usersVo">
-		select user_id, user_name, bg_img, bg_path, profile_img, profile_path, addr1, addr2, zipcode, email, telno, user_birth, persnal_url
+		select user_id, user_name, bg_img, bg_path, profile_img, profile_path, addr1, addr2, zipcode, email, telno, user_birth, persnal_url, profile_contents
 		  from users
 		 where user_id = #{user_id}
 	</select>
@@ -51,6 +52,7 @@
 		       email		= #{email},
 		       telno		= #{telno},
 		       persnal_url	= #{persnal_url}
+		       profile_contents = #{profile_contents}
 		 where user_id = #{user_id}  
 	</update>
 	
