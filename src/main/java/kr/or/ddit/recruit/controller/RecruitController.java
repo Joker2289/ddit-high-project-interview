@@ -322,14 +322,23 @@ public class RecruitController {
 		Search_logVo sVo = new Search_logVo();
 //		logger.debug("search_local? : {}", search_local);
 		sVo.setSearch_word(search_word);
-		sVo.setSearch_local(search_local);
+		
+		if(search_local == null){
+			sVo.setSearch_local("전국");
+		}else{
+			sVo.setSearch_local(search_local);			
+		}
 		sVo.setSearch_code(String.valueOf(search_logService.getAllCnt()+1));
 		// search_save 임시로 2로 설정. -> 나중에 1로 바꾸기. 순서도 역순으로 해놓았음.
 		sVo.setSearch_save("2");
 		
 		UsersVo uVo = (UsersVo) session.getAttribute("usersVo");
-		sVo.setUser_id(uVo.getUser_id());
-		
+		if(uVo != null){
+			sVo.setUser_id(uVo.getUser_id());
+		}else{
+			// 임시로 아이디 brown 입력.
+			sVo.setUser_id("brown");
+		}
 		search_logService.insertSearch_log(sVo);
 		
 		return "redirect:"+req.getContextPath()+"/recruit";
