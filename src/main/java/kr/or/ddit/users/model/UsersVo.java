@@ -14,9 +14,22 @@ public class UsersVo {
 	private String telno;			// 전화번호
 	private String user_birth;		// 생년월일
 	private String persnal_url;		// 외부URL
+	private String profile_contents;// 간단 소개글
+	
+	
+
+
 
 	public UsersVo() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public String getProfile_contents() {
+		return profile_contents;
+	}
+
+	public void setProfile_contents(String profile_contents) {
+		this.profile_contents = profile_contents;
 	}
 
 	public String getUser_id() {
@@ -128,9 +141,8 @@ public class UsersVo {
 		return "UsersVo [user_id=" + user_id + ", user_name=" + user_name + ", bg_img=" + bg_img + ", bg_path="
 				+ bg_path + ", profile_img=" + profile_img + ", profile_path=" + profile_path + ", addr1=" + addr1
 				+ ", addr2=" + addr2 + ", zipcode=" + zipcode + ", email=" + email + ", telno=" + telno
-				+ ", user_birth=" + user_birth + ", persnal_url=" + persnal_url + "]";
+				+ ", user_birth=" + user_birth + ", persnal_url=" + persnal_url + ", profile_contents="
+				+ profile_contents + "]";
 	}
-	
-
 
 }
