@@ -31,4 +31,8 @@
 		<put-attribute name="content" value="/WEB-INF/views/personalConnection/company.jsp" />
 	</definition>
 	
+	<definition name="recruitTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/recruit/recruit.jsp"/>
+	</definition>	
+	
 </tiles-definitions>

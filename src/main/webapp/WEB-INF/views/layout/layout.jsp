@@ -12,6 +12,14 @@
 <link href="/css/header.css" rel="stylesheet">
 <link href="/css/personalConnection.css" rel="stylesheet">
 <link href="/css/timeline/writemodal.css" rel="stylesheet">
+<!-- Favicon -->
+<link rel="shortcut icon" href="favicon.ico" />
+
+<!-- jQuery -->
+<!-- <script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.min.js"></script>-->
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
 <script>
 $(document).ready(function() {
 	// 검색창
@@ -44,6 +52,9 @@ $(document).ready(function() {
 		$( this ).css( "background-color", "#F3F6F8" ); 
 	    $( this).children("td").css( "cursor", "pointer" ); 
 	});
+	$(document).on('mouseleave', '#searchmenu tbody  tr', function(e) {
+		$( this ).css( "background-color", "white" ); 
+	});
 	
 	$(document).on('mouseleave', '.profiletr', function(e) {
 		$( this ).css( "background-color", "white" ); 
@@ -54,9 +65,6 @@ $(document).ready(function() {
 	    $( this).children("td").css( "cursor", "pointer" ); 
 	});
 	
-	$(document).on('mouseleave', '#profilemenu  tr', function(e) {
-		$( this ).css( "background-color", "white" ); 
-	});
 	
 	$(".menu").on("click", function(){
 		$(".activeOn").attr('class','menu');
@@ -64,41 +72,18 @@ $(document).ready(function() {
         $(this).addClass("activeOn");
 	});
 	
-	var divWidth  = "511"; 
-	$("#btnslidelt").on("click",function(){
-		$("#content").stop(true,true);
-		
-		   var moveX   = parseInt($("#content").css("margin-left"));
-
-		   if( moveX < 0 )
-		   {
-		    $("#content").animate({"margin-left":"+=" + divWidth + "px"},500);
-		   }
-	});
-
-	$("#btnSlidegt").on("click",function(){
-		 $("#content").stop(true,true);
-
-		   var moveX   = parseInt($("#content").css("margin-left"));
-
-		   if( -1022 < moveX )
-		   {
-		    $("#content").animate({"margin-left":"-=" + divWidth + "px"},500);
-		   }
-	});
-
-	
 });
 </script>
 </head>
 <body>
 <tiles:insertAttribute name="header" />
-<div class="container">
-	<div class="row">
-		<div style="margin-top: 101px;">
-			<tiles:insertAttribute name="content" />
-		</div>
-	</div>
-</div>
+<tiles:insertAttribute name="content" />
+	
 </body>
 </html>
+
+
+
+
+
+
