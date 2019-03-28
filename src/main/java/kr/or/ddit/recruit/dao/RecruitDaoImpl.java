@@ -93,4 +93,20 @@ public class RecruitDaoImpl implements IRecruitDao{
 		return rVo;
 	}
 
+	/**
+	 * 
+	 * Method : getLastViewRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 특정 유저가 마지막으로 조회한 채용공고 조회.
+	 */
+	@Override
+	public RecruitVo getLastViewRecr(String user_id) {
+		RecruitVo LVRVo = sqlSessionTemplate.selectOne("recr.getLastViewRecr", user_id);
+		
+		return LVRVo;
+	}
+
 }

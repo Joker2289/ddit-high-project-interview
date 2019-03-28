@@ -25,6 +25,8 @@ import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
+import kr.or.ddit.save_recruit.model.Save_recruitVo;
+import kr.or.ddit.save_recruit.service.ISave_recruitService;
 import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.users.model.UsersVo;
@@ -50,6 +52,9 @@ public class RecruitController {
 	
 	@Resource(name="recruitService")
 	private IRecruitService recrService;
+	
+	@Resource(name="save_recruitService")
+	private ISave_recruitService srecrService;
 
 	private List<String> img_list;
 	private List<String> str_list;
@@ -72,7 +77,8 @@ public class RecruitController {
 			search_logService.updateSearch_log(sVo);
 		}
 		
-		// 임시로 session에 user값 넣기.
+		// 임시로 session에 user값 넣기. -> 우선은 이렇게 해놓고 개발하고 나중에는 로그인 컨트롤러에서
+		// 처리하는 방식으로 바꿔야 함. 'File Search - usersVo (usersV?)'
 		session.setAttribute("usersVo", usersService.select_userInfo("brown"));
 		
 		// 저장한 검색어 리스트 넘기기.
@@ -103,6 +109,11 @@ public class RecruitController {
 		
 		model.addAttribute("corpImgList", corpImgList);		
 		model.addAttribute("corpNmList", corpNmList);		
+		
+		// 조회한 항목(마지막으로 조회한 채용공고) model에 넣기.
+		// 여기서 가장 큰 수를 구한다음 조회, 조회 하지말고 -> 'recrService.getLastViewRecr'
+		RecruitVo LVRVo = recrService.getLastViewRecr(uVo.getUser_id());
+		model.addAttribute("LVRVo", LVRVo);
 		
 		return "recruitTiles";
 	}	
@@ -347,7 +358,18 @@ public class RecruitController {
 	
 	// 채용공고 상세화면.
 	@RequestMapping("/recr_detail")
-	public String recr_detail(String recruit_code, Model model){
+	public String recr_detail(String recruit_code, HttpSession session, Model model){
+		// 회원 정보를 가져와서 채용공고저장에 마지막으로 조회한 채용공고 저장. 마지막 채용공고를 따로 
+		// 설정하지는 않고 회원의 채용공고저장 리스트에서 save_code가 가장 큰 데이터를 확인하자.
+		Save_recruitVo sVo = new Save_recruitVo();
+		sVo.setRecruit_code(recruit_code);
+		sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));
+		sVo.setSave_flag("f");
+		
+		UsersVo uVo = (UsersVo) session.getAttribute("usersVo");
+		sVo.setUser_id(uVo.getUser_id());
+		srecrService.insertSrecr(sVo);
+		
 		RecruitVo recr = recrService.getRecr(recruit_code);
 		CorporationVo corp = corpService.select_corpInfo(recr.getCorp_id());
 		model.addAttribute("recr", recr);
@@ -356,12 +378,16 @@ public class RecruitController {
 		return "recr_detailTiles";
 	}
 	
-
+	// 채용공고저장 페이지.
+	@RequestMapping("/srecr")
+	public String srecr(){
+		
+		return "srecrTiles";
+	}
+	
+	
+	
 }
-
-
-
-
 
 
 

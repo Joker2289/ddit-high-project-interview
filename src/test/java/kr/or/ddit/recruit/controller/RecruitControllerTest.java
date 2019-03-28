@@ -4,8 +4,10 @@ import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,7 +15,9 @@ import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
+import kr.or.ddit.save_recruit.service.ISave_recruitService;
 import kr.or.ddit.test.WebTestConfig;
+import kr.or.ddit.users.model.UsersVo;
 
 public class RecruitControllerTest extends WebTestConfig{
 
@@ -22,6 +26,9 @@ public class RecruitControllerTest extends WebTestConfig{
 	
 	@Resource(name="recruitService")
 	private IRecruitService recrService;	
+	
+	@Resource(name="save_recruitService")
+	private ISave_recruitService srecrService;	
 	
 	/**
 	 * 
@@ -36,8 +43,14 @@ public class RecruitControllerTest extends WebTestConfig{
 		/***Given***/
 		String recruit_code = "1";
 		
+		// ** session 객체 생성. MockHttpSession()
+		HttpSession session = new MockHttpSession();
+		UsersVo uVo = new UsersVo();
+		uVo.setUser_id("brown");
+		session.setAttribute("usersVo", uVo);
+		
 		/***When***/
-		MvcResult mvcResult = mockMvc.perform(get("/recr_detail").param("recruit_code", recruit_code)).andReturn();
+		MvcResult mvcResult = mockMvc.perform(get("/recr_detail").param("recruit_code", recruit_code).session((MockHttpSession) session)).andReturn();
 		ModelAndView mav = mvcResult.getModelAndView();
 		String viewName = mav.getViewName();
 		
