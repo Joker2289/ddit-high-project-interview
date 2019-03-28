@@ -499,6 +499,13 @@ public class RecruitController {
 		return "srecrTiles";
 	}
 	
+	// 커리어 관심분야 페이지
+	@RequestMapping("/interest")
+	public String interest(){
+		
+		return "interestTiles";
+	}
+	
 	
 	
 }

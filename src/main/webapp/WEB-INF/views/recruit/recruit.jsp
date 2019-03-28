@@ -46,7 +46,7 @@
 			<i class="far fa-check-circle"></i>
 			채용공고 상태 파악
 		</a> │ 
-		<a href="">
+		<a href="${pageContext.request.contextPath }/interest">
 			<i class="fas fa-pencil-alt"></i>
 			커리어 관심분야
 		</a>
@@ -113,7 +113,7 @@
 	<form id="frm_detail" action="${pageContext.request.contextPath }/recr_detail" method="post">
 		<input type="hidden" id="recruit_code" name="recruit_code">
 	
-	   	<div class="div_list" style="border: 1px solid; padding: 10px; margin-bottom: 0px; margin-top: 20px;">
+	   	<div class="div_list" style="border: 1px solid; padding: 10px; margin-bottom: 150px; margin-top: 20px;">
 	   		<div style="text-align: left; margin-bottom: 10px;">
 	   			<strong>조회하신 항목을 참고하여..</strong> <br> 
 	   			<c:choose>
@@ -142,7 +142,7 @@
 									<strong>${RRList1.get(i.index).recruit_title }</strong> <br>
 									${corpNmList1.get(i.index) } <br>
 									${RRList1.get(i.index).job_local } <br>
-									${RRList1.get(i.index).job_type } <!-- 임시. -->
+									${RRList1.get(i.index).job_type }
 								</div>
 								<i class="far fa-bookmark" style="margin-top: 10px; font-size: large;"></i><br>
 							</td>								
@@ -161,7 +161,7 @@
 			<!-- RRList2 출력. -->				
 			<table class="tb_recruit">
 				<tr style="width: 100px; height: 140px; text-align: left;">
-					<c:forEach begin="5" end="8" varStatus="i">
+					<c:forEach begin="7" end="10" varStatus="i">
 						<td style="width: 5px; height: 5px;">
 							<div id="recr${i.index-1 }" onmouseover="" style="cursor: pointer;">
 								<div class="table_div">
@@ -229,9 +229,9 @@
 			// 채용공고 리스트
 			
 			// 지금은 12개인데...
-			<c:forEach begin="1" end="12" varStatus="i">
+			<c:forEach begin="1" end="10" varStatus="i">
 				$("#recr${i.index-1 }").on("click", function(){
-					//alert("${i.index-1 }"); 첫번째 채용공고 : i.index-1 -> '0'
+					alert("${i.index-1 }"); // 첫번째 채용공고 : i.index-1 -> '0'
 					
 					$("#recruit_code").val(${recrList.get(i.index-1).recruit_code});
 					

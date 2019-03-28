@@ -51,4 +51,8 @@
 		<put-attribute name="content" value="/WEB-INF/views/recruit/recrSearch.jsp"/>
 	</definition>	
 	
+	<definition name="interestTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/recruit/interest.jsp"/>
+	</definition>	
+	
 </tiles-definitions>
