@@ -61,6 +61,11 @@ public class RecruitController {
 	private List<String> one_list;
 	private List<List<String>> com_list;
 	
+	// 채용공고 페이지에 출력할 추천채용공고 리스트 사이즈.
+	private int RRList1Size = 4;
+	private int RRList2Size = 8;
+
+	// 채용공고 페이지 요청.
 	@RequestMapping("/recruit")
 	public String recruit(HttpSession session, String alarm_flag, String search_code, Model model) throws IOException{
 		// 크롤링해서 값 넣기 어떻게 했더라. 삼성전자 데이터 있으면 리턴. 일단 비활성화.
@@ -79,7 +84,7 @@ public class RecruitController {
 		
 		// 임시로 session에 user값 넣기. -> 우선은 이렇게 해놓고 개발하고 나중에는 로그인 컨트롤러에서
 		// 처리하는 방식으로 바꿔야 함. 'File Search - usersVo (usersV?)'
-		session.setAttribute("usersVo", usersService.select_userInfo("brown"));
+		session.setAttribute("usersVo", usersService.select_userInfo("kim"));
 		
 		// 저장한 검색어 리스트 넘기기.
 		Search_logVo sVo = new Search_logVo();
@@ -89,13 +94,14 @@ public class RecruitController {
 		sVo.setSearch_save("2");
 		List<Search_logVo> saveList = search_logService.getSaveList(sVo);
 		
-		logger.debug("check1");
 		model.addAttribute("saveList", saveList);
 		
 		List<RecruitVo> recrList = recrService.getAllRecr();
 		model.addAttribute("recrList", recrList);
 		
 		// 회사 리스트 - 혹시 나중에 느려지면 필요한 정보만 가져오는 쿼리 새로 만들기.
+		// 이 부분은 처음에 리스트를 출력하려고 전체리스트를 가져온 거고 추천리스트 두개를 만들면
+		// 불필요한 부분임.
 		List<CorporationVo> corpList = corpService.select_allCorps();
 		List<String> corpImgList = new ArrayList<>();
 		List<String> corpNmList = new ArrayList<>();
@@ -112,8 +118,47 @@ public class RecruitController {
 		
 		// 조회한 항목(마지막으로 조회한 채용공고) model에 넣기.
 		// 여기서 가장 큰 수를 구한다음 조회, 조회 하지말고 -> 'recrService.getLastViewRecr'
+		// 조회한 채용공고가 없는 경우도 처리해줘야 함.
 		RecruitVo LVRVo = recrService.getLastViewRecr(uVo.getUser_id());
-		model.addAttribute("LVRVo", LVRVo);
+		List<RecruitVo> RRList1 = new ArrayList<>();
+		if(LVRVo == null){
+			LVRVo = new RecruitVo();
+			LVRVo.setRecruit_title("원하는 채용공고를 찾아보세요!");
+			LVRVo.setJob_local("회원님에게 맞는 채용공고를 추천해드립니다.");
+			
+			// 이 글을 클릭했을 경우 채용공고 검색 페이지로 이동. '전체 - 전국'
+			// 값이 있는 경우는 그 채용공고 상세페이지로 이동하지.
+			// /recr_detail - recruit_code
+			// 이동할 때 recruit_title을 확인해서 '원하는 채용공고를'로 시작하면 검색 페이지로 
+			// 이동하도록 하자.
+			model.addAttribute("LVRVo", LVRVo);
+			
+			// jsp에서 <c:if test="${RRList == null"> 이면 추천채용공고 리스트 출력하지 않기.
+		}else{
+			model.addAttribute("LVRVo", LVRVo);
+			
+			// 조회한 항목을 참고한 추천채용공고리스트 넘기기. (RRList1)
+			RRList1 = recrService.getRecrByLocal(LVRVo.getJob_local());
+			
+			// 조회한 항목은 제외하고 나머지를 리스트에 넣도록 하자. (parameterMap 사용? 일단 X)
+			// 여기서 list size가 0이 될수 있으니 size가 RRList1Size를 넘지 않는 경우 비슷한 업무를 찾아
+			// 넣어주는 기능 만들기.
+			
+			List<String> corpImgList1 = new ArrayList<>();
+			List<String> corpNmList1 = new ArrayList<>();
+
+			for(int i=0; i < RRList1.size(); i++){
+				RecruitVo rVo = RRList1.get(i);
+				CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+				corpImgList1.add(cVo.getLogo_path());
+				corpNmList1.add(cVo.getCorp_name());
+			}
+			
+			model.addAttribute("corpImgList1", corpImgList1);		
+			model.addAttribute("corpNmList1", corpNmList1);			
+		}
+		
+		model.addAttribute("RRList1", RRList1);
 		
 		return "recruitTiles";
 	}	
@@ -327,8 +372,9 @@ public class RecruitController {
 		}		
 	}
 
-	@RequestMapping("/temp_search")
-	public String temp_search(HttpServletRequest req, String search_word, String search_local, 
+	// 채용공고 검색 페이지 요청.
+	@RequestMapping("/recrSearch")
+	public String recrSearch(HttpServletRequest req, String search_word, String search_local, 
 			HttpSession session, Model model){
 		// 검색어 DB에 저장하기
 		Search_logVo sVo = new Search_logVo();
@@ -340,8 +386,10 @@ public class RecruitController {
 		}else{
 			sVo.setSearch_local(search_local);			
 		}
+		
 		sVo.setSearch_code(String.valueOf(search_logService.getAllCnt()+1));
-		// search_save 임시로 2로 설정. -> 나중에 1로 바꾸기. 순서도 역순으로 해놓았음.
+		
+		// search_save 임시로 2로 설정. -> 나중에 1로 바꾸기.
 		sVo.setSearch_save("2");
 		
 		UsersVo uVo = (UsersVo) session.getAttribute("usersVo");
@@ -353,7 +401,7 @@ public class RecruitController {
 		}
 		search_logService.insertSearch_log(sVo);
 		
-		return "redirect:"+req.getContextPath()+"/recruit";
+		return "recrSearchTiles";
 	}	
 	
 	// 채용공고 상세화면.

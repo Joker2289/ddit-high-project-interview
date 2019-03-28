@@ -109,4 +109,20 @@ public class RecruitServiceImpl implements IRecruitService{
 		return LVRVo;
 	}
 
+	/**
+	 * 
+	 * Method : getRecrByLocal
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param job_local
+	 * @return
+	 * Method 설명 : 특정 업무지역으로 채용공고 목록 조회. 
+	 */
+	@Override
+	public List<RecruitVo> getRecrByLocal(String job_local) {
+		List<RecruitVo> RRList1 = recrDao.getRecrByLocal(job_local);
+		
+		return RRList1;
+	}
+
 }
