@@ -80,6 +80,17 @@ public interface IRecruitDao {
 	 * Method 설명 : 특정 업무지역으로 채용공고 목록 조회.
 	 */
 	List<RecruitVo> getRecrByLocal(String job_local);
+
+	/**
+	 * 
+	 * Method : getRecrByType
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param type
+	 * @return
+	 * Method 설명 : 특정 업무분야로 채용공고 목록 조회.
+	 */
+	List<RecruitVo> getRecrByType(String type);
 	
 	
 	

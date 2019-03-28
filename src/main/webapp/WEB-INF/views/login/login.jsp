@@ -21,9 +21,9 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="/css/login/vendor/animsition/css/animsition.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/css/login/login/vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/login/vendor/select2/select2.min.css">
 <!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="/css/login/login/vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="/css/login/vendor/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="/css/login/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/css/login/css/main.css">

@@ -57,7 +57,7 @@ public class PostVo {
 	@Override
 	public String toString() {
 		return "PostVo [post_code=" + post_code + ", mem_id=" + mem_id + ", post_contents=" + post_contents
-				+ ", post_date=" + post_date + "writer_name=" +  writer_name + "]";
+				+ ", post_date=" + post_date + ", writer_name=" +  writer_name + "]";
 	}
 	
 }

@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +19,7 @@ import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
 import kr.or.ddit.save_recruit.service.ISave_recruitService;
+import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.test.WebTestConfig;
 import kr.or.ddit.users.model.UsersVo;
 
@@ -31,6 +33,9 @@ public class RecruitControllerTest extends WebTestConfig{
 	
 	@Resource(name="save_recruitService")
 	private ISave_recruitService srecrService;	
+	
+	@Resource(name="search_logService")
+	private ISearch_logService SLService;	
 	
 	/**
 	 * 
@@ -136,6 +141,34 @@ public class RecruitControllerTest extends WebTestConfig{
 		/***Then***/
 		assertEquals("recruitTiles", viewName);
 		assertNotNull(RRList1);
+	}
+	
+	/**
+	 * 
+	 * Method : testRecrSearch
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 채용공고검색 페이지 요청 테스트.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testRecrSearch() throws Exception {
+		/***Given***/
+		MockHttpServletRequest req = new MockHttpServletRequest();
+		MockHttpSession session = new MockHttpSession();
+		String search_word = "google";
+		String search_local = null;
+
+		/***When***/
+		MvcResult mvcResult = mockMvc.perform(get("/recrSearch").session(session).param("search_word", search_word).param("search_local", search_local)).andReturn();
+		ModelAndView mav = mvcResult.getModelAndView();
+		String viewName = mav.getViewName();
+
+		/***Then***/
+		assertEquals("recrSearchTiles", viewName);
+		
+		// 테스트 돌려도 insert가 되네.
+		SLService.deleteSearch_logForTest(String.valueOf(SLService.getAllCnt()));
 	}
 	
 	

@@ -24,6 +24,12 @@
 			display: inline-block;
 		}
 		
+		.div_list{
+			width: 1000px;
+			height: 670px;
+			display: inline-block;
+		}
+		
 		
 	</style>
 	
@@ -40,7 +46,7 @@
 			<i class="far fa-check-circle"></i>
 			채용공고 상태 파악
 		</a> │ 
-		<a href="">
+		<a href="${pageContext.request.contextPath }/interest">
 			<i class="fas fa-pencil-alt"></i>
 			커리어 관심분야
 		</a>
@@ -107,12 +113,21 @@
 	<form id="frm_detail" action="${pageContext.request.contextPath }/recr_detail" method="post">
 		<input type="hidden" id="recruit_code" name="recruit_code">
 	
-	   	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px; margin-top: 20px;">
+	   	<div class="div_list" style="border: 1px solid; padding: 10px; margin-bottom: 150px; margin-top: 20px;">
 	   		<div style="text-align: left; margin-bottom: 10px;">
 	   			<strong>조회하신 항목을 참고하여..</strong> <br> 
-	   			<a href="${pageContext.request.contextPath }/recr_detail?recruit_code=${LVRVo.recruit_code }">
-	   				${LVRVo.recruit_title } - ${LVRVo.job_local }
-	   			</a><br>
+	   			<c:choose>
+	   				<c:when test="${LVRVo.recruit_title.substring(0, 9) == '원하는 채용공고를' }">
+			   			<a href="${pageContext.request.contextPath }/recrSearch">
+			   				${LVRVo.recruit_title } - ${LVRVo.job_local }
+			   			</a><br>
+	   				</c:when>
+	   				<c:otherwise>
+			   			<a href="${pageContext.request.contextPath }/recr_detail?recruit_code=${LVRVo.recruit_code }">
+			   				${LVRVo.recruit_title } - ${LVRVo.job_local }
+			   			</a><br>
+	   				</c:otherwise>
+	   			</c:choose>
 	   		</div>
 	   		<!-- RRList1가 있으면 출력. -->
 	   		<c:if test="${RRList1.size() >= 1 }">
@@ -126,7 +141,8 @@
 									</div> <br>
 									<strong>${RRList1.get(i.index).recruit_title }</strong> <br>
 									${corpNmList1.get(i.index) } <br>
-									${RRList1.get(i.index).job_local }
+									${RRList1.get(i.index).job_local } <br>
+									${RRList1.get(i.index).job_type }
 								</div>
 								<i class="far fa-bookmark" style="margin-top: 10px; font-size: large;"></i><br>
 							</td>								
@@ -140,12 +156,12 @@
 			<br><br> 
 			<div style="text-align: left; margin-bottom: 10px;">
 				<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br> [관심 분야 · 관심 분야 · 관심 분야 ...] 
-				<a href="">관심 분야 설정</a><br>
+				<a href="${pageContext.request.contextPath }/interest">관심 분야 설정</a><br>
 			</div>
 			<!-- RRList2 출력. -->				
 			<table class="tb_recruit">
 				<tr style="width: 100px; height: 140px; text-align: left;">
-					<c:forEach begin="5" end="8" varStatus="i">
+					<c:forEach begin="7" end="10" varStatus="i">
 						<td style="width: 5px; height: 5px;">
 							<div id="recr${i.index-1 }" onmouseover="" style="cursor: pointer;">
 								<div class="table_div">
@@ -159,24 +175,12 @@
 						</td>								
 					</c:forEach>
 				</tr>
-				<tr style="width: 100px; height: 140px; text-align: left;">
-					<c:forEach begin="9" end="12" varStatus="i">
-						<td style="width: 5px; height: 5px;">
-							<div id="recr${i.index-1 }" onmouseover="" style="cursor: pointer;">
-								<div class="table_div">
-									${corpImgList.get(i.index-1) }
-								</div> <br>
-								<strong>${recrList.get(i.index-1).recruit_title }</strong> <br>
-								${corpNmList.get(i.index-1) } <br>
-								${recrList.get(i.index-1).job_local }
-							</div>
-							<i class="far fa-bookmark" style="margin-top: 10px; font-size: large;"></i><br>
-						</td>								
-					</c:forEach>
-				</tr>			
 			</table> <br><br><br>   				
-			<br>	                				
-		</div>					
+			<br>	 
+			<div style="border-top: 1px solid;">              				
+				<a href="">계속 검색</a>
+			</div>
+		</div>		
 		<!-- 스크랩 안한 아이콘 -->
 		<!-- <i class="far fa-bookmark"></i> -->
 	</form>
@@ -225,9 +229,9 @@
 			// 채용공고 리스트
 			
 			// 지금은 12개인데...
-			<c:forEach begin="1" end="12" varStatus="i">
+			<c:forEach begin="1" end="10" varStatus="i">
 				$("#recr${i.index-1 }").on("click", function(){
-					//alert("${i.index-1 }"); 첫번째 채용공고 : i.index-1 -> '0'
+					alert("${i.index-1 }"); // 첫번째 채용공고 : i.index-1 -> '0'
 					
 					$("#recruit_code").val(${recrList.get(i.index-1).recruit_code});
 					

@@ -1,5 +1,6 @@
 package kr.or.ddit.post.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -68,24 +69,43 @@ public class PostController {
 			
 		}
 		
-//		paginationVo.setMem_id("goo8455");
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("timelinePost", timelinePost);
 		
 		return "timeLineTiles";
 	}
 	
-	@RequestMapping(path={"/writePost"}, method={RequestMethod.POST})
-	public String writePost(Model model, PostVo postVo){
-		
-		return "redirect:/timeline";
-	}
+//	@RequestMapping(path={"/writePost"}, method={RequestMethod.POST})
+//	public String writePost(Model model, PostVo postVo){
+//		
+//		return "redirect:/timeline";
+//	}
 	
 	@ResponseBody
 	@RequestMapping(value="/timeline", method=RequestMethod.POST)
-	public PostVo infiniteScroll(@RequestBody PostVo postVo){
+	public List<PostVo> infiniteScroll(@RequestBody PostVo postVo, PaginationVo paginationVo, HttpServletRequest request, Model model){
 		
-		return postVo;
+		List<PostVo> afterPost = new ArrayList<PostVo>();
+		
+		MemberVo member = (MemberVo) request.getSession().getAttribute("memberVO");
+		
+		
+		paginationVo.setMem_id(member.getMem_id());
+		
+		if(member.getMem_division().equals("1")){
+			UsersVo userInfo = usersService.select_userInfo(member.getMem_id());
+			model.addAttribute("userInfo", userInfo);
+		} else if(member.getMem_division().equals("2")){
+			CorporationVo corpInfo = corporationService.select_corpInfo(member.getMem_id());
+			model.addAttribute("corpInfo", corpInfo);
+		} else {
+			
+		}
+		
+		afterPost = postService.select_timelinePost(paginationVo);
+		model.addAttribute("timelinePost", afterPost);
+		
+		return afterPost;
 	}
 	
 	

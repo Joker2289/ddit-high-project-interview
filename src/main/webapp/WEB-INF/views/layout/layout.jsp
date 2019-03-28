@@ -12,16 +12,12 @@
 <link href="/css/header.css" rel="stylesheet">
 <link href="/css/personalConnection.css" rel="stylesheet">
 <link href="/css/timeline/writemodal.css" rel="stylesheet">
-<!-- Favicon -->
-<link rel="shortcut icon" href="favicon.ico" />
 
-<!-- jQuery -->
-<!-- <script type="text/javascript" src="/js/jquery.js"></script>
-<script type="text/javascript" src="/js/jquery-ui.min.js"></script>-->
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
 <script>
+
+
 $(document).ready(function() {
+	
 	// 검색창
 	$("#search").on("click", function(){
 		$("#dropdownSearch").empty();
@@ -44,6 +40,7 @@ $(document).ready(function() {
 			$("#dropdownProfile").empty();
 		});
 	});
+	
 	
 	
 	// append이후에 #search.on 메서드 실행이 안되므로 
@@ -73,9 +70,11 @@ $(document).ready(function() {
 	});
 	
 });
+
 </script>
 </head>
 <body>
+
 <tiles:insertAttribute name="header" />
 <tiles:insertAttribute name="content" />
 	
