@@ -24,6 +24,8 @@ public class Save_recruitServiceImplTest extends LogicTestConfig{
 	@Test
 	public void testInsertSrecr() {
 		/***Given***/
+		srecrService.deleteForTest("1");
+		
 		Save_recruitVo sVo = new Save_recruitVo();
 		sVo.setRecruit_code("1");
 		sVo.setSave_code("1");

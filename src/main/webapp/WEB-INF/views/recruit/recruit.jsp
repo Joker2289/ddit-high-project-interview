@@ -37,6 +37,7 @@
 <section style="text-align: center;">
    	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px;">
 		<a href="">
+<%-- 		<a href="${pageContext.request.contextPath }/srecr"> --%>
 			<i class="far fa-check-circle"></i>
 			채용공고 상태 파악
 		</a> │ 
@@ -108,8 +109,8 @@
 		<input type="hidden" id="recruit_code" name="recruit_code">
 	
 	   	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px; margin-top: 20px;">
-	   		<div style="text-align: left;">
-	   			<strong>조회하신 항목을 참고하여..</strong> <br> [조회한 항목이름 - 지역] <br>
+	   		<div style="text-align: left; margin-bottom: 10px;">
+	   			<strong>조회하신 항목을 참고하여..</strong> <br> ${LVRVo.recruit_title } <br>
 	   		</div>
 			<table class="tb_recruit">
 				<tr style="width: 100px; height: 140px; text-align: left;">
@@ -131,7 +132,7 @@
 		           		
 		         
 			<br><br> 
-			<div style="text-align: left;">
+			<div style="text-align: left; margin-bottom: 10px;">
 				<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br> [관심 분야 · 관심 분야 · 관심 분야 ...] 
 				<a href="">관심 분야 설정</a><br>
 			</div>

@@ -38,6 +38,17 @@
 		 WHERE RECRUIT_CODE = #{recruit_code}	
 	</select>
 	
+	<!-- 특정 유저가 마지막으로 조회한 채용공고 조회. -->
+	<select id="getLastViewRecr" parameterType="String" resultType="recruitVo">
+		SELECT *
+		  FROM RECRUIT
+		 WHERE RECRUIT_CODE = (SELECT RECRUIT_CODE
+		                         FROM SAVE_RECRUIT
+		                        WHERE SAVE_CODE = (SELECT MAX(SAVE_CODE)
+		                                             FROM SAVE_RECRUIT
+		                                            WHERE USER_ID = #{user_id}))
+	</select>
+	
 
   	
   	

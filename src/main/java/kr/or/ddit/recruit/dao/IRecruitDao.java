@@ -58,6 +58,17 @@ public interface IRecruitDao {
 	 * Method 설명 : 특정 채용공고 조회.
 	 */
 	RecruitVo getRecr(String recruit_code);
+
+	/**
+	 * 
+	 * Method : getLastViewRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 특정 유저가 마지막으로 조회한 채용공고 조회.
+	 */
+	RecruitVo getLastViewRecr(String user_id);
 	
 	
 	
