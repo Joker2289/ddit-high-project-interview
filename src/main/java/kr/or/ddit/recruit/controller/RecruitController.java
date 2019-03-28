@@ -25,6 +25,8 @@ import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
+import kr.or.ddit.save_recruit.model.Save_recruitVo;
+import kr.or.ddit.save_recruit.service.ISave_recruitService;
 import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.users.model.UsersVo;
@@ -50,12 +52,20 @@ public class RecruitController {
 	
 	@Resource(name="recruitService")
 	private IRecruitService recrService;
+	
+	@Resource(name="save_recruitService")
+	private ISave_recruitService srecrService;
 
 	private List<String> img_list;
 	private List<String> str_list;
 	private List<String> one_list;
 	private List<List<String>> com_list;
 	
+	// 채용공고 페이지에 출력할 추천채용공고 리스트 사이즈.
+	private int RRList1Size = 6; // 나중에 16쯤으로.
+	private int RRList2Size = 4;
+
+	// 채용공고 페이지 요청.
 	@RequestMapping("/recruit")
 	public String recruit(HttpSession session, String alarm_flag, String search_code, Model model) throws IOException{
 		// 크롤링해서 값 넣기 어떻게 했더라. 삼성전자 데이터 있으면 리턴. 일단 비활성화.
@@ -72,8 +82,9 @@ public class RecruitController {
 			search_logService.updateSearch_log(sVo);
 		}
 		
-		// 임시로 session에 user값 넣기.
-		session.setAttribute("usersVo", usersService.select_userInfo("brown"));
+		// 임시로 session에 user값 넣기. -> 우선은 이렇게 해놓고 개발하고 나중에는 로그인 컨트롤러에서
+		// 처리하는 방식으로 바꿔야 함. 'File Search - usersVo (usersV?)'
+		session.setAttribute("usersVo", usersService.select_userInfo("kim"));
 		
 		// 저장한 검색어 리스트 넘기기.
 		Search_logVo sVo = new Search_logVo();
@@ -83,13 +94,14 @@ public class RecruitController {
 		sVo.setSearch_save("2");
 		List<Search_logVo> saveList = search_logService.getSaveList(sVo);
 		
-		logger.debug("check1");
 		model.addAttribute("saveList", saveList);
 		
 		List<RecruitVo> recrList = recrService.getAllRecr();
 		model.addAttribute("recrList", recrList);
 		
 		// 회사 리스트 - 혹시 나중에 느려지면 필요한 정보만 가져오는 쿼리 새로 만들기.
+		// 이 부분은 처음에 리스트를 출력하려고 전체리스트를 가져온 거고 추천리스트 두개를 만들면
+		// 불필요한 부분임.
 		List<CorporationVo> corpList = corpService.select_allCorps();
 		List<String> corpImgList = new ArrayList<>();
 		List<String> corpNmList = new ArrayList<>();
@@ -103,6 +115,113 @@ public class RecruitController {
 		
 		model.addAttribute("corpImgList", corpImgList);		
 		model.addAttribute("corpNmList", corpNmList);		
+		
+		// 조회한 항목(마지막으로 조회한 채용공고) model에 넣기.
+		// 여기서 가장 큰 수를 구한다음 조회, 조회 하지말고 -> 'recrService.getLastViewRecr'
+		// 조회한 채용공고가 없는 경우도 처리해줘야 함.
+		RecruitVo LVRVo = recrService.getLastViewRecr(uVo.getUser_id());
+		List<RecruitVo> RRList1 = new ArrayList<>();
+		if(LVRVo == null){
+			LVRVo = new RecruitVo();
+			LVRVo.setRecruit_title("원하는 채용공고를 찾아보세요!");
+			LVRVo.setJob_local("회원님에게 맞는 채용공고를 추천해드립니다.");
+			
+			// 이 글을 클릭했을 경우 채용공고 검색 페이지로 이동. '전체 - 전국'
+			// 값이 있는 경우는 그 채용공고 상세페이지로 이동하지.
+			// /recr_detail - recruit_code
+			// 이동할 때 recruit_title을 확인해서 '원하는 채용공고를'로 시작하면 검색 페이지로 
+			// 이동하도록 하자.
+			model.addAttribute("LVRVo", LVRVo);
+			
+			// jsp에서 <c:if test="${RRList == null"> 이면 추천채용공고 리스트 출력하지 않기.
+		}else{
+			model.addAttribute("LVRVo", LVRVo);
+			
+			// 조회한 항목을 참고한 추천채용공고리스트 넘기기. (RRList1)
+			RRList1 = recrService.getRecrByLocal(LVRVo.getJob_local());
+			
+			// 조회한 항목은 제외하고 나머지를 리스트에 넣도록 하자. (parameterMap 사용? 일단 X)
+			// 여기서 list size가 0이 될수 있으니 size가 RRList1Size를 넘지 않는 경우 비슷한 업무를 찾아
+			// 넣어주는 기능 만들기.
+			// job_type -> POS / springboot / 알고리즘
+			if(RRList1.size() < RRList1Size){
+				String type1 = LVRVo.getJob_type().split(" / ")[0];
+				List<RecruitVo> searchList1 = recrService.getRecrByType(type1);
+				for(RecruitVo rVo : searchList1){
+					boolean insertFlag = true;
+					
+					for(RecruitVo RRVo : RRList1){
+						if(RRVo.getRecruit_code().equals(rVo.getRecruit_code())){
+							// 중복되면 넣지 않기.
+							insertFlag = false;
+							break;
+						}
+					}
+					
+					if(insertFlag){
+						RRList1.add(rVo);
+					}
+				}
+				
+				String type2 = LVRVo.getJob_type().split(" / ")[1];
+				List<RecruitVo> searchList2 = recrService.getRecrByType(type2);
+				for(RecruitVo rVo : searchList2){
+					boolean insertFlag = true;
+					
+					for(RecruitVo RRVo : RRList1){
+						if(RRVo.getRecruit_code().equals(rVo.getRecruit_code())){
+							// 중복되면 넣지 않기.
+							insertFlag = false;
+							break;
+						}
+					}
+					
+					if(insertFlag){
+						RRList1.add(rVo);
+					}
+				}
+				
+				String type3 = LVRVo.getJob_type().split(" / ")[2];
+				List<RecruitVo> searchList3 = recrService.getRecrByType(type3);
+				for(RecruitVo rVo : searchList3){
+					boolean insertFlag = true;
+					
+					for(RecruitVo RRVo : RRList1){
+						if(RRVo.getRecruit_code().equals(rVo.getRecruit_code())){
+							// 중복되면 넣지 않기.
+							insertFlag = false;
+							break;
+						}
+					}
+					
+					if(insertFlag){
+						RRList1.add(rVo);
+					}
+				}
+				// 중복되는 걸 제거해야 됨.
+			}
+			
+			// RRList1.size()가 RRList1Size가 될때까지 마지막 항목 지움.
+			while(RRList1.size() > RRList1Size){
+				RRList1.remove(RRList1.size()-1);
+			}
+			
+			
+			List<String> corpImgList1 = new ArrayList<>();
+			List<String> corpNmList1 = new ArrayList<>();
+
+			for(int i=0; i < RRList1.size(); i++){
+				RecruitVo rVo = RRList1.get(i);
+				CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+				corpImgList1.add(cVo.getLogo_path());
+				corpNmList1.add(cVo.getCorp_name());
+			}
+			
+			model.addAttribute("corpImgList1", corpImgList1);		
+			model.addAttribute("corpNmList1", corpNmList1);			
+		}
+		
+		model.addAttribute("RRList1", RRList1);
 		
 		return "recruitTiles";
 	}	
@@ -316,21 +435,27 @@ public class RecruitController {
 		}		
 	}
 
-	@RequestMapping("/temp_search")
-	public String temp_search(HttpServletRequest req, String search_word, String search_local, 
-			HttpSession session, Model model){
+	// 검색결과 저장 후 채용공고 검색 페이지 요청.
+	@RequestMapping("/recrSearch")
+	public String recrSearch(String search_word, String search_local, HttpSession session, Model model){
 		// 검색어 DB에 저장하기
 		Search_logVo sVo = new Search_logVo();
 //		logger.debug("search_local? : {}", search_local);
-		sVo.setSearch_word(search_word);
+		if(search_word == null || search_word.equals("")){
+			sVo.setSearch_word("전체");
+		}else{
+			sVo.setSearch_word(search_word);
+		}
 		
-		if(search_local == null){
+		if(search_local == null || search_local.equals("")){
 			sVo.setSearch_local("전국");
 		}else{
 			sVo.setSearch_local(search_local);			
 		}
+		
 		sVo.setSearch_code(String.valueOf(search_logService.getAllCnt()+1));
-		// search_save 임시로 2로 설정. -> 나중에 1로 바꾸기. 순서도 역순으로 해놓았음.
+		
+		// search_save 임시로 2로 설정. -> 나중에 1로 바꾸기.
 		sVo.setSearch_save("2");
 		
 		UsersVo uVo = (UsersVo) session.getAttribute("usersVo");
@@ -342,12 +467,23 @@ public class RecruitController {
 		}
 		search_logService.insertSearch_log(sVo);
 		
-		return "redirect:"+req.getContextPath()+"/recruit";
+		return "recrSearchTiles";
 	}	
 	
 	// 채용공고 상세화면.
 	@RequestMapping("/recr_detail")
-	public String recr_detail(String recruit_code, Model model){
+	public String recr_detail(String recruit_code, HttpSession session, Model model){
+		// 회원 정보를 가져와서 채용공고저장에 마지막으로 조회한 채용공고 저장. 마지막 채용공고를 따로 
+		// 설정하지는 않고 회원의 채용공고저장 리스트에서 save_code가 가장 큰 데이터를 확인하자.
+		Save_recruitVo sVo = new Save_recruitVo();
+		sVo.setRecruit_code(recruit_code);
+		sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));
+		sVo.setSave_flag("f");
+		
+		UsersVo uVo = (UsersVo) session.getAttribute("usersVo");
+		sVo.setUser_id(uVo.getUser_id());
+		srecrService.insertSrecr(sVo);
+		
 		RecruitVo recr = recrService.getRecr(recruit_code);
 		CorporationVo corp = corpService.select_corpInfo(recr.getCorp_id());
 		model.addAttribute("recr", recr);
@@ -356,12 +492,16 @@ public class RecruitController {
 		return "recr_detailTiles";
 	}
 	
-
+	// 채용공고저장 페이지.
+	@RequestMapping("/srecr")
+	public String srecr(){
+		
+		return "srecrTiles";
+	}
+	
+	
+	
 }
-
-
-
-
 
 
 

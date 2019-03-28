@@ -35,7 +35,7 @@
             	</a>
             </li>
             <li class="menu">
-            	<a href="#" class="menugroup" style="padding-top: 7px;">
+            	<a href="/recruit" class="menugroup" style="padding-top: 7px;">
             		<div><span style="font-size: 20px;"><i class="fas fa-briefcase"></i></span></div>
             		<div>채용공고</div>
             	</a>

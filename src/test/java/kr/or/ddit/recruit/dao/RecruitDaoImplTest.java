@@ -52,6 +52,43 @@ public class RecruitDaoImplTest extends LogicTestConfig{
 		assertNotNull(recrList);
 	}
 	
+	/**
+	 * 
+	 * Method : testGetLastViewRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 특정 유저가 마지막으로 조회한 채용공고 조회.
+	 */
+	@Test
+	public void testGetLastViewRecr() {
+		/***Given***/
+
+		/***When***/
+		RecruitVo LVRVo = recrDao.getLastViewRecr("brown");
+
+		/***Then***/
+		assertNotNull(LVRVo);
+	}
+	
+	/**
+	 * 
+	 * Method : testGetRecrByType
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 특정 업무분야로 채용공고 목록 조회.
+	 */
+	@Test
+	public void testGetRecrByType() {
+		/***Given***/
+
+		/***When***/
+		List<RecruitVo> searchList = recrDao.getRecrByType("웹테스터");
+
+		/***Then***/
+		assertNotNull(searchList);
+	}
+	
+	
 	
 
 }
