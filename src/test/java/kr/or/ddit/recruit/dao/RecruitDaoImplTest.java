@@ -70,6 +70,25 @@ public class RecruitDaoImplTest extends LogicTestConfig{
 		assertNotNull(LVRVo);
 	}
 	
+	/**
+	 * 
+	 * Method : testGetRecrByType
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 특정 업무분야로 채용공고 목록 조회.
+	 */
+	@Test
+	public void testGetRecrByType() {
+		/***Given***/
+
+		/***When***/
+		List<RecruitVo> searchList = recrDao.getRecrByType("웹테스터");
+
+		/***Then***/
+		assertNotNull(searchList);
+	}
+	
+	
 	
 
 }
