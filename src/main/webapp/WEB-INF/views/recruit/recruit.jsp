@@ -55,7 +55,7 @@
 		</span>
 	</div>
 	
-	<form action="${pageContext.request.contextPath }/temp_search" id="frm_search" method="post">
+	<form action="${pageContext.request.contextPath }/recrSearch" id="frm_search" method="post">
 		<input type="hidden" id="search_word" name="search_word">
 		<input type="hidden" id="search_local" name="search_local">
 	
@@ -103,31 +103,38 @@
 		</div>
 	</form>	
 	
-	
+
 	<form id="frm_detail" action="${pageContext.request.contextPath }/recr_detail" method="post">
 		<input type="hidden" id="recruit_code" name="recruit_code">
 	
 	   	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px; margin-top: 20px;">
 	   		<div style="text-align: left; margin-bottom: 10px;">
-	   			<strong>조회하신 항목을 참고하여..</strong> <br> ${LVRVo.recruit_title } <br>
+	   			<strong>조회하신 항목을 참고하여..</strong> <br> 
+	   			<a href="${pageContext.request.contextPath }/recr_detail?recruit_code=${LVRVo.recruit_code }">
+	   				${LVRVo.recruit_title } - ${LVRVo.job_local }
+	   			</a><br>
 	   		</div>
-			<table class="tb_recruit">
-				<tr style="width: 100px; height: 140px; text-align: left;">
-					<c:forEach begin="1" end="4" varStatus="i">
-						<td style="width: 5px; height: 5px;">
-							<div id="recr${i.index-1 }" onmouseover="" style="cursor: pointer;">
-								<div class="table_div">
-									${corpImgList.get(i.index-1) }
-								</div> <br>
-								<strong>${recrList.get(i.index-1).recruit_title }</strong> <br>
-								${corpNmList.get(i.index-1) } <br>
-								${recrList.get(i.index-1).job_local }
-							</div>
-							<i class="far fa-bookmark" style="margin-top: 10px; font-size: large;"></i><br>
-						</td>								
-					</c:forEach>
-				</tr>
-			</table> <br>	                		
+	   		<!-- RRList1가 있으면 출력. -->
+	   		<c:if test="${RRList1.size() >= 1 }">
+				<table class="tb_recruit">
+					<tr style="width: 100px; height: 140px; text-align: left;">
+						<c:forEach items="${RRList1 }" varStatus="i" var="RRVo">
+							<td style="width: 5px; height: 5px;">
+								<div id="recr${i.index }" onmouseover="" style="cursor: pointer;">
+									<div class="table_div">
+										${corpImgList1.get(i.index) }
+									</div> <br>
+									<strong>${RRList1.get(i.index).recruit_title }</strong> <br>
+									${corpNmList1.get(i.index) } <br>
+									${RRList1.get(i.index).job_local }
+								</div>
+								<i class="far fa-bookmark" style="margin-top: 10px; font-size: large;"></i><br>
+							</td>								
+						</c:forEach>
+					</tr>
+				</table>
+			</c:if> 
+			<br>	                		
 		           		
 		         
 			<br><br> 
@@ -135,7 +142,7 @@
 				<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br> [관심 분야 · 관심 분야 · 관심 분야 ...] 
 				<a href="">관심 분야 설정</a><br>
 			</div>
-			
+			<!-- RRList2 출력. -->				
 			<table class="tb_recruit">
 				<tr style="width: 100px; height: 140px; text-align: left;">
 					<c:forEach begin="5" end="8" varStatus="i">
@@ -187,7 +194,7 @@
 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			console.log("docu");
+			console.log("RRlist1? : ${RRList1 }");
 			
 			// 채용공고 검색
 			$("#btn_search").on("click", function(){

@@ -3,6 +3,8 @@ package kr.or.ddit.recruit.controller;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -63,6 +65,79 @@ public class RecruitControllerTest extends WebTestConfig{
 		assertNotNull(cVo);
 	}
 
+	/**
+	 * 
+	 * Method : testSrecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 채용공고저장 페이지 요청 테스트.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testSrecr() throws Exception {
+		/***Given***/
+
+		/***When***/
+		MvcResult mvcResult = mockMvc.perform(get("/srecr")).andReturn();
+		ModelAndView mav = mvcResult.getModelAndView();
+		String viewName = mav.getViewName();
+		
+		/***Then***/
+		assertEquals("srecrTiles", viewName);
+	}
+	
+	/**
+	 * 
+	 * Method : testRecruit
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 채용공고 페이지 요청 테스트.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testRecruit() throws Exception {
+		/***Given***/
+		MockHttpSession session = new MockHttpSession();
+		String alarm_flag = null;
+
+		/***When***/
+		MvcResult mvcResult = mockMvc.perform(get("/recruit").session(session).param("alarm_flag", alarm_flag)).andReturn();
+		ModelAndView mav = mvcResult.getModelAndView();
+		String viewName = mav.getViewName();
+
+		/***Then***/
+		assertEquals("recruitTiles", viewName);
+	}
+	
+	/**
+	 * 
+	 * Method : testRRList1
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 채용공고 페이지 - 추천채용공고 리스트 테스트.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testRRList1() throws Exception {
+		/***Given***/
+		MockHttpSession session = new MockHttpSession();
+		String alarm_flag = null;
+		UsersVo uVo = new UsersVo();
+		uVo.setUser_id("brown");
+		session.setAttribute("usersVo", uVo);
+
+		/***When***/
+		MvcResult mvcResult = mockMvc.perform(get("/recruit").session(session).param("alarm_flag", alarm_flag)).andReturn();
+		ModelAndView mav = mvcResult.getModelAndView();
+		String viewName = mav.getViewName();
+		
+		List<RecruitVo> RRList1 = (List<RecruitVo>) mav.getModel().get("RRList1");
+
+		/***Then***/
+		assertEquals("recruitTiles", viewName);
+		assertNotNull(RRList1);
+	}
+	
 	
 	
 	
