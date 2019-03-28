@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"> -->
 <link href="/css/bootstrap.css" rel="stylesheet">
 <link href="/css/header.css" rel="stylesheet">
 <link href="/css/personalConnection.css" rel="stylesheet">
@@ -21,7 +21,10 @@
 
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
 <script>
+
+
 $(document).ready(function() {
+	
 	// 검색창
 	$("#search").on("click", function(){
 		$("#dropdownSearch").empty();
@@ -44,6 +47,7 @@ $(document).ready(function() {
 			$("#dropdownProfile").empty();
 		});
 	});
+	
 	
 	
 	// append이후에 #search.on 메서드 실행이 안되므로 
@@ -73,9 +77,11 @@ $(document).ready(function() {
 	});
 	
 });
+
 </script>
 </head>
 <body>
+
 <tiles:insertAttribute name="header" />
 <tiles:insertAttribute name="content" />
 	
