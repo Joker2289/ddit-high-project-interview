@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <br>
+    <br>
+    <br>
 <label for="cover">bg_img사진</label>
 	<img
 		src="${pageContext.request.contextPath }/">
