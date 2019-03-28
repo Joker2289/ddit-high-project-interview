@@ -77,4 +77,20 @@ public class RecruitDaoImpl implements IRecruitDao{
 		return recrList;
 	}
 
+	/**
+	 * 
+	 * Method : getRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param recruit_code
+	 * @return
+	 * Method 설명 : 특정 채용공고 조회.
+	 */
+	@Override
+	public RecruitVo getRecr(String recruit_code) {
+		RecruitVo rVo = sqlSessionTemplate.selectOne("recr.getRecr", recruit_code);
+		
+		return rVo;
+	}
+
 }

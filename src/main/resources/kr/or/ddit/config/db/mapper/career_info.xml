@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="career_info">
+	
+	<!-- 경력 정보 등록 -->
+	<insert id="insert_career_info" parameterType="career_infoVo">
+		insert into career_info
+		values(
+			career_code_seq.nextval,
+			#{user_id},
+			nvl(#{job_position, jdbcType=VARCHAR}, null),
+			nvl(#{job_rank, jdbcType=VARCHAR}, null),
+			nvl(#{corporate_name, jdbcType=VARCHAR}, null),
+			nvl(#{corp_local, jdbcType=VARCHAR}, null),
+			nvl(#{join_date, jdbcType=VARCHAR}, null),
+			nvl(#{resign_date, jdbcType=VARCHAR}, null),
+			nvl(#{contents, jdbcType=VARCHAR}, null),
+			nvl(#{corp_code, jdbcType=VARCHAR}, null)
+		)
+	</insert>
+	
+</mapper>

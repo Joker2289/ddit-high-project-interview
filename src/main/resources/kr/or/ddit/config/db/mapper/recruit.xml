@@ -31,15 +31,17 @@
 		  FROM RECRUIT	
 	</select>
 	
+	<!-- 특정 채용공고 조회. -->
+	<select id="getRecr" parameterType="String" resultType="recruitVo">
+		SELECT *
+		  FROM RECRUIT
+		 WHERE RECRUIT_CODE = #{recruit_code}	
+	</select>
 	
 
   	
   	
 </mapper>
-
-
-
-
 
 
 
