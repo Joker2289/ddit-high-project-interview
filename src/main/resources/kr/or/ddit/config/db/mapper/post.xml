@@ -47,21 +47,19 @@
 		           from personal_connection
 		          where (user_id = #{mem_id} or receive_id = #{mem_id})
 		            and receive_accept='Y'
-		            and user_id != #{mem_id}
 		          union
 		         select receive_id
 		           from personal_connection
 		          where (user_id = #{mem_id} or receive_id = #{mem_id})
 		            and receive_accept='Y'
-		            and receive_id != #{mem_id}
 		          union
 		         select ref_keyword
 		           from follow
 		          where mem_id = #{mem_id}
 		            and (division='43' or division='11') ) a
-		  where mem_id = a.user_id
+		    where mem_id = a.user_id
 		  order by post_date desc)
-		  where rn between (#{page}-1) * #{pageSize}+1 and #{page}*#{pageSize}
+		 where rn between (#{page}-1) * #{pageSize}+1 and #{page}*#{pageSize}
 	</select>
 	
 </mapper>

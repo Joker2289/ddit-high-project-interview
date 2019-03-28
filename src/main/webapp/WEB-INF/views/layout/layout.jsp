@@ -12,16 +12,12 @@
 <link href="/css/header.css" rel="stylesheet">
 <link href="/css/personalConnection.css" rel="stylesheet">
 <link href="/css/timeline/writemodal.css" rel="stylesheet">
-<!-- Favicon -->
-<link rel="shortcut icon" href="favicon.ico" />
 
-<!-- jQuery -->
-<!-- <script type="text/javascript" src="/js/jquery.js"></script>
-<script type="text/javascript" src="/js/jquery-ui.min.js"></script>-->
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
 <script>
+
+
 $(document).ready(function() {
+	
 	// 검색창
 	$("#search").on("click", function(){
 		$("#dropdownSearch").empty();
@@ -36,7 +32,7 @@ $(document).ready(function() {
 	// 프로필 보기
 	$("#profile").on("click", function(){
 		$("#dropdownProfile").empty();
-		$("#dropdownProfile").append('<table id="profilemenu"><thead><tr><td style="padding-bottom: 0px;"><div class="col-md-3"style="padding-right: 0px; padding-left: 30px;"><span style="font-size: 50px;"><i class="fas fa-user-circle"></i></span></div><div class="col-md-6"style="padding-left: 30px;"><div class="col-md-6"style="width: 180px; padding-top: 12px; padding-left: 0px;">사용자이름</div><div class="col-md-6"style="width: 180px; padding-left: 0px;">간단프로필</div></div></td></tr><tr class="profiletr"><td style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;">프로필보기</td></tr><tr class="profiletr"style="border-top: 1px solid #CFD1D3; border-bottom: 1px solid #CFD1D3;"><td style="color: #666666; text-align: center;">프리미엄1개월무료이용</td></tr></thead><tbody><tr class="profiletr"><td style="color: #666666;">개인정보설정</td></tr><tr class="profiletr"><td style="color: #666666;">글&amp;활동</td></tr><tr class="profiletr"><td style="color: #666666;">채용공고</td></tr><tr class="profiletr"style="border-top: 1px solid #CFD1D3;"><td style="color: #666666;">로그아웃</td></tr></tbody></table>');
+		$("#dropdownProfile").append('<table id="profilemenu"><thead><tr><td style="padding-bottom: 0px;"><div class="col-md-3"style="padding-right: 0px; padding-left: 30px;"><span style="font-size: 50px;"><i class="fas fa-user-circle"></i></span></div><div class="col-md-6"style="padding-left: 30px;"><div class="col-md-6"style="width: 180px; padding-top: 12px; padding-left: 0px;">사용자이름</div><div class="col-md-6"style="width: 180px; padding-left: 0px;">간단프로필</div></div></td></tr><tr class="profiletr"><td style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;">프로필보기</td></tr><tr class="profiletr"style="border-top: 1px solid #CFD1D3; border-bottom: 1px solid #CFD1D3;"><td style="color: #666666; text-align: center;">프리미엄1개월무료이용</td></tr></thead><tbody><tr class="profiletr"><td style="color: #666666;">개인정보설정</td></tr><tr class="profiletr"><td style="color: #666666;">글&amp;활동</td></tr><tr class="profiletr"><td style="color: #666666;">채용공고</td></tr><tr class="profiletr"style="border-top: 1px solid #CFD1D3;"><tr class="profiletr"><td style="color: #666666;">회사</td></tr><tr class="profiletr"style="border-top: 1px solid #CFD1D3;"><td style="color: #666666;">로그아웃</td></tr></tbody></table>');
 	});
 	
 	$("#profile").on("mouseleave", function(){
@@ -44,6 +40,7 @@ $(document).ready(function() {
 			$("#dropdownProfile").empty();
 		});
 	});
+	
 	
 	
 	// append이후에 #search.on 메서드 실행이 안되므로 
@@ -73,9 +70,11 @@ $(document).ready(function() {
 	});
 	
 });
+
 </script>
 </head>
 <body>
+
 <tiles:insertAttribute name="header" />
 <tiles:insertAttribute name="content" />
 	

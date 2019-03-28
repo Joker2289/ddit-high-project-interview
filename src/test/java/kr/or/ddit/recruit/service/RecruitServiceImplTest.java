@@ -2,6 +2,9 @@ package kr.or.ddit.recruit.service;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -78,6 +81,40 @@ public class RecruitServiceImplTest extends LogicTestConfig{
 		/***Then***/
 		assertNotNull(rVo);
 	}
+
+	/**
+	 * 
+	 * Method : testGetRecrByLocal
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 특정 업무지역으로 채용공고 목록 조회 테스트.
+	 */
+	@Test
+	public void testGetRecrByLocal() {
+		/***Given***/
+
+		/***When***/
+		List<RecruitVo> RRList1 = recrService.getRecrByLocal("전북");
+
+		/***Then***/
+		assertNotNull(RRList1);
+	}
+	
+	// List size, null 테스트.
+	@Test
+	public void testList() {
+		/***Given***/
+		List<String> list = new ArrayList<String>();
+
+		/***When***/
+
+		/***Then***/
+		assertNotNull(list);
+		assertEquals(0, list.size());
+		// ArrayList 객체를 만들어놓으면 null 아니고 size는 0.
+	}
+	
+	
 	
 	
 }

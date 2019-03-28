@@ -4,20 +4,21 @@
 
     <!-- modal 영역 팝업 -->
     <div class="modal fade" id="write-modal" tabindex="-1" role="dialog" aria-labelledby="writeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog" role="document">
       	<div class="modal-content">
-      	  
-      	  <div class="modal-header">
-			<label>헤더</label>      	  	
+
+      	  <div class="modal-head">
       	  </div>
-      	  
+
       	  <div class="modal-body">
-      	  	<label>바디</label>
-      	  	<textarea name="smarteditor" id="smarteditor" rows="10" cols="100" style="width:766px; height:412px;"></textarea>
+      	  	<textarea class="write_area" name="smarteditor" id="smarteditor" style="width:620px; height:300px;"></textarea>
       	  </div>
       	  
-      	  <div class="modal-footer">
-      	  	<label>푸터</label>
+      	  <div class="modal-foot">
+      	  	<button class="btn-modal-upload"><span style="font-size: 22px;"><a><i class="far fa-images"></i></a></span></button>
+          	<button class="btn-modal-upload"><span style="font-size: 22px;"><a><i class="far fa-play-circle"></i></a></span></button>
+          	<button class="btn-modal-upload"><span style="font-size: 22px;"><a><i class="far fa-file-alt"></i></a></span></button>
+          	<button class="btn-save"><span style="font-size: 18px; color: #ffffff;">올리기</span></button>
       	  </div>
       	  
       	</div>
