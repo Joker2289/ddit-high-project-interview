@@ -7,7 +7,6 @@
 		<put-attribute name="content" value="" />
 	</definition>
 	
-	
 	<definition name="homeTiles" extends="layout" >
 		<put-attribute name="content" value="/WEB-INF/views/home.jsp" />
 	</definition>
@@ -36,8 +35,16 @@
 		<put-attribute name="content" value="/WEB-INF/views/recruit/recruit.jsp"/>
 	</definition>	
 	
-	<definition name="corporationTiles" extends="layout">
-		<put-attribute name="content" value="/WEB-INF/views/corporation/corporationHome.jsp"/>
-	</definition>		
+	<definition name="recr_detailTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/recruit/recr_detail.jsp"/>
+	</definition>
+	
+	<definition name="profileHomeTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/profile/profileHome.jsp"/>
+	</definition>	
+	
+	<definition name="srecrTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/recruit/srecr.jsp"/>
+	</definition>	
 	
 </tiles-definitions>

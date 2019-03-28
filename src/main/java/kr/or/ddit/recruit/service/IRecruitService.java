@@ -47,6 +47,28 @@ public interface IRecruitService {
 	 * Method 설명 : 전체 채용공고 조회.
 	 */
 	List<RecruitVo> getAllRecr();
+
+	/**
+	 * 
+	 * Method : getRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param recruit_code
+	 * @return
+	 * Method 설명 : 특정 채용공고 조회.
+	 */
+	RecruitVo getRecr(String recruit_code);
+
+	/**
+	 * 
+	 * Method : getLastViewRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 특정 유저가 마지막으로 조회한 채용공고 조회.
+	 */
+	RecruitVo getLastViewRecr(String user_id);
 	
 	
 	

@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
@@ -39,6 +41,7 @@ public class PostController {
 	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
 	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request){
+		// 작업 완류 후 loginController로 이동시켜야 함
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("memberVO");
 		
@@ -76,6 +79,13 @@ public class PostController {
 	public String writePost(Model model, PostVo postVo){
 		
 		return "redirect:/timeline";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/timeline", method=RequestMethod.POST)
+	public PostVo infiniteScroll(@RequestBody PostVo postVo){
+		
+		return postVo;
 	}
 	
 	

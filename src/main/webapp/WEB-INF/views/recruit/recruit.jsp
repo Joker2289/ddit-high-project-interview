@@ -30,9 +30,13 @@
 </head>
 
 <body>
+
+<div class="container">
+<div class="row">
+<div style="margin-top: 101px;">
 <section style="text-align: center;">
    	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px;">
-		<a href="">
+		<a href="${pageContext.request.contextPath }/srecr">
 			<i class="far fa-check-circle"></i>
 			채용공고 상태 파악
 		</a> │ 
@@ -56,7 +60,7 @@
 		<input type="hidden" id="search_local" name="search_local">
 	
 		<div class="div_ch" style="border: 1px solid; padding: 10px;">
-			<h3 style="">꿈꾸시던 직장 - 검색하면 바로 뜹니다.</h3><br>
+			<h3 style="">꿈꾸시던 직장 - 검색하면 바로 뜹니다. (mem_id : ${memberVO.mem_id })</h3><br>
 			<span style="margin-left: 30px;">
 				<i class="fas fa-search"></i>
 				<input id="txt_name" type="text" style="width: 400px; height: 30px; border: 0px;" placeholder="채용공고 검색">
@@ -99,69 +103,83 @@
 		</div>
 	</form>	
 	
-   	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px; margin-top: 20px;">
-   		<div style="text-align: left;">
-   			<strong>조회하신 항목을 참고하여..</strong> <br> [조회한 항목이름 - 지역] <br>
-   		</div>
-		<table class="tb_recruit">
-			<tr style="width: 100px; height: 140px; text-align: left;">
-				<c:forEach begin="1" end="4" varStatus="i">
-					<td style="width: 5px; height: 5px;">
-						<div class="table_div">
-							${corpImgList.get(i.index-1) }
-						</div> <br>
-						<i class="far fa-bookmark" style="margin-top: 5px; margin-left: 10px; font-size: large;"></i><br>
-						<strong>${recrList.get(i.index-1).recruit_title }</strong> <br>
-						${corpNmList.get(i.index-1) } <br>
-						${recrList.get(i.index-1).job_local }
-					</td>								
-				</c:forEach>
-			</tr>
-		</table> <br>	                		
-	           		
-	         
-	           		
-		<br><br> 
-		<div style="text-align: left;">
-			<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br> [관심 분야 · 관심 분야 · 관심 분야 ...] 
-			<a href="">관심 분야 설정</a><br>
-		</div>
-		
-		<table class="tb_recruit">
-			<tr style="width: 100px; height: 140px; text-align: left;">
-				<c:forEach begin="5" end="8" varStatus="i">
-					<td style="width: 5px; height: 5px;">
-						<div class="table_div">
-							${corpImgList.get(i.index-1) }
-						</div> <br>
-						<i class="far fa-bookmark" style="margin-top: 5px; margin-left: 10px; font-size: large;"></i><br>
-						<strong>${recrList.get(i.index-1).recruit_title }</strong> <br>
-						${corpNmList.get(i.index-1) } <br>
-						${recrList.get(i.index-1).job_local }
-					</td>								
-				</c:forEach>
-			</tr>
-			<tr style="width: 100px; height: 140px; text-align: left;">
-				<c:forEach begin="9" end="12" varStatus="i">
-					<td style="width: 5px; height: 5px;">
-						<div class="table_div">
-							${corpImgList.get(i.index-1) }
-						</div> <br>
-						<i class="far fa-bookmark" style="margin-top: 5px; margin-left: 10px; font-size: large;"></i><br>
-						<strong>${recrList.get(i.index-1).recruit_title }</strong> <br>
-						${corpNmList.get(i.index-1) } <br>
-						${recrList.get(i.index-1).job_local }
-					</td>								
-				</c:forEach>
-			</tr>			
-		</table> <br><br><br>   				
+	
+	<form id="frm_detail" action="${pageContext.request.contextPath }/recr_detail" method="post">
+		<input type="hidden" id="recruit_code" name="recruit_code">
+	
+	   	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px; margin-top: 20px;">
+	   		<div style="text-align: left; margin-bottom: 10px;">
+	   			<strong>조회하신 항목을 참고하여..</strong> <br> ${LVRVo.recruit_title } <br>
+	   		</div>
+			<table class="tb_recruit">
+				<tr style="width: 100px; height: 140px; text-align: left;">
+					<c:forEach begin="1" end="4" varStatus="i">
+						<td style="width: 5px; height: 5px;">
+							<div id="recr${i.index-1 }" onmouseover="" style="cursor: pointer;">
+								<div class="table_div">
+									${corpImgList.get(i.index-1) }
+								</div> <br>
+								<strong>${recrList.get(i.index-1).recruit_title }</strong> <br>
+								${corpNmList.get(i.index-1) } <br>
+								${recrList.get(i.index-1).job_local }
+							</div>
+							<i class="far fa-bookmark" style="margin-top: 10px; font-size: large;"></i><br>
+						</td>								
+					</c:forEach>
+				</tr>
+			</table> <br>	                		
+		           		
+		         
+			<br><br> 
+			<div style="text-align: left; margin-bottom: 10px;">
+				<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br> [관심 분야 · 관심 분야 · 관심 분야 ...] 
+				<a href="">관심 분야 설정</a><br>
+			</div>
+			
+			<table class="tb_recruit">
+				<tr style="width: 100px; height: 140px; text-align: left;">
+					<c:forEach begin="5" end="8" varStatus="i">
+						<td style="width: 5px; height: 5px;">
+							<div id="recr${i.index-1 }" onmouseover="" style="cursor: pointer;">
+								<div class="table_div">
+									${corpImgList.get(i.index-1) }
+								</div> <br>
+								<strong>${recrList.get(i.index-1).recruit_title }</strong> <br>
+								${corpNmList.get(i.index-1) } <br>
+								${recrList.get(i.index-1).job_local }
+							</div>
+							<i class="far fa-bookmark" style="margin-top: 10px; font-size: large;"></i><br>
+						</td>								
+					</c:forEach>
+				</tr>
+				<tr style="width: 100px; height: 140px; text-align: left;">
+					<c:forEach begin="9" end="12" varStatus="i">
+						<td style="width: 5px; height: 5px;">
+							<div id="recr${i.index-1 }" onmouseover="" style="cursor: pointer;">
+								<div class="table_div">
+									${corpImgList.get(i.index-1) }
+								</div> <br>
+								<strong>${recrList.get(i.index-1).recruit_title }</strong> <br>
+								${corpNmList.get(i.index-1) } <br>
+								${recrList.get(i.index-1).job_local }
+							</div>
+							<i class="far fa-bookmark" style="margin-top: 10px; font-size: large;"></i><br>
+						</td>								
+					</c:forEach>
+				</tr>			
+			</table> <br><br><br>   				
+			<br>	                				
+		</div>					
+		<!-- 스크랩 안한 아이콘 -->
+		<!-- <i class="far fa-bookmark"></i> -->
+	</form>
 	
 	
-		<br>	                				
-	</div>					
-	<!-- 스크랩 안한 아이콘 -->
-<!-- <i class="far fa-bookmark"></i> -->
-</section>		
+	
+</section>	
+</div>
+</div>	
+</div>	
 
 		
 	<script src="js/jquery-3.3.1.min.js"></script>
@@ -171,14 +189,18 @@
 		$(document).ready(function(){
 			console.log("docu");
 			
-			$("#btn1").on("click", function(){
-				alert(1);
-			});
+			// 채용공고 검색
+			$("#btn_search").on("click", function(){
+// 				alert($("#txt_name").val() + " / " + $("#txt_location").val());
+				
+				// hidden에 값 넣어주기.
+				$("#search_word").val($("#txt_name").val());
+				$("#search_local").val($("#txt_location").val());
+				
+				$("#frm_search").submit();
+			});			
 			
-			$("#img1").on("click", function(){
-				alert(2);
-			});
-			
+			// 채용공고 검색어 (저장한 검색어)
 			<c:forEach items="${saveList }" varStatus="i">
 				$(".t_alarm${i.index }").on("click", function(){
 					alert("t_alarm${i.index }");
@@ -190,20 +212,22 @@
 					if(confirm("검색어를 목록에서 제거하시겠습니까?")) {
 						window.location.href = 'http://localhost${pageContext.request.contextPath }/recruit?alarm_flag=t&search_code=${saveList.get(i.index).search_code }';					
 					}					
-
 				});
 			</c:forEach>
 			
+			// 채용공고 리스트
 			
-			$("#btn_search").on("click", function(){
-// 				alert($("#txt_name").val() + " / " + $("#txt_location").val());
-				
-				// hidden에 값 넣어주기.
-				$("#search_word").val($("#txt_name").val());
-				$("#search_local").val($("#txt_location").val());
-				
-				$("#frm_search").submit();
-			});
+			// 지금은 12개인데...
+			<c:forEach begin="1" end="12" varStatus="i">
+				$("#recr${i.index-1 }").on("click", function(){
+					//alert("${i.index-1 }"); 첫번째 채용공고 : i.index-1 -> '0'
+					
+					$("#recruit_code").val(${recrList.get(i.index-1).recruit_code});
+					
+					$("#frm_detail").submit();
+				});
+			</c:forEach>
+			
 			
 		});
 	
