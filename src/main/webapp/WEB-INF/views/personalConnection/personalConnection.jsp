@@ -34,10 +34,9 @@ $(document).ready(function() {
 	    		type : "POST",
  	    		url : "/personalConnection",
 //  	    		dataType : "JSON",    //옵션이므로 JSON으로 받을게 아니면 안써도 됨
- 	    		data : {},
+ 	    		data : { },
 	    		success : function(result) {
 	    		//통신이 성공적으로 이루어졌을 때 처리하고 싶은 함수
-	    			console.log("되요~~");
 	    			$("#content2").append('<li><div class="whiteBox">1sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">2sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">3sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">4sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">5sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">6sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">7sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">8sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">9sdfgsdfgsdfgsdfg<br>sadf</div></li>');
 	    		},
 	    		complete : function(result){

@@ -37,6 +37,10 @@
 	
 	<definition name="recr_detailTiles" extends="layout">
 		<put-attribute name="content" value="/WEB-INF/views/recruit/recr_detail.jsp"/>
+	</definition>
+	
+	<definition name="profileHomeTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/profile/profileHome.jsp"/>
 	</definition>	
 	
 </tiles-definitions>
