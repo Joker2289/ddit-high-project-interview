@@ -61,7 +61,7 @@ public class RecruitController {
 	private int RRList1Size = 6; // 나중에 16쯤으로.
 	private int RRList2Size = 4;
 
-	// 채용공고 페이지 요청.
+	// @채용공고 페이지 요청.
 	@RequestMapping("/recruit")
 	public String recruit(HttpSession session, String alarm_flag, String search_code, Model model) throws IOException{
 		// 크롤링해서 값 넣기 어떻게 했더라. 삼성전자 데이터 있으면 리턴. 일단 비활성화.
@@ -431,7 +431,7 @@ public class RecruitController {
 		}		
 	}
 
-	// 검색결과 저장 후 채용공고 검색 페이지 요청.
+	// @검색결과 저장 후 채용공고 검색 페이지 요청.
 	@RequestMapping("/recrSearch")
 	public String recrSearch(String search_word, String search_local, HttpSession session, Model model){
 		// 검색어 DB에 저장하기
@@ -466,7 +466,7 @@ public class RecruitController {
 		return "recrSearchTiles";
 	}	
 	
-	// 채용공고 상세화면.
+	// @채용공고 상세화면.
 	@RequestMapping("/recr_detail")
 	public String recr_detail(String recruit_code, HttpSession session, Model model){
 		// 회원 정보를 가져와서 채용공고저장에 마지막으로 조회한 채용공고 저장. 마지막 채용공고를 따로 
@@ -488,12 +488,6 @@ public class RecruitController {
 		return "recr_detailTiles";
 	}
 	
-	// 채용공고저장 페이지.
-	@RequestMapping("/srecr")
-	public String srecr(){
-		
-		return "srecrTiles";
-	}
 	
 	
 	
