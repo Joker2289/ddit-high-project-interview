@@ -36,8 +36,7 @@
 <div style="margin-top: 101px;">
 <section style="text-align: center;">
    	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px;">
-		<a href="">
-<%-- 		<a href="${pageContext.request.contextPath }/srecr"> --%>
+		<a href="${pageContext.request.contextPath }/srecr">
 			<i class="far fa-check-circle"></i>
 			채용공고 상태 파악
 		</a> │ 

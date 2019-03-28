@@ -379,11 +379,11 @@ public class RecruitController {
 	}
 	
 	// 채용공고저장 페이지.
-//	@RequestMapping("/srecr")
-//	public String srecr(){
-//		
-//		return "srecrTiles";
-//	}
+	@RequestMapping("/srecr")
+	public String srecr(){
+		
+		return "srecrTiles";
+	}
 	
 	
 	
