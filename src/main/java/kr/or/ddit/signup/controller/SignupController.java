@@ -29,6 +29,8 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.career_info.service.ICareer_infoService;
 import kr.or.ddit.corporation.service.ICorporationService;
+import kr.or.ddit.education_info.model.Education_infoVo;
+import kr.or.ddit.education_info.service.IEducation_infoService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.signup.model.SignupUserVo;
@@ -54,12 +56,26 @@ public class SignupController {
 	@Resource(name="career_infoService")
 	private ICareer_infoService careerService;
 	
+	@Resource(name="education_infoService")
+	private IEducation_infoService educationService;
+	
 	private String SecurityCode;
 	private String id;
 	
-	
-	@RequestMapping(path="/step1")
+	@RequestMapping(path="/cancel")
 	@ResponseBody
+	public String cancel() {
+		memService.delete_member(id);
+		return "login/login";
+	}
+	
+	@RequestMapping("/go")
+	public String step() {
+		return "login/step1";
+	}
+	
+	
+	@RequestMapping("/step1")
 	public String step1(@RequestBody SignupUserVo vo, Model model) {
 
 		logger.debug("step1 : {}", vo); 
@@ -90,11 +106,11 @@ public class SignupController {
 		id = vo.getId();
 		SecurityCode = success;
 		
-		return "login/login";
+		return "login/step2";
 	}
 	
-	@RequestMapping(path="/step2")
-	@ResponseBody
+	
+	@RequestMapping("/step2")
 	public String step2(@RequestBody SignupUserVo vo, HttpServletRequest req) {
 		logger.debug("SecurityCode :{}", SecurityCode);
 		logger.debug("SecurityCode2 :{}", vo.getSecurityCode());
@@ -103,11 +119,11 @@ public class SignupController {
 			return "error";
 		}
 		
-		return "login/login";
+		return "login/step3";
 	}
 	
-	@RequestMapping(path="/step3")
-	@ResponseBody
+	
+	@RequestMapping("/step3")
 	public String step3(@RequestBody SignupUserVo vo, HttpServletRequest req) {
 		
 		logger.debug("step3 : {}", vo);
@@ -120,14 +136,35 @@ public class SignupController {
 		
 		careerService.insert_career_info(career_infoVo);
 		
-		return "login/login";
+		return "login/step4";
 	}
 	
-	@RequestMapping(path="/step4", consumes ={"multipart/form-data"})
-	@ResponseBody
-	public String step4(@RequestParam(value = "profile") MultipartFile profile, HttpServletRequest req) throws IllegalStateException, IOException {
+	@RequestMapping("/step4")
+	public String step4(@RequestBody SignupUserVo vo, HttpServletRequest req) {
 		
-		logger.debug("step4 : {}", profile);
+		logger.debug("step4 : {}", vo);
+		
+		Education_infoVo eVo = new Education_infoVo();
+		eVo.setUser_id(id);
+		eVo.setSchool_name(vo.getSchool_name());
+		eVo.setDegree_name(vo.getDegree_name());
+		eVo.setMajor(vo.getMajor());
+		//eVo.setAdmission(vo.getAdmission());
+		//eVo.setGraduation(vo.getGraduation());
+		eVo.setGrade(vo.getGrade());
+		
+		educationService.insert_education_info(eVo);
+	
+		
+		return "login/step5";
+	}
+	
+	
+	
+	@RequestMapping(path="/step5", consumes ={"multipart/form-data"})
+	public String step5(@RequestParam(value = "profile") MultipartFile profile, HttpServletRequest req) throws IllegalStateException, IOException {
+		
+		logger.debug("step5 : {}", profile);
 		
 		//사용자 사진을 업로드 한경우
 		if(profile.getSize() > 0) {
@@ -143,10 +180,8 @@ public class SignupController {
 			userService.update_userInfo(uVo);
 		}
 		
-		
 		return "login/login";
 	}
-	
 	
 	
 	
@@ -214,4 +249,22 @@ public class SignupController {
 		
 		return SecurityCode[0];
 	}
+	
+	@RequestMapping("/test111")
+	public String test111() {
+		
+		return "login/test111";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

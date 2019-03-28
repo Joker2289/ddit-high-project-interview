@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+
 	<title>JK Board - Login</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,15 +23,28 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="/css/login/vendor/animsition/css/animsition.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/css/login/login/vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/login/vendor/select2/select2.min.css">
 <!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="/css/login/login/vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="/css/login/vendor/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="/css/login/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/css/login/css/main.css">
 	<link rel="stylesheet" type="text/css" href="/css/login/css/item.css">
 	<link rel="stylesheet" type="text/css" href="/css/modal.css">
 <!--===============================================================================================-->
+	<!-- jQuery UI CSS파일 -->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+<!-- 	<!-- jQuery 기본 js파일 --> -->
+<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>   -->
+<!-- 	<!-- jQuery UI 라이브러리 js파일 --> -->
+<!-- 	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>    -->
+	
+	
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+	
+	
+	 
 </head>
 <body>
 	
@@ -72,7 +87,7 @@
 					<div class="flex-col-c p-t-70">
 					
 						<button type="button" id="signupUser" class="btn btn-primary jk-sign-btn">
-						  Sign Up User
+						  User
 						</button>
 						
 					
@@ -83,12 +98,10 @@
 						<span class="txt1 p-b-17">
 						</span>
 						
-<!-- 						<a href="#" class="txt3"> -->
-<!-- 							Forgot ID & PW? -->
-<!-- 						</a> -->
 
-						<button type="button" id="signupCorp" class="btn btn-primary jk-join-btn" >
-						  Sign Up Corp
+
+						<button type="button" id="signupCorp" class="btn btn-primary jk-sign-btn" >
+						  Corpation
 						</button>
 					</div>
 
@@ -137,17 +150,24 @@
 <!--===============================================================================================-->
 	<script src="/css/login/js/main.js"></script>
 	
-	<script src="<%=request.getContextPath()%>/js/jquery-3.3.1.min.js"></script>
+<%-- 	<script src="<%=request.getContextPath()%>/js/jquery-3.3.1.min.js"></script>  --%>
+	
+	
+	 
+		
+	
+
 
 	<!-- 쿠키 관련 -->
 	<script src="<%=request.getContextPath()%>/js/cookieUtil.js"></script>
 	<script src="<%=request.getContextPath()%>/js/js.cookie.js"></script>
 	
+	
 	<%@ include file="/WEB-INF/views/login/signup_modal.jsp" %>
 	
 	<script>
+	
   	$(document).ready(function(){
-  		
   		
   		//쿠키 설정
   		if(Cookies.get("mem_id")){
@@ -167,16 +187,51 @@
   			}
   		
   			$("form").submit();
-  			
   		});
   		
   		
   		//회원가입 유저 클릭
   		$('#signupUser').on('click',function(){
   			$('.jk-modalsasun').css('display','block');
-  			$('#modal-head').html('<h1>User - STEP 1</h1>');
-  			$('#modal-body').html('<form id="step1"><div class="wrap-input-custom validate-input m-b-50"data-validate="Username is reauired"><span class="label-input100">ID</span><input class="input100"type="text"name="id"placeholder=" Your ID"><span class="focus-input100"data-symbol="&#xf206;"></span></div><div class="wrap-input-custom validate-input m-b-50"data-validate="Password is required"><span class="label-input100">Pass word</span><input class="input100"type="password"name="pass"placeholder=" Your Password"><span class="focus-input100"data-symbol="&#xf190;"></span></div><div class="wrap-input-custom validate-input m-b-50"data-validate="Username is reauired"><span class="label-input100">Your Name</span><input class="input100"type="text"name="name"placeholder=" Your Name"><span class="focus-input100"data-symbol="&#xf206;"></span></div><div class="wrap-input-custom validate-input m-b-50"data-validate="Username is reauired"><span class="label-input100">e-mail</span><input class="input100"type="text"name="email"placeholder=" e-mail"><span class="focus-input100"data-symbol="&#xf206;"></span></div><input type="hidden"name="division"value="1"><input type="hidden"name="step"value="1"></form>');
-  			//$('#modal-footer').html('<button id="nextStep"class="jk-join-btn"type="button">다음</button><button id="close"class="jk-close-btn"type="button">닫기</button>');
+  			
+			$.ajax({
+				url	: "${cp}/signUp/go",
+				success : function(data){
+					
+					console.log(data);
+					$(".jk-modal").html(data);
+					
+					
+					
+					
+					//닫기 버튼 클릭
+				  	$('#close').on('click',function(){
+				  		
+				  		var result = confirm("지금 까지 입력한 정보가 삭제 됩니다");
+				  		
+				  		if(result){
+				  			$.ajax({
+				  	  			
+				  	  			url : "${cp}/signUp/cancel",
+				  	  			method : "post",
+				  	  			contentType : "application/json; charset=uft-8",
+				  	  			success : function(data){
+				  	  				console.log(data);
+				  	  				
+				  	  			}
+				  	  		});
+				  			
+							$('.jk-modalsasun').css('display','none');
+				  		} else {
+				  			
+				  			
+				  		}
+					});
+					
+					
+					
+				}
+			});
   			
   		});
   		
@@ -184,9 +239,6 @@
   		$('#signupCorp').on('click',function(){
   			
   		});
-  		
-  		
-  		
   	});
   
 
