@@ -15,7 +15,6 @@
 			nvl(#{major, jdbcType=VARCHAR}, null),
 			nvl(#{admission, jdbcType=VARCHAR}, null),
 			nvl(#{graduation, jdbcType=VARCHAR}, null),
-			nvl(#{resign_date, jdbcType=VARCHAR}, null),
 			nvl(#{grade, jdbcType=VARCHAR}, null),
 			nvl(#{contents, jdbcType=VARCHAR}, null)
 		)
