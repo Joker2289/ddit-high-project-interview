@@ -90,9 +90,9 @@
 	        
 	          <!-- post -->
 	          <c:forEach items="${timelinePost }" var="post">
-	            <div class="panel panel-default">
+	            <div class="col-post">
 		          
-		          <div id="post_data" class="scrolling" data-post="${post }">
+		          <div id="panel panel-default" class="scrolling" data-post="${post }">
 		          
 	                <div class="panel-body">
 	                  <div class="writer_info">
@@ -147,58 +147,18 @@ $(function () {
 
 var lastTop = 0;
 
-$(window).scroll(function () {
-	var currentTop = $(window).scrollTop(); //현재 스크롤 위치
-	
-	if(currentTop - lastTop > 0){ // 스크롤을 내릴 때 
-		lastTop = currentTop;
-	} else {	// 스크롤을 올릴 때
-		lastTop = currentTop;
-	}
-});
-
-
-
-
 //스크롤 이벤트 발생 시
 $(window).scroll(function () {
-	var postData = $(".scrolling:last").attr("data-post");
+// 	var postData = $(".scrolling:last").attr("data-post");
 	
 	console.log($(window).scrollTop());
-// 	console.log($(document).height());
-// 	console.log($(window).height());
+	console.log($(document).height());
+	console.log($(window).height());
 	console.log($(document).height() - $(window).height() - 200);
 	
-	//현재 스크롤 위치가 화면의 위치보다 클때
-	if($(window).scrollTop() >= $(document).height() - $(window).height() - 300){
-		$.ajax({
-			type : 'post',
-			url : 'timeline',
-			headers : {"Content-Type" : "application/json"},
-			dataType : 'json',
-			data : JSON.stringify({data : postData}),
-			success : function (data) {
-				
-				console.log(data);	
-			
-				var str = "";
-				
-				if(data != ""){
-					$(data).each(
-						function () {
-// 							str +=  "<div class='panel panel-default'><div id='post_data'class='scrolling'data-post=" + data + "><div class='panel-body'><div class='writer_info'><h4><a href='#'>${"+ data +".writer_name}</a></h4><span>${" + data + ".post_date}</span></div><div class='post_info'><span>${ " + data + ".post_contents}</span></div></div><div class='panel-footer'><span>게시물하단</span></div></div></div>";
-					});
-				
-// 		 			$(".panel panel-default").empty();
-// 					$(".panel panel-default").after(str);
-				
-				} else {
-					console.log("마지막 페이지입니다.")
-				}
-			}
-		});
-	}
+
 });
+
 	
 </script>
 

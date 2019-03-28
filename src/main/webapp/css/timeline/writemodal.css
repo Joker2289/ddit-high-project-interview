@@ -1,9 +1,9 @@
 .btn-write_modal{
 	background:#ffffff;
 	background-size: auto;
-	font-size:20px;
+/* 	font-size:20px; */
 	padding:18px;
-/* 	vertical-align: middle; */
+	vertical-align: middle;
 	text-rendering: auto;
     letter-spacing: normal;
     word-spacing: normal;
@@ -45,7 +45,7 @@
     border-right-width: 1px;
     border-bottom-width: 1px;
     width: 76px;
-/*     display: inline-block;  */
+    display: inline-block; 
 }
 
 .btn-upload:hover{
