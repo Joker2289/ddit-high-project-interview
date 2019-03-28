@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="srecr">
+	
+	<!-- 저장채용공고 등록. -->
+	<insert id="insertSrecr" parameterType="recruitVo">
+		INSERT INTO SAVE_RECRUIT(SAVE_CODE, RECRUIT_CODE, USER_ID, SAVE_FLAG) 
+		VALUES(#{save_code}, #{recruit_code}, #{user_id}, #{save_flag})	
+	</insert>
+	
+
+  	
+  	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
