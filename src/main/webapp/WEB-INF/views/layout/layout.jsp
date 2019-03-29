@@ -22,10 +22,23 @@
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
 <script>
 $(document).ready(function() {
-	// 검색창
 	$("#search").on("click", function(){
-		$("#dropdownSearch").empty();
-		$("#dropdownSearch").append('<table id="searchmenu"><thead><tr><td>검색어 :</td></tr></thead><tbody><tr><td><span style="font-size: 20px;"><i class="fas fa-users"></i></span>사람</td></tr><tr><td><span style="font-size: 20px;"><i class="fas fa-briefcase"></i></span>채용</td></tr><tr><td><span style="font-size: 20px;"><i class="far fa-newspaper"></i></span>내용</td></tr></tbody></table>');
+		
+		var str = "search";
+		
+		$.ajax({
+    		type : "POST",
+	    		url : "/menu",
+	    		dataType : "HTML",
+	    		data : {"str":str},
+    		success : function(result) {
+    			$("#dropdownSearch").empty();
+    			$("#dropdownSearch").append(result);
+    		}
+
+    	});
+		
+		
 	});
 	
 	$("#search").on("mouseleave", function(){
@@ -35,14 +48,28 @@ $(document).ready(function() {
 	});
 	// 프로필 보기
 	$("#profile").on("click", function(){
-		$("#dropdownProfile").empty();
-		$("#dropdownProfile").append('<table id="profilemenu"><thead><tr><td style="padding-bottom: 0px;"><div class="col-md-3"style="padding-right: 0px; padding-left: 30px;"><span style="font-size: 50px;"><i class="fas fa-user-circle"></i></span></div><div class="col-md-6"style="padding-left: 30px;"><div class="col-md-6"style="width: 180px; padding-top: 12px; padding-left: 0px;">사용자이름</div><div class="col-md-6"style="width: 180px; padding-left: 0px;">간단프로필</div></div></td></tr><tr class="profiletr"><td style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;">프로필보기</td></tr><tr class="profiletr"style="border-top: 1px solid #CFD1D3; border-bottom: 1px solid #CFD1D3;"><td style="color: #666666; text-align: center;">프리미엄1개월무료이용</td></tr></thead><tbody><tr class="profiletr"><td style="color: #666666;">개인정보설정</td></tr><tr class="profiletr"><td style="color: #666666;">글&amp;활동</td></tr><tr class="profiletr"><td style="color: #666666;">채용공고</td></tr><tr class="profiletr"style="border-top: 1px solid #CFD1D3;"><td style="color: #666666;">로그아웃</td></tr></tbody></table>');
+		
+		var str = "profile";
+		
+		$.ajax({
+    		type : "POST",
+	    		url : "/menu",
+	    		dataType : "HTML",
+	    		data : {"str":str},
+    		success : function(result) {
+    			$("#dropdownProfile").empty();
+    			$("#dropdownProfile").append(result);
+    		}
+
+    	}); 
+		
 	});
 	
-	$("#profile").on("mouseleave", function(){
-		$(document).on("mouseup", function(){
+
+	$(document).on("click", function(e){
+		if(!$(e.target).closest(".test123").hasClass("test123")){
 			$("#dropdownProfile").empty();
-		});
+		}
 	});
 	
 	
@@ -70,6 +97,7 @@ $(document).ready(function() {
 		$(".activeOn").attr('class','menu');
 		$(this).removeClass();
         $(this).addClass("activeOn");
+        $(this).addClass("test123");
 	});
 	
 });
@@ -81,9 +109,4 @@ $(document).ready(function() {
 	
 </body>
 </html>
-
-
-
-
-
 
