@@ -120,7 +120,7 @@
 	
    	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px; margin-top: 20px;">
 		<img width="30" src="http://mblogthumb4.phinf.naver.net/20160920_175/kokoa2100_1474368430239vv9yY_PNG/mzl.xnmoezsr.png?type=w800">   	
-		<a href="">
+		<a href="https://map.kakao.com/">
 			 (지도 API를 이용한 채용공고 검색)
 		</a>
 	</div>	
@@ -131,7 +131,7 @@
 	
 	   	<div class="div_list" style="border: 1px solid; padding: 10px; margin-bottom: 150px; margin-top: 20px;">
 	   		<div style="text-align: left; margin-bottom: 10px;">
-	   			<strong>조회하신 항목을 참고하여..</strong> <br> 
+	   			<strong>조회/스크랩하신 항목을 참고하여..</strong> <br> 
 	   			<c:choose>
 	   				<c:when test="${lVRVo.recruit_title.substring(0, 9) == '원하는 채용공고를' }">
 			   			<a href="${pageContext.request.contextPath }/recrSearch">
@@ -140,7 +140,7 @@
 	   				</c:when>
 	   				<c:otherwise>
 			   			<a href="${pageContext.request.contextPath }/recr_detail?recruit_code=${lVRVo.recruit_code }">
-			   				${lVRVo.recruit_title } - ${lVRVo.job_local }
+			   				${lVRVo.recruit_title } - ${lVRVo.job_local } 과(와) 유사한 채용공고.
 			   			</a><br>
 	   				</c:otherwise>
 	   			</c:choose>
@@ -150,6 +150,8 @@
 				<table class="tb_recruit">
 					<tr style="width: 100px; height: 140px; text-align: left;">
 						<c:forEach items="${rRList1 }" varStatus="i" var="rRVo">
+							<!-- 마지막 조회/스크랩 채용공고 색을 좀 표시하면 좋겠는데. -->
+<!-- 							<td style="width: 5px; height: 5px; border: 10px; border-color: #b3d9ff;"> -->
 							<td style="width: 5px; height: 5px;">
 								<div id="recr${i.index }" onmouseover="" style="cursor: pointer;">
 									<div class="table_div">
@@ -171,19 +173,6 @@
 												style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
 									</c:otherwise>
 								</c:choose>
-<%-- 									<c:when test="${scrapList1.get(i.index) == 'f' }"> --%>
-<!-- 										scrap_flag에 recruit_code를 붙여주자. (예: t12) -->
-<%-- 										<a href="${pageContext.request.contextPath }/recruit?scrap_flag=t${rRList1.get(i.index).recruit_code }"> --%>
-<%-- 											<i id="scrap${i.index }" class="far fa-bookmark" onmouseover=""  --%>
-<!-- 													style="margin-top: 10px; font-size: large; cursor: pointer;"></i> -->
-<!-- 										</a><br> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<%-- 										<a href="${pageContext.request.contextPath }/recruit?scrap_flag=f${rRList1.get(i.index).recruit_code }"> --%>
-<%-- 											<i id="scrap${i.index }" class="fas fa-bookmark" onmouseover=""  --%>
-<!-- 													style="margin-top: 10px; font-size: large; cursor: pointer;"></i> -->
-<!-- 										</a><br> -->
-<%-- 									</c:otherwise> --%>
 							</td>								
 						</c:forEach>
 					</tr>

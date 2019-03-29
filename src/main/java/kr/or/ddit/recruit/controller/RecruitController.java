@@ -276,6 +276,15 @@ public class RecruitController {
 			model.addAttribute("scrapList1", scrapList1);			
 		}
 		
+		// 마지막 조회/스크랩 채용공고를 리스트의 맨앞으로 옮기자. lVRVo가 리스트에 없을수도 있음.
+//		boolean lVRVo_flag = true;
+//		
+//		for(RecruitVo rVo : rRList1){
+//			
+//		}
+//		
+//		if(lVRVo_flag == false)
+		
 		model.addAttribute("rRList1", rRList1);
 //		logger.debug("flag?? : {}", scrap_flag); // 설마 로그 너무 많아서..
 		// logback.xml logger level error 추가함.
@@ -344,14 +353,18 @@ public class RecruitController {
 		numList.add((int) (Math.random() * arr_jobtype.length));
 		
 		// 먼저 numList에 중복되지 않게 숫자를 num개 뽑아서 넣음.
+		// 중복이 되나??
 		while(true){
 			int rnum = (int) (Math.random() * arr_jobtype.length);
+			
 			for(int j=0; j < numList.size(); j++){
 				if(rnum == numList.get(j)){
 					continue;
 				}
 			}
+			
 			numList.add(rnum);
+			
 			if(numList.size() == num){
 				break;
 			}
