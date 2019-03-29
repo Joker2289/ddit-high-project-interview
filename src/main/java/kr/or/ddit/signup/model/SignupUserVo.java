@@ -8,7 +8,7 @@ public class SignupUserVo {
 	private String email;		 	// 이메일
 	private String name;			// 회원 이름
 	private String division;		// 회원구분
-	
+
 	//step2
 	private String securityCode;	// 인증코드
 	
@@ -17,8 +17,14 @@ public class SignupUserVo {
 	private String job_rank;		// 직급
 	private String corporate_name;	// 회사
 	
-	private String profile_img;		// 프로필사진
-	private String profile_path;	// 프로필경로
+	//step4
+	private String school_name;		// 학교명
+	private String degree_name;		// 학위
+	private String major;			// 전공
+	private String admission;		// 입학년도
+	private String graduation;		// 졸업(예정)년도
+	private String grade;			// 학점
+	
 	public String getId() {
 		return id;
 	}
@@ -73,28 +79,49 @@ public class SignupUserVo {
 	public void setCorporate_name(String corporate_name) {
 		this.corporate_name = corporate_name;
 	}
-	public String getProfile_img() {
-		return profile_img;
+	public String getSchool_name() {
+		return school_name;
 	}
-	public void setProfile_img(String profile_img) {
-		this.profile_img = profile_img;
+	public void setSchool_name(String school_name) {
+		this.school_name = school_name;
 	}
-	public String getProfile_path() {
-		return profile_path;
+	public String getDegree_name() {
+		return degree_name;
 	}
-	public void setProfile_path(String profile_path) {
-		this.profile_path = profile_path;
+	public void setDegree_name(String degree_name) {
+		this.degree_name = degree_name;
 	}
-	
+	public String getMajor() {
+		return major;
+	}
+	public void setMajor(String major) {
+		this.major = major;
+	}
+	public String getAdmission() {
+		return admission;
+	}
+	public void setAdmission(String admission) {
+		this.admission = admission;
+	}
+	public String getGraduation() {
+		return graduation;
+	}
+	public void setGraduation(String graduation) {
+		this.graduation = graduation;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
 	@Override
 	public String toString() {
 		return "SignupUserVo [id=" + id + ", pass=" + pass + ", email=" + email + ", name=" + name + ", division="
 				+ division + ", securityCode=" + securityCode + ", job_position=" + job_position + ", job_rank="
-				+ job_rank + ", corporate_name=" + corporate_name + ", profile_img=" + profile_img + ", profile_path="
-				+ profile_path + "]";
+				+ job_rank + ", corporate_name=" + corporate_name + ", school_name=" + school_name + ", degree_name="
+				+ degree_name + ", major=" + major + ", admission=" + admission + ", graduation=" + graduation
+				+ ", grade=" + grade + "]";
 	}
-	
-	
-	
 	
 }

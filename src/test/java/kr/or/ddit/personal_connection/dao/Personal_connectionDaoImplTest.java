@@ -1,5 +1,6 @@
 package kr.or.ddit.personal_connection.dao;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -11,6 +12,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.test.LogicTestConfig;
@@ -56,7 +58,7 @@ public class Personal_connectionDaoImplTest extends LogicTestConfig{
 	* Method : testConnections_count
 	* 작성자 : PC09
 	* 변경이력 :
-	* Method 설명 : 일촌 수 조회
+	* Method 설명 : 팔로우한 일촌 수 조회
 	*/
 	@Test
 	public void testConnections_count() {
@@ -71,6 +73,30 @@ public class Personal_connectionDaoImplTest extends LogicTestConfig{
 		/***Then***/
 		assertNotNull(membervo);
 		//assertEquals(3, connections_count);
+		
+	}
+	
+	
+	
+	/**
+	* Method : testCorporation_count
+	* 작성자 : PC09
+	* 변경이력 :
+	* Method 설명 : 팔로우한 회사 수 조회
+	*/
+	@Test
+	public void testCorporation_count() {
+		
+		/***Given***/
+		FollowVo followVo = new FollowVo();
+		followVo.setDivision("43");
+		
+		/***When***/
+		int corporation_count = personalDao.corporation_count(followVo);
+
+		/***Then***/
+		assertNotNull(followVo);
+		//assertEquals(1, corporation_count);
 		
 	}
 	

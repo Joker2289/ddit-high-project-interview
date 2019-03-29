@@ -125,4 +125,27 @@ public class RecruitServiceImpl implements IRecruitService{
 		return RRList1;
 	}
 
+	/**
+	 * 
+	 * Method : getRecrByType
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param type1
+	 * @return
+	 * Method 설명 : 특정 업무분야로 채용공고 목록 조회.
+	 */
+	@Override
+	public List<RecruitVo> getRecrByType(String type) {
+		List<RecruitVo> searchList = recrDao.getRecrByType(type);
+		
+		return searchList;
+	}
+
+	
+	
+	
 }
+
+
+
+

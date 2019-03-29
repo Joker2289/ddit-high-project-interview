@@ -52,10 +52,10 @@ $(document).ready(function() {
 			  <div id="pc_leftmenu" class="col-md-3">
 			        <div id="pc_leftmenuBox" class="whiteBox">
 			         	<a href="/connections">
-			         		<span style="padding-right: 5px;"><i class="fas fa-user-friends"></i></span>1촌명
+			         		<span style="padding-right: 5px;"><i class="fas fa-user-friends"></i></span>1촌 ${connections_count }명
 			         	</a>
 			           <a id="pc_leftmenuBorder" href="fd">
-			           	<span><i class="fas fa-building" ></i></span>회사()개
+			           	<span><i class="fas fa-building" ></i></span>회사 (${corporation_count })개
 			           </a>
 			        </div>
 			  </div>

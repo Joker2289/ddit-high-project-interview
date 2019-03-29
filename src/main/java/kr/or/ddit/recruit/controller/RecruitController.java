@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
-import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
@@ -31,8 +29,6 @@ import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
-import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
-
 
 @Controller
 public class RecruitController {
@@ -62,10 +58,10 @@ public class RecruitController {
 	private List<List<String>> com_list;
 	
 	// 채용공고 페이지에 출력할 추천채용공고 리스트 사이즈.
-	private int RRList1Size = 4;
-	private int RRList2Size = 8;
+	private int RRList1Size = 6; // 나중에 16쯤으로.
+	private int RRList2Size = 4;
 
-	// 채용공고 페이지 요청.
+	// @채용공고 페이지 요청.
 	@RequestMapping("/recruit")
 	public String recruit(HttpSession session, String alarm_flag, String search_code, Model model) throws IOException{
 		// 크롤링해서 값 넣기 어떻게 했더라. 삼성전자 데이터 있으면 리턴. 일단 비활성화.
@@ -143,6 +139,69 @@ public class RecruitController {
 			// 조회한 항목은 제외하고 나머지를 리스트에 넣도록 하자. (parameterMap 사용? 일단 X)
 			// 여기서 list size가 0이 될수 있으니 size가 RRList1Size를 넘지 않는 경우 비슷한 업무를 찾아
 			// 넣어주는 기능 만들기.
+			// job_type -> POS / springboot / 알고리즘
+			if(RRList1.size() < RRList1Size){
+				String type1 = LVRVo.getJob_type().split(" / ")[0];
+				List<RecruitVo> searchList1 = recrService.getRecrByType(type1);
+				for(RecruitVo rVo : searchList1){
+					boolean insertFlag = true;
+					
+					for(RecruitVo RRVo : RRList1){
+						if(RRVo.getRecruit_code().equals(rVo.getRecruit_code())){
+							// 중복되면 넣지 않기.
+							insertFlag = false;
+							break;
+						}
+					}
+					
+					if(insertFlag){
+						RRList1.add(rVo);
+					}
+				}
+				
+				String type2 = LVRVo.getJob_type().split(" / ")[1];
+				List<RecruitVo> searchList2 = recrService.getRecrByType(type2);
+				for(RecruitVo rVo : searchList2){
+					boolean insertFlag = true;
+					
+					for(RecruitVo RRVo : RRList1){
+						if(RRVo.getRecruit_code().equals(rVo.getRecruit_code())){
+							// 중복되면 넣지 않기.
+							insertFlag = false;
+							break;
+						}
+					}
+					
+					if(insertFlag){
+						RRList1.add(rVo);
+					}
+				}
+				
+				String type3 = LVRVo.getJob_type().split(" / ")[2];
+				List<RecruitVo> searchList3 = recrService.getRecrByType(type3);
+				for(RecruitVo rVo : searchList3){
+					boolean insertFlag = true;
+					
+					for(RecruitVo RRVo : RRList1){
+						if(RRVo.getRecruit_code().equals(rVo.getRecruit_code())){
+							// 중복되면 넣지 않기.
+							insertFlag = false;
+							break;
+						}
+					}
+					
+					if(insertFlag){
+						RRList1.add(rVo);
+					}
+				}
+				// 중복되는 걸 제거해야 됨.
+			}
+			
+			// RRList1.size()가 RRList1Size가 될때까지 마지막 항목 지움.
+			while(RRList1.size() > RRList1Size){
+				RRList1.remove(RRList1.size()-1);
+			}
+			
 			
 			List<String> corpImgList1 = new ArrayList<>();
 			List<String> corpNmList1 = new ArrayList<>();
@@ -372,16 +431,19 @@ public class RecruitController {
 		}		
 	}
 
-	// 채용공고 검색 페이지 요청.
+	// @검색결과 저장 후 채용공고 검색 페이지 요청.
 	@RequestMapping("/recrSearch")
-	public String recrSearch(HttpServletRequest req, String search_word, String search_local, 
-			HttpSession session, Model model){
+	public String recrSearch(String search_word, String search_local, HttpSession session, Model model){
 		// 검색어 DB에 저장하기
 		Search_logVo sVo = new Search_logVo();
 //		logger.debug("search_local? : {}", search_local);
-		sVo.setSearch_word(search_word);
+		if(search_word == null || search_word.equals("")){
+			sVo.setSearch_word("전체");
+		}else{
+			sVo.setSearch_word(search_word);
+		}
 		
-		if(search_local == null){
+		if(search_local == null || search_local.equals("")){
 			sVo.setSearch_local("전국");
 		}else{
 			sVo.setSearch_local(search_local);			
@@ -404,7 +466,7 @@ public class RecruitController {
 		return "recrSearchTiles";
 	}	
 	
-	// 채용공고 상세화면.
+	// @채용공고 상세화면.
 	@RequestMapping("/recr_detail")
 	public String recr_detail(String recruit_code, HttpSession session, Model model){
 		// 회원 정보를 가져와서 채용공고저장에 마지막으로 조회한 채용공고 저장. 마지막 채용공고를 따로 
@@ -426,12 +488,7 @@ public class RecruitController {
 		return "recr_detailTiles";
 	}
 	
-	// 채용공고저장 페이지.
-	@RequestMapping("/srecr")
-	public String srecr(){
-		
-		return "srecrTiles";
-	}
+	
 	
 	
 	
