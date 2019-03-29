@@ -1,13 +1,13 @@
 package kr.or.ddit.post.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +28,8 @@ import kr.or.ddit.util.pagination.PaginationVo;
 //@RequestMapping("/post")
 @Controller
 public class PostController {
+	
+	private Logger logger = LoggerFactory.getLogger(PostController.class);
 	
 	@Resource(name="postService")
 	private IPostService postService;
@@ -138,5 +140,48 @@ public class PostController {
 		return afterPost;
 	}
 	
+	@RequestMapping(path={"/writepost_timeline"}, method=RequestMethod.POST)
+	public String writePost_timeline(Model model, String post_contents, HttpServletRequest request){
+		
+		MemberVo member = (MemberVo) request.getSession().getAttribute("memberVO");
+		
+		String mem_id = member.getMem_id();
+		
+		logger.debug("asdasdasdasdmem_id : {}", mem_id);
+		
+		PostVo insertPost = new PostVo();
+		String writer_name = "";
+		
+//		MemberVo memberSer = memberService.select_memberInfo(mem_id);
+		
+		if(member.getMem_division().equals("1")){
+			UsersVo user = usersService.select_userInfo(mem_id);
+			writer_name = user.getUser_name();
+			
+			insertPost.setMem_id(mem_id);
+			insertPost.setPost_contents(post_contents);
+			insertPost.setWriter_name(writer_name);
+			
+		} else if(member.getMem_division().equals("2")){
+			CorporationVo corp = corporationService.select_corpInfo(mem_id);
+			writer_name = corp.getCorp_name();
+			
+			insertPost.setMem_id(mem_id);
+			insertPost.setPost_contents(post_contents);
+			insertPost.setWriter_name(writer_name);
+			
+		} else {
+			
+		}
+		
+		int insertCnt = postService.insert_post(insertPost);
+		
+		if(insertCnt == 1){
+			return "redirect:/timeline";
+		} else {
+			return "redirect:/timeline";
+		}
+		
+	}
 	
 }

@@ -93,19 +93,27 @@
 		          
 		        <div id="col-post" class="scrolling" data-post="${post.post_code }">
 	              <div class="col-post">
-		          
+
 	                <div class="col-post-body">
+	                  <div class="col-post-controll">
+	                    <button class="btn_postControll"><i class="fas fa-ellipsis-h"></i></button>
+	                  </div>
 	                  <div class="writer_info">
-	                    <h4><a href="#">${post.writer_name }</a></h4>
-	                    <span>${post.post_date }</span>
+	                    <span><a style="font-size: 20px;" href="#">${post.writer_name }</a> </span><br>
 	                  </div>
 	                  <div class="post_info">
+	                    <span>${post.post_date }</span><br>
 	                  	<span>${post.post_contents }</span>
 	                  </div>
 	                </div>
 
 	                <div class="col-post-footer">
 					  <span>게시물 하단(동영상 혹은 공유게시물 출력란)</span>
+	                </div>
+	                <div class="col-post-social">
+					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-thumbs-up"></i></span></button>
+					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
+					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-share-square"></i></span></button>
 	                </div>
 
 	              </div>
@@ -142,18 +150,17 @@
 	$(function () {
 		$("#btn-write_modal").on("click", function () {
 			$("div.modal").modal();
+			
+			$("#btn_write_upload").on("click", function() {
+				$("#frm_writePost").submit();
+			})
 		});
 	});
-	
-	var lastTop = 0;
-	var easeEffect = 'easeInQuint';
 	
 	//스크롤 이벤트 발생 시
 	$(window).scroll(function () {
 		
 		console.log($(window).scrollTop());
-// 		console.log($(document).height());
-// 		console.log($(window).height());
 		console.log($(document).height() - $(window).height() - 200);
 		
 		var currentTop = $(window).scrollTop();
@@ -174,7 +181,7 @@
 					console.log(data);
 					if(data != ""){
 						for(var i=0; i<5; i++){
-							$(".col-md-6").append('<div><div id="col-post"class="scrolling"data-post="${post.post_code }"><div class="col-post"><div class="col-post-body"><div class="writer_info"><h4><a href="#">${post.writer_name}</a></h4><span>${post.post_date}</span></div><div class="post_info"><span>${post.post_contents}</span></div></div><div class="col-post-footer"><span>게시물하단(동영상혹은공유게시물출력란)</span></div></div></div></div>');
+							$(".col-md-6").append('<div><div id="col-post"class="scrolling"data-post="${post.post_code }"><div class="col-post"><div class="col-post-body"><div class="col-post-controll"><button class="btn_postControll"><i class="fas fa-ellipsis-h"></i></button></div><div class="writer_info"><span><a style="font-size: 20px;"href="#">${post.writer_name}</a></span><br></div><div class="post_info"><span>${post.post_date}</span><br><span>${post.post_contents}</span></div></div><div class="col-post-footer"><span>게시물하단(동영상혹은공유게시물출력란)</span></div><div class="col-post-social"><button class="btn-social"><span style="font-size: 18px;"><i class="far fa-thumbs-up"></i></span></button><button class="btn-social"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button><button class="btn-social"><span style="font-size: 18px;"><i class="far fa-share-square"></i></span></button></div></div></div></div>');
 						}
 					}
 				}
