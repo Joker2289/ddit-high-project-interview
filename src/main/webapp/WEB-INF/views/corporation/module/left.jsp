@@ -4,7 +4,7 @@
     
     	<table border="1">
 		<tr>
-			<td><a href="<%=request.getContextPath()%>/corporation/corporationHome">홈</a></td>
+			<td><a href="<%=request.getContextPath()%>/corporation">홈</a></td>
 		</tr>
 		<tr>
 			<td><a href="<%=request.getContextPath()%>/corporation/corporationIntroduction">소개</a></td>
