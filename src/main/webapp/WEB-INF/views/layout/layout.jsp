@@ -12,6 +12,7 @@
 <link href="/css/header.css" rel="stylesheet">
 <link href="/css/personalConnection.css" rel="stylesheet">
 <link href="/css/timeline/writemodal.css" rel="stylesheet">
+<link rel="shortcut icon" href="favicon.ico" />
 
 <script>
 
