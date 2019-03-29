@@ -207,6 +207,28 @@ public class RecruitControllerTest extends WebTestConfig{
 		assertNotNull(scarpList1);
 	}
 	
+	/**
+	 * 
+	 * Method : testWriteRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 채용공고 올리기 페이지 요청 테스트.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testWriteRecr() throws Exception {
+		/***Given***/
+
+		/***When***/
+		MvcResult mvcResult = mockMvc.perform(get("/writeRecr")).andReturn();
+		ModelAndView mav = mvcResult.getModelAndView();
+		String viewName = mav.getViewName();
+
+		/***Then***/
+		assertEquals("writeRecrTiles", viewName);
+	}
+	
+	
 	
 	
 	

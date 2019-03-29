@@ -70,6 +70,16 @@ public interface ICorporationDao {
 	 */
 	int getCorpCnt();
 	
+	/**
+	 * 
+	 * Method : searchCorp
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 회사 검색
+	 */
+	List<CorporationVo> searchCorp(String keyword);
+	
 }
 
 

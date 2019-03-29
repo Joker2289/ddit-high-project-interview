@@ -97,5 +97,18 @@ public class CorporationDaoImpl implements ICorporationDao{
 		
 		return corpCnt;
 	}
+	
+	/**
+	 * 
+	 * Method : searchCorp
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 회사 검색
+	 */
+	@Override
+	public List<CorporationVo> searchCorp(String keyword) {
+		return sqlSessionTemplate.selectList("corp.searchCorp", keyword);
+	}
 
 }

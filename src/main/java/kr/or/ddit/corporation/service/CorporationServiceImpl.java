@@ -97,5 +97,19 @@ public class CorporationServiceImpl implements ICorporationService{
 		
 		return corpCnt;
 	}
+	
+	/**
+	 * 
+	 * Method : searchCorp
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param keyword
+	 * @return
+	 * Method 설명 : 회사 검색
+	 */
+	@Override
+	public List<CorporationVo> searchCorp(String keyword) {
+		return corporationDao.searchCorp(keyword);
+	}
 
 }
