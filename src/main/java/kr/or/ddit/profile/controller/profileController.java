@@ -2,7 +2,6 @@ package kr.or.ddit.profile.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.annotation.Resource;
@@ -11,6 +10,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,15 +25,31 @@ import kr.or.ddit.users.service.IUsersService;
 @Controller
 public class profileController {
 	
+	private Logger logger = LoggerFactory.getLogger(profileController.class);
+	
 	@Resource(name="usersService")
 	private IUsersService usersService;
 	
 	@Resource(name="corporationService")
 	private ICorporationService corpService;
 	
-	@RequestMapping(path= {"/profileHome"}, method=RequestMethod.GET)
-	public String profileHomeView() {
+	@RequestMapping("/menu")
+	public String menuDropdownView(String str) {
 		
+		logger.debug(str);
+		
+		if(str.equals("search")){
+			return "/layout/searchDropdown";
+		}
+		else {
+			
+			return "/layout/profileDropdown";
+		}
+		
+	}
+	
+	@RequestMapping(path= {"/profileHome"})
+	public String profileHomeView() {
 		return "profileHomeTiles";
 	}
 	
@@ -41,8 +58,14 @@ public class profileController {
 		resp.setHeader("content-Disposition", "attachment;"); 
 		resp.setContentType("image");
 		
+		
+		
 		UsersVo users = usersService.select_userInfo(memberVo.getMem_id());
-		CorporationVo corporation = corpService.select_corpInfo(memberVo.getMem_id());
+		CorporationVo corporation = null;
+		
+		if(users == null) {
+			corporation = corpService.select_corpInfo(memberVo.getMem_id());
+		}
 		
 		FileInputStream fis;
 		if((users != null && users.getBg_path() != null) || (corporation != null && corporation.getBg_path() != null))
@@ -50,7 +73,7 @@ public class profileController {
 		
 		else{
 			ServletContext application = req.getServletContext();
-			String noimgPath = application.getRealPath("/upload/basicBackground.png");
+			String noimgPath = application.getRealPath("/images/profile/basicBackground.png");
 			fis = new FileInputStream(new File(noimgPath));
 		}
 		
@@ -71,7 +94,11 @@ public class profileController {
 		resp.setContentType("image");
 		
 		UsersVo users = usersService.select_userInfo(memberVo.getMem_id());
-		CorporationVo corporation = corpService.select_corpInfo(memberVo.getMem_id());
+		CorporationVo corporation = null;
+		
+		if(users == null) {
+			corporation = corpService.select_corpInfo(memberVo.getMem_id());
+		}
 		
 		FileInputStream fis;
 		if((users != null && users.getProfile_path() != null) || (corporation != null && corporation.getLogo_path() != null))
@@ -79,7 +106,7 @@ public class profileController {
 		
 		else{
 			ServletContext application = req.getServletContext();
-			String noimgPath = application.getRealPath("/upload/basicProfile.png");
+			String noimgPath = application.getRealPath("/images/profile/basicProfile.png");
 			fis = new FileInputStream(new File(noimgPath));
 		}
 		

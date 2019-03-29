@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
-import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
@@ -31,8 +29,6 @@ import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
-import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
-
 
 @Controller
 public class RecruitController {
@@ -65,7 +61,7 @@ public class RecruitController {
 	private int RRList1Size = 6; // 나중에 16쯤으로.
 	private int RRList2Size = 4;
 
-	// 채용공고 페이지 요청.
+	// @채용공고 페이지 요청.
 	@RequestMapping("/recruit")
 	public String recruit(HttpSession session, String alarm_flag, String search_code, Model model) throws IOException{
 		// 크롤링해서 값 넣기 어떻게 했더라. 삼성전자 데이터 있으면 리턴. 일단 비활성화.
@@ -435,7 +431,7 @@ public class RecruitController {
 		}		
 	}
 
-	// 검색결과 저장 후 채용공고 검색 페이지 요청.
+	// @검색결과 저장 후 채용공고 검색 페이지 요청.
 	@RequestMapping("/recrSearch")
 	public String recrSearch(String search_word, String search_local, HttpSession session, Model model){
 		// 검색어 DB에 저장하기
@@ -470,7 +466,7 @@ public class RecruitController {
 		return "recrSearchTiles";
 	}	
 	
-	// 채용공고 상세화면.
+	// @채용공고 상세화면.
 	@RequestMapping("/recr_detail")
 	public String recr_detail(String recruit_code, HttpSession session, Model model){
 		// 회원 정보를 가져와서 채용공고저장에 마지막으로 조회한 채용공고 저장. 마지막 채용공고를 따로 
@@ -492,19 +488,7 @@ public class RecruitController {
 		return "recr_detailTiles";
 	}
 	
-	// 채용공고저장 페이지.
-	@RequestMapping("/srecr")
-	public String srecr(){
-		
-		return "srecrTiles";
-	}
 	
-	// 커리어 관심분야 페이지
-	@RequestMapping("/interest")
-	public String interest(){
-		
-		return "interestTiles";
-	}
 	
 	
 	

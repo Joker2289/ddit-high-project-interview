@@ -156,7 +156,7 @@
 			<br><br> 
 			<div style="text-align: left; margin-bottom: 10px;">
 				<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br> [관심 분야 · 관심 분야 · 관심 분야 ...] 
-				<a href="">관심 분야 설정</a><br>
+				<a href="${pageContext.request.contextPath }/interest">관심 분야 설정</a><br>
 			</div>
 			<!-- RRList2 출력. -->				
 			<table class="tb_recruit">
