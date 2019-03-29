@@ -38,11 +38,7 @@ $(document).ready(function() {
 	    		success : function(result) {
 	    		//통신이 성공적으로 이루어졌을 때 처리하고 싶은 함수
 	    			$("#content2").append('<li><div class="whiteBox">1sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">2sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">3sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">4sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">5sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">6sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">7sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">8sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">9sdfgsdfgsdfgsdfg<br>sadf</div></li>');
-	    		},
-	    		complete : function(result){
-	    		//통신이 실패했어도 완료가 되었을 때 처리하고 싶은 함수
 	    		}
-
 	    	});
 	    }
 	});
@@ -58,7 +54,7 @@ $(document).ready(function() {
 			         	<a href="/connections">
 			         		<span style="padding-right: 5px;"><i class="fas fa-user-friends"></i></span>1촌 ${connections_count }명
 			         	</a>
-			           <a id="pc_leftmenuBorder" href="fd">
+			           <a id="pc_leftmenuBorder" href="/coporation">
 			           	<span><i class="fas fa-building" ></i></span>회사 (${corporation_count })개
 			           </a>
 			        </div>
