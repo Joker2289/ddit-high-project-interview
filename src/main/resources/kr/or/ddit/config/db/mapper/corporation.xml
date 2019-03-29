@@ -84,7 +84,7 @@
 		  FROM CORPORATION	
 	</select>
 	
-	<!-- 회사검색 -->
+	<!-- 회사 검색 -->
 	<select id="searchCorp" resultType="corporationVo" parameterType="String">
 		SELECT * FROM CORPORATION where corp_name like '%'|| #{ value }||'%' order by corp_name 
 	</select>
