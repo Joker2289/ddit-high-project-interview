@@ -104,9 +104,9 @@ public class RecruitDaoImpl implements IRecruitDao{
 	 */
 	@Override
 	public RecruitVo getLastViewRecr(String user_id) {
-		RecruitVo LVRVo = sqlSessionTemplate.selectOne("recr.getLastViewRecr", user_id);
+		RecruitVo lVRVo = sqlSessionTemplate.selectOne("recr.getLastViewRecr", user_id);
 		
-		return LVRVo;
+		return lVRVo;
 	}
 
 	/**
@@ -120,9 +120,9 @@ public class RecruitDaoImpl implements IRecruitDao{
 	 */
 	@Override
 	public List<RecruitVo> getRecrByLocal(String job_local) {
-		List<RecruitVo> RRList1 = sqlSessionTemplate.selectList("recr.getRecrByLocal", job_local);
+		List<RecruitVo> rRList1 = sqlSessionTemplate.selectList("recr.getRecrByLocal", job_local);
 		
-		return RRList1;
+		return rRList1;
 	}
 
 	/**

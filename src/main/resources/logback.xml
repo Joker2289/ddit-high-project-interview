@@ -12,6 +12,10 @@
 	
 	<!-- Digester 로그 보기싫으면 error로 설정 -->
 	<logger name="org.apache.commons.digester.Digester" level="error"></logger>
+	<!-- 추가 (pkh) -->
+	<logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager" level="error"></logger>
+	<logger name="org.mybatis.spring.SqlSessionUtils" level="error"></logger>
+	<logger name="org.springframework.web.servlet.view.tiles3.TilesView" level="error"></logger>
 	
     
 	<root level="DEBUG">

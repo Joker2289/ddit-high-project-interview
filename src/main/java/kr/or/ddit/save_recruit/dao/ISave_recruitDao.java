@@ -48,6 +48,39 @@ public interface ISave_recruitDao {
 	 * Method 설명 : 특정 유저의 전체 채용공고저장 목록 조회.
 	 */
 	List<Save_recruitVo> getUserSrecrList(String user_id);
+
+	/**
+	 * 
+	 * Method : getLastSrecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param recruit_code
+	 * @return
+	 * Method 설명 : 특정 채용공고저장 중 마지막 항목 조회.
+	 */
+	Save_recruitVo getLastSrecr(String recruit_code);
+
+	/**
+	 * 
+	 * Method : getSrecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param recruit_code
+	 * @return
+	 * Method 설명 : 특정 채용공고저장 목록 조회.
+	 */
+	List<Save_recruitVo> getSrecr(String recruit_code);
+
+	/**
+	 * 
+	 * Method : updateSrecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param sVo
+	 * @return
+	 * Method 설명 : 채용공고저장 수정.
+	 */
+	int updateSrecr(Save_recruitVo sVo);
 	
 	
 	

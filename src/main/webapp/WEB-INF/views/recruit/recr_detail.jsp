@@ -57,6 +57,8 @@
 			<td>${recr.emp_type }</td>
 		</tr>
 	</table>	
+	<br>
+	<a href="${pageContext.request.contextPath }/recruit">채용공고 페이지로 이동 -></a>
 		
 </div>		
 </div>		
