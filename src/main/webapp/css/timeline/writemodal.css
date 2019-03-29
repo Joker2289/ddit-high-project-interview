@@ -1,7 +1,35 @@
+.span-text{
+	font-size: 20px;
+}
+
+.col-post{
+	background: #ffffff;
+	margin: 10px;
+	border: 1px solid #c7c8c9;
+	border-radius: 4px;
+	border-spacing: normal;
+	margin-left: 0px;
+	margin-right: 0px; /* 555* 158.52 */
+}
+
+.col-post-body{
+	border-bottom : 1px solid #e5e6e8;
+	padding : 15px;
+	width: 553.02
+}
+
+.col-post-footer{
+	padding : 15px;
+}
+
+.writer-info{
+	border-style: 1px solid;
+	border-color: #e5e5e5;
+}
+
 .btn-write_modal{
 	background:#ffffff;
 	background-size: auto;
-/* 	font-size:20px; */
 	padding:18px;
 	vertical-align: middle;
 	text-rendering: auto;
@@ -17,7 +45,6 @@
     border-bottom-width: 1px;
     width: 326px;
     
-/*     display: inline-block;  */
 }
 
 .btn-write_modal:hover{
