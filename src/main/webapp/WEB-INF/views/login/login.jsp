@@ -34,15 +34,16 @@
 <!--===============================================================================================-->
 	<!-- jQuery UI CSS파일 -->
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
-<!-- 	<!-- jQuery 기본 js파일 --> -->
-<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>   -->
-<!-- 	<!-- jQuery UI 라이브러리 js파일 --> -->
-<!-- 	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>    -->
+<!-- 	<!-- jQuery 기본 js파일 -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<!-- 	<!-- jQuery UI 라이브러리 js파일 --> 
+	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>    
 	
 	
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
-	
+  	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 	 
 </head>
@@ -195,39 +196,11 @@
   			$('.jk-modalsasun').css('display','block');
   			
 			$.ajax({
-				url	: "${cp}/signUp/go",
+				url	: "${cp}/signUp/goStep1",
 				success : function(data){
 					
 					console.log(data);
 					$(".jk-modal").html(data);
-					
-					
-					
-					
-					//닫기 버튼 클릭
-				  	$('#close').on('click',function(){
-				  		
-				  		var result = confirm("지금 까지 입력한 정보가 삭제 됩니다");
-				  		
-				  		if(result){
-				  			$.ajax({
-				  	  			
-				  	  			url : "${cp}/signUp/cancel",
-				  	  			method : "post",
-				  	  			contentType : "application/json; charset=uft-8",
-				  	  			success : function(data){
-				  	  				console.log(data);
-				  	  				
-				  	  			}
-				  	  		});
-				  			
-							$('.jk-modalsasun').css('display','none');
-				  		} else {
-				  			
-				  			
-				  		}
-					});
-					
 					
 					
 				}

@@ -15,22 +15,7 @@
     
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
-  
-  $("#test111").on("click", function(){
-		$.ajax({
-			url	: "${cp}/signUp/test111",
-			success : function(data){
-				
-				console.log(data);
-				$(".jk-inner").html(data);
-				
-			}
-		});
-  });
-  
-  
-
-  
+ 
   
   $(document).ready(function(){
 	  

@@ -38,14 +38,15 @@
 		
 		<script>
 		
-		var form = $("#step5")[0];
-		var formData = new FormData(form);
 		
 		$("#nextStep").on("click", function(){
 
+				var form = $("#step5")[0];
+				var formData = new FormData(form);
+			
 		  		$.ajax({
 		  			
-		  			url : "${cp}/signUp/step5",
+		  			url : "${cp}/signUp/finalStep",
 		  			enctype: 'multipart/form-data',
 		  			method : "post",
 		  			data : formData,
@@ -55,12 +56,34 @@
 		  	        timeout: 600000,
 		  			success : function(data){
 		  				console.log(data);
-		  				
+		  				$('.jk-modalsasun').css('display','none');
+		  				alert("회원가입을 축하드립니다!!");
 		  			}
 		  		});
-	  		
 		});
+		
+		//닫기 버튼 클릭
+	  	$('#close').on('click',function(){
 	  		
+	  		var result = confirm("지금 까지 입력한 정보가 삭제 됩니다");
+	  		
+	  		if(result){
+	  			$.ajax({
+	  	  			
+	  	  			url : "${cp}/signUp/cancel",
+	  	  			method : "post",
+	  	  			contentType : "application/json; charset=uft-8",
+	  	  			success : function(data){
+	  	  				console.log(data);
+	  	  				
+	  	  			}
+	  	  		});
+	  			
+				$('.jk-modalsasun').css('display','none');
+				
+				
+	  		} 
+		});
 		</script>
 		
 		
