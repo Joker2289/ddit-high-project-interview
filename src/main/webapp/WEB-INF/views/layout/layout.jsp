@@ -44,9 +44,8 @@ $(document).ready(function() {
 			$("#dropdownSearch").empty();
 		});
 	});
-	// 프로필 보기
+	/* // 프로필 보기
 	$("#profile").on("click", function(){
-		
 		var str = "profile";
 		
 		$.ajax({
@@ -60,15 +59,16 @@ $(document).ready(function() {
     		}
 
     	}); 
-	});
+		
+	}); */
 	
-
+/* 
 	$(document).on("click", function(e){
-		if(!$(e.target).closest(".test123").hasClass("test123")){
+		if(!$(e.target).closest(".profile").hasClass("profile")){
 			$("#dropdownProfile").empty();
 		}
 	});
-	
+	 */
 	
 	
 	// append이후에 #search.on 메서드 실행이 안되므로 
@@ -91,12 +91,44 @@ $(document).ready(function() {
 	});
 	
 	
-	$(".menu").on("click", function(){
-		$(".activeOn").attr('class','menu');
-		$(this).removeClass();
-        $(this).addClass("activeOn");
-        $(this).addClass("test123");
-	});
+	$(document).on("click", function(e){
+			if($(e.target).closest(".profile").hasClass("profile")){
+				
+        		$(".activeOn").attr('class', 'menu');
+        		$(e.target).closest(".menu").attr('class', 'activeOn profileOn');
+        		
+	        	var str = "profile";
+	        	
+	        	$(".profile").attr('class','activeOn profileOn');
+	    		
+	    		$.ajax({
+	        		type : "POST",
+	    	    		url : "/menu",
+	    	    		dataType : "HTML",
+	    	    		data : {"str":str},
+	        		success : function(result) {
+	        			$("#dropdownProfile").append(result);
+	        		}
+	        	}); 
+			}else if (!$(e.target).closest(".profile").hasClass("profile")){
+	        	
+	        	if($(e.target).closest(".profileOn").hasClass("profileOn")) {
+	        		
+ 	        		$(".profileOn").attr('class','activeOn profile');
+	        		
+	        	}else if ($(e.target).closest(".menu").hasClass("menu")){
+	        		
+	        		$(".profileOn").attr('class', 'menu profile');
+	        		$(".profile").attr('class', 'menu profile');
+	        		$(".activeOn").attr('class', 'menu');
+	        		$(e.target).closest(".menu").attr('class', 'activeOn');
+	        	}else {
+	        		
+ 	        		$(".profileOn").attr('class', 'menu profile');
+	        	}
+	        	$("#dropdownProfile").empty();
+	        }
+	}); 
 	
 });
 

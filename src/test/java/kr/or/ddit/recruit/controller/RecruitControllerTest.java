@@ -9,6 +9,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MvcResult;
@@ -24,6 +26,7 @@ import kr.or.ddit.test.WebTestConfig;
 import kr.or.ddit.users.model.UsersVo;
 
 public class RecruitControllerTest extends WebTestConfig{
+	private Logger logger = LoggerFactory.getLogger(RecruitControllerTest.class);
 
 	@Resource(name="corporationService")
 	private ICorporationService corpService;
@@ -136,11 +139,11 @@ public class RecruitControllerTest extends WebTestConfig{
 		ModelAndView mav = mvcResult.getModelAndView();
 		String viewName = mav.getViewName();
 		
-		List<RecruitVo> RRList1 = (List<RecruitVo>) mav.getModel().get("RRList1");
+		List<RecruitVo> rRList1 = (List<RecruitVo>) mav.getModel().get("rRList1");
 
 		/***Then***/
 		assertEquals("recruitTiles", viewName);
-		assertNotNull(RRList1);
+		assertNotNull(rRList1);
 	}
 	
 	/**
@@ -169,6 +172,39 @@ public class RecruitControllerTest extends WebTestConfig{
 		
 		// 테스트 돌려도 insert가 되네.
 		SLService.deleteSearch_logForTest(String.valueOf(SLService.getAllCnt()));
+	}
+	
+	/**
+	 * 
+	 * Method : testScrapList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : scrapList size 테스트.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testScrapList() throws Exception {
+		/***Given***/
+		MockHttpSession session = new MockHttpSession();
+		String alarm_flag = null;
+		UsersVo uVo = new UsersVo();
+		uVo.setUser_id("brown");
+		session.setAttribute("usersVo", uVo);
+
+		/***When***/
+		MvcResult mvcResult = mockMvc.perform(get("/recruit").session(session).param("alarm_flag", alarm_flag)).andReturn();
+		ModelAndView mav = mvcResult.getModelAndView();
+		String viewName = mav.getViewName();
+		
+		List<RecruitVo> rRList1 = (List<RecruitVo>) mav.getModel().get("rRList1");
+		List<String> scarpList1 = (List<String>) mav.getModel().get("scarpList1");
+		logger.debug("rRList1 size? : {}", rRList1.size());
+		logger.debug("scarpList1 size? : {}", scarpList1.size());
+		
+		/***Then***/
+		assertEquals("recruitTiles", viewName);
+		assertNotNull(rRList1);
+		assertNotNull(scarpList1);
 	}
 	
 	
