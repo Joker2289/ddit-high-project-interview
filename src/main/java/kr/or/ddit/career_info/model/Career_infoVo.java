@@ -1,5 +1,7 @@
 package kr.or.ddit.career_info.model;
 
+import java.util.Date;
+
 public class Career_infoVo {
 	
 	private String career_code;		// 경력코드
@@ -8,8 +10,8 @@ public class Career_infoVo {
 	private String job_rank;		// 직급
 	private String corporate_name;	// 회사
 	private String corp_local;		// 지역
-	private String join_date;		// 입사일
-	private String resign_date;		// 퇴사일
+	private Date   join_date;		// 입사일
+	private Date   resign_date;		// 퇴사일
 	private String contents;		// 설명
 	private String corp_code;		// 회사코드
 	
@@ -65,19 +67,19 @@ public class Career_infoVo {
 		this.corp_local = corp_local;
 	}
 
-	public String getJoin_date() {
+	public Date getJoin_date() {
 		return join_date;
 	}
 
-	public void setJoin_date(String join_date) {
+	public void setJoin_date(Date join_date) {
 		this.join_date = join_date;
 	}
 
-	public String getResign_date() {
+	public Date getResign_date() {
 		return resign_date;
 	}
 
-	public void setResign_date(String resign_date) {
+	public void setResign_date(Date resign_date) {
 		this.resign_date = resign_date;
 	}
 
@@ -104,5 +106,4 @@ public class Career_infoVo {
 				+ ", join_date=" + join_date + ", resign_date=" + resign_date + ", contents=" + contents
 				+ ", corp_code=" + corp_code + "]";
 	}
-	
 }

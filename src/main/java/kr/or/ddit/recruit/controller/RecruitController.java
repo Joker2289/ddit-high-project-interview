@@ -63,7 +63,7 @@ public class RecruitController {
 
 	// @채용공고 페이지 요청.
 	@RequestMapping("/recruit")
-	public String recruit(HttpSession session, String alarm_flag, String search_code, Model model) throws IOException{
+	public String recruit(HttpSession session, String alarm_flag, String search_code, String scrap_flag, Model model) throws IOException{
 		// 크롤링해서 값 넣기 어떻게 했더라. 삼성전자 데이터 있으면 리턴. 일단 비활성화.
 //		crawling_company();
 		
@@ -82,10 +82,49 @@ public class RecruitController {
 		// 처리하는 방식으로 바꿔야 함. 'File Search - usersVo (usersV?)'
 		session.setAttribute("usersVo", usersService.select_userInfo("kim"));
 		
+		UsersVo uVo = (UsersVo) session.getAttribute("usersVo");		
+		
+		// 채용공고 스크랩을 한 경우. scrap_flag.substring(0, 1) -> 't'
+		if( scrap_flag != null && 
+				(scrap_flag.substring(0, 1).equals("t") || scrap_flag.substring(0, 1).equals("f")) ){
+			// recruit_code는 scrap_flag - substring - 앞의 한글자만 빼면 됨.
+			String scrap_code = scrap_flag.substring(1, scrap_flag.length());
+			
+			List<Save_recruitVo> uSRList = new ArrayList<>();
+			uSRList = srecrService.getUserSrecrList(uVo.getUser_id());
+			
+			// 조회한 데이터가 없는 경우 먼저 insert를 해야됨.
+			boolean srecr_Flag = false;
+			for(Save_recruitVo sVo : uSRList){
+				if(sVo.getRecruit_code().equals(scrap_code)){
+					srecr_Flag = true;
+				}
+			}
+			
+			if(uSRList.size() == 0 || srecr_Flag  == false){
+				Save_recruitVo sVo = new Save_recruitVo();
+				sVo.setRecruit_code(scrap_code);
+				sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));
+				sVo.setSave_flag("t");
+				sVo.setUser_id(uVo.getUser_id());
+				srecrService.insertSrecr(sVo);
+			}else{
+				for(Save_recruitVo sVo : uSRList){
+					if(sVo.getRecruit_code().equals(scrap_code)){
+						if(scrap_flag.substring(0, 1).equals("t")){
+							sVo.setSave_flag("t");
+						}else{
+							sVo.setSave_flag("f");
+						}
+						srecrService.updateSrecr(sVo);
+					}
+				}
+			}
+		}
+	
 		// 저장한 검색어 리스트 넘기기.
 		Search_logVo sVo = new Search_logVo();
-		
-		UsersVo uVo = (UsersVo) session.getAttribute("usersVo");
+
 		sVo.setUser_id(uVo.getUser_id());
 		sVo.setSearch_save("2");
 		List<Search_logVo> saveList = search_logService.getSaveList(sVo);
@@ -115,38 +154,39 @@ public class RecruitController {
 		// 조회한 항목(마지막으로 조회한 채용공고) model에 넣기.
 		// 여기서 가장 큰 수를 구한다음 조회, 조회 하지말고 -> 'recrService.getLastViewRecr'
 		// 조회한 채용공고가 없는 경우도 처리해줘야 함.
-		RecruitVo LVRVo = recrService.getLastViewRecr(uVo.getUser_id());
-		List<RecruitVo> RRList1 = new ArrayList<>();
-		if(LVRVo == null){
-			LVRVo = new RecruitVo();
-			LVRVo.setRecruit_title("원하는 채용공고를 찾아보세요!");
-			LVRVo.setJob_local("회원님에게 맞는 채용공고를 추천해드립니다.");
+		// 변수 첫 자는 소문자로.
+		RecruitVo lVRVo = recrService.getLastViewRecr(uVo.getUser_id());
+		List<RecruitVo> rRList1 = new ArrayList<>();
+		if(lVRVo == null){
+			lVRVo = new RecruitVo();
+			lVRVo.setRecruit_title("원하는 채용공고를 찾아보세요!");
+			lVRVo.setJob_local("회원님에게 맞는 채용공고를 추천해드립니다.");
 			
 			// 이 글을 클릭했을 경우 채용공고 검색 페이지로 이동. '전체 - 전국'
 			// 값이 있는 경우는 그 채용공고 상세페이지로 이동하지.
 			// /recr_detail - recruit_code
 			// 이동할 때 recruit_title을 확인해서 '원하는 채용공고를'로 시작하면 검색 페이지로 
 			// 이동하도록 하자.
-			model.addAttribute("LVRVo", LVRVo);
+			model.addAttribute("lVRVo", lVRVo);
 			
 			// jsp에서 <c:if test="${RRList == null"> 이면 추천채용공고 리스트 출력하지 않기.
 		}else{
-			model.addAttribute("LVRVo", LVRVo);
+			model.addAttribute("lVRVo", lVRVo);
 			
 			// 조회한 항목을 참고한 추천채용공고리스트 넘기기. (RRList1)
-			RRList1 = recrService.getRecrByLocal(LVRVo.getJob_local());
+			rRList1 = recrService.getRecrByLocal(lVRVo.getJob_local());
 			
 			// 조회한 항목은 제외하고 나머지를 리스트에 넣도록 하자. (parameterMap 사용? 일단 X)
 			// 여기서 list size가 0이 될수 있으니 size가 RRList1Size를 넘지 않는 경우 비슷한 업무를 찾아
 			// 넣어주는 기능 만들기.
 			// job_type -> POS / springboot / 알고리즘
-			if(RRList1.size() < RRList1Size){
-				String type1 = LVRVo.getJob_type().split(" / ")[0];
+			if(rRList1.size() < RRList1Size){
+				String type1 = lVRVo.getJob_type().split(" / ")[0];
 				List<RecruitVo> searchList1 = recrService.getRecrByType(type1);
 				for(RecruitVo rVo : searchList1){
 					boolean insertFlag = true;
 					
-					for(RecruitVo RRVo : RRList1){
+					for(RecruitVo RRVo : rRList1){
 						if(RRVo.getRecruit_code().equals(rVo.getRecruit_code())){
 							// 중복되면 넣지 않기.
 							insertFlag = false;
@@ -155,16 +195,16 @@ public class RecruitController {
 					}
 					
 					if(insertFlag){
-						RRList1.add(rVo);
+						rRList1.add(rVo);
 					}
 				}
 				
-				String type2 = LVRVo.getJob_type().split(" / ")[1];
+				String type2 = lVRVo.getJob_type().split(" / ")[1];
 				List<RecruitVo> searchList2 = recrService.getRecrByType(type2);
 				for(RecruitVo rVo : searchList2){
 					boolean insertFlag = true;
 					
-					for(RecruitVo RRVo : RRList1){
+					for(RecruitVo RRVo : rRList1){
 						if(RRVo.getRecruit_code().equals(rVo.getRecruit_code())){
 							// 중복되면 넣지 않기.
 							insertFlag = false;
@@ -173,16 +213,16 @@ public class RecruitController {
 					}
 					
 					if(insertFlag){
-						RRList1.add(rVo);
+						rRList1.add(rVo);
 					}
 				}
 				
-				String type3 = LVRVo.getJob_type().split(" / ")[2];
+				String type3 = lVRVo.getJob_type().split(" / ")[2];
 				List<RecruitVo> searchList3 = recrService.getRecrByType(type3);
 				for(RecruitVo rVo : searchList3){
 					boolean insertFlag = true;
 					
-					for(RecruitVo RRVo : RRList1){
+					for(RecruitVo RRVo : rRList1){
 						if(RRVo.getRecruit_code().equals(rVo.getRecruit_code())){
 							// 중복되면 넣지 않기.
 							insertFlag = false;
@@ -191,33 +231,54 @@ public class RecruitController {
 					}
 					
 					if(insertFlag){
-						RRList1.add(rVo);
+						rRList1.add(rVo);
 					}
 				}
 				// 중복되는 걸 제거해야 됨.
 			}
 			
 			// RRList1.size()가 RRList1Size가 될때까지 마지막 항목 지움.
-			while(RRList1.size() > RRList1Size){
-				RRList1.remove(RRList1.size()-1);
+			while(rRList1.size() > RRList1Size){
+				rRList1.remove(rRList1.size()-1);
 			}
-			
 			
 			List<String> corpImgList1 = new ArrayList<>();
 			List<String> corpNmList1 = new ArrayList<>();
+			
+			// 스크랩 데이터는 srecr에 있으니까 저장여부 리스트 scrapList 만들기. size는 rRList1에서 
+			// 가져오고 uSRList에서 save_flag가 't'인게 있으면 t. 없으면 f.
+			List<String> scrapList1 = new ArrayList<>();
+			List<Save_recruitVo> uSRList1 = srecrService.getUserSrecrList(uVo.getUser_id());
 
-			for(int i=0; i < RRList1.size(); i++){
-				RecruitVo rVo = RRList1.get(i);
+			for(int i=0; i < rRList1.size(); i++){
+				RecruitVo rVo = rRList1.get(i);
 				CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
 				corpImgList1.add(cVo.getLogo_path());
 				corpNmList1.add(cVo.getCorp_name());
+				
+				boolean scrapCheck_flag = false;
+				for(Save_recruitVo scrapCheckSVo : uSRList1){
+					if(scrapCheckSVo.getRecruit_code().equals(rVo.getRecruit_code()) 
+							&& scrapCheckSVo.getSave_flag().equals("t")){
+						scrapCheck_flag = true;
+						scrapList1.add("t");
+						break;
+					}
+				}
+				
+				if(scrapCheck_flag == false){
+					scrapList1.add("f");
+				}
 			}
 			
 			model.addAttribute("corpImgList1", corpImgList1);		
 			model.addAttribute("corpNmList1", corpNmList1);			
+			model.addAttribute("scrapList1", scrapList1);			
 		}
 		
-		model.addAttribute("RRList1", RRList1);
+		model.addAttribute("rRList1", rRList1);
+//		logger.debug("flag?? : {}", scrap_flag); // 설마 로그 너무 많아서..
+		// logback.xml logger level error 추가함.
 		
 		return "recruitTiles";
 	}	
@@ -488,7 +549,12 @@ public class RecruitController {
 		return "recr_detailTiles";
 	}
 	
-	
+	// @채용공고 올리기 페이지 요청.
+	@RequestMapping("/writeRecr")
+	public String writeRecr() {
+
+		return "writeRecrTiles";
+	}
 	
 	
 	
