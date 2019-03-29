@@ -1,5 +1,7 @@
 package kr.or.ddit.education_info.model;
 
+import java.util.Date;
+
 public class Education_infoVo {
 	
 	private String education_code;	// 학력코드
@@ -7,8 +9,8 @@ public class Education_infoVo {
 	private String school_name;		// 학교명
 	private String degree_name;		// 학위
 	private String major;			// 전공
-	private String admission;		// 입학년도
-	private String graduation;		// 졸업(예정)년도
+	private Date admission;			// 입학년도
+	private Date graduation;		// 졸업(예정)년도
 	private String grade;			// 학점
 	private String contents;		// 설명
 	
@@ -56,19 +58,19 @@ public class Education_infoVo {
 		this.major = major;
 	}
 
-	public String getAdmission() {
+	public Date getAdmission() {
 		return admission;
 	}
 
-	public void setAdmission(String admission) {
+	public void setAdmission(Date admission) {
 		this.admission = admission;
 	}
 
-	public String getGraduation() {
+	public Date getGraduation() {
 		return graduation;
 	}
 
-	public void setGraduation(String graduation) {
+	public void setGraduation(Date graduation) {
 		this.graduation = graduation;
 	}
 
@@ -94,5 +96,6 @@ public class Education_infoVo {
 				+ school_name + ", degree_name=" + degree_name + ", major=" + major + ", admission=" + admission
 				+ ", graduation=" + graduation + ", grade=" + grade + ", contents=" + contents + "]";
 	}
+
 	
 }
