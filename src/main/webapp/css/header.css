@@ -145,7 +145,55 @@ body {
 }
 
 .activeOn>a {
-	outline: none;
+	position:relative;
+/* 	outline: none; */
+/* 	opacity: 1; */
+/* 	border-bottom: 3px solid white; */
+/* 	-webkit-transition: all .33s ease; */
+/* 	-moz-transition: all .33s ease; */
+/* 	-ms-transition: all .33s ease; */
+/* 	-o-transition: all .33s ease; */
+/* 	transition: all .33s ease; */
+}
+
+
+
+.menu>a::after{
+	position:absolute;	
+	content:"";
+	bottom:0;
+	width:0px;
+	height:1px;
+	display:block;
+	opacity:0;
+	left:0;
+	
+	border-bottom: 3px solid white;
+	
+	
+	-webkit-transition: all .33s ease;
+	-moz-transition: all .33s ease;
+	-ms-transition: all .33s ease;
+	-o-transition: all .33s ease;
+	transition: all .33s ease;
+	
+}
+
+.menu>a{
+	position:relative;
+}
+
+
+.activeOn>a::after{
+	position:absolute;	
+	content:"";
+	left:-30%;
+	bottom:0;
+	width:90%;
+	margin-left:30px;
+	height:1px;
+	display:block;
+	
 	opacity: 1;
 	border-bottom: 3px solid white;
 	-webkit-transition: all .33s ease;
@@ -153,7 +201,9 @@ body {
 	-ms-transition: all .33s ease;
 	-o-transition: all .33s ease;
 	transition: all .33s ease;
+	
 }
+
 
 .activeOn>a>div>span {
 	color: white;

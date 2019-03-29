@@ -15,7 +15,7 @@
           	<li style=" width: 410px; height: 34px; padding-top: 8px;">
 	          	<div class="searchbox">
 				  <div class="searchgroup">
-				      <input type="search" id="search" placeholder="검색" />
+				      <input type="search" id="search" placeholder="검색"/>
 				      <button class="icon"><i class="fa fa-search"></i></button>
 				  </div>
 				  	<div id="dropdownSearch">

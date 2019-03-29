@@ -78,7 +78,7 @@
 	      </div>
 	      <div class="col-md-6">
 	          <div class="input-group">
-	          	<button id="btn-write_modal" class="btn-write_modal"><span style="font-size: 25px;"><a><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></span></button>
+	          	<button id="btn-write_modal" class="btn-write_modal"  style="height: 73.6px; margin-top: -9px;"><span class="span-text"><a><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></span></button>
 	          	<button class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-images"></i></a></span></button>
 	          	<button class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-play-circle"></i></a></span></button>
 	          	<button class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-file-alt"></i></a></span></button>
@@ -90,11 +90,11 @@
 	        
 	          <!-- post -->
 	          <c:forEach items="${timelinePost }" var="post">
-	            <div class="col-post">
 		          
-		          <div id="panel panel-default" class="scrolling" data-post="${post }">
+		        <div id="col-post" class="scrolling" data-post="${post.post_code }">
+	              <div class="col-post">
 		          
-	                <div class="panel-body">
+	                <div class="col-post-body">
 	                  <div class="writer_info">
 	                    <h4><a href="#">${post.writer_name }</a></h4>
 	                    <span>${post.post_date }</span>
@@ -103,14 +103,14 @@
 	                  	<span>${post.post_contents }</span>
 	                  </div>
 	                </div>
-	                
-	                <div class="panel-footer">
-					  <span>게시물 하단</span>
-	                </div>
-	              
-		          </div>
 
-	            </div>
+	                <div class="col-post-footer">
+					  <span>게시물 하단(동영상 혹은 공유게시물 출력란)</span>
+	                </div>
+
+	              </div>
+		        </div>
+
 	          </c:forEach>
 	          <!-- ./post -->
 	        </div>
@@ -139,25 +139,68 @@
 
 <script type="text/javascript">
 
-$(function () {
-	$("#btn-write_modal").on("click", function () {
-		$("div.modal").modal();
+	$(function () {
+		$("#btn-write_modal").on("click", function () {
+			$("div.modal").modal();
+		});
 	});
-});
-
-var lastTop = 0;
-
-//스크롤 이벤트 발생 시
-$(window).scroll(function () {
-// 	var postData = $(".scrolling:last").attr("data-post");
 	
-	console.log($(window).scrollTop());
-	console.log($(document).height());
-	console.log($(window).height());
-	console.log($(document).height() - $(window).height() - 200);
+	var lastTop = 0;
+	var easeEffect = 'easeInQuint';
 	
-
-});
+	//스크롤 이벤트 발생 시
+	$(window).scroll(function () {
+		
+		console.log($(window).scrollTop());
+// 		console.log($(document).height());
+// 		console.log($(window).height());
+		console.log($(document).height() - $(window).height() - 200);
+		
+		var currentTop = $(window).scrollTop();
+		
+		if(currentTop >= $(document).height() - $(window).height() - 200){
+			
+// 			var postData = $(".scrolling:last").attr("data-post");
+			var lastPost = $(".scrolling:last").attr("data-post")
+			
+			$.ajax({
+				type : 'POST',
+				url : 'timeline',
+				headers : {"Content-Type" : "application/json"},
+				dataType : 'json',
+				data : JSON.stringify({data : lastPost}),
+				success : function(data) {
+					
+					console.log(data);
+					if(data != ""){
+						for(var i=0; i<5; i++){
+							$(".col-md-6").append('<div><div id="col-post"class="scrolling"data-post="${post.post_code }"><div class="col-post"><div class="col-post-body"><div class="writer_info"><h4><a href="#">${post.writer_name}</a></h4><span>${post.post_date}</span></div><div class="post_info"><span>${post.post_contents}</span></div></div><div class="col-post-footer"><span>게시물하단(동영상혹은공유게시물출력란)</span></div></div></div></div>');
+						}
+					}
+				}
+			}); //jsp 미사용
+			
+// 			$.ajax({
+// 				type : 'GET',
+// 				url : 'appendpost',
+// 				headers : {"Content-Type" : "application/json"},
+// 				dataType : 'text',
+// // 				data : JSON.stringify({data : lastPost}),
+// 				success : function(data) {
+					
+// 					console.log(data);
+// 					if(data != ""){
+// 						for(var i=0; i<5; i++){
+// 							$(".col-md-6").append(data);
+// 						}
+// 					}
+// 				}
+// 			}); //jsp 호출
+			
+		}
+		
+	
+	});
 
 	
 </script>
