@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.corporation.dao.ICorporationDao;
@@ -108,8 +110,9 @@ public class CorporationServiceImpl implements ICorporationService{
 	 * Method 설명 : 회사 검색
 	 */
 	@Override
-	public List<CorporationVo> searchCorp(String keyword) {
-		return corporationDao.searchCorp(keyword);
+	public List<CorporationVo> searchCorp(String corp_name) {
+		List<CorporationVo> corpList = corporationDao.searchCorp(corp_name);
+		return corpList;
 	}
 
 }
