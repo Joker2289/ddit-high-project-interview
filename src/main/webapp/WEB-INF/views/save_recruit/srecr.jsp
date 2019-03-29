@@ -20,7 +20,8 @@
 	<!-- 레이아웃 잡는건 나중에.. -->
 	<h3>채용공고저장 페이지임니다.</h3>
 	
-		
+	<br>
+	<a href="${pageContext.request.contextPath }/recruit">채용공고 페이지로 이동 -></a>	
 </div>		
 </div>		
 </div>		
