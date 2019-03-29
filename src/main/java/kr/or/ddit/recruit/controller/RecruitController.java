@@ -549,6 +549,12 @@ public class RecruitController {
 		return "recr_detailTiles";
 	}
 	
+	// @채용공고 올리기 페이지 요청.
+	@RequestMapping("/writeRecr")
+	public String writeRecr() {
+
+		return "writeRecrTiles";
+	}
 	
 	
 	

@@ -53,7 +53,7 @@
 		<span style="margin: 290px;">
 			인재를 찾고 계세요?
 			<span class="button-group-area mt-10" style="margin-left: 20px;">
-				<a href="#" class="genric-btn info-border">
+				<a href="${pageContext.request.contextPath }/writeRecr" class="genric-btn info-border">
 					<i class="fas fa-edit"></i>
 					채용공고 올리기
 				</a>
