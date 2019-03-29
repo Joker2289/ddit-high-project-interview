@@ -58,7 +58,7 @@ $(document).ready(function() {
 			         	<a href="/connections">
 			         		<span style="padding-right: 5px;"><i class="fas fa-user-friends"></i></span>1촌 ${connections_count }명
 			         	</a>
-			           <a id="pc_leftmenuBorder" href="fd">
+			           <a id="pc_leftmenuBorder" href="/coporation">
 			           	<span><i class="fas fa-building" ></i></span>회사 (${corporation_count })개
 			           </a>
 			        </div>
