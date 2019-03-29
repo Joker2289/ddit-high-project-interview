@@ -70,6 +70,17 @@ public interface ICorporationService {
 	 */
 	int getCorpCnt();
 	
+	/**
+	 * 
+	 * Method : searchCorp
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param keyword
+	 * @return
+	 * Method 설명 : 회사 검색
+	 */
+	List<CorporationVo> searchCorp(String keyword);
+	
 	
 }
 
