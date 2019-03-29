@@ -53,7 +53,7 @@
 		<span style="margin: 290px;">
 			인재를 찾고 계세요?
 			<span class="button-group-area mt-10" style="margin-left: 20px;">
-				<a href="#" class="genric-btn info-border">
+				<a href="${pageContext.request.contextPath }/writeRecr" class="genric-btn info-border">
 					<i class="fas fa-edit"></i>
 					채용공고 올리기
 				</a>
@@ -117,34 +117,48 @@
 	   		<div style="text-align: left; margin-bottom: 10px;">
 	   			<strong>조회하신 항목을 참고하여..</strong> <br> 
 	   			<c:choose>
-	   				<c:when test="${LVRVo.recruit_title.substring(0, 9) == '원하는 채용공고를' }">
+	   				<c:when test="${lVRVo.recruit_title.substring(0, 9) == '원하는 채용공고를' }">
 			   			<a href="${pageContext.request.contextPath }/recrSearch">
-			   				${LVRVo.recruit_title } - ${LVRVo.job_local }
+			   				${lVRVo.recruit_title } - ${lVRVo.job_local }
 			   			</a><br>
 	   				</c:when>
 	   				<c:otherwise>
-			   			<a href="${pageContext.request.contextPath }/recr_detail?recruit_code=${LVRVo.recruit_code }">
-			   				${LVRVo.recruit_title } - ${LVRVo.job_local }
+			   			<a href="${pageContext.request.contextPath }/recr_detail?recruit_code=${lVRVo.recruit_code }">
+			   				${lVRVo.recruit_title } - ${lVRVo.job_local }
 			   			</a><br>
 	   				</c:otherwise>
 	   			</c:choose>
 	   		</div>
-	   		<!-- RRList1가 있으면 출력. -->
-	   		<c:if test="${RRList1.size() >= 1 }">
+	   		<!-- rRList1가 있으면 출력. -->
+	   		<c:if test="${rRList1.size() >= 1 }">
 				<table class="tb_recruit">
 					<tr style="width: 100px; height: 140px; text-align: left;">
-						<c:forEach items="${RRList1 }" varStatus="i" var="RRVo">
+						<c:forEach items="${rRList1 }" varStatus="i" var="rRVo">
 							<td style="width: 5px; height: 5px;">
 								<div id="recr${i.index }" onmouseover="" style="cursor: pointer;">
 									<div class="table_div">
 										${corpImgList1.get(i.index) }
 									</div> <br>
-									<strong>${RRList1.get(i.index).recruit_title }</strong> <br>
+									<strong>${rRVo.recruit_title }</strong> <br>
 									${corpNmList1.get(i.index) } <br>
-									${RRList1.get(i.index).job_local } <br>
-									${RRList1.get(i.index).job_type }
+									${rRVo.job_local } <br>
+									${rRVo.job_type }
 								</div>
-								<i class="far fa-bookmark" style="margin-top: 10px; font-size: large;"></i><br>
+								<c:choose>
+									<c:when test="${scrapList1.get(i.index) == 'f' }">
+										<!-- scrap_flag에 recruit_code를 붙여주자. (예: t12) -->
+										<a href="${pageContext.request.contextPath }/recruit?scrap_flag=t${rRList1.get(i.index).recruit_code }">
+											<i id="scrapf${i.index }" class="far fa-bookmark" onmouseover="" 
+													style="margin-top: 10px; font-size: large; cursor: pointer;"></i>
+										</a><br>
+									</c:when>
+									<c:otherwise>
+										<a href="${pageContext.request.contextPath }/recruit?scrap_flag=f${rRList1.get(i.index).recruit_code }">
+											<i id="scrapt${i.index }" class="fas fa-bookmark" onmouseover="" 
+													style="margin-top: 10px; font-size: large; cursor: pointer;"></i>
+										</a><br>
+									</c:otherwise>
+								</c:choose>
 							</td>								
 						</c:forEach>
 					</tr>
@@ -158,7 +172,7 @@
 				<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br> [관심 분야 · 관심 분야 · 관심 분야 ...] 
 				<a href="${pageContext.request.contextPath }/interest">관심 분야 설정</a><br>
 			</div>
-			<!-- RRList2 출력. -->				
+			<!-- rRList2 출력. -->				
 			<table class="tb_recruit">
 				<tr style="width: 100px; height: 140px; text-align: left;">
 					<c:forEach begin="7" end="10" varStatus="i">
@@ -198,7 +212,7 @@
 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			console.log("RRlist1? : ${RRList1 }");
+			console.log("scrapList1? : ${scrapList1 }");
 			
 			// 채용공고 검색
 			$("#btn_search").on("click", function(){
@@ -229,16 +243,15 @@
 			// 채용공고 리스트
 			
 			// 지금은 12개인데...
-			<c:forEach begin="1" end="10" varStatus="i">
-				$("#recr${i.index-1 }").on("click", function(){
+			<c:forEach items="${rRList1 }" varStatus="i">
+				$("#recr${i.index }").on("click", function(){
 					alert("${i.index-1 }"); // 첫번째 채용공고 : i.index-1 -> '0'
 					
-					$("#recruit_code").val(${recrList.get(i.index-1).recruit_code});
+					$("#recruit_code").val(${rRList1.get(i.index).recruit_code});
 					
 					$("#frm_detail").submit();
 				});
 			</c:forEach>
-			
 			
 		});
 	

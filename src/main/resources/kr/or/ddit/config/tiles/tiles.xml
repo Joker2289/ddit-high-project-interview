@@ -55,4 +55,8 @@
 		<put-attribute name="content" value="/WEB-INF/views/interest/interest.jsp"/>
 	</definition>	
 	
+	<definition name="writeRecrTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/recruit/writeRecr.jsp"/>
+	</definition>	
+	
 </tiles-definitions>

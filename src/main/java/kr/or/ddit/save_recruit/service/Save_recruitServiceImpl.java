@@ -73,9 +73,57 @@ public class Save_recruitServiceImpl implements ISave_recruitService{
 	 */
 	@Override
 	public List<Save_recruitVo> getUserSrecrList(String user_id) {
-		List<Save_recruitVo> USList = srecrDao.getUserSrecrList(user_id);
+		List<Save_recruitVo> uSRList = srecrDao.getUserSrecrList(user_id);
 		
-		return USList;
+		return uSRList;
+	}
+
+	/**
+	 * 
+	 * Method : getLastSrecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param recruit_code
+	 * @return
+	 * Method 설명 : 특정 채용공고저장 중 마지막 항목 조회.
+	 */
+	@Override
+	public Save_recruitVo getLastSrecr(String recruit_code) {
+		Save_recruitVo sVo = srecrDao.getLastSrecr(recruit_code);
+		
+		return sVo;
+	}
+
+	/**
+	 * 
+	 * Method : getSrecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param recruit_code
+	 * @return
+	 * Method 설명 : 특정 채용공고저장 목록 조회.
+	 */
+	@Override
+	public List<Save_recruitVo> getSrecr(String recruit_code) {
+		List<Save_recruitVo> srecrList = srecrDao.getSrecr(recruit_code);
+		
+		return srecrList;
+	}
+
+	/**
+	 * 
+	 * Method : updateSrecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param sVo
+	 * @return
+	 * Method 설명 : 채용공고저장 수정.
+	 */
+	@Override
+	public int updateSrecr(Save_recruitVo sVo) {
+		int updateCnt = srecrDao.updateSrecr(sVo);
+		
+		return updateCnt;
 	}
 	
 	

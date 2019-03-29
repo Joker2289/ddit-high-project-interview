@@ -104,9 +104,9 @@ public class RecruitServiceImpl implements IRecruitService{
 	 */
 	@Override
 	public RecruitVo getLastViewRecr(String user_id) {
-		RecruitVo LVRVo = recrDao.getLastViewRecr(user_id);
+		RecruitVo lVRVo = recrDao.getLastViewRecr(user_id);
 		
-		return LVRVo;
+		return lVRVo;
 	}
 
 	/**
@@ -120,9 +120,9 @@ public class RecruitServiceImpl implements IRecruitService{
 	 */
 	@Override
 	public List<RecruitVo> getRecrByLocal(String job_local) {
-		List<RecruitVo> RRList1 = recrDao.getRecrByLocal(job_local);
+		List<RecruitVo> rRList1 = recrDao.getRecrByLocal(job_local);
 		
-		return RRList1;
+		return rRList1;
 	}
 
 	/**
