@@ -84,6 +84,11 @@
 		  FROM CORPORATION	
 	</select>
 	
+	<!-- 회사검색 -->
+	<select id="searchCorp" resultType="corporationVo" parameterType="String">
+		SELECT * FROM CORPORATION where corp_name like '%'|| #{ keyword } ||'%'
+	</select>
+	
 	
 	
 </mapper>
