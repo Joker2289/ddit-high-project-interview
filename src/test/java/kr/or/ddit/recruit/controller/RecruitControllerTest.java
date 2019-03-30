@@ -3,6 +3,7 @@ package kr.or.ddit.recruit.controller;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -226,6 +227,28 @@ public class RecruitControllerTest extends WebTestConfig{
 
 		/***Then***/
 		assertEquals("writeRecrTiles", viewName);
+	}
+	
+	// 리스트에 항목 추가하고 제거하기 테스트.
+	@Test
+	public void testListAdd() {
+		/***Given***/
+		List<String> list = new ArrayList<>();
+		list.add("1");
+		list.add("2");
+		list.add("3");
+		list.add("4");
+		list.add("5");
+		
+		int lVIdx = 2; // 인덱스 2 이면 -> 세번째 항목.
+
+		/***When***/
+		list.add(0, list.get(lVIdx));
+		list.remove(list.size()-1);
+
+		/***Then***/
+		assertEquals("3", list.get(0));
+		assertEquals(5, list.size());
 	}
 	
 	

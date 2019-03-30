@@ -140,7 +140,7 @@
 	   				</c:when>
 	   				<c:otherwise>
 			   			<a href="${pageContext.request.contextPath }/recr_detail?recruit_code=${lVRVo.recruit_code }">
-			   				${lVRVo.recruit_title } - ${lVRVo.job_local } 과(와) 유사한 채용공고.
+			   				${lVRVo.recruit_title } - ${lVRVo.job_local }
 			   			</a><br>
 	   				</c:otherwise>
 	   			</c:choose>

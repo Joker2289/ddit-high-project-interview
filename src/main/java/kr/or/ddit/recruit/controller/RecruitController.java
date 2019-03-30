@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
+import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
@@ -27,7 +28,6 @@ import kr.or.ddit.save_recruit.model.Save_recruitVo;
 import kr.or.ddit.save_recruit.service.ISave_recruitService;
 import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
-import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 
 @Controller
@@ -70,6 +70,10 @@ public class RecruitController {
 		// 채용공고 등록해보자.
 //		insert_recr();
 		
+		// '관심분야'를 통해 'rRList2' 만들기. -_-! 우선 받은 값을 확인해보자. 확인 InterestController
+		// 에서 하고 insert까지 한 다음 redirect - /recruit.
+		
+		
 		// alarm_flag - 저장한 검색어 제거하기. - search_save를 '1'로 변경.
 		if(alarm_flag != null && alarm_flag.equals("t")){
 			Search_logVo sVo = search_logService.getSearch_log(search_code);
@@ -78,11 +82,7 @@ public class RecruitController {
 			search_logService.updateSearch_log(sVo);
 		}
 		
-		// 임시로 session에 user값 넣기. -> 우선은 이렇게 해놓고 개발하고 나중에는 로그인 컨트롤러에서
-		// 처리하는 방식으로 바꿔야 함. 'File Search - usersVo (usersV?)'
-		session.setAttribute("usersVo", usersService.select_userInfo("kim"));
-		
-		UsersVo uVo = (UsersVo) session.getAttribute("usersVo");		
+		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");		
 		
 		// 채용공고 스크랩을 한 경우. scrap_flag.substring(0, 1) -> 't'
 		if( scrap_flag != null && 
@@ -91,7 +91,7 @@ public class RecruitController {
 			String scrap_code = scrap_flag.substring(1, scrap_flag.length());
 			
 			List<Save_recruitVo> uSRList = new ArrayList<>();
-			uSRList = srecrService.getUserSrecrList(uVo.getUser_id());
+			uSRList = srecrService.getUserSrecrList(mVo.getMem_id());
 			
 			// 조회한 데이터가 없는 경우 먼저 insert를 해야됨.
 			boolean srecr_Flag = false;
@@ -106,7 +106,7 @@ public class RecruitController {
 				sVo.setRecruit_code(scrap_code);
 				sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));
 				sVo.setSave_flag("t");
-				sVo.setUser_id(uVo.getUser_id());
+				sVo.setUser_id(mVo.getMem_id());
 				srecrService.insertSrecr(sVo);
 			}else{
 				for(Save_recruitVo sVo : uSRList){
@@ -125,7 +125,7 @@ public class RecruitController {
 		// 저장한 검색어 리스트 넘기기.
 		Search_logVo sVo = new Search_logVo();
 
-		sVo.setUser_id(uVo.getUser_id());
+		sVo.setUser_id(mVo.getMem_id());
 		sVo.setSearch_save("2");
 		List<Search_logVo> saveList = search_logService.getSaveList(sVo);
 		
@@ -155,7 +155,7 @@ public class RecruitController {
 		// 여기서 가장 큰 수를 구한다음 조회, 조회 하지말고 -> 'recrService.getLastViewRecr'
 		// 조회한 채용공고가 없는 경우도 처리해줘야 함.
 		// 변수 첫 자는 소문자로.
-		RecruitVo lVRVo = recrService.getLastViewRecr(uVo.getUser_id());
+		RecruitVo lVRVo = recrService.getLastViewRecr(mVo.getMem_id());
 		List<RecruitVo> rRList1 = new ArrayList<>();
 		if(lVRVo == null){
 			lVRVo = new RecruitVo();
@@ -248,7 +248,7 @@ public class RecruitController {
 			// 스크랩 데이터는 srecr에 있으니까 저장여부 리스트 scrapList 만들기. size는 rRList1에서 
 			// 가져오고 uSRList에서 save_flag가 't'인게 있으면 t. 없으면 f.
 			List<String> scrapList1 = new ArrayList<>();
-			List<Save_recruitVo> uSRList1 = srecrService.getUserSrecrList(uVo.getUser_id());
+			List<Save_recruitVo> uSRList1 = srecrService.getUserSrecrList(mVo.getMem_id());
 
 			for(int i=0; i < rRList1.size(); i++){
 				RecruitVo rVo = rRList1.get(i);
@@ -277,13 +277,24 @@ public class RecruitController {
 		}
 		
 		// 마지막 조회/스크랩 채용공고를 리스트의 맨앞으로 옮기자. lVRVo가 리스트에 없을수도 있음.
-//		boolean lVRVo_flag = true;
-//		
-//		for(RecruitVo rVo : rRList1){
-//			
-//		}
-//		
-//		if(lVRVo_flag == false)
+		// 있을 땐 인덱스 저장해놓기. (lVIdx)
+		boolean lVRVo_flag = false;
+		
+		for(RecruitVo rVo : rRList1){
+			if(rVo.getRecruit_code().equals(lVRVo.getRecruit_code())){
+				lVRVo_flag = true;
+				break;
+			}
+		}
+		
+		// list.add(index, element); 이용.
+		if(lVRVo_flag == false){
+			// 없을 땐 lVRVo를 0번에 넣고 마지막 항목을 지움.
+			
+		}else{
+			// 있을 땐 add([lVIdx])하고 remove([lVIdx+1]) <- 테스트 해보기.
+			
+		}
 		
 		model.addAttribute("rRList1", rRList1);
 //		logger.debug("flag?? : {}", scrap_flag); // 설마 로그 너무 많아서..
@@ -528,9 +539,9 @@ public class RecruitController {
 		// search_save 임시로 2로 설정. -> 나중에 1로 바꾸기.
 		sVo.setSearch_save("2");
 		
-		UsersVo uVo = (UsersVo) session.getAttribute("usersVo");
-		if(uVo != null){
-			sVo.setUser_id(uVo.getUser_id());
+		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");
+		if(mVo != null){
+			sVo.setUser_id(mVo.getMem_id());
 		}else{
 			// 임시로 아이디 brown 입력.
 			sVo.setUser_id("brown");
@@ -550,8 +561,8 @@ public class RecruitController {
 		sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));
 		sVo.setSave_flag("f");
 		
-		UsersVo uVo = (UsersVo) session.getAttribute("usersVo");
-		sVo.setUser_id(uVo.getUser_id());
+		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");
+		sVo.setUser_id(mVo.getMem_id());
 		srecrService.insertSrecr(sVo);
 		
 		RecruitVo recr = recrService.getRecr(recruit_code);
