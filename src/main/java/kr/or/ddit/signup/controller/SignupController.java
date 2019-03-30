@@ -244,10 +244,14 @@ public class SignupController {
 		
 		logger.debug("step5 : {}", profile);
 		
+		String realFileName = "";
+		
 		//사용자 사진을 업로드 한경우
 		if(profile.getSize() > 0) {
 			String fileName = profile.getOriginalFilename();
-			String realFileName =  "/Users/pjk/Documents/picture/" + UUID.randomUUID().toString();
+			realFileName =  req.getServletContext().getRealPath("/images/profile/" + UUID.randomUUID().toString());
+			
+			
 			
 			profile.transferTo(new File(realFileName));
 			UsersVo uVo = new UsersVo();
@@ -258,7 +262,7 @@ public class SignupController {
 			userService.update_userInfo(uVo);
 		}
 		
-		return "Complete";
+		return realFileName;
 	}
 	
 	
