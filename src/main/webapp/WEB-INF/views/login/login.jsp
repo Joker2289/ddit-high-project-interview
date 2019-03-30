@@ -34,18 +34,20 @@
 <!--===============================================================================================-->
 	<!-- jQuery UI CSS파일 -->
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
-<!-- 	<!-- jQuery 기본 js파일 -->
+	<!-- jQuery 기본 js파일 -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<!-- 	<!-- jQuery UI 라이브러리 js파일 --> 
+	<!-- jQuery UI 라이브러리 js파일 --> 
 	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>    
 	
 	
-
+	<!-- AutoComplete(자동완성)	 css, script -->
   	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
-	 
+	<!-- kakao 로그인	 script -->
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	
 </head>
 <body>
 	
@@ -104,6 +106,9 @@
 						<button type="button" id="signupCorp" class="btn btn-primary jk-sign-btn" >
 						  Corpation
 						</button>
+						
+						
+						
 					</div>
 
 					<div class="txt1 text-center p-t-54 p-b-20">
@@ -113,7 +118,7 @@
 					</div>
 
 					<div class="flex-c-m">
-						<a href="http://www.facebook.com" class="login100-social-item bg1">
+						<!-- <a href="http://www.facebook.com" class="login100-social-item bg1">
 							<i class="fa fa-facebook"></i>
 						</a>
 
@@ -123,7 +128,16 @@
 
 						<a href="http://www.google.com" class="login100-social-item bg3">
 							<i class="fa fa-google"></i>
+						</a> -->
+						
+						<a id="custom-login-btn" class="login100-social-item" href="javascript:kakaoLogin();">
+							<img src="${cp}/css/login/images/kakaolink_btn_medium.png" width="100" />
+							<!-- <img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"/> -->
 						</a>
+						
+						<%-- <a id="custom-login-btn" class="login100-social-item" href="https://kauth.kakao.com/oauth/authorize?client_id=5bc077e20fdb3cf12fec5e1abbccc2bc&redirect_uri=http://localhost:8080/kakaoLogin&response_type=code">
+							<img src="${cp}/css/login/images/kakaolink_btn_medium.png" width="100" />
+						</a> --%>
 					</div>
 					
 				</form>
@@ -151,13 +165,9 @@
 <!--===============================================================================================-->
 	<script src="/css/login/js/main.js"></script>
 	
+	
 <%-- 	<script src="<%=request.getContextPath()%>/js/jquery-3.3.1.min.js"></script>  --%>
 	
-	
-	 
-		
-	
-
 
 	<!-- 쿠키 관련 -->
 	<script src="<%=request.getContextPath()%>/js/cookieUtil.js"></script>
@@ -168,6 +178,68 @@
 	
 	<script>
 	
+	
+		// API KEY : 47f91cddcc83e3f0e48917969701abe1
+		
+		
+	    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+	    Kakao.init('47f91cddcc83e3f0e48917969701abe1');
+	    function kakaoLogin() {
+	      // 로그인 창을 띄웁니다.
+	      Kakao.Auth.login({
+	    	
+	        success: function(authObj) {
+	        	
+	          alert(JSON.stringify(authObj));
+	          console.log(authObj);
+	          
+	           Kakao.API.request({
+	           
+	        	  url: '/v1/user/me',
+	              success: function(res) {
+	            	  
+	        	  alert(JSON.stringify(res)); //<---- kakao.api.request 에서 불러온 결과값 json형태로 출력
+	              alert(JSON.stringify(authObj)); //<----Kakao.Auth.createLoginButton에서 불러온 결과값 json형태로 출력
+	  
+	              console.log(res.id);//<---- 콘솔 로그에 id 정보 출력(id는 res안에 있기 때문에  res.id 로 불러온다)
+	              console.log(res.kaccount_email);//<---- 콘솔 로그에 email 정보 출력 
+	              console.log(res.profile_image);
+	              console.log(res.properties['nickname']);//<---- 콘솔 로그에 닉네임 출력(properties에 있는 nickname 접근 
+	              // res.properties.nickname으로도 접근 가능 )
+	              console.log(res.created);
+	              console.log(res.status);
+	              console.log(authObj.access_token);//<---- 콘솔 로그에 토큰값 출력
+	  
+	              //$('#kakao_id').val(res.properties.id);
+	              //$('#kakao_nickname').val(res.properties.nickname);  
+	  
+	             var d = new Date();
+	  
+	             document.write(res.properties.nickname+"님 환영합니다.");
+	             document.write('');
+	             document.write('접속시간 : '+ d.getFullYear()+'/'+d.getMonth()+'/'+d.getDate()+'/'+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds());
+	  
+	             document.write('');
+	             document.write(res.id);
+	              
+	  
+	           
+	  
+	          }
+	  
+	          	
+	         
+	          }) 
+	         
+	        },
+	        fail: function(err) {
+	          alert(JSON.stringify(err));
+	        }
+	      });
+	      
+	    };
+	    
+	    
   	$(document).ready(function(){
   		
   		//쿠키 설정

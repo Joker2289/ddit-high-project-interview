@@ -3,14 +3,19 @@ package kr.or.ddit.login;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
@@ -19,6 +24,7 @@ import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
+import kr.or.ddit.util.kakao.kakao_restapi;
 
 
 @Controller
@@ -108,5 +114,24 @@ public class LoginController {
 			return "login/login";
 		}
 	}
+	
+	@RequestMapping(path="/kakaoLogin", produces = "application/json")
+    public String kakaoLogin(@RequestBody String code, Model model, HttpSession session) {
+        //카카오 홈페이지에서 받은 결과 코드
+        logger.debug("kakao 임시 코드 : " + code);
+        
+        //카카오 rest api 객체 선언
+        kakao_restapi kr = new kakao_restapi();
+        //결과값을 node에 담아줌
+        JsonNode node = kr.getAccessToken(code);
+        //결과값 출력
+        logger.debug("결과 값 출력 : " + node);
+        //노드 안에 있는 access_token값을 꺼내 문자열로 변환
+        String token = node.get("access_token").toString();
+        //세션에 담아준다.
+        session.setAttribute("token", token);
+        
+        return "redirect:/timeline";
+    }
 	
 }

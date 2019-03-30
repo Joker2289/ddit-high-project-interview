@@ -18,6 +18,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +26,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.career_info.service.ICareer_infoService;
@@ -43,6 +47,7 @@ import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
 import kr.or.ddit.util.model.Job_positionVo;
 import kr.or.ddit.util.service.IJob_positionService;
+import kr.or.ddit.util.kakao.kakao_restapi;
 
 @RequestMapping("/signUp")
 @Controller
@@ -67,6 +72,9 @@ public class SignupController {
 	
 	@Resource(name="job_positionService")
 	private IJob_positionService job_positionService;
+	
+	private kakao_restapi kakao_restapi = new kakao_restapi();
+
 	
 	private String SecurityCode;
 	private String id;
@@ -328,5 +336,11 @@ public class SignupController {
 		
 		return SecurityCode[0];
 	}
+	
+	
+
+
+
+
 	
 }
