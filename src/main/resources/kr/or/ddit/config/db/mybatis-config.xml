@@ -22,6 +22,7 @@
 		<typeAlias alias="save_recruitVo" type="kr.or.ddit.save_recruit.model.Save_recruitVo"/>
 		<typeAlias alias="education_infoVo" type="kr.or.ddit.education_info.model.Education_infoVo"/>
 		<typeAlias alias="job_positionVo" type="kr.or.ddit.util.model.Job_positionVo"/>
+		<typeAlias alias="interestVo" type="kr.or.ddit.interest.model.InterestVo"/>
 	</typeAliases> 
 	
   
@@ -42,6 +43,7 @@
 		<mapper resource="kr/or/ddit/config/db/mapper/save_recruit.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/education_info.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/job_position.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/interest.xml"/>
 	</mappers>
 </configuration>
 
