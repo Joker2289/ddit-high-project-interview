@@ -82,6 +82,7 @@ public class SignupController {
 		return "login/step1";
 	}
 	
+	//기업 검색(자동완성)
 	@RequestMapping(path="/searchCorp")
 	@ResponseBody
 	public List<CorporationVo> searchCorp(String keyword) throws UnsupportedEncodingException {
@@ -95,6 +96,7 @@ public class SignupController {
 		return corpList;
 	}
 	
+	//직군 검색(자동완성)
 	@RequestMapping(path="/searchPosition")
 	@ResponseBody
 	public List<Job_positionVo> searchPosition(String keyword) throws UnsupportedEncodingException {
@@ -123,6 +125,19 @@ public class SignupController {
 		}
 		
 		SecurityCode = success;
+		
+		return "success";
+	}
+	
+	@RequestMapping(path="/idCheck")
+	@ResponseBody
+	public String idCheck(String id) {
+		
+		MemberVo memVo = memService.select_memberInfo(id);
+		
+		if(memVo != null) {
+			return "error";
+		}
 		
 		return "success";
 	}

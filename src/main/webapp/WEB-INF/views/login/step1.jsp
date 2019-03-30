@@ -23,6 +23,11 @@
 								type="text" id="id" name="id" placeholder=" Your ID" autocomplete="on"><span
 								class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
+						
+						<div class="wrap-input-custom">
+							<button id="idCheck" class="btn btn-primary jk-sign-btn" type="button">중복확인</button>
+						</div>			 
+						
 						<div class="wrap-input-custom validate-input m-b-50"
 							data-validate="Password is required">
 							<span class="label-input100">Pass word</span>
@@ -44,6 +49,9 @@
 						<input type="hidden" name="division" value="1">
 						<input type="hidden" name="step" value="1">
 					</form>
+					
+					
+					
 
 			 </div>
 		 </div>  
@@ -60,6 +68,40 @@
 		
 		<script>
 		
+		var idCheck = false;
+		
+		$("#idCheck").on('click', function(){
+			
+			var input_id = $("#id").val();
+			
+			if($("#id").val().trim() == "") {
+				alert("사용자 아이디를 입력해주세요	");
+				$("#id").focus();
+				return false;
+			}
+			
+			console.log(input_id);
+			
+			$.ajax({
+		  			url : "${cp}/signUp/idCheck",
+		  			method : "post",
+		  			data : {"id" : input_id},
+		  			success : function(data){
+		  				console.log(data);
+		  				
+		  				if(data == "error"){
+		  					alert("존재하는 ID 입니다");
+		  				}
+		  				
+		  				if(data == "success"){
+		  					alert("사용가능한 ID 입니다")
+							idCheck=true;
+		  				}
+		  			}
+		  	});
+			
+			
+		});
 		
 		$("#nextStep").on('click', function(){
 			
@@ -90,6 +132,11 @@
 				$("#email").focus();
 				return false;
 			} 
+			
+			if(idCheck == false) {
+				alert("ID 중복체크를 통과해주세요");
+				return false;
+			}
 			
 			
 			
