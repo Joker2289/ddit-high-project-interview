@@ -114,5 +114,19 @@ public class CorporationDaoImpl implements ICorporationDao{
 		
 		return corpList;
 	}
+	
+	/**
+	 * 
+	 * Method : update_corpInfo
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 기업 정보 수정
+	 */
+	@Override
+	public int update_corpInfo(CorporationVo vo) {
+		return sqlSessionTemplate.update("corp.update_corpInfo", vo);
+	}
 
 }

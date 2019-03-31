@@ -80,6 +80,17 @@ public interface ICorporationDao {
 	 */
 	List<CorporationVo> searchCorp(String keyword);
 	
+	/**
+	 * 
+	 * Method : update_corpInfo
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 기업 정보 수정
+	 */
+	int update_corpInfo(CorporationVo vo);
+	
 }
 
 
