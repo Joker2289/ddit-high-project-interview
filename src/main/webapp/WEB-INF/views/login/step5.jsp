@@ -5,7 +5,7 @@
 		<div class="jk-row">
 	  	 	<div id="modal-head" class="jk-modal-head">
 	  	 		
-	  	 		step4
+	  	 		<img src="${ cp }/images/step5.png"  width="550" height="80">
 	  	 		
 	  	 	</div>
   	 	</div>

@@ -6,7 +6,7 @@
 		<div class="jk-row">
 	  	 	<div id="modal-head" class="jk-modal-head">
 	  	 		
-	  	 		<h1>Step 4</h1>
+	  	 		<img src="${ cp }/images/step4.png"  width="500" height="80">
 	  	 		
 	  	 	</div>
   	 	</div>
@@ -36,20 +36,20 @@
 						</div>
 						
 						
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Major is reauired">
-							<span class="label-input100">입학년도</span>
-							<input type="text" id="fromDate" name="admission">
+						<div class="wrap-input-custom2">
+							<span class="label-input100-custom">입학년도</span>
+							<input type="text" id="fromDate" name="admission" class="custom-select">
 						</div>
 						
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Major is reauired">
-							<span class="label-input100">졸업년도</span>
-							<input type="text" id="toDate" name="graduation">
+						<div class="wrap-input-custom2">
+							<span class="label-input100-custom">졸업년도</span>
+							<input type="text" id="toDate" name="graduation" class="custom-select">
 						</div>
 						
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Grade is reauired">
-							<span class="label-input100">학점</span>
+						<div class="wrap-input-custom2">
+							<span class="label-input100-custom">학점</span>
 							
-							<select name="grade">
+							<select name="grade" class="custom-select">
 								 <option value="" hidden> Select Grade </option>
 								<option value="4.5">	A+</option>
 								<option value="4.0">	A</option>               
@@ -65,8 +65,9 @@
 								<option value="0.7">	D-</option>               
 								<option value="0">		F</option>              
 							</select>
-							
-							<button id="step3" class="btn btn-primary jk-sign-btn" type="button">저는 학생이 아닙니다</button>
+						</div>
+						<div class="wrap-input-custom2">
+							<button id="step3" class="jk-btn-long3" type="button">학생이 아닙니다</button>
 						</div>
 					</form>
 					
@@ -93,7 +94,7 @@
 	            ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
 	            ,changeYear: true //콤보박스에서 년 선택 가능
 	            ,changeMonth: true //콤보박스에서 월 선택 가능                
-	            ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+	            //,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
 	            ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
 	            ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
 	            ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
@@ -115,7 +116,7 @@
 	            ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
 	            ,changeYear: true //콤보박스에서 년 선택 가능
 	            ,changeMonth: true //콤보박스에서 월 선택 가능                
-	            ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+	            //,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
 	            ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
 	            ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
 	            ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                

@@ -4,7 +4,6 @@ package kr.or.ddit.signup.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
@@ -18,7 +17,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +24,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.JsonNode;
 
 import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.career_info.service.ICareer_infoService;
@@ -73,11 +69,10 @@ public class SignupController {
 	@Resource(name="job_positionService")
 	private IJob_positionService job_positionService;
 	
-	private kakao_restapi kakao_restapi = new kakao_restapi();
-
+	private String SecurityCode;	//인증코드 저장
+	private String id;				//id 저장
+	private String division;		//구분 저장
 	
-	private String SecurityCode;
-	private String id;
 	
 	@RequestMapping("/cancel")
 	public String cancel() {
@@ -86,8 +81,13 @@ public class SignupController {
 	}
 	
 	@RequestMapping("/goStep1")
-	public String goStep1() {
-		return "login/step1";
+	public String goStep1(String division) {
+		
+		if(division.equals("1")){
+			return "login/step3";
+		}
+		
+		return "login/step1_corp";
 	}
 	
 	//기업 검색(자동완성)
@@ -118,7 +118,7 @@ public class SignupController {
 		return positionList;
 	}
 	
-	
+	//이메일 인증
 	@RequestMapping(path="/error_email")
 	@ResponseBody
 	public String error_email(@RequestBody SignupUserVo vo) {
@@ -137,6 +137,7 @@ public class SignupController {
 		return "success";
 	}
 	
+	//ID 중복체크
 	@RequestMapping(path="/idCheck")
 	@ResponseBody
 	public String idCheck(String id) {
@@ -150,12 +151,12 @@ public class SignupController {
 		return "success";
 	}
 	
-	
+	//Step2
 	@RequestMapping("/goStep2")
 	public String goStep2(@RequestBody SignupUserVo vo, Model model) {
 
 		
-		logger.debug("vo : {}", vo);
+		logger.debug("ste1.vo : {}", vo);
 		
 		
 		//member 등록 후 -> users / corp 등록
@@ -163,25 +164,46 @@ public class SignupController {
 		mVo.setMem_id(vo.getId());
 		mVo.setMem_division(vo.getDivision());
 		mVo.setPass(KISA_SHA256.encrypt(vo.getPass()));
+		
 		int insertCnt = memService.insert_member(mVo);
 		
+		id = vo.getId();
 		
+		division = vo.getDivision();
 		
-		if(insertCnt == 1) {
-			UsersVo uVo = new UsersVo();
-			uVo.setUser_id(vo.getId());
-			uVo.setEmail(vo.getEmail());
-			uVo.setUser_name(vo.getName());
-			userService.insert_users(uVo);
+		if(vo.getDivision().equals("1")) {
+			
+			if(insertCnt == 1) {
+				UsersVo uVo = new UsersVo();
+				uVo.setUser_id(vo.getId());
+				uVo.setEmail(vo.getEmail());
+				uVo.setUser_name(vo.getName());
+				userService.insert_users(uVo);
+			}
+			
 		}
 		
-		id = vo.getId();
+		if(vo.getDivision().equals("2")) {
+			
+			if(insertCnt == 1) {
+				CorporationVo cVo = new CorporationVo();
+				cVo.setCorp_id(vo.getId());
+				cVo.setEmail(vo.getEmail());
+				cVo.setCorp_name(vo.getName());
+				corpService.insert_corp(cVo);
+			}
+			
+		}
 		
 		return "login/step2";
 	}
 	
+	//인증코드 에러 검사
 	@RequestMapping("/error_code")
-	public String error_code(@RequestBody SignupUserVo vo, HttpServletRequest req) {
+	@ResponseBody
+	public String error_code(@RequestBody SignupUserVo vo) {
+		
+		logger.debug("error_code : {}", vo.getSecurityCode());
 		
 		if(!SecurityCode.equals(vo.getSecurityCode())) {
 			return "error";
@@ -191,7 +213,14 @@ public class SignupController {
 	
 	@RequestMapping("/goStep3")
 	public String goStep3() {
-		return "login/step3";
+		
+		logger.debug("dividion: {}", division);
+		
+		if(division.equals("1")) {
+			return "login/step3";
+		}
+		
+		return "login/step3_corp";
 	}
 	
 	
@@ -244,6 +273,35 @@ public class SignupController {
 		return "login/step3";
 	}
 	
+	@RequestMapping("/goStep4_corp")
+	public String goStep4_corp(@RequestBody SignupUserVo vo) {
+		
+		CorporationVo cVo = new CorporationVo();
+		cVo.setCorp_id(id);
+		cVo.setCorp_type(vo.getCorp_type());
+		cVo.setIndustry_type(vo.getIndustry_type());
+		cVo.setCorp_size(vo.getCorp_size());
+		cVo.setCorp_birth(vo.getCorp_birth());
+		
+		corpService.update_corpInfo(cVo);
+		
+		return "login/step4_corp";
+	}
+	
+	@RequestMapping("/goStep5_corp")
+	public String goStep5_corp(@RequestBody SignupUserVo vo) {
+		
+		CorporationVo cVo = new CorporationVo();
+		cVo.setCorp_id(id);
+		cVo.setTelno(vo.getTelno());
+		cVo.setZipcode(vo.getZipcode());
+		cVo.setAddr1(vo.getAddr1());
+		cVo.setAddr2(vo.getAddr2());
+		
+		corpService.update_corpInfo(cVo);
+		
+		return "login/step5";
+	}
 	
 	
 	@RequestMapping(path="/finalStep", consumes ={"multipart/form-data"})
@@ -257,28 +315,35 @@ public class SignupController {
 		//사용자 사진을 업로드 한경우
 		if(profile.getSize() > 0) {
 			String fileName = profile.getOriginalFilename();
-			realFileName =  req.getServletContext().getRealPath("/images/profile/" + UUID.randomUUID().toString());
 			
+			//유저 프로필 등록
+			if(division.equals("1")) {
+				realFileName =  req.getServletContext().getRealPath("/images/profile/" + UUID.randomUUID().toString());
+				
+				profile.transferTo(new File(realFileName));
+				UsersVo uVo = new UsersVo();
+				uVo.setUser_id(id);
+				uVo.setProfile_img(fileName);
+				uVo.setProfile_path(realFileName);
+				
+				userService.update_userInfo(uVo);
+			}
 			
+			//기업 프로필 등록
+			else {
+				realFileName =  req.getServletContext().getRealPath("/images/logo/" + UUID.randomUUID().toString());
+				profile.transferTo(new File(realFileName));
+				CorporationVo cVo = new CorporationVo();
+				cVo.setCorp_id(id);
+				cVo.setCorp_logo(fileName);
+				cVo.setLogo_path(realFileName);
+				
+				corpService.update_corpInfo(cVo);
+			}
 			
-			profile.transferTo(new File(realFileName));
-			UsersVo uVo = new UsersVo();
-			uVo.setUser_id(id);
-			uVo.setProfile_img(fileName);
-			uVo.setProfile_path(realFileName);
-			
-			userService.update_userInfo(uVo);
 		}
-		
 		return realFileName;
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * 
@@ -333,14 +398,7 @@ public class SignupController {
 			return "error";
 		}
 		
-		
 		return SecurityCode[0];
 	}
-	
-	
-
-
-
-
 	
 }

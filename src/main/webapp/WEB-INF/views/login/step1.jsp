@@ -6,7 +6,7 @@
 		<div class="jk-row">
 	  	 	<div id="modal-head" class="jk-modal-head">
 	  	 		
-	  	 		<h1> 회원 가입 </h1>
+	  	 		<img src="${ cp }/images/step1.png"  width="500" height="80">
 	  	 		
 	  	 	</div>
   	 	</div>
@@ -17,15 +17,14 @@
 		     		
 		     		<!-- step1  -->
 					<form id="step1">
-						<div class="wrap-input-custom validate-input m-b-50"
-							data-validate="Username is reauired">
-							<span class="label-input100">ID</span><input class="input100"
-								type="text" id="id" name="id" placeholder=" Your ID" autocomplete="on"><span
-								class="focus-input100" data-symbol="&#xf206;"></span>
+						<div class="wrap-input-custom validate-input m-b-50" data-validate="Username is reauired">
+							<span class="label-input100">ID</span>
+							<input class="input100" type="text" id="id" name="id" placeholder=" Your ID">
+							<span class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 						
-						<div class="wrap-input-custom">
-							<button id="idCheck" class="btn btn-primary jk-sign-btn" type="button">중복확인</button>
+						<div class="wrap-input-custom2">
+							<button id="idCheck" class="jk-btn-long" type="button">중복검사</button>
 						</div>			 
 						
 						<div class="wrap-input-custom validate-input m-b-50"
@@ -47,12 +46,8 @@
 								class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 						<input type="hidden" name="division" value="1">
-						<input type="hidden" name="step" value="1">
 					</form>
 					
-					
-					
-
 			 </div>
 		 </div>  
 	     
@@ -68,8 +63,8 @@
 		
 		<script>
 		
+		//ID 중복체크
 		var idCheck = false;
-		
 		$("#idCheck").on('click', function(){
 			
 			var input_id = $("#id").val();
@@ -83,21 +78,26 @@
 			console.log(input_id);
 			
 			$.ajax({
-		  			url : "${cp}/signUp/idCheck",
-		  			method : "post",
-		  			data : {"id" : input_id},
-		  			success : function(data){
-		  				console.log(data);
-		  				
-		  				if(data == "error"){
-		  					alert("존재하는 ID 입니다");
-		  				}
-		  				
-		  				if(data == "success"){
-		  					alert("사용가능한 ID 입니다")
-							idCheck=true;
-		  				}
-		  			}
+	  			url : "${cp}/signUp/idCheck",
+	  			method : "post",
+	  			data : {"id" : input_id},
+	  			success : function(data){
+	  				console.log(data);
+	  				
+	  				if(data == "error"){
+	  					alert("존재하는 ID 입니다");
+	  					$("#idCheck").html("사용불가");
+	  					$("#idCheck").css("background", "#D94739");
+	  				}
+	  				
+	  				if(data == "success"){
+	  					alert("사용가능한 ID 입니다");
+						idCheck=true;
+	  					$("#id").attr("disabled", true);
+	  					$("#idCheck").html("사용가능");
+	  					$("#idCheck").css("background", "#7DB150");
+	  				}
+	  			}
 		  	});
 			
 			
@@ -119,14 +119,15 @@
 				$("#pass").focus();
 				return false;
 			} */
+			
 			//이름
 			if($("#name").val().trim() == "") {
 				alert("사용자 아름을 입력해주세요");
 				$("#name").focus();
 				return false;
 			}
-			//닉네
 			
+			//이메일
 			if($("#email").val().trim() == "") {
 				alert("이메일을 입력해주세요");
 				$("#email").focus();
@@ -137,7 +138,6 @@
 				alert("ID 중복체크를 통과해주세요");
 				return false;
 			}
-			
 			
 			
 			//step1 - user
@@ -172,7 +172,6 @@
 		  		  			}
 		  		  		});
 	  				}
-	  				
 	  			}
 	  		});
 		});
@@ -195,10 +194,7 @@
 	  	  		});
 	  			
 				$('.jk-modalsasun').css('display','none');
-	  		} else {
-	  			
-	  			
-	  		}
+	  		} 
 		});
 			
 	  		

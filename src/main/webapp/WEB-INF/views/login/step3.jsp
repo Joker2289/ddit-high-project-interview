@@ -5,7 +5,7 @@
 		<div class="jk-row">
 	  	 	<div id="modal-head" class="jk-modal-head">
 	  	 		
-	  	 		<h1>경력 등록</h1>
+	  	 		<img src="${ cp }/images/step3.png"  width="500" height="80">
 	  	 		
 	  	 	</div>
   	 	</div>
@@ -28,10 +28,10 @@
 							<span class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 						
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Job Rank is reauired">
-							<span class="label-input100">직급</span>
-							<select name="jab_rank">
-								 <option value="" hidden> Select Job Rank </option>
+						<div class="wrap-input-custom2">
+							<span class="label-input100-custom">직 급</span>
+							<select name="jab_rank" class="custom-select">
+								<option value="" hidden> 직급 선택 </option>
 								<option value="회장">		회장</option>
 								<option value="부회장">	부회장</option>               
 								<option value="사장">		사장</option>               
@@ -48,23 +48,22 @@
 								<option value="사원">		사원</option>
 								<option value="인턴">		인턴</option>              
 							</select>
-							<span class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 						
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Major is reauired">
-							<span class="label-input100">입사일</span>
-							<input type="text" id="fromDate" name="join_date">
+						<div class="wrap-input-custom2">
+							<span class="label-input100-custom">입사일</span>
+							<input type="text" id="fromDate" name="join_date" class="custom-select">
 						</div>
 						
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Major is reauired">
-							<span class="label-input100">퇴사일</span>
-							<input type="text" id="toDate" name="resign_date">
+						<div class="wrap-input-custom2">
+							<span class="label-input100-custom">퇴사일</span>
+							<input type="text" id="toDate" name="resign_date" class="custom-select">
 						</div>
 						
 					</form> 
 					
-					<div class="wrap-input-custom">
-						<button id="step4" class="btn btn-primary jk-sign-btn" type="button">아직 학생 이세요 ??</button>
+					<div class="wrap-input-custom2">
+						<button id="step4" class="jk-btn-long2" type="button">아직 학생 이세요??</button>
 					</div>			 
 			 
 			 </div>
@@ -207,7 +206,7 @@
             ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
             ,changeYear: true //콤보박스에서 년 선택 가능
             ,changeMonth: true //콤보박스에서 월 선택 가능                
-            ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+            //,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
             ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
             ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
             ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
@@ -216,8 +215,6 @@
             ,monthNames: ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"] //달력의 월 부분 Tooltip 텍스트
             ,dayNamesMin: ["일","월","화","수","목","금","토"] //달력의 요일 부분 텍스트
             ,dayNames: ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"] //달력의 요일 부분 Tooltip 텍스트
-            ,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-            ,maxDate: "+1M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
         });                    
         
         //초기값을 오늘 날짜로 설정
@@ -229,7 +226,7 @@
             ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
             ,changeYear: true //콤보박스에서 년 선택 가능
             ,changeMonth: true //콤보박스에서 월 선택 가능                
-            ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+            //,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
             ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
             ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
             ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
@@ -238,8 +235,6 @@
             ,monthNames: ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"] //달력의 월 부분 Tooltip 텍스트
             ,dayNamesMin: ["일","월","화","수","목","금","토"] //달력의 요일 부분 텍스트
             ,dayNames: ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"] //달력의 요일 부분 Tooltip 텍스트
-            ,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-            ,maxDate: "+1M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
         });                    
         
   		

@@ -46,7 +46,7 @@
 	
 	<!-- 회사정보 수정 -->
 	<update id="update_corpInfo" parameterType="corporationVo">
-		update users
+		update corporation
 		   set corp_name 	 = nvl(#{corp_name, jdbcType=VARCHAR}, corp_name),
 		       bg_img	 	 = nvl(#{bg_img, jdbcType=VARCHAR}, bg_img),
 		       bg_path	 	 = nvl(#{bg_path, jdbcType=VARCHAR}, bg_path),
