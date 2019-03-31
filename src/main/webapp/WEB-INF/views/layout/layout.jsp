@@ -92,42 +92,42 @@ $(document).ready(function() {
 	
 	
 	$(document).on("click", function(e){
-			if($(e.target).closest(".profile").hasClass("profile")){
-				
-        		$(".activeOn").attr('class', 'menu');
-        		$(e.target).closest(".menu").attr('class', 'activeOn profileOn');
+		if($(e.target).closest(".profile").hasClass("profile")){
+			
+       		$(".activeOn").attr('class', 'menu');
+       		$(e.target).closest(".menu").attr('class', 'activeOn profileOn');
+       		
+        	var str = "profile";
+        	
+        	$(".profile").attr('class','activeOn profileOn');
+    		
+    		$.ajax({
+        		type : "POST",
+    	    		url : "/menu",
+    	    		dataType : "HTML",
+    	    		data : {"str":str},
+        		success : function(result) {
+        			$("#dropdownProfile").append(result);
+        		}
+        	}); 
+		}else if (!$(e.target).closest(".profile").hasClass("profile")){
+        	
+        	if($(e.target).closest(".profileOn").hasClass("profileOn")) {
         		
-	        	var str = "profile";
-	        	
-	        	$(".profile").attr('class','activeOn profileOn');
-	    		
-	    		$.ajax({
-	        		type : "POST",
-	    	    		url : "/menu",
-	    	    		dataType : "HTML",
-	    	    		data : {"str":str},
-	        		success : function(result) {
-	        			$("#dropdownProfile").append(result);
-	        		}
-	        	}); 
-			}else if (!$(e.target).closest(".profile").hasClass("profile")){
-	        	
-	        	if($(e.target).closest(".profileOn").hasClass("profileOn")) {
-	        		
- 	        		$(".profileOn").attr('class','activeOn profile');
-	        		
-	        	}else if ($(e.target).closest(".menu").hasClass("menu")){
-	        		
-	        		$(".profileOn").attr('class', 'menu profile');
-	        		$(".profile").attr('class', 'menu profile');
-	        		$(".activeOn").attr('class', 'menu');
-	        		$(e.target).closest(".menu").attr('class', 'activeOn');
-	        	}else {
-	        		
- 	        		$(".profileOn").attr('class', 'menu profile');
-	        	}
-	        	$("#dropdownProfile").empty();
-	        }
+	        		$(".profileOn").attr('class','activeOn profile');
+        		
+        	}else if ($(e.target).closest(".menu").hasClass("menu")){
+        		
+        		$(".profileOn").attr('class', 'menu profile');
+        		$(".profile").attr('class', 'menu profile');
+        		$(".activeOn").attr('class', 'menu');
+        		$(e.target).closest(".menu").attr('class', 'activeOn');
+        	}else {
+        		
+	        	$(".profileOn").attr('class', 'menu profile');
+        	}
+        	$("#dropdownProfile").empty();
+        }
 	}); 
 	
 });
