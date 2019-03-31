@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="job_position">
+	
+	<!-- 회사검색 -->
+	<select id="searchPosition" resultType="job_positionVo" parameterType="String">
+		SELECT * FROM JOB_POSITION where position like '%'|| #{ value }||'%' order by position 
+	</select>
+	
+</mapper>

@@ -1,5 +1,7 @@
 package kr.or.ddit.signup.model;
 
+import java.util.Date;
+
 public class SignupUserVo {
 	
 	//step1
@@ -16,14 +18,17 @@ public class SignupUserVo {
 	private String job_position;	// 직군
 	private String job_rank;		// 직급
 	private String corporate_name;	// 회사
+	private Date   join_date;		// 입사일
+	private Date   resign_date;		// 퇴사일
 	
 	//step4
 	private String school_name;		// 학교명
 	private String degree_name;		// 학위
 	private String major;			// 전공
-	private String admission;		// 입학년도
-	private String graduation;		// 졸업(예정)년도
+	private Date admission;			// 입학년도
+	private Date graduation;		// 졸업(예정)년도
 	private String grade;			// 학점
+	
 	
 	public String getId() {
 		return id;
@@ -79,6 +84,18 @@ public class SignupUserVo {
 	public void setCorporate_name(String corporate_name) {
 		this.corporate_name = corporate_name;
 	}
+	public Date getJoin_date() {
+		return join_date;
+	}
+	public void setJoin_date(Date join_date) {
+		this.join_date = join_date;
+	}
+	public Date getResign_date() {
+		return resign_date;
+	}
+	public void setResign_date(Date resign_date) {
+		this.resign_date = resign_date;
+	}
 	public String getSchool_name() {
 		return school_name;
 	}
@@ -97,16 +114,16 @@ public class SignupUserVo {
 	public void setMajor(String major) {
 		this.major = major;
 	}
-	public String getAdmission() {
+	public Date getAdmission() {
 		return admission;
 	}
-	public void setAdmission(String admission) {
+	public void setAdmission(Date admission) {
 		this.admission = admission;
 	}
-	public String getGraduation() {
+	public Date getGraduation() {
 		return graduation;
 	}
-	public void setGraduation(String graduation) {
+	public void setGraduation(Date graduation) {
 		this.graduation = graduation;
 	}
 	public String getGrade() {
@@ -115,13 +132,13 @@ public class SignupUserVo {
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
+	
 	@Override
 	public String toString() {
 		return "SignupUserVo [id=" + id + ", pass=" + pass + ", email=" + email + ", name=" + name + ", division="
 				+ division + ", securityCode=" + securityCode + ", job_position=" + job_position + ", job_rank="
-				+ job_rank + ", corporate_name=" + corporate_name + ", school_name=" + school_name + ", degree_name="
-				+ degree_name + ", major=" + major + ", admission=" + admission + ", graduation=" + graduation
-				+ ", grade=" + grade + "]";
+				+ job_rank + ", corporate_name=" + corporate_name + ", join_date=" + join_date + ", resign_date="
+				+ resign_date + ", school_name=" + school_name + ", degree_name=" + degree_name + ", major=" + major
+				+ ", admission=" + admission + ", graduation=" + graduation + ", grade=" + grade + "]";
 	}
-	
 }

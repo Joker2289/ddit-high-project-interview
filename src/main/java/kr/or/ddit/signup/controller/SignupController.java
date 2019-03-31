@@ -3,6 +3,9 @@ package kr.or.ddit.signup.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -15,6 +18,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,12 +26,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.career_info.service.ICareer_infoService;
+import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.education_info.service.IEducation_infoService;
@@ -37,6 +45,9 @@ import kr.or.ddit.signup.model.SignupUserVo;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
+import kr.or.ddit.util.model.Job_positionVo;
+import kr.or.ddit.util.service.IJob_positionService;
+import kr.or.ddit.util.kakao.kakao_restapi;
 
 @RequestMapping("/signUp")
 @Controller
@@ -59,32 +70,93 @@ public class SignupController {
 	@Resource(name="education_infoService")
 	private IEducation_infoService educationService;
 	
+	@Resource(name="job_positionService")
+	private IJob_positionService job_positionService;
+	
+	private kakao_restapi kakao_restapi = new kakao_restapi();
+
+	
 	private String SecurityCode;
 	private String id;
 	
-	@RequestMapping(path="/cancel")
-	@ResponseBody
+	@RequestMapping("/cancel")
 	public String cancel() {
 		memService.delete_member(id);
 		return "login/login";
 	}
 	
-	@RequestMapping("/go")
-	public String step() {
+	@RequestMapping("/goStep1")
+	public String goStep1() {
 		return "login/step1";
 	}
 	
+	//기업 검색(자동완성)
+	@RequestMapping(path="/searchCorp")
+	@ResponseBody
+	public List<CorporationVo> searchCorp(String keyword) throws UnsupportedEncodingException {
+		
+		logger.debug("keyword : {}", keyword);
+		
+		List<CorporationVo> corpList = corpService.searchCorp(keyword);
+		
+		logger.debug("corpList : {}", corpList);
+		
+		return corpList;
+	}
 	
-	@RequestMapping("/step1")
-	public String step1(@RequestBody SignupUserVo vo, Model model) {
-
-		logger.debug("step1 : {}", vo); 
+	//직군 검색(자동완성)
+	@RequestMapping(path="/searchPosition")
+	@ResponseBody
+	public List<Job_positionVo> searchPosition(String keyword) throws UnsupportedEncodingException {
+		
+		logger.debug("keyword : {}", keyword);
+		
+		List<Job_positionVo> positionList = job_positionService.searchPosition(keyword);
+		
+		logger.debug("positionList : {}", positionList);
+		
+		return positionList;
+	}
+	
+	
+	@RequestMapping(path="/error_email")
+	@ResponseBody
+	public String error_email(@RequestBody SignupUserVo vo) {
 		
 		String success = sendEmail(vo.getEmail());
+		
+		logger.debug("mail 인증 : {}", success);
+		logger.debug("mail vo : {}", vo);
 		
 		if(success.equals("error")) {
 			return "error";
 		}
+		
+		SecurityCode = success;
+		
+		return "success";
+	}
+	
+	@RequestMapping(path="/idCheck")
+	@ResponseBody
+	public String idCheck(String id) {
+		
+		MemberVo memVo = memService.select_memberInfo(id);
+		
+		if(memVo != null) {
+			return "error";
+		}
+		
+		return "success";
+	}
+	
+	
+	@RequestMapping("/goStep2")
+	public String goStep2(@RequestBody SignupUserVo vo, Model model) {
+
+		
+		logger.debug("vo : {}", vo);
+		
 		
 		//member 등록 후 -> users / corp 등록
 		MemberVo mVo = new MemberVo();
@@ -104,27 +176,27 @@ public class SignupController {
 		}
 		
 		id = vo.getId();
-		SecurityCode = success;
 		
 		return "login/step2";
 	}
 	
-	
-	@RequestMapping("/step2")
-	public String step2(@RequestBody SignupUserVo vo, HttpServletRequest req) {
-		logger.debug("SecurityCode :{}", SecurityCode);
-		logger.debug("SecurityCode2 :{}", vo.getSecurityCode());
+	@RequestMapping("/error_code")
+	public String error_code(@RequestBody SignupUserVo vo, HttpServletRequest req) {
 		
 		if(!SecurityCode.equals(vo.getSecurityCode())) {
 			return "error";
 		}
-		
+		return "success";
+	}
+	
+	@RequestMapping("/goStep3")
+	public String goStep3() {
 		return "login/step3";
 	}
 	
 	
-	@RequestMapping("/step3")
-	public String step3(@RequestBody SignupUserVo vo, HttpServletRequest req) {
+	@RequestMapping("/goStep5From3")
+	public String goStep5From3(@RequestBody SignupUserVo vo, HttpServletRequest req) {
 		
 		logger.debug("step3 : {}", vo);
 		
@@ -133,14 +205,18 @@ public class SignupController {
 		career_infoVo.setJob_position(vo.getJob_position());		//직군
 		career_infoVo.setJob_rank(vo.getJob_rank());				//직급
 		career_infoVo.setCorporate_name(vo.getCorporate_name());	//회사이름
+		career_infoVo.setJoin_date(vo.getJoin_date());
+		career_infoVo.setResign_date(vo.getResign_date());
 		
 		careerService.insert_career_info(career_infoVo);
 		
-		return "login/step4";
+		logger.debug("step4 : {}", vo);
+		
+		return "login/step5";
 	}
 	
-	@RequestMapping("/step4")
-	public String step4(@RequestBody SignupUserVo vo, HttpServletRequest req) {
+	@RequestMapping("/goStep5From4")
+	public String goStep5From4(@RequestBody SignupUserVo vo, HttpServletRequest req) {
 		
 		logger.debug("step4 : {}", vo);
 		
@@ -149,27 +225,41 @@ public class SignupController {
 		eVo.setSchool_name(vo.getSchool_name());
 		eVo.setDegree_name(vo.getDegree_name());
 		eVo.setMajor(vo.getMajor());
-		//eVo.setAdmission(vo.getAdmission());
-		//eVo.setGraduation(vo.getGraduation());
+		eVo.setAdmission(vo.getAdmission());
+		eVo.setGraduation(vo.getGraduation());
 		eVo.setGrade(vo.getGrade());
 		
 		educationService.insert_education_info(eVo);
-	
 		
 		return "login/step5";
 	}
 	
+	@RequestMapping("/returnStep4")
+	public String returnStep4() {
+		return "login/step4";
+	}
+	
+	@RequestMapping("/returnStep3")
+	public String returnStep3() {
+		return "login/step3";
+	}
 	
 	
-	@RequestMapping(path="/step5", consumes ={"multipart/form-data"})
-	public String step5(@RequestParam(value = "profile") MultipartFile profile, HttpServletRequest req) throws IllegalStateException, IOException {
+	
+	@RequestMapping(path="/finalStep", consumes ={"multipart/form-data"})
+	@ResponseBody
+	public String finalStep(@RequestParam(value = "profile") MultipartFile profile, HttpServletRequest req) throws IllegalStateException, IOException {
 		
 		logger.debug("step5 : {}", profile);
+		
+		String realFileName = "";
 		
 		//사용자 사진을 업로드 한경우
 		if(profile.getSize() > 0) {
 			String fileName = profile.getOriginalFilename();
-			String realFileName =  "/Users/pjk/Documents/picture/" + UUID.randomUUID().toString();
+			realFileName =  req.getServletContext().getRealPath("/images/profile/" + UUID.randomUUID().toString());
+			
+			
 			
 			profile.transferTo(new File(realFileName));
 			UsersVo uVo = new UsersVo();
@@ -180,11 +270,8 @@ public class SignupController {
 			userService.update_userInfo(uVo);
 		}
 		
-		return "login/login";
+		return realFileName;
 	}
-	
-	
-	
 	
 	
 	
@@ -250,21 +337,10 @@ public class SignupController {
 		return SecurityCode[0];
 	}
 	
-	@RequestMapping("/test111")
-	public String test111() {
-		
-		return "login/test111";
-	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
 	
 }

@@ -47,7 +47,7 @@ public class CorporationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(path={"/corporation"}, method={RequestMethod.GET})
+	@RequestMapping(path={"/corporation"})
 	public String postList(Model model, PaginationVo paginationVo, HttpServletRequest request){
 		// 작업 완류 후 loginController로 이동시켜야 함
 		
@@ -93,13 +93,13 @@ public class CorporationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(path="/write",method={RequestMethod.POST,RequestMethod.GET})
-	public String post(String mem_id,PostVo postVo, String post_contents, Model model){
+	@RequestMapping(path="/write",method={RequestMethod.POST})
+	public String post(String mem_id,PostVo postVo, String smarteditor, Model model){
 		String writer_name= "a";
 		int post_code=1000;
 		postVo.setMem_id(mem_id);
 		postVo.setWriter_name(writer_name);
-		postVo.setPost_contents(post_contents);
+		postVo.setPost_contents(smarteditor);
 		
 		int insertCnt=0;
 		insertCnt=postService.insert_post(postVo);

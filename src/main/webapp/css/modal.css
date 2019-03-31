@@ -94,5 +94,14 @@
 	/* opacity:0.4; */
 }
 
+/* 자동완성 css - 모달창 뒤로 숨는 현상 발생 */
+ul.ui-autocomplete {
+    z-index: 1100;
+}
+
+ul[id*="ui-"] li{
+display: block;
+}
+
 
 

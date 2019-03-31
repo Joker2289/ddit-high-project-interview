@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,6 +63,13 @@
 		</span>
 	</div>
 	
+   	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px;">
+		<img width="30" src="https://lh3.googleusercontent.com/sMhe3GxpmWD6NISZBzhy--dtwcAcVvLFDxOGe1Kat3d0YA0nhq9ICwTSFN3UQ7uEZA">
+		<a href="https://media.daum.net/digital/">
+			 뉴스로 IT 업계 동향을 확인해보세요.(다음 뉴스 - IT - 크롤링 - 링크)
+		</a>
+	</div>
+	
 	<form action="${pageContext.request.contextPath }/recrSearch" id="frm_search" method="post">
 		<input type="hidden" id="search_word" name="search_word">
 		<input type="hidden" id="search_local" name="search_local">
@@ -85,8 +94,8 @@
 			<span style="">
 				채용공고 검색어
 			</span>
-			<span class="button-group-area mt-10" style="margin-left: 800px;">
-				<a href="#" class="genric-btn info-border">관리</a>
+			<span id="alarm_manage" class="button-group-area mt-10" onmouseover="" style="margin-left: 800px; cursor: pointer;">
+				관리
 			</span>		
 			
 			<div style="text-align: left;">		
@@ -109,13 +118,20 @@
 		</div>
 	</form>	
 	
+   	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px; margin-top: 20px;">
+		<img width="30" src="http://mblogthumb4.phinf.naver.net/20160920_175/kokoa2100_1474368430239vv9yY_PNG/mzl.xnmoezsr.png?type=w800">   	
+		<a href="https://map.kakao.com/">
+			 (지도 API를 이용한 채용공고 검색)
+		</a>
+	</div>	
+	
 
 	<form id="frm_detail" action="${pageContext.request.contextPath }/recr_detail" method="post">
 		<input type="hidden" id="recruit_code" name="recruit_code">
 	
 	   	<div class="div_list" style="border: 1px solid; padding: 10px; margin-bottom: 150px; margin-top: 20px;">
 	   		<div style="text-align: left; margin-bottom: 10px;">
-	   			<strong>조회하신 항목을 참고하여..</strong> <br> 
+	   			<strong>조회/스크랩하신 항목을 참고하여..</strong> <br> 
 	   			<c:choose>
 	   				<c:when test="${lVRVo.recruit_title.substring(0, 9) == '원하는 채용공고를' }">
 			   			<a href="${pageContext.request.contextPath }/recrSearch">
@@ -134,6 +150,8 @@
 				<table class="tb_recruit">
 					<tr style="width: 100px; height: 140px; text-align: left;">
 						<c:forEach items="${rRList1 }" varStatus="i" var="rRVo">
+							<!-- 마지막 조회/스크랩 채용공고 색을 좀 표시하면 좋겠는데. -->
+<!-- 							<td style="width: 5px; height: 5px; border: 10px; border-color: #b3d9ff;"> -->
 							<td style="width: 5px; height: 5px;">
 								<div id="recr${i.index }" onmouseover="" style="cursor: pointer;">
 									<div class="table_div">
@@ -147,16 +165,12 @@
 								<c:choose>
 									<c:when test="${scrapList1.get(i.index) == 'f' }">
 										<!-- scrap_flag에 recruit_code를 붙여주자. (예: t12) -->
-										<a href="${pageContext.request.contextPath }/recruit?scrap_flag=t${rRList1.get(i.index).recruit_code }">
-											<i id="scrapf${i.index }" class="far fa-bookmark" onmouseover="" 
-													style="margin-top: 10px; font-size: large; cursor: pointer;"></i>
-										</a><br>
+										<i id="scrap${i.index }" class="far fa-bookmark" onmouseover="" 
+												style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
 									</c:when>
 									<c:otherwise>
-										<a href="${pageContext.request.contextPath }/recruit?scrap_flag=f${rRList1.get(i.index).recruit_code }">
-											<i id="scrapt${i.index }" class="fas fa-bookmark" onmouseover="" 
-													style="margin-top: 10px; font-size: large; cursor: pointer;"></i>
-										</a><br>
+										<i id="scrap${i.index }" class="fas fa-bookmark" onmouseover="" 
+												style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
 									</c:otherwise>
 								</c:choose>
 							</td>								
@@ -169,7 +183,7 @@
 		         
 			<br><br> 
 			<div style="text-align: left; margin-bottom: 10px;">
-				<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br> [관심 분야 · 관심 분야 · 관심 분야 ...] 
+				<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br> [업무분야 · 지역 · 고용형태 · 회사 규모]
 				<a href="${pageContext.request.contextPath }/interest">관심 분야 설정</a><br>
 			</div>
 			<!-- rRList2 출력. -->				
@@ -200,63 +214,93 @@
 	</form>
 	
 	
-	
+<%@ include file="/WEB-INF/views/recruit/alarm_manage_modal.jsp" %><!-- 모달창 -->	
 </section>	
 </div>
 </div>	
 </div>	
 
-		
-	<script src="js/jquery-3.3.1.min.js"></script>
-	<!-- font awesome icon -->
-	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			console.log("scrapList1? : ${scrapList1 }");
-			
-			// 채용공고 검색
-			$("#btn_search").on("click", function(){
-// 				alert($("#txt_name").val() + " / " + $("#txt_location").val());
-				
-				// hidden에 값 넣어주기.
-				$("#search_word").val($("#txt_name").val());
-				$("#search_local").val($("#txt_location").val());
-				
-				$("#frm_search").submit();
-			});			
-			
-			// 채용공고 검색어 (저장한 검색어)
-			<c:forEach items="${saveList }" varStatus="i">
-				$(".t_alarm${i.index }").on("click", function(){
-					alert("t_alarm${i.index }");
-				});
-				
-				$("#t_alarm_alarm${i.index }").on("click", function(){
-// 					alert("t_alarm_alarm${i.index }");
-					// 저장한 검색어에서 제외. 확인창 띄우기
-					if(confirm("검색어를 목록에서 제거하시겠습니까?")) {
-						window.location.href = 'http://localhost${pageContext.request.contextPath }/recruit?alarm_flag=t&search_code=${saveList.get(i.index).search_code }';					
-					}					
-				});
-			</c:forEach>
-			
-			// 채용공고 리스트
-			
-			// 지금은 12개인데...
-			<c:forEach items="${rRList1 }" varStatus="i">
-				$("#recr${i.index }").on("click", function(){
-					alert("${i.index-1 }"); // 첫번째 채용공고 : i.index-1 -> '0'
-					
-					$("#recruit_code").val(${rRList1.get(i.index).recruit_code});
-					
-					$("#frm_detail").submit();
-				});
-			</c:forEach>
-			
+<!-- layout.jsp의 script랑 충돌나서 주석처리함. -->
+<!-- <script src="js/jquery-3.3.1.min.js"></script> -->
+<!-- font awesome icon -->
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script type="text/javascript">
+
+	// 채용공고 검색어 관리
+	$(function () {
+		$("#alarm_manage").on("click", function(){
+	//			console.log(1);
+			$("div.modal").modal();
 		});
-	
-	
-	</script>	
+	});
+
+	$(document).ready(function(){
+// 		console.log("scrapList1? : ${scrapList1 }");
+		
+		<c:forEach items="${rRList1 }" varStatus="i">
+			console.log("i? : ${i.index }");
+		</c:forEach>
+		// " i? : 0 ~ 5 "
+		
+		// 채용공고 검색
+		$("#btn_search").on("click", function(){
+// 			alert($("#txt_name").val() + " / " + $("#txt_location").val());
+			
+			// hidden에 값 넣어주기.
+			$("#search_word").val($("#txt_name").val());
+			$("#search_local").val($("#txt_location").val());
+			
+			$("#frm_search").submit();
+		});			
+
+		// 채용공고 검색어 (저장한 검색어)
+		<c:forEach items="${saveList }" varStatus="i">
+			$(".t_alarm${i.index }").on("click", function(){
+				alert("t_alarm${i.index }");
+			});
+			
+			$("#t_alarm_alarm${i.index }").on("click", function(){
+// 				alert("t_alarm_alarm${i.index }");
+				// 저장한 검색어에서 제외. 확인창 띄우기
+				if(confirm("검색어를 목록에서 제거하시겠습니까?")) {
+					window.location.href = 'http://localhost${pageContext.request.contextPath }/recruit?alarm_flag=t&search_code=${saveList.get(i.index).search_code }';					
+				}					
+			});
+		</c:forEach>
+		
+		// 채용공고 리스트
+		
+		// 지금은 12개인데...
+		<c:forEach items="${rRList1 }" varStatus="i">
+			$("#recr${i.index }").on("click", function(){
+// 				alert("${i.index }"); // 첫번째 채용공고 : i.index-1 -> '0'
+				
+				$("#recruit_code").val(${rRList1.get(i.index).recruit_code});
+				
+				$("#frm_detail").submit();
+			});
+			
+			$("#scrap${i.index }").on("click", function(){
+				<c:choose>
+					<c:when test="${scrapList1.get(i.index) == 'f' }">
+						if(confirm("채용공고를 스크랩하시겠습니까?")){
+							window.location.href = '${pageContext.request.contextPath }/recruit?scrap_flag=t${rRList1.get(i.index).recruit_code }';
+						}
+					</c:when>
+					<c:otherwise>
+						if(confirm("채용공고 스크랩을 취소하시겠습니까?")){
+							window.location.href = '${pageContext.request.contextPath }/recruit?scrap_flag=f${rRList1.get(i.index).recruit_code }';
+						}
+					</c:otherwise>
+				</c:choose>
+			});
+			
+		</c:forEach>
+		
+		
+	});
+
+</script>	
 	
 </body>
 </html>

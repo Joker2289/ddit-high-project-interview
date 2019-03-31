@@ -5,7 +5,7 @@
 		<div class="jk-row">
 	  	 	<div id="modal-head" class="jk-modal-head">
 	  	 		
-	  	 		step2 - 변경
+	  	 		<h1> 이메일 인증 </h1>
 	  	 		
 	  	 	</div>
   	 	</div>
@@ -23,7 +23,7 @@
 					
 						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Security Code is reauired">
 							<span class="label-input100">인증 코드</span>
-							<input class="input100" type="text" name="securityCode" placeholder=" Security Code">
+							<input class="input100" type="text" id="securityCode" name="securityCode" placeholder=" Security Code">
 							<span class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 					</form>
@@ -48,27 +48,89 @@
 		
 		
 		$("#nextStep").on('click', function(){
+			
+			//아이디
+			if($("#securityCode").val().trim() == "") {
+				alert("인증번호를 입력해주세요	");
+				$("#securityCode").focus();
+				return false;
+			}
+		
+			
 			//step2 - user
 			var step2 = $("#step2").serializeObject();  //.serialize();
 			console.log("step2 : " + JSON.stringify(step2));
-	  		$.ajax({
+			$.ajax({
 	  			
-	  			url : "${cp}/signUp/step2",
+	  			url : "${cp}/signUp/error_code",
 	  			method : "post",
 	  			data : JSON.stringify(step2),
 	  			contentType : "application/json; charset=uft-8",
 	  			success : function(data){
-	  				console.log(data + "3페이지로 가자");
-	  				
 	  				if(data == "error"){
 	  					alert("인증 번호가 틀렸습니다");
 	  					return;
 	  				}
-	  				
-	  				$(".jk-modal").html(data);
+	  				if(data == "success"){
+						$.ajax({
+				  			
+				  			url : "${cp}/signUp/goStep3",
+				  			method : "post",
+				  			data : JSON.stringify(step2),
+				  			contentType : "application/json; charset=uft-8",
+				  			success : function(data){
+				  				console.log(data + "3페이지로 가자");
+				  				
+				  				$(".jk-modal").html(data);
+				  			}
+				  		});
+	  				}
 	  			}
-	  		});
+	  		});  		
 			
+					$.ajax({
+			  			
+			  			url : "${cp}/signUp/goStep3",
+			  			method : "post",
+			  			data : JSON.stringify(step2),
+			  			contentType : "application/json; charset=uft-8",
+			  			success : function(data){
+			  				console.log(data + "3페이지로 가자");
+			  				
+			  				if(data == "error"){
+			  					alert("인증 번호가 틀렸습니다");
+			  					return;
+			  				}
+			  				
+			  				$(".jk-modal").html(data);
+			  			}
+			  		});
+					
+					
+		});
+		
+		//닫기 버튼 클릭
+	  	$('#close').on('click',function(){
+	  		
+	  		var result = confirm("지금 까지 입력한 정보가 삭제 됩니다");
+	  		
+	  		if(result){
+	  			$.ajax({
+	  	  			
+	  	  			url : "${cp}/signUp/cancel",
+	  	  			method : "post",
+	  	  			contentType : "application/json; charset=uft-8",
+	  	  			success : function(data){
+	  	  				console.log(data);
+	  	  				
+	  	  			}
+	  	  		});
+	  			
+				$('.jk-modalsasun').css('display','none');
+	  		} else {
+	  			
+	  			
+	  		}
 		});
 	  		
 		</script>
