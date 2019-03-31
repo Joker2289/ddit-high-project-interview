@@ -507,7 +507,7 @@ public class RecruitController {
 //			memService.insert_member(mVo);
 			
 			cVo.setCorp_id(String.valueOf((corpService.getCorpCnt()+1)));
-			cVo.setCorp_birth("94/03/03");
+			//cVo.setCorp_birth("94/03/03");
 			cVo.setCorp_code(UUID.randomUUID().toString().substring(0, 8));
 			cVo.setTelno("01011112222");
 			cVo.setEmail("123@gmail.com");
