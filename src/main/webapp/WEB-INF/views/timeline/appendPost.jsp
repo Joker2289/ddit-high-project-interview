@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div id="col-post" class="scrolling" data-post="${timelinePost }">
+	<c:forEach items="${timelinePost }" var="post"></c:forEach>
 	<div class="col-post-body">
 		<div class="writer_info">
 			<h4>

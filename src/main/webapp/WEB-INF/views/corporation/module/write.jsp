@@ -1,58 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	
-<!DOCTYPE html>
-<html>
-<head>
-	<title>${memberVO.mem_id }</title>
-</head>
+<!-- <!DOCTYPE html> -->
+<!-- <html> -->
+<!-- <head> -->
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+<%-- <title>${memberVO.mem_id }</title> --%>
+	
+
+
+
+<!-- </head> -->
 
 <body>
-<form id="frm"
-	action="${pageContext.request.contextPath }/corporation"
-	method="post">
-	<input type="hidden" id="mem_id" name="mem_id">
-	<table border="1">
-		<tr>
-			<textarea id="post_contents" name="post_contents" rows="2" style="width: 36.5%;"></textarea>
-		</tr>
-		<tr>
-			<th><a href="">사진공유</a> <a href="">동영상공유</a> <a href="">문서공유</a>
-				<input id="insertBtn" name="insertBtn" type="button" value="글쓰기">
-			</th>
-		</tr>
-	</table>
-		
-	<form action="${pageContext.request.contextPath }/corporation" method="post" id="frm2">
-	    <textarea name="smarteditor" id="smarteditor" rows="10" cols="100" style="width:400px; height:60px;"></textarea>
-	    <br><input type="button" id="savebutton" value="서버전송" />
-	</form>
-	
 
-	
-		
-	
-</form>
-
-<script src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
-		console.log(111);
-		$("#insertBtn").on("click", function(){
-			$("#mem_id").val("${memberVO.mem_id}");
+// 	$(document).ready(function(){
+// 		console.log(111);
+// 		$("#insertBtn").on("click", function(){
+// 			$("#mem_id").val("${memberVO.mem_id}");
 			
-			$("#frm").submit();
-		});
-	});
+// 			$("#frm").submit();
+// 		});
+// 	});
+
+	var editor_object = [];
 	
 	$(function(){
 	    //전역변수선언
-	    var editor_object = [];
 	     
 	    nhn.husky.EZCreator.createInIFrame({
 	        oAppRef: editor_object,
 	        elPlaceHolder: "smarteditor",
-	        sSkinURI: "/smarteditor/SmartEditor2Skin.html",
+	        sSkinURI: "/SE2/SmartEditor2Skin.html",
 	        htParams : {
 	            // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
 	            bUseToolbar : true,            
@@ -60,7 +43,14 @@
 	            bUseVerticalResizer : true,    
 	            // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
 	            bUseModeChanger : true,
+	            fOnBeforeUnload : function(){
 	        }
+	        }, 
+	          fOnAppLoad : function(){
+	              //기존 저장된 내용의 text 내용을 에디터상에 뿌려주고자 할때 사용
+	             editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
+	          },
+	          fCreator: "createSEditor2"
 	    });
 	     
 	    //전송버튼 클릭이벤트
@@ -72,14 +62,42 @@
 	         
 	        //폼 submit
 	        $("#frm").submit();
-	    })
-	})
+	    });
+	});
 
 
 </script>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 
 
-</body>
-</html>
+		
+		
+<form id="frm" action="${pageContext.request.contextPath }/corporation" method="post" >
+<table width="100%">
+<!--         <tr> -->
+<!--             <td>제목</td> -->
+<!--             <td><input type="text" id="title" name="title" style="width:650px"/></td> -->
+<!--         </tr> -->
+        <tr>
+            <td>내용</td>
+            <td>
+                <textarea rows="10" cols="30" id="smarteditor" name="smarteditor" style="width:650px; height:350px; "></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="button" id="savebutton" value="저장"/>
+                <input type="button" value="취소"/>
+            </td>
+        </tr>
+</table>
+
+	
+		
+	
+</form>
+
+
+
+
+<!-- </body> -->
+<!-- </html> -->

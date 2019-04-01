@@ -56,4 +56,14 @@ public interface IPostService {
 	 * Method 설명 : 타임라인 게시글 목록 조회
 	 */
 	List<PostVo> select_timelinePost(PaginationVo paginationVo);
+	
+	/**
+	 * Method : select_postInfo
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param post_code
+	 * @return
+	 * Method 설명 : 특정 게시물 조회
+	 */
+	PostVo select_postInfo(String post_code);
 }

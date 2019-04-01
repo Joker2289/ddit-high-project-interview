@@ -9,7 +9,7 @@
 		insert into corporation
 		values(
 			#{corp_id},
-			#{corp_name},
+			nvl(#{corp_name, jdbcType=VARCHAR}, null),
 			nvl(#{bg_img, jdbcType=VARCHAR}, null),
 			nvl(#{bg_path, jdbcType=VARCHAR}, null),
 			nvl(#{corp_logo, jdbcType=VARCHAR}, null),
@@ -17,15 +17,15 @@
 			nvl(#{addr1, jdbcType=VARCHAR}, null),
 			nvl(#{addr2, jdbcType=VARCHAR}, null),
 			nvl(#{zipcode, jdbcType=VARCHAR}, null),
-			#{corp_birth},
+			nvl(#{corp_birth, jdbcType=VARCHAR}, null),
 			nvl(#{corp_type, jdbcType=VARCHAR}, null),
 			nvl(#{industry_type, jdbcType=VARCHAR}, null),
 			nvl(#{corp_url, jdbcType=VARCHAR}, null),
 			nvl(#{corp_size, jdbcType=VARCHAR}, null),
 			nvl(#{corp_profile, jdbcType=VARCHAR}, null),
-			#{corp_code},
-			#{telno},
-			#{email}
+			nvl(#{corp_code, jdbcType=VARCHAR}, null),
+			nvl(#{telno, jdbcType=VARCHAR}, null),
+			nvl(#{email, jdbcType=VARCHAR}, null)
 		)
 	</insert>
 	
@@ -46,22 +46,24 @@
 	
 	<!-- 회사정보 수정 -->
 	<update id="update_corpInfo" parameterType="corporationVo">
-		update users
-		   set corp_name 	 = #{corp_name},
-		       bg_img	 	 = #{bg_img},
-		       bg_path	 	 = #{bg_path},
-		       corp_logo  	 = #{corp_logo},
-		       logo_path	 = #{logo_path},
-		       addr1		 = #{addr1},
-		       addr2		 = #{addr2},
-		       zipcode		 = #{zipcode},
-		       corp_birth	 = #{corp_birth},
-		       corp_type	 = #{corp_type},
-		       industry_type = #{industry_type},
-		       corp_url		 = #{corp_url},
-		       corp_size	 = #{corp_size},
-		       corp_profile	 = #{corp_profile},
-		       corp_code	 = #{corp_code}
+		update corporation
+		   set corp_name 	 = nvl(#{corp_name, jdbcType=VARCHAR}, corp_name),
+		       bg_img	 	 = nvl(#{bg_img, jdbcType=VARCHAR}, bg_img),
+		       bg_path	 	 = nvl(#{bg_path, jdbcType=VARCHAR}, bg_path),
+		       corp_logo  	 = nvl(#{corp_logo, jdbcType=VARCHAR}, corp_logo),
+		       logo_path	 = nvl(#{logo_path, jdbcType=VARCHAR}, logo_path),
+		       addr1		 = nvl(#{addr1, jdbcType=VARCHAR}, addr1),
+		       addr2		 = nvl(#{addr2, jdbcType=VARCHAR}, addr2),
+		       zipcode		 = nvl(#{zipcode, jdbcType=VARCHAR}, zipcode),
+		       corp_birth	 = nvl(#{corp_birth, jdbcType=VARCHAR}, corp_birth),
+		       corp_type	 = nvl(#{corp_type, jdbcType=VARCHAR}, corp_type),
+		       industry_type = nvl(#{industry_type, jdbcType=VARCHAR}, industry_type),
+		       corp_url		 = nvl(#{corp_url, jdbcType=VARCHAR}, corp_url),
+		       corp_size	 = nvl(#{corp_size, jdbcType=VARCHAR}, corp_size),
+		       corp_profile	 = nvl(#{corp_profile, jdbcType=VARCHAR}, corp_profile),
+		       corp_code	 = nvl(#{corp_code, jdbcType=VARCHAR}, corp_code),
+		       telno	 	 = nvl(#{telno, jdbcType=VARCHAR}, telno),
+		       email	 	 = nvl(#{email, jdbcType=VARCHAR}, email)
 		 where corp_id = #{corp_id}  
 	</update>
 	
@@ -82,6 +84,11 @@
 	<select id="getCorpCnt" resultType="Integer">
 		SELECT COUNT(*)
 		  FROM CORPORATION	
+	</select>
+	
+	<!-- 회사 검색 -->
+	<select id="searchCorp" resultType="corporationVo" parameterType="String">
+		SELECT * FROM CORPORATION where corp_name like '%'|| #{ value }||'%' order by corp_name 
 	</select>
 	
 	

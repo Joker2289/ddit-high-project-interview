@@ -56,6 +56,27 @@
    		and
    			a.ref_keyword = b.corp_name
 	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="select_connectionList">
+		
+	</select>
 
 
 

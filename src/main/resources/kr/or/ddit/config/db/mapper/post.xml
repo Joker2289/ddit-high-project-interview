@@ -40,26 +40,33 @@
 	<!-- 타임라인 게시물 목록 출력(page적용) -->
 	<select id="select_timelinePost" parameterType="paginationVo" resultType="postVo">
 		select *
-		  from
-		  (select post.*, rownum rn
-		     from post, (
-		         select user_id
-		           from personal_connection
-		          where (user_id = #{mem_id} or receive_id = #{mem_id})
-		            and receive_accept='Y'
-		          union
-		         select receive_id
-		           from personal_connection
-		          where (user_id = #{mem_id} or receive_id = #{mem_id})
-		            and receive_accept='Y'
-		          union
-		         select ref_keyword
-		           from follow
-		          where mem_id = #{mem_id}
-		            and (division='43' or division='11') ) a
-		    where mem_id = a.user_id
-		  order by post_date desc)
+		  from (select b.*, rownum rn
+		          from (select post.*
+		                  from post, (
+		                          select user_id
+		                            from personal_connection
+		                           where (user_id = #{mem_id} or receive_id = #{mem_id})
+		                             and receive_accept='Y'
+		                           union
+		                          select receive_id
+		                            from personal_connection
+		                           where (user_id = #{mem_id} or receive_id = #{mem_id})
+		                             and receive_accept='Y'
+		                           union
+		                          select ref_keyword
+		                            from follow
+		                           where mem_id = #{mem_id}
+		                             and (division='43' or division='11') ) a
+		                 where mem_id = a.user_id
+		                 order by post_date desc) b )
 		 where rn between (#{page}-1) * #{pageSize}+1 and #{page}*#{pageSize}
+	</select>
+
+	<!-- 특정 게시물 조회 -->	
+	<select id="select_postInfo" parameterType="String" resultType="postVo">
+		select post_code, mem_id, post_contents, post_date, writer_name
+		  from post
+		 where post_code = #{post_code}
 	</select>
 	
 </mapper>

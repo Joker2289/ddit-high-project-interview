@@ -1,0 +1,63 @@
+.profileHomeBox{
+	width: 1128px;
+	margin-left: 0px;
+}
+
+.mainAllBox{
+	width: 822px;
+}
+
+.introduceBox{
+	width: 792px; 
+	min-height: 450px;
+}
+
+.memberBox{
+	margin-top: 33px; 
+	float: left;
+}
+
+.member{
+	font-size: 23px; 
+	max-width: 600px; 
+	width: 500px;
+}
+
+.memberRight{
+	font-size: 15px; 
+	font-weight: bold;
+}
+
+.memberBox>span>i{
+	width:30px;
+}
+
+.memberBox>span{
+	color: #B3B6B9;
+	font-size: 18px; 
+}
+
+.simpleInfo{
+	font-size: 20px;
+	font-weight: 100;
+}
+
+
+.profileHomeBackgroundPicture{
+	height: 200px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+
+.profileHomeProfilePicture{
+	width:152px;
+	height: 152px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	margin-top: -80px;
+	margin-left: 24px; 
+	border: 4px solid #E3EEF2; 
+	border-radius: 100px;
+}

@@ -22,7 +22,7 @@
 	</insert>
 	
 	<!-- 팔로우 정보 삭제 -->
-	<delete id="delete_follow" parameterType="followVo">
+	<delete id="delete_follow" parameterType="String">
 		delete follow
 		 where follow_code = #{follow_code}
 	</delete>

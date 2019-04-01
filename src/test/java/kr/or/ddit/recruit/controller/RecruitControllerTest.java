@@ -3,12 +3,15 @@ package kr.or.ddit.recruit.controller;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MvcResult;
@@ -24,6 +27,7 @@ import kr.or.ddit.test.WebTestConfig;
 import kr.or.ddit.users.model.UsersVo;
 
 public class RecruitControllerTest extends WebTestConfig{
+	private Logger logger = LoggerFactory.getLogger(RecruitControllerTest.class);
 
 	@Resource(name="corporationService")
 	private ICorporationService corpService;
@@ -136,11 +140,11 @@ public class RecruitControllerTest extends WebTestConfig{
 		ModelAndView mav = mvcResult.getModelAndView();
 		String viewName = mav.getViewName();
 		
-		List<RecruitVo> RRList1 = (List<RecruitVo>) mav.getModel().get("RRList1");
+		List<RecruitVo> rRList1 = (List<RecruitVo>) mav.getModel().get("rRList1");
 
 		/***Then***/
 		assertEquals("recruitTiles", viewName);
-		assertNotNull(RRList1);
+		assertNotNull(rRList1);
 	}
 	
 	/**
@@ -170,6 +174,83 @@ public class RecruitControllerTest extends WebTestConfig{
 		// 테스트 돌려도 insert가 되네.
 		SLService.deleteSearch_logForTest(String.valueOf(SLService.getAllCnt()));
 	}
+	
+	/**
+	 * 
+	 * Method : testScrapList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : scrapList size 테스트.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testScrapList() throws Exception {
+		/***Given***/
+		MockHttpSession session = new MockHttpSession();
+		String alarm_flag = null;
+		UsersVo uVo = new UsersVo();
+		uVo.setUser_id("brown");
+		session.setAttribute("usersVo", uVo);
+
+		/***When***/
+		MvcResult mvcResult = mockMvc.perform(get("/recruit").session(session).param("alarm_flag", alarm_flag)).andReturn();
+		ModelAndView mav = mvcResult.getModelAndView();
+		String viewName = mav.getViewName();
+		
+		List<RecruitVo> rRList1 = (List<RecruitVo>) mav.getModel().get("rRList1");
+		List<String> scarpList1 = (List<String>) mav.getModel().get("scarpList1");
+		logger.debug("rRList1 size? : {}", rRList1.size());
+		logger.debug("scarpList1 size? : {}", scarpList1.size());
+		
+		/***Then***/
+		assertEquals("recruitTiles", viewName);
+		assertNotNull(rRList1);
+		assertNotNull(scarpList1);
+	}
+	
+	/**
+	 * 
+	 * Method : testWriteRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 채용공고 올리기 페이지 요청 테스트.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testWriteRecr() throws Exception {
+		/***Given***/
+
+		/***When***/
+		MvcResult mvcResult = mockMvc.perform(get("/writeRecr")).andReturn();
+		ModelAndView mav = mvcResult.getModelAndView();
+		String viewName = mav.getViewName();
+
+		/***Then***/
+		assertEquals("writeRecrTiles", viewName);
+	}
+	
+	// 리스트에 항목 추가하고 제거하기 테스트.
+	@Test
+	public void testListAdd() {
+		/***Given***/
+		List<String> list = new ArrayList<>();
+		list.add("1");
+		list.add("2");
+		list.add("3");
+		list.add("4");
+		list.add("5");
+		
+		int lVIdx = 2; // 인덱스 2 이면 -> 세번째 항목.
+
+		/***When***/
+		list.add(0, list.get(lVIdx));
+		list.remove(list.size()-1);
+
+		/***Then***/
+		assertEquals("3", list.get(0));
+		assertEquals(5, list.size());
+	}
+	
 	
 	
 	

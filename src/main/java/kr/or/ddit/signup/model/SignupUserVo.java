@@ -1,5 +1,7 @@
 package kr.or.ddit.signup.model;
 
+import java.util.Date;
+
 public class SignupUserVo {
 	
 	//step1
@@ -16,15 +18,28 @@ public class SignupUserVo {
 	private String job_position;	// 직군
 	private String job_rank;		// 직급
 	private String corporate_name;	// 회사
+	private Date   join_date;		// 입사일
+	private Date   resign_date;		// 퇴사일
 	
 	//step4
 	private String school_name;		// 학교명
 	private String degree_name;		// 학위
 	private String major;			// 전공
-	private String admission;		// 입학년도
-	private String graduation;		// 졸업(예정)년도
+	private Date admission;			// 입학년도
+	private Date graduation;		// 졸업(예정)년도
 	private String grade;			// 학점
 	
+	//step3_corp
+	private Date corp_birth;		// 창립일
+	private String corp_type;		// 회사유형
+	private String industry_type;	// 업계
+	private String corp_size;		// 회사규모
+	
+	//step4_corp
+	private String addr1;			// 주소
+	private String addr2;			// 상세주소
+	private String zipcode;			// 우편번호
+	private String telno;			// 전화번호
 	public String getId() {
 		return id;
 	}
@@ -79,6 +94,18 @@ public class SignupUserVo {
 	public void setCorporate_name(String corporate_name) {
 		this.corporate_name = corporate_name;
 	}
+	public Date getJoin_date() {
+		return join_date;
+	}
+	public void setJoin_date(Date join_date) {
+		this.join_date = join_date;
+	}
+	public Date getResign_date() {
+		return resign_date;
+	}
+	public void setResign_date(Date resign_date) {
+		this.resign_date = resign_date;
+	}
 	public String getSchool_name() {
 		return school_name;
 	}
@@ -97,16 +124,16 @@ public class SignupUserVo {
 	public void setMajor(String major) {
 		this.major = major;
 	}
-	public String getAdmission() {
+	public Date getAdmission() {
 		return admission;
 	}
-	public void setAdmission(String admission) {
+	public void setAdmission(Date admission) {
 		this.admission = admission;
 	}
-	public String getGraduation() {
+	public Date getGraduation() {
 		return graduation;
 	}
-	public void setGraduation(String graduation) {
+	public void setGraduation(Date graduation) {
 		this.graduation = graduation;
 	}
 	public String getGrade() {
@@ -115,13 +142,67 @@ public class SignupUserVo {
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
+	public Date getCorp_birth() {
+		return corp_birth;
+	}
+	public void setCorp_birth(Date corp_birth) {
+		this.corp_birth = corp_birth;
+	}
+	public String getCorp_type() {
+		return corp_type;
+	}
+	public void setCorp_type(String corp_type) {
+		this.corp_type = corp_type;
+	}
+	public String getIndustry_type() {
+		return industry_type;
+	}
+	public void setIndustry_type(String industry_type) {
+		this.industry_type = industry_type;
+	}
+	public String getCorp_size() {
+		return corp_size;
+	}
+	public void setCorp_size(String corp_size) {
+		this.corp_size = corp_size;
+	}
+	public String getAddr1() {
+		return addr1;
+	}
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
+	}
+	public String getAddr2() {
+		return addr2;
+	}
+	public void setAddr2(String addr2) {
+		this.addr2 = addr2;
+	}
+	public String getZipcode() {
+		return zipcode;
+	}
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+	public String getTelno() {
+		return telno;
+	}
+	public void setTelno(String telno) {
+		this.telno = telno;
+	}
 	@Override
 	public String toString() {
 		return "SignupUserVo [id=" + id + ", pass=" + pass + ", email=" + email + ", name=" + name + ", division="
 				+ division + ", securityCode=" + securityCode + ", job_position=" + job_position + ", job_rank="
-				+ job_rank + ", corporate_name=" + corporate_name + ", school_name=" + school_name + ", degree_name="
-				+ degree_name + ", major=" + major + ", admission=" + admission + ", graduation=" + graduation
-				+ ", grade=" + grade + "]";
+				+ job_rank + ", corporate_name=" + corporate_name + ", join_date=" + join_date + ", resign_date="
+				+ resign_date + ", school_name=" + school_name + ", degree_name=" + degree_name + ", major=" + major
+				+ ", admission=" + admission + ", graduation=" + graduation + ", grade=" + grade + ", corp_birth="
+				+ corp_birth + ", corp_type=" + corp_type + ", industry_type=" + industry_type + ", corp_size="
+				+ corp_size + ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", telno=" + telno
+				+ "]";
 	}
+	
+	
+	
 	
 }

@@ -10,7 +10,6 @@ import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.dao.IPersonal_connectionDao;
-import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.users.model.UsersVo;
 
 @Service("personalService")

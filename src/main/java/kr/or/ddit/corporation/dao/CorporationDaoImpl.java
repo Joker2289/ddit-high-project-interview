@@ -1,5 +1,6 @@
 package kr.or.ddit.corporation.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -96,6 +97,36 @@ public class CorporationDaoImpl implements ICorporationDao{
 		int corpCnt = sqlSessionTemplate.selectOne("corp.getCorpCnt");
 		
 		return corpCnt;
+	}
+	
+	/**
+	 * 
+	 * Method : searchCorp
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 회사 검색
+	 */
+	@Override
+	public List<CorporationVo> searchCorp(String corp_name) {
+		List<CorporationVo> corpList = new ArrayList<CorporationVo>();
+		corpList = sqlSessionTemplate.selectList("corp.searchCorp", corp_name);
+		
+		return corpList;
+	}
+	
+	/**
+	 * 
+	 * Method : update_corpInfo
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 기업 정보 수정
+	 */
+	@Override
+	public int update_corpInfo(CorporationVo vo) {
+		return sqlSessionTemplate.update("corp.update_corpInfo", vo);
 	}
 
 }

@@ -5,7 +5,7 @@
 <head>
 
 
-	<title>JK Board - Login</title>
+	<title>Inter View - Login</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -34,27 +34,33 @@
 <!--===============================================================================================-->
 	<!-- jQuery UI CSS파일 -->
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
-<!-- 	<!-- jQuery 기본 js파일 --> -->
-<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>   -->
-<!-- 	<!-- jQuery UI 라이브러리 js파일 --> -->
-<!-- 	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>    -->
+	<!-- jQuery 기본 js파일 -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<!-- jQuery UI 라이브러리 js파일 --> 
+	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>    
 	
 	
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-
+	<!-- AutoComplete(자동완성)	 css, script -->
+  	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	<!-- kakao 로그인	 script -->
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 	
 	
-	 
+	
 </head>
 <body>
 	
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('/css/login/images/code.jpeg');">
+		<div class="container-login100" style="background-image: url('/css/login/images/bg4.jpg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="login100-form validate-form" action="/login" method="post">
 					<span class="login100-form-title p-b-49">
-						InterView
-					</span>
+						<!-- InterView -->
+						<img src="${ cp }/images/interview_logo2.png"  width="330" height="100">
+					</span> 
 					
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
 						<span class="label-input100">ID</span>
@@ -67,7 +73,7 @@
 						<input class="input100" type="password" id="pass" name="pass" placeholder=" Your Password">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
-					
+				</form>	
 					<!-- 체크박스 -->
 					<div class="row">
 						<input type="checkbox" id="md_3">
@@ -86,23 +92,27 @@
 					
 					<div class="flex-col-c p-t-70">
 					
-						<button type="button" id="signupUser" class="btn btn-primary jk-sign-btn">
-						  User
-						</button>
-						
-					
-<!-- 						<a href="#" class="txt3"> -->
-<!-- 							Sign Up -->
-<!-- 						</a> -->
-						
-						<span class="txt1 p-b-17">
-						</span>
+						<!-- <a href="#" class="txt3">
+							Sign Up
+						</a> -->
+						<div class="txt1 text-center p-b-20">
+							<span>
+								Sign Up
+							</span>
+						</div>
 						
 
-
-						<button type="button" id="signupCorp" class="btn btn-primary jk-sign-btn" >
-						  Corpation
-						</button>
+						<div class="flex-c-m">
+							<a href="javascript:signupUser();" class="login100-social-item-custom bg2">
+								<i class="fa fa-user"></i>
+							</a>
+							
+							<a href="javascript:signupCorp();" class="login100-social-item-custom bg4">
+								<i class="fa fa-building"></i>
+							</a>
+						</div>
+						
+						
 					</div>
 
 					<div class="txt1 text-center p-t-54 p-b-20">
@@ -110,9 +120,10 @@
 							Or Sign Up Using
 						</span>
 					</div>
+						
 
 					<div class="flex-c-m">
-						<a href="http://www.facebook.com" class="login100-social-item bg1">
+						<!-- <a href="http://www.facebook.com" class="login100-social-item bg1">
 							<i class="fa fa-facebook"></i>
 						</a>
 
@@ -122,10 +133,17 @@
 
 						<a href="http://www.google.com" class="login100-social-item bg3">
 							<i class="fa fa-google"></i>
+						</a> -->
+						
+						<a id="custom-login-btn" href="javascript:kakaoLogin();">
+							<%-- <img src="${cp}/css/login/images/kakaolink_btn_medium.png" width="100" /> --%>
+							<img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"/>
 						</a>
+						
+						<%-- <a id="custom-login-btn" class="login100-social-item" href="https://kauth.kakao.com/oauth/authorize?client_id=5bc077e20fdb3cf12fec5e1abbccc2bc&redirect_uri=http://localhost:8080/kakaoLogin&response_type=code">
+							<img src="${cp}/css/login/images/kakaolink_btn_medium.png" width="100" />
+						</a> --%>
 					</div>
-					
-				</form>
 			</div>
 		</div>
 	</div>
@@ -150,13 +168,13 @@
 <!--===============================================================================================-->
 	<script src="/css/login/js/main.js"></script>
 	
-<%-- 	<script src="<%=request.getContextPath()%>/js/jquery-3.3.1.min.js"></script>  --%>
+	 <!-- 다음 우편번호 API -->
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	
 	
-	 
-		
+    <%-- <script src="<%=request.getContextPath()%>/js/jquery-3.3.1.min.js"></script>  --%> 
+	<!-- <script src="/css/login/selectbox.js"></script> -->
 	
-
 
 	<!-- 쿠키 관련 -->
 	<script src="<%=request.getContextPath()%>/js/cookieUtil.js"></script>
@@ -167,6 +185,84 @@
 	
 	<script>
 	
+	
+		// API KEY : 47f91cddcc83e3f0e48917969701abe1
+		
+		
+	    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+	    Kakao.init('47f91cddcc83e3f0e48917969701abe1');
+	    function kakaoLogin() {
+	      // 로그인 창을 띄웁니다.
+	      Kakao.Auth.login({
+	    	
+	        success: function(authObj) {
+	        	
+	           Kakao.API.request({
+	           
+	        	  url: '/v2/user/me',
+	              success: function(res) {
+	            	  
+	        	  console.log(JSON.stringify(res)); //<---- kakao.api.request 에서 불러온 결과값 json형태로 출력
+	        	  console.log(JSON.stringify(authObj)); //<----Kakao.Auth.createLoginButton에서 불러온 결과값 json형태로 출력
+	  
+	              console.log(res.id);//<---- 콘솔 로그에 id 정보 출력(id는 res안에 있기 때문에  res.id 로 불러온다)
+	              //console.log(res.account.email);//<---- 콘솔 로그에 email 정보 출력
+	              //console.log(res.kakao_account.gender);
+	              console.log(res.kakao_account.has_email);//<---- 콘솔 로그에 email 정보 출력 
+	              console.log(res.properties['nickname']);//<---- 콘솔 로그에 닉네임 출력(properties에 있는 nickname 접근 
+	              // res.properties.nickname으로도 접근 가능 )
+	              console.log(res.created);
+	              console.log(res.status);
+	              console.log(authObj.access_token);//<---- 콘솔 로그에 토큰값 출력
+	  
+	              //$('#kakao_id').val(res.properties.id);
+	              //$('#kakao_nickname').val(res.properties.nickname);  
+	  
+	          }
+	  
+	          	
+	         
+	          }) 
+	         
+	        },
+	        fail: function(err) {
+	          alert(JSON.stringify(err));
+	        }
+	      });
+	      
+	    };
+	    
+	  	//회원가입 유저 클릭
+  		function signupUser(){
+			$('.jk-modalsasun').css('display','block');
+  			
+			$.ajax({
+				url	: "${cp}/signUp/goStep1",
+				data : {"division" : "1"},
+				success : function(data){
+					
+					console.log(data);
+					$(".jk-modal").html(data);
+				}
+			});
+  		};
+  		
+  		function signupCorp() {
+			$('.jk-modalsasun').css('display','block');
+  			
+  			$.ajax({
+				url	: "${cp}/signUp/goStep1",
+				data : {"division" : "2"},
+				success : function(data){
+					
+					console.log(data);
+					$(".jk-modal").html(data);
+					
+				}
+			});
+  		};
+	    
+	    
   	$(document).ready(function(){
   		
   		//쿠키 설정
@@ -189,60 +285,7 @@
   			$("form").submit();
   		});
   		
-  		
-  		//회원가입 유저 클릭
-  		$('#signupUser').on('click',function(){
-  			$('.jk-modalsasun').css('display','block');
-  			
-			$.ajax({
-				url	: "${cp}/signUp/go",
-				success : function(data){
-					
-					console.log(data);
-					$(".jk-modal").html(data);
-					
-					
-					
-					
-					//닫기 버튼 클릭
-				  	$('#close').on('click',function(){
-				  		
-				  		var result = confirm("지금 까지 입력한 정보가 삭제 됩니다");
-				  		
-				  		if(result){
-				  			$.ajax({
-				  	  			
-				  	  			url : "${cp}/signUp/cancel",
-				  	  			method : "post",
-				  	  			contentType : "application/json; charset=uft-8",
-				  	  			success : function(data){
-				  	  				console.log(data);
-				  	  				
-				  	  			}
-				  	  		});
-				  			
-							$('.jk-modalsasun').css('display','none');
-				  		} else {
-				  			
-				  			
-				  		}
-					});
-					
-					
-					
-				}
-			});
-  			
-  		});
-  		
-  		//회원가입 기업 클릭
-  		$('#signupCorp').on('click',function(){
-  			
-  		});
   	});
-  
-
-  	
   	
   </script>
 

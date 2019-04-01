@@ -52,7 +52,7 @@
             		<div>알람</div>
             	</a>
             </li>
-            <li class="menu">
+            <li class="menu profile">
 			  	<a href="#" id="profile" class="menugroup" style="padding-top: 7px;">
             		<div><span style="font-size: 20px;"><i class="fas fa-user-circle"></i></span></div>
             		<div>나</div>
