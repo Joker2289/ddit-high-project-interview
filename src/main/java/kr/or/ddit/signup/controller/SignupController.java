@@ -74,6 +74,55 @@ public class SignupController {
 	private String division;		//구분 저장
 	
 	
+	@RequestMapping("/kakaoLogin")
+	@ResponseBody
+	public String kakaoLogin(@RequestBody SignupUserVo vo, HttpServletRequest req) {
+		
+		MemberVo search_member = memService.select_memberInfo(vo.getId());
+		
+		if(search_member == null) {
+			MemberVo mVo = new MemberVo();
+			mVo.setMem_id(vo.getId());
+			mVo.setMem_division("1");
+			
+			int insertCnt = memService.insert_member(mVo);
+			
+			if(insertCnt == 1) {
+				UsersVo uVo = new UsersVo();
+				uVo.setProfile_img("kakao profile");
+				uVo.setProfile_path(vo.getKakaoProfile());
+				uVo.setUser_id(vo.getId());
+				uVo.setUser_name(vo.getName());
+				
+				userService.insert_users(uVo);
+				
+				req.getSession().setAttribute("memberVO", mVo);
+				
+				
+				
+				
+				return "redirect:/timeline";
+			}
+		}
+		else {
+			UsersVo userInfo = userService.select_userInfo(vo.getId());
+			
+			if(userInfo.getUser_name().equals(vo.getName()) || userInfo.getProfile_path().equals(vo.getKakaoProfile())) {
+				UsersVo uVo = new UsersVo();
+				uVo.setUser_id(vo.getId());
+				uVo.setUser_name(vo.getName());
+				uVo.setProfile_path(vo.getKakaoProfile());
+				userService.update_userInfo(uVo);
+			}
+			
+		}
+		
+		req.getSession().setAttribute("memberVO", search_member);
+		
+		return "redirect:/timeline";
+		
+	}
+	
 	@RequestMapping("/cancel")
 	public String cancel() {
 		memService.delete_member(id);
@@ -84,7 +133,7 @@ public class SignupController {
 	public String goStep1(String division) {
 		
 		if(division.equals("1")){
-			return "login/step3";
+			return "login/step1";
 		}
 		
 		return "login/step1_corp";
@@ -217,7 +266,7 @@ public class SignupController {
 		logger.debug("dividion: {}", division);
 		
 		if(division.equals("1")) {
-			return "login/step3";
+			return "login/step5";
 		}
 		
 		return "login/step3_corp";
@@ -302,6 +351,8 @@ public class SignupController {
 		
 		return "login/step5";
 	}
+	
+	
 	
 	
 	@RequestMapping(path="/finalStep", consumes ={"multipart/form-data"})

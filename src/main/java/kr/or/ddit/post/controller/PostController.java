@@ -50,6 +50,7 @@ public class PostController {
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("memberVO");
 		
+		logger.debug("memberInfoGo : {}", memberInfo);
 		
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		

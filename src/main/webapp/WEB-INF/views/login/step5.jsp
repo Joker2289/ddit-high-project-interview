@@ -14,17 +14,27 @@
 		<div class="jk-row">
 		     <div id="modal-body" class="jk-modal-body">
 		     		
+		     		
+		     		<div class="wrap-input-custom2 bt-padding20">
+							<span class="label-custom">프로필을 등록하여 인맥들에게 알리세요</span>
+					</div>
 					
-					<div>
-						<img src="${ cp }/images/profile/basicProfile.png" id="profileImg" width="300" height="300">
+					<div class="wrap-input-custom3">
+						<div class="image-radius">
+							<img src="${ cp }/images/profile/basicProfile.png" id="profileImg" width="250px" height="250px">
+						</div>
 					</div>
 					
 					
 					
 					
 					<form id="step5">
-						사진이 있으면 회원님이 맞는지 쉽게 알 수 있습니다
-						<input type="file" class="form-control" id="profile" name="profile" placeholder="사진" onchange="LoadImg(this);">
+						<div class="filebox wrap-input-custom3">
+							<input class="upload-name" value="파일 선택" disabled="disabled"> 
+							
+							<label for="ex_filename">업로드</label>
+							<input type="file" id="ex_filename" name="profile" class="upload-hidden" placeholder="사진" onchange="LoadImg(this);">
+						</div>
 					</form>
 					
 			 </div>
@@ -41,6 +51,23 @@
 	   	 
 		
 		<script>
+		
+		var fileTarget = $('.filebox .upload-hidden'); 
+		
+		fileTarget.on('change', function(){ 
+			// 값이 변경되면 
+			if(window.FileReader){ 
+				// modern browser
+				var filename = $(this)[0].files[0].name; } 
+			else { 
+				// old IE 
+				var filename = $(this).val().split('/').pop().split('\\').pop(); 
+				// 파일명만 추출 
+			} 
+			// 추출한 파일명 삽입 
+			$(this).siblings('.upload-name').val(filename); 
+		});
+
 		
 		//업로드 이미지 미리보기
 		function LoadImg(data){

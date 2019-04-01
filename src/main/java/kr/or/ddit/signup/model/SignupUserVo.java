@@ -40,6 +40,10 @@ public class SignupUserVo {
 	private String addr2;			// 상세주소
 	private String zipcode;			// 우편번호
 	private String telno;			// 전화번호
+	
+	//kakaoLogin
+	private String kakaoProfile; 	//카카오 프로필
+	
 	public String getId() {
 		return id;
 	}
@@ -190,6 +194,12 @@ public class SignupUserVo {
 	public void setTelno(String telno) {
 		this.telno = telno;
 	}
+	public String getKakaoProfile() {
+		return kakaoProfile;
+	}
+	public void setKakaoProfile(String kakaoProfile) {
+		this.kakaoProfile = kakaoProfile;
+	}
 	@Override
 	public String toString() {
 		return "SignupUserVo [id=" + id + ", pass=" + pass + ", email=" + email + ", name=" + name + ", division="
@@ -199,10 +209,7 @@ public class SignupUserVo {
 				+ ", admission=" + admission + ", graduation=" + graduation + ", grade=" + grade + ", corp_birth="
 				+ corp_birth + ", corp_type=" + corp_type + ", industry_type=" + industry_type + ", corp_size="
 				+ corp_size + ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", telno=" + telno
-				+ "]";
+				+ ", kakaoProfile=" + kakaoProfile + "]";
 	}
-	
-	
-	
 	
 }
