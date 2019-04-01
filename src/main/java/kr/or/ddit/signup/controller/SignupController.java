@@ -82,7 +82,7 @@ public class SignupController {
 		
 		if(search_member == null) {
 			MemberVo mVo = new MemberVo();
-			mVo.setMem_id(vo.getId());
+			mVo.setMem_id(vo.getKakaoId());
 			mVo.setMem_division("1");
 			
 			int insertCnt = memService.insert_member(mVo);
@@ -91,26 +91,24 @@ public class SignupController {
 				UsersVo uVo = new UsersVo();
 				uVo.setProfile_img("kakao profile");
 				uVo.setProfile_path(vo.getKakaoProfile());
-				uVo.setUser_id(vo.getId());
-				uVo.setUser_name(vo.getName());
+				uVo.setUser_id(vo.getKakaoId());
+				uVo.setUser_name(vo.getKakaoName());
 				
 				userService.insert_users(uVo);
 				
 				req.getSession().setAttribute("memberVO", mVo);
 				
 				
-				
-				
 				return "redirect:/timeline";
 			}
 		}
 		else {
-			UsersVo userInfo = userService.select_userInfo(vo.getId());
+			UsersVo userInfo = userService.select_userInfo(vo.getKakaoId());
 			
-			if(userInfo.getUser_name().equals(vo.getName()) || userInfo.getProfile_path().equals(vo.getKakaoProfile())) {
+			if(userInfo.getUser_name().equals(vo.getKakaoName()) || userInfo.getProfile_path().equals(vo.getKakaoProfile())) {
 				UsersVo uVo = new UsersVo();
-				uVo.setUser_id(vo.getId());
-				uVo.setUser_name(vo.getName());
+				uVo.setUser_id(vo.getKakaoId());
+				uVo.setUser_name(vo.getKakaoName());
 				uVo.setProfile_path(vo.getKakaoProfile());
 				userService.update_userInfo(uVo);
 			}
@@ -266,7 +264,7 @@ public class SignupController {
 		logger.debug("dividion: {}", division);
 		
 		if(division.equals("1")) {
-			return "login/step5";
+			return "login/step3";
 		}
 		
 		return "login/step3_corp";

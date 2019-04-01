@@ -78,8 +78,8 @@
 				
 				
 				<form id="kakaoForm">
-					<input type="hidden" id="id" name="id">
-					<input type="hidden" id="name" name="name">
+					<input type="hidden" id="kakaoId" name="kakaoId">
+					<input type="hidden" id="kakaoName" name="kakaoName">
 					<input type="hidden" id="kakaoProfile" name="kakaoProfile">
 				</form>
 				
@@ -223,8 +223,8 @@
 	              //console.log(res.created);
 	              //console.log(res.status);
 	              
-	              $("#id").val(res.id);
-              	  $("#name").val(res.properties.nickname);
+	              $("#kakaoId").val(res.id);
+              	  $("#kakaoName").val(res.properties.nickname);
               	  $("#kakaoProfile").val(res.properties.profile_image);
            		
               	  //step1 - user
