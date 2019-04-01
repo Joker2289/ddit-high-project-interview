@@ -6,10 +6,10 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.dao.IPersonal_connectionDao;
-import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.users.model.UsersVo;
 
 @Service("personalService")
@@ -29,8 +29,9 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	}
 
 	@Override
-	public int corporation_count(FollowVo followVo) {
-		return personalDao.corporation_count(followVo);
+	public List<CorporationVo> select_followCoporation(FollowVo followVo) {
+		return personalDao.select_followCoporation(followVo);
 	}
+
 	
 }

@@ -14,7 +14,7 @@ import kr.or.ddit.search_log.model.Search_logVo;
 public class Search_logServiceImpl implements ISearch_logService{
 	
 	@Resource(name="search_logDao")
-	private ISearch_logDao search_logDao;
+	private ISearch_logDao sLogDao;
 
 	/**
 	 * 
@@ -26,7 +26,7 @@ public class Search_logServiceImpl implements ISearch_logService{
 	 */
 	@Override
 	public int getAllCnt() {
-		int search_logCnt = search_logDao.getAllCnt();
+		int search_logCnt = sLogDao.getAllCnt();
 		
 		return search_logCnt;
 	}
@@ -42,7 +42,7 @@ public class Search_logServiceImpl implements ISearch_logService{
 	 */
 	@Override
 	public int insertSearch_log(Search_logVo sVo) {
-		int insertCnt = search_logDao.insertSearch_log(sVo);
+		int insertCnt = sLogDao.insertSearch_log(sVo);
 		
 		return insertCnt;
 	}
@@ -58,7 +58,7 @@ public class Search_logServiceImpl implements ISearch_logService{
 	 */
 	@Override
 	public List<Search_logVo> getSaveList(Search_logVo sVo) {
-		List<Search_logVo> saveList = search_logDao.getSaveList(sVo);
+		List<Search_logVo> saveList = sLogDao.getSaveList(sVo);
 		
 		return saveList;
 	}
@@ -74,7 +74,7 @@ public class Search_logServiceImpl implements ISearch_logService{
 	 */
 	@Override
 	public Search_logVo getSearch_log(String search_code) {
-		Search_logVo sVo = search_logDao.getSearch_log(search_code);
+		Search_logVo sVo = sLogDao.getSearch_log(search_code);
 		
 		return sVo;
 	}
@@ -90,7 +90,7 @@ public class Search_logServiceImpl implements ISearch_logService{
 	 */
 	@Override
 	public int deleteSearch_logForTest(String search_code) {
-		int deleteCnt = search_logDao.deleteSearch_logForTest(search_code);
+		int deleteCnt = sLogDao.deleteSearch_logForTest(search_code);
 		
 		return deleteCnt;
 	}
@@ -106,9 +106,25 @@ public class Search_logServiceImpl implements ISearch_logService{
 	 */
 	@Override
 	public int updateSearch_log(Search_logVo sVo) {
-		int updateCnt = search_logDao.updateSearch_log(sVo);
+		int updateCnt = sLogDao.updateSearch_log(sVo);
 		
 		return updateCnt;
+	}
+
+	/**
+	 * 
+	 * Method : getLSLog
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 특정 회원이 검색하려는 값 조회.
+	 */
+	@Override
+	public Search_logVo getLSLog(String mem_id) {
+		Search_logVo lSLog = sLogDao.getLSLog(mem_id);
+		
+		return lSLog;
 	}
 
 	

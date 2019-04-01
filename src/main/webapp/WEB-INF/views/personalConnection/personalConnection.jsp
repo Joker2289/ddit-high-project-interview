@@ -46,16 +46,16 @@ $(document).ready(function() {
 
 </script>
 <div class="container">
-	<div class="row">
-		<div style="margin-top: 101px;">
-			<div class="row">
+<div class="row">
+<div style="margin-top: 101px;">
+<div class="row">
 			  <div id="pc_leftmenu" class="col-md-3">
 			        <div id="pc_leftmenuBox" class="whiteBox">
 			         	<a href="/connections">
 			         		<span style="padding-right: 5px;"><i class="fas fa-user-friends"></i></span>1촌 ${connections_count }명
 			         	</a>
 			           <a id="pc_leftmenuBorder" href="/coporation">
-			           	<span><i class="fas fa-building" ></i></span>회사 (${corporation_count })개
+			           	<span><i class="fas fa-building" ></i></span>회사 ()개
 			           </a>
 			        </div>
 			  </div>
@@ -106,7 +106,7 @@ $(document).ready(function() {
 					<div class="whiteBox" style="width:314px; height: 256px;">Level 2: .col-xs-4 .col-sm-6</div>
 					footer
 				</div>
-			</div>
-		</div>
-	</div>
+</div>
+</div>
+</div>
 </div>

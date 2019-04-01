@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
+import kr.or.ddit.follow.model.FollowVo;
+import kr.or.ddit.follow.service.IFollowService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
 import kr.or.ddit.users.model.UsersVo;
@@ -42,6 +45,12 @@ public class PostController {
 	
 	@Resource(name="corporationService")
 	private ICorporationService corporationService;
+	
+	@Resource(name="personalService")
+	private IPersonal_connectionService personal_connectionService; 
+	
+	@Resource(name="followService")
+	private IFollowService followService; 
 	 
 	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
@@ -51,18 +60,27 @@ public class PostController {
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("memberVO");
 		
 		logger.debug("memberInfoGo : {}", memberInfo);
+		FollowVo followInfo = new FollowVo();
+		followInfo.setMem_id(memberInfo.getMem_id());
+		followInfo.setDivision("14");
+		
 		
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
 		
 		if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id()); 
+			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
 			
 			//인맥 수 출력을 위한 세팅
+			int connectionCnt = personal_connectionService.connections_count(memberInfo);
 			
 			//팔로우 한 해쉬태그 출력을 위한 세팅
+//			List<FollowVo> followHashtag = followService.select_followKindList(followInfo);
+			
 			
 			model.addAttribute("userInfo", userInfo);
+			model.addAttribute("connectionCnt", connectionCnt);
+//			model.addAttribute("followHashtag", followHashtag);
 		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
 			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
 			

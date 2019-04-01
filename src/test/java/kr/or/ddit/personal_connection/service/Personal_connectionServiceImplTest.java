@@ -77,21 +77,6 @@ public class Personal_connectionServiceImplTest extends LogicTestConfig {
 	
 	
 	
-	@Test
-	public void testCorporation_count() {
-		
-		/***Given***/
-		FollowVo followVo = new FollowVo();
-		followVo.setDivision("43");
-		
-		/***When***/
-		int corporation_count = personalService.corporation_count(followVo);
-
-		/***Then***/
-		assertNotNull(followVo);
-		//assertEquals(1, corporation_count);
-		
-	}
 	
 	
 	

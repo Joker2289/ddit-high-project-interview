@@ -42,4 +42,9 @@ public class PostServiceImpl implements IPostService {
 		return postDao.select_timelinePost(paginationVo);
 	}
 
+	@Override
+	public PostVo select_postInfo(String post_code) {
+		return postDao.select_postInfo(post_code);
+	}
+
 }

@@ -41,17 +41,44 @@
 		and
 			receive_accept='Y'
 	</select>
-
-
-	<!-- 팔로우한 회사 수 조회 -->
-	<select id="corporation_count" parameterType="followVo" resultType="int">
+	
+	
+	<!-- 팔로우한 회사 리스트 출력 -->
+	<select id="select_followCoporation" parameterType="followVo" resultType="corporationVo">
 		select
-			count(*)
-		from
-			follow
-		where
-			division=#{division}
+			b.*
+  		from
+  			follow a, corporation b
+ 		where
+ 			a.mem_id=#{mem_id}
+   		and
+   			a.division=#{division}
+   		and
+   			a.ref_keyword = b.corp_name
 	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="select_connectionList">
+		
+	</select>
+
+
 
 
 </mapper>
