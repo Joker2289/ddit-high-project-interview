@@ -78,7 +78,7 @@ public class SignupController {
 	@ResponseBody
 	public String kakaoLogin(@RequestBody SignupVo vo, HttpServletRequest req) {
 		
-		MemberVo search_member = memService.select_memberInfo(vo.getId());
+		MemberVo search_member = memService.select_memberInfo(vo.getKakaoId());
 		
 		if(search_member == null) {
 			MemberVo mVo = new MemberVo();
