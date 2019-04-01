@@ -37,7 +37,7 @@ import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.education_info.service.IEducation_infoService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
-import kr.or.ddit.signup.model.SignupUserVo;
+import kr.or.ddit.signup.model.SignupVo;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
@@ -76,7 +76,7 @@ public class SignupController {
 	
 	@RequestMapping("/kakaoLogin")
 	@ResponseBody
-	public String kakaoLogin(@RequestBody SignupUserVo vo, HttpServletRequest req) {
+	public String kakaoLogin(@RequestBody SignupVo vo, HttpServletRequest req) {
 		
 		MemberVo search_member = memService.select_memberInfo(vo.getId());
 		
@@ -170,7 +170,7 @@ public class SignupController {
 	//이메일 인증
 	@RequestMapping(path="/error_email")
 	@ResponseBody
-	public String error_email(@RequestBody SignupUserVo vo) {
+	public String error_email(@RequestBody SignupVo vo) {
 		
 		String success = sendEmail(vo.getEmail());
 		
@@ -202,7 +202,7 @@ public class SignupController {
 	
 	//Step2
 	@RequestMapping("/goStep2")
-	public String goStep2(@RequestBody SignupUserVo vo, Model model) {
+	public String goStep2(@RequestBody SignupVo vo, Model model) {
 
 		
 		logger.debug("ste1.vo : {}", vo);
@@ -250,7 +250,7 @@ public class SignupController {
 	//인증코드 에러 검사
 	@RequestMapping("/error_code")
 	@ResponseBody
-	public String error_code(@RequestBody SignupUserVo vo) {
+	public String error_code(@RequestBody SignupVo vo) {
 		
 		logger.debug("error_code : {}", vo.getSecurityCode());
 		
@@ -274,7 +274,7 @@ public class SignupController {
 	
 	
 	@RequestMapping("/goStep5From3")
-	public String goStep5From3(@RequestBody SignupUserVo vo, HttpServletRequest req) {
+	public String goStep5From3(@RequestBody SignupVo vo, HttpServletRequest req) {
 		
 		logger.debug("step3 : {}", vo);
 		
@@ -294,7 +294,7 @@ public class SignupController {
 	}
 	
 	@RequestMapping("/goStep5From4")
-	public String goStep5From4(@RequestBody SignupUserVo vo, HttpServletRequest req) {
+	public String goStep5From4(@RequestBody SignupVo vo, HttpServletRequest req) {
 		
 		logger.debug("step4 : {}", vo);
 		
@@ -323,7 +323,7 @@ public class SignupController {
 	}
 	
 	@RequestMapping("/goStep4_corp")
-	public String goStep4_corp(@RequestBody SignupUserVo vo) {
+	public String goStep4_corp(@RequestBody SignupVo vo) {
 		
 		CorporationVo cVo = new CorporationVo();
 		cVo.setCorp_id(id);
@@ -338,7 +338,7 @@ public class SignupController {
 	}
 	
 	@RequestMapping("/goStep5_corp")
-	public String goStep5_corp(@RequestBody SignupUserVo vo) {
+	public String goStep5_corp(@RequestBody SignupVo vo) {
 		
 		CorporationVo cVo = new CorporationVo();
 		cVo.setCorp_id(id);

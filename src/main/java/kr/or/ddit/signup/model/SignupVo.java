@@ -2,7 +2,7 @@ package kr.or.ddit.signup.model;
 
 import java.util.Date;
 
-public class SignupUserVo {
+public class SignupVo {
 	
 	//step1
 	private String id;				// 회원아이디
