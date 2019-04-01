@@ -121,7 +121,7 @@
 	
    	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px; margin-top: 20px;">
 		<img width="30" src="http://mblogthumb4.phinf.naver.net/20160920_175/kokoa2100_1474368430239vv9yY_PNG/mzl.xnmoezsr.png?type=w800">   	
-		<a href="https://map.kakao.com/">
+		<a href="${pageContext.request.contextPath }/map">
 			 (지도 API를 이용한 채용공고 검색)
 		</a>
 	</div>	

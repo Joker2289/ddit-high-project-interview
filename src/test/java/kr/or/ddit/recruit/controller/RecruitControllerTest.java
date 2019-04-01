@@ -353,6 +353,27 @@ public class RecruitControllerTest extends WebTestConfig{
 		assertFalse(duplication_flag);
 	}
 	
+	/**
+	 * 
+	 * Method : testMap
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 지도 검색 페이지 요청 테스트.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testMap() throws Exception {
+		/***Given***/
+
+		/***When***/
+		MvcResult mvcResult = mockMvc.perform(get("/map")).andReturn();
+		ModelAndView mav = mvcResult.getModelAndView();
+		String viewName = mav.getViewName();
+
+		/***Then***/
+		assertEquals("mapTiles", viewName);
+	}
+	
 	
 	
 	

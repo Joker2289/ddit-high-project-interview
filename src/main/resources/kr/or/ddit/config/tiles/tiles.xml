@@ -63,4 +63,8 @@
 		<put-attribute name="content" value="/WEB-INF/views/personalConnection/feedFollowing.jsp"/>
 	</definition>	
 	
+	<definition name="mapTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/recruit/map.jsp"/>
+	</definition>	
+	
 </tiles-definitions>

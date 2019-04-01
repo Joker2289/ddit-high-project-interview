@@ -604,6 +604,14 @@ public class RecruitController {
 		return "writeRecrTiles";
 	}
 	
+	// @지도 검색 페이지 요청.
+	@RequestMapping("/map")
+	public String map() {
+
+		return "mapTiles";
+	}
+	
+	
 	
 	
 }
