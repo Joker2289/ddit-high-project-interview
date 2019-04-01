@@ -59,6 +59,7 @@ public class PostController {
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("memberVO");
 		
+		logger.debug("memberInfoGo : {}", memberInfo);
 		FollowVo followInfo = new FollowVo();
 		followInfo.setMem_id(memberInfo.getMem_id());
 		followInfo.setDivision("14");
@@ -199,47 +200,6 @@ public class PostController {
 		} else {
 			return "redirect:/timeline";
 		}
-	}
-	
-	@RequestMapping(path={"/modifypost"}, method=RequestMethod.GET)
-	public String modifyPost_timeline(Model model, String post_code){
-		
-		PostVo bringPost = postService.select_postInfo(post_code);
-		
-		model.addAttribute("bringPost", bringPost);
-		
-		return "redirect:/timeline"; //ajax요청으로 보내줘야 함 -> 수정예정
-	}
-	
-	@RequestMapping(path={"/modifysave"}, method=RequestMethod.POST)
-	public String modifyPost_timeline(Model model, String post_code, String post_contents){
-		logger.debug("qweqwe-----post : {} {}", post_code, post_contents);
-		PostVo modifiedPost = new PostVo();
-		
-		modifiedPost.setPost_code(post_code);
-		modifiedPost.setPost_contents(post_contents);
-		
-		int updateCnt = postService.update_post(modifiedPost);
-		
-		if(updateCnt == 1){
-			return "redirect:/timeline"; //성공시 타임라인으로
-		} else {
-			return "redirect:/timeline"; //실패시...?
-		}
-	}
-	
-	@RequestMapping(path={"/deletepost"}, method=RequestMethod.GET)
-	public String delete_post(Model model, String post_code){
-		logger.debug("asdasdasd-----post_code : {}", post_code);
-		
-		int deleteCnt = postService.delete_post(post_code);
-		
-		if(deleteCnt == 1){
-			return "redirect:/timeline";
-		} else {
-			return "redirect:/timeline"; //실패시...?
-		}
-		
 		
 	}
 	

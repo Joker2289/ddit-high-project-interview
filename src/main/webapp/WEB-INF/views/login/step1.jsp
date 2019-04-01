@@ -93,7 +93,7 @@
 	  				if(data == "success"){
 	  					alert("사용가능한 ID 입니다");
 						idCheck=true;
-	  					$("#id").attr("disabled", true);
+	  					$("#id").attr("readonly", true);
 	  					$("#idCheck").html("사용가능");
 	  					$("#idCheck").css("background", "#7DB150");
 	  				}

@@ -1,215 +1,252 @@
 .modal-dialog.modal-fullsize {
 	width: 100%;
-  	height: 100%;
+	height: 100%;
 }
 
-
-.jk-modalsasun{
-	position:absolute;
-	top:0;
-	display:none;
-	width:100%;
-	height:100%;
-	
+.jk-modalsasun {
+	position: absolute;
+	top: 0;
+	display: none;
+	width: 100%;
+	height: 100%;
 	background-color: rgba(0, 0, 0, 0.7);
-	
-	z-index:500;
-
+	z-index: 500;
 }
 
 .jk-modal {
-	position:absolute;
-	display:table;
-	top:100px;
-	left:50%;
-	margin-left:-300px;
-	
-	
-	width:100%;
-	max-width:600px;
-	min-height:500px;
-	background:#fff;
-	
-	border-radius:20px;
+	position: absolute;
+	display: table;
+	top: 100px;
+	left: 50%;
+	margin-left: -300px;
+	width: 100%;
+	max-width: 600px;
+	min-height: 500px;
+	background: #fff;
+	border-radius: 20px;
 	/* overflow:hidden; */
 }
 
-
-.jk-row{
-	display:table-row;
+.jk-row {
+	display: table-row;
 }
 
-.jk-modal-head{
-	width:100%;
-	display:table-cell;
-	height:50px;
-	vertical-align:middle;
-	text-align:center;
-	
-/* 	위, 오른쪽, 아래, 왼 */
-	padding:50px 0 0 0;
-/* 	padding-top:50px; */
-	
+.jk-modal-head {
+	width: 100%;
+	display: table-cell;
+	height: 50px;
+	vertical-align: middle;
+	text-align: center;
+	/* 	위, 오른쪽, 아래, 왼 */
+	padding: 50px 0 0 0;
+	/* 	padding-top:50px; */
 }
 
-.jk-modal-head h1{
-	font-weight:800;
+.jk-modal-head h1 {
+	font-weight: 800;
 }
 
-
-.jk-modal-body{
-	width:100%;
-	display:table-cell;
-	vertical-align:middle;
-	width:100%;
-	height:500px;
-	overflow:auto;
+.jk-modal-body {
+	width: 100%;
+	display: table-cell;
+	vertical-align: middle;
+	width: 100%;
+	height: 500px;
+	overflow: auto;
 }
 
-
-.jk-modal-footer{
-	width:100%;
-	height:100px;
-	display:table-cell;
-	vertical-align:middle;
-	text-align:center;
-	
+.jk-modal-footer {
+	width: 100%;
+	height: 100px;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
 }
 
-.jk-modal-footer button{
-	margin:0 10px;
-	padding:10px 30px 10px 30px;
+.jk-modal-footer button {
+	margin: 0 10px;
+	padding: 10px 30px 10px 30px;
 	background: #000;
-	opacity:0.9;
-	color:#fff;
-	border-radius:5px;
+	opacity: 0.9;
+	color: #fff;
+	border-radius: 5px;
 }
 
-.jk-btn{
-	margin:0 10px;
-	padding:10px 30px 10px 30px;
+.jk-btn {
+	margin: 0 10px;
+	padding: 10px 30px 10px 30px;
 	background: #000;
-	opacity:0.9;
-	color:#fff;
-	border-radius:5px;
+	opacity: 0.9;
+	color: #fff;
+	border-radius: 5px;
 }
 
-.jk-btn-long{
-	margin:0 10px;
-	padding:6px 169px 6px 169px;
+.jk-btn-long {
+	margin: 0 10px;
+	padding: 6px 169px 6px 169px;
 	background: #000;
-	opacity:0.9;
-	color:#fff;
-	border-radius:5px;
+	opacity: 0.9;
+	color: #fff;
+	border-radius: 5px;
 }
 
-.jk-btn-long2{
-	margin:20px 10px;
-	padding:10px 139px 10px 139px;
+.jk-btn-long2 {
+	margin: 20px 10px;
+	padding: 10px 139px 10px 139px;
 	background: #000;
-	opacity:0.9;
-	color:#fff;
-	border-radius:5px;
+	opacity: 0.9;
+	color: #fff;
+	border-radius: 5px;
 }
 
-.jk-btn-long3{
-	margin:10px 10px;
-	padding:10px 144px 10px 144px;
+.jk-btn-long3 {
+	margin: 10px 10px;
+	padding: 10px 144px 10px 144px;
 	background: #000;
-	opacity:0.9;
-	color:#fff;
-	border-radius:5px;
+	opacity: 0.9;
+	color: #fff;
+	border-radius: 5px;
 }
 
-
-
-.jk-join-btn{
-	background:#323ad3;
+.jk-join-btn {
+	background: #323ad3;
 }
 
-.jk-modal-footer button:hover{
-	background:#8546B3;
+.jk-modal-footer button:hover {
+	background: #8546B3;
 	/* opacity:0.4; */
 }
 
-.jk-modal-body button:hover{
-	background:#8546B3;
+.jk-modal-body button:hover {
+	background: #8546B3;
 	/* opacity:0.4; */
 }
-
 
 /* 자동완성 css - 모달창 뒤로 숨는 현상 발생 */
 ul.ui-autocomplete {
-    z-index: 1100;
+	z-index: 1100;
 }
 
-ul[id*="ui-"] li{
-display: block;
+ul[id*="ui-"] li {
+	display: block;
 }
-
 
 /* 셀렉트박스 css */
 /* The container must be positioned relative: */
 .custom-select {
-  position: relative;
-  font-family: Arial;
-  display: inline-block;
-  width:100%;
+	position: relative;
+	font-family: Arial;
+	display: inline-block;
+	width: 100%;
 }
 
 .custom-select select {
-  display: none; /*hide original SELECT element: */
+	display: none; /*hide original SELECT element: */
 }
 
 .select-selected {
-  background-color: #000;
+	background-color: #000;
 }
 
 /* Style the arrow inside the select element: */
 .select-selected:after {
-  position: absolute;
-  content: "";
-  top: 14px;
-  right: 10px;
-  width: 0;
-  height: 0;
-  border: 6px solid transparent;
-  border-color: #fff transparent transparent transparent;
+	position: absolute;
+	content: "";
+	top: 14px;
+	right: 10px;
+	width: 0;
+	height: 0;
+	border: 6px solid transparent;
+	border-color: #fff transparent transparent transparent;
 }
 
 /* Point the arrow upwards when the select box is open (active): */
 .select-selected.select-arrow-active:after {
-  border-color: transparent transparent #fff transparent;
-  top: 7px;
+	border-color: transparent transparent #fff transparent;
+	top: 7px;
 }
 
 /* style the items (options), including the selected item: */
-.select-items div,.select-selected {
-  color: #ffffff;
-  padding: 8px 16px;
-  border: 1px solid transparent;
-  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
-  cursor: pointer;
+.select-items div, .select-selected {
+	color: #ffffff;
+	padding: 8px 16px;
+	border: 1px solid transparent;
+	border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+	cursor: pointer;
 }
 
 /* Style items (options): */
 .select-items {
-  position: absolute;
-  background-color: DodgerBlue;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 99;
+	position: absolute;
+	background-color: DodgerBlue;
+	top: 100%;
+	left: 0;
+	right: 0;
+	z-index: 99;
 }
 
 /* Hide the items when the select box is closed: */
 .select-hide {
-  display: none;
+	display: none;
 }
 
 .select-items div:hover, .same-as-selected {
-  background-color: rgba(0, 0, 0, 0.1);
+	background-color: rgba(0, 0, 0, 0.1);
 }
 
+.filebox input[type="file"] {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
 
+/* 파일업로드 css */
+.filebox label {
+	display: inline-block;
+	/* padding: .5em .75em; */
+	padding: 8px 30px 8px 30px;
+	color: #fff;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #1A1A1A;
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+	margin-bottom: 0px !important;
+} 
 
+/* named upload */
+.filebox .upload-name {
+	display: inline-block;
+	/* padding: .5em .75em; */ /* label의 패딩값과 일치 */
+	padding: 8px 30px 8px 30px;
+	font-size: inherit;
+	font-family: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #f5f5f5;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+	-webkit-appearance: none; /* 네이티브 외형 감추기 */
+	-moz-appearance: none;
+	appearance: none;
+	margin-right: 10px;
+	
+}
+
+.image-radius {
+	position: relative;
+    display: inline-block;
+   	border-radius: 50%;
+   	box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.8);
+   	margin-bottom: 30px;
+   	overflow:hidden;
+}

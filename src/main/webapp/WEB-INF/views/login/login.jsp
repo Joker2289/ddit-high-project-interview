@@ -56,7 +56,7 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('/css/login/images/bg4.jpg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-				<form class="login100-form validate-form" action="/login" method="post">
+				<form id="login"class="login100-form validate-form" action="/login" method="post">
 					<span class="login100-form-title p-b-49">
 						<!-- InterView -->
 						<img src="${ cp }/images/interview_logo2.png"  width="330" height="100">
@@ -74,6 +74,19 @@
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 				</form>	
+				
+				
+				
+				<form id="kakaoForm">
+					<input type="hidden" id="kakaoId" name="kakaoId">
+					<input type="hidden" id="kakaoName" name="kakaoName">
+					<input type="hidden" id="kakaoProfile" name="kakaoProfile">
+				</form>
+				
+				<form id="kakaoLoginGo" action="/timeline" method="get">
+					
+				</form>
+				
 					<!-- 체크박스 -->
 					<div class="row">
 						<input type="checkbox" id="md_3">
@@ -140,9 +153,6 @@
 							<img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"/>
 						</a>
 						
-						<%-- <a id="custom-login-btn" class="login100-social-item" href="https://kauth.kakao.com/oauth/authorize?client_id=5bc077e20fdb3cf12fec5e1abbccc2bc&redirect_uri=http://localhost:8080/kakaoLogin&response_type=code">
-							<img src="${cp}/css/login/images/kakaolink_btn_medium.png" width="100" />
-						</a> --%>
 					</div>
 			</div>
 		</div>
@@ -187,8 +197,6 @@
 	
 	
 		// API KEY : 47f91cddcc83e3f0e48917969701abe1
-		
-		
 	    // 사용할 앱의 JavaScript 키를 설정해 주세요.
 	    Kakao.init('47f91cddcc83e3f0e48917969701abe1');
 	    function kakaoLogin() {
@@ -198,31 +206,46 @@
 	        success: function(authObj) {
 	        	
 	           Kakao.API.request({
-	           
 	        	  url: '/v2/user/me',
 	              success: function(res) {
 	            	  
-	        	  console.log(JSON.stringify(res)); //<---- kakao.api.request 에서 불러온 결과값 json형태로 출력
-	        	  console.log(JSON.stringify(authObj)); //<----Kakao.Auth.createLoginButton에서 불러온 결과값 json형태로 출력
-	  
-	              console.log(res.id);//<---- 콘솔 로그에 id 정보 출력(id는 res안에 있기 때문에  res.id 로 불러온다)
-	              //console.log(res.account.email);//<---- 콘솔 로그에 email 정보 출력
+	        	  console.log(JSON.stringify(res)); 		// kakao.api.request 에서 불러온 결과값 json형태로 출력
+	        	  console.log(JSON.stringify(authObj)); 	// Kakao.Auth.createLoginButton에서 불러온 결과값 json형태로 출력
+	              console.log(res.id);						// id출력
+	              console.log(res.kakao_account.has_email);	 
+	              console.log(res.properties['nickname']);	// 닉네임 출력 
+	              console.log(res.properties.nickname);		// 닉네임 출력
+	              console.log(authObj.access_token);		// 토큰 값 출력
+	              console.log(res.properties.profile_image);// 프로필 이미지
+	              
+	              //console.log(res.account.email);			// 콘솔 로그에 email 정보 출력
 	              //console.log(res.kakao_account.gender);
-	              console.log(res.kakao_account.has_email);//<---- 콘솔 로그에 email 정보 출력 
-	              console.log(res.properties['nickname']);//<---- 콘솔 로그에 닉네임 출력(properties에 있는 nickname 접근 
-	              // res.properties.nickname으로도 접근 가능 )
-	              console.log(res.created);
-	              console.log(res.status);
-	              console.log(authObj.access_token);//<---- 콘솔 로그에 토큰값 출력
-	  
-	              //$('#kakao_id').val(res.properties.id);
-	              //$('#kakao_nickname').val(res.properties.nickname);  
-	  
+	              //console.log(res.created);
+	              //console.log(res.status);
+	              
+	              $("#kakaoId").val(res.id);
+              	  $("#kakaoName").val(res.properties.nickname);
+              	  $("#kakaoProfile").val(res.properties.profile_image);
+           		
+              	  //step1 - user
+              	  var kakaoForm = $("#kakaoForm").serializeObject();  
+              	  console.log("kakaoForm : " + JSON.stringify(kakaoForm));
+              	  
+              	  $.ajax({
+              		  
+	    	  		  	url : "${cp}/signUp/kakaoLogin",
+	    	  		  	method : "post",
+	    	  		  	contentType : "application/json; charset=uft-8",
+	    	  		  	data : JSON.stringify(kakaoForm),
+	    	  		  	success : function(data){
+	    	  		  		console.log(data);
+	    	  		  		//location.href = data;
+							$("#kakaoLoginGo").submit();	    	  		  		
+	    	  		  	}
+    		  	  });
 	          }
-	  
-	          	
 	         
-	          }) 
+	          }); 
 	         
 	        },
 	        fail: function(err) {
@@ -282,7 +305,7 @@
   				Cookies.remove("md_3");
   			}
   		
-  			$("form").submit();
+  			$("#login").submit();
   		});
   		
   	});

@@ -22,9 +22,20 @@ public class CorporationVo {
 	private String corp_profile;	// 소개문구
 	private String email;			// 이메일
 	private String telno;			// 전화번호
+	private String corp_location;	// 회사좌표
 	
 	public CorporationVo() {
 		
+	}
+
+	@Override
+	public String toString() {
+		return "CorporationVo [corp_code=" + corp_code + ", corp_id=" + corp_id + ", corp_name=" + corp_name
+				+ ", bg_img=" + bg_img + ", bg_path=" + bg_path + ", corp_logo=" + corp_logo + ", logo_path="
+				+ logo_path + ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", corp_birth="
+				+ corp_birth + ", corp_type=" + corp_type + ", industry_type=" + industry_type + ", corp_url="
+				+ corp_url + ", corp_size=" + corp_size + ", corp_profile=" + corp_profile + ", email=" + email
+				+ ", telno=" + telno + ", corp_location=" + corp_location + "]";
 	}
 
 	public String getCorp_code() {
@@ -171,15 +182,15 @@ public class CorporationVo {
 		this.telno = telno;
 	}
 
-	@Override
-	public String toString() {
-		return "CorporationVo [corp_code=" + corp_code + ", corp_id=" + corp_id + ", corp_name=" + corp_name
-				+ ", bg_img=" + bg_img + ", bg_path=" + bg_path + ", corp_logo=" + corp_logo + ", logo_path="
-				+ logo_path + ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", corp_birth="
-				+ corp_birth + ", corp_type=" + corp_type + ", industry_type=" + industry_type + ", corp_url="
-				+ corp_url + ", corp_size=" + corp_size + ", corp_profile=" + corp_profile + ", email=" + email
-				+ ", telno=" + telno + "]";
+	public String getCorp_location() {
+		return corp_location;
 	}
+
+	public void setCorp_location(String corp_location) {
+		this.corp_location = corp_location;
+	}
+
+
 
 
 
