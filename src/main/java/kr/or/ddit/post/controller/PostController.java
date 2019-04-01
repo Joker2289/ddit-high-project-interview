@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
+import kr.or.ddit.follow.model.FollowVo;
+import kr.or.ddit.follow.service.IFollowService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
 import kr.or.ddit.users.model.UsersVo;
@@ -42,6 +45,12 @@ public class PostController {
 	
 	@Resource(name="corporationService")
 	private ICorporationService corporationService;
+	
+	@Resource(name="personalService")
+	private IPersonal_connectionService personal_connectionService; 
+	
+	@Resource(name="followService")
+	private IFollowService followService; 
 	 
 	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
@@ -50,18 +59,27 @@ public class PostController {
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("memberVO");
 		
+		FollowVo followInfo = new FollowVo();
+		followInfo.setMem_id(memberInfo.getMem_id());
+		followInfo.setDivision("14");
+		
 		
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
 		
 		if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id()); 
+			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
 			
 			//인맥 수 출력을 위한 세팅
+			int connectionCnt = personal_connectionService.connections_count(memberInfo);
 			
 			//팔로우 한 해쉬태그 출력을 위한 세팅
+//			List<FollowVo> followHashtag = followService.select_followKindList(followInfo);
+			
 			
 			model.addAttribute("userInfo", userInfo);
+			model.addAttribute("connectionCnt", connectionCnt);
+//			model.addAttribute("followHashtag", followHashtag);
 		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
 			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
 			
@@ -181,6 +199,47 @@ public class PostController {
 		} else {
 			return "redirect:/timeline";
 		}
+	}
+	
+	@RequestMapping(path={"/modifypost"}, method=RequestMethod.GET)
+	public String modifyPost_timeline(Model model, String post_code){
+		
+		PostVo bringPost = postService.select_postInfo(post_code);
+		
+		model.addAttribute("bringPost", bringPost);
+		
+		return "redirect:/timeline"; //ajax요청으로 보내줘야 함 -> 수정예정
+	}
+	
+	@RequestMapping(path={"/modifysave"}, method=RequestMethod.POST)
+	public String modifyPost_timeline(Model model, String post_code, String post_contents){
+		logger.debug("qweqwe-----post : {} {}", post_code, post_contents);
+		PostVo modifiedPost = new PostVo();
+		
+		modifiedPost.setPost_code(post_code);
+		modifiedPost.setPost_contents(post_contents);
+		
+		int updateCnt = postService.update_post(modifiedPost);
+		
+		if(updateCnt == 1){
+			return "redirect:/timeline"; //성공시 타임라인으로
+		} else {
+			return "redirect:/timeline"; //실패시...?
+		}
+	}
+	
+	@RequestMapping(path={"/deletepost"}, method=RequestMethod.GET)
+	public String delete_post(Model model, String post_code){
+		logger.debug("asdasdasd-----post_code : {}", post_code);
+		
+		int deleteCnt = postService.delete_post(post_code);
+		
+		if(deleteCnt == 1){
+			return "redirect:/timeline";
+		} else {
+			return "redirect:/timeline"; //실패시...?
+		}
+		
 		
 	}
 	

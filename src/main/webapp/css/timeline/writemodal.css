@@ -39,8 +39,16 @@
 .writer-info{
 	border-style: 1px solid;
 	border-color: #e5e5e5;
+	margin: 200px;
 }
 
+/* .writer-info a{ */
+/* 	float: left; */
+/* } */
+	
+/* .writer-info button{ */
+/* 	float: right; */
+/* }	 */
 .btn-write_modal{
 	background:#ffffff;
 	background-size: auto;

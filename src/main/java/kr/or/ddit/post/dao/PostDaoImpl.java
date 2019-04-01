@@ -41,5 +41,10 @@ public class PostDaoImpl implements IPostDao {
 		return sqlSession.selectList("post.select_timelinePost", paginationVo);
 	}
 
+	@Override
+	public PostVo select_postInfo(String post_code) {
+		return sqlSession.selectOne("post.select_postInfo", post_code);
+	}
+
 
 }

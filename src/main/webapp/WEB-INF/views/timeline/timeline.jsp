@@ -12,14 +12,15 @@
 	          <div class="panel-body">
 	            <h4>프로필 정보란</h4>
 	            <div class="col-user-bgimg">
-	            	<label>배경 사진란</label>
+	            	<label>배경 사진란</label><br>
 	            	<c:choose>
 	            	  <c:when test="${memberVO.mem_division == '1' }"><!-- 일반회원일 경우 -->
 	            	    <c:if test="${sessionScope.detailVO.bg_path == null }">
-	            	    	<span><a href="#"><img src=""></a></span>
+	            	      <span><a href="#"><img src=""></a></span>
+	            	      <a href="#"><span>일촌 수(명)${connectionCnt }명</span></a>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.detailVO.bg_path != null }">
-	            	    	<span><a href="#"><img src="sessionScope.detailVO.bg_path"></a></span>
+	            	      <span><a href="#"><img src="sessionScope.detailVO.bg_path"></a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:when test="${memberVO.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
@@ -36,7 +37,7 @@
 	            	</c:choose>
 	            </div>
 	            <div class="col-user-profileimg">
-	            	<label>프로필 사진란</label>
+	            	<span>프로필 사진란</span><br>
 	            	<c:choose>
 	            	  <c:when test="${memberVO.mem_division == '1' }"><!-- 일반회원일 경우 -->
 	            	    <c:if test="${sessionScope.detailVO.profile_path == null }">
@@ -92,32 +93,35 @@
 	          <c:forEach items="${timelinePost }" var="post">
 		          
 		        <div id="col-post" class="scrolling" data-post="${post.post_code }">
-	              <div class="col-post">
-
-	                <div class="col-post-body">
-	                  <div class="col-post-controll">
-	                    <button class="btn_postControll"><i class="fas fa-ellipsis-h"></i></button>
-	                  </div>
-	                  <div class="writer_info">
-	                    <span><a style="font-size: 20px;" href="#">${post.writer_name }</a> </span><br>
-	                  </div>
-	                  <div class="post_info">
-	                    <span>${post.post_date }</span><br>
-	                  	<span>${post.post_contents }</span>
-	                  </div>
-	                </div>
-
-	                <div class="col-post-footer">
+				  <div class="col-post">
+				
+					<div class="col-post-body">
+					  
+					  <div class="writer_info" >
+						<a style="font-size: 20px;" href="#">${post.writer_name }</a>
+					  </div>
+					  
+					  <div class="col-post-controll">
+						<button class="btn_postControll"><i class="fas fa-ellipsis-h"></i></button>
+					  </div>
+					  
+					  <div class="post_info">
+						<span>${post.post_date }</span><br>
+						<span>${post.post_contents }</span>
+					  </div>
+					</div>
+				
+					<div class="col-post-footer">
 					  <span>게시물 하단(동영상 혹은 공유게시물 출력란)</span>
-	                </div>
-	                <div class="col-post-social">
+					</div>
+					<div class="col-post-social">
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-thumbs-up"></i></span></button>
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-share-square"></i></span></button>
-	                </div>
-
-	              </div>
-		        </div>
+					</div>
+				
+				  </div>
+				</div>
 
 	          </c:forEach>
 	          <!-- ./post -->
@@ -151,6 +155,8 @@
 		$("#btn-write_modal").on("click", function () {
 			$("div.modal").modal();
 			
+// 			if()
+			
 			$("#btn_write_upload").on("click", function() {
 				$("#frm_writePost").submit();
 			})
@@ -181,7 +187,7 @@
 					console.log(data);
 					if(data != ""){
 						for(var i=0; i<5; i++){
-							$(".col-md-6").append('<div><div id="col-post"class="scrolling"data-post="${post.post_code }"><div class="col-post"><div class="col-post-body"><div class="col-post-controll"><button class="btn_postControll"><i class="fas fa-ellipsis-h"></i></button></div><div class="writer_info"><span><a style="font-size: 20px;"href="#">${post.writer_name}</a></span><br></div><div class="post_info"><span>${post.post_date}</span><br><span>${post.post_contents}</span></div></div><div class="col-post-footer"><span>게시물하단(동영상혹은공유게시물출력란)</span></div><div class="col-post-social"><button class="btn-social"><span style="font-size: 18px;"><i class="far fa-thumbs-up"></i></span></button><button class="btn-social"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button><button class="btn-social"><span style="font-size: 18px;"><i class="far fa-share-square"></i></span></button></div></div></div></div>');
+							$(".col-md-6").append('<div><div id="col-post"class="scrolling"data-post="${post.post_code }"><div class="col-post"><div class="col-post-body"><div class="col-post-controll"><button class="btn_postControll"><i class="fas fa-ellipsis-h"></i></button></div><div class="writer_info"><span><a style="font-size: 20px;"href="#">${post.writer_name}</a></span><br></div><div class="post_info"><span>${post.post_date}</span><br><span>${post.post_contents}</span></div></div><div class="col-post-footer"><span>게시물하단(동영상 혹은 공유게시물 출력란)</span></div><div class="col-post-social"><button class="btn-social"><span style="font-size: 18px;"><i class="far fa-thumbs-up"></i></span></button><button class="btn-social"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button><button class="btn-social"><span style="font-size: 18px;"><i class="far fa-share-square"></i></span></button></div></div></div></div>');
 						}
 					}
 				}
