@@ -183,8 +183,22 @@
 		         
 			<br><br> 
 			<div style="text-align: left; margin-bottom: 10px;">
-				<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br> [업무분야 · 지역 · 고용형태 · 회사 규모]
-				<a href="${pageContext.request.contextPath }/interest">관심 분야 설정</a><br>
+				<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br>
+				
+				<!-- c:choose안에 또 c:choose 넣을 수 있나? -->
+				<c:choose>
+					<c:when test="${inteVo == null }">
+						<a href="${pageContext.request.contextPath }/interest">
+							 업무분야 · 업무지역 · 고용형태 · 회사 규모 등 관심 분야 설정
+						</a><br>
+					</c:when>
+					<c:otherwise>
+						 ${inteVo.inte_type } · ${inteVo.inte_local } · ${inteVo.inte_emptype } · ${inteVo.inte_size } ... 
+						<a href="${pageContext.request.contextPath }/interest">
+							 관심 분야 설정
+						</a> <br>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<!-- rRList2 출력. -->				
 			<table class="tb_recruit">
@@ -235,7 +249,9 @@
 	});
 
 	$(document).ready(function(){
-// 		console.log("scrapList1? : ${scrapList1 }");
+		if(${inteVo == null }){
+			console.log("inteVo? : ${inteVo }");
+		}		
 		
 		<c:forEach items="${rRList1 }" varStatus="i">
 			console.log("i? : ${i.index }");

@@ -59,6 +59,38 @@ public class InterestServiceImpl implements IInterestService{
 		
 		return deleteCnt;
 	}
+
+	/**
+	 * 
+	 * Method : getInte
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 특정 관심분야 조회.
+	 */
+	@Override
+	public InterestVo getInte(String mem_id) {
+		InterestVo iVo = inteDao.getInte(mem_id);
+		
+		return iVo;
+	}
+
+	/**
+	 * 
+	 * Method : updateInte
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param iVo
+	 * @return
+	 * Method 설명 : 관심분야 수정.
+	 */
+	@Override
+	public int updateInte(InterestVo iVo) {
+		int updateCnt = inteDao.updateInte(iVo);
+		
+		return updateCnt;
+	}
 	
 	
 	
@@ -67,9 +99,6 @@ public class InterestServiceImpl implements IInterestService{
 	
 
 }
-
-
-
 
 
 

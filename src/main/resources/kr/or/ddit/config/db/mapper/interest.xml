@@ -24,18 +24,31 @@
 		 WHERE INTE_CODE = #{inte_code}
 	</delete>
 	
+	<!-- 특정 관심분야 조회. -->
+	<select id="getInte" parameterType="String" resultType="interestVo">
+		SELECT *
+		  FROM INTEREST
+		 WHERE USER_ID = #{mem_id}
+	</select>
+	
+	<!-- 관심분야 수정. -->
+	<update id="updateInte" parameterType="interestVo">
+		UPDATE INTEREST
+		SET
+		CHANGE_FLAG = #{change_flag, jdbcType=VARCHAR},
+		TELL_CONTENT = #{tell_content, jdbcType=VARCHAR},
+		JOB_CONDITION = #{job_condition, jdbcType=VARCHAR},
+		INTE_TYPE = #{inte_type},
+		INTE_LOCAL = #{inte_local},
+		INTE_EMPTYPE = #{inte_emptype},
+		INTE_SIZE = #{inte_size}
+		WHERE INTE_CODE = #{inte_code}	
+	</update>
+	
 	
   	
   	
 </mapper>
-
-
-
-
-
-
-
-
 
 
 

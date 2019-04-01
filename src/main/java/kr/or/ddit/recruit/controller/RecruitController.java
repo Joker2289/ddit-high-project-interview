@@ -1,7 +1,10 @@
 package kr.or.ddit.recruit.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
+import kr.or.ddit.interest.model.InterestVo;
+import kr.or.ddit.interest.service.IInterestService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.recruit.model.RecruitVo;
@@ -51,6 +56,9 @@ public class RecruitController {
 	
 	@Resource(name="save_recruitService")
 	private ISave_recruitService srecrService;
+	
+	@Resource(name="interestService")
+	private IInterestService inteService;
 
 	private List<String> img_list;
 	private List<String> str_list;
@@ -70,9 +78,14 @@ public class RecruitController {
 		// 채용공고 등록해보자.
 //		insert_recr();
 		
+		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");		
+				
 		// '관심분야'를 통해 'rRList2' 만들기. -_-! 우선 받은 값을 확인해보자. 확인 InterestController
 		// 에서 하고 insert까지 한 다음 redirect - /recruit.
-		
+		InterestVo iVo = inteService.getInte(mVo.getMem_id());
+		if(iVo != null){
+			model.addAttribute("inteVo", iVo);
+		}
 		
 		// alarm_flag - 저장한 검색어 제거하기. - search_save를 '1'로 변경.
 		if(alarm_flag != null && alarm_flag.equals("t")){
@@ -81,9 +94,7 @@ public class RecruitController {
 			
 			search_logService.updateSearch_log(sVo);
 		}
-		
-		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");		
-		
+
 		// 채용공고 스크랩을 한 경우. scrap_flag.substring(0, 1) -> 't'
 		if( scrap_flag != null && 
 				(scrap_flag.substring(0, 1).equals("t") || scrap_flag.substring(0, 1).equals("f")) ){
@@ -402,7 +413,7 @@ public class RecruitController {
 	}
 
 	// 잡코리아 - 연봉정보 - 직무별 - IT·인터넷 - 사원 많은순 - 1 page 크롤링.
-	private void crawling_company() throws IOException {
+	private void crawling_company() throws IOException, ParseException {
 		// corp_name - 삼성전자가 있으면 insert하지 않도록 return.
 		if(corpService.getCorp("삼성전자") != null){
 			return;
@@ -464,7 +475,7 @@ public class RecruitController {
 	}
 
 	// 회사 insert
-	private void insertList() {
+	private void insertList() throws ParseException {
 		for(int i=0; i<img_list.size(); i++){
 			CorporationVo cVo = new CorporationVo();
 			cVo.setLogo_path(img_list.get(i));
@@ -507,7 +518,9 @@ public class RecruitController {
 //			memService.insert_member(mVo);
 			
 			cVo.setCorp_id(String.valueOf((corpService.getCorpCnt()+1)));
-			//cVo.setCorp_birth("94/03/03");
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
+			cVo.setCorp_birth(sdf.parse("94/03/03"));
 			cVo.setCorp_code(UUID.randomUUID().toString().substring(0, 8));
 			cVo.setTelno("01011112222");
 			cVo.setEmail("123@gmail.com");

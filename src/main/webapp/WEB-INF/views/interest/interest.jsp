@@ -167,6 +167,9 @@
 	$(document).ready(function(){
 		console.log("docu");
 		
+		// inte_size 기본값.
+		$("#inte_size").val($("#sel_1st option:selected").val() + " / " + $("#sel_2nd option:selected").val());
+		
 		// 업무분야 체크박스.
 		$('input:checkbox[name="cb_job"]').on("change", function(){
 			// 여기서 순위도 넣어야 하는데... 일단은 이렇게.
