@@ -78,27 +78,6 @@ public class Personal_connectionDaoImplTest extends LogicTestConfig{
 	
 	
 	
-	/**
-	* Method : testCorporation_count
-	* 작성자 : PC09
-	* 변경이력 :
-	* Method 설명 : 팔로우한 회사 수 조회
-	*/
-	@Test
-	public void testCorporation_count() {
-		
-		/***Given***/
-		FollowVo followVo = new FollowVo();
-		followVo.setDivision("43");
-		
-		/***When***/
-		int corporation_count = personalDao.corporation_count(followVo);
-
-		/***Then***/
-		assertNotNull(followVo);
-		//assertEquals(1, corporation_count);
-		
-	}
 	
 
 }

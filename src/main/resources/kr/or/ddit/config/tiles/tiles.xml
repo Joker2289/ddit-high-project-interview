@@ -55,4 +55,8 @@
 		<put-attribute name="content" value="/WEB-INF/views/interest/interest.jsp"/>
 	</definition>	
 	
+	<definition name="feedFollowingTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/personalConnection/feedFollowing.jsp"/>
+	</definition>	
+	
 </tiles-definitions>
