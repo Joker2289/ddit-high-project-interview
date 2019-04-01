@@ -45,6 +45,16 @@
 		 WHERE SEARCH_CODE = #{search_code}	
 	</update>
 	
+	<!-- 특정 회원이 검색하려는 값 조회. -->
+	<select id="getLSLog" parameterType="String" resultType="search_logVo">
+		SELECT *
+		  FROM SEARCH_LOG
+		 WHERE SEARCH_CODE = (SELECT MAX(SEARCH_CODE)
+		                        FROM SEARCH_LOG
+		                       WHERE USER_ID = #{mem_id})	
+	</select>
+	
+	
   	
   	
 </mapper>

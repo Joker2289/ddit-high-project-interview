@@ -19,9 +19,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
+import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
 import kr.or.ddit.save_recruit.service.ISave_recruitService;
+import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.test.WebTestConfig;
 import kr.or.ddit.users.model.UsersVo;
@@ -40,6 +43,10 @@ public class RecruitControllerTest extends WebTestConfig{
 	
 	@Resource(name="search_logService")
 	private ISearch_logService SLService;	
+	
+	@Resource(name="memberService")
+	private IMemberService memService;	
+	
 	
 	/**
 	 * 
@@ -249,6 +256,101 @@ public class RecruitControllerTest extends WebTestConfig{
 		/***Then***/
 		assertEquals("3", list.get(0));
 		assertEquals(5, list.size());
+	}
+	
+	/**
+	 * 
+	 * Method : testRecr_search
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 채용공고 검색 테스트.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testRecr_search() throws Exception {
+		/***Given***/
+		MemberVo mVo = memService.select_memberInfo("brown");
+
+		/***When***/
+		MvcResult mvcResult = mockMvc.perform(get("/recrSearch").sessionAttr("memberVO", mVo)).andReturn();
+		ModelAndView mav = mvcResult.getModelAndView();
+		String viewName = mav.getViewName();
+		
+		Search_logVo lSLog = (Search_logVo) mav.getModel().get("lSLog");
+
+		/***Then***/
+		assertEquals("recrSearchTiles", viewName);
+		assertEquals("samsung", lSLog.getSearch_word());
+	}
+	
+	/**
+	 * 
+	 * Method : testRandomArr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : String[]을 넣으면 num개를 골라서 strList를 반환해주는 메서드 테스트.
+	 */
+	@Test
+	public void testRandomArr() {
+		/***Given***/
+		// String[]을 넣으면 num개를 골라서 strList를 반환
+//		private List<String> ran_arr_arr(String[] arr_jobtype, int num) {
+		String[] arr_jobtype = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+		int num = 10;
+		
+		List<String> strList = new ArrayList<>();
+		List<Integer> numList = new ArrayList<>();
+		numList.add((int) (Math.random() * arr_jobtype.length));
+		
+		// 먼저 numList에 중복되지 않게 숫자를 num개 뽑아서 넣음.
+		// 중복이 되나?? - ㅇㅇ. continue를 쓸때 while문이 다시 반복되는게 아니고 먼저 걸려있는 for문이 
+		// 반복되기 때문에 내가 원하는 결과가 나오지 않음. flag를 추가해서 for문 밖에서 continue를 타게 만들자.
+		while(true){
+			int rnum = (int) (Math.random() * arr_jobtype.length);
+			
+			boolean skip_flag = false;
+			for(int j=0; j < numList.size(); j++){
+				if(rnum == numList.get(j)){
+					skip_flag = true;
+				}
+			}
+			
+			if(skip_flag == true){
+				continue;
+			}
+			
+			numList.add(rnum);
+			
+			if(numList.size() == num){
+				break;
+			}
+		}
+		
+		for(int i=0; i < numList.size(); i++){
+			strList.add(arr_jobtype[numList.get(i)]);
+		}
+//			return strList;
+
+		/***When***/
+		logger.debug("to string strList ? : {}", strList.toString());
+		// 중복되네.. - 수정.
+		
+		boolean duplication_flag = true;
+		boolean duplication_check = false;
+		String checkValue = strList.get(0);
+		for(int i=1; i < strList.size(); i++){
+			if(strList.get(i).equals(checkValue)){
+				duplication_check = true;
+				break;
+			}
+		}
+		
+		if(duplication_check == false){
+			duplication_flag = false;
+		}
+
+		/***Then***/
+		assertFalse(duplication_flag);
 	}
 	
 	
