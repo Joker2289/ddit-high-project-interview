@@ -24,7 +24,7 @@ import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
-import kr.or.ddit.util.kakao.kakao_restapi;
+
 
 
 @Controller
@@ -90,21 +90,16 @@ public class LoginController {
 				req.getSession().setAttribute("detailVO", uVo);
 			}
 				
-			
 			//기업 로그인
 			else if(dbMemberVo.getMem_division().equals("2")) {
 				CorporationVo cVo = corpService.select_corpInfo(dbMemberVo.getMem_id());
 				req.getSession().setAttribute("detailVO", cVo);
 			}
-			
 			//관리자 로그인
 			else {
-				
 			}
 			
-		
 			req.getSession().setAttribute("memberVO", dbMemberVo);
-			
 //			return "timeLineTiles";
 			return "redirect:/timeline";
 		}
@@ -115,23 +110,6 @@ public class LoginController {
 		}
 	}
 	
-	@RequestMapping(path="/kakaoLogin", produces = "application/json")
-    public String kakaoLogin(@RequestBody String code, Model model, HttpSession session) {
-        //카카오 홈페이지에서 받은 결과 코드
-        logger.debug("kakao 임시 코드 : " + code);
-        
-        //카카오 rest api 객체 선언
-        kakao_restapi kr = new kakao_restapi();
-        //결과값을 node에 담아줌
-        JsonNode node = kr.getAccessToken(code);
-        //결과값 출력
-        logger.debug("결과 값 출력 : " + node);
-        //노드 안에 있는 access_token값을 꺼내 문자열로 변환
-        String token = node.get("access_token").toString();
-        //세션에 담아준다.
-        session.setAttribute("token", token);
-        
-        return "redirect:/timeline";
-    }
+
 	
 }
