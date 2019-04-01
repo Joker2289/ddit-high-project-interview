@@ -25,21 +25,20 @@
 			nvl(#{corp_profile, jdbcType=VARCHAR}, null),
 			nvl(#{corp_code, jdbcType=VARCHAR}, null),
 			nvl(#{telno, jdbcType=VARCHAR}, null),
-			nvl(#{email, jdbcType=VARCHAR}, null)
+			nvl(#{email, jdbcType=VARCHAR}, null),
+			nvl(#{corp_location, jdbcType=VARCHAR}, null)
 		)
 	</insert>
 	
 	<!-- 전체회사 조회 -->
 	<select id="select_allCorps" resultType="corporationVo">
-		select corp_id, corp_name, bg_img, bg_path, corp_logo, logo_path, addr1, addr2, zipcode, 
-			   corp_birth, corp_type, industry_type, corp_url, corp_size, corp_profile, corp_code
+		select *
 		  from corporation
 	</select>
 	
 	<!-- 특정 회사 정보 조회 -->
 	<select id="select_corpInfo" parameterType="String" resultType="corporationVo">
-		select corp_id, corp_name, bg_img, bg_path, corp_logo, logo_path, addr1, addr2, zipcode, 
-			   corp_birth, corp_type, industry_type, corp_url, corp_size, corp_profile, corp_code
+		select *
 		  from corporation
 		 where corp_id = #{corp_id}
 	</select>
@@ -63,7 +62,8 @@
 		       corp_profile	 = nvl(#{corp_profile, jdbcType=VARCHAR}, corp_profile),
 		       corp_code	 = nvl(#{corp_code, jdbcType=VARCHAR}, corp_code),
 		       telno	 	 = nvl(#{telno, jdbcType=VARCHAR}, telno),
-		       email	 	 = nvl(#{email, jdbcType=VARCHAR}, email)
+		       email	 	 = nvl(#{email, jdbcType=VARCHAR}, email),
+		       corp_location = nvl(#{corp_location, jdbcType=VARCHAR}, corp_location)
 		 where corp_id = #{corp_id}  
 	</update>
 	
