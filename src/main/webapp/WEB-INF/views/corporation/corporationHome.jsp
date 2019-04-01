@@ -2,16 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>회사 페이지</title>
+<!-- <!DOCTYPE html> -->
+<!-- <html> -->
+<!-- <head> -->
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+<!-- <title>회사 페이지</title> -->
 
 
 
-</head>
-<body>
+<!-- </head> -->
+<!-- <body> -->
 	<br>
 	<%@ include file="/WEB-INF/views/corporation/module/top.jsp"%>
 	<br>
@@ -24,10 +24,18 @@
 	-------------
 	<br>
 	
-	request.setCharacterEncoding("utf-8");
-	out.println("에디터 결과"); 
-	out.println(request.getParameter("smarteditor"));
+<%    
+    //제대로 utf-8환경이 아니라 한글 깨짐 그래서 임의로 추가                                                   
+    request.setCharacterEncoding("utf-8");
+    
+    String content = request.getParameter("smarteditor");
+    
+    //콘솔 출력
+    System.out.println("내용:"+content);    
+%>
 
+내용 : <br>
+<%=content %>
 
 
 	<br>
@@ -50,5 +58,7 @@
 	            </div>
 	          </c:forEach>
 	          
-</body>
-</html>
+<!-- </body> -->
+<!-- </html> -->
+
+

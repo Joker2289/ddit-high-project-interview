@@ -1,5 +1,7 @@
 package kr.or.ddit.corporation.model;
 
+import java.util.Date;
+
 public class CorporationVo {
 	
 	private String corp_code;		// 회사코드
@@ -12,7 +14,7 @@ public class CorporationVo {
 	private String addr1;			// 주소
 	private String addr2;			// 상세주소
 	private String zipcode;			// 우편번호
-	private String corp_birth;		// 창립일
+	private Date   corp_birth;		// 창립일
 	private String corp_type;		// 회사유형
 	private String industry_type;	// 업계
 	private String corp_url;		// 회사URL
@@ -23,6 +25,14 @@ public class CorporationVo {
 	
 	public CorporationVo() {
 		
+	}
+
+	public String getCorp_code() {
+		return corp_code;
+	}
+
+	public void setCorp_code(String corp_code) {
+		this.corp_code = corp_code;
 	}
 
 	public String getCorp_id() {
@@ -97,11 +107,11 @@ public class CorporationVo {
 		this.zipcode = zipcode;
 	}
 
-	public String getCorp_birth() {
+	public Date getCorp_birth() {
 		return corp_birth;
 	}
 
-	public void setCorp_birth(String corp_birth) {
+	public void setCorp_birth(Date corp_birth) {
 		this.corp_birth = corp_birth;
 	}
 
@@ -145,14 +155,6 @@ public class CorporationVo {
 		this.corp_profile = corp_profile;
 	}
 
-	public String getCorp_code() {
-		return corp_code;
-	}
-
-	public void setCorp_code(String corp_code) {
-		this.corp_code = corp_code;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -178,5 +180,7 @@ public class CorporationVo {
 				+ corp_url + ", corp_size=" + corp_size + ", corp_profile=" + corp_profile + ", email=" + email
 				+ ", telno=" + telno + "]";
 	}
+
+
 
 }

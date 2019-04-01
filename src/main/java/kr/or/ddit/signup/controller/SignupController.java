@@ -3,6 +3,8 @@ package kr.or.ddit.signup.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -26,8 +28,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.career_info.service.ICareer_infoService;
+import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.education_info.service.IEducation_infoService;
@@ -37,6 +41,9 @@ import kr.or.ddit.signup.model.SignupUserVo;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
+import kr.or.ddit.util.model.Job_positionVo;
+import kr.or.ddit.util.service.IJob_positionService;
+import kr.or.ddit.util.kakao.kakao_restapi;
 
 @RequestMapping("/signUp")
 @Controller
@@ -59,72 +66,166 @@ public class SignupController {
 	@Resource(name="education_infoService")
 	private IEducation_infoService educationService;
 	
-	private String SecurityCode;
-	private String id;
+	@Resource(name="job_positionService")
+	private IJob_positionService job_positionService;
 	
-	@RequestMapping(path="/cancel")
-	@ResponseBody
+	private String SecurityCode;	//인증코드 저장
+	private String id;				//id 저장
+	private String division;		//구분 저장
+	
+	
+	@RequestMapping("/cancel")
 	public String cancel() {
 		memService.delete_member(id);
 		return "login/login";
 	}
 	
-	@RequestMapping("/go")
-	public String step() {
-		return "login/step1";
+	@RequestMapping("/goStep1")
+	public String goStep1(String division) {
+		
+		if(division.equals("1")){
+			return "login/step3";
+		}
+		
+		return "login/step1_corp";
 	}
 	
+	//기업 검색(자동완성)
+	@RequestMapping(path="/searchCorp")
+	@ResponseBody
+	public List<CorporationVo> searchCorp(String keyword) throws UnsupportedEncodingException {
+		
+		logger.debug("keyword : {}", keyword);
+		
+		List<CorporationVo> corpList = corpService.searchCorp(keyword);
+		
+		logger.debug("corpList : {}", corpList);
+		
+		return corpList;
+	}
 	
-	@RequestMapping("/step1")
-	public String step1(@RequestBody SignupUserVo vo, Model model) {
-
-		logger.debug("step1 : {}", vo); 
+	//직군 검색(자동완성)
+	@RequestMapping(path="/searchPosition")
+	@ResponseBody
+	public List<Job_positionVo> searchPosition(String keyword) throws UnsupportedEncodingException {
+		
+		logger.debug("keyword : {}", keyword);
+		
+		List<Job_positionVo> positionList = job_positionService.searchPosition(keyword);
+		
+		logger.debug("positionList : {}", positionList);
+		
+		return positionList;
+	}
+	
+	//이메일 인증
+	@RequestMapping(path="/error_email")
+	@ResponseBody
+	public String error_email(@RequestBody SignupUserVo vo) {
 		
 		String success = sendEmail(vo.getEmail());
+		
+		logger.debug("mail 인증 : {}", success);
+		logger.debug("mail vo : {}", vo);
 		
 		if(success.equals("error")) {
 			return "error";
 		}
+		
+		SecurityCode = success;
+		
+		return "success";
+	}
+	
+	//ID 중복체크
+	@RequestMapping(path="/idCheck")
+	@ResponseBody
+	public String idCheck(String id) {
+		
+		MemberVo memVo = memService.select_memberInfo(id);
+		
+		if(memVo != null) {
+			return "error";
+		}
+		
+		return "success";
+	}
+	
+	//Step2
+	@RequestMapping("/goStep2")
+	public String goStep2(@RequestBody SignupUserVo vo, Model model) {
+
+		
+		logger.debug("ste1.vo : {}", vo);
+		
 		
 		//member 등록 후 -> users / corp 등록
 		MemberVo mVo = new MemberVo();
 		mVo.setMem_id(vo.getId());
 		mVo.setMem_division(vo.getDivision());
 		mVo.setPass(KISA_SHA256.encrypt(vo.getPass()));
+		
 		int insertCnt = memService.insert_member(mVo);
 		
+		id = vo.getId();
 		
+		division = vo.getDivision();
 		
-		if(insertCnt == 1) {
-			UsersVo uVo = new UsersVo();
-			uVo.setUser_id(vo.getId());
-			uVo.setEmail(vo.getEmail());
-			uVo.setUser_name(vo.getName());
-			userService.insert_users(uVo);
+		if(vo.getDivision().equals("1")) {
+			
+			if(insertCnt == 1) {
+				UsersVo uVo = new UsersVo();
+				uVo.setUser_id(vo.getId());
+				uVo.setEmail(vo.getEmail());
+				uVo.setUser_name(vo.getName());
+				userService.insert_users(uVo);
+			}
+			
 		}
 		
-		id = vo.getId();
-		SecurityCode = success;
+		if(vo.getDivision().equals("2")) {
+			
+			if(insertCnt == 1) {
+				CorporationVo cVo = new CorporationVo();
+				cVo.setCorp_id(vo.getId());
+				cVo.setEmail(vo.getEmail());
+				cVo.setCorp_name(vo.getName());
+				corpService.insert_corp(cVo);
+			}
+			
+		}
 		
 		return "login/step2";
 	}
 	
-	
-	@RequestMapping("/step2")
-	public String step2(@RequestBody SignupUserVo vo, HttpServletRequest req) {
-		logger.debug("SecurityCode :{}", SecurityCode);
-		logger.debug("SecurityCode2 :{}", vo.getSecurityCode());
+	//인증코드 에러 검사
+	@RequestMapping("/error_code")
+	@ResponseBody
+	public String error_code(@RequestBody SignupUserVo vo) {
+		
+		logger.debug("error_code : {}", vo.getSecurityCode());
 		
 		if(!SecurityCode.equals(vo.getSecurityCode())) {
 			return "error";
 		}
+		return "success";
+	}
+	
+	@RequestMapping("/goStep3")
+	public String goStep3() {
 		
-		return "login/step3";
+		logger.debug("dividion: {}", division);
+		
+		if(division.equals("1")) {
+			return "login/step3";
+		}
+		
+		return "login/step3_corp";
 	}
 	
 	
-	@RequestMapping("/step3")
-	public String step3(@RequestBody SignupUserVo vo, HttpServletRequest req) {
+	@RequestMapping("/goStep5From3")
+	public String goStep5From3(@RequestBody SignupUserVo vo, HttpServletRequest req) {
 		
 		logger.debug("step3 : {}", vo);
 		
@@ -133,14 +234,18 @@ public class SignupController {
 		career_infoVo.setJob_position(vo.getJob_position());		//직군
 		career_infoVo.setJob_rank(vo.getJob_rank());				//직급
 		career_infoVo.setCorporate_name(vo.getCorporate_name());	//회사이름
+		career_infoVo.setJoin_date(vo.getJoin_date());
+		career_infoVo.setResign_date(vo.getResign_date());
 		
 		careerService.insert_career_info(career_infoVo);
 		
-		return "login/step4";
+		logger.debug("step4 : {}", vo);
+		
+		return "login/step5";
 	}
 	
-	@RequestMapping("/step4")
-	public String step4(@RequestBody SignupUserVo vo, HttpServletRequest req) {
+	@RequestMapping("/goStep5From4")
+	public String goStep5From4(@RequestBody SignupUserVo vo, HttpServletRequest req) {
 		
 		logger.debug("step4 : {}", vo);
 		
@@ -149,49 +254,96 @@ public class SignupController {
 		eVo.setSchool_name(vo.getSchool_name());
 		eVo.setDegree_name(vo.getDegree_name());
 		eVo.setMajor(vo.getMajor());
-		//eVo.setAdmission(vo.getAdmission());
-		//eVo.setGraduation(vo.getGraduation());
+		eVo.setAdmission(vo.getAdmission());
+		eVo.setGraduation(vo.getGraduation());
 		eVo.setGrade(vo.getGrade());
 		
 		educationService.insert_education_info(eVo);
+		
+		return "login/step5";
+	}
 	
+	@RequestMapping("/returnStep4")
+	public String returnStep4() {
+		return "login/step4";
+	}
+	
+	@RequestMapping("/returnStep3")
+	public String returnStep3() {
+		return "login/step3";
+	}
+	
+	@RequestMapping("/goStep4_corp")
+	public String goStep4_corp(@RequestBody SignupUserVo vo) {
+		
+		CorporationVo cVo = new CorporationVo();
+		cVo.setCorp_id(id);
+		cVo.setCorp_type(vo.getCorp_type());
+		cVo.setIndustry_type(vo.getIndustry_type());
+		cVo.setCorp_size(vo.getCorp_size());
+		cVo.setCorp_birth(vo.getCorp_birth());
+		
+		corpService.update_corpInfo(cVo);
+		
+		return "login/step4_corp";
+	}
+	
+	@RequestMapping("/goStep5_corp")
+	public String goStep5_corp(@RequestBody SignupUserVo vo) {
+		
+		CorporationVo cVo = new CorporationVo();
+		cVo.setCorp_id(id);
+		cVo.setTelno(vo.getTelno());
+		cVo.setZipcode(vo.getZipcode());
+		cVo.setAddr1(vo.getAddr1());
+		cVo.setAddr2(vo.getAddr2());
+		
+		corpService.update_corpInfo(cVo);
 		
 		return "login/step5";
 	}
 	
 	
-	
-	@RequestMapping(path="/step5", consumes ={"multipart/form-data"})
-	public String step5(@RequestParam(value = "profile") MultipartFile profile, HttpServletRequest req) throws IllegalStateException, IOException {
+	@RequestMapping(path="/finalStep", consumes ={"multipart/form-data"})
+	@ResponseBody
+	public String finalStep(@RequestParam(value = "profile") MultipartFile profile, HttpServletRequest req) throws IllegalStateException, IOException {
 		
 		logger.debug("step5 : {}", profile);
+		
+		String realFileName = "";
 		
 		//사용자 사진을 업로드 한경우
 		if(profile.getSize() > 0) {
 			String fileName = profile.getOriginalFilename();
-			String realFileName =  "/Users/pjk/Documents/picture/" + UUID.randomUUID().toString();
 			
-			profile.transferTo(new File(realFileName));
-			UsersVo uVo = new UsersVo();
-			uVo.setUser_id(id);
-			uVo.setProfile_img(fileName);
-			uVo.setProfile_path(realFileName);
+			//유저 프로필 등록
+			if(division.equals("1")) {
+				realFileName =  req.getServletContext().getRealPath("/images/profile/" + UUID.randomUUID().toString());
+				
+				profile.transferTo(new File(realFileName));
+				UsersVo uVo = new UsersVo();
+				uVo.setUser_id(id);
+				uVo.setProfile_img(fileName);
+				uVo.setProfile_path(realFileName);
+				
+				userService.update_userInfo(uVo);
+			}
 			
-			userService.update_userInfo(uVo);
+			//기업 프로필 등록
+			else {
+				realFileName =  req.getServletContext().getRealPath("/images/logo/" + UUID.randomUUID().toString());
+				profile.transferTo(new File(realFileName));
+				CorporationVo cVo = new CorporationVo();
+				cVo.setCorp_id(id);
+				cVo.setCorp_logo(fileName);
+				cVo.setLogo_path(realFileName);
+				
+				corpService.update_corpInfo(cVo);
+			}
+			
 		}
-		
-		return "login/login";
+		return realFileName;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * 
@@ -246,25 +398,7 @@ public class SignupController {
 			return "error";
 		}
 		
-		
 		return SecurityCode[0];
 	}
-	
-	@RequestMapping("/test111")
-	public String test111() {
-		
-		return "login/test111";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

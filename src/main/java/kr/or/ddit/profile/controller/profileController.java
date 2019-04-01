@@ -43,9 +43,15 @@ public class profileController {
 		}
 		else {
 			
-			return "/layout/profileDropdown";
+			return "/layout/myDropdown";
 		}
 		
+	}
+	
+	@RequestMapping("/profileDropdown")
+	public String profileDropdownView() {
+		
+		return "/profile/profileDropdown";
 	}
 	
 	@RequestMapping(path= {"/profileHome"})

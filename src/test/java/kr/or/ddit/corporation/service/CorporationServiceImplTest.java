@@ -2,6 +2,8 @@ package kr.or.ddit.corporation.service;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -70,7 +72,6 @@ public class CorporationServiceImplTest extends LogicTestConfig{
 		CorporationVo cVo = new CorporationVo();
 		cVo.setCorp_id("samsung");
 		cVo.setCorp_name("삼성전자");
-		cVo.setCorp_birth("94/03/03");
 		cVo.setCorp_code(UUID.randomUUID().toString().substring(0, 8));
 		cVo.setTelno("01011112222");
 		cVo.setEmail("123@gmail.com");

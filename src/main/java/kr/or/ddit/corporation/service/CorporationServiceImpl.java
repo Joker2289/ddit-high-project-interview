@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.corporation.dao.ICorporationDao;
@@ -96,6 +98,35 @@ public class CorporationServiceImpl implements ICorporationService{
 		int corpCnt = corporationDao.getCorpCnt();
 		
 		return corpCnt;
+	}
+	
+	/**
+	 * 
+	 * Method : searchCorp
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param keyword
+	 * @return
+	 * Method 설명 : 회사 검색
+	 */
+	@Override
+	public List<CorporationVo> searchCorp(String corp_name) {
+		List<CorporationVo> corpList = corporationDao.searchCorp(corp_name);
+		return corpList;
+	}
+	
+	/**
+	 * 
+	 * Method : update_corpInfo
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 기업 정보 수정
+	 */
+	@Override
+	public int update_corpInfo(CorporationVo vo) {
+		return corporationDao.update_corpInfo(vo);
 	}
 
 }
