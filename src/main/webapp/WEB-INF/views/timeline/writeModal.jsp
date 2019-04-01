@@ -8,7 +8,7 @@
       	<div class="modal-content">
 		  <form id="frm_writePost" action="/writepost_timeline" method="post" >
       	    <div class="modal-head">
-      	    	<input type="hidden" name="mem_id" value="${sessionScope.detileVO. }">
+     	    	
       	    </div>
             
       	    <div class="modal-body">
