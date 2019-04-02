@@ -57,7 +57,7 @@ public class PostController {
 	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request){
 		// 작업 완류 후 loginController로 이동시켜야 함
 		
-		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("memberVO");
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		logger.debug("memberInfoGo : {}", memberInfo);
 		FollowVo followInfo = new FollowVo();
