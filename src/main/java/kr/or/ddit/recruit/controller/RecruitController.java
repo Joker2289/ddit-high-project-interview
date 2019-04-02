@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
@@ -75,7 +76,7 @@ public class RecruitController {
 	public String recruit(HttpSession session, String alarm_flag, String search_code, HttpServletRequest req, 
 			Model model) throws IOException{
 		// 유저정보 수정. 'SESSION_MEMBERVO'
-		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");		
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");		
 		
 		// 사용자 정보 없으면 로그인창으로 이동. -> 수정. 필터?
 		
@@ -93,90 +94,91 @@ public class RecruitController {
 		
 		// '관심분야'를 통해 'rRList2' 만들기. -_-! 우선 받은 값을 확인해보자. 확인 InterestController
 		// 에서 하고 insert까지 한 다음 redirect - /recruit.
+		List<RecruitVo> rRList2 = new ArrayList<>();
+		
 		InterestVo iVo = inteService.getInte(mVo.getMem_id());
 		if(iVo != null){
 			model.addAttribute("inteVo", iVo);
-		}
 		
-		String inte_type = iVo.getInte_type();
-		String inte_local = iVo.getInte_local();
-		String inte_emptype = iVo.getInte_emptype();
-		String inte_size = iVo.getInte_size();
-		List<RecruitVo> rRList2 = new ArrayList<>();
-		List<RecruitVo> tempList = new ArrayList<>();
-		
-		// 처음에 지역으로 추천리스트를 채웠네. rRList2는 우선 설정한 조건에 맞는 채용공고들을 출력
-		// 해주도록 하자. 조건 우선순위는 local > type > emptype > size
-		// 우선 local, type만 맞춰서 리스트를 만들어보자. 
-		
-		// local이 '전국'인지 확인
-		if(inte_local.equals("전국")){
-			rRList2 = recrService.getAllRecr();
-		}else{
-			String inte_local1 = inte_local.split(" / ")[0];
-			String inte_local2 = inte_local.split(" / ")[1];
-			String inte_local3 = inte_local.split(" / ")[2];
-			rRList2.addAll(recrService.getRecrByLocal(inte_local1));
-			rRList2.addAll(recrService.getRecrByLocal(inte_local2));
-			rRList2.addAll(recrService.getRecrByLocal(inte_local3));
-		}
-		
-		// 업무분야의 1순위가 (inte_local1) 포함되어있지 않은 채용공고는 제외. -> remove - size 변경으로 인한
-		// 오류 발생. inte_local1가 포함된 채용공고를 tempList에 추가하도록 수정. 
-		for(int i=0; i < rRList2.size(); i++){
-			// 채용공고 등록에서 업무분야 입력할 때 '가장 유사한 업무분야를 순서대로 3가지 선택해주세요'
-			String inte_type1 = inte_type.split(" / ")[0];
+			String inte_type = iVo.getInte_type();
+			String inte_local = iVo.getInte_local();
+			String inte_emptype = iVo.getInte_emptype();
+			String inte_size = iVo.getInte_size();
+			List<RecruitVo> tempList = new ArrayList<>();
 			
-			String job_type = rRList2.get(i).getJob_type();
-			String job_type1 = job_type.split(" / ")[0];
-			String job_type2 = job_type.split(" / ")[1];
-			String job_type3 = job_type.split(" / ")[2];
+			// 처음에 지역으로 추천리스트를 채웠네. rRList2는 우선 설정한 조건에 맞는 채용공고들을 출력
+			// 해주도록 하자. 조건 우선순위는 local > type > emptype > size
+			// 우선 local, type만 맞춰서 리스트를 만들어보자. 
 			
-			if(job_type1.equals(inte_type1) || job_type2.equals(inte_type1) || job_type3.equals(inte_type1)){
-				tempList.add(rRList2.get(i));
+			// local이 '전국'인지 확인
+			if(inte_local.equals("전국")){
+				rRList2 = recrService.getAllRecr();
+			}else{
+				String inte_local1 = inte_local.split(" / ")[0];
+				String inte_local2 = inte_local.split(" / ")[1];
+				String inte_local3 = inte_local.split(" / ")[2];
+				rRList2.addAll(recrService.getRecrByLocal(inte_local1));
+				rRList2.addAll(recrService.getRecrByLocal(inte_local2));
+				rRList2.addAll(recrService.getRecrByLocal(inte_local3));
 			}
-		}
-		
-		rRList2 = tempList;
-		
-		List<String> corpImgList2 = new ArrayList<>();
-		List<String> corpNmList2 = new ArrayList<>();
-		
-		// 스크랩 데이터는 srecr에 있으니까 저장여부 리스트 scrapList 만들기. size는 rRList2에서 
-		// 가져오고 uSRList에서 save_flag가 't'인게 있으면 t. 없으면 f.
-		List<String> scrapList2 = new ArrayList<>();
-		List<Save_recruitVo> uSRList2 = srecrService.getUserSrecrList(mVo.getMem_id());
-
-		for(int i=0; i < rRList2.size(); i++){
-			RecruitVo rVo = rRList2.get(i);
-			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
-			corpImgList2.add(cVo.getLogo_path());
-			corpNmList2.add(cVo.getCorp_name());
 			
-			boolean scrapCheck_flag = false;
-			for(Save_recruitVo scrapCheckSVo : uSRList2){
-				if(scrapCheckSVo.getRecruit_code().equals(rVo.getRecruit_code()) 
-						&& scrapCheckSVo.getSave_flag().equals("t")){
-					scrapCheck_flag = true;
-					scrapList2.add("t");
-					break;
+			// 업무분야의 1순위가 (inte_local1) 포함되어있지 않은 채용공고는 제외. -> remove - size 변경으로 인한
+			// 오류 발생. inte_local1가 포함된 채용공고를 tempList에 추가하도록 수정. 
+			for(int i=0; i < rRList2.size(); i++){
+				// 채용공고 등록에서 업무분야 입력할 때 '가장 유사한 업무분야를 순서대로 3가지 선택해주세요'
+				String inte_type1 = inte_type.split(" / ")[0];
+				
+				String job_type = rRList2.get(i).getJob_type();
+				String job_type1 = job_type.split(" / ")[0];
+				String job_type2 = job_type.split(" / ")[1];
+				String job_type3 = job_type.split(" / ")[2];
+				
+				if(job_type1.equals(inte_type1) || job_type2.equals(inte_type1) || job_type3.equals(inte_type1)){
+					tempList.add(rRList2.get(i));
 				}
 			}
 			
-			if(scrapCheck_flag == false){
-				scrapList2.add("f");
+			rRList2 = tempList;
+			
+			List<String> corpImgList2 = new ArrayList<>();
+			List<String> corpNmList2 = new ArrayList<>();
+			
+			// 스크랩 데이터는 srecr에 있으니까 저장여부 리스트 scrapList 만들기. size는 rRList2에서 
+			// 가져오고 uSRList에서 save_flag가 't'인게 있으면 t. 없으면 f.
+			List<String> scrapList2 = new ArrayList<>();
+			List<Save_recruitVo> uSRList2 = srecrService.getUserSrecrList(mVo.getMem_id());
+	
+			for(int i=0; i < rRList2.size(); i++){
+				RecruitVo rVo = rRList2.get(i);
+				CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+				corpImgList2.add(cVo.getLogo_path());
+				corpNmList2.add(cVo.getCorp_name());
+				
+				boolean scrapCheck_flag = false;
+				for(Save_recruitVo scrapCheckSVo : uSRList2){
+					if(scrapCheckSVo.getRecruit_code().equals(rVo.getRecruit_code()) 
+							&& scrapCheckSVo.getSave_flag().equals("t")){
+						scrapCheck_flag = true;
+						scrapList2.add("t");
+						break;
+					}
+				}
+				
+				if(scrapCheck_flag == false){
+					scrapList2.add("f");
+				}
 			}
+			
+			model.addAttribute("corpImgList2", corpImgList2);		
+			model.addAttribute("corpNmList2", corpNmList2);			
+			model.addAttribute("scrapList2", scrapList2);		
+			
+			
+			// rRList2.size()가 rRList2Size가 될때까지 마지막 항목 지움.
+			while(rRList2.size() > rRList2Size){
+				rRList2.remove(rRList2.size()-1);
+			}		
 		}
-		
-		model.addAttribute("corpImgList2", corpImgList2);		
-		model.addAttribute("corpNmList2", corpNmList2);			
-		model.addAttribute("scrapList2", scrapList2);		
-		
-		
-		// rRList2.size()가 rRList2Size가 될때까지 마지막 항목 지움.
-		while(rRList2.size() > rRList2Size){
-			rRList2.remove(rRList2.size()-1);
-		}		
 		
 		model.addAttribute("rRList2", rRList2);
 		
@@ -606,18 +608,34 @@ public class RecruitController {
 	// @검색결과 저장 후 채용공고 검색 페이지 요청. -> 검색내역 저장은 Search_logController로 이동.
 	@RequestMapping("/recrSearch")
 	public String recrSearch(HttpSession session, Model model){
-		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		// 회원이 검색한 값 가져오기. (getLSLog - get last search_log)
 		Search_logVo lSLog = sLogService.getLSLog(mVo.getMem_id());
 		
 		model.addAttribute("lSLog", lSLog);
 		
+		// 채용공고 리스트 넘기기. <- corpImgList / corpNmList도 추가해야됨.
+		List<RecruitVo> recrList = recrService.getAllRecr();
+		List<String> corpImgList = new ArrayList<>();
+		List<String> corpNmList = new ArrayList<>();
+		
+		for(int i=0; i < recrList.size(); i++){
+			RecruitVo rVo = recrList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			corpImgList.add(cVo.getLogo_path());
+			corpNmList.add(cVo.getCorp_name());
+		}
+		
+		model.addAttribute("recrList", recrList);
+		model.addAttribute("corpImgList", corpImgList);
+		model.addAttribute("corpNmList", corpNmList);
+		
 		return "recrSearchTiles";
 	}	
 	
 	// @채용공고 상세화면.
-	@RequestMapping("/recr_detail")
+	@RequestMapping(path="/recr_detail", method=RequestMethod.POST)
 	public String recr_detail(String recruit_code, HttpSession session, Model model){
 		// 회원 정보를 가져와서 채용공고저장에 마지막으로 조회한 채용공고 저장. 마지막 채용공고를 따로 
 		// 설정하지는 않고 회원의 채용공고저장 리스트에서 save_code가 가장 큰 데이터를 확인하자.
@@ -626,7 +644,27 @@ public class RecruitController {
 		sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));
 		sVo.setSave_flag("f");
 		
-		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		sVo.setUser_id(mVo.getMem_id());
+		srecrService.insertSrecr(sVo);
+		
+		RecruitVo recr = recrService.getRecr(recruit_code);
+		CorporationVo corp = corpService.select_corpInfo(recr.getCorp_id());
+		model.addAttribute("recr", recr);
+		model.addAttribute("corp", corp);
+		
+		return "recr_detailTiles";
+	}
+	
+	// @채용공고 상세화면 method - get
+	@RequestMapping(path="/recr_detail", method=RequestMethod.GET)
+	public String recr_detail(String recruit_code, String otherParam, HttpSession session, Model model) {
+		Save_recruitVo sVo = new Save_recruitVo();
+		sVo.setRecruit_code(recruit_code);
+		sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));
+		sVo.setSave_flag("f");
+		
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		sVo.setUser_id(mVo.getMem_id());
 		srecrService.insertSrecr(sVo);
 		

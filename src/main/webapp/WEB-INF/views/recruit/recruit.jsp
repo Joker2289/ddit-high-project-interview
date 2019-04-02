@@ -75,7 +75,7 @@
 		<input type="hidden" id="search_local" name="search_local">
 	
 		<div class="div_ch" style="border: 1px solid; padding: 10px;">
-			<h3 style="">꿈꾸시던 직장 - 검색하면 바로 뜹니다. (mem_id : ${memberVO.mem_id })</h3><br>
+			<h3 style="">꿈꾸시던 직장 - 검색하면 바로 뜹니다. (mem_id : ${SESSION_MEMBERVO.mem_id })</h3><br>
 			<span style="margin-left: 30px;">
 				<i class="fas fa-search"></i>
 				<input id="txt_name" type="text" style="width: 400px; height: 30px; border: 0px;" placeholder="채용공고 검색">

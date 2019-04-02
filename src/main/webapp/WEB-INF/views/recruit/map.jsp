@@ -85,6 +85,36 @@
 	
 	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 	
+	// 마커 생성.
+	<c:forEach begin="1" end="${corpList.size() }" varStatus="i">
+		var data = "${corpList.get(i.index - 1).corp_location }";
+		var data1 = data.split("/")[0];
+		var data2 = data.split("/")[1];
+		
+		// 마커가 표시될 위치입니다 
+		var markerPosition  = new daum.maps.LatLng(data1, data2); 
+
+		// 마커를 생성합니다
+		var marker = new daum.maps.Marker({
+		    position: markerPosition
+		});
+
+		// 마커가 지도 위에 표시되도록 설정합니다
+		marker.setMap(map);		
+		
+		var iwContent = '<div style="padding:5px;">${corpList.get(i.index - 1).corp_name } </div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+	    iwPosition = new daum.maps.LatLng(data1, data2); //인포윈도우 표시 위치입니다
+
+		// 인포윈도우를 생성합니다
+		var infowindow = new daum.maps.InfoWindow({
+		    position : iwPosition, 
+		    content : iwContent 
+		});
+		  
+		// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+		infowindow.open(map, marker); 			
+	</c:forEach>	
+	
 	var drawingFlag = false; // 원이 그려지고 있는 상태를 가지고 있을 변수입니다
 	var centerPosition; // 원의 중심좌표 입니다
 	var drawingCircle; // 그려지고 있는 원을 표시할 원 객체입니다
@@ -373,6 +403,18 @@
 	
 			// 마커가 지도 위에 표시되도록 설정합니다
 			marker.setMap(map);		
+			
+			var iwContent = '<div style="padding:5px;">${corpList.get(i.index - 1).corp_name } </div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		    iwPosition = new daum.maps.LatLng(data1, data2); //인포윈도우 표시 위치입니다
+
+			// 인포윈도우를 생성합니다
+			var infowindow = new daum.maps.InfoWindow({
+			    position : iwPosition, 
+			    content : iwContent 
+			});
+			  
+			// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+			infowindow.open(map, marker); 			
 		</c:forEach>
 	});	
 	

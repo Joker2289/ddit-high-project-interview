@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>채용공고｜InterView</title>
+	<title>채용공고｜InterView11</title>
 	<style type="text/css">
 		
 		
@@ -16,11 +16,59 @@
 <div class="container">
 <div class="row">
 <div style="margin-top: 101px;">
+	<!-- 필터. -->
+	<table border="1">
+		<tr>
+			<td>
+				항목 수 xxx (여기는 저장한 채용공고 보여주는 페이지임.)
+			</td>
+			<td>
+				<select>
+					<option>올린날</option>
+				</select>
+			</td>
+			<td>
+				<select>
+					<option>기능</option>
+				</select>
+			</td>
+			<td>
+				<select>
+					<option>회사</option>
+				</select>
+			</td>
+			<td>
+				<select>
+					<option>경력수준</option>
+				</select>
+			</td>
+			<td><a href="">전체필터</a></td>
+		</tr>
+	</table>
+
 
 	<!-- 레이아웃 잡는건 나중에.. -->
-	<h3>채용공고저장 페이지임니다.</h3>
+	<h3>채용공고저장 페이지임니다. (mem_id : ${SESSION_MEMBERVO.mem_id })</h3>
 	
-	<br>
+	<table border="1">
+		<tr>
+			<td>채용공고 검색 쪽부터 먼저 만들자.</td>
+			<td>저장한 검색어</td>
+		</tr>
+		<tr>
+			<td>채용공고2</td>
+		</tr>
+		<tr>
+			<td>채용공고3</td>
+		</tr>
+		<tr>
+			<td>채용공고4</td>
+		</tr>
+	</table>
+	
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	<a href="${pageContext.request.contextPath }/recruit">채용공고 페이지로 이동 -></a>	
 </div>		
 </div>		
