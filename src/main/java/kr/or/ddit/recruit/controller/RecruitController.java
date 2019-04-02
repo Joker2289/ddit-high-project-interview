@@ -74,17 +74,22 @@ public class RecruitController {
 	@RequestMapping("/recruit")
 	public String recruit(HttpSession session, String alarm_flag, String search_code, HttpServletRequest req, 
 			Model model) throws IOException{
+		// 유저정보 수정. 'SESSION_MEMBERVO'
 		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");		
-		// 사용자 정보 없으면 로그인창으로 이동.
-		if(mVo == null){
-			return "redirect:" + req.getContextPath() + "/login";
-		}
+		
+		// 사용자 정보 없으면 로그인창으로 이동. -> 수정. 필터?
 		
 		// 크롤링해서 값 넣기 어떻게 했더라. 삼성전자 데이터 있으면 리턴. 일단 비활성화.
 //		crawling_company();
 		
 		// 채용공고 등록해보자.
 //		insert_recr();
+		
+		// 회사회원 데이터에 주소 넣기. (주소 -> 좌표)
+//		update_corp_addr();
+		
+		// 회사 좌표 업데이트.
+//		update_corp_location();
 		
 		// '관심분야'를 통해 'rRList2' 만들기. -_-! 우선 받은 값을 확인해보자. 확인 InterestController
 		// 에서 하고 insert까지 한 다음 redirect - /recruit.
@@ -348,6 +353,36 @@ public class RecruitController {
 		return "recruitTiles";
 	}	
 	
+	// 회사 좌표 업데이트.
+	private void update_corp_location() {
+		String data = "4/36.33503205924424/127.39677886497321//5/36.327950661050465/127.42659051361443//6/36.35141693706307/127.3401790981222//8/36.36067544342291/127.34464046741947//7/36.35455478978288/127.33955994392711//10/36.354222353058155/127.44422053795066//9/36.425479947931365/127.39263989076437//13/36.29857090530391/127.33793218829507//11/36.358465496689334/127.4232496366498//15/36.44864430849931/127.4199108121918//12/36.30370852264028/127.34892329869682//17/36.352958482623535/127.3777969073076//14/36.31717489752688/127.45338195339158//16/36.3502458465932/127.37725797696643//19/37.570744325762846/126.98360914667553//18/36.35427578252461/127.3772952471586//21/37.57126926703499/126.97630554223102//20/37.52525923818516/127.04183916231236//holly/37.522827164111504/127.04001424430611//22/37.56462407218648/126.97922335034117//kim/35.115364308266564/128.9595348158848//23/37.50449284378187/127.00784436615872//27/37.55720941721661/126.92361977091058//samsung/37.5265427209826/127.04053210013338//26/37.50653640461993/127.12048711570657//28/37.50944139825955/127.1052363434873//31/37.52201436464297/126.85883630726723//30/37.534802342638976/127.01093858339178//25/35.154275771307425/129.06359316332686//24/35.207169937902535/129.07204589207316";
+		String[] arr_data = data.split("//");
+		for(int i=0; i < arr_data.length; i++){
+			String corp_id = arr_data[i].split("/")[0];
+			CorporationVo cVo = corpService.select_corpInfo(corp_id);
+			String location_value = arr_data[i].split("/")[1].substring(0, 8).concat("/" + arr_data[i].split("/")[2].substring(0, 9));
+//			logger.debug("location_value ?? : {}", location_value);
+			cVo.setCorp_location(location_value);
+			corpService.update_corpInfo(cVo);
+		}
+	}
+
+	// 회사회원 데이터에 주소 넣기.
+	private void update_corp_addr() {
+		String data = "대전 중구 대종로 486/대전 서구 계룡로 692 1층, 2층/대전 유성구 도안대로 573/대전 유성구 온천서로 2/대전 유성구 대학로 82/대전 유성구 테크노중앙로 68/대전 대덕구 동서대로 1776/대전 대덕구 한밭대로 1122/대전 서구 계백로 1128/대전 서구 관저로 142/대전 동구 옥천로 118/대전 대덕구 석봉동 309-10/대전 서구 대덕대로 189 1층/대전 서구 둔산로31번길 28 금정빌딩 1층/대전 서구 대덕대로241번길 35/서울 종로구 종로 51/서울 강남구 도산대로57길 24/서울 종로구 세종대로 167 현대해상본사사옥 별관내/서울 중구 소공로 112 반도조선아케이드/서울 서초구 사평대로 205 센트럴시티 파미에파크돔/서울 강남구 강남대로 390/서울 강남구 선릉로 836 삼원빌딩 1~2층/서울 강서구 등촌로 57/서울 송파구 오금로 241/서울 마포구 양화로 165 상진빌딩 1층/서울 송파구 석촌호수로 262 지상 1, 2층/서울 영등포구 신길로 137 1,2층/서울 용산구 독서당로 94/서울 양천구 신월로 341";
+		String[] arr_data = data.split("/");		
+		
+		List<CorporationVo> corpList = corpService.select_allCorps();
+		for(int i=0; i < corpList.size(); i++){
+			CorporationVo cVo = corpList.get(i);
+			
+			if(cVo.getAddr1() == null){
+				cVo.setAddr1(arr_data[i]);
+				corpService.update_corpInfo(cVo);
+			}
+		}
+	}
+
 	// 채용공고 등록
 	private void insert_recr() {
 		for(int k=0; k<30; k++){
@@ -612,8 +647,22 @@ public class RecruitController {
 	
 	// @지도 검색 페이지 요청.
 	@RequestMapping("/map")
-	public String map() {
-
+	public String map(Model model) {
+		List<RecruitVo> recrList = recrService.getAllRecr();
+		model.addAttribute("recrList", recrList);
+		
+		List<String> addrList = new ArrayList<>();
+		for(int i=0; i < recrList.size(); i++){
+			RecruitVo rVo = recrList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			addrList.add(cVo.getAddr1());
+		}
+		model.addAttribute("addrList", addrList);
+		
+		// 회사 목록을 넘겨보자.
+		List<CorporationVo> corpList = corpService.select_allCorps();
+		model.addAttribute("corpList", corpList);
+		
 		return "mapTiles";
 	}
 	

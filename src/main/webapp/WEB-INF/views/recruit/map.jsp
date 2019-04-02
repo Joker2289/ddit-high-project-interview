@@ -27,7 +27,10 @@
 			<td><div id="map" style="width:750px;height:600px;"></div></td>
 			<td>
 				<input id="btn_removeCircles" type="button" value="원 제거하기"> <br><br>
-				<input id="btn_circleNum" type="button" value="원 개수확인"> <br><br>
+				<input id="btn_changeAddr" type="button" value="주소 - 좌표 변환"> <br><br>
+				<input id="btn_check" type="button" value="확인"> <br><br>
+				<input id="btn_all" type="button" value="좌표 확인"> <br><br>
+				<input id="btn_marker" type="button" value="마커 하나 찍기"> <br><br>
 			</td>
 		</tr>
 		<tr>
@@ -38,6 +41,25 @@
 				<input type="text" id="sample6_address" placeholder="주소"><br>
 				<input type="text" id="sample6_detailAddress" placeholder="상세주소">
 				<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+			</td>
+			<td>11</td>
+		</tr>
+		<tr>
+			<td>
+				전체 좌표 : <strong id="txt_location"></strong><br>
+				회사 리스트 <br><br>
+				<c:forEach begin="1" end="${corpList.size() }" varStatus="i">
+					${i.index }. ${corpList.get(i.index - 1).corp_name } / ${corpList.get(i.index - 1).addr1 } / ${corpList.get(i.index - 1).corp_location } <br>
+				</c:forEach> <br><br>
+			</td>
+			<td>11</td>
+		</tr>
+		<tr>
+			<td>
+				채용공고 리스트 <br><br>
+				<c:forEach begin="1" end="${recrList.size() }" varStatus="i">
+					${i.index }. ${recrList.get(i.index - 1).recruit_title } / ${addrList.get(i.index - 1) } <br>
+				</c:forEach>
 			</td>
 			<td>11</td>
 		</tr>
@@ -314,10 +336,105 @@
 		removeCircles();
 	});
 	
-	// 원 개수확인
-	$("#btn_circleNum").on("click", function(){
-		alert(circles.length);
+	// 주소 - 좌표 변환.
+	$("#btn_changeAddr").on("click", function(){
+		changeAddr($("#sample6_address").val());
 	});
+	
+	// 확인
+	$("#btn_check").on("click", function(){
+		console.log("회사 좌표(위도 / 경도) : " + coords.getLat() + " / " + coords.getLng());
+		$("#txt_location").text($("#txt_location").text() + "//222");
+	});
+	
+	// 전체 좌표 만들기 / 좌표 확인
+	$("#btn_all").on("click", function(){
+// 		createAllLocation();
+	 	var data = '4/36.33503205924424/127.39677886497321//5/36.327950661050465/127.42659051361443//6/36.35141693706307/127.3401790981222//8/36.36067544342291/127.34464046741947//7/36.35455478978288/127.33955994392711//10/36.354222353058155/127.44422053795066//9/36.425479947931365/127.39263989076437//13/36.29857090530391/127.33793218829507//11/36.358465496689334/127.4232496366498//15/36.44864430849931/127.4199108121918//12/36.30370852264028/127.34892329869682//17/36.352958482623535/127.3777969073076//14/36.31717489752688/127.45338195339158//16/36.3502458465932/127.37725797696643//19/37.570744325762846/126.98360914667553//18/36.35427578252461/127.3772952471586//21/37.57126926703499/126.97630554223102//20/37.52525923818516/127.04183916231236//holly/37.522827164111504/127.04001424430611//22/37.56462407218648/126.97922335034117//kim/35.115364308266564/128.9595348158848//23/37.50449284378187/127.00784436615872//27/37.55720941721661/126.92361977091058//samsung/37.5265427209826/127.04053210013338//26/37.50653640461993/127.12048711570657//28/37.50944139825955/127.1052363434873//31/37.52201436464297/126.85883630726723//30/37.534802342638976/127.01093858339178//25/35.154275771307425/129.06359316332686//24/35.207169937902535/129.07204589207316';			
+		var arr_data = data.split('//'); // corp_id/위도/경도
+		$("#txt_location").text($("#txt_location").text() + arr_data.length);
+	});
+	
+	// 마커 하나 찍기.
+	$("#btn_marker").on("click", function(){
+		// 36.32489/127.42015
+		<c:forEach begin="1" end="${corpList.size() }" varStatus="i">
+			var data = "${corpList.get(i.index - 1).corp_location }";
+			var data1 = data.split("/")[0];
+			var data2 = data.split("/")[1];
+			
+			// 마커가 표시될 위치입니다 
+			var markerPosition  = new daum.maps.LatLng(data1, data2); 
+	
+			// 마커를 생성합니다
+			var marker = new daum.maps.Marker({
+			    position: markerPosition
+			});
+	
+			// 마커가 지도 위에 표시되도록 설정합니다
+			marker.setMap(map);		
+		</c:forEach>
+	});	
+	
+	// 전체 좌표 만드는 메서드
+	function createAllLocation(){
+		// 우선 첫번째 항목부터 해보자.
+
+		<c:forEach begin="1" end="${corpList.size() }" varStatus="i">
+			var addr = "${corpList.get(i.index - 1).addr1 }";
+			var corp_id = "${corpList.get(i.index - 1).corp_id }";
+			getLocation(addr, corp_id);
+		</c:forEach>
+		
+	}
+	
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new daum.maps.services.Geocoder();
+	
+	// 주소를 통해 coords에 좌표 넣는 메서드.
+	function getLocation(addr, corp_id){
+		// 주소로 좌표를 검색합니다
+		geocoder.addressSearch(addr, function(result, status) {
+
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === daum.maps.services.Status.OK) {
+		        coords = new daum.maps.LatLng(result[0].y, result[0].x);
+		        $("#txt_location").text($("#txt_location").text() + "//" + corp_id + "/" + coords.getLat() + "/" + coords.getLng());
+		    }
+		});
+	}
+	
+	// 주소 - 좌표 변환 메서드.
+	var marker = null;	
+	var coords = null;
+	function changeAddr(addr){
+		// 주소-좌표 변환 객체를 생성합니다
+		var geocoder = new daum.maps.services.Geocoder();
+
+		// 주소로 좌표를 검색합니다
+		geocoder.addressSearch(addr, function(result, status) {
+
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === daum.maps.services.Status.OK) {
+		        coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+		        // 결과값으로 받은 위치를 마커로 표시합니다
+		        marker = new daum.maps.Marker({
+		            map: map,
+		            position: coords
+		        });
+
+		        // 인포윈도우로 장소에 대한 설명을 표시합니다
+		        var infowindow = new daum.maps.InfoWindow({
+		            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+		        });
+		        infowindow.open(map, marker);
+
+		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        map.setCenter(coords);
+		    } 
+		});
+	}
 	
 	
 	
