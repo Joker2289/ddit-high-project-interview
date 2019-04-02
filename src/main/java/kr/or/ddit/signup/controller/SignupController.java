@@ -43,7 +43,6 @@ import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
 import kr.or.ddit.util.model.Job_positionVo;
 import kr.or.ddit.util.service.IJob_positionService;
-import kr.or.ddit.util.kakao.kakao_restapi;
 
 @RequestMapping("/signUp")
 @Controller
