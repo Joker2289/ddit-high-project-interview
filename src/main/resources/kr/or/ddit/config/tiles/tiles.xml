@@ -23,6 +23,10 @@
 		<put-attribute name="content" value="/WEB-INF/views/corporation/corporationHome.jsp" />
 	</definition>
 	
+	<definition name="corporationIntroTiles" extends="layout" >
+		<put-attribute name="content" value="/WEB-INF/views/corporation/corporationIntroduction.jsp" />
+	</definition>
+	
 	<definition name="connectionsTiles" extends="layout" >
 		<put-attribute name="content" value="/WEB-INF/views/personalConnection/connections.jsp" />
 	</definition>

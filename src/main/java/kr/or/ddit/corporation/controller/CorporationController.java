@@ -86,7 +86,11 @@ public class CorporationController {
 		return "corporationTiles";
 	}
 	
-	
+	@RequestMapping(path={"/corporationIntroduction"})
+	public String corporationIntro(){
+		
+		return "corporationIntroTiles";
+	}
 	
 
 	
