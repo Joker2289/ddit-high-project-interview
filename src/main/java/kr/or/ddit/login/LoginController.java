@@ -25,7 +25,6 @@ import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
 
-
 @Controller
 public class LoginController {
 	private Logger logger = LoggerFactory.getLogger(LoginController.class);
@@ -89,21 +88,16 @@ public class LoginController {
 				req.getSession().setAttribute("detailVO", uVo);
 			}
 				
-			
 			//기업 로그인
 			else if(dbMemberVo.getMem_division().equals("2")) {
 				CorporationVo cVo = corpService.select_corpInfo(dbMemberVo.getMem_id());
 				req.getSession().setAttribute("detailVO", cVo);
 			}
-			
 			//관리자 로그인
 			else {
-				
 			}
 			
-		
 			req.getSession().setAttribute("memberVO", dbMemberVo);
-			
 //			return "timeLineTiles";
 			return "redirect:/timeline";
 		}
@@ -113,5 +107,5 @@ public class LoginController {
 			return "login/login";
 		}
 	}
-	
+
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
@@ -71,15 +72,20 @@ public class RecruitController {
 
 	// @채용공고 페이지 요청.
 	@RequestMapping("/recruit")
-	public String recruit(HttpSession session, String alarm_flag, String search_code, Model model) throws IOException{
+	public String recruit(HttpSession session, String alarm_flag, String search_code, HttpServletRequest req, 
+			Model model) throws IOException{
+		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");		
+		// 사용자 정보 없으면 로그인창으로 이동.
+		if(mVo == null){
+			return "redirect:" + req.getContextPath() + "/login";
+		}
+		
 		// 크롤링해서 값 넣기 어떻게 했더라. 삼성전자 데이터 있으면 리턴. 일단 비활성화.
 //		crawling_company();
 		
 		// 채용공고 등록해보자.
 //		insert_recr();
 		
-		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");		
-			
 		// '관심분야'를 통해 'rRList2' 만들기. -_-! 우선 받은 값을 확인해보자. 확인 InterestController
 		// 에서 하고 insert까지 한 다음 redirect - /recruit.
 		InterestVo iVo = inteService.getInte(mVo.getMem_id());
@@ -610,6 +616,7 @@ public class RecruitController {
 
 		return "mapTiles";
 	}
+	
 	
 	
 	
