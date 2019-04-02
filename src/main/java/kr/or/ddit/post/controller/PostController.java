@@ -143,7 +143,7 @@ public class PostController {
 		
 		List<PostVo> afterPost = new ArrayList<PostVo>();
 		
-		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_DETAILVO");
+		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		
 		paginationVo.setMem_id(member.getMem_id());
