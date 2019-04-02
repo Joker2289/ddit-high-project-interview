@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
@@ -614,14 +615,50 @@ public class RecruitController {
 		
 		model.addAttribute("lSLog", lSLog);
 		
+		// 채용공고 리스트 넘기기. <- corpImgList / corpNmList도 추가해야됨.
+		List<RecruitVo> recrList = recrService.getAllRecr();
+		List<String> corpImgList = new ArrayList<>();
+		List<String> corpNmList = new ArrayList<>();
+		
+		for(int i=0; i < recrList.size(); i++){
+			RecruitVo rVo = recrList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			corpImgList.add(cVo.getLogo_path());
+			corpNmList.add(cVo.getCorp_name());
+		}
+		
+		model.addAttribute("recrList", recrList);
+		model.addAttribute("corpImgList", corpImgList);
+		model.addAttribute("corpNmList", corpNmList);
+		
 		return "recrSearchTiles";
 	}	
 	
 	// @채용공고 상세화면.
-	@RequestMapping("/recr_detail")
+	@RequestMapping(path="/recr_detail", method=RequestMethod.POST)
 	public String recr_detail(String recruit_code, HttpSession session, Model model){
 		// 회원 정보를 가져와서 채용공고저장에 마지막으로 조회한 채용공고 저장. 마지막 채용공고를 따로 
 		// 설정하지는 않고 회원의 채용공고저장 리스트에서 save_code가 가장 큰 데이터를 확인하자.
+		Save_recruitVo sVo = new Save_recruitVo();
+		sVo.setRecruit_code(recruit_code);
+		sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));
+		sVo.setSave_flag("f");
+		
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		sVo.setUser_id(mVo.getMem_id());
+		srecrService.insertSrecr(sVo);
+		
+		RecruitVo recr = recrService.getRecr(recruit_code);
+		CorporationVo corp = corpService.select_corpInfo(recr.getCorp_id());
+		model.addAttribute("recr", recr);
+		model.addAttribute("corp", corp);
+		
+		return "recr_detailTiles";
+	}
+	
+	// @채용공고 상세화면 method - get
+	@RequestMapping(path="/recr_detail", method=RequestMethod.GET)
+	public String recr_detail(String recruit_code, String otherParam, HttpSession session, Model model) {
 		Save_recruitVo sVo = new Save_recruitVo();
 		sVo.setRecruit_code(recruit_code);
 		sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));

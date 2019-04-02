@@ -66,6 +66,8 @@
 		</tr>
 	</table>	
 	<br>
+	<a href="#" onclick="history.back(-1); return false;">뒤로 가기</a>
+	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
 	<a href="${pageContext.request.contextPath }/recruit">채용공고 페이지로 이동 -></a>
 		
 </div>		
