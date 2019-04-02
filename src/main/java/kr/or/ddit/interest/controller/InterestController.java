@@ -31,7 +31,7 @@ public class InterestController {
 	public String insertInte(HttpServletRequest req, String inte_type, String inte_local, String inte_emptype, 
 			String inte_size, HttpSession session) {
 		// mem_id로 검색되는 관심분야가 있으면 update, 없으면 insert.
-		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		InterestVo iVo = inteService.getInte(mVo.getMem_id());
 		if(iVo != null){
 			iVo.setInte_emptype(inte_emptype);

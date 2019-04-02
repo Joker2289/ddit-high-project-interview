@@ -33,7 +33,7 @@ public class Save_recruitController {
 	// @채용공고 스크랩(저장)
 	@RequestMapping("/scrap")
 	public String scrap(String scrap_flag, HttpSession session, HttpServletRequest req) {
-		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		// 채용공고 스크랩을 한 경우. scrap_flag.substring(0, 1) -> 't'
 		if( scrap_flag != null && 

@@ -75,7 +75,7 @@ public class RecruitController {
 	public String recruit(HttpSession session, String alarm_flag, String search_code, HttpServletRequest req, 
 			Model model) throws IOException{
 		// 유저정보 수정. 'SESSION_MEMBERVO'
-		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");		
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");		
 		
 		// 사용자 정보 없으면 로그인창으로 이동. -> 수정. 필터?
 		
@@ -606,7 +606,7 @@ public class RecruitController {
 	// @검색결과 저장 후 채용공고 검색 페이지 요청. -> 검색내역 저장은 Search_logController로 이동.
 	@RequestMapping("/recrSearch")
 	public String recrSearch(HttpSession session, Model model){
-		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		// 회원이 검색한 값 가져오기. (getLSLog - get last search_log)
 		Search_logVo lSLog = sLogService.getLSLog(mVo.getMem_id());
@@ -626,7 +626,7 @@ public class RecruitController {
 		sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));
 		sVo.setSave_flag("f");
 		
-		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		sVo.setUser_id(mVo.getMem_id());
 		srecrService.insertSrecr(sVo);
 		

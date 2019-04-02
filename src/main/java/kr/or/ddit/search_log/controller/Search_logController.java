@@ -42,7 +42,7 @@ public class Search_logController {
 		// search_save 임시로 2로 설정. -> 나중에 1로 바꾸기.
 		sVo.setSearch_save("2");
 		
-		MemberVo mVo = (MemberVo) session.getAttribute("memberVO");
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		if(mVo != null){
 			sVo.setUser_id(mVo.getMem_id());
 		}else{
