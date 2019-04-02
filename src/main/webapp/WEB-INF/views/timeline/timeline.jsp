@@ -303,7 +303,3 @@ var select_file;
 
 	
 </script>
-
-
-
-
