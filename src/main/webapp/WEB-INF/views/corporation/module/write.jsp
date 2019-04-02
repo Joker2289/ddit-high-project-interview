@@ -65,32 +65,19 @@
 	        $("#frm").submit();
 	    });
 	});
-
+ 
 
 
 </script>
 
 
-
-
-
-<form id="frm" action="${pageContext.request.contextPath}/corporation" method="post" >
-	<table width="100%">
-	        <tr>
-	            <td>내용</td>
-	            <td>
-	                <textarea rows="10" cols="30" id="smarteditor2" name="smarteditor2" style="width:650px; height:350px; "></textarea>
-	            </td>
-	        </tr>
-	        <tr>
-	            <td colspan="2">
-	                <input type="button" id="savebutton" value="저장"/>
-	                <input type="button" value="취소"/>
-	            </td>
-	        </tr>
-	</table>
-</form>
-
+<div style="position: relative; top: -177px; left: 180px; "> 
+	<form id="frm" action="${pageContext.request.contextPath}/corporation" method="post" >
+		<textarea rows="10" cols="30" id="smarteditor2" name="smarteditor2" style="width:650px; height:350px; "></textarea>
+		<input type="button" id="savebutton" value="저장"/>
+		<input type="button" value="취소"/>
+	</form>
+</div>
 
 
 
