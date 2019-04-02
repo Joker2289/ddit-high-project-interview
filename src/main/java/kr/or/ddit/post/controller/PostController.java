@@ -63,7 +63,8 @@ public class PostController {
 		// 작업 완류 후 loginController로 이동시켜야 함
 		
 		
-		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("memberVO");
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		logger.debug("asdasdasd {}", memberInfo);
 		
 		FollowVo followInfo = new FollowVo();
 		followInfo.setMem_id(memberInfo.getMem_id());
@@ -114,7 +115,7 @@ public class PostController {
 		
 		List<PostVo> afterPost = new ArrayList<PostVo>();
 		
-		MemberVo member = (MemberVo) request.getSession().getAttribute("memberVO");
+		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_DETAILVO");
 		
 		
 		paginationVo.setMem_id(member.getMem_id());
@@ -142,7 +143,7 @@ public class PostController {
 		
 		List<PostVo> afterPost = new ArrayList<PostVo>();
 		
-		MemberVo member = (MemberVo) request.getSession().getAttribute("memberVO");
+		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_DETAILVO");
 		
 		
 		paginationVo.setMem_id(member.getMem_id());
@@ -167,7 +168,7 @@ public class PostController {
 	@RequestMapping(path={"/writepost_timeline"}, method=RequestMethod.POST)
 	public String writePost_timeline(Model model, String post_contents, HttpServletRequest request){
 		
-		MemberVo member = (MemberVo) request.getSession().getAttribute("memberVO");
+		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_DETAILVO");
 		
 		String mem_id = member.getMem_id();
 		
@@ -175,6 +176,8 @@ public class PostController {
 		
 		PostVo insertPost = new PostVo();
 		String writer_name = "";
+		
+//		MemberVo memberSer = memberService.select_memberInfo(mem_id);
 		
 		if(member.getMem_division().equals("1")){
 			UsersVo user = usersService.select_userInfo(mem_id);
