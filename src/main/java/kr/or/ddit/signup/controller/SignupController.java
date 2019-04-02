@@ -95,7 +95,7 @@ public class SignupController {
 				
 				userService.insert_users(uVo);
 				
-				req.getSession().setAttribute("memberVO", mVo);
+				req.getSession().setAttribute("SESSION_MEMBERVO", mVo);
 				
 				
 				return "redirect:/timeline";
@@ -114,7 +114,7 @@ public class SignupController {
 			
 		}
 		
-		req.getSession().setAttribute("memberVO", search_member);
+		req.getSession().setAttribute("SESSION_MEMBERVO", search_member);
 		
 		return "redirect:/timeline";
 		

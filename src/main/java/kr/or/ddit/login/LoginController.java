@@ -3,19 +3,14 @@ package kr.or.ddit.login;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fasterxml.jackson.databind.JsonNode;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
@@ -27,6 +22,7 @@ import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
 
 @Controller
 public class LoginController {
+	
 	private Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	@Resource(name="memberService")
@@ -49,17 +45,7 @@ public class LoginController {
 	 */
 	@RequestMapping(path= {"/login"}, method=RequestMethod.GET)
 	public String loginView(HttpServletRequest req, Model model) {
-		// 홈 화면 클릭시 session에 memberVO가 있으면 홈으로, 없으면 로그인.
-		MemberVo mVo = (MemberVo) req.getSession().getAttribute("memberVO");
-		if(mVo == null){
-			return "login/login";
-		}
 		
-		String mem_id = mVo.getMem_id();
-		if(mem_id != null){
-			req.getSession().setAttribute("memberVO", mVo);
-			return "timeLineTiles";
-		}
 		return "login/login";
 	}
 	
@@ -85,19 +71,19 @@ public class LoginController {
 			//일반회원 로그인
 			if(dbMemberVo.getMem_division().equals("1")) {
 				UsersVo uVo = usersService.select_userInfo(dbMemberVo.getMem_id());
-				req.getSession().setAttribute("detailVO", uVo);
+				req.getSession().setAttribute("SESSION_DETAILVO", uVo);
 			}
 				
 			//기업 로그인
 			else if(dbMemberVo.getMem_division().equals("2")) {
 				CorporationVo cVo = corpService.select_corpInfo(dbMemberVo.getMem_id());
-				req.getSession().setAttribute("detailVO", cVo);
+				req.getSession().setAttribute("SESSION_DETAILVO", cVo);
 			}
 			//관리자 로그인
 			else {
 			}
 			
-			req.getSession().setAttribute("memberVO", dbMemberVo);
+			req.getSession().setAttribute("SESSION_MEMBERVO", dbMemberVo);
 //			return "timeLineTiles";
 			return "redirect:/timeline";
 		}
