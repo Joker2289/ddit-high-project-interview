@@ -17,7 +17,7 @@
 		     		
 					<!-- step2 (인증번호 인증) -->
 					<form id="step2" class="validate-form">
-						<div class="wrap-input-custom2 bt-padding40">
+						<div class="wrap-input-custom2 bt-padding20">
 							<span class="label-custom">회원님의 email로 전송된 인증 코드를 입력 해주세요</span>
 						</div>
 						

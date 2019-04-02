@@ -17,15 +17,15 @@
 					<!-- step3 -->
 					<form id="step3">
 						
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Job Position is reauired">
+						<div class="wrap-input-custom validate-input m-b-50">
 							<span class="label-input100">업계</span>
-							<input class="input100" type="text" id="industry_type" name="industry_type" placeholder=" Job Position">
+							<input class="input100" type="text" id="industry_type" name="industry_type" placeholder=" 회사 업계 작성">
 							<span class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 					
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Job Rank is reauired">
-							<span class="label-input100">회사유형</span>
-							<select name="corp_type">
+						<div class="wrap-input-custom2">
+							<span class="label-input100-custom">회사유형</span>
+							<select name="corp_type" class="custom-select">
 								<option value="" hidden> 			회사유형 선택 </option>
 								<option value="개인사업">		개인사업</option>
 								<option value="교육기관">		교육기관</option>               
@@ -36,12 +36,11 @@
 								<option value="정부기관">		정부기관</option>               
 								<option value="합명회사">		합명회사</option>               
 							</select>
-							<span class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 						
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Job Rank is reauired">
-							<span class="label-input100">회사 규모</span>
-							<select name="corp_size">
+						<div class="wrap-input-custom2">
+							<span class="label-input100-custom">회사 규모</span>
+							<select name="corp_size" class="custom-select">
 								<option value="" hidden> 회사 규모 선택 </option>
 								<option value="직원 50명 미만">		직원 50명 미만</option>
 								<option value="직원 50명-100명">	직원 50명-100명</option>               
@@ -54,12 +53,11 @@
 								<option value="직원 5000명 이상">		직원 5000명 이상</option>               
 								<option value="직원 10000명 이상">		직원 10000명 이상</option>               
 							</select>
-							<span class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 						
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Major is reauired">
-							<span class="label-input100">창립일</span>
-							<input type="text" id="corp_birth" name="corp_birth">
+						<div class="wrap-input-custom2">
+							<span class="label-input100-custom">창립일</span>
+							<input type="text" id="corp_birth" name="corp_birth" class="custom-select">
 						</div>
 						
 					</form> 
@@ -83,7 +81,7 @@
             ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
             ,changeYear: true //콤보박스에서 년 선택 가능
             ,changeMonth: true //콤보박스에서 월 선택 가능                
-            ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+            //,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
             ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
             ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
             ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                

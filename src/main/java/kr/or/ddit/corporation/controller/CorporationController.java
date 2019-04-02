@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.post.controller.PostController;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
 import kr.or.ddit.users.model.UsersVo;
@@ -27,7 +30,8 @@ import kr.or.ddit.util.pagination.PaginationVo;
 @Controller
 public class CorporationController {
 	
-
+	private Logger logger = LoggerFactory.getLogger(PostController.class);
+	
 	@Resource(name="postService")
 	private IPostService postService;
 	
@@ -49,7 +53,7 @@ public class CorporationController {
 	 */
 	@RequestMapping(path={"/corporation"})
 	public String postList(Model model, PaginationVo paginationVo, HttpServletRequest request){
-		// 작업 완류 후 loginController로 이동시켜야 함
+
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("memberVO");
 		
@@ -94,16 +98,30 @@ public class CorporationController {
 	 * @return
 	 */
 	@RequestMapping(path="/write",method={RequestMethod.POST})
-	public String post(String mem_id,PostVo postVo, String smarteditor, Model model){
-		String writer_name= "a";
-		int post_code=1000;
-		postVo.setMem_id(mem_id);
-		postVo.setWriter_name(writer_name);
-		postVo.setPost_contents(smarteditor);
+	public String post(Model model, String smarteditor2, HttpServletRequest request){
+
+		MemberVo member = (MemberVo) request.getSession().getAttribute("memberVO");
 		
-		int insertCnt=0;
-		insertCnt=postService.insert_post(postVo);
+		String mem_id = member.getMem_id();
+		
+		System.out.println("987654321987654321");
+	
+		logger.debug("asdasdasdasdmem_id : {}", mem_id);
+		
+		PostVo insertPost = new PostVo();
+		String writer_name = "";
+		
+		CorporationVo corp = corporationService.select_corpInfo(mem_id);
+		writer_name = corp.getCorp_name();
+		
+		insertPost.setMem_id(mem_id);
+		insertPost.setPost_contents(smarteditor2);
+		insertPost.setWriter_name(writer_name);
+		
+		int insertCnt = postService.insert_post(insertPost);
+		
 		return "corporationTiles";
+
 	}
 }
 

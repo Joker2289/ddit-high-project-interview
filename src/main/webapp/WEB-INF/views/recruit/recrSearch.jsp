@@ -19,6 +19,7 @@
 
 	<!-- 레이아웃 잡는건 나중에.. -->
 	<h3>채용공고검색 페이지임니다.</h3>
+	<h5>(검색 : 검색어 - ${lSLog.search_word } / 지역 - ${lSLog.search_local })</h5>
 	
 		
 </div>		

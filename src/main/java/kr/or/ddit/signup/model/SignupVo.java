@@ -2,7 +2,7 @@ package kr.or.ddit.signup.model;
 
 import java.util.Date;
 
-public class SignupUserVo {
+public class SignupVo {
 	
 	//step1
 	private String id;				// 회원아이디
@@ -40,6 +40,12 @@ public class SignupUserVo {
 	private String addr2;			// 상세주소
 	private String zipcode;			// 우편번호
 	private String telno;			// 전화번호
+	
+	//kakaoLogin
+	private String kakaoId;
+	private String kakaoProfile; 	//카카오 프로필
+	private String kakaoName;
+	
 	public String getId() {
 		return id;
 	}
@@ -190,19 +196,33 @@ public class SignupUserVo {
 	public void setTelno(String telno) {
 		this.telno = telno;
 	}
+	public String getKakaoProfile() {
+		return kakaoProfile;
+	}
+	public void setKakaoProfile(String kakaoProfile) {
+		this.kakaoProfile = kakaoProfile;
+	}
+	public String getKakaoId() {
+		return kakaoId;
+	}
+	public void setKakaoId(String kakaoId) {
+		this.kakaoId = kakaoId;
+	}
+	public String getKakaoName() {
+		return kakaoName;
+	}
+	public void setKakaoName(String kakaoName) {
+		this.kakaoName = kakaoName;
+	}
 	@Override
 	public String toString() {
-		return "SignupUserVo [id=" + id + ", pass=" + pass + ", email=" + email + ", name=" + name + ", division="
+		return "SignupVo [id=" + id + ", pass=" + pass + ", email=" + email + ", name=" + name + ", division="
 				+ division + ", securityCode=" + securityCode + ", job_position=" + job_position + ", job_rank="
 				+ job_rank + ", corporate_name=" + corporate_name + ", join_date=" + join_date + ", resign_date="
 				+ resign_date + ", school_name=" + school_name + ", degree_name=" + degree_name + ", major=" + major
 				+ ", admission=" + admission + ", graduation=" + graduation + ", grade=" + grade + ", corp_birth="
 				+ corp_birth + ", corp_type=" + corp_type + ", industry_type=" + industry_type + ", corp_size="
 				+ corp_size + ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", telno=" + telno
-				+ "]";
+				+ ", kakaoId=" + kakaoId + ", kakaoProfile=" + kakaoProfile + ", kakaoName=" + kakaoName + "]";
 	}
-	
-	
-	
-	
 }

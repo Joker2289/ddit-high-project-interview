@@ -108,6 +108,22 @@ public class Search_logDaoImpl implements ISearch_logDao{
 		int updateCnt = sqlSessionTemplate.update("search_log.updateSearch_log", sVo);
 		
 		return updateCnt;
+	}
+
+	/**
+	 * 
+	 * Method : getLSLog
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 특정 회원이 검색하려는 값 조회.
+	 */
+	@Override
+	public Search_logVo getLSLog(String mem_id) {
+		Search_logVo lSLog = sqlSessionTemplate.selectOne("search_log.getLSLog", mem_id);
+		
+		return lSLog;
 	}	
 
 	

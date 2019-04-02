@@ -37,13 +37,12 @@ import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.education_info.service.IEducation_infoService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
-import kr.or.ddit.signup.model.SignupUserVo;
+import kr.or.ddit.signup.model.SignupVo;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
 import kr.or.ddit.util.model.Job_positionVo;
 import kr.or.ddit.util.service.IJob_positionService;
-import kr.or.ddit.util.kakao.kakao_restapi;
 
 @RequestMapping("/signUp")
 @Controller
@@ -74,6 +73,53 @@ public class SignupController {
 	private String division;		//구분 저장
 	
 	
+	@RequestMapping("/kakaoLogin")
+	@ResponseBody
+	public String kakaoLogin(@RequestBody SignupVo vo, HttpServletRequest req) {
+		
+		MemberVo search_member = memService.select_memberInfo(vo.getKakaoId());
+		
+		if(search_member == null) {
+			MemberVo mVo = new MemberVo();
+			mVo.setMem_id(vo.getKakaoId());
+			mVo.setMem_division("1");
+			
+			int insertCnt = memService.insert_member(mVo);
+			
+			if(insertCnt == 1) {
+				UsersVo uVo = new UsersVo();
+				uVo.setProfile_img("kakao profile");
+				uVo.setProfile_path(vo.getKakaoProfile());
+				uVo.setUser_id(vo.getKakaoId());
+				uVo.setUser_name(vo.getKakaoName());
+				
+				userService.insert_users(uVo);
+				
+				req.getSession().setAttribute("memberVO", mVo);
+				
+				
+				return "redirect:/timeline";
+			}
+		}
+		else {
+			UsersVo userInfo = userService.select_userInfo(vo.getKakaoId());
+			
+			if(userInfo.getUser_name().equals(vo.getKakaoName()) || userInfo.getProfile_path().equals(vo.getKakaoProfile())) {
+				UsersVo uVo = new UsersVo();
+				uVo.setUser_id(vo.getKakaoId());
+				uVo.setUser_name(vo.getKakaoName());
+				uVo.setProfile_path(vo.getKakaoProfile());
+				userService.update_userInfo(uVo);
+			}
+			
+		}
+		
+		req.getSession().setAttribute("memberVO", search_member);
+		
+		return "redirect:/timeline";
+		
+	}
+	
 	@RequestMapping("/cancel")
 	public String cancel() {
 		memService.delete_member(id);
@@ -84,7 +130,7 @@ public class SignupController {
 	public String goStep1(String division) {
 		
 		if(division.equals("1")){
-			return "login/step3";
+			return "login/step1";
 		}
 		
 		return "login/step1_corp";
@@ -121,7 +167,7 @@ public class SignupController {
 	//이메일 인증
 	@RequestMapping(path="/error_email")
 	@ResponseBody
-	public String error_email(@RequestBody SignupUserVo vo) {
+	public String error_email(@RequestBody SignupVo vo) {
 		
 		String success = sendEmail(vo.getEmail());
 		
@@ -153,7 +199,7 @@ public class SignupController {
 	
 	//Step2
 	@RequestMapping("/goStep2")
-	public String goStep2(@RequestBody SignupUserVo vo, Model model) {
+	public String goStep2(@RequestBody SignupVo vo, Model model) {
 
 		
 		logger.debug("ste1.vo : {}", vo);
@@ -201,7 +247,7 @@ public class SignupController {
 	//인증코드 에러 검사
 	@RequestMapping("/error_code")
 	@ResponseBody
-	public String error_code(@RequestBody SignupUserVo vo) {
+	public String error_code(@RequestBody SignupVo vo) {
 		
 		logger.debug("error_code : {}", vo.getSecurityCode());
 		
@@ -225,7 +271,7 @@ public class SignupController {
 	
 	
 	@RequestMapping("/goStep5From3")
-	public String goStep5From3(@RequestBody SignupUserVo vo, HttpServletRequest req) {
+	public String goStep5From3(@RequestBody SignupVo vo, HttpServletRequest req) {
 		
 		logger.debug("step3 : {}", vo);
 		
@@ -245,7 +291,7 @@ public class SignupController {
 	}
 	
 	@RequestMapping("/goStep5From4")
-	public String goStep5From4(@RequestBody SignupUserVo vo, HttpServletRequest req) {
+	public String goStep5From4(@RequestBody SignupVo vo, HttpServletRequest req) {
 		
 		logger.debug("step4 : {}", vo);
 		
@@ -274,7 +320,7 @@ public class SignupController {
 	}
 	
 	@RequestMapping("/goStep4_corp")
-	public String goStep4_corp(@RequestBody SignupUserVo vo) {
+	public String goStep4_corp(@RequestBody SignupVo vo) {
 		
 		CorporationVo cVo = new CorporationVo();
 		cVo.setCorp_id(id);
@@ -289,7 +335,7 @@ public class SignupController {
 	}
 	
 	@RequestMapping("/goStep5_corp")
-	public String goStep5_corp(@RequestBody SignupUserVo vo) {
+	public String goStep5_corp(@RequestBody SignupVo vo) {
 		
 		CorporationVo cVo = new CorporationVo();
 		cVo.setCorp_id(id);
@@ -302,6 +348,8 @@ public class SignupController {
 		
 		return "login/step5";
 	}
+	
+	
 	
 	
 	@RequestMapping(path="/finalStep", consumes ={"multipart/form-data"})

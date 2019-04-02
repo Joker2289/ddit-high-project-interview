@@ -28,7 +28,7 @@
     //제대로 utf-8환경이 아니라 한글 깨짐 그래서 임의로 추가                                                   
     request.setCharacterEncoding("utf-8");
     
-    String content = request.getParameter("smarteditor");
+    String content = request.getParameter("smarteditor2");
     
     //콘솔 출력
     System.out.println("내용:"+content);    

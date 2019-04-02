@@ -35,6 +35,28 @@ public interface IInterestService {
 	 * Method 설명 : 테스트를 위한 관심분야 삭제.
 	 */
 	int deleteForTest(String inte_code);
+
+	/**
+	 * 
+	 * Method : getInte
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 특정 관심분야 조회.
+	 */
+	InterestVo getInte(String mem_id);
+
+	/**
+	 * 
+	 * Method : updateInte
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param iVo
+	 * @return
+	 * Method 설명 : 관심분야 수정.
+	 */
+	int updateInte(InterestVo iVo);
 	
 	
 

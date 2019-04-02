@@ -8,7 +8,6 @@
       	<div class="modal-content">
 		  <form id="frm_writePost" action="/writepost_timeline" method="post" >
       	    <div class="modal-head">
-      	    	
       	    </div>
             
       	    <div class="modal-body">

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
@@ -32,10 +33,11 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 	}
 
 	@Override
-	public int corporation_count(FollowVo followVo) {
-		int corporation_count = sqlSessionTemplate.selectOne("personal.corporation_count", followVo);
-		return corporation_count;
+	public List<CorporationVo> select_followCoporation(FollowVo followVo) {
+		List<CorporationVo> followCoporation = sqlSessionTemplate.selectList("personal.select_followCoporation" , followVo);
+		return followCoporation;
 	}
+
 
 
 }

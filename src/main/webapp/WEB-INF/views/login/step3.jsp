@@ -16,15 +16,15 @@
 		     		
 					<!-- step3 -->
 					<form id="step3">
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Corporation Name is reauired">
+						<div class="wrap-input-custom validate-input m-b-50">
 							<span class="label-input100">최근 다닌 회사</span>
-							<input class="input100" type="text" id="corporate_name" name="corporate_name" placeholder=" Corporation Name">
+							<input class="input100" type="text" id="corporate_name" name="corporate_name" placeholder=" 회사명을 작성 해주세요">
 							<span class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 						
 						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Job Position is reauired">
 							<span class="label-input100">직군</span>
-							<input class="input100" type="text" id="job_position" name="job_position" placeholder=" Job Position">
+							<input class="input100" type="text" id="job_position" name="job_position" placeholder=" 직군을 작성 해주세요">
 							<span class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 						

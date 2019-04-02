@@ -16,31 +16,31 @@
 		     		
 					<!-- step4 -->
 					<form id="step4">
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "College Name is reauired">
+						<div class="wrap-input-custom validate-input m-b-50">
 							<span class="label-input100">대표전화</span>
-							<input class="input100" type="text" name="telno" placeholder=" Corp">
+							<input class="input100" type="text" name="telno" placeholder=" '-' 빼고 입력해주세요">
 							<span class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 						
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Degree Name is reauired">
+						<div class="wrap-input-custom validate-input m-b-50">
 							<span class="label-input100">우편번호</span>
-							<input class="input100" type="text" id="zipcode" name="zipcode" placeholder=" Degree Name">
+							<input class="input100" type="text" id="zipcode" name="zipcode" placeholder=" 우편번호">
 							<span class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 						
-						<div class="wrap-input-custom">
-							<button id="zipcodeBtn" class="btn btn-primary jk-sign-btn" type="button">우편번호 검색</button>
-						</div>		
+						<div class="wrap-input-custom2">
+							<button id="zipcodeBtn" class="jk-btn-long" type="button">우편번호</button>
+						</div>			
 						
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Major is reauired">
+						<div class="wrap-input-custom validate-input m-b-50">
 							<span class="label-input100">주소</span>
-							<input class="input100" type="text" id="addr1" name="addr1" placeholder=" Major">
+							<input class="input100" type="text" id="addr1" name="addr1" placeholder=" 주소 입력">
 							<span class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 						
-						<div class="wrap-input-custom validate-input m-b-50" data-validate = "Major is reauired">
+						<div class="wrap-input-custom validate-input m-b-50">
 							<span class="label-input100">상세주소</span>
-							<input class="input100" type="text" id="addr2" name="addr2" placeholder=" Major">
+							<input class="input100" type="text" id="addr2" name="addr2" placeholder=" 상세주소 입력">
 							<span class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 						
@@ -86,7 +86,7 @@
 			
 		
 	  		
-			//step4 - user
+			//step4 
 			$("#nextStep").on("click", function(){
 				var step4 = $("#step4").serializeObject();  //.serialize();
 				console.log("step4 : " + JSON.stringify(step4));
