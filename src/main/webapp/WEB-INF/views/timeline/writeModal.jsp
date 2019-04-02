@@ -8,11 +8,11 @@
       	<div class="modal-content">
 		  <form id="frm_writePost" action="/writepost_timeline" method="post" >
       	    <div class="modal-head">
-      	    	<input type="hidden" name="mem_id" value="${sessionScope.detileVO. }">
+      	    	
       	    </div>
             
       	    <div class="modal-body">
-      	    	<textarea class="write_area" name="post_contents"  style="width:620px; height:300px;"></textarea>
+    	    	<textarea class="write_area" name="post_contents"  style="width:620px; height:300px; resize: none; border: 0;"></textarea>
       	    </div>
       	    
       	    <div class="modal-foot">

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="savepost">
+	
+	<!-- 저장글 정보 삽입 -->
+	<insert id="insert_savepostDate" parameterType="savepostVo">
+		insert into save_post
+		values(
+			postsave_code_seq.nextval,
+			#{save_post_code},
+			#{mem_id},
+			sysdate
+		)
+	</insert>
+	
+	<!-- 저장글 삭제  -->
+	<delete id="delete_savepostData" parameterType="String">
+		delete save_post
+		 where postsave_code = #{postsave_code}
+	</delete>
+	
+	<!-- 저장글 목록 조회 -->
+	<select id="select_savepostData" parameterType="String" resultType="savepostVo">
+		select postsave_code, save_post_code, mem_id, save_date
+		  from save_post
+		 where mem_id = #{mem_id}
+	</select>
+	
+	<!-- 저장글 갯수 조회 -->
+	<select id="savepost_count" parameterType="String" resultType="int">
+		select count(*)
+		from save_post
+		where mem_id = #{mem_id}
+	</select>
+	
+</mapper>
