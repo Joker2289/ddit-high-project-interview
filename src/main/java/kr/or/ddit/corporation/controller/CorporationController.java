@@ -80,6 +80,13 @@ public class CorporationController {
 		return "corporationTiles";
 	}
 
+	/**
+	 * 회사 소개
+	 * @param model
+	 * @param paginationVo
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(path = { "/corporationIntroduction" })
 	public String corporationIntro(Model model, PaginationVo paginationVo, HttpServletRequest request) {
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
@@ -108,6 +115,82 @@ public class CorporationController {
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("timelinePost", timelinePost);
 		return "corporationIntroTiles";
+	}
+	
+	/**
+	 * 채용정보
+	 * @param model
+	 * @param paginationVo
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(path = { "/corporationRecruitment" })
+	public String corporationRecruit(Model model, PaginationVo paginationVo, HttpServletRequest request) {
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		
+		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
+			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+			
+			// 인맥 수 출력을 위한 세팅
+			
+			// 팔로우 한 해쉬태그 출력을 위한 세팅
+			
+			model.addAttribute("userInfo", userInfo);
+		} else if (memberInfo.getMem_division().equals("2")) { // 회사일 경우
+			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+			
+			// 회사 회원 로그인 시 홈 화면 출력을 위한 세팅
+			
+			model.addAttribute("corpInfo", corpInfo);
+		} else { // 관리자일 경우
+			// 관리자 로그인 시 홈 화면 출력을 위한 세팅
+			
+		}
+		
+		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
+		model.addAttribute("timelinePost", timelinePost);
+		
+		return "corporationRecruitmentTiles";
+	}
+	
+	/**
+	 * 회사 직원
+	 * @param model
+	 * @param paginationVo
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(path = { "/corporationEmployee" })
+	public String corporationEmployee(Model model, PaginationVo paginationVo, HttpServletRequest request) {
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		
+		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
+			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+			
+			// 인맥 수 출력을 위한 세팅
+			
+			// 팔로우 한 해쉬태그 출력을 위한 세팅
+			
+			model.addAttribute("userInfo", userInfo);
+		} else if (memberInfo.getMem_division().equals("2")) { // 회사일 경우
+			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+			
+			// 회사 회원 로그인 시 홈 화면 출력을 위한 세팅
+			
+			model.addAttribute("corpInfo", corpInfo);
+		} else { // 관리자일 경우
+			// 관리자 로그인 시 홈 화면 출력을 위한 세팅
+			
+		}
+		
+		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
+		model.addAttribute("timelinePost", timelinePost);
+		
+		return "corporationEmployeeTiles";
 	}
 
 	/**

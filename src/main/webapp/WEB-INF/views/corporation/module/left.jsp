@@ -10,7 +10,7 @@
 			<a href="<%=request.getContextPath()%>/corporationIntroduction">소개</a><br>
 		</div>
 		<div style="border: 1px solid; margin-top: -1px; height: 35px;">
-			<a href="<%=request.getContextPath()%>/corporationRectuitment">채용</a><br>
+			<a href="<%=request.getContextPath()%>/corporationRecruitment">채용</a><br>
 		</div>
 		<div style="border: 1px solid; margin-top: -1px; height: 35px;">
 			<a href="<%=request.getContextPath()%>/corporationEmployee">직원</a><br>
