@@ -17,7 +17,7 @@
 	            	    <c:if test="${sessionScope.detailVO.bg_path == null }">
 	            	      <span><a href="#"><img src=""></a></span>
 	            	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>일촌 수<span style="float: right;">${connectionCnt }명</span></span></a></pre>
-	            	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${connectionCnt }명</span></span></a></pre>
+	            	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${savepostCnt }개</span></span></a></pre>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.detailVO.bg_path != null }">
 	            	      <span><a href="#"><img src="${sessionScope.detailVO.bg_path }"></a></span>
@@ -80,9 +80,9 @@
 	      <div class="col-md-6">
 	        <div class="input-group">
 	          <button id="btn-write_modal" class="btn-write_modal"  style="height: 73.6px; margin-top: -9px;"><span class="span-text"><a><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></span></button>
-	          <button class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-images"></i></a></span></button>
-	          <button class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-play-circle"></i></a></span></button>
-	          <button class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-file-alt"></i></a></span></button>
+	          <button id="btn-upload-img" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-images"></i></a></span></button>
+	          <button id="btn-upload-video" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-play-circle"></i></a></span></button>
+	          <button id="btn-upload-document" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-file-alt"></i></a></span></button>
 	        </div>
 			  <hr>
 
@@ -189,16 +189,64 @@
 
 <script type="text/javascript">
 
+var select_file;
+
+	//작성 모달창 푸쉬
+	function pushModal() {
+		$("div.modal").modal();
+	}
+
+	//작성 모달창에서 이미지 삽입버튼 클릭시 이미지첨부 실행
+	$("#btn_attend_img").on("click",function(){
+		$("#input_img").click();
+	});
+	
+	
+	//이미지 첨부 핸들러(이미지 미리보기 -> 수정필요)
+	function handleImgFileSelect(e) {
+		var img_file = e.target.files;
+		var img_fileArr = Array.prototype.slice.call(img_file);
+		
+		img_fileArr.forEach(function (f) {
+			if(!f.typematch("image.*")){
+				return;
+			}
+			
+			select_file = f;
+			
+			var reader = new fileReader();
+			reader.onload = function(e) {
+				$("#img").attr("src", e.target.result);
+			}
+			reader.readAsDataURL(f);
+		})
+		
+	}
+
 	$(function () {
 		$("#btn-write_modal").on("click", function () {
-			$("div.modal").modal();
-			
-// 			if()
+			pushModal();
 			
 			$("#btn_write_upload").on("click", function() {
 				$("#frm_writePost").submit();
 			})
 		});
+		
+		$("#btn-upload-img").on("click", function () {
+			pushModal();
+			$("#input_img").click();
+			handleImgFileSelect();
+		});
+		
+		$("#btn-upload-video").on("click", function () {
+			pushModal();
+		});
+		
+		$("#btn-upload-document").on("click", function () {
+			pushModal();
+		});
+		
+		
 	});
 	
 	//스크롤 이벤트 발생 시

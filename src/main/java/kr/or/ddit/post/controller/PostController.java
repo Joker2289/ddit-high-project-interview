@@ -24,6 +24,8 @@ import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
+import kr.or.ddit.save_post.model.Save_postVo;
+import kr.or.ddit.save_post.service.ISave_postService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.pagination.PaginationVo;
@@ -51,6 +53,9 @@ public class PostController {
 	
 	@Resource(name="followService")
 	private IFollowService followService; 
+	
+	@Resource(name="save_postService")
+	private ISave_postService savepostService;
 	 
 	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
@@ -59,13 +64,13 @@ public class PostController {
 		
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("memberVO");
-		logger.debug("asdasdasd {}", memberInfo);
 		
-		logger.debug("memberInfoGo : {}", memberInfo);
 		FollowVo followInfo = new FollowVo();
 		followInfo.setMem_id(memberInfo.getMem_id());
 		followInfo.setDivision("14");
 		
+		Save_postVo savepost = new Save_postVo();
+		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
 		
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
@@ -83,6 +88,7 @@ public class PostController {
 			model.addAttribute("userInfo", userInfo);
 			model.addAttribute("connectionCnt", connectionCnt);
 //			model.addAttribute("followHashtag", followHashtag);
+			model.addAttribute("savepostCnt", savepostCnt);
 		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
 			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
 			

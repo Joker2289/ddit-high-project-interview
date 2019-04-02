@@ -19,6 +19,8 @@
 
 $(document).ready(function() {
 	
+	$("#input_img").hide();
+	
 	// 검색창
 	$("#search").on("click", function(){
 		

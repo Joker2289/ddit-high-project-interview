@@ -12,12 +12,14 @@
             
       	    <div class="modal-body">
     	    	<textarea class="write_area" name="post_contents"  style="width:620px; height:300px; resize: none; border: 0;"></textarea>
+    	    	<input type="file" id="input_img"/>
+    	    	<img id="img"/>
       	    </div>
       	    
       	    <div class="modal-foot">
-      	    	<button class="btn-modal-upload" type="submit" id="btn_attend_img"><span style="font-size: 22px;"><i class="far fa-images"></i></span></button>
-            	<button class="btn-modal-upload" type="submit" id="btn_attend_video"><span style="font-size: 22px;"><i class="far fa-play-circle"></i></span></button>
-            	<button class="btn-modal-upload" type="submit" id="btn_attend_document"><span style="font-size: 22px;"><i class="far fa-file-alt"></i></span></button>
+      	    	<button class="btn-modal-upload" type="button" id="btn_attend_img"><span style="font-size: 22px;"><i class="far fa-images"></i></span></button>
+            	<button class="btn-modal-upload" type="button" id="btn_attend_video"><span style="font-size: 22px;"><i class="far fa-play-circle"></i></span></button>
+            	<button class="btn-modal-upload" type="button" id="btn_attend_document"><span style="font-size: 22px;"><i class="far fa-file-alt"></i></span></button>
             	<button class="btn-save" type="submit" id="btn_write_upload"><span style="font-size: 18px; color: #ffffff;">올리기</span></button>
       	    </div>
       	  </form>

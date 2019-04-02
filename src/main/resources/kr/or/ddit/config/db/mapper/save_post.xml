@@ -5,7 +5,7 @@
 <mapper namespace="savepost">
 	
 	<!-- 저장글 정보 삽입 -->
-	<insert id="insert_savepostDate" parameterType="savepostVo">
+	<insert id="insert_savepostData" parameterType="savepostVo">
 		insert into save_post
 		values(
 			postsave_code_seq.nextval,
