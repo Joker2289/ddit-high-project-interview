@@ -5,7 +5,7 @@
 	<img src="/images/logo/HTML-500.png" alt="이미지를 찾을 수 없습니다." width="1168" height="170"></img><br>
 	<div style="position: absolute;">
 		<div style="border: 1px solid; position: relative; top: -50px; left: 30px; height: 105px; width: 105px;">
-	        <img src="/images/logo/ruda.png"  height="105" width="105" alt="이미지를 찾을 수 없습니다."/><br>
+	        <img src="/images/logo/ruda.png"  height="103" width="103" alt="이미지를 찾을 수 없습니다."/><br>
 	    </div>	
     </div>
 </div>  

@@ -25,107 +25,123 @@ import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.pagination.PaginationVo;
 
-
-
 @Controller
 public class CorporationController {
-	
+
 	private Logger logger = LoggerFactory.getLogger(PostController.class);
-	
-	@Resource(name="postService")
+
+	@Resource(name = "postService")
 	private IPostService postService;
-	
-	@Resource(name="memberService")
+
+	@Resource(name = "memberService")
 	private IMemberService memberService;
-	
-	@Resource(name="usersService")
+
+	@Resource(name = "usersService")
 	private IUsersService usersService;
-	
-	@Resource(name="corporationService")
+
+	@Resource(name = "corporationService")
 	private ICorporationService corporationService;
-	
-	
-	
+
 	/**
 	 * 업데이트 게시물 조회
+	 * 
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(path={"/corporation"})
-	public String postList(Model model, PaginationVo paginationVo, HttpServletRequest request){
+	@RequestMapping(path = { "/corporation" })
+	public String postList(Model model, PaginationVo paginationVo, HttpServletRequest request) {
 
-		
-		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("memberVO");
-		
-		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+
 		paginationVo.setMem_id(memberInfo.getMem_id());
-		
-		
-		if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id()); 
-			
-			//인맥 수 출력을 위한 세팅
-			
-			//팔로우 한 해쉬태그 출력을 위한 세팅
-			
+
+		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
+			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+
+			// 인맥 수 출력을 위한 세팅
+
+			// 팔로우 한 해쉬태그 출력을 위한 세팅
+
 			model.addAttribute("userInfo", userInfo);
-		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
+		} else if (memberInfo.getMem_division().equals("2")) { // 회사일 경우
 			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
-			
-			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
-			
+
+			// 회사 회원 로그인 시 홈 화면 출력을 위한 세팅
+
 			model.addAttribute("corpInfo", corpInfo);
-		} else { //관리자일 경우
-			//관리자 로그인 시 홈 화면 출력을 위한 세팅
-			
+		} else { // 관리자일 경우
+			// 관리자 로그인 시 홈 화면 출력을 위한 세팅
+
 		}
-		
+
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("timelinePost", timelinePost);
-		
+
 		return "corporationTiles";
 	}
-	
-	@RequestMapping(path={"/corporationIntroduction"})
-	public String corporationIntro(){
-		
+
+	@RequestMapping(path = { "/corporationIntroduction" })
+	public String corporationIntro(Model model, PaginationVo paginationVo, HttpServletRequest request) {
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+
+		paginationVo.setMem_id(memberInfo.getMem_id());
+
+		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
+			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+
+			// 인맥 수 출력을 위한 세팅
+
+			// 팔로우 한 해쉬태그 출력을 위한 세팅
+
+			model.addAttribute("userInfo", userInfo);
+		} else if (memberInfo.getMem_division().equals("2")) { // 회사일 경우
+			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+
+			// 회사 회원 로그인 시 홈 화면 출력을 위한 세팅
+
+			model.addAttribute("corpInfo", corpInfo);
+		} else { // 관리자일 경우
+			// 관리자 로그인 시 홈 화면 출력을 위한 세팅
+
+		}
+
+		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
+		model.addAttribute("timelinePost", timelinePost);
 		return "corporationIntroTiles";
 	}
-	
 
-	
 	/**
 	 * 회사타임라인게시글생성
+	 * 
 	 * @param memberVo
 	 * @param postVo
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(path="/write",method={RequestMethod.POST})
-	public String post(Model model, String smarteditor2, HttpServletRequest request){
+	@RequestMapping(path = "/write", method = { RequestMethod.POST })
+	public String post(Model model, String smarteditor2, HttpServletRequest request) {
 
-		MemberVo member = (MemberVo) request.getSession().getAttribute("memberVO");
-		
+		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+
 		String mem_id = member.getMem_id();
-		
+
 		System.out.println("987654321987654321");
-	
+
 		logger.debug("asdasdasdasdmem_id : {}", mem_id);
-		
+
 		PostVo insertPost = new PostVo();
 		String writer_name = "";
-		
+
 		CorporationVo corp = corporationService.select_corpInfo(mem_id);
 		writer_name = corp.getCorp_name();
-		
+
 		insertPost.setMem_id(mem_id);
 		insertPost.setPost_contents(smarteditor2);
 		insertPost.setWriter_name(writer_name);
-		
+
 		int insertCnt = postService.insert_post(insertPost);
-		
+
 		return "corporationTiles";
 
 	}
 }
-
