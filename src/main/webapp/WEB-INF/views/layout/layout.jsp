@@ -13,12 +13,10 @@
 <link href="/css/personalConnection.css" rel="stylesheet">
 <link href="/css/timeline/writemodal.css" rel="stylesheet">
 <link rel="shortcut icon" href="favicon.ico" />
-
 <script>
-
-
 $(document).ready(function() {
 	
+	//image 삽입버튼 숨기기
 	$("#input_img").hide();
 	
 	// 검색창
@@ -135,6 +133,7 @@ $(document).ready(function() {
 });
 
 </script>
+
 </head>
 <body>
 

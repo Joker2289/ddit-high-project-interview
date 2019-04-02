@@ -5,7 +5,7 @@
 <div class="container">
    <div class="row">
       <div style="margin-top: 101px;">
-	      <div class="col-md-3">
+	      <div id="col-info" class="col-md-3">
 
 	        <div class="panel panel-default">
 	          <div class="panel-body">
@@ -14,20 +14,20 @@
 	            	<label>배경 사진란</label><br>
 	            	<c:choose>
 	            	  <c:when test="${memberInfo.mem_division == '1' }"><!-- 일반회원일 경우 -->
-	            	    <c:if test="${sessionScope.detailVO.bg_path == null }">
+	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path == null }">
 	            	      <span><a href="#"><img src=""></a></span>
 	            	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>일촌 수<span style="float: right;">${connectionCnt }명</span></span></a></pre>
 	            	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${savepostCnt }개</span></span></a></pre>
 	            	    </c:if>
-	            	    <c:if test="${sessionScope.detailVO.bg_path != null }">
-	            	      <span><a href="#"><img src="${sessionScope.detailVO.bg_path }"></a></span>
+	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }">
+	            	      <span><a href="#"><img src="${sessionScope.SESSION_DETAILVO.bg_path }"></a></span>
 	            	    </c:if>
 	            	  </c:when>
-	            	  <c:when test="${memberVO.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
-	            	  	<c:if test="${sessionScope.detailVO.bg_path == null }">
+	            	  <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
+	            	  	<c:if test="${sessionScope.SESSION_DETAILVO.bg_path == null }">
 	            	    	<span><a href="#">사진 올리기</a></span>
 	            	    </c:if>
-	            	    <c:if test="${sessionScope.detailVO.bg_path != null }"><!-- 관리자일 경우 -->
+	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }"><!-- 관리자일 경우 -->
 	            	    	<span><a href="#"><img src="sessionScope.detailVO.bg_path"></a></span>
 	            	    </c:if>
 	            	  </c:when>
@@ -39,20 +39,20 @@
 	            <div class="col-user-profileimg">
 	            	<span>프로필 사진란</span><br>
 	            	<c:choose>
-	            	  <c:when test="${memberVO.mem_division == '1' }"><!-- 일반회원일 경우 -->
-	            	    <c:if test="${sessionScope.detailVO.profile_path == null }">
+	            	  <c:when test="${memberInfo.mem_division == '1' }"><!-- 일반회원일 경우 -->
+	            	    <c:if test="${sessionScope.SESSION_DETAILVO.profile_path == null }">
 	            	    	<span><a href="#">사진 올리기</a></span>
 	            	    </c:if>
-	            	    <c:if test="${sessionScope.detailVO.profile_path != null }">
-	            	    	<span><a href="#"><img src="${sessionScope.detailVO.profile_path }"></a></span>
+	            	    <c:if test="${sessionScope.SESSION_DETAILVO.profile_path != null }">
+	            	    	<span><a href="#"><img src="${sessionScope.SESSION_DETAILVO.profile_path }"></a></span>
 	            	    </c:if>
 	            	  </c:when>
-	            	  <c:when test="${memberVO.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
-	            	  	<c:if test="${sessionScope.detailVO.logo_path == null }">
+	            	  <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
+	            	  	<c:if test="${sessionScope.SESSION_DETAILVO.logo_path == null }">
 	            	    	<span><a href="#">사진 올리기</a></span>
 	            	    </c:if>
-	            	    <c:if test="${sessionScope.detailVO.logo_path != null }"><!-- 관리자일 경우 -->
-	            	    	<span><a href="#"><img src="${sessionScope.detailVO.logo_path }"></a></span>
+	            	    <c:if test="${sessionScope.SESSION_DETAILVO.logo_path != null }"><!-- 관리자일 경우 -->
+	            	    	<span><a href="#"><img src="${sessionScope.SESSION_DETAILVO.logo_path }"></a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:otherwise>
@@ -166,7 +166,7 @@
 	        </div>
 	        <!-- ./feed -->
 	      </div>
-	      <div class="col-md-3">
+	      <div id="col-add" class="col-md-3">
 	      <!-- add friend -->
 	        <div class="panel panel-default">
 	          <div class="panel-body">
@@ -257,6 +257,14 @@ var select_file;
 		
 		var currentTop = $(window).scrollTop();
 		
+		if($(window).scrollTop() > 50){
+			$("#col-add").stop().animate({top: (currentTop-50) + "px"}, 250);
+			$("#col-info").stop().animate({top: (currentTop-50) + "px"}, 250);
+		} else {
+			$("#col-add").stop().animate({top: 0 + "px"}, 250);
+			$("#col-info").stop().animate({top: 0 + "px"}, 250);
+		}
+		
 		if(currentTop >= $(document).height() - $(window).height() - 200){
 			
 // 			var postData = $(".scrolling:last").attr("data-post");
@@ -303,7 +311,3 @@ var select_file;
 
 	
 </script>
-
-
-
-
