@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,7 +89,7 @@
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 	mapOption = { 
 	    center: new daum.maps.LatLng(data1, data2), // 지도의 중심좌표
-	    level: 3 // 지도의 확대 레벨  
+	    level: 5 // 지도의 확대 레벨  
 	};
 	
 	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
