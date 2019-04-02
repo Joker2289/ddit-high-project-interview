@@ -11,7 +11,7 @@
       	    </div>
             
       	    <div class="modal-body">
-      	    	<textarea class="write_area" name="post_contents"  style="width:620px; height:300px;"></textarea>
+    	    	<textarea class="write_area" name="post_contents"  style="width:620px; height:300px; resize: none; border: 0;"></textarea>
       	    </div>
       	    
       	    <div class="modal-foot">

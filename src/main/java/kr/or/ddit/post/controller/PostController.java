@@ -57,7 +57,9 @@ public class PostController {
 	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request){
 		// 작업 완류 후 loginController로 이동시켜야 함
 		
-		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("memberVO");
+		logger.debug("asdasdasd {}", memberInfo);
 		
 		logger.debug("memberInfoGo : {}", memberInfo);
 		FollowVo followInfo = new FollowVo();
@@ -92,17 +94,14 @@ public class PostController {
 			
 		}
 		
+		
+		model.addAttribute("memberInfo", memberInfo);
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("timelinePost", timelinePost);
 		
 		return "timeLineTiles";
 	}
 	
-//	@RequestMapping(path={"/writePost"}, method={RequestMethod.POST})
-//	public String writePost(Model model, PostVo postVo){
-//		
-//		return "redirect:/timeline";
-//	}
 	
 	@RequestMapping(path={"/appendpost"}, method=RequestMethod.GET)
 	public String appendPost(PostVo postVo, PaginationVo paginationVo, HttpServletRequest request, Model model, int page){
