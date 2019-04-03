@@ -10,9 +10,14 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.or.ddit.corporation.model.CorporationVo;
+import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.recruit.model.RecruitVo;
+import kr.or.ddit.recruit.service.IRecruitService;
 import kr.or.ddit.save_recruit.model.Save_recruitVo;
 import kr.or.ddit.save_recruit.service.ISave_recruitService;
 
@@ -23,9 +28,67 @@ public class Save_recruitController {
 	@Resource(name="save_recruitService")
 	private ISave_recruitService srecrService;
 
+	@Resource(name="recruitService")
+	private IRecruitService recrService;
+
+	@Resource(name="corporationService")
+	private ICorporationService corpService;
+
 	// @채용공고저장 페이지 요청.
 	@RequestMapping("/srecr")
-	public String srecr(){
+	public String srecr(HttpSession session, Model model){
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		
+		// tempSVo - tempList를 조회하기 위한 임시 sVo
+		Save_recruitVo tempSVo = new Save_recruitVo();	
+		tempSVo.setSave_flag("t");
+		tempSVo.setUser_id(mVo.getMem_id());
+		
+		// tempList에서 중복되는 값을 제거 - sSrecrList
+		List<Save_recruitVo> tempList = srecrService.getSSrecrList(tempSVo);
+		List<Save_recruitVo> sSrecrList = new ArrayList<>();
+		
+		for(int i=0; i < tempList.size(); i++){
+			if(i == 0){
+				sSrecrList.add(tempList.get(i));
+			}else{
+				boolean add_flag = true;
+				
+				for(int j=0; j < sSrecrList.size(); j++){
+					if(tempList.get(i).getRecruit_code().equals( sSrecrList.get(j).getRecruit_code() )){
+						add_flag = false;
+					}
+				}
+				
+				if(add_flag == true){
+					sSrecrList.add(tempList.get(i));
+				}
+			}
+		}
+		
+		List<RecruitVo> srList = new ArrayList<>();
+		
+		for(int i=0; i < sSrecrList.size(); i++){
+			RecruitVo rVo = recrService.getRecr(sSrecrList.get(i).getRecruit_code());
+			srList.add(rVo);
+		}
+		
+		// srList에 맞는 corpImgList/corpNmList 보내기.
+		List<String> corpImgList = new ArrayList<>();
+		List<String> corpNmList = new ArrayList<>();
+		
+		for(int i=0; i < srList.size(); i++){
+			RecruitVo rVo = srList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			
+			corpImgList.add(cVo.getLogo_path());
+			corpNmList.add(cVo.getCorp_name());
+		}
+		
+		// sSrecrList를 보내야되는게 아니고 그걸 통한 recrList를 보내야되네? (srList)
+		model.addAttribute("srList", srList);
+		model.addAttribute("corpNmList", corpNmList);
+		model.addAttribute("corpImgList", corpImgList);
 		
 		return "srecrTiles";
 	}

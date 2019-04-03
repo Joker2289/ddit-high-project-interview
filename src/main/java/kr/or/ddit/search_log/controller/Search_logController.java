@@ -40,7 +40,7 @@ public class Search_logController {
 		sVo.setSearch_code(String.valueOf(sLogService.getAllCnt()+1));
 		
 		// search_save 임시로 2로 설정. -> 나중에 1로 바꾸기.
-		sVo.setSearch_save("2");
+		sVo.setSearch_save("1");
 		
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		if(mVo != null){
