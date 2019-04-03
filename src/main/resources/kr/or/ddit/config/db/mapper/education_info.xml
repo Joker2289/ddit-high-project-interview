@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="education_info">
 	
-	<!-- 경력 정보 등록 -->
+	<!-- 학력 정보 등록 -->
 	<insert id="insert_education_info" parameterType="education_infoVo">
 		insert into education_info
 		values(
@@ -20,4 +20,12 @@
 		)
 	</insert>
 	
+	<!-- 사용자의 학력정보 조회 -->
+	<select id="select_educationInfo" parameterType="String" resultType="education_infoVo">
+		select education_code, user_id, school_name, degree_name, major, admission, graduation, grade, contents
+		  from education_info
+		 where user_id = #{user_id}
+		 order by graduation desc
+		
+	</select>
 </mapper>

@@ -54,8 +54,8 @@ public class FilesVo {
 
 	@Override
 	public String toString() {
-		return "FilesVo [file_code=" + file_code + ", ref_code=" + ref_code + ", division=" + division + ", file_name="
-				+ file_name + ", file_path=" + file_path + "]";
+		return "file_code=" + file_code + "&ref_code=" + ref_code + "&division=" + division + "&file_name="
+				+ file_name + "&file_path=" + file_path;
 	}
 
 }

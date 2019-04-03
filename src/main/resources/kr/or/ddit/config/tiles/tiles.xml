@@ -75,8 +75,16 @@
 		<put-attribute name="content" value="/WEB-INF/views/personalConnection/feedFollowing.jsp"/>
 	</definition>	
 	
+	<definition name="connectionApplyTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/personalConnection/connectionApply.jsp"/>
+	</definition>	
+	
+	<definition name="filterSearchTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/personalConnection/filterSearch.jsp"/>
+	</definition>	
+	
 	<definition name="mapTiles" extends="layout">
 		<put-attribute name="content" value="/WEB-INF/views/recruit/map.jsp"/>
-	</definition>	
+	</definition>
 	
 </tiles-definitions>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<link href="/css/personalConnection/personalConnection.css" rel="stylesheet">
 <script type="text/javascript">
 $(document).ready(function() {
 	var divWidth  = "511"; 
@@ -54,8 +54,8 @@ $(document).ready(function() {
 			         	<a href="/connections">
 			         		<span style="padding-right: 5px;"><i class="fas fa-user-friends"></i></span>1촌 ${connections_count }명
 			         	</a>
-			           <a id="pc_leftmenuBorder" href="/coporation">
-			           	<span><i class="fas fa-building" ></i></span>회사 ()개
+			           <a id="pc_leftmenuBorder" href="/feedFollowing">
+			           	<span><i class="fas fa-building" ></i></span>회사 (${coporations_count})개
 			           </a>
 			        </div>
 			  </div>
@@ -63,7 +63,7 @@ $(document).ready(function() {
 					<div class="row">
 						<div class="col-md-12" >
 							<div id="pc_resiceConnection" class="whiteBox">
-								<label style="padding-right: 295px;">받은 일촌 신청 </label><a>모두 보기</a><br>
+								<label style="padding-right: 295px;">받은 일촌 신청 </label><a href="/connectionApply">모두 보기</a><br>
 							</div>
 						</div>
 						<div class="col-md-12" style="padding: 20px 0 20px 15px; ">

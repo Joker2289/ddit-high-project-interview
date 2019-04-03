@@ -29,6 +29,19 @@ public class UsersDaoImpl implements IUsersDao{
 	public int update_userInfo(UsersVo vo) {
 		return sqlSessionTemplate.update("users.update_userInfo", vo);
 	}
+
+	/**
+	 * Method : select_introduce
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 사용자의 간단프로필 (학력이나 경력사항) 
+	 */
+	@Override
+	public String select_introduce(String user_id) {
+		return sqlSessionTemplate.selectOne("users.select_introduce", user_id);
+	}
 	
 
 }

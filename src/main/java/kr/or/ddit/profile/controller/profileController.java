@@ -3,22 +3,32 @@ package kr.or.ddit.profile.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.or.ddit.career_info.model.Career_infoVo;
+import kr.or.ddit.career_info.service.ICareer_infoService;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
+import kr.or.ddit.education_info.model.Education_infoVo;
+import kr.or.ddit.education_info.service.IEducation_infoService;
+import kr.or.ddit.files.model.FilesVo;
+import kr.or.ddit.files.service.IFilesService;
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 
@@ -32,6 +42,18 @@ public class profileController {
 	
 	@Resource(name="corporationService")
 	private ICorporationService corpService;
+	
+	@Resource(name="education_infoService")
+	private IEducation_infoService eduService;
+	
+	@Resource(name="career_infoService")
+	private ICareer_infoService carService;
+	
+	@Resource(name="personalService")
+	private IPersonal_connectionService PersonalService;
+	
+	@Resource(name="filesService")
+	private IFilesService filesService;
 	
 	@RequestMapping("/menu")
 	public String menuDropdownView(String str) {
@@ -48,6 +70,56 @@ public class profileController {
 		
 	}
 	
+	@RequestMapping("/modalInsertView")
+	public String modalInsertView(String modalStr) {
+		
+		String result = "";
+		
+		switch (modalStr) {
+			case "introduction":
+				result="/profile/modalInsert/introduction";
+				break;
+			case "career":
+				result="/profile/modalInsert/career";
+				break;
+			case "education":
+				result="/profile/modalInsert/education";
+				break;
+			case "skills":
+				result="/profile/modalInsert/skills";
+				break;
+			case "Thesis":
+				result="/profile/modalInsert/Thesis";
+				break;
+			case "patent":
+				result="/profile/modalInsert/patent";
+				break;
+			case "project":
+				result="/profile/modalInsert/project";
+				break;
+			case "award":
+				result="/profile/modalInsert/award";
+				break;
+			case "language":
+				result="/profile/modalInsert/language";
+				break;
+			case "recommendation":
+				result="/profile/modalInsert/recommendation";
+				break;
+			default:
+				break;
+		}
+		
+		return result;
+		
+	}
+	
+	@RequestMapping("/otherDropdown")
+	public String otherDropdownView() {
+		
+		return "/profile/otherDropdown";
+	}
+	
 	@RequestMapping("/profileDropdown")
 	public String profileDropdownView() {
 		
@@ -55,7 +127,26 @@ public class profileController {
 	}
 	
 	@RequestMapping(path= {"/profileHome"})
-	public String profileHomeView() {
+	public String profileHomeView(Model model, HttpSession session) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		UsersVo userVo = usersService.select_userInfo(memberVo.getMem_id());
+		FilesVo filesVo = new FilesVo();
+		filesVo.setRef_code(memberVo.getMem_id());
+		filesVo.setDivision("43");
+		
+		String introduce = usersService.select_introduce(userVo.getUser_id());
+		List<Education_infoVo> education_infoList = eduService.select_educationInfo(userVo.getUser_id());
+		List<Career_infoVo> career_infoList = carService.select_careerInfo(userVo.getUser_id());
+		int peopleCount = PersonalService.connections_count(memberVo);
+		List<FilesVo> filesList = filesService.select_usersFile(filesVo);
+		
+		model.addAttribute("education_infoList", education_infoList);
+		model.addAttribute("career_infoList", career_infoList);
+		model.addAttribute("introduce", introduce);
+		model.addAttribute("peopleCount", peopleCount);
+		model.addAttribute("userVo", userVo);
+		model.addAttribute("filesList", filesList);
+		
 		return "profileHomeTiles";
 	}
 	
@@ -126,6 +217,33 @@ public class profileController {
 		sos.close();
 		fis.close();
 	}
+	
+	@RequestMapping(path={"/fileDownload"})
+	public void fileDownload(String file_code, Model model, HttpServletResponse resp) throws IOException{
+		
+		resp.setCharacterEncoding("UTF-8");
+		resp.setContentType("application/octet-stream");
+		
+		FilesVo filesVo = filesService.select_oneFile(file_code);
+		
+		String docName = new String(filesVo.getFile_name().getBytes("UTF-8"), "ISO-8859-1");
+		
+		FileInputStream fis = new FileInputStream(new File(filesVo.getFile_path()));
+		resp.setHeader("Content-Disposition", "attachment; filename=\"" + docName + "\"");
+
+		//4.FileInputStream을 response객체의 outputStream 객체에 write
+		ServletOutputStream sos = resp.getOutputStream();
+		byte[] buff = new byte[512];
+		int len = 0;
+		while ((len = fis.read(buff)) > -1) {
+			sos.write(buff);
+		}
+		
+		sos.close();
+		fis.close();
+		
+	}
+	
 	
 	
 

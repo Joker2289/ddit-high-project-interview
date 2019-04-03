@@ -38,6 +38,24 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 		return followCoporation;
 	}
 
+	@Override
+	public int coporations_count(FollowVo followVo) {
+		int coporations_count = sqlSessionTemplate.selectOne("personal.coporations_count", followVo);
+		return coporations_count;
+	}
+
+	@Override
+	public List<UsersVo> select_followConnections(MemberVo memberVo) {
+		List<UsersVo> followConnections = sqlSessionTemplate.selectList("personal.select_followConnections", memberVo);
+		return followConnections;
+	}
+
+	@Override
+	public List<FollowVo> select_followHashTag(MemberVo memberVo) {
+		List<FollowVo> select_followHashTag = sqlSessionTemplate.selectList("personal.select_followHashTag", memberVo);
+		return select_followHashTag;
+	}
+
 
 
 }

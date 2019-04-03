@@ -33,5 +33,20 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 		return personalDao.select_followCoporation(followVo);
 	}
 
+	@Override
+	public int coporations_count(FollowVo followVo) {
+		return personalDao.coporations_count(followVo);
+	}
+
+	@Override
+	public List<UsersVo> select_followConnections(MemberVo memberVo) {
+		return personalDao.select_followConnections(memberVo);
+	}
+
+	@Override
+	public List<FollowVo> select_followHashTag(MemberVo memberVo) {
+		return personalDao.select_followHashTag(memberVo);
+	}
+
 	
 }
