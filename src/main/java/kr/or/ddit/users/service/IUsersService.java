@@ -36,4 +36,14 @@ public interface IUsersService {
 	 * Method 설명 : 유저 수정
 	 */
 	int update_userInfo(UsersVo vo);
+	
+	/**
+	 * Method : select_introduce
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 사용자의 간단프로필 (학력이나 경력사항)
+	 */
+	String select_introduce(String user_id);
 }

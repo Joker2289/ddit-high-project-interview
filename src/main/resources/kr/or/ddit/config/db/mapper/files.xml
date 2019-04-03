@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="files">
+	
+	<select id="select_usersFile" parameterType="filesVo" resultType="filesVo">
+       select file_code, ref_code, division, file_name, file_path
+         from files
+        where division = #{division}
+          and ref_code = #{ref_code}
+	</select>
+	
+	<select id="select_oneFile" parameterType="String" resultType="filesVo">
+       select file_code, ref_code, division, file_name, file_path
+         from files
+        where file_code = #{file_code}
+	</select>
+	
+</mapper>

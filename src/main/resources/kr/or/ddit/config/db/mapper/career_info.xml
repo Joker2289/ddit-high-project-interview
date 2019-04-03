@@ -21,4 +21,11 @@
 		)
 	</insert>
 	
+	<!-- 사용자의 경력정보 조회 -->
+	<select id="select_careerInfo" parameterType="String" resultType="career_infoVo">
+		select career_code, user_id, job_position, job_rank, corporate_name, corp_local, join_date, resign_date, contents, corp_code
+		  from career_info
+		 where user_id = #{user_id}
+		 order by resign_date desc
+	</select>
 </mapper>

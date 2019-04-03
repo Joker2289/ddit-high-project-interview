@@ -56,5 +56,16 @@
 		       profile_contents = nvl(#{profile_contents, jdbcType=VARCHAR}, profile_contents)
 		 where user_id = #{user_id}  
 	</update>
+
+	<!-- 프로필 조회 -->
+	<select id="select_introduce" parameterType="String" resultType="String">
+		select a.introduce
+		  from (select decode(c_info.resign_date,null,c_info.corporate_name||' '|| c_info.job_position, e_info.school_name||' '||'학생') as introduce
+		          from career_info c_info,education_info e_info
+			     where c_info.user_id = e_info.user_id
+			       and c_info.user_id = #{user_id}
+			     order by c_info.join_date desc, e_info.admission desc) a
+		 where rownum &lt;= 1
+	</select>
 	
 </mapper>

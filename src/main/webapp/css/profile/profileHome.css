@@ -28,11 +28,11 @@
 	font-weight: bold;
 }
 
-.memberBox>span>i{
+.memberBox>div>span>i{
 	width:30px;
 }
 
-.memberBox>span{
+.memberBox>div>span{
 	color: #B3B6B9;
 	font-size: 18px; 
 }
@@ -61,3 +61,79 @@
 	border: 4px solid #E3EEF2; 
 	border-radius: 100px;
 }
+
+.profileDropdownBox>ul>li>a{
+	font-size: 17px; 
+	font-weight: 900;
+}
+
+.well{
+	width: 310px;
+	display: flex; 
+	padding: 18px 0 8px 0px;
+	justify-content: center; 
+	align-items: center;
+}
+
+.well>span{
+	font-size: 20px;
+	height: 20px;
+	padding-right: 10px;
+	padding-left: 10px;
+	margin-top: -15px;
+	color: #777a7d;
+}
+.well>button{
+	height: 32px;
+	width:32px;
+	border-radius: 32px;
+	border: 1px solid rgba(0, 0, 0, 0.6);
+	padding: 0px;
+}
+.well>span>i{
+	width: 20px;
+}
+
+.well>button:hover, .well>button:focus, .well>button:active{
+	border: 2px solid black;
+}
+.dropdownAccordion{
+	width: 195px; 
+	min-height: 19px; 
+	font-size: 15px; 
+	color: #777a7d; 
+}
+
+.otherDropdown {
+	height: 40px; 
+	padding-top: 3px; 
+	padding-bottom: 3px; 
+	padding-left: 15px;
+}
+
+.userContentsSkip>p{
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  white-space: nowrap; 
+  width: 743px;
+  
+  white-space: normal; 
+  line-height: 1.2; 
+  text-align: left; 
+  word-wrap: break-word; 
+  display: -webkit-box; 
+  -webkit-line-clamp: 3; 
+  -webkit-box-orient: vertical;
+
+}
+
+.userContentsShow{
+	width: 793px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: -25px;
+    color: #0073b1; 
+    font-size: 17px;
+    
+}
+

@@ -24,6 +24,7 @@
 		<typeAlias alias="job_positionVo" type="kr.or.ddit.util.model.Job_positionVo"/>
 		<typeAlias alias="interestVo" type="kr.or.ddit.interest.model.InterestVo"/>
 		<typeAlias alias="savepostVo" type="kr.or.ddit.save_post.model.Save_postVo"/>
+		<typeAlias alias="filesVo" type="kr.or.ddit.files.model.FilesVo"/>
 	</typeAliases> 
 	
   
@@ -46,6 +47,7 @@
 		<mapper resource="kr/or/ddit/config/db/mapper/job_position.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/interest.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/save_post.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/files.xml"/>
 	</mappers>
 </configuration>
 
