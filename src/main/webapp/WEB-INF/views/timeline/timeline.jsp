@@ -232,8 +232,13 @@
 		$('#summernote').summernote({
 			placeholder: '소식을 업데이트 해주세요!',
 	        tabsize: 2,
-	        height: 450
+	        height: 440,
+	        maxheight: 600,
+	        width: 655,
+	        maxwidth: 700
 		});
+		
+		
 		
 		$(".col-comment").hide();
 
@@ -242,12 +247,12 @@
 		$(".note-resizebar").hide();
 		$(".note-status-output").hide();
 		
+		//게시글 댓글 버튼 클릭 시 댓글 영역 출력
 		$(".btn_comment").on("click", function() {
 			
 			var className = $(this).attr('title');
 			
 			if (!$("."+className).attr('class').endsWith('On')) {
-				
 				$("."+className).show();
 				$("."+className).attr('class', 'col-comment '+className+' On');
 			}else {

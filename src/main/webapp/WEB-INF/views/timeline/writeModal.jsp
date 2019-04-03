@@ -11,9 +11,7 @@
       	    </div>
             
       	    <div class="modal-write-body">
-    	    	<textarea id="summernote" class="write_area" name="post_contents"  style="width:620px; height:300px; resize: none; border: 0;"></textarea>
-    	    	<input type="file" id="input_img"/>
-    	    	<img id="img"/>
+    	    	<textarea id="summernote" class="write_area" name="post_contents"  style="width:200px; height:200px; resize: none; border: 0;"></textarea>
       	    </div>
       	    
       	    <div class="modal-write-foot">
