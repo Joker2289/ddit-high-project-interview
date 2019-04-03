@@ -81,6 +81,17 @@ public interface ISave_recruitDao {
 	 * Method 설명 : 채용공고저장 수정.
 	 */
 	int updateSrecr(Save_recruitVo sVo);
+
+	/**
+	 * 
+	 * Method : getSSrecrList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param sVo
+	 * @return
+	 * Method 설명 : 특정 유저가 스크랩한 채용공고 목록 조회.
+	 */
+	List<Save_recruitVo> getSSrecrList(Save_recruitVo sVo);
 	
 	
 	

@@ -1,5 +1,6 @@
 package kr.or.ddit.save_recruit.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,7 +15,7 @@ public class Save_recruitServiceImpl implements ISave_recruitService{
 
 	@Resource(name="save_recruitDao")
 	private ISave_recruitDao srecrDao;
-
+	
 	/**
 	 * 
 	 * Method : insertSrecr
@@ -124,6 +125,22 @@ public class Save_recruitServiceImpl implements ISave_recruitService{
 		int updateCnt = srecrDao.updateSrecr(sVo);
 		
 		return updateCnt;
+	}
+
+	/**
+	 * 
+	 * Method : getSSrecrList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param sVo
+	 * @return
+	 * Method 설명 : 특정 유저가 스크랩한 채용공고 목록 조회.
+	 */
+	@Override
+	public List<Save_recruitVo> getSSrecrList(Save_recruitVo sVo) {
+		List<Save_recruitVo> sSrecrList = srecrDao.getSSrecrList(sVo);
+		
+		return sSrecrList;
 	}
 	
 	

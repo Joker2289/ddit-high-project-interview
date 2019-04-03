@@ -73,8 +73,7 @@ public class RecruitController {
 
 	// @채용공고 페이지 요청.
 	@RequestMapping("/recruit")
-	public String recruit(HttpSession session, String alarm_flag, String search_code, HttpServletRequest req, 
-			Model model) throws IOException{
+	public String recruit(HttpSession session, HttpServletRequest req, Model model) throws IOException{
 		// 유저정보 수정. 'SESSION_MEMBERVO'
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");		
 		
@@ -181,15 +180,6 @@ public class RecruitController {
 		}
 		
 		model.addAttribute("rRList2", rRList2);
-		
-		
-		// alarm_flag - 저장한 검색어 제거하기. - search_save를 '1'로 변경.
-		if(alarm_flag != null && alarm_flag.equals("t")){
-			Search_logVo sVo = sLogService.getSearch_log(search_code);
-			sVo.setSearch_save("1");
-			
-			sLogService.updateSearch_log(sVo);
-		}
 
 		// 저장한 검색어 리스트 넘기기.
 		Search_logVo sVo = new Search_logVo();
@@ -704,7 +694,13 @@ public class RecruitController {
 		return "mapTiles";
 	}
 	
-	
+	// 채용공고 페이지에서 @RequestMapping으로 void 메서드를 실행시키면 어떻게 되지?
+	// attach_file에서 파일 다운로드 할때 void 메서드로 했는데.. 지금은 왜 404에러가 나지?
+	// @void 메서드 테스트.
+//	@RequestMapping("/test")
+//	public void test() {
+//		logger.debug("void test !!");
+//	}
 	
 	
 	

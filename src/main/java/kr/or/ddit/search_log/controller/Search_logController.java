@@ -40,7 +40,7 @@ public class Search_logController {
 		sVo.setSearch_code(String.valueOf(sLogService.getAllCnt()+1));
 		
 		// search_save 임시로 2로 설정. -> 나중에 1로 바꾸기.
-		sVo.setSearch_save("2");
+		sVo.setSearch_save("1");
 		
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		if(mVo != null){
@@ -55,12 +55,19 @@ public class Search_logController {
 		return "redirect:" + req.getContextPath() + "/recrSearch";
 	}
 	
-	// @
-//	@RequestMapping("/")
-//	public String() {
-//
-//		return "";
-//	}
+	// @검색내역 저장여부 수정.
+	@RequestMapping("/updateSave")
+	public String updateSave(String save_flag, String search_code, HttpServletRequest req) {
+		// save_flag 't'를 받으면 - 검색내역 저장 해제. - search_save를 '1'로 변경.
+		if(save_flag != null && save_flag.equals("t")){
+			Search_logVo sVo = sLogService.getSearch_log(search_code);
+			sVo.setSearch_save("1");
+			
+			sLogService.updateSearch_log(sVo);
+		}
+
+		return "redirect:" + req.getContextPath() + "/recruit";
+	}
 	
 	
 	
