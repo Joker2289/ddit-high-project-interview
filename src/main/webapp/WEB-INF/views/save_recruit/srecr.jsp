@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>채용공고｜222</title>
+	<title>22222</title>
 	<style type="text/css">
 		
 		
@@ -43,22 +43,16 @@
 		<tr>
 			<td>
 				<!-- 첫번째 항목 따로 출력했음. -->
-				<table id="srecr1" border="1" onmouseover="" style="margin: 2px; cursor: pointer;">
+				<table border="1" style="margin: 2px;">
 					<tr>
-						<td rowspan="6">${corpImgList.get(0) }</td>
-						<td>${srList.get(0).recruit_title }</td>
-					</tr>
-					<tr>
-						<td>${corpNmList.get(0) }</td>
-					</tr>
-					<tr>
-						<td>${srList.get(0).job_local }</td>
-					</tr>
-					<tr>
-						<td>지원 버튼 (또는 'xxx전에 마감되었습니다.')</td>
-					</tr>
-					<tr>
-						<td><i id="" class="far fa-bookmark" onmouseover="" 
+						<td id="img1" rowspan="6" onmouseover="" style="cursor: pointer;">${corpImgList.get(0) }</td>
+						<td id="srecr1" onmouseover="" style="cursor: pointer;">
+							${srList.get(0).recruit_title }<br>
+							${corpNmList.get(0) }<br>
+							${srList.get(0).job_local }<br>
+							지원 버튼 (또는 'xxx전에 마감되었습니다.')<br>
+						</td>
+						<td><i id="scrap1" class="fas fa-bookmark" onmouseover="" 
 								style="margin-top: 10px; font-size: large; cursor: pointer;"></i></td>
 					</tr>
 				</table>
@@ -90,29 +84,24 @@
 		<c:forEach begin="2" end="${srList.size() }" varStatus="i">
 			<tr>
 				<td>
-					<table id="srecr${i.index }" border="1" style="margin: 2px; cursor: pointer;" onmouseover="">
+					<table border="1" style="margin: 2px;">
 						<tr>
-							<td rowspan="6">${corpImgList.get(i.index - 1) }</td>
-							<td>${srList.get(i.index - 1).recruit_title }</td>
-						</tr>
-						<tr>
-							<td>${corpNmList.get(i.index - 1) }</td>
-						</tr>
-						<tr>
-							<td>${srList.get(i.index - 1).job_local }</td>
-						</tr>
-						<tr>
-							<td>지원 버튼 (또는 'xxx전에 마감되었습니다.')</td>
-						</tr>
-						<tr>
-							<td><i id="" class="far fa-bookmark" onmouseover="" 
+							<td id="img${i.index }" rowspan="6" onmouseover="" style="cursor: pointer;">${corpImgList.get(i.index - 1) }</td>
+							<td id="srecr${i.index }" onmouseover="" style="cursor: pointer;">
+								${srList.get(i.index - 1).recruit_title }<br>
+								${corpNmList.get(i.index - 1) }<br>
+								${srList.get(i.index - 1).job_local }<br>
+								지원 버튼 (또는 'xxx전에 마감되었습니다.')<br>
+							</td>
+							<td><i id="scrap${i.index }" class="fas fa-bookmark" onmouseover="" 
 									style="margin-top: 10px; font-size: large; cursor: pointer;"></i></td>
-						</tr>						
+						</tr>
 					</table>			
 				</td>
 			</tr>
 		</c:forEach>
 	</table>	
+	
 	
 	<br><br>
 	
@@ -131,6 +120,27 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		console.log("docu");
+		
+		// 이미지, 채용공고 & 스크랩 클릭
+		<c:forEach begin="1" end="${srList.size() }" varStatus="i">
+			$("#img${i.index }").on("click", function(){
+				alert("code : ${srList.get(i.index - 1).recruit_code }");
+				
+				// 상세보기 페이지로 이동.
+				window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code=${srList.get(i.index - 1).recruit_code }';
+			});
+			
+			$("#srecr${i.index }").on("click", function(){
+// 				alert("채용공고 ${i.index }");
+			});
+			
+			$("#scrap${i.index }").on("click", function(){
+// 				alert("스크랩 ${i.index }");
+
+				// 스크랩 취소하기.
+			});
+		</c:forEach>
+		
 		
 	});
 
