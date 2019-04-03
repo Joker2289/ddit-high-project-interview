@@ -10,6 +10,18 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
+@CHARSET "UTF-8";
+
+@font-face { 
+	font-family: '한돈삼겹살체300g'; 
+	src: url(/font/한돈삼겹살체300g.ttf) format('truetype');
+}
+
+
+*{
+	font-family: 한돈삼겹살체300g;
+	color: #696c6f;
+}
  
 .btn-success,
 	.btn-warning {
