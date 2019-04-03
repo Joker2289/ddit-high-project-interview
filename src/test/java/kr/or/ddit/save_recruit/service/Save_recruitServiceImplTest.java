@@ -100,6 +100,27 @@ public class Save_recruitServiceImplTest extends LogicTestConfig{
 		assertNotNull(updateCnt);
 	}
 	
+	/**
+	 * 
+	 * Method : testGetSSrecrList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 특정 유저가 스크랩한 채용공고 목록 조회 테스트.
+	 */
+	@Test
+	public void testGetSSrecrList() {
+		/***Given***/
+		Save_recruitVo sVo = new Save_recruitVo();
+		sVo.setSave_flag("t");
+		sVo.setUser_id("brown");
+
+		/***When***/
+		List<Save_recruitVo> sSrecrList = srecrService.getSSrecrList(sVo);
+
+		/***Then***/
+		assertNotNull(sSrecrList);
+	}
+	
 	
 	
 }

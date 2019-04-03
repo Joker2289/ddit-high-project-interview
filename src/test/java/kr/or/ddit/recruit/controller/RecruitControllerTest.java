@@ -3,6 +3,7 @@ package kr.or.ddit.recruit.controller;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +20,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
+import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
 import kr.or.ddit.save_recruit.service.ISave_recruitService;
+import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.test.WebTestConfig;
 import kr.or.ddit.users.model.UsersVo;
@@ -40,6 +44,9 @@ public class RecruitControllerTest extends WebTestConfig{
 	
 	@Resource(name="search_logService")
 	private ISearch_logService SLService;	
+	
+	@Resource(name="memberService")
+	private IMemberService memService;	
 	
 	/**
 	 * 
@@ -249,6 +256,190 @@ public class RecruitControllerTest extends WebTestConfig{
 		/***Then***/
 		assertEquals("3", list.get(0));
 		assertEquals(5, list.size());
+	}
+	
+	/**
+	 * 
+	 * Method : testRecr_search
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 채용공고 검색 테스트.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testRecr_search() throws Exception {
+		/***Given***/
+		MemberVo mVo = memService.select_memberInfo("brown");
+
+		/***When***/
+		MvcResult mvcResult = mockMvc.perform(get("/recrSearch").sessionAttr("memberVO", mVo)).andReturn();
+		ModelAndView mav = mvcResult.getModelAndView();
+		String viewName = mav.getViewName();
+		
+		Search_logVo lSLog = (Search_logVo) mav.getModel().get("lSLog");
+
+		/***Then***/
+		assertEquals("recrSearchTiles", viewName);
+		assertEquals("samsung", lSLog.getSearch_word());
+	}
+	
+	/**
+	 * 
+	 * Method : testRandomArr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : String[]을 넣으면 num개를 골라서 strList를 반환해주는 메서드 테스트.
+	 */
+	@Test
+	public void testRandomArr() {
+		/***Given***/
+		// String[]을 넣으면 num개를 골라서 strList를 반환
+//		private List<String> ran_arr_arr(String[] arr_jobtype, int num) {
+		String[] arr_jobtype = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+		int num = 10;
+		
+		List<String> strList = new ArrayList<>();
+		List<Integer> numList = new ArrayList<>();
+		numList.add((int) (Math.random() * arr_jobtype.length));
+		
+		// 먼저 numList에 중복되지 않게 숫자를 num개 뽑아서 넣음.
+		// 중복이 되나?? - ㅇㅇ. continue를 쓸때 while문이 다시 반복되는게 아니고 먼저 걸려있는 for문이 
+		// 반복되기 때문에 내가 원하는 결과가 나오지 않음. flag를 추가해서 for문 밖에서 continue를 타게 만들자.
+		while(true){
+			int rnum = (int) (Math.random() * arr_jobtype.length);
+			
+			boolean skip_flag = false;
+			for(int j=0; j < numList.size(); j++){
+				if(rnum == numList.get(j)){
+					skip_flag = true;
+				}
+			}
+			
+			if(skip_flag == true){
+				continue;
+			}
+			
+			numList.add(rnum);
+			
+			if(numList.size() == num){
+				break;
+			}
+		}
+		
+		for(int i=0; i < numList.size(); i++){
+			strList.add(arr_jobtype[numList.get(i)]);
+		}
+//			return strList;
+
+		/***When***/
+		logger.debug("to string strList ? : {}", strList.toString());
+		// 중복되네.. - 수정.
+		
+		boolean duplication_flag = true;
+		boolean duplication_check = false;
+		String checkValue = strList.get(0);
+		for(int i=1; i < strList.size(); i++){
+			if(strList.get(i).equals(checkValue)){
+				duplication_check = true;
+				break;
+			}
+		}
+		
+		if(duplication_check == false){
+			duplication_flag = false;
+		}
+
+		/***Then***/
+		assertFalse(duplication_flag);
+	}
+	
+	/**
+	 * 
+	 * Method : testMap
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 지도 검색 페이지 요청 테스트.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testMap() throws Exception {
+		/***Given***/
+
+		/***When***/
+		MvcResult mvcResult = mockMvc.perform(get("/map")).andReturn();
+		ModelAndView mav = mvcResult.getModelAndView();
+		String viewName = mav.getViewName();
+
+		/***Then***/
+		assertEquals("mapTiles", viewName);
+	}
+	
+	// 실수 값 변환 테스트.
+	@Test
+	public void testDouble() {
+		/***Given***/
+		String lat = "123.2233332223";
+		// 에러. lat - split - 형변환 - 다시 소수점 붙이기?
+		String[] arr_lat = lat.split("\\.");
+		
+		logger.debug("arr_lat[1]? : {}", arr_lat[1]);
+		int int_lat = Integer.valueOf(arr_lat[0].concat(arr_lat[1].substring(0, 5)));
+		
+		/***When***/
+		// 123.22333 <- 12322333 / 100000.0
+		double double_lat = int_lat / 100000.0;
+		logger.debug("double_lat? : {}", double_lat);
+
+		/***Then***/
+		assertTrue(double_lat > 100);
+	}
+	
+	// 다음 지도 - 주소 값 크롤링 테스트.
+	@Test
+	public void testCrawling() throws IOException {
+		/***Given***/
+		// addr값이 페이지 소스에 나타나지가 않네. -> 그냥 select element 한 다음 소스를 복사해오면 되네.
+		// 가 아니고 select elememt 한 다음 링크 주소를 복사해야됨. 도 안되네. javascript로 페이지가 만들
+		// 어지는 곳은 크롤링하기가..
+		
+//		Document doc = Jsoup.connect("https://map.naver.com/?query=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4&type=SITE_1&queryRank=0").get();		
+//				
+//		Elements data = doc.select("#panel dd");
+//		logger.debug("data? : {}", data);
+		
+//		대전 중구 대종로 486, 대전 서구 계룡로 692 1층, 2층, 대전 유성구 도안대로 573, 대전 유성구 온천서로 2, 대전 유성구 대학로 82, 대전 유성구 테크노중앙로 68, 대전 대덕구 동서대로 1776, 대전 대덕구 한밭대로 1122, 대전 서구 계백로 1128, 대전 서구 관저로 142, 대전 동구 옥천로 118, 대전 대덕구 석봉동 309-10, 대전 서구 대덕대로 189 1층, 대전 서구 둔산로31번길 28 금정빌딩 1층, 대전 서구 대덕대로241번길 35
+
+
+
+		/***When***/
+
+		/***Then***/
+		//assert
+	}
+	
+	// 주소 데이터 가져오기.
+	@Test
+	public void testAddr() {
+		/***Given***/
+		String data_daejeon = "대전 중구 대종로 486/대전 서구 계룡로 692 1층, 2층/대전 유성구 도안대로 573/대전 유성구 온천서로 2/대전 유성구 대학로 82/대전 유성구 테크노중앙로 68/대전 대덕구 동서대로 1776/대전 대덕구 한밭대로 1122/대전 서구 계백로 1128/대전 서구 관저로 142/대전 동구 옥천로 118/대전 대덕구 석봉동 309-10/대전 서구 대덕대로 189 1층/대전 서구 둔산로31번길 28 금정빌딩 1층/대전 서구 대덕대로241번길 35";
+		String[] arr_data_daejeon = data_daejeon.split("/");
+		
+		String data_seoul = "서울 종로구 종로 51/서울 강남구 도산대로57길 24/서울 종로구 세종대로 167 현대해상본사사옥 별관내/서울 중구 소공로 112 반도조선아케이드/서울 서초구 사평대로 205 센트럴시티 파미에파크돔/서울 강남구 강남대로 390/서울 강남구 선릉로 836 삼원빌딩 1~2층/서울 강서구 등촌로 57/서울 송파구 오금로 241/서울 마포구 양화로 165 상진빌딩 1층/서울 송파구 석촌호수로 262 지상 1, 2층/서울 영등포구 신길로 137 1,2층/서울 용산구 독서당로 94/서울 양천구 신월로 341/서울 종로구 인사동길 14";
+		String[] arr_data_seoul = data_daejeon.split("/");
+		
+		String data = "대전 중구 대종로 486/대전 서구 계룡로 692 1층, 2층/대전 유성구 도안대로 573/대전 유성구 온천서로 2/대전 유성구 대학로 82/대전 유성구 테크노중앙로 68/대전 대덕구 동서대로 1776/대전 대덕구 한밭대로 1122/대전 서구 계백로 1128/대전 서구 관저로 142/대전 동구 옥천로 118/대전 대덕구 석봉동 309-10/대전 서구 대덕대로 189 1층/대전 서구 둔산로31번길 28 금정빌딩 1층/대전 서구 대덕대로241번길 35/서울 종로구 종로 51/서울 강남구 도산대로57길 24/서울 종로구 세종대로 167 현대해상본사사옥 별관내/서울 중구 소공로 112 반도조선아케이드/서울 서초구 사평대로 205 센트럴시티 파미에파크돔/서울 강남구 강남대로 390/서울 강남구 선릉로 836 삼원빌딩 1~2층/서울 강서구 등촌로 57/서울 송파구 오금로 241/서울 마포구 양화로 165 상진빌딩 1층/서울 송파구 석촌호수로 262 지상 1, 2층/서울 영등포구 신길로 137 1,2층/서울 용산구 독서당로 94/서울 양천구 신월로 341";
+		String[] arr_data = data.split("/");
+		// 부산 : 부산 동래구 충렬대로 101/부산 부산진구 전포대로199번길 27
+		
+		String rest_data = "서울 종로구 인사동길 14";
+
+		/***When***/
+		logger.debug("check : {}", arr_data_daejeon[2]);
+		logger.debug("check length : {}", arr_data_daejeon.length);
+		logger.debug("check length : {}", arr_data.length);
+
+		/***Then***/
+		assertTrue(arr_data_daejeon.length > 5);
 	}
 	
 	

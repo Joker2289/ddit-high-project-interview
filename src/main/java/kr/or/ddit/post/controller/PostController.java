@@ -24,6 +24,8 @@ import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
+import kr.or.ddit.save_post.model.Save_postVo;
+import kr.or.ddit.save_post.service.ISave_postService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.pagination.PaginationVo;
@@ -51,18 +53,25 @@ public class PostController {
 	
 	@Resource(name="followService")
 	private IFollowService followService; 
+	
+	@Resource(name="save_postService")
+	private ISave_postService savepostService;
 	 
 	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
 	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request){
 		// 작업 완류 후 loginController로 이동시켜야 함
 		
-		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("memberVO");
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		logger.debug("asdasdasd {}", memberInfo);
 		
 		FollowVo followInfo = new FollowVo();
 		followInfo.setMem_id(memberInfo.getMem_id());
 		followInfo.setDivision("14");
 		
+		Save_postVo savepost = new Save_postVo();
+		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
 		
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
@@ -80,6 +89,7 @@ public class PostController {
 			model.addAttribute("userInfo", userInfo);
 			model.addAttribute("connectionCnt", connectionCnt);
 //			model.addAttribute("followHashtag", followHashtag);
+			model.addAttribute("savepostCnt", savepostCnt);
 		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
 			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
 			
@@ -91,24 +101,21 @@ public class PostController {
 			
 		}
 		
+		
+		model.addAttribute("memberInfo", memberInfo);
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("timelinePost", timelinePost);
 		
 		return "timeLineTiles";
 	}
 	
-//	@RequestMapping(path={"/writePost"}, method={RequestMethod.POST})
-//	public String writePost(Model model, PostVo postVo){
-//		
-//		return "redirect:/timeline";
-//	}
 	
 	@RequestMapping(path={"/appendpost"}, method=RequestMethod.GET)
 	public String appendPost(PostVo postVo, PaginationVo paginationVo, HttpServletRequest request, Model model, int page){
 		
 		List<PostVo> afterPost = new ArrayList<PostVo>();
 		
-		MemberVo member = (MemberVo) request.getSession().getAttribute("memberVO");
+		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_DETAILVO");
 		
 		
 		paginationVo.setMem_id(member.getMem_id());
@@ -136,7 +143,7 @@ public class PostController {
 		
 		List<PostVo> afterPost = new ArrayList<PostVo>();
 		
-		MemberVo member = (MemberVo) request.getSession().getAttribute("memberVO");
+		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		
 		paginationVo.setMem_id(member.getMem_id());
@@ -161,7 +168,7 @@ public class PostController {
 	@RequestMapping(path={"/writepost_timeline"}, method=RequestMethod.POST)
 	public String writePost_timeline(Model model, String post_contents, HttpServletRequest request){
 		
-		MemberVo member = (MemberVo) request.getSession().getAttribute("memberVO");
+		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		String mem_id = member.getMem_id();
 		
@@ -199,47 +206,6 @@ public class PostController {
 		} else {
 			return "redirect:/timeline";
 		}
-	}
-	
-	@RequestMapping(path={"/modifypost"}, method=RequestMethod.GET)
-	public String modifyPost_timeline(Model model, String post_code){
-		
-		PostVo bringPost = postService.select_postInfo(post_code);
-		
-		model.addAttribute("bringPost", bringPost);
-		
-		return "redirect:/timeline"; //ajax요청으로 보내줘야 함 -> 수정예정
-	}
-	
-	@RequestMapping(path={"/modifysave"}, method=RequestMethod.POST)
-	public String modifyPost_timeline(Model model, String post_code, String post_contents){
-		logger.debug("qweqwe-----post : {} {}", post_code, post_contents);
-		PostVo modifiedPost = new PostVo();
-		
-		modifiedPost.setPost_code(post_code);
-		modifiedPost.setPost_contents(post_contents);
-		
-		int updateCnt = postService.update_post(modifiedPost);
-		
-		if(updateCnt == 1){
-			return "redirect:/timeline"; //성공시 타임라인으로
-		} else {
-			return "redirect:/timeline"; //실패시...?
-		}
-	}
-	
-	@RequestMapping(path={"/deletepost"}, method=RequestMethod.GET)
-	public String delete_post(Model model, String post_code){
-		logger.debug("asdasdasd-----post_code : {}", post_code);
-		
-		int deleteCnt = postService.delete_post(post_code);
-		
-		if(deleteCnt == 1){
-			return "redirect:/timeline";
-		} else {
-			return "redirect:/timeline"; //실패시...?
-		}
-		
 		
 	}
 	

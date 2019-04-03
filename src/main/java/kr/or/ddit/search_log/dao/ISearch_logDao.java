@@ -70,6 +70,17 @@ public interface ISearch_logDao {
 	 * Method 설명 : 검색내역 수정.
 	 */
 	int updateSearch_log(Search_logVo sVo);
+
+	/**
+	 * 
+	 * Method : getLSLog
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 특정 회원이 검색하려는 값 조회.
+	 */
+	Search_logVo getLSLog(String mem_id);
 	
 	
 }

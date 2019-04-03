@@ -23,6 +23,18 @@
 		<put-attribute name="content" value="/WEB-INF/views/corporation/corporationHome.jsp" />
 	</definition>
 	
+	<definition name="corporationIntroTiles" extends="layout" >
+		<put-attribute name="content" value="/WEB-INF/views/corporation/corporationIntroduction.jsp" />
+	</definition>
+	
+	<definition name="corporationRecruitmentTiles" extends="layout" >
+		<put-attribute name="content" value="/WEB-INF/views/corporation/corporationRecruitment.jsp" />
+	</definition>
+	
+	<definition name="corporationEmployeeTiles" extends="layout" >
+		<put-attribute name="content" value="/WEB-INF/views/corporation/corporationEmployee.jsp" />
+	</definition>
+	
 	<definition name="connectionsTiles" extends="layout" >
 		<put-attribute name="content" value="/WEB-INF/views/personalConnection/connections.jsp" />
 	</definition>
@@ -70,5 +82,9 @@
 	<definition name="filterSearchTiles" extends="layout">
 		<put-attribute name="content" value="/WEB-INF/views/personalConnection/filterSearch.jsp"/>
 	</definition>	
+	
+	<definition name="mapTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/recruit/map.jsp"/>
+	</definition>
 	
 </tiles-definitions>

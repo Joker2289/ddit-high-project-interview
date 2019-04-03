@@ -1,16 +1,15 @@
+<%@page import="ch.qos.logback.classic.Logger"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	
-<!-- <!DOCTYPE html> -->
-<!-- <html> -->
-<!-- <head> -->
+
 <!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
 <%-- <title>${memberVO.mem_id }</title> --%>
 	
 
 
 
-<!-- </head> -->
+</head> 
 
 <body>
 
@@ -27,14 +26,14 @@
 // 		});
 // 	});
 
-	var editor_object = [];
 	
 	$(function(){
 	    //전역변수선언
+	var editor_object = [];
 	     
 	    nhn.husky.EZCreator.createInIFrame({
 	        oAppRef: editor_object,
-	        elPlaceHolder: "smarteditor",
+	        elPlaceHolder: "smarteditor2",
 	        sSkinURI: "/SE2/SmartEditor2Skin.html",
 	        htParams : {
 	            // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
@@ -48,15 +47,15 @@
 	        }, 
 	          fOnAppLoad : function(){
 	              //기존 저장된 내용의 text 내용을 에디터상에 뿌려주고자 할때 사용
-	             editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
+	             editor_object.getById["smarteditor2"].exec("UPDATE_CONTENTS_FIELD", []);
 	          },
-	          fCreator: "createSEditor2"
+	          fCreator: "createSEditor"
 	    });
 	     
 	    //전송버튼 클릭이벤트
 	    $("#savebutton").click(function(){
 	        //id가 smarteditor인 textarea에 에디터에서 대입
-	        editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
+	        editor_object.getById["smarteditor2"].exec("UPDATE_CONTENTS_FIELD", []);
 	         
 	        // 이부분에 에디터 validation 검증
 	         
@@ -64,40 +63,17 @@
 	        $("#frm").submit();
 	    });
 	});
+ 
 
 
 </script>
 
 
-		
-		
-<form id="frm" action="${pageContext.request.contextPath }/corporation" method="post" >
-<table width="100%">
-<!--         <tr> -->
-<!--             <td>제목</td> -->
-<!--             <td><input type="text" id="title" name="title" style="width:650px"/></td> -->
-<!--         </tr> -->
-        <tr>
-            <td>내용</td>
-            <td>
-                <textarea rows="10" cols="30" id="smarteditor" name="smarteditor" style="width:650px; height:350px; "></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="button" id="savebutton" value="저장"/>
-                <input type="button" value="취소"/>
-            </td>
-        </tr>
-</table>
+<div style="position: relative; top: -177px; left: 180px; "> 
+	<form id="frm" action="${pageContext.request.contextPath}/corporation" method="post" >
+		<textarea rows="10" cols="30" id="smarteditor2" name="smarteditor2" style="width:650px; height:350px; "></textarea>
+		<input type="button" id="savebutton" value="저장"/>
+		<input type="button" value="취소"/>
+	</form>
+</div>
 
-	
-		
-	
-</form>
-
-
-
-
-<!-- </body> -->
-<!-- </html> -->

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>InterView</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -12,11 +12,17 @@
 <link href="/css/header.css" rel="stylesheet">
 <link href="/css/timeline/writemodal.css" rel="stylesheet">
 <link rel="shortcut icon" href="favicon.ico" />
+<script src="/SE2/js/HuskyEZCreator.js"></script>
+
+<!-- include summernote css/js -->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
 
 <script>
-
-
 $(document).ready(function() {
+	
+	//image 삽입버튼 숨기기
+	$("#input_img").hide();
 	
 	// 검색창
 	$("#search").on("click", function(){
@@ -131,7 +137,10 @@ $(document).ready(function() {
 	
 });
 
+
+
 </script>
+
 </head>
 <body>
 

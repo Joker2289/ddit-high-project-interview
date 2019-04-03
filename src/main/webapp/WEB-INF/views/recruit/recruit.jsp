@@ -70,12 +70,12 @@
 		</a>
 	</div>
 	
-	<form action="${pageContext.request.contextPath }/recrSearch" id="frm_search" method="post">
+	<form action="${pageContext.request.contextPath }/insertSLog" id="frm_search" method="post">
 		<input type="hidden" id="search_word" name="search_word">
 		<input type="hidden" id="search_local" name="search_local">
 	
 		<div class="div_ch" style="border: 1px solid; padding: 10px;">
-			<h3 style="">꿈꾸시던 직장 - 검색하면 바로 뜹니다. (mem_id : ${memberVO.mem_id })</h3><br>
+			<h3 style="">꿈꾸시던 직장 - 검색하면 바로 뜹니다. (mem_id : ${SESSION_MEMBERVO.mem_id })</h3><br>
 			<span style="margin-left: 30px;">
 				<i class="fas fa-search"></i>
 				<input id="txt_name" type="text" style="width: 400px; height: 30px; border: 0px;" placeholder="채용공고 검색">
@@ -103,11 +103,12 @@
 					<div class="div_alarm">
 						<table class="tb_alarm" style="margin-right: 20px;">
 							<tr>
-								<td class="t_alarm${i.index }">${search.search_word }</td>
-								<td rowspan="2"><i id="t_alarm_alarm${i.index }" class="fas fa-bell"></i></td>
+								<td class="t_alarm${i.index }" onmouseover="" style="cursor: pointer;">${search.search_word }</td>
+								<td rowspan="2"><i id="t_alarm_alarm${i.index }" class="fas fa-bell" onmouseover="" 
+										style="cursor: pointer;"></i></td>
 							</tr>
 							<tr style="margin-left: 50px;">
-								<td class="t_alarm${i.index }">${search.search_local }</td>
+								<td class="t_alarm${i.index }" onmouseover="" style="cursor: pointer;">${search.search_local }</td>
 							</tr>
 						</table>
 					</div>			
@@ -120,7 +121,7 @@
 	
    	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px; margin-top: 20px;">
 		<img width="30" src="http://mblogthumb4.phinf.naver.net/20160920_175/kokoa2100_1474368430239vv9yY_PNG/mzl.xnmoezsr.png?type=w800">   	
-		<a href="https://map.kakao.com/">
+		<a href="${pageContext.request.contextPath }/map">
 			 (지도 API를 이용한 채용공고 검색)
 		</a>
 	</div>	
@@ -189,35 +190,49 @@
 				<c:choose>
 					<c:when test="${inteVo == null }">
 						<a href="${pageContext.request.contextPath }/interest">
-							 업무분야 · 업무지역 · 고용형태 · 회사 규모 등 관심 분야 설정
+							 업무지역 · 업무분야 · 고용형태 · 회사 규모 등 관심 분야 설정
 						</a><br>
 					</c:when>
 					<c:otherwise>
-						 ${inteVo.inte_type } · ${inteVo.inte_local } · ${inteVo.inte_emptype } · ${inteVo.inte_size } ... 
+						 ${inteVo.inte_local } · ${inteVo.inte_type } · ${inteVo.inte_emptype } · ${inteVo.inte_size } ... 
 						<a href="${pageContext.request.contextPath }/interest">
 							 관심 분야 설정
 						</a> <br>
 					</c:otherwise>
 				</c:choose>
 			</div>
-			<!-- rRList2 출력. -->				
-			<table class="tb_recruit">
-				<tr style="width: 100px; height: 140px; text-align: left;">
-					<c:forEach begin="7" end="10" varStatus="i">
-						<td style="width: 5px; height: 5px;">
-							<div id="recr${i.index-1 }" onmouseover="" style="cursor: pointer;">
-								<div class="table_div">
-									${corpImgList.get(i.index-1) }
-								</div> <br>
-								<strong>${recrList.get(i.index-1).recruit_title }</strong> <br>
-								${corpNmList.get(i.index-1) } <br>
-								${recrList.get(i.index-1).job_local }
-							</div>
-							<i class="far fa-bookmark" style="margin-top: 10px; font-size: large;"></i><br>
-						</td>								
-					</c:forEach>
-				</tr>
-			</table> <br><br><br>   				
+			<!-- rRList2 출력. 있으면 출력. -->				
+	   		<c:if test="${rRList2.size() >= 1 }">
+				<table class="tb_recruit">
+					<tr style="width: 100px; height: 140px; text-align: left;">
+						<c:forEach items="${rRList2 }" varStatus="i" var="rRVo">
+							<td style="width: 5px; height: 5px;">
+								<div id="recr2${i.index }" onmouseover="" style="cursor: pointer;">
+									<div class="table_div">
+										${corpImgList2.get(i.index) }
+									</div> <br>
+									<strong>${rRVo.recruit_title }</strong> <br>
+									${corpNmList2.get(i.index) } <br>
+									${rRVo.job_local } <br>
+									${rRVo.job_type }
+								</div>
+								<c:choose>
+									<c:when test="${scrapList2.get(i.index) == 'f' }">
+										<!-- scrap_flag에 recruit_code를 붙여주자. (예: t12) -->
+										<i id="scrap2${i.index }" class="far fa-bookmark" onmouseover="" 
+												style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
+									</c:when>
+									<c:otherwise>
+										<i id="scrap2${i.index }" class="fas fa-bookmark" onmouseover="" 
+												style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
+									</c:otherwise>
+								</c:choose>
+							</td>								
+						</c:forEach>
+					</tr>
+				</table>
+			</c:if>
+			<br><br><br>   				
 			<br>	 
 			<div style="border-top: 1px solid;">              				
 				<a href="">계속 검색</a>
@@ -249,9 +264,7 @@
 	});
 
 	$(document).ready(function(){
-		if(${inteVo == null }){
-			console.log("inteVo? : ${inteVo }");
-		}		
+		console.log("scrapList? : ${scrapList }");
 		
 		<c:forEach items="${rRList1 }" varStatus="i">
 			console.log("i? : ${i.index }");
@@ -272,14 +285,20 @@
 		// 채용공고 검색어 (저장한 검색어)
 		<c:forEach items="${saveList }" varStatus="i">
 			$(".t_alarm${i.index }").on("click", function(){
-				alert("t_alarm${i.index }");
+// 				alert("${saveList.get(i.index).search_word } / ${saveList.get(i.index).search_local }");
+
+				// 여기서도 /recrSearch로 파라미터를 넘기지 말고 검색어를 등록하면 됨. - 
+				// /insertSLog
+				window.location.href = '${pageContext.request.contextPath }/insertSLog?search_word=${saveList.get(i.index).search_word }&search_local=${saveList.get(i.index).search_local }';
 			});
 			
 			$("#t_alarm_alarm${i.index }").on("click", function(){
 // 				alert("t_alarm_alarm${i.index }");
 				// 저장한 검색어에서 제외. 확인창 띄우기
 				if(confirm("검색어를 목록에서 제거하시겠습니까?")) {
-					window.location.href = 'http://localhost${pageContext.request.contextPath }/recruit?alarm_flag=t&search_code=${saveList.get(i.index).search_code }';					
+					// alarm_flag를 우선 save_flag로 변경. 저장되어있는 항목은 flag 't'를 보낸다.
+					// 컨트롤러에서 't'를 받으면 search_save를 '1'로 변경(저장을 해제).
+					window.location.href = 'http://localhost${pageContext.request.contextPath }/updateSave?save_flag=t&search_code=${saveList.get(i.index).search_code }';					
 				}					
 			});
 		</c:forEach>
@@ -300,18 +319,45 @@
 				<c:choose>
 					<c:when test="${scrapList1.get(i.index) == 'f' }">
 						if(confirm("채용공고를 스크랩하시겠습니까?")){
-							window.location.href = '${pageContext.request.contextPath }/recruit?scrap_flag=t${rRList1.get(i.index).recruit_code }';
+							window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=t${rRList1.get(i.index).recruit_code }';
 						}
 					</c:when>
 					<c:otherwise>
 						if(confirm("채용공고 스크랩을 취소하시겠습니까?")){
-							window.location.href = '${pageContext.request.contextPath }/recruit?scrap_flag=f${rRList1.get(i.index).recruit_code }';
+							window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=f${rRList1.get(i.index).recruit_code }';
 						}
 					</c:otherwise>
 				</c:choose>
 			});
 			
 		</c:forEach>
+		
+		<c:forEach items="${rRList2 }" varStatus="i">
+			$("#recr2${i.index }").on("click", function(){
+// 				alert("${i.index }"); // 첫번째 채용공고 : i.index-1 -> '0'
+				
+				$("#recruit_code").val(${rRList2.get(i.index).recruit_code});
+				
+				$("#frm_detail").submit();
+			});
+			
+			$("#scrap2${i.index }").on("click", function(){
+				<c:choose>
+					<c:when test="${scrapList2.get(i.index) == 'f' }">
+						if(confirm("채용공고를 스크랩하시겠습니까?")){
+							window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=t${rRList2.get(i.index).recruit_code }';
+						}
+					</c:when>
+					<c:otherwise>
+						if(confirm("채용공고 스크랩을 취소하시겠습니까?")){
+							window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=f${rRList2.get(i.index).recruit_code }';
+						}
+					</c:otherwise>
+				</c:choose>
+			});
+			
+		</c:forEach>
+		
 		
 		
 	});
