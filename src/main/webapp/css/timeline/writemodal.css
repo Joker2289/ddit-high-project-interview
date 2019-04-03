@@ -144,8 +144,10 @@
 	width: 655px;
 }
 
-.modal-header,.modal-body,.modal-footer{
-	width: 650px;
+.modal-write-body{
+	background : #fff;
+	height: 520px;
+	width: auto;
 }
 
 .btn-modal-upload{
@@ -191,19 +193,22 @@
 	background-color: #0073b1;
 }
 
-.modal-foot{
+.modal-write-foot{
 	border-top: 1px solid #e5e5e5;
 	height: 60px;
 	padding: 15px;
+	background: #fff;
+	border-bottom-left-radius: 4px;  
+	border-bottom-right-radius: 4px; 
 }
 
 
-.modal-head{
+.modal-write-head{
 	background: #0073b1;
 	background-size: 655px; 
 	height: 45px;
 	padding: 15px;
-	border-bottom: 1px solid #e5e5e5;
+/* 	border-bottom: 1px solid #e5e5e5; */
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px; 
 }
@@ -260,4 +265,32 @@
 .fixedmenu{
    	position: fixed;
 	top: 0px;
+}
+
+.note-editable{
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;	
+}
+
+.post-info img, video{
+	height: 100%;
+	width: 532px;
+}
+
+.note-editor{
+	padding: 0px;
+	border: 0px solid #fff;
+}
+
+.note-status-output{
+	padding: 0px;
+	border: 0;
+}
+.note-statusbar{
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
 }

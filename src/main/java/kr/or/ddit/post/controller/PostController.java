@@ -168,7 +168,7 @@ public class PostController {
 	@RequestMapping(path={"/writepost_timeline"}, method=RequestMethod.POST)
 	public String writePost_timeline(Model model, String post_contents, HttpServletRequest request){
 		
-		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_DETAILVO");
+		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		String mem_id = member.getMem_id();
 		

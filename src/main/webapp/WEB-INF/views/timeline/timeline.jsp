@@ -77,15 +77,14 @@
 	        </div>
 	        <!-- ./friend requests -->
 	      </div>
+	      
 	      <div class="col-md-6">
 	        <div class="input-group">
 	          <button id="btn-write_modal" class="btn-write_modal"  style="height: 73.6px; margin-top: -9px;"><span class="span-text"><a><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></span></button>
 	          <button id="btn-upload-img" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-images"></i></a></span></button>
 	          <button id="btn-upload-video" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-play-circle"></i></a></span></button>
 	          <button id="btn-upload-document" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-file-alt"></i></a></span></button>
-	        </div>
-			  <hr>
-
+	        </div><hr>
 	        <!-- feed -->
 	        <div>
 	        
@@ -153,10 +152,46 @@
 					</div>
 					<div class="col-post-social">
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-thumbs-up"></i></span></button>
-					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
+					  <button  title="${post.post_code }" class="btn-social btn_comment"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-share-square"></i></span></button>
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-bookmark"></i></span></button>
 					</div>
+					
+					<!-- comment -->
+					<div class="col-comment ${post.post_code }" style="height: 100px; padding: 5px;">
+					
+					  <div class="comment-profile-img" style="float: left; padding: 5px; width: 10%;">
+					  	<img src="" style="border-radius: 100px;">이미지
+					  </div>
+					  
+					  <div class="comment-area-input" style="float:right; border: 1px solid #e1e3e8; border-radius: 30px; height: 30px; padding: 5px; width: 90%;">
+					    <div class="comment-input-text" style="float: left; width: 80%;">
+					    	<form>
+					    	  <input placeholder="댓글달기" style="border: 0px solid #fff; width: 100%; outline: 0;">
+					    	</form>
+					    </div>
+					    <div class="comment-input-img" style="float: right;">
+					    	<button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="fas fa-camera"></i></button>
+					    </div>
+					  </div>
+					  
+					  <!-- comment print -->
+<%-- 					  <c:forEach items="${ }" var=""> --%>
+					    <div class="comment-area" style="float:right; border: 1px solid #e1e3e8; border-radius: 30px; height: 30px; padding: 5px; width: 90%;">
+					      
+					      <div class="comment-text">
+					    	<input style="border: 0px solid #fff; width: 100%; outline: 0; padding-top: 5px; padding-bottom: 5px;">
+					      </div>
+					      <div class="comment-input-button" style="padding-top: 5px; padding-bottom: 5px;">
+					    	<button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="fas fa-camera"></i></button>
+					    	<button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="far fa-thumbs-up"></i></button>
+					      </div>
+					      
+					    </div>
+<%-- 					  </c:forEach> --%>
+						<!-- /comment print -->
+					</div>
+					<!-- /comment -->
 				
 				  </div>
 				</div>
@@ -170,7 +205,8 @@
 	      <!-- add friend -->
 	        <div class="panel panel-default">
 	          <div class="panel-body">
-	            <h4>광고란</h4>
+<!-- 	            <a id="scroll-top" href="#btn-write_modal"><h4>광고란</h4></a> -->
+	            <a id="scroll-top" href="#"><h4>광고란</h4></a>
 	            <ul>
 	              <li>
 	                <a href="#">앙 광고띠</a> 
@@ -189,11 +225,44 @@
 
 <script type="text/javascript">
 
-var select_file;
+	var select_file;
 
+	$(document).ready(function() {
+		
+		$('#summernote').summernote({
+			placeholder: '소식을 업데이트 해주세요!',
+	        tabsize: 2,
+	        height: 450
+		});
+		
+		$(".col-comment").hide();
+
+		//summernote 툴바 숨기기
+// 		$(".note-toolbar").hide();
+		$(".note-resizebar").hide();
+		$(".note-status-output").hide();
+		
+		$(".btn_comment").on("click", function() {
+			
+			var className = $(this).attr('title');
+			
+			if (!$("."+className).attr('class').endsWith('On')) {
+				
+				$("."+className).show();
+				$("."+className).attr('class', 'col-comment '+className+' On');
+			}else {
+				$("."+className).hide();
+				$("."+className).attr('class', 'col-comment '+className);
+			}
+		});
+		
+		
+	})
+	
+	
 	//작성 모달창 푸쉬
 	function pushModal() {
-		$("div.modal").modal();
+		$("div.writemodal").modal();
 	}
 
 	//작성 모달창에서 이미지 삽입버튼 클릭시 이미지첨부 실행
@@ -222,7 +291,7 @@ var select_file;
 		})
 		
 	}
-
+	
 	$(function () {
 		$("#btn-write_modal").on("click", function () {
 			pushModal();
@@ -249,6 +318,11 @@ var select_file;
 		
 	});
 	
+	//현재 스크롤 위치에서 화면 최상단으로 이동
+	$("#scroll-top").on("click", function() {
+		$(window).scrollTop() = $(window).height();
+	});
+	
 	//스크롤 이벤트 발생 시
 	$(window).scroll(function () {
 		
@@ -258,8 +332,8 @@ var select_file;
 		var currentTop = $(window).scrollTop();
 		
 		if($(window).scrollTop() > 50){
-			$("#col-add").stop().animate({top: (currentTop-50) + "px"}, 250);
-			$("#col-info").stop().animate({top: (currentTop-50) + "px"}, 250);
+			$("#col-add").stop().animate({top: (currentTop-20) + "px"}, 250);
+			$("#col-info").stop().animate({top: (currentTop-20) + "px"}, 250);
 		} else {
 			$("#col-add").stop().animate({top: 0 + "px"}, 250);
 			$("#col-info").stop().animate({top: 0 + "px"}, 250);
