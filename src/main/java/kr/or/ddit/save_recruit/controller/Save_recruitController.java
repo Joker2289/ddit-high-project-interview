@@ -126,6 +126,8 @@ public class Save_recruitController {
 				for(Save_recruitVo sVo : uSRList){
 					if(sVo.getRecruit_code().equals(scrap_code)){
 						if(scrap_flag.substring(0, 1).equals("t")){
+							// scrap_flag를 't'로 보내면 - '스크랩 안한 항목이니까 스크랩해줘'
+							// - setSave_flag("t")
 							sVo.setSave_flag("t");
 						}else{
 							sVo.setSave_flag("f");

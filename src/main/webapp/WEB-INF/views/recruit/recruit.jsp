@@ -285,14 +285,20 @@
 		// 채용공고 검색어 (저장한 검색어)
 		<c:forEach items="${saveList }" varStatus="i">
 			$(".t_alarm${i.index }").on("click", function(){
-				alert("t_alarm${i.index }");
+// 				alert("${saveList.get(i.index).search_word } / ${saveList.get(i.index).search_local }");
+
+				// 여기서도 /recrSearch로 파라미터를 넘기지 말고 검색어를 등록하면 됨. - 
+				// /insertSLog
+				window.location.href = '${pageContext.request.contextPath }/insertSLog?search_word=${saveList.get(i.index).search_word }&search_local=${saveList.get(i.index).search_local }';
 			});
 			
 			$("#t_alarm_alarm${i.index }").on("click", function(){
 // 				alert("t_alarm_alarm${i.index }");
 				// 저장한 검색어에서 제외. 확인창 띄우기
 				if(confirm("검색어를 목록에서 제거하시겠습니까?")) {
-					window.location.href = 'http://localhost${pageContext.request.contextPath }/recruit?alarm_flag=t&search_code=${saveList.get(i.index).search_code }';					
+					// alarm_flag를 우선 save_flag로 변경. 저장되어있는 항목은 flag 't'를 보낸다.
+					// 컨트롤러에서 't'를 받으면 search_save를 '1'로 변경(저장을 해제).
+					window.location.href = 'http://localhost${pageContext.request.contextPath }/updateSave?save_flag=t&search_code=${saveList.get(i.index).search_code }';					
 				}					
 			});
 		</c:forEach>
@@ -351,6 +357,7 @@
 			});
 			
 		</c:forEach>
+		
 		
 		
 	});
