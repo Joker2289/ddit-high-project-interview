@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,17 +28,23 @@ public class Personal_connectionController {
 
 	
 	@RequestMapping(path={"/personalConnection"})
-	public String personalConnectionView(Model model) {
+	public String personalConnectionView(Model model , HttpSession session) {
 		
-		//MemberVo memberVo = (MemberVo) req.getSession().getAttribute("memberVO");
+		//MemberVo member =(MemberVo) session.getAttribute("memberVO");
+		//member.setMem_id();
 		
 		MemberVo memberVo = new MemberVo();
-		//FollowVo followVo = new FollowVo();
 		memberVo.setMem_id("lhh");
 		
+		FollowVo followVo = new FollowVo();
+		followVo.setDivision("11");
+		followVo.setMem_id("lhh");
+		
 		int connections_count = personalService.connections_count(memberVo);
+		int coporations_count = personalService.coporations_count(followVo);
 		
 		model.addAttribute("connections_count" , connections_count);
+		model.addAttribute("coporations_count", coporations_count);
 		
 		return "personalTiles";
 	}
@@ -61,38 +68,76 @@ public class Personal_connectionController {
 		return "connectionsTiles";
 	}
 	
-	
-	@RequestMapping(path={"/coporation"})
-	public String companyView(Model model) {
-		
-		FollowVo followVo = new FollowVo();
-		followVo.setMem_id("lhh");
-		followVo.setDivision("11");
-		
-		List<CorporationVo> corporationList = personalService.select_followCoporation(followVo);
-		
-		model.addAttribute("corporationList", corporationList);
-		logger.debug("corporationList==== {}" , corporationList);
-		
-		return "companyTiles";
-	}
-	
-	
 	@RequestMapping(path={"/feedFollowing"})
-	public String feedFollowingView(Model model) {
+	public String feedFollowingView(Model model, HttpSession session) {
+		MemberVo memberVo =(MemberVo) session.getAttribute("memberVO");
 		
 		FollowVo followVo = new FollowVo();
-		followVo.setMem_id("lhh");
+		followVo.setMem_id(memberVo.getMem_id());
 		followVo.setDivision("11");
 		
 		List<CorporationVo> corporationList = personalService.select_followCoporation(followVo);
 		
 		model.addAttribute("corporationList", corporationList);
-		logger.debug("corporationList==== {}" , corporationList);
+		logger.debug("corporationList {}" , corporationList);
 		
 		return "feedFollowingTiles";
 		
 	}
+	
+	
+	@RequestMapping(path={"/connectionApply"})
+	public String connectionApplyView() {
+		return "connectionApplyTiles";
+		
+	}
+	
+	
+	@RequestMapping(path={"/filterSearch"})
+	public String filterSearchView() {
+		return null;
+		
+	}
+	
+
+	@RequestMapping(path={"/feed"})
+	public String feedView(String str,Model model, HttpSession session) {
+		MemberVo memberVo =(MemberVo) session.getAttribute("memberVO");
+		
+		FollowVo followVo = new FollowVo();
+		followVo.setMem_id(memberVo.getMem_id());
+		followVo.setDivision("11");
+		
+		
+		if (str.equals("connections")) {
+			
+			List<UsersVo> followConnections =
+					personalService.select_followConnections(memberVo);
+			
+			model.addAttribute("followConnections", followConnections);
+			
+			return "/personalConnection/feedFilter/feedConnections";
+		}else if(str.equals("connectionEtc")) {
+			
+			return "/personalConnection/feedFilter/feedConnectionEtc";
+		}else if(str.equals("company")) {
+			
+			followVo.setDivision("11");
+			List<CorporationVo> corporationList = personalService.select_followCoporation(followVo);
+			model.addAttribute("corporationList", corporationList);
+			return "/personalConnection/feedFilter/feedCompany";
+		}else{
+			
+			List<FollowVo> hashTagList =
+					personalService.select_followHashTag(memberVo);
+			model.addAttribute("hashTagList", hashTagList);
+			
+			return "/personalConnection/feedFilter/feedHashTag";
+			
+		}
+		
+	}
+	
 	
 	
 	

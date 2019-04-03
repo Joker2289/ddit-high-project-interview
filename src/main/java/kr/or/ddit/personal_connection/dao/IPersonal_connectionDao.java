@@ -48,6 +48,42 @@ public interface IPersonal_connectionDao {
 	
 	
 	
+	/**
+	* Method : coporations_count
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param followVo
+	* @return
+	* Method 설명 : 팔로우한 회사 수 조회
+	*/
+	int coporations_count(FollowVo followVo);
+	
+	
+	
+	/**
+	* Method : select_followConnections
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param memberVo
+	* @return
+	* Method 설명 : 팔로우한 일촌 리스트 조회
+	*/
+	List<UsersVo> select_followConnections(MemberVo memberVo);
+	
+	
+	
+	/**
+	* Method : select_followHashTag
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param memberVo
+	* @return
+	* Method 설명 : 팔로우한 해시태그 리스트 조회
+	*/
+	List<FollowVo> select_followHashTag(MemberVo memberVo);
+	
+	
+	
 
 	
 }

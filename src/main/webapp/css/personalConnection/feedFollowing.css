@@ -1,0 +1,50 @@
+.feedTop{
+	margin-top: 51px;
+	min-height: 36px;
+	 height: 36px; 
+	 background-color: white; 
+	 border-bottom-color: white; 
+	 box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.feedDiv{
+	display: inline; 
+	padding-right: 15px;
+}
+
+.feedFollowingTop{
+	background-color: white; 
+	width: 1126px;
+	padding-left: 15px;
+	padding-bottom: 13px;
+	padding-top: 13px; 
+	margin-top: 30px; 
+	font-size: 17px;
+}
+
+.corporationList{
+	display: flex; 
+	flex: auto; 
+	flex-direction: row; 
+	flex-wrap: wrap; 
+	margin-left: 0px; 
+	width: 1200px;
+}
+
+.corporation{
+	border:1px solid #d0d0d0 ; 
+	border-bottom-width:2px; 
+	margin:20px 0 0 0; 
+	background-color: white; 
+	width: 225px; 
+	height: 211px;
+}
+
+.followingBtn{
+	font-size:16px; 
+	height: 39px; 
+	width: 225px; 
+	border: 1px solid #d0d0d0; 
+	border-top-width: 0px; 
+	border-radius: 0px;
+}

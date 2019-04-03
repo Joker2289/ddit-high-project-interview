@@ -10,7 +10,7 @@
 	<div id="pc_leftmenu" class="col-md-8" style="padding-left: 0px;margin-left: 30px;">
 		<div class="whiteBox" style="width: 796px;padding-left: 15px;padding-bottom: 15px;padding-top: 20px;">
 			<label style="font-size: 19px;">1촌 ${connections_count }명</label>
-			<div class="row" style="padding-left: 15px;">
+			<div class="row" style="padding-left: 15px;">	
 				<label style="display:inline">정렬기준:</label>
 					<select style="display:inline;width: 106px;" class="form-control">
 						<option>최근순</option>
@@ -18,7 +18,7 @@
 						<option>성</option>
 					</select>
 					<input style="display:inline;width: 170px;margin-left: 305px;" type="text" class="form-control" id="" placeholder="이름으로 검색">
-					<a href="" style="padding-left: 20px; font-size: 15px; color: blue">필터로 검색</a>
+					<a href="/filterSearch" style="padding-left: 20px; font-size: 15px; color: blue">필터로 검색</a>
 			</div>
 			<div class="row" style="padding-left: 15px;">
 				<table class="table table-hover">
