@@ -34,11 +34,25 @@
 		<tr class="profiletr">
 			<td style="color: #666666;">채용공고</td>
 		</tr>
-		<tr class="profiletr">
-			<td><a style="color: #666666;" href="<%=request.getContextPath()%>/corporation">회사</a></td>
-		</tr>
-		<tr class="profiletr" style="border-top: 1px solid #CFD1D3;">
-			<td style="color: #666666;">로그아웃</td>
-		</tr>
+	
+		<tr><td>${session_memberVo.mem_division}</td></tr>
+
+		<c:choose>
+			<c:when test="${session_memberVo.mem_division == '2' }">
+				<tr class="profiletr">
+					<td><a style="color: #666666;" href="<%=request.getContextPath()%>/corporation">회사</a></td>
+				</tr>
+				<tr class="profiletr" style="border-top: 1px solid #CFD1D3;">
+					<td style="color: #666666;">로그아웃</td>
+				</tr>
+			</c:when>
+			<c:otherwise>
+				<tr class="profiletr" style="border-top: 1px solid #CFD1D3;">
+					<td style="color: #666666;">로그아웃</td>
+				</tr>
+             </c:otherwise>
+		</c:choose>
+		
+		
 	</tbody>
 </table>
