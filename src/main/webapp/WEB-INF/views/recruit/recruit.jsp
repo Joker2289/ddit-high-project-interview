@@ -9,7 +9,6 @@
 	<title>채용공고｜InterView</title>
 	<style type="text/css">
 		table.tb_recruit{
-/*  style="width: 700px; height: 500px; border: 1px solid; border-spacing: 15px;" */
 			border-spacing: 15px;
 		}
 	
@@ -75,7 +74,7 @@
 		<input type="hidden" id="search_local" name="search_local">
 	
 		<div class="div_ch" style="border: 1px solid; padding: 10px;">
-			<h3 style="">꿈꾸시던 직장 - 검색하면 바로 뜹니다. (mem_id : ${SESSION_MEMBERVO.mem_id })</h3><br>
+			<h3 style="color: black;">꿈꾸시던 직장 - 검색하면 바로 뜹니다. (mem_id : ${SESSION_MEMBERVO.mem_id })</h3><br>
 			<span style="margin-left: 30px;">
 				<i class="fas fa-search"></i>
 				<input id="txt_name" type="text" style="width: 400px; height: 30px; border: 0px;" placeholder="채용공고 검색">
@@ -120,9 +119,9 @@
 	</form>	
 	
    	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px; margin-top: 20px;">
-		<img width="30" src="http://mblogthumb4.phinf.naver.net/20160920_175/kokoa2100_1474368430239vv9yY_PNG/mzl.xnmoezsr.png?type=w800">   	
-		<a href="${pageContext.request.contextPath }/map">
-			 (지도 API를 이용한 채용공고 검색)
+		<a href="${pageContext.request.contextPath }/map" style="font-size: x-large;">
+			<img width="37" src="http://mblogthumb4.phinf.naver.net/20160920_175/kokoa2100_1474368430239vv9yY_PNG/mzl.xnmoezsr.png?type=w800">   	
+			 지도에서 검색 - 한 눈에 확인하는 채용공고.
 		</a>
 	</div>	
 	
@@ -264,13 +263,25 @@
 	});
 
 	$(document).ready(function(){
-		console.log("scrapList? : ${scrapList }");
+// 		console.log("msg_flag? : ${msg_flag }");
 		
 		<c:forEach items="${rRList1 }" varStatus="i">
 			console.log("i? : ${i.index }");
 		</c:forEach>
 		// " i? : 0 ~ 5 "
+				
+		// msg 출력.
+		var msg_flag = "${msg_flag }";
+		console.log("msg_flag? : " + msg_flag);
 		
+		var msg = "일반회원으로 로그인 후 이용해주세요.";
+
+		if(msg_flag == 't'){
+			alert(msg);
+			
+			<c:set var="msg_flag" value="t"></c:set>
+		}
+			
 		// 채용공고 검색
 		$("#btn_search").on("click", function(){
 // 			alert($("#txt_name").val() + " / " + $("#txt_location").val());
