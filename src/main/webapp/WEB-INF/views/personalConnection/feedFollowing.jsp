@@ -78,7 +78,7 @@ $(document).ready(function() {
 		<div class="row corporationList">
 			<c:forEach items="${corporationList}" var="corp">
 				<div style="width: 225px;">
-					<div class="col-md-3 corporation">
+					<div class="corporation">
 						<div
 							style="width: 59px;height: 59px;background-image:url(/profile?mem_id=${corp.corp_id});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;"></div>
 						<div>

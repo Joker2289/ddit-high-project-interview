@@ -20,17 +20,19 @@
 	<!-- 레이아웃 잡는건 나중에.. -->
 	
 	<br><br>
-	<h3>지도에서 채용공고 검색하기 페이지임니다</h3>
+	<h3>지도에서 채용공고 검색하기 페이지임니다 (uVo : ${uVo.user_id })</h3>
 	
 	<table border="1">
 		<tr>
 			<td><div id="map" style="width:750px;height:600px;"></div></td>
 			<td>
+				원 그리기 on/off <input id="cb_circle" type="checkbox" checked><br><br>
 				<input id="btn_removeCircles" type="button" value="원 제거하기"> <br><br>
 				<input id="btn_changeAddr" type="button" value="주소 - 좌표 변환"> <br><br>
 				<input id="btn_check" type="button" value="확인"> <br><br>
 				<input id="btn_all" type="button" value="좌표 확인"> <br><br>
 				<input id="btn_marker" type="button" value="마커 하나 찍기"> <br><br>
+				<input id="btn_userAddr" type="button" value="회원 주소 표시"> <br><br>
 			</td>
 		</tr>
 		<tr>
@@ -41,6 +43,15 @@
 				<input type="text" id="sample6_address" placeholder="주소"><br>
 				<input type="text" id="sample6_detailAddress" placeholder="상세주소">
 				<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+			</td>
+			<td>11</td>
+		</tr>
+		<tr>
+			회사와의 거리 <br><br>
+			<td id="td_map">
+<%-- 				<c:forEach begin="1" end="${corpList.size() }" varStatus="i"> --%>
+<%-- 					${i.index }. ${corpList.get(i.index - 1).corp_name } / ${corpList.get(i.index - 1).addr1 } / 거리 : xxx <br> --%>
+<%-- 				</c:forEach> <br><br> --%>
 			</td>
 			<td>11</td>
 		</tr>
@@ -76,11 +87,45 @@
 </div></div></div>		
 		
 <script>
+	var result = "";
+
+	$(document).ready(function(){
+		console.log("${corpList.size() }");	
+		
+		// ajax로 회사와의 거리 나타내기.
+		getMapHtml(result);
+	});		
+	
+	
+	function getMapHtml(result){
+		$.ajax({
+			url : "${pageContext.request.contextPath }/mapAjaxHtml",
+			data : "result="+result,
+			success : function(data){
+// 				$("#userListTbody").html(htmlArr[0]);
+// 				$("#pagination").html(htmlArr[1]);
+				
+				console.log("data : " + data);
+				
+				$("#td_map").html(data);
+				
+				// * ajax를 통한 html 생성시 이벤트 핸들러 등록 방법 2.
+				// ajax callback 안에 클릭 이벤트를 넣어줌.
+// 				$(".userTr").on("click", function(){
+// 					var userId = $(this).data("userid");
+					
+// 					$("#userId").val(userId);
+// 					$("#frm").submit();
+// 				});
+			}
+		});
+	}
+	
 		
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 	mapOption = { 
 	    center: new daum.maps.LatLng(36.32485, 127.42009), // 지도의 중심좌표
-	    level: 2 // 지도의 확대 레벨  
+	    level: 7 // 지도의 확대 레벨  
 	};
 	
 	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -115,6 +160,13 @@
 		infowindow.open(map, marker); 			
 	</c:forEach>	
 	
+	// 마커 생성 후 지도 중심 이동시키기.
+	// 이동할 위도 경도 위치를 생성합니다 
+    var moveLatLon = new daum.maps.LatLng(36.32486, 127.42006);
+	
+    // 지도 중심을 이동 시킵니다
+    map.setCenter(moveLatLon);	
+	
 	var drawingFlag = false; // 원이 그려지고 있는 상태를 가지고 있을 변수입니다
 	var centerPosition; // 원의 중심좌표 입니다
 	var drawingCircle; // 그려지고 있는 원을 표시할 원 객체입니다
@@ -122,10 +174,18 @@
 	var drawingOverlay; // 그려지고 있는 원의 반경을 표시할 커스텀오버레이 입니다
 	var drawingDot; // 그려지고 있는 원의 중심점을 표시할 커스텀오버레이 입니다
 	
+	var tempCenterValue; // 중심좌표를 확인하기 위한 임시 변수.
+	var tempDistanceValue; // 원의 반지름을 확인하기 위한 임시 변수.
+	
 	var circles = []; // 클릭으로 그려진 원과 반경 정보를 표시하는 선과 커스텀오버레이를 가지고 있을 배열입니다
 	
 	// 지도에 클릭 이벤트를 등록합니다
 	daum.maps.event.addListener(map, 'click', function(mouseEvent) {
+		
+		// 체크박스 값 false이면 return.
+		if($('input:checkbox[id="cb_circle"]').is(":checked") == false){
+			return;
+		}
 		
 		// 원 1개만 그려지도록 하기
 		if(circles.length == 1){
@@ -139,7 +199,9 @@
 	        drawingFlag = true; 
 	        
 	        // 원이 그려질 중심좌표를 클릭한 위치로 설정합니다 
-	        centerPosition = mouseEvent.latLng; 
+	        centerPosition = mouseEvent.latLng;
+	        
+	        tempCenterValue = centerPosition;
 	
 	        // 그려지고 있는 원의 반경을 표시할 선 객체를 생성합니다
 	        if (!drawingLine) {
@@ -172,7 +234,7 @@
 	            });              
 	        }
 	    }
-	    });
+	});
 	
 	// 지도에 마우스무브 이벤트를 등록합니다
 	// 원을 그리고있는 상태에서 마우스무브 이벤트가 발생하면 그려질 원의 위치와 반경정보를 동적으로 보여주도록 합니다
@@ -193,12 +255,14 @@
 	        // 원의 반지름을 선 객체를 이용해서 얻어옵니다 
 	        var length = drawingLine.getLength();
 	        
+	        tempDistanceValue = length;
+	        
 	        if(length > 0) {
 	            
 	            // 그려지고 있는 원의 중심좌표와 반지름입니다
 	            var circleOptions = { 
 	                center : centerPosition, 
-	            radius: length,                 
+	            	radius: length,                 
 	            };
 	            
 	            // 그려지고 있는 원의 옵션을 설정합니다
@@ -307,7 +371,51 @@
 	        drawingCircle.setMap(null);
 	        drawingLine.setMap(null);   
 	        drawingOverlay.setMap(null);
+	        
+	        result = "";
+	        <c:forEach begin="1" end="${corpList.size() }" varStatus="i">
+		        // 회사의 좌표
+			    var corp_location = "${corpList.get(i.index - 1).corp_location }";
+			    var corp_lat = corp_location.split("/")[0];
+			    var corp_lng = corp_location.split("/")[1];
+			    var corp_position = "(" + corp_lat + ", " + corp_lng + ")";
+			    
+				// 좌표를 통해 직접 거리를 계산해야겠다. 함수로 가져온 좌표값은 자료형이 뭔지 모르겠네.
+				// 아무튼 문자열로 변환해주는 'String([object])'을 이용해서 문자열로 바꿨음.
+				var center_location = String(tempCenterValue);
+				center_location = center_location.substr(1, center_location.length);
+				center_location = center_location.substr(0, center_location.length - 1);
+				var center_lat = center_location.split(", ")[0];
+				var center_lng = center_location.split(", ")[1];
+				
+				// 원 중심에서 corpList.get(0)까지의 거리.
+				var tempDistance = 94344.35355830716 * (Math.sqrt( ((corp_lat+0)-(center_lat+0))*((corp_lat+0)-(center_lat+0)) + ((corp_lng+0)-(center_lng+0))*((corp_lng+0)-(center_lng+0)) ));
+				
+				if(tempDistance < tempDistanceValue){
+					// '회사1:신세계,거리:100m/회사2:삼성,거리:200m...'
+					result += "회사${i.index }:${corpList.get(i.index - 1).corp_name },거리:" + tempDistance + "/";
+				}
+				
+	        </c:forEach>
+// 			    alert("인덱스:${corpList.get(i.index).addr1 }  /  체크:"+ tempDistance);
+// 			    alert("원 중심 좌표:"+ tempCenterValue);
+// 			    alert("원 반지름:"+ tempDistanceValue);
+	        
+	        result += "반경:" + tempDistanceValue;
+	        
+	        alert(result);
+	        
+	        var arr_result = result.split("/");
+	        
+	        // 반경 내의 회사 수.
+	        var corp_num = arr_result.length - 1;
+	        alert("범위 내에 " + corp_num + "개의 채용공고가 있습니다.");
+	        getMapHtml(result);
+	        
+		    tempCenterValue = null;
+		    tempDistanceValue = null;
 	    }
+	    
 	});    
 	    
 	// 지도에 표시되어 있는 모든 원과 반경정보를 표시하는 선, 커스텀 오버레이를 지도에서 제거합니다
@@ -324,42 +432,27 @@
 	// 그려진 원의 반경 정보와 반경에 대한 도보, 자전거 시간을 계산하여
 	// HTML Content를 만들어 리턴하는 함수입니다
 	function getTimeHTML(distance) {
-	
-	    // 도보의 시속은 평균 4km/h 이고 도보의 분속은 67m/min입니다
-	    var walkkTime = distance / 67 | 0;
-	    var walkHour = '', walkMin = '';
-	
-	    // 계산한 도보 시간이 60분 보다 크면 시간으로 표시합니다
-	    if (walkkTime > 60) {
-	        walkHour = '<span class="number">' + Math.floor(walkkTime / 60) + '</span>시간 '
-	    }
-	    walkMin = '<span class="number">' + walkkTime % 60 + '</span>분'
-	
-	    // 자전거의 평균 시속은 16km/h 이고 이것을 기준으로 자전거의 분속은 267m/min입니다
-	    var bycicleTime = distance / 227 | 0;
-	    var bycicleHour = '', bycicleMin = '';
-	
-	    // 계산한 자전거 시간이 60분 보다 크면 시간으로 표출합니다
-	    if (bycicleTime > 60) {
-	        bycicleHour = '<span class="number">' + Math.floor(bycicleTime / 60) + '</span>시간 '
-	    }
-	    bycicleMin = '<span class="number">' + bycicleTime % 60 + '</span>분'
-	
-	    // 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
-	    var content = '<ul class="info">';
+		// 
+		var recr_num = 0;
+		
+	    // 거리를 가지고 HTML Content를 만들어 리턴합니다
+	    var content = '<ul class="info" style="color: black;">';
 	    content += '    <li>';
-	    content += '        <span class="label">총거리</span><span class="number">' + distance + '</span>m';
+	    content += '        <span>총거리 : </span><span class="number">' + distance + '</span>m';
 	    content += '    </li>';
 	    content += '    <li>';
-	    content += '        <span class="label">도보</span>' + walkHour + walkMin;
-	    content += '    </li>';
-	    content += '    <li>';
-	    content += '        <span class="label">자전거</span>' + bycicleHour + bycicleMin;
+	    content += '        <span>채용공고 수 : </span><span class="number">' + recr_num + '</span>개';
 	    content += '    </li>';
 	    content += '</ul>'
 	
 	    return content;
 	}
+	
+	// 원 그리기 on/off
+	$("#cb_circle").on("click", function(){
+		alert("원 그리기 : " + $('input:checkbox[id="cb_circle"]').is(":checked"));
+		// 체크박스 값이 true일 때 원 그릴 수 있도록 설정.
+	});
 	
 	// 원 제거하기
 	$("#btn_removeCircles").on("click", function(){
@@ -369,86 +462,51 @@
 	// 주소 - 좌표 변환.
 	$("#btn_changeAddr").on("click", function(){
 		changeAddr($("#sample6_address").val());
-	});
-	
-	// 확인
-	$("#btn_check").on("click", function(){
-		console.log("회사 좌표(위도 / 경도) : " + coords.getLat() + " / " + coords.getLng());
-		$("#txt_location").text($("#txt_location").text() + "//222");
-	});
-	
-	// 전체 좌표 만들기 / 좌표 확인
-	$("#btn_all").on("click", function(){
-// 		createAllLocation();
-	 	var data = '4/36.33503205924424/127.39677886497321//5/36.327950661050465/127.42659051361443//6/36.35141693706307/127.3401790981222//8/36.36067544342291/127.34464046741947//7/36.35455478978288/127.33955994392711//10/36.354222353058155/127.44422053795066//9/36.425479947931365/127.39263989076437//13/36.29857090530391/127.33793218829507//11/36.358465496689334/127.4232496366498//15/36.44864430849931/127.4199108121918//12/36.30370852264028/127.34892329869682//17/36.352958482623535/127.3777969073076//14/36.31717489752688/127.45338195339158//16/36.3502458465932/127.37725797696643//19/37.570744325762846/126.98360914667553//18/36.35427578252461/127.3772952471586//21/37.57126926703499/126.97630554223102//20/37.52525923818516/127.04183916231236//holly/37.522827164111504/127.04001424430611//22/37.56462407218648/126.97922335034117//kim/35.115364308266564/128.9595348158848//23/37.50449284378187/127.00784436615872//27/37.55720941721661/126.92361977091058//samsung/37.5265427209826/127.04053210013338//26/37.50653640461993/127.12048711570657//28/37.50944139825955/127.1052363434873//31/37.52201436464297/126.85883630726723//30/37.534802342638976/127.01093858339178//25/35.154275771307425/129.06359316332686//24/35.207169937902535/129.07204589207316';			
-		var arr_data = data.split('//'); // corp_id/위도/경도
-		$("#txt_location").text($("#txt_location").text() + arr_data.length);
-	});
-	
-	// 마커 하나 찍기.
-	$("#btn_marker").on("click", function(){
-		// 36.32489/127.42015
-		<c:forEach begin="1" end="${corpList.size() }" varStatus="i">
-			var data = "${corpList.get(i.index - 1).corp_location }";
-			var data1 = data.split("/")[0];
-			var data2 = data.split("/")[1];
-			
-			// 마커가 표시될 위치입니다 
-			var markerPosition  = new daum.maps.LatLng(data1, data2); 
-	
-			// 마커를 생성합니다
-			var marker = new daum.maps.Marker({
-			    position: markerPosition
-			});
-	
-			// 마커가 지도 위에 표시되도록 설정합니다
-			marker.setMap(map);		
-			
-			var iwContent = '<div style="padding:5px;">${corpList.get(i.index - 1).corp_name } </div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-		    iwPosition = new daum.maps.LatLng(data1, data2); //인포윈도우 표시 위치입니다
-
-			// 인포윈도우를 생성합니다
-			var infowindow = new daum.maps.InfoWindow({
-			    position : iwPosition, 
-			    content : iwContent 
-			});
-			  
-			// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-			infowindow.open(map, marker); 			
-		</c:forEach>
 	});	
 	
-	// 전체 좌표 만드는 메서드
-	function createAllLocation(){
-		// 우선 첫번째 항목부터 해보자.
-
-		<c:forEach begin="1" end="${corpList.size() }" varStatus="i">
-			var addr = "${corpList.get(i.index - 1).addr1 }";
-			var corp_id = "${corpList.get(i.index - 1).corp_id }";
-			getLocation(addr, corp_id);
-		</c:forEach>
+	// 회원의 주소 표시.
+	$("#btn_userAddr").on("click", function(){
+		var addr = "${uVo.addr1 }";
+		var user_id = "${uVo.user_id }";
 		
-	}
+		changeUserAddr(addr, user_id);
+	});	
 	
-	// 주소-좌표 변환 객체를 생성합니다
-	var geocoder = new daum.maps.services.Geocoder();
 	
-	// 주소를 통해 coords에 좌표 넣는 메서드.
-	function getLocation(addr, corp_id){
+	
+	// 주소 - 좌표 변환 메서드.
+	var marker = null;	
+	var coords = null;
+	function changeUserAddr(addr, user_id){
+		// 주소-좌표 변환 객체를 생성합니다
+		var geocoder = new daum.maps.services.Geocoder();
+
 		// 주소로 좌표를 검색합니다
 		geocoder.addressSearch(addr, function(result, status) {
 
 		    // 정상적으로 검색이 완료됐으면 
 		     if (status === daum.maps.services.Status.OK) {
 		        coords = new daum.maps.LatLng(result[0].y, result[0].x);
-		        $("#txt_location").text($("#txt_location").text() + "//" + corp_id + "/" + coords.getLat() + "/" + coords.getLng());
-		    }
+
+		        // 결과값으로 받은 위치를 마커로 표시합니다
+		        marker = new daum.maps.Marker({
+		            map: map,
+		            position: coords
+		        });
+
+		        // 인포윈도우로 장소에 대한 설명을 표시합니다
+		        var infowindow = new daum.maps.InfoWindow({
+		            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + user_id + '님의 주소</div>'
+		        });
+		        
+		        infowindow.open(map, marker);
+
+		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        map.setCenter(coords);
+		    } 
 		});
-	}
+	}	
 	
-	// 주소 - 좌표 변환 메서드.
-	var marker = null;	
-	var coords = null;
 	function changeAddr(addr){
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new daum.maps.services.Geocoder();
@@ -470,18 +528,17 @@
 		        var infowindow = new daum.maps.InfoWindow({
 		            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
 		        });
+		        
 		        infowindow.open(map, marker);
 
 		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 		        map.setCenter(coords);
 		    } 
 		});
-	}
-	
-	
-	
-	
-  	
+	}	
+    
+    
+    
 </script>	
 
 <!-- 우편번호 script. -->

@@ -35,6 +35,7 @@ import kr.or.ddit.save_recruit.model.Save_recruitVo;
 import kr.or.ddit.save_recruit.service.ISave_recruitService;
 import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
+import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 
 @Controller
@@ -73,7 +74,7 @@ public class RecruitController {
 
 	// @채용공고 페이지 요청.
 	@RequestMapping("/recruit")
-	public String recruit(HttpSession session, HttpServletRequest req, Model model) throws IOException{
+	public String recruit(HttpSession session, HttpServletRequest req, String msg_flag, Model model) throws IOException{
 		// 유저정보 수정. 'SESSION_MEMBERVO'
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");		
 		
@@ -90,6 +91,9 @@ public class RecruitController {
 		
 		// 회사 좌표 업데이트.
 //		update_corp_location();
+		
+		// 'msg_flag' model에 넣기. (redirect시 여기서 한번더 넣어줘야 alert 띄울 수 있음)
+		model.addAttribute("msg_flag", msg_flag);
 		
 		// '관심분야'를 통해 'rRList2' 만들기. -_-! 우선 받은 값을 확인해보자. 확인 InterestController
 		// 에서 하고 insert까지 한 다음 redirect - /recruit.
@@ -675,7 +679,20 @@ public class RecruitController {
 	
 	// @지도 검색 페이지 요청.
 	@RequestMapping("/map")
-	public String map(Model model) {
+	public String map(HttpSession session, HttpServletRequest req, Model model) {
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		// mem_division이 2(회사회원)이면 redirect:/recruit하고 msg로 alert.
+		if(mVo.getMem_division().equals("2")){
+			String msg_flag = "t";
+			model.addAttribute("msg_flag", msg_flag);
+			
+			return "redirect:" + req.getContextPath() + "/recruit";
+		}
+		
+		// 지도 이용에 필요한 일반회원 정보 uVo 넘기기.
+		UsersVo uVo = usersService.select_userInfo(mVo.getMem_id());
+		model.addAttribute("uVo", uVo);
+		
 		List<RecruitVo> recrList = recrService.getAllRecr();
 		model.addAttribute("recrList", recrList);
 		
@@ -701,6 +718,37 @@ public class RecruitController {
 //	public void test() {
 //		logger.debug("void test !!");
 //	}
+	
+	// @ajax로 지도 검색 페이지의 회사와의 거리 그리기.
+	@RequestMapping("/mapAjaxHtml")
+	public String mapAjaxHtml(String result, Model model) {
+		List<CorporationVo> corpList = corpService.select_allCorps();
+		
+		// 설정한 범위 내에 있는 회사(채용공고) - corpList2
+		List<CorporationVo> corpList2 = new ArrayList<>();
+		
+		// result - 회사1:신세계,거리:702.9181827114676/반경:756.8619424973508
+		String[] arr_result = result.split("/");
+		int corp_num = arr_result.length - 1;
+		
+		List<String> corpNmList = new ArrayList<>();
+		List<String> corpDList = new ArrayList<>();
+		
+		for(int i=0; i < corp_num; i++){
+			String data = arr_result[i];
+			String corpNm = data.split(",")[0].split(":")[1];
+			String str_corpD = data.split(",")[1].split(":")[1];
+
+			CorporationVo cVo = corpService.getCorp(corpNm);
+			corpList2.add(cVo);
+		}
+		
+		model.addAttribute("corpList2", corpList2);
+
+		
+		return "recruit/mapAjaxHtml";
+	}
+	
 	
 	
 	

@@ -140,6 +140,22 @@ public class RecruitDaoImpl implements IRecruitDao{
 		
 		return searchList;
 	}
+
+	/**
+	 * 
+	 * Method : getRecrCorpId
+	 * 작성자 : PC18
+	 * 변경이력 :
+	 * @param corp_id
+	 * @return
+	 * Method 설명 : 특정 회사 채용공고 목록 조회.
+	 */
+	@Override
+	public RecruitVo getRecrCorpId(String corp_id) {
+	RecruitVo rVo = sqlSessionTemplate.selectOne("recr.getRecrCorpId", corp_id);
+		
+	return rVo;
+	}
 	
 	
 	

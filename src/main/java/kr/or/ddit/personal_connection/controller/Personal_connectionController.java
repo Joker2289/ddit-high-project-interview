@@ -30,7 +30,7 @@ public class Personal_connectionController {
 	@RequestMapping(path={"/personalConnection"})
 	public String personalConnectionView(Model model , HttpSession session) {
 		
-		//MemberVo member =(MemberVo) session.getAttribute("memberVO");
+		//MemberVo member =(MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		//member.setMem_id();
 		
 		MemberVo memberVo = new MemberVo();
@@ -70,7 +70,7 @@ public class Personal_connectionController {
 	
 	@RequestMapping(path={"/feedFollowing"})
 	public String feedFollowingView(Model model, HttpSession session) {
-		MemberVo memberVo =(MemberVo) session.getAttribute("memberVO");
+		MemberVo memberVo =(MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		FollowVo followVo = new FollowVo();
 		followVo.setMem_id(memberVo.getMem_id());
@@ -102,7 +102,7 @@ public class Personal_connectionController {
 
 	@RequestMapping(path={"/feed"})
 	public String feedView(String str,Model model, HttpSession session) {
-		MemberVo memberVo =(MemberVo) session.getAttribute("memberVO");
+		MemberVo memberVo =(MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		FollowVo followVo = new FollowVo();
 		followVo.setMem_id(memberVo.getMem_id());
