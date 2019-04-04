@@ -4,12 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="good">
 	
-	<!-- 
-		*** 좋아요 구분 종류
-		1 : 타임라인 게시물
-		2 : 블로그 페이지
-	 -->
-	
 	<!-- 좋아요 정보 등록 -->	
 	<insert id="insert_goodInfo" parameterType="goodVo">
 		insert into good
@@ -28,12 +22,29 @@
 		 where good_code = #{good_code}
 	</delete>
 	
-	<!-- 좋아요 정보 조회 -->
+	<!-- 회원의 좋아요 정보 조회 -->
 	<select id="select_goodInfo" parameterType="String" resultType="goodVo">
 		select good_code, mem_id, ref_code, division, good_date
 		  from good
 		 where mem_id = #{mem_id}
 		order by good_date desc
 	</select>
+	
+	<!-- 게시글 좋아요 갯수 조회 -->
+	<select id="select_goodCount" parameterType="goodVo" resultType="int">
+		select count(*)
+		  from good
+		 where ref_code = #{ref_code}
+		   and division = #{division}
+	</select>
+	
+	<!-- 좋아요 한 회원 조회 -->
+	<select id="select_pushGoodMember" parameterType="goodVo" resultType="goodVo">
+		select good_code, mem_id, good_date
+		  from good
+		 where ref_code = #{ref_code}
+		   and division = #{division}
+	</select>
+	
 	
 </mapper>

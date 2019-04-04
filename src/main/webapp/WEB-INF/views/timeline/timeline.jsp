@@ -67,11 +67,13 @@
 	        <!-- friend requests -->
 	        <div class="panel panel-default">
 	          <div class="panel-body">
-	            <h4>팔로우 정보</h4>
+	            <h4>팔로우 한 해시태그</h4>
 	            <ul>
-	              <li>
-	                <a href="#">팔로우 리스트</a> 
-	              </li>
+	              <c:forEach items="${followHashtag }" var="hashtags">
+	                <li>
+	                  <a href="#">${hashtags.ref_keyword }</a>
+	                </li>
+                  </c:forEach> 
 	            </ul>
 	          </div>
 	        </div>
@@ -150,9 +152,10 @@
 					<div class="col-post-footer">
 					  <span></span>
 					</div>
+					
 					<div class="col-post-social">
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-thumbs-up"></i></span></button>
-					  <button  title="${post.post_code }" class="btn-social btn_comment"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
+					  <button title="${post.post_code }" class="btn-social btn_comment"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-share-square"></i></span></button>
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-bookmark"></i></span></button>
 					</div>
@@ -227,6 +230,11 @@
 
 	var select_file;
 
+	//작성 모달창 푸쉬
+	function pushModal() {
+		$("div.writemodal").modal();
+	}
+	
 	$(document).ready(function() {
 		
 		$('#summernote').summernote({
@@ -234,8 +242,20 @@
 	        tabsize: 2,
 	        height: 440,
 	        maxheight: 600,
-	        width: 655,
-	        maxwidth: 700
+	        width: 555,
+	        maxwidth: 700,
+	        
+	        airMode: true
+		});
+		
+		$("#btn_upload_img").on("click",function(){
+			pushModal();
+			$(".note-insert").children()[1].click();
+		});
+		
+		$("#btn_upload_video").on("click",function(){
+			pushModal();
+			$(".note-insert").children()[2].click();
 		});
 		
 		
@@ -243,7 +263,7 @@
 		$(".col-comment").hide();
 
 		//summernote 툴바 숨기기
-// 		$(".note-toolbar").hide();
+		$(".note-toolbar").hide();
 		$(".note-resizebar").hide();
 		$(".note-status-output").hide();
 		
@@ -265,15 +285,9 @@
 	})
 	
 	
-	//작성 모달창 푸쉬
-	function pushModal() {
-		$("div.writemodal").modal();
-	}
 
-	//작성 모달창에서 이미지 삽입버튼 클릭시 이미지첨부 실행
-	$("#btn_attend_img").on("click",function(){
-		$("#input_img").click();
-	});
+	
+	
 	
 	
 	//이미지 첨부 핸들러(이미지 미리보기 -> 수정필요)

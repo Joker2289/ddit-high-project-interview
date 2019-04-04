@@ -68,7 +68,7 @@ public class PostController {
 		
 		FollowVo followInfo = new FollowVo();
 		followInfo.setMem_id(memberInfo.getMem_id());
-		followInfo.setDivision("14");
+		followInfo.setDivision("16");
 		
 		Save_postVo savepost = new Save_postVo();
 		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
@@ -83,12 +83,12 @@ public class PostController {
 			int connectionCnt = personal_connectionService.connections_count(memberInfo);
 			
 			//팔로우 한 해쉬태그 출력을 위한 세팅
-//			List<FollowVo> followHashtag = followService.select_followKindList(followInfo);
+			List<FollowVo> followHashtag = followService.select_followKindList(followInfo);
 			
 			
 			model.addAttribute("userInfo", userInfo);
 			model.addAttribute("connectionCnt", connectionCnt);
-//			model.addAttribute("followHashtag", followHashtag);
+			model.addAttribute("followHashtag", followHashtag);
 			model.addAttribute("savepostCnt", savepostCnt);
 		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
 			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
@@ -104,6 +104,9 @@ public class PostController {
 		
 		model.addAttribute("memberInfo", memberInfo);
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
+		
+		timelinePost.get(0).getPost_code();
+		
 		model.addAttribute("timelinePost", timelinePost);
 		
 		return "timeLineTiles";
@@ -172,12 +175,10 @@ public class PostController {
 		
 		String mem_id = member.getMem_id();
 		
-		logger.debug("asdasdasdasdmem_id : {}", mem_id);
+		logger.debug("asdasd : {}", post_contents);
 		
 		PostVo insertPost = new PostVo();
 		String writer_name = "";
-		
-//		MemberVo memberSer = memberService.select_memberInfo(mem_id);
 		
 		if(member.getMem_division().equals("1")){
 			UsersVo user = usersService.select_userInfo(mem_id);
@@ -195,11 +196,12 @@ public class PostController {
 			insertPost.setPost_contents(post_contents);
 			insertPost.setWriter_name(writer_name);
 			
-		} else {
+		} else { //관리자
 			
 		}
 		
 		int insertCnt = postService.insert_post(insertPost);
+		
 		
 		if(insertCnt == 1){
 			return "redirect:/timeline";

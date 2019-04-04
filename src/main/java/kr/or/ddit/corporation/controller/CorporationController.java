@@ -1,5 +1,6 @@
 package kr.or.ddit.corporation.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -21,6 +22,10 @@ import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.post.controller.PostController;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
+import kr.or.ddit.recruit.model.RecruitVo;
+import kr.or.ddit.recruit.service.IRecruitService;
+import kr.or.ddit.search_log.model.Search_logVo;
+import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.pagination.PaginationVo;
@@ -29,6 +34,9 @@ import kr.or.ddit.util.pagination.PaginationVo;
 public class CorporationController {
 
 	private Logger logger = LoggerFactory.getLogger(PostController.class);
+	
+	@Resource(name="search_logService")
+	private ISearch_logService sLogService;
 
 	@Resource(name = "postService")
 	private IPostService postService;
@@ -41,9 +49,15 @@ public class CorporationController {
 
 	@Resource(name = "corporationService")
 	private ICorporationService corporationService;
+	
+	@Resource(name="corporationService")
+	private ICorporationService corpService;
+	
+	@Resource(name="recruitService")
+	private IRecruitService recrService;
 
 	/**
-	 * 업데이트 게시물 조회
+	 * 회사 홈(회사타임라인)
 	 * 
 	 * @param model
 	 * @return
@@ -125,7 +139,7 @@ public class CorporationController {
 	 * @return
 	 */
 	@RequestMapping(path = { "/corporationRecruitment" })
-	public String corporationRecruit(Model model, PaginationVo paginationVo, HttpServletRequest request) {
+	public String corporationRecruit(HttpSession session, Model model, PaginationVo paginationVo, HttpServletRequest request) {
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		paginationVo.setMem_id(memberInfo.getMem_id());
@@ -151,6 +165,32 @@ public class CorporationController {
 		
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("timelinePost", timelinePost);
+		
+		
+		
+	MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		
+		// 회원이 검색한 값 가져오기. (getLSLog - get last search_log)
+		Search_logVo lSLog = sLogService.getLSLog(mVo.getMem_id());
+		
+		model.addAttribute("lSLog", lSLog);
+		
+		// 채용공고 리스트 넘기기. <- corpImgList / corpNmList도 추가해야됨.
+		List<RecruitVo> recrList = recrService.getAllRecr();
+		List<String> corpImgList = new ArrayList<>();
+		List<String> corpNmList = new ArrayList<>();
+		
+		for(int i=0; i < recrList.size(); i++){
+			RecruitVo rVo = recrList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			corpImgList.add(cVo.getLogo_path());
+			corpNmList.add(cVo.getCorp_name());
+		}
+		
+		model.addAttribute("recrList", recrList);
+		model.addAttribute("corpImgList", corpImgList);
+		model.addAttribute("corpNmList", corpNmList);
+	
 		
 		return "corporationRecruitmentTiles";
 	}

@@ -1,12 +1,14 @@
 package kr.or.ddit.post_comment.model;
 
+import java.util.Date;
+
 public class Post_commentVo {
 	private String comment_code;		// 댓글코드
-	private String user_id;				// 작성자
+	private String mem_id;				// 작성자
 	private String comment_contents;	// 내용
 	private String ref_code;			// 참조코드
 	private String division;			// 구분
-	private String comment_date;		// 작성일
+	private Date comment_date;			// 작성일
 	
 	public Post_commentVo() {
 		// TODO Auto-generated constructor stub
@@ -20,12 +22,12 @@ public class Post_commentVo {
 		this.comment_code = comment_code;
 	}
 
-	public String getUser_id() {
-		return user_id;
+	public String getMem_id() {
+		return mem_id;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
 	}
 
 	public String getComment_contents() {
@@ -52,17 +54,17 @@ public class Post_commentVo {
 		this.division = division;
 	}
 
-	public String getComment_date() {
+	public Date getComment_date() {
 		return comment_date;
 	}
 
-	public void setComment_date(String comment_date) {
+	public void setComment_date(Date comment_date) {
 		this.comment_date = comment_date;
 	}
 
 	@Override
 	public String toString() {
-		return "Post_commentVo [comment_code=" + comment_code + ", user_id=" + user_id + ", comment_contents="
+		return "Post_commentVo [comment_code=" + comment_code + ", mem_id=" + mem_id + ", comment_contents="
 				+ comment_contents + ", ref_code=" + ref_code + ", division=" + division + ", comment_date="
 				+ comment_date + "]";
 	}
