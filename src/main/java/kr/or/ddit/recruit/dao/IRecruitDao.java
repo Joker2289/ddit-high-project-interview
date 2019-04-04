@@ -91,6 +91,18 @@ public interface IRecruitDao {
 	 * Method 설명 : 특정 업무분야로 채용공고 목록 조회.
 	 */
 	List<RecruitVo> getRecrByType(String type);
+
+	
+	/**
+	 * 
+	 * Method : getRecrCorpId
+	 * 작성자 : PC18
+	 * 변경이력 :
+	 * @param corp_id
+	 * @return
+	 * Method 설명 : 특정 회사 채용공고 조회.
+	 */
+	RecruitVo getRecrCorpId(String corp_id);
 	
 	
 	
