@@ -40,8 +40,6 @@ $(document).ready(function() {
     		}
 
     	});
-		
-		
 	});
 	
 	$("#search").on("mouseleave", function(){
@@ -49,32 +47,6 @@ $(document).ready(function() {
 			$("#dropdownSearch").empty();
 		});
 	});
-	/* // 프로필 보기
-	$("#profile").on("click", function(){
-		var str = "profile";
-		
-		$.ajax({
-    		type : "POST",
-	    		url : "/menu",
-	    		dataType : "HTML",
-	    		data : {"str":str},
-    		success : function(result) {
-    			$("#dropdownProfile").empty();
-    			$("#dropdownProfile").append(result);
-    		}
-
-    	}); 
-		
-	}); */
-	
-/* 
-	$(document).on("click", function(e){
-		if(!$(e.target).closest(".profile").hasClass("profile")){
-			$("#dropdownProfile").empty();
-		}
-	});
-	 */
-	
 	
 	// append이후에 #search.on 메서드 실행이 안되므로 
 	// document.on 메서드로 실행

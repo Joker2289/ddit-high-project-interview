@@ -105,8 +105,8 @@
 <script type="text/javascript">
 
 $(".modalBtn").on("click",function(){
-	var modalStr = $(this).attr("title");
 	
+	var modalStr = $(this).attr("title");
 	console.log(modalStr);
 	
 	$.ajax({
