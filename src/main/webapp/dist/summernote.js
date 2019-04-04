@@ -2683,7 +2683,9 @@
               $img.off('load').detach();
               deferred.reject($img);
           }).css({
-              display: 'none'
+              display: 'none',
+              width: '523',
+              height: 'auto'
           }).appendTo(document.body).attr('src', url);
       }).promise();
   }
@@ -6633,7 +6635,7 @@
               $video = $$1('<iframe>')
                   .attr('frameborder', 0)
                   .attr('src', '//www.youtube.com/embed/' + youtubeId + (start > 0 ? '?start=' + start : ''))
-                  .attr('width', '640').attr('height', '360');
+                  .attr('width', '532').attr('height', '294');
           }
           else if (igMatch && igMatch[0].length) {
               $video = $$1('<iframe>')

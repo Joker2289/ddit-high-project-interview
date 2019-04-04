@@ -104,7 +104,7 @@
     text-shadow: none;
     border-style: solid;
     border-color: #f3f6f8; 
-	margin-bottom: 25px;
+	margin-bottom: 10px;
     width: 30px;
     height: 20px;
    	border : 0;
@@ -141,13 +141,13 @@
 }
 
 .modal-dialog{
-	width: 655px;
+	width: 555px;
 }
 
 .modal-write-body{
 	background : #fff;
 	height: 520px;
-	width: auto;
+	width: 555;
 }
 
 .btn-modal-upload{
@@ -186,7 +186,7 @@
     border-right-width: 1px;
     border-bottom-width: 1px;
     border-radius: 8px;
-	margin-left: 443px;
+	margin-left: 350px;
 }
 
 .btn-save:hover{
@@ -272,6 +272,7 @@
 	border-top-right-radius: 0px;
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;	
+	box-shadow: none;
 }
 
 .post-info img, video{
@@ -286,6 +287,26 @@
 	border-color: #fff;
 	border: 0px solid;
 	outline-color: #fff;
+	box-shadow: none;
+	border-bottom-color: #fff;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+}
+
+.note-frame{
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+}
+
+.note-editor.note-frame{
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
 }
 
 .note-status-output{

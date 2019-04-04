@@ -15,14 +15,11 @@
 <script src="/SE2/js/HuskyEZCreator.js"></script>
 
 <!-- include summernote css/js -->
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
+<link href="dist/summernote.css" rel="stylesheet">
+<script src="dist/summernote.js"></script>
 
 <script>
 $(document).ready(function() {
-	
-	//image 삽입버튼 숨기기
-	$("#input_img").hide();
 	
 	// 검색창
 	$("#search").on("click", function(){

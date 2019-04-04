@@ -11,7 +11,7 @@
       	    </div>
             
       	    <div class="modal-write-body">
-    	    	<textarea id="summernote" class="write_area" name="post_contents"  style="width:200px; height:200px; resize: none; border: 0;"></textarea>
+    	    	<textarea id="summernote" class="write_area" name="post_contents" style="width:200px; height:200px; resize: none; border: 0;"></textarea>
       	    </div>
       	    
       	    <div class="modal-write-foot">
@@ -24,3 +24,21 @@
       	</div>
       </div>
     </div>
+    
+    
+    
+<script>
+	
+	$("#btn_attend_img").on("click",function(){
+		$(".note-insert").children()[1].click();
+	});
+	
+	$("#btn_attend_video").on("click",function(){
+		$(".note-insert").children()[2].click();
+	});
+	
+// 	$("#btn_attend_document").on("click",function(){
+// 		$(".note-insert").children()[2].click();
+// 	});
+	
+</script>
