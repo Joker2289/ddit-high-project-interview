@@ -28,6 +28,7 @@
     
     
 <script>
+
 	
 	$("#btn_attend_img").on("click",function(){
 		$(".note-insert").children()[1].click();
