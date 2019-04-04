@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"/>
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -64,6 +67,7 @@ $(document).ready(function() {
 
 
 </script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="/css/profile/profileHome.css" rel="stylesheet">    
 <div class="container">
 <div class="row">
@@ -131,7 +135,7 @@ $(document).ready(function() {
 										</div>
 									</c:forEach>
 								</div>
-								<c:if test="${fn:length(userVo.profile_contents) > 172}">
+								<c:if test="${fn:length(userVo.profile_contents) > 187}">
 									<button class="btn btn-link userContentsShow" style="outline: 0; text-decoration: none;">더 보기 <i class="fas fa-angle-down"></i></button>
 								</c:if>
 								
@@ -149,8 +153,8 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-    <div class="modal-content">
+	<div class="modal-dialog" style="width: 744px;">
+    <div class="modal-content" style="width: 744px;">
 		
 	</div>
     </div>

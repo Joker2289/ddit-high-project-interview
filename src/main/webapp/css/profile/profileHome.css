@@ -48,6 +48,7 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
+	box-shadow: 0 1.5px 4px 3px rgba(0,0,0,.15);
 }
 
 .profileHomeProfilePicture{
@@ -60,6 +61,7 @@
 	margin-left: 24px; 
 	border: 4px solid #E3EEF2; 
 	border-radius: 100px;
+	box-shadow: 0 1.5px 20px 11px rgba(0,0,0,.15);
 }
 
 .profileDropdownBox>ul>li>a{
@@ -136,4 +138,74 @@
     font-size: 17px;
     
 }
+
+.essential:after{
+	content: '*';
+    color: #0073b1;
+    margin-left: 2px;
+}
+
+.pictureInsert{
+	padding-left: 0px;
+	margin-top: -180;
+	margin-top: -180px;
+	margin-left: 670px;
+	
+	
+}
+
+.pictureInsert>button>span{
+	font-size: 20px;
+	color: #0073B1;
+}
+
+.pictureInsert>button{
+	padding: 0 0 0 0;
+	width: 28px;
+	height: 28px;
+	border-radius: 28px; 
+	background-color: white;
+	box-shadow: 0 1.5px 4px 3px rgba(0,0,0,.15);
+}
+
+.modalRow{
+	margin-top: 10px; 
+	display: flex;
+}
+
+.modalHalfLeft{
+	width:335.500px; 
+	height: 55px; 
+	margin-right: 10px;
+}
+.modalHalfRight{
+	width:335.500px; 
+	height: 55px; 
+}
+.modalHalfLeft>label{
+	display: table-cell; 
+	vertical-align: middle; 
+	width:335.500px; 
+	font-size: 15px;
+}
+.modalHalfRight>label{
+	display: table-cell; 
+	vertical-align: middle; 
+	width:335.500px; 
+	font-size: 15px;
+}
+
+.modalHalfLeft>input[type=text]{
+	width:335.500px; 
+	height:30px; 
+	padding: 0 10px 0 10px;
+}
+.modalHalfRight>input[type=text]{
+	width:335.500px; 
+	height:30px; 
+	padding: 0 10px 0 10px;
+}
+
+
+
 
