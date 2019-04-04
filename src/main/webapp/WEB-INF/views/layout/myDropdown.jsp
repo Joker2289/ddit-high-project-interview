@@ -15,10 +15,17 @@
 				</div></td>
 		</tr>
 		<tr class="profiletr">
-			<td
-				style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;"
-				onclick="javascript:location.href='/profileHome'">프로필보기</td>
-		</tr>
+		<c:if test="${SESSION_MEMBERVO.mem_division == '1' }">
+				<td
+					style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;"
+					onclick="javascript:location.href='/profileHome'">프로필보기</td>
+		</c:if>
+		<c:if test="${SESSION_MEMBERVO.mem_division == '2' }">
+				<td
+					style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;"
+					onclick="javascript:location.href='/corporation'">회사 페이지</td>
+		</c:if>
+			</tr>
 		<tr class="profiletr"
 			style="border-top: 1px solid #CFD1D3; border-bottom: 1px solid #CFD1D3;">
 			<td style="color: #666666; text-align: center;">프리미엄1개월무료이용</td>
@@ -34,25 +41,9 @@
 		<tr class="profiletr">
 			<td style="color: #666666;">채용공고</td>
 		</tr>
-	
-		<tr><td>${session_memberVo.mem_division}</td></tr>
 
-		<c:choose>
-			<c:when test="${session_memberVo.mem_division == '2' }">
-				<tr class="profiletr">
-					<td><a style="color: #666666;" href="<%=request.getContextPath()%>/corporation">회사</a></td>
-				</tr>
-				<tr class="profiletr" style="border-top: 1px solid #CFD1D3;">
+		<tr class="profiletr" style="border-top: 1px solid #CFD1D3;">
 					<td style="color: #666666;">로그아웃</td>
 				</tr>
-			</c:when>
-			<c:otherwise>
-				<tr class="profiletr" style="border-top: 1px solid #CFD1D3;">
-					<td style="color: #666666;">로그아웃</td>
-				</tr>
-             </c:otherwise>
-		</c:choose>
-		
-		
 	</tbody>
 </table>
