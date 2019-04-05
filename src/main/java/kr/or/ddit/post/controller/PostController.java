@@ -2,6 +2,7 @@ package kr.or.ddit.post.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,6 @@ import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.pagination.PaginationVo;
 
-//@RequestMapping("/post")
 @Controller
 public class PostController {
 	
@@ -83,17 +83,29 @@ public class PostController {
 			int connectionCnt = personal_connectionService.connections_count(memberInfo);
 			
 			//팔로우 한 해쉬태그 출력을 위한 세팅
-//			List<FollowVo> followHashtag = followService.select_followKindList(followInfo);
+			List<FollowVo> followHashtag = followService.select_followKindList(followInfo);
 			
-			
+			if(!followHashtag.isEmpty()){
+				model.addAttribute("followHashtag", followHashtag);
+			} else {
+				model.addAttribute("followHashtag","notfollow");
+			}
+				
 			model.addAttribute("userInfo", userInfo);
 			model.addAttribute("connectionCnt", connectionCnt);
-//			model.addAttribute("followHashtag", followHashtag);
 			model.addAttribute("savepostCnt", savepostCnt);
 		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
+			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
 			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
 			
-			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
+			List<FollowVo> followHashtag = followService.select_followKindList(followInfo);
+	         
+	         if(!followHashtag.isEmpty()){
+	            model.addAttribute("followHashtag", followHashtag);
+	         } else {
+	            model.addAttribute("followHashtag","notfollow");
+	         }
+			
 			
 			model.addAttribute("corpInfo", corpInfo);
 		} else { //관리자일 경우
@@ -104,8 +116,6 @@ public class PostController {
 		
 		model.addAttribute("memberInfo", memberInfo);
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
-		
-		timelinePost.get(0).getPost_code();
 		
 		model.addAttribute("timelinePost", timelinePost);
 		
@@ -140,17 +150,20 @@ public class PostController {
 		return "timeline/appendPost";
 	}
 	
-	@ResponseBody
+	
+//	@ResponseBody
 	@RequestMapping(value="/timeline", method=RequestMethod.POST)
-	public List<PostVo> infiniteScroll(@RequestBody PostVo postVo, PaginationVo paginationVo, HttpServletRequest request, Model model){
+	public List<PostVo> infiniteScroll(@RequestBody PostVo postVo, PaginationVo paginationVo, HttpServletRequest request,
+											Model model, @RequestBody Map<String, Object> param){
+		
+		String pageNum = (String) param.get("pageNum");
 		
 		List<PostVo> afterPost = new ArrayList<PostVo>();
 		
 		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
-		
 		paginationVo.setMem_id(member.getMem_id());
-		paginationVo.setPageSize(1);
+		paginationVo.setPage(Integer.parseInt(pageNum)); 
 		
 		if(member.getMem_division().equals("1")){
 			UsersVo userInfo = usersService.select_userInfo(member.getMem_id());

@@ -24,6 +24,7 @@ import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
+import kr.or.ddit.save_recruit.model.Save_recruitVo;
 import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.users.model.UsersVo;
@@ -139,7 +140,7 @@ public class CorporationController {
 	 * @return
 	 */
 	@RequestMapping(path = { "/corporationRecruitment" })
-	public String corporationRecruit(HttpSession session, Model model, PaginationVo paginationVo, HttpServletRequest request) {
+	public String corporationRecruit(String corp_id,HttpSession session, Model model, PaginationVo paginationVo, HttpServletRequest request) {
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		paginationVo.setMem_id(memberInfo.getMem_id());
@@ -167,29 +168,7 @@ public class CorporationController {
 		model.addAttribute("timelinePost", timelinePost);
 		
 		
-		
-	MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
-		
-		// 회원이 검색한 값 가져오기. (getLSLog - get last search_log)
-		Search_logVo lSLog = sLogService.getLSLog(mVo.getMem_id());
-		
-		model.addAttribute("lSLog", lSLog);
-		
-		// 채용공고 리스트 넘기기. <- corpImgList / corpNmList도 추가해야됨.
-		List<RecruitVo> recrList = recrService.getAllRecr();
-		List<String> corpImgList = new ArrayList<>();
-		List<String> corpNmList = new ArrayList<>();
-		
-		for(int i=0; i < recrList.size(); i++){
-			RecruitVo rVo = recrList.get(i);
-			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
-			corpImgList.add(cVo.getLogo_path());
-			corpNmList.add(cVo.getCorp_name());
-		}
-		
-		model.addAttribute("recrList", recrList);
-		model.addAttribute("corpImgList", corpImgList);
-		model.addAttribute("corpNmList", corpNmList);
+
 	
 		
 		return "corporationRecruitmentTiles";
