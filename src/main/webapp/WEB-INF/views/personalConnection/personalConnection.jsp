@@ -47,7 +47,7 @@ $(document).ready(function() {
 </script>
 <div class="container">
 <div class="row">
-<div style="margin-top: 101px;">
+<div>
 <div class="row">
 			  <div id="pc_leftmenu" class="col-md-3">
 			        <div id="pc_leftmenuBox" class="whiteBox">

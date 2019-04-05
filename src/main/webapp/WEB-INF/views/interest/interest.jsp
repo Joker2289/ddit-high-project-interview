@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<div class="container"><div class="row"><div style="margin-top: 101px;">
+<div class="container"><div class="row"><div>
 	<!-- 레이아웃 잡는건 나중에.. -->
 	
 	<br><br>

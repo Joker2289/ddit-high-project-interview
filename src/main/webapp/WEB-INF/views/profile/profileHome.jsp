@@ -71,7 +71,7 @@ $(document).ready(function() {
 <link href="/css/profile/profileHome.css" rel="stylesheet">    
 <div class="container">
 <div class="row">
-<div style="margin-top: 101px;">
+<div>
 	<div class="row profileHomeBox">
 		<div class="col-md-9 mainAllBox">
 			<div class="whiteBox introduceBox">

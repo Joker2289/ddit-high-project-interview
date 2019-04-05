@@ -18,7 +18,7 @@
 <body>
 <div class="container">
 <div class="row">
-<div style="margin-top: 101px;">
+<div>
 
 	<!-- 레이아웃 잡는건 나중에.. -->
 	<!-- 채용공고 상세 페이지. 어떤 param을 받아야되지? - recr/corp 받음. -->

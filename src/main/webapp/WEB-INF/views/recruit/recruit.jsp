@@ -40,7 +40,7 @@
 
 <div class="container">
 <div class="row">
-<div style="margin-top: 101px;">
+<div >
 <section style="text-align: center;">
    	<div class="div_ch" style="border: 1px solid; padding: 10px; margin-bottom: 20px;">
 		<a href="${pageContext.request.contextPath }/srecr">

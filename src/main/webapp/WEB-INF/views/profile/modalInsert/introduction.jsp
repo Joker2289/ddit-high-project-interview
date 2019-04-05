@@ -6,7 +6,7 @@
 		aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	</button>
-	<h4 class="modal-title">소개 수정</h4>
+	<h4 class="modal-title">소개</h4>
 </div>
 <div class="modal-body">
 <form action="/usersProfileUpdate" method="post" id="usersUpdateFrm" enctype="multipart/form-data">
