@@ -71,12 +71,17 @@ public class profileController {
 	}
 	
 	@RequestMapping("/modalInsertView")
-	public String modalInsertView(String modalStr) {
+	public String modalInsertView(String modalStr, Model model, String user_id) {
 		
 		String result = "";
 		
 		switch (modalStr) {
 			case "introduction":
+				FilesVo filesVo = new FilesVo();
+				filesVo.setRef_code(user_id);
+				filesVo.setDivision("43");
+				List<FilesVo> userFilesList = filesService.select_usersFile(filesVo);
+				model.addAttribute("userFilesList", userFilesList);
 				result="/profile/modalInsert/introduction";
 				break;
 			case "career":
@@ -110,6 +115,8 @@ public class profileController {
 				break;
 		}
 		
+		
+		
 		return result;
 		
 	}
@@ -121,7 +128,8 @@ public class profileController {
 	}
 	
 	@RequestMapping("/profileDropdown")
-	public String profileDropdownView() {
+	public String profileDropdownView(Model model, HttpSession session,String user_id) {
+		model.addAttribute("user_id", user_id);
 		
 		return "/profile/profileDropdown";
 	}
@@ -129,23 +137,23 @@ public class profileController {
 	@RequestMapping(path= {"/profileHome"})
 	public String profileHomeView(Model model, HttpSession session) {
 		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
-		UsersVo userVo = usersService.select_userInfo(memberVo.getMem_id());
+		UsersVo usersVo = usersService.select_userInfo(memberVo.getMem_id());
 		FilesVo filesVo = new FilesVo();
 		filesVo.setRef_code(memberVo.getMem_id());
 		filesVo.setDivision("43");
 		
-		String introduce = usersService.select_introduce(userVo.getUser_id());
-		List<Education_infoVo> education_infoList = eduService.select_educationInfo(userVo.getUser_id());
-		List<Career_infoVo> career_infoList = carService.select_careerInfo(userVo.getUser_id());
+		String introduce = usersService.select_introduce(usersVo.getUser_id());
+		List<Education_infoVo> education_infoList = eduService.select_educationInfo(usersVo.getUser_id());
+		List<Career_infoVo> career_infoList = carService.select_careerInfo(usersVo.getUser_id());
 		int peopleCount = PersonalService.connections_count(memberVo);
-		List<FilesVo> filesList = filesService.select_usersFile(filesVo);
+		List<FilesVo> userFilesList = filesService.select_usersFile(filesVo);
 		
 		model.addAttribute("education_infoList", education_infoList);
 		model.addAttribute("career_infoList", career_infoList);
 		model.addAttribute("introduce", introduce);
 		model.addAttribute("peopleCount", peopleCount);
-		model.addAttribute("userVo", userVo);
-		model.addAttribute("filesList", filesList);
+		model.addAttribute("usersVo", usersVo);
+		model.addAttribute("userFilesList", userFilesList);
 		
 		return "profileHomeTiles";
 	}

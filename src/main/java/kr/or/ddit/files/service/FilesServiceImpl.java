@@ -41,4 +41,30 @@ public class FilesServiceImpl implements IFilesService{
 	public FilesVo select_oneFile(String file_code) {
 		return filesDao.select_oneFile(file_code);
 	}
+
+	/**
+	 * Method : insert_usersFile
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param filesVo
+	 * @return
+	 * Method 설명 : 파일 첨부 생성
+	 */
+	@Override
+	public int insert_usersFile(FilesVo filesVo) {
+		return filesDao.insert_usersFile(filesVo);
+	}
+	
+	/**
+	 * Method : delete_allFile
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param filesVo
+	 * @return
+	 * Method 설명 : 구분코드에 해당하는 참조코드명 전체 파일 삭제
+	 */
+	@Override
+	public int delete_allFile(FilesVo filesVo) {
+		return filesDao.delete_allFile(filesVo);
+	}
 }

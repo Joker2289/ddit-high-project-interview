@@ -696,13 +696,17 @@ public class RecruitController {
 		List<RecruitVo> recrList = recrService.getAllRecr();
 		model.addAttribute("recrList", recrList);
 		
+		// addrList - 회사의 주소, locationList - 회사의 좌표.
 		List<String> addrList = new ArrayList<>();
+		List<String> locationList = new ArrayList<>();
 		for(int i=0; i < recrList.size(); i++){
 			RecruitVo rVo = recrList.get(i);
 			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
 			addrList.add(cVo.getAddr1());
+			locationList.add(cVo.getCorp_location());
 		}
 		model.addAttribute("addrList", addrList);
+		model.addAttribute("locationList", locationList);
 		
 		// 회사 목록을 넘겨보자.
 		List<CorporationVo> corpList = corpService.select_allCorps();
@@ -723,27 +727,35 @@ public class RecruitController {
 	@RequestMapping("/mapAjaxHtml")
 	public String mapAjaxHtml(String result, Model model) {
 		List<CorporationVo> corpList = corpService.select_allCorps();
+		List<RecruitVo> recrList = recrService.getAllRecr();
 		
 		// 설정한 범위 내에 있는 회사(채용공고) - corpList2
-		List<CorporationVo> corpList2 = new ArrayList<>();
+		List<RecruitVo> recrList2 = new ArrayList<>();
 		
 		// result - 회사1:신세계,거리:702.9181827114676/반경:756.8619424973508
 		String[] arr_result = result.split("/");
-		int corp_num = arr_result.length - 1;
+		int recr_num = arr_result.length - 1;
 		
 		List<String> corpNmList = new ArrayList<>();
+		List<String> corpImgList = new ArrayList<>();
 		List<String> corpDList = new ArrayList<>();
 		
-		for(int i=0; i < corp_num; i++){
+		for(int i=0; i < recr_num; i++){
 			String data = arr_result[i];
-			String corpNm = data.split(",")[0].split(":")[1];
+			String recruit_code = data.split(",")[0].split(":")[1];
 			String str_corpD = data.split(",")[1].split(":")[1];
 
-			CorporationVo cVo = corpService.getCorp(corpNm);
-			corpList2.add(cVo);
+			RecruitVo rVo = recrService.getRecr(recruit_code);
+			recrList2.add(rVo);
+			
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			corpImgList.add(cVo.getLogo_path());
+			corpNmList.add(cVo.getCorp_name());
 		}
 		
-		model.addAttribute("corpList2", corpList2);
+		model.addAttribute("recrList2", recrList2);
+		model.addAttribute("corpImgList", corpImgList);
+		model.addAttribute("corpNmList", corpNmList);
 
 		
 		return "recruit/mapAjaxHtml";

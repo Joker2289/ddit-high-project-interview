@@ -6,7 +6,6 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	
 	$(".userContentsShow").on("click",function(e){
 		if ($(e.target).closest(".userContentsSkip").hasClass('userContentsSkip')) {
 			$(".userContentsShow").empty();
@@ -24,11 +23,12 @@ $(document).ready(function() {
 		if($(e.target).closest(".profileBtn").hasClass("profileBtn")){
 			
 			$(".profileBtn").attr('class','btn btn-primary profileBtnOn');
+			
 			$.ajax({
 	    		type : "POST",
 		    		url : "/profileDropdown",
 		    		dataType : "HTML",
-		    		data : { },
+		    		data : {"user_id" :  "${usersVo.user_id}" },
 	    		success : function(result) {
 	    			$(".profileDropdownBox").append(result);
 	    		}
@@ -71,18 +71,18 @@ $(document).ready(function() {
 <link href="/css/profile/profileHome.css" rel="stylesheet">    
 <div class="container">
 <div class="row">
-<div style="margin-top: 101px;">
+<div>
 	<div class="row profileHomeBox">
 		<div class="col-md-9 mainAllBox">
 			<div class="whiteBox introduceBox">
-				<div class="profileHomeBackgroundPicture" style="background-image: url(/background?mem_id=${userVo.user_id});"></div>
+				<div class="profileHomeBackgroundPicture" style="background-image: url(/background?mem_id=${usersVo.user_id});"></div>
 				<div style="min-height: 328px;">
-					<div class="profileHomeProfilePicture" style="background-image: url(/profile?mem_id=${userVo.user_id});"></div>
+					<div class="profileHomeProfilePicture" style="background-image: url(/profile?mem_id=${usersVo.user_id});"></div>
 					<div style="width: 791px; padding:24px; margin-top: -72px;">
 						<span style="font-size: 20px;padding-left: 717px; color: #0073B1;"><i class="fas fa-pencil-alt"></i></span>
 						<div class="memberBox" style="display: flex;">
 							<div style="width: 500px;">
-								<label class="member" >${userVo.user_name }</label>
+								<label class="member" >${usersVo.user_name }</label>
 								<label class="member simpleInfo" style="font-size: 20px; font-weight: 100;">${introduce }</label>
 							</div>
 							
@@ -125,17 +125,17 @@ $(document).ready(function() {
 							
 						</div>
 						
-						<c:if test="${(not empty userVo.profile_contents) or (not empty userVo.profile_contents)}">
+						<c:if test="${(not empty usersVo.profile_contents) or (not empty usersVo.profile_contents)}">
 							<div class="userContentsSkip" style="border-top: 1px solid #CDCFD2; margin-top: 20px; padding-top: 10px;">
-								<p>${userVo.profile_contents }</p>
+								<p>${usersVo.profile_contents }</p>
 								<div style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;">
-									<c:forEach items="${filesList }" var="files" > 
+									<c:forEach items="${userFilesList }" var="files" > 
 										<div style="height: 25px; margin-right: 10px;border: 2px solid #CDCFD2; font-size: 15px; font-weight: bold">
 											<a href="/fileDownload?file_code=${files.file_code }">${files.file_name}</a>
 										</div>
 									</c:forEach>
 								</div>
-								<c:if test="${fn:length(userVo.profile_contents) > 187}">
+								<c:if test="${fn:length(usersVo.profile_contents) > 187}">
 									<button class="btn btn-link userContentsShow" style="outline: 0; text-decoration: none;">더 보기 <i class="fas fa-angle-down"></i></button>
 								</c:if>
 								

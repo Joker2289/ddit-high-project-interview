@@ -26,4 +26,24 @@ public interface IFilesDao {
 	 */
 	FilesVo select_oneFile(String file_code);
 	
+	/**
+	 * Method : insert_usersFile
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param filesVo
+	 * @return
+	 * Method 설명 : 첨부파일 생성
+	 */
+	int insert_usersFile(FilesVo filesVo);
+	
+	/**
+	 * Method : delete_allFile
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param filesVo
+	 * @return
+	 * Method 설명 : 구분코드에 해당하는 참조코드명 전체 파일 삭제
+	 */
+	int delete_allFile(FilesVo filesVo);
+	
 }

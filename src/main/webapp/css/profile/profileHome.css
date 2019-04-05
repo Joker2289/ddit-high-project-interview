@@ -154,12 +154,13 @@
 	
 }
 
-.pictureInsert>button>span{
+.pictureInsert>label>span{
 	font-size: 20px;
 	color: #0073B1;
+	padding-left: 4px;
 }
 
-.pictureInsert>button{
+.pictureInsert>label{
 	padding: 0 0 0 0;
 	width: 28px;
 	height: 28px;

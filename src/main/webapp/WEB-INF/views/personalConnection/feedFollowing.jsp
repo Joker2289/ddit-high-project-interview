@@ -72,7 +72,7 @@ $(document).ready(function() {
 });
 	
 </script>
-<nav class="navbar navbar-inverse navbar-fixed-top feedTop">
+<nav class="navbar navbar-inverse navbar-fixed-top feedTop" style="margin-top: -20px;">
 	<div class="container" style="padding-top: 8px;">
 		<div class="feedDiv">
 			<a href="/feedFollow" >신선한 시각 팔로우</a>
@@ -88,7 +88,7 @@ $(document).ready(function() {
 
 <div class="container">
 <div class="row">
-<div style="margin-top: 101px;">
+<div>
 <div class="row">
 
 	<div id="pc_leftmenu" class="col-md-3" style="padding-left: 0px;margin-left: 30px;">

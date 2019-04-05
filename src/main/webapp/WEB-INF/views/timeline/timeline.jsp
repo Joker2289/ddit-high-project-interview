@@ -4,7 +4,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <div class="container">
    <div class="row">
-      <div style="margin-top: 101px;">
+      <div>
 	      <div id="col-info" class="col-md-3">
 
 	        <div class="panel panel-default">
@@ -67,13 +67,21 @@
 	        <!-- friend requests -->
 	        <div class="panel panel-default">
 	          <div class="panel-body">
-	            <h4>팔로우 한 해시태그</h4>
+	            <h4>팔로우한 해시태그</h4>
 	            <ul>
-	              <c:forEach items="${followHashtag }" var="hashtags">
-	                <li>
-	                  <a href="#">${hashtags.ref_keyword }</a>
-	                </li>
-                  </c:forEach> 
+	              <c:choose>
+	                <c:when test="${followHashtag eq 'notfollow'}">
+                   	  <li>팔로우한 태그가 읎스요.</li>
+                   	  <li>해시태그를 팔로우 해보세요!</li>
+                    </c:when>
+                    <c:otherwise>
+	                  <c:forEach items="${followHashtag }" var="hashtags">
+                        <li>
+                          <a href="#">${hashtags.ref_keyword }</a>
+                        </li>
+                      </c:forEach>
+                    </c:otherwise>
+                  </c:choose>     
 	            </ul>
 	          </div>
 	        </div>
@@ -235,6 +243,16 @@
 		$("div.writemodal").modal();
 	}
 	
+	$("#btn_upload_img").on("click",function(){
+		pushModal();
+		$(".note-insert").children()[1].click();
+	});
+	
+	$("#btn_upload_video").on("click",function(){
+		pushModal();
+		$(".note-insert").children()[2].click();
+	});
+	
 	$(document).ready(function() {
 		
 		$('#summernote').summernote({
@@ -243,19 +261,7 @@
 	        height: 440,
 	        maxheight: 600,
 	        width: 555,
-	        maxwidth: 700,
-	        
-	        airMode: true
-		});
-		
-		$("#btn_upload_img").on("click",function(){
-			pushModal();
-			$(".note-insert").children()[1].click();
-		});
-		
-		$("#btn_upload_video").on("click",function(){
-			pushModal();
-			$(".note-insert").children()[2].click();
+	        maxwidth: 555
 		});
 		
 		
@@ -282,7 +288,8 @@
 		});
 		
 		
-	})
+		
+	});
 	
 	
 
