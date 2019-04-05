@@ -14,7 +14,7 @@
 
 <div class="container">
 <div class="row">
-<div>
+<div style="margin-top: 101px;">
 
 
 	<div class="col-md-12" >
@@ -28,7 +28,7 @@
 				<i class="fas fa-pencil-alt" style="color: #0174b0;"></i>
 				커리어 관심분야
 			</a>
-			<span style="margin: 410px;">
+			<span style="margin: 370px;">
 				인재를 찾고 계세요?
 				<a href="${pageContext.request.contextPath }/writeRecr" class="genric-btn info-border" style="
 						border: 1px solid; padding: 9px; margin-left: 15px; border-color: #0174b0; 
@@ -42,8 +42,9 @@
 	
 	<div class="col-md-12" >
 		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: 0px;
-				text-align: center; padding-top: 10px; background-color: #edf1f5; border-bottom: 0px;">
-			<a href="${pageContext.request.contextPath }/map" style="font-size: x-large;">
+				text-align: center; padding-top: 10px; background-color: #edf1f5; border-bottom: 0px;
+				font-size: 22px;">
+			<a href="${pageContext.request.contextPath }/map" style="">
 				<img width="37" src="http://mblogthumb4.phinf.naver.net/20160920_175/kokoa2100_1474368430239vv9yY_PNG/mzl.xnmoezsr.png?type=w800">   	
 				 지도에서 검색 - 한 눈에 확인하는 채용공고.
 			</a>
@@ -52,7 +53,7 @@
 	
 	<div class="col-md-12" >
 		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: 20px;
-				text-align: center; padding-top: 12px; font-size: 22px;">
+				text-align: center; padding-top: 12px; font-size: 21px;">
 			<img width="30" src="https://lh3.googleusercontent.com/sMhe3GxpmWD6NISZBzhy--dtwcAcVvLFDxOGe1Kat3d0YA0nhq9ICwTSFN3UQ7uEZA">
 			<a href="https://media.daum.net/digital/">
 				 뉴스로 IT 업계 동향을 확인해보세요.
@@ -64,7 +65,7 @@
 		<input type="hidden" id="search_word" name="search_word">
 		<input type="hidden" id="search_local" name="search_local">
 		
-		<div class="col-md-12" >
+		<div class="col-md-12" style="height: 148px;">
 			<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 148px; text-align: center;
 					background-color: #edf1f5;">
 				<h3 style="color: black;">꿈꾸시던 직장 - 검색하면 바로 뜹니다. (mem_id : ${SESSION_MEMBERVO.mem_id })</h3><br>
@@ -87,17 +88,22 @@
 	</form>
 	
 	<div class="col-md-12" >
-		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 150px; margin-bottom: 20px;
+		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 160px; margin-bottom: 20px;
 				text-align: center; border-top: 0px; font-size: 18px; padding-top: 15px; padding-left: 15px;
 				overflow:hidden;">
 			<span style="">
 				채용공고 검색어
 			</span>
-			<span id="alarm_manage" class="button-group-area mt-10" onmouseover="" style="margin-left: 800px; cursor: pointer;">
-				관리
+			<span id="alarm_manage" class="button-group-area mt-10" onmouseover="" style="margin-left: 800px; cursor: pointer;
+					color: #0174b0;">
+				<strong>관리</strong>
 			</span>
-			<button id="btnslidelt" class="btn btn-default" style="border: 0px;">&lt;</button>
-			<button id="btnSlidegt" class="btn btn-default" style="border: 0px;">&gt;</button><br/>
+			<button id="btnslidelt" class="btn btn-default" style="border: 0px;">
+				<i class="fas fa-chevron-left" style="font-size: 17px;"></i>
+			</button>
+			<button id="btnSlidegt" class="btn btn-default" style="border: 0px;">
+				<i class="fas fa-chevron-right" style="font-size: 17px;"></i>
+			</button><br/>
 			
 			<div style="text-align: left;">		
 				<ul id="content" style="list-style: none; width: 3000px; padding-left: 5px;">			
@@ -127,117 +133,141 @@
 
 	<form id="frm_detail" action="${pageContext.request.contextPath }/recr_detail" method="post">
 		<input type="hidden" id="recruit_code" name="recruit_code">	
+		
 		<div class="col-md-12" >
-			<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 900px; margin-bottom: 20px;
-					text-align: center;">
-	   		<div style="text-align: left; margin-bottom: 10px;">
-	   			<strong>조회/스크랩하신 항목을 참고하여..</strong> <br> 
-	   			<c:choose>
-	   				<c:when test="${lVRVo.recruit_title.substring(0, 9) == '원하는 채용공고를' }">
-			   			<a href="${pageContext.request.contextPath }/recrSearch">
-			   				${lVRVo.recruit_title } - ${lVRVo.job_local }
-			   			</a><br>
-	   				</c:when>
-	   				<c:otherwise>
-			   			<a href="${pageContext.request.contextPath }/recr_detail?recruit_code=${lVRVo.recruit_code }">
-			   				${lVRVo.recruit_title } - ${lVRVo.job_local }
-			   			</a><br>
-	   				</c:otherwise>
-	   			</c:choose>
-	   		</div>
-	   		<!-- rRList1가 있으면 출력. -->
-	   		<c:if test="${rRList1.size() >= 1 }">
-				<table class="tb_recruit">
-					<tr style="width: 100px; height: 140px; text-align: left;">
-						<c:forEach items="${rRList1 }" varStatus="i" var="rRVo">
-							<!-- 마지막 조회/스크랩 채용공고 색을 좀 표시하면 좋겠는데. -->
-<!-- 							<td style="width: 5px; height: 5px; border: 10px; border-color: #b3d9ff;"> -->
-							<td style="width: 5px; height: 5px;">
-								<div id="recr${i.index }" onmouseover="" style="cursor: pointer;">
-									<div class="table_div">
-										${corpImgList1.get(i.index) }
-									</div> <br>
-									<strong>${rRVo.recruit_title }</strong> <br>
-									${corpNmList1.get(i.index) } <br>
-									${rRVo.job_local } <br>
-									${rRVo.job_type }
-								</div>
-								<c:choose>
-									<c:when test="${scrapList1.get(i.index) == 'f' }">
-										<!-- scrap_flag에 recruit_code를 붙여주자. (예: t12) -->
-										<i id="scrap${i.index }" class="far fa-bookmark" onmouseover="" 
-												style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
-									</c:when>
-									<c:otherwise>
-										<i id="scrap${i.index }" class="fas fa-bookmark" onmouseover="" 
-												style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
-									</c:otherwise>
-								</c:choose>
-							</td>								
-						</c:forEach>
+			<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 790px; margin-bottom: 20px;
+					text-align: center; padding-top: 20px; font-size: 18px; padding-left: 20px; overflow:hidden;">
+				<table>
+					<tr>
+						<td>
+					   		<table style="margin-bottom: 20px;">
+					   			<tr>
+					   				<td style="width: 800px; text-align: left;">
+							   			<strong>조회/스크랩하신 항목을 참고하여..</strong> <br> 
+							   			<c:choose>
+							   				<c:when test="${lVRVo.recruit_title.substring(0, 9) == '원하는 채용공고를' }">
+									   			<a href="${pageContext.request.contextPath }/recrSearch">
+									   				${lVRVo.recruit_title } - ${lVRVo.job_local }
+									   			</a>
+							   				</c:when>
+							   				<c:otherwise>
+									   			<a href="${pageContext.request.contextPath }/recr_detail?recruit_code=${lVRVo.recruit_code }">
+									   				${lVRVo.recruit_title } - ${lVRVo.job_local }
+									   			</a>
+							   				</c:otherwise>
+							   			</c:choose>
+					   				</td>
+					   				<td>
+										<a id="btn_slt1" class="btn btn-default" style="border: 0px; margin-left: 200px;">
+											<i class="fas fa-chevron-left" style="font-size: 17px;"></i>
+										</a>
+										<a id="btn_sgt1" class="btn btn-default" style="border: 0px;">
+											<i class="fas fa-chevron-right" style="font-size: 17px;"></i>
+										</a><br/>
+					   				</td>
+					   			</tr>
+					   		</table>
+					   		
+					   		<!-- rRList1가 있으면 출력. -->
+					   		<c:if test="${rRList1.size() >= 1 }">
+					   			<ul id="content1" style="list-style: none; width: 3000px; padding-left: 5px;">
+								<c:forEach items="${rRList1 }" varStatus="i" var="rRVo">
+									<li style="float: left; text-align: left;"><div class="whiteBox" style="width: 280px; box-shadow: 0 3px 3px rgba(0, 0, 0, .175);
+											margin-right: 10px; padding: 8px; font-size: 16px; height: 270px;">
+										<div id="recr${i.index }" onmouseover="" style="cursor: pointer;">
+											<div class="table_div">
+												${corpImgList1.get(i.index) }
+											</div> <br>
+											<strong>${rRVo.recruit_title }</strong> <br>
+											${corpNmList1.get(i.index) } <br>
+											${rRVo.job_local } <br>
+											${rRVo.job_type }
+										</div>
+										<c:choose>
+											<c:when test="${scrapList1.get(i.index) == 'f' }">
+												<!-- scrap_flag에 recruit_code를 붙여주자. (예: t12) -->
+												<i id="scrap${i.index }" class="far fa-bookmark" onmouseover="" 
+														style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
+											</c:when>
+											<c:otherwise>
+												<i id="scrap${i.index }" class="fas fa-bookmark" onmouseover="" 
+														style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
+											</c:otherwise>
+										</c:choose>
+									</div></li>
+								</c:forEach>
+								</ul>
+							</c:if> 
+						</td>
 					</tr>
-				</table>
-			</c:if> 
-			<br>	                		
-		           		
-		         
-			<br><br> 
-			<div style="text-align: left; margin-bottom: 10px;">
-				<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br>
-				
-				<!-- c:choose안에 또 c:choose 넣을 수 있나? -->
-				<c:choose>
-					<c:when test="${inteVo == null }">
-						<a href="${pageContext.request.contextPath }/interest">
-							 업무지역 · 업무분야 · 고용형태 · 회사 규모 등 관심 분야 설정
-						</a><br>
-					</c:when>
-					<c:otherwise>
-						 ${inteVo.inte_local } · ${inteVo.inte_type } · ${inteVo.inte_emptype } · ${inteVo.inte_size } ... 
-						<a href="${pageContext.request.contextPath }/interest">
-							 관심 분야 설정
-						</a> <br>
-					</c:otherwise>
-				</c:choose>
-			</div>
-			<!-- rRList2 출력. 있으면 출력. -->				
-	   		<c:if test="${rRList2.size() >= 1 }">
-				<table class="tb_recruit">
-					<tr style="width: 100px; height: 140px; text-align: left;">
-						<c:forEach items="${rRList2 }" varStatus="i" var="rRVo">
-							<td style="width: 5px; height: 5px;">
-								<div id="recr2${i.index }" onmouseover="" style="cursor: pointer;">
-									<div class="table_div">
-										${corpImgList2.get(i.index) }
-									</div> <br>
-									<strong>${rRVo.recruit_title }</strong> <br>
-									${corpNmList2.get(i.index) } <br>
-									${rRVo.job_local } <br>
-									${rRVo.job_type }
-								</div>
-								<c:choose>
-									<c:when test="${scrapList2.get(i.index) == 'f' }">
-										<!-- scrap_flag에 recruit_code를 붙여주자. (예: t12) -->
-										<i id="scrap2${i.index }" class="far fa-bookmark" onmouseover="" 
-												style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
-									</c:when>
-									<c:otherwise>
-										<i id="scrap2${i.index }" class="fas fa-bookmark" onmouseover="" 
-												style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
-									</c:otherwise>
-								</c:choose>
-							</td>								
-						</c:forEach>
+					<tr>
+						<td>
+					   		<table style="margin-bottom: 20px; margin-top: 30px;">
+					   			<tr>
+					   				<td style="width: 800px; text-align: left;">
+							   			<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br>
+										<c:choose>
+											<c:when test="${inteVo == null }">
+												<a href="${pageContext.request.contextPath }/interest">
+													 업무지역 · 업무분야 · 고용형태 · 회사 규모 등 관심 분야 설정
+												</a><br>
+											</c:when>
+											<c:otherwise>
+												 ${inteVo.inte_local } · ${inteVo.inte_type } · ${inteVo.inte_emptype } · ${inteVo.inte_size } ... 
+												<a href="${pageContext.request.contextPath }/interest">
+													 관심 분야 설정
+												</a> <br>
+											</c:otherwise>
+										</c:choose>
+					   				</td>
+					   				<td>
+										<a id="btn_slt2" class="btn btn-default" style="border: 0px; margin-left: 200px;">
+											<i class="fas fa-chevron-left" style="font-size: 17px;"></i>
+										</a>
+										<a id="btn_sgt2" class="btn btn-default" style="border: 0px;">
+											<i class="fas fa-chevron-right" style="font-size: 17px;"></i>
+										</a><br/>
+					   				</td>
+					   			</tr>
+					   		</table>	
+					   		<!-- rRList1가 있으면 출력. -->
+					   		<c:if test="${rRList2.size() >= 1 }">
+					   			<ul id="content2" style="list-style: none; width: 3000px; padding-left: 5px;">
+								<c:forEach items="${rRList2 }" varStatus="i" var="rRVo">
+									<li style="float: left; text-align: left;"><div class="whiteBox" style="width: 280px; box-shadow: 0 3px 3px rgba(0, 0, 0, .175);
+											margin-right: 10px; padding: 8px; font-size: 16px; height: 270px;">
+										<div id="recr${i.index }" onmouseover="" style="cursor: pointer;">
+											<div class="table_div">
+												${corpImgList2.get(i.index) }
+											</div> <br>
+											<strong>${rRVo.recruit_title }</strong> <br>
+											${corpNmList2.get(i.index) } <br>
+											${rRVo.job_local } <br>
+											${rRVo.job_type }
+										</div>
+										<c:choose>
+											<c:when test="${scrapList2.get(i.index) == 'f' }">
+												<!-- scrap_flag에 recruit_code를 붙여주자. (예: t12) -->
+												<i id="scrap${i.index }" class="far fa-bookmark" onmouseover="" 
+														style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
+											</c:when>
+											<c:otherwise>
+												<i id="scrap${i.index }" class="fas fa-bookmark" onmouseover="" 
+														style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
+											</c:otherwise>
+										</c:choose>
+									</div></li>
+								</c:forEach>
+								</ul>
+							</c:if> 					
+						</td>
 					</tr>
-				</table>
-			</c:if>
-			<br><br><br>   				
-			<br>	 
-			<div style="border-top: 1px solid;">              				
-				<a href="">계속 검색</a>
-			</div>
+				</table>				
+				<br>
+				 
 			</div>
 		</div>
+		
 	</form>
 	
 
@@ -279,25 +309,61 @@
 		// " i? : 0 ~ 5 "
 				
 		var divWidth  = "511"; 
+		
+		// 검색어 슬라이드.
 		$("#btnslidelt").on("click",function(){
 			$("#content").stop(true,true);
-			
 			   var moveX   = parseInt($("#content").css("margin-left"));
 		
-			   if( moveX < 0 )
-			   {
-			    $("#content").animate({"margin-left":"+=" + divWidth + "px"},500);
+			   if( moveX < 0 ){
+					$("#content").animate({"margin-left":"+=" + divWidth + "px"},500);
 			   }
 		});
 	
 		$("#btnSlidegt").on("click",function(){
 			 $("#content").stop(true,true);
-		
 			   var moveX   = parseInt($("#content").css("margin-left"));
 		
-			   if( -1022 < moveX )
-			   {
-			    $("#content").animate({"margin-left":"-=" + divWidth + "px"},500);
+			   if( -1022 < moveX ){
+			   		 $("#content").animate({"margin-left":"-=" + divWidth + "px"},500);
+			   }
+		});		
+		
+		// 추천리스트1 슬라이드.
+		$("#btn_slt1").on("click",function(){
+			$("#content1").stop(true,true);
+			   var moveX   = parseInt($("#content1").css("margin-left"));
+		
+			   if( moveX < 0 ){
+					$("#content1").animate({"margin-left":"+=" + divWidth + "px"},500);
+			   }
+		});
+	
+		$("#btn_sgt1").on("click",function(){
+			 $("#content1").stop(true,true);
+			   var moveX   = parseInt($("#content1").css("margin-left"));
+		
+			   if( -1022 < moveX ){
+			   		 $("#content1").animate({"margin-left":"-=" + divWidth + "px"},500);
+			   }
+		});				
+		
+		// 추천리스트2 슬라이드.
+		$("#btn_slt2").on("click",function(){
+			$("#content2").stop(true,true);
+			   var moveX   = parseInt($("#content2").css("margin-left"));
+		
+			   if( moveX < 0 ){
+					$("#content2").animate({"margin-left":"+=" + divWidth + "px"},500);
+			   }
+		});
+	
+		$("#btn_sgt2").on("click",function(){
+			 $("#content2").stop(true,true);
+			   var moveX   = parseInt($("#content2").css("margin-left"));
+		
+			   if( -1022 < moveX ){
+			   		 $("#content2").animate({"margin-left":"-=" + divWidth + "px"},500);
 			   }
 		});				
 				

@@ -16,9 +16,9 @@
 </head>
 
 <body>
-<div class="container"><div class="row"><div>
+<div class="container"><div class="row"><div style="margin-top: 101px;">
 	<!-- 레이아웃 잡는건 나중에.. -->
-	<h4>원하는 범위를 설정해서 채용공고를 검색해보세요.</h4>
+	<h4><i class="fas fa-map-marked-alt" style="font-size: 18px;"></i> 원하는 범위를 설정해서 채용공고를 검색해보세요.</h4>
 	<table border="1">
 		<tr>
 			<td><div id="map" style="width:750px;height:600px;"></div></td>
