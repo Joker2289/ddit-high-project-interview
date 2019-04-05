@@ -227,4 +227,34 @@
 	</select>
 	
 	
+	<!-- 아는 동문 찾기 -->
+	<select id="schoolFriendsSearch" parameterType="String" resultType="usersVo">
+		select a.user_id as user_id,
+               users.profile_path,
+               users.user_name,
+               users.profile_img,
+               b.introduce
+          from users ,(select user_id
+			             from EDUCATION_INFO
+			            where SCHOOL_NAME = ( select a.*
+                                              from (select SCHOOL_NAME
+                                                      from education_info
+                                                     where user_id=#{user_id}
+                                                  order by graduation desc) a
+                                            		 where rownum &lt;=1 )) a , ( select distinct(a.user_id),
+                                                                                 case when b.resign_date is null then b.corporate_name || ' ' || job_position
+                                                                                      when b.resign_date is not null then a.school_name ||' ' || a.degree_name
+                                                                                  end as introduce
+                                                                                 from EDUCATION_INFO a, CAREER_INFO b
+                                                                                where a.user_id = b.user_id
+                                                                                  and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select CAREER_INFO.user_id,  max(nvl(CAREER_INFO.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+                                                                                                                                                               from CAREER_INFO, EDUCATION_INFO
+                                                                                                                                                              where CAREER_INFO.user_id = education_info.user_id
+                                                                                                                                                           group by CAREER_INFO.user_id)) b
+		 where a.user_id = b.user_id(+)
+		   and a.user_id = users.user_id(+)
+           and a.user_id != #{user_id}
+	</select>
+	
+	
 </mapper>

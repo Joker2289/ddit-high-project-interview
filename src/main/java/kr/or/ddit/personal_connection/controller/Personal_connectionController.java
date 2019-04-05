@@ -26,38 +26,39 @@ public class Personal_connectionController {
 	
 	@Resource(name="personalService")
 	private IPersonal_connectionService personalService; 
-
+	
 	
 	@RequestMapping(path={"/personalConnection"})
 	public String personalConnectionView(Model model , HttpSession session) {
 		
-		//MemberVo member =(MemberVo) session.getAttribute("SESSION_MEMBERVO");
-		//member.setMem_id();
-		
-		MemberVo memberVo = new MemberVo();
-		memberVo.setMem_id("lhh");
+		MemberVo memberVo =(MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		FollowVo followVo = new FollowVo();
 		followVo.setDivision("11");
-		followVo.setMem_id("lhh");
+		followVo.setMem_id(memberVo.getMem_id());
+		
+		String user_id = memberVo.getMem_id();
 		
 		int connections_count = personalService.connections_count(memberVo);
 		int coporations_count = personalService.coporations_count(followVo);
+		List<UsersVo> schoolFriends = 
+				personalService.schoolFriendsSearch(user_id);
 		
 		model.addAttribute("connections_count" , connections_count);
 		model.addAttribute("coporations_count", coporations_count);
+		model.addAttribute("schoolFriends", schoolFriends);
+		logger.debug("schoolFriends {}" , schoolFriends);
 		
 		return "personalTiles";
 	}
 	
 	
 	@RequestMapping(path={"/connections"})
-	public String connectionsView(Model model ,HttpServletRequest req) {
+	public String connectionsView(HttpSession session , Model model , HttpServletRequest req) {
 		
-		//MemberVo memberVo = (MemberVo) req.getSession().getAttribute("memberVO");
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
-		MemberVo memberVo = new MemberVo();
-		memberVo.setMem_id("lhh");
+		memberVo.setMem_id(memberVo.getMem_id());
 		
 		List<UsersVo> personalList = 
 				personalService.select_connections(memberVo);
@@ -78,8 +79,10 @@ public class Personal_connectionController {
 		followVo.setDivision("11");
 		
 		List<CorporationVo> corporationList = personalService.select_followCoporation(followVo);
+		int allFollowCount = personalService.allFollowCnt(followVo);
 		
 		model.addAttribute("corporationList", corporationList);
+		model.addAttribute("allFollowCount", allFollowCount);
 		logger.debug("corporationList {}" , corporationList);
 		
 		return "feedFollowingTiles";

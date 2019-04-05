@@ -78,7 +78,7 @@ $(document).ready(function() {
 			<a href="/feedFollow" >신선한 시각 팔로우</a>
 		</div>
 		<div class="feedDiv">
-			<a href="/feedFollowing">()명 팔로우 중</a>
+			<a href="/feedFollowing">(${allFollowCount})명 팔로우 중</a>
 		</div>
 		<div class="feedDiv">
 			<a href="/feedFollowers">팔로워 ()명</a>
