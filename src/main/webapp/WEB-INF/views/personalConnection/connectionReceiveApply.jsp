@@ -4,7 +4,7 @@
 
 <div class="container">
 <div class="row">
-<div style="margin-top: 101px;">
+<div>
 <div class="row">
 
 	<div class="col-md-8" style="padding-left: 0px;margin-left: 30px;">

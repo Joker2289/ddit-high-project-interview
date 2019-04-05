@@ -314,5 +314,33 @@ public class Personal_connectionDaoImplTest extends LogicTestConfig{
 		
 	}
 	
+	
+	
+	/**
+	* Method : testSchoolFriendsSearch
+	* 작성자 : PC09
+	* 변경이력 :
+	* Method 설명 : 아는 동문 찾기
+	*/
+	@Test
+	public void testSchoolFriendsSearch() {
+		
+		/***Given***/
+		UsersVo usersVo = new UsersVo();
+		usersVo.setUser_id("lhh");
+		
+		String user_id = usersVo.getUser_id();
+		
+		/***When***/
+		List<UsersVo> friendList = personalDao.schoolFriendsSearch(user_id);
+		for(UsersVo list : friendList) {
+			logger.debug("list&& {}" , list);
+		}
+
+		/***Then***/
+		assertNotNull(friendList);
+		
+	}
+	
 
 }

@@ -142,6 +142,18 @@ public interface IPersonal_connectionDao {
 	*/
 	int allFollowCnt(FollowVo followVo);
 	
+	
+	
+	/**
+	* Method : schoolSearch
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param user_id
+	* @return
+	* Method 설명 : 아는 동문 찾기
+	*/
+	List<UsersVo> schoolFriendsSearch(String user_id);
+	
 
 	
 }

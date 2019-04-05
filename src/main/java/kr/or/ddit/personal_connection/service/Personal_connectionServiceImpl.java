@@ -74,5 +74,10 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 		return personalDao.allFollowCnt(followVo);
 	}
 
+	@Override
+	public List<UsersVo> schoolFriendsSearch(String user_id) {
+		return personalDao.schoolFriendsSearch(user_id);
+	}
+
 	
 }

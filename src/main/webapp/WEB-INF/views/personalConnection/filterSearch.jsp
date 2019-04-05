@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link href="/css/personalConnection/feedFollowing.css" rel="stylesheet">
-
-<nav class="navbar navbar-inverse navbar-fixed-top feedTop" style="height: 55px;">
+<nav class="navbar navbar-inverse navbar-fixed-top feedTop" style="height: 55px;margin-top: -21px;">
 	<div class="container" style="padding-top: 8px;">
 		<div class="dropdown" style="display:inline;">
 			<button class="btn btn-default" id="dLabel" style="border-style: hidden;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

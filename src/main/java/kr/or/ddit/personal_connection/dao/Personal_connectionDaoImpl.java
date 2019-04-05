@@ -86,6 +86,12 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 		return allFollowCnt;
 	}
 
+	@Override
+	public List<UsersVo> schoolFriendsSearch(String user_id) {
+		List<UsersVo> schoolSearch = sqlSessionTemplate.selectList("personal.schoolFriendsSearch", user_id);
+		return schoolSearch;
+	}
+
 
 
 }

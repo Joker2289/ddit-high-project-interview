@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link href="/css/personalConnection/personalConnection.css" rel="stylesheet">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
 $(document).ready(function() {
 	var divWidth  = "511"; 
@@ -68,19 +69,17 @@ $(document).ready(function() {
 						</div>
 						<div class="col-md-12" style="padding: 20px 0 20px 15px; ">
 							<div id="pc_find" class="whiteBox">
-								<label>아는 동문 찾기</label><a style="font-size: 17px;">모두보기</a>
+								<label style="padding-right: 330px;">아는 동문 찾기</label>
 								<button id="btnslidelt" class="btn btn-default" style="border: 0px;">&lt;</button>
 								<button id="btnSlidegt" class="btn btn-default" style="border: 0px;">&gt;</button><br/>
 								<ul  id="content" style="list-style:none;width:3000px; padding-left: 5px;">
-									<li><div class="whiteBox">1sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">2sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">3sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">4sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">5sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">6sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">7sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">8sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">9sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<c:forEach items="${schoolFriends }" var="friend">
+										<%-- <li><div style="width: 88px;height: 88px;background-image:url(/profile?mem_id=${friend.user_id });background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 20px;border: 4px solid #E3EEF2;border-radius: 100px;">
+										</div></li> --%>
+										<li><div class="whiteBox"><div>${friend.user_name}</div> <div>${friend.introduce}</div></div></li>
+										<li><div class="whiteBox">${friend.introduce}</div></li>
+									</c:forEach>
+									
 								</ul>
 							</div>
 						</div>
