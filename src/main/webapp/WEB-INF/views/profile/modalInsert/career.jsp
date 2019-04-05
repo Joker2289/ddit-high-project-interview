@@ -13,19 +13,27 @@
 	<div style="min-height: 328px;">
 		<div class="modalRow">
 			<div class="modalHalfLeft">
-				<label class="essential">직함 </label>
-				<input class="form-control" type="text" name="user_name">
+				<label class="essential">회사 </label>
+				<input class="form-control" type="text" name="corporate_name" data-toggle="dropdown">
+			</div>
+			<div class="dropdown">
+			<ul class="dropdown-menu" style="top: 75px;left: 15px;width: 337px;min-height: 50px;" >
+  				<li><a>Action</a></li>
+			    <li><a>Another action</a></li>
+			    <li><a>Something else here</a></li>
+			    <li><a>Separated link</a></li>
+			</ul>
 			</div>
 			<div class="modalHalfRight">
-				<label class="essential">회사 </label>
-				<input class="form-control" id="userBirth" type="text" name="user_birth">
+				<label class="essential">회사코드 </label>
+				<input class="form-control" id="corp_code" type="text" name="corp_code">
 			</div>
 		</div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
-				<label class="essential">우편번호 </label>
+				<label class="essential">주소 </label>
 			    <div class="input-group">
-			      <input class="form-control zipcode" name="zipcode" type="text" style="width:283px; height: 31px;" value="${SESSION_DETAILVO.zipcode}"/>
+			      <input class="form-control zipcode" name="corp_local" type="text" style="width:283px; height: 31px;" />
 			      <span class="input-group-btn" style="height: 33px;">
 			        <button class="btn btn-default zipcodeSearch" type="button" style="height: 31px;margin-top: -1px;">검색</button>
 			      </span>
@@ -34,28 +42,28 @@
 		</div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
-				<label class="essential">주소 </label>
-				<input type="text" name="addr1" class="form-control addr1" value="${SESSION_DETAILVO.addr1}"/>
+				<label class="essential">직군</label>
+				<input type="text" name="job_position" class="form-control addr1"/>
 			</div>
 			<div class="modalHalfRight">
-				<label class="essential">상세주소 </label>
-				<input type="text" name="addr2" class="form-control addr2" value="${SESSION_DETAILVO.addr2}" />
+				<label class="essential">직급 </label>
+				<input type="text" name="job_rank" class="form-control addr2" />
 			</div>
 		</div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
-				<label class="essential">이메일 </label>
-				<input class="form-control" name="email" type="text" value="${SESSION_DETAILVO.email}">
+				<label class="essential">시작일 </label>
+				<input class="form-control" name="join_date" type="text" >
 			</div>
 			<div class="modalHalfRight">
-				<label>전화번호 </label>
-				<input class="form-control" name="telno" type="text" value="${SESSION_DETAILVO.telno}">
+				<label>종료일 </label>
+				<input class="form-control" name="resign_date" type="text" >
 			</div>
 		</div>
 		<div class="modalRow" style="padding-bottom: 15px;">
 			<div style="modalHalfLeft">
-				<label>간단소개글 </label>
-				<textarea class="form-control" rows="3" name="profile_contents" style="width: 682px; height: 80px;">${SESSION_DETAILVO.profile_contents}</textarea>
+				<label>설명 </label>
+				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;"></textarea>
 			</div>
 		</div>
 		<div style="margin-top: 10px;">
@@ -101,8 +109,11 @@
 </div>
 
 <script>
-
-
+/* $(document).on("click","input[name=corporate_name]", function(){
+	
+$('.dropdown-toggle').dropdown(); 
+})
+ */
 	$(document).on("change","input[name=filesVo]",function(){
 	
 		var fileValue = $(this).val().split("\\");
@@ -212,40 +223,6 @@
 		$(".fileUpload").parent().append('<input type="file" multiple="multiple" name="filesVo" style="display: none;">');
 		$(".fileUpload").parent().children().last().click();
 		
-	});
-	
-	// 우체국 API
-	$(".zipcodeSearch").on("click",function(){
-		daum.postcode.load(function(){
-	        new daum.Postcode({
-	            oncomplete: function(data) {
-	            	   var addr = ''; 
-	                   var extraAddr = ''; 
-
-	                   if (data.userSelectedType === 'R') { 
-	                       addr = data.roadAddress;
-	                   } else { 
-	                       addr = data.jibunAddress;
-	                   }
-
-	                   if(data.userSelectedType === 'R'){
-	                       if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-	                           extraAddr += data.bname;
-	                       }
-	                       if(data.buildingName !== '' && data.apartment === 'Y'){
-	                           extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	                       }
-	                       if(extraAddr !== ''){
-	                           extraAddr = ' (' + extraAddr + ')';
-	                       }
-	                   }
-
-	                   $(".zipcode").val(data.zonecode);
-	                   $(".addr1").val(addr);
-	                   $(".addr2").focus();
-	            }
-	        }).open();
-	    });
 	});
 	
 	$("#userBirth").datepicker({

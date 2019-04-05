@@ -150,8 +150,6 @@
 	margin-top: -180;
 	margin-top: -180px;
 	margin-left: 670px;
-	
-	
 }
 
 .pictureInsert>label>span{
@@ -206,7 +204,17 @@
 	height:30px; 
 	padding: 0 10px 0 10px;
 }
+.modal-dialog,
+.modal-content {
+    /* 80% of window height */
+    height: 80%;
+}
 
+.modal-body {
+    /* 100% = dialog height, 120px = header + footer */
+    max-height: calc(100% - 121px);
+    overflow-y: scroll;
+}
 
 
 

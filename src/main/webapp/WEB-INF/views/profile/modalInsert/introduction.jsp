@@ -11,7 +11,7 @@
 <div class="modal-body">
 <form action="/usersProfileUpdate" method="post" id="usersUpdateFrm" enctype="multipart/form-data">
 	<div class="profileHomeBackgroundPicture modalBackground" style="background-image: url(/background?mem_id=${SESSION_DETAILVO.user_id});"></div>
-	<div class="pictureInsert">
+	<div class="pictureInsert" style="margin-left: 660px;">
 		<label id="backgroundBtn">
 			<span><i class="fas fa-pencil-alt"></i></span>
 		</label>

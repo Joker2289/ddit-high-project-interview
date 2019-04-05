@@ -45,7 +45,7 @@ public class UserController {
 			int pos = filename.lastIndexOf( "." );
 			String ext = filename.substring( pos + 1 );
 			String uuidFilename = UUID.randomUUID().toString();
-			String realFilename = path + File.separator + uuidFilename + ext;
+			String realFilename = path + File.separator + uuidFilename;
 			try {
 				file.transferTo(new File(realFilename));
 			} catch (IllegalStateException | IOException e) {
@@ -53,7 +53,7 @@ public class UserController {
 			}
 			
 			result.put("filename", filename);
-			result.put("realFilename", realFilename);
+			result.put("realFilename", uuidFilename);
 		}
 		
 		return file.getSize() > 0 && !filename.equals("") ? result : null;
