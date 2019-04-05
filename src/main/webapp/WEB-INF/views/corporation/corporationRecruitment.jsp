@@ -20,10 +20,19 @@
 			</div>
 		</div>
 	</div>
-
-
-
-
+${SESSION_MEMBERVO.mem_id }
+${SESSION_MEMBERVO.mem_division }
+<table id="profilemenu">
+	<thead>
+<c:if test="${SESSION_MEMBERVO.mem_division == '2' }">
+			회사계정
+		
+			</c:if>
+			<c:if test="${SESSION_MEMBERVO.mem_division == '1' }">
+			일반계정
+			</c:if>
+</thead>
+</table>
 
 
 

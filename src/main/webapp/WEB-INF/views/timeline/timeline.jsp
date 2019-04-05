@@ -97,7 +97,7 @@
 	        </div><hr>
 	        <!-- feed -->
 	        <div>
-	        
+	      
 	          <!-- post -->
 	          <c:forEach items="${timelinePost }" var="post">
 		          
