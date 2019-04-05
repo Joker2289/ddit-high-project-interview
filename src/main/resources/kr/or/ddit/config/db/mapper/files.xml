@@ -17,4 +17,14 @@
         where file_code = #{file_code}
 	</select>
 	
+	<insert id="insert_file" parameterType="filesVo" >
+		insert into files (file_code, ref_code, division, file_name, file_path)
+			values (file_code_seq.nextval,#{ref_code} ,#{division},#{file_name},#{file_path})
+	
+	</insert>
+	
+	<delete id="delete_allFile" parameterType="filesVo" >
+		delete from files where division = #{division} and ref_code=#{ref_code}
+	</delete>
+	
 </mapper>

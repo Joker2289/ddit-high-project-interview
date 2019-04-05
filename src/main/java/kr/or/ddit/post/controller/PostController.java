@@ -83,12 +83,12 @@ public class PostController {
 			int connectionCnt = personal_connectionService.connections_count(memberInfo);
 			
 			//팔로우 한 해쉬태그 출력을 위한 세팅
-			List<FollowVo> followHashtag = followService.select_followKindList(followInfo);
+//			List<FollowVo> followHashtag = followService.select_followKindList(followInfo);
 			
 			
 			model.addAttribute("userInfo", userInfo);
 			model.addAttribute("connectionCnt", connectionCnt);
-			model.addAttribute("followHashtag", followHashtag);
+//			model.addAttribute("followHashtag", followHashtag);
 			model.addAttribute("savepostCnt", savepostCnt);
 		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
 			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());

@@ -106,6 +106,7 @@
 
 $(".modalBtn").on("click",function(){
 	
+	
 	var modalStr = $(this).attr("title");
 	console.log(modalStr);
 	
@@ -113,7 +114,7 @@ $(".modalBtn").on("click",function(){
 		type : "POST",
     		url : "/modalInsertView",
     		dataType : "HTML",
-    		data : {"modalStr" :  modalStr},
+    		data : {"modalStr" :  modalStr, "user_id" :  "${user_id}" },
 		success : function(result) {
 			
 			$(".modal-content").html(result);
