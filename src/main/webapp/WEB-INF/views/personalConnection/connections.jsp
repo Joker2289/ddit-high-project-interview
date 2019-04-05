@@ -12,7 +12,7 @@
 			<label style="font-size: 19px;">1촌 ${connections_count }명</label>
 			<div class="row" style="padding-left: 15px;">	
 				<label style="display:inline">정렬기준:</label>
-					<select style="display:inline;width: 106px;" class="form-control">
+					<select style="border-style: hidden; display:inline;width: 106px;" class="form-control">
 						<option>최근순</option>
 						<option>이름</option>
 						<option>성</option>

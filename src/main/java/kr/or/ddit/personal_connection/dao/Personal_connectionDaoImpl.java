@@ -56,6 +56,36 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 		return select_followHashTag;
 	}
 
+	@Override
+	public List<UsersVo> select_connectionReceiveList(String receive_id) {
+		List<UsersVo> selectconnectionReceive = sqlSessionTemplate.selectList("personal.select_connectionReceiveList", receive_id);
+		return selectconnectionReceive;
+	}
+
+	@Override
+	public List<UsersVo> select_connectionSendList(String user_id) {
+		List<UsersVo> connectionSendList = sqlSessionTemplate.selectList("personal.select_connectionSendList", user_id);
+		return connectionSendList;
+	}
+
+	@Override
+	public int update_connectionReceiveApply(Personal_connectionVo personalVo) {
+		int connectionReceiveApply = sqlSessionTemplate.update("personal.update_connectionReceiveApply", personalVo);
+		return connectionReceiveApply;
+	}
+
+	@Override
+	public int delete_connectionCancel(Personal_connectionVo personalVo) {
+		int connectionCancel = sqlSessionTemplate.delete("personal.delete_connectionCancel", personalVo);
+		return connectionCancel;
+	}
+
+	@Override
+	public int allFollowCnt(FollowVo followVo) {
+		int allFollowCnt = sqlSessionTemplate.selectOne("personal.allFollowCnt", followVo);
+		return allFollowCnt;
+	}
+
 
 
 }

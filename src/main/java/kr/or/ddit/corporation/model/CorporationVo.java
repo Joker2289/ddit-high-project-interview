@@ -23,7 +23,9 @@ public class CorporationVo {
 	private String email;			// 이메일
 	private String telno;			// 전화번호
 	private String corp_location;	// 회사좌표
+	private String follow_code;     // 팔로우 코드
 	
+
 	public CorporationVo() {
 		
 	}
@@ -38,6 +40,14 @@ public class CorporationVo {
 				+ ", telno=" + telno + ", corp_location=" + corp_location + "]";
 	}
 
+	public String getFollow_code() {
+		return follow_code;
+	}
+	
+	public void setFollow_code(String follow_code) {
+		this.follow_code = follow_code;
+	}
+	
 	public String getCorp_code() {
 		return corp_code;
 	}

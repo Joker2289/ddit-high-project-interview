@@ -11,7 +11,7 @@
 			</div>
 		</div>
 		<div>
-			<button class="btn btn-default followingBtn">
+			<button class="btn btn-default followingBtn follow">
 				<i class="fas fa-check"></i> 팔로우 중
 			</button>
 		</div>
