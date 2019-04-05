@@ -107,7 +107,13 @@
 	// 마커가 지도 위에 표시되도록 설정합니다
 	marker.setMap(map);	
 
-	var iwContent = '<div style="padding:5px;">${corp.corp_name } </div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+	// 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+// 	var content = "${recr.recruit_title }";
+// 	if(content.length > 21){
+// 		content = content.substr(0, 21) + "...";
+// 	}
+	
+	var iwContent = '<div style="padding:5px;">${corp.corp_name }<br>${recr.recruit_title } </div>', 
     iwPosition = new daum.maps.LatLng(data1, data2); //인포윈도우 표시 위치입니다
 
 	// 인포윈도우를 생성합니다
