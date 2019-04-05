@@ -50,7 +50,6 @@
 							${srList.get(0).recruit_title }<br>
 							${corpNmList.get(0) }<br>
 							${srList.get(0).job_local }<br>
-							지원 버튼 (또는 'xxx전에 마감되었습니다.')<br>
 						</td>
 						<td><i id="scrap1" class="fas fa-bookmark" onmouseover="" 
 								style="margin-top: 10px; font-size: large; cursor: pointer;"></i></td>
@@ -91,7 +90,6 @@
 								${srList.get(i.index - 1).recruit_title }<br>
 								${corpNmList.get(i.index - 1) }<br>
 								${srList.get(i.index - 1).job_local }<br>
-								지원 버튼 (또는 'xxx전에 마감되었습니다.')<br>
 							</td>
 							<td><i id="scrap${i.index }" class="fas fa-bookmark" onmouseover="" 
 									style="margin-top: 10px; font-size: large; cursor: pointer;"></i></td>
@@ -132,6 +130,7 @@
 			
 			$("#srecr${i.index }").on("click", function(){
 // 				alert("채용공고 ${i.index }");
+				window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code=${srList.get(i.index - 1).recruit_code }';
 			});
 			
 			$("#scrap${i.index }").on("click", function(){

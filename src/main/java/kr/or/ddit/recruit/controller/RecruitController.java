@@ -638,6 +638,21 @@ public class RecruitController {
 		sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));
 		sVo.setSave_flag("f");
 		
+		// recr_app값을 가져와야 함.
+		Save_recruitVo checkSVo = srecrService.getLastSrecr(recruit_code);
+		String recr_app = "";
+		
+		if(checkSVo == null){
+			recr_app = "f";
+		}else{
+			recr_app = checkSVo.getRecr_app();
+		}
+		
+		sVo.setRecr_app(recr_app);
+		
+		// 지원여부 넘기기.
+		model.addAttribute("recr_app", recr_app);
+		
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		sVo.setUser_id(mVo.getMem_id());
 		srecrService.insertSrecr(sVo);
@@ -657,6 +672,21 @@ public class RecruitController {
 		sVo.setRecruit_code(recruit_code);
 		sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));
 		sVo.setSave_flag("f");
+		
+		// recr_app값을 가져와야 함.
+		Save_recruitVo checkSVo = srecrService.getLastSrecr(recruit_code);
+		String recr_app = "";
+		
+		if(checkSVo == null){
+			recr_app = "f";
+		}else{
+			recr_app = checkSVo.getRecr_app();
+		}
+		
+		sVo.setRecr_app(recr_app);
+		
+		// 지원여부 넘기기.
+		model.addAttribute("recr_app", recr_app);
 		
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		sVo.setUser_id(mVo.getMem_id());
@@ -761,6 +791,34 @@ public class RecruitController {
 		return "recruit/mapAjaxHtml";
 	}
 	
+	// @채용공고 지원
+	@RequestMapping("/recr_app")
+	public String recr_app(String recruit_code, Model model) {
+		Save_recruitVo sVo = srecrService.getLastSrecr(recruit_code);
+		String recr_app = "";
+		
+		// recr_app값이 t면 f로, f면 t로 수정.
+		if(sVo.getRecr_app().equals("t")){
+			recr_app = "f";
+		}else{
+			recr_app = "t";
+		}
+		
+		sVo.setRecr_app(recr_app);
+		
+		srecrService.updateSrecr(sVo);
+		
+		// 지원여부 넘기기.
+		model.addAttribute("recr_app", recr_app);
+		
+		RecruitVo recr = recrService.getRecr(recruit_code);
+		CorporationVo corp = corpService.select_corpInfo(recr.getCorp_id());
+		model.addAttribute("recr", recr);
+		model.addAttribute("corp", corp);
+		
+
+		return "recr_detailTiles";
+	}
 	
 	
 	

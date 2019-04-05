@@ -14,7 +14,7 @@
 
 <div class="container">
 <div class="row">
-<div style="margin-top: 101px;">
+<div>
 
 
 	<div class="col-md-12" >
@@ -94,8 +94,8 @@
 			<span style="">
 				채용공고 검색어
 			</span>
-			<span id="alarm_manage" class="button-group-area mt-10" onmouseover="" style="margin-left: 800px; cursor: pointer;
-					color: #0174b0;">
+			<span id="alarm_manage" class="button-group-area mt-10" onmouseover="" style="margin-left: 790px; cursor: pointer;
+					color: #0174b0; margin-right: 10px;">
 				<strong>관리</strong>
 			</span>
 			<button id="btnslidelt" class="btn btn-default" style="border: 0px;">
@@ -335,7 +335,7 @@
 			   var moveX   = parseInt($("#content1").css("margin-left"));
 		
 			   if( moveX < 0 ){
-					$("#content1").animate({"margin-left":"+=" + divWidth + "px"},500);
+					$("#content1").animate({"margin-left":"+=" + divWidth + "px"},340);
 			   }
 		});
 	
@@ -344,7 +344,7 @@
 			   var moveX   = parseInt($("#content1").css("margin-left"));
 		
 			   if( -1022 < moveX ){
-			   		 $("#content1").animate({"margin-left":"-=" + divWidth + "px"},500);
+			   		 $("#content1").animate({"margin-left":"-=" + divWidth + "px"},340);
 			   }
 		});				
 		
@@ -354,7 +354,7 @@
 			   var moveX   = parseInt($("#content2").css("margin-left"));
 		
 			   if( moveX < 0 ){
-					$("#content2").animate({"margin-left":"+=" + divWidth + "px"},500);
+					$("#content2").animate({"margin-left":"+=" + divWidth + "px"},340);
 			   }
 		});
 	
@@ -363,7 +363,7 @@
 			   var moveX   = parseInt($("#content2").css("margin-left"));
 		
 			   if( -1022 < moveX ){
-			   		 $("#content2").animate({"margin-left":"-=" + divWidth + "px"},500);
+			   		 $("#content2").animate({"margin-left":"-=" + divWidth + "px"},340);
 			   }
 		});				
 				

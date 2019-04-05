@@ -121,6 +121,10 @@ public class Save_recruitController {
 				sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));
 				sVo.setSave_flag("t");
 				sVo.setUser_id(mVo.getMem_id());
+				
+				// recr_app값을 가져와야 함.
+				String recr_app = srecrService.getLastSrecr(scrap_code).getRecr_app();
+				sVo.setRecr_app(recr_app);
 				srecrService.insertSrecr(sVo);
 			}else{
 				for(Save_recruitVo sVo : uSRList){
