@@ -158,6 +158,12 @@ public class Personal_connectionServiceImplTest extends LogicTestConfig {
 	
 	
 	
+	/**
+	* Method : testSelect_followHashTag
+	* 작성자 : PC09
+	* 변경이력 :
+	* Method 설명 : 팔로우한 해시태그 리스트 조회
+	*/
 	@Test
 	public void testSelect_followHashTag() {
 		
@@ -174,6 +180,135 @@ public class Personal_connectionServiceImplTest extends LogicTestConfig {
 
 		/***Then***/
 		assertNotNull(hashTagList);
+		
+	}
+	
+	
+	
+	/**
+	* Method : testSelect_connectionReceive
+	* 작성자 : PC09
+	* 변경이력 :
+	* Method 설명 : 받은 일촌 신청 리스트 조회
+	*/
+	@Test
+	public void testSelect_connectionReceiveList() {
+		
+		/***Given***/
+		UsersVo usersVo = new UsersVo();
+		usersVo.setUser_id("lhh");
+		
+		String receive_id = usersVo.getUser_id();
+		
+		/***When***/
+		List<UsersVo> receiveLsit = 
+				personalService.select_connectionReceiveList(receive_id);
+		for(UsersVo list : receiveLsit) {
+			logger.debug("list++ {}" , list);
+		}
+
+		/***Then***/
+		assertNotNull(receiveLsit);
+		
+	}
+	
+	
+	
+	/**
+	* Method : testSelect_connectionSendList
+	* 작성자 : PC09
+	* 변경이력 :
+	* Method 설명 : 보낸 일촌 신청 리스트 조회
+	*/
+	@Test
+	public void testSelect_connectionSendList() {
+		
+		/***Given***/
+		UsersVo usersVo = new UsersVo();
+		usersVo.setUser_id("lhh");
+		
+		String user_id = usersVo.getUser_id();
+		
+		/***When***/
+		List<UsersVo> sendList = personalService.select_connectionSendList(user_id);
+		for(UsersVo list : sendList) {
+			logger.debug("list+++ {}" , list);
+		}
+
+		/***Then***/
+		assertNotNull(sendList);
+		
+	}
+	
+	
+	
+	/**
+	* Method : testUpdate_connectionReceiveApply
+	* 작성자 : PC09
+	* 변경이력 :
+	* Method 설명 : 받은 일촌 신청 수락
+	*/
+	@Test
+	public void testUpdate_connectionReceiveApply() {
+		
+		/***Given***/
+		Personal_connectionVo personalVo = new Personal_connectionVo();
+		personalVo.setReceive_id("brown");
+		personalVo.setUser_id("kim");
+		
+		/***When***/
+		int update = personalService.update_connectionReceiveApply(personalVo);
+
+		/***Then***/
+		assertEquals(update, 1);
+		
+	}
+	
+	
+	
+	/**
+	* Method : testDelete_connectionCancel
+	* 작성자 : PC09
+	* 변경이력 :
+	* Method 설명 : 받은/보낸 일촌 신청 거절(취소)
+	*/
+	//@Test
+	public void testDelete_connectionCancel() {
+		
+		/***Given***/
+		Personal_connectionVo personalVo = new Personal_connectionVo();
+		personalVo.setReceive_id("brown");
+		personalVo.setUser_id("lhh");
+		
+		/***When***/
+		int delete = personalService.delete_connectionCancel(personalVo);
+
+		/***Then***/
+		assertEquals(delete, 1);
+		
+	}
+	
+	
+	
+	/**
+	* Method : testAllFollowCount
+	* 작성자 : PC09
+	* 변경이력 :
+	* Method 설명 : 전체(회사,해시태그,인맥,인맥밖) 팔로우한 수 조회
+	*/
+	@Test
+	public void testAllFollowCount() {
+		
+		/***Given***/
+		FollowVo followVo = new FollowVo();
+		followVo.setMem_id("lhh");
+		
+		/***When***/
+		int allFollowCount = personalService.allFollowCnt(followVo);
+
+		/***Then***/
+		assertNotNull(followVo);
+		assertEquals(17, allFollowCount);
 		
 	}
 

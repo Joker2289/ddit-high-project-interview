@@ -47,7 +47,7 @@ $(document).ready(function() {
 </script>
 <div class="container">
 <div class="row">
-<div style="margin-top: 101px;">
+<div>
 <div class="row">
 			  <div id="pc_leftmenu" class="col-md-3">
 			        <div id="pc_leftmenuBox" class="whiteBox">
@@ -63,7 +63,7 @@ $(document).ready(function() {
 					<div class="row">
 						<div class="col-md-12" >
 							<div id="pc_resiceConnection" class="whiteBox">
-								<label style="padding-right: 295px;">받은 일촌 신청 </label><a href="/connectionApply">모두 보기</a><br>
+								<label style="padding-right: 295px;">받은 일촌 신청 </label><a href="/connectionReceiveApply">모두 보기</a><br>
 							</div>
 						</div>
 						<div class="col-md-12" style="padding: 20px 0 20px 15px; ">

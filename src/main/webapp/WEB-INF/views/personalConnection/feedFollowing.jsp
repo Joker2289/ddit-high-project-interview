@@ -33,15 +33,46 @@ $(document).ready(function() {
 		               break;
 		}
 		$("#feedName").text(str);
+	});
+	
+	$(".follow").on("click", function(){
+		var followStr = $(this).attr('title');
 		
-		
-		
+		if(!$(this).hasClass('Out')){
+			
+			$.ajax({
+	            type : "POST",
+	               url : "/followOut",
+// 	               dataType : "HTML",
+	               data : {"followStr" : followStr},
+	            success : function() {
+	            	
+	            	$(this).html('<i class="fas fa-plus-circle"></i> 팔로우');
+	    			$(this).attr('class','btn btn-default followingBtn follow Out');
+	               
+	            } 
+	         }); 
+		}else{
+			$.ajax({
+	            type : "POST",
+	               url : "/follow",
+	               dataType : "json",
+	               data : {"followStr" : followStr},
+	            success : function(result) {
+	            	$(this).attr('title',result);
+	            	$(this).html('<i class="fas fa-check"></i> 팔로우 중');
+	    			$(this).attr('class','btn btn-default followingBtn follow');
+	               
+	            } 
+	         }); 
+			
+		}
 	});
 	
 });
 	
 </script>
-<nav class="navbar navbar-inverse navbar-fixed-top feedTop">
+<nav class="navbar navbar-inverse navbar-fixed-top feedTop" style="margin-top: -20px;">
 	<div class="container" style="padding-top: 8px;">
 		<div class="feedDiv">
 			<a href="/feedFollow" >신선한 시각 팔로우</a>
@@ -57,7 +88,7 @@ $(document).ready(function() {
 
 <div class="container">
 <div class="row">
-<div style="margin-top: 101px;">
+<div>
 <div class="row">
 
 	<div id="pc_leftmenu" class="col-md-3" style="padding-left: 0px;margin-left: 30px;">
@@ -67,7 +98,7 @@ $(document).ready(function() {
 				<button class="btn btn-default" id="dLabel" style="margin-left: 765px; border-style: hidden;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="fas fa-align-right"></i>
 				</button>
-			    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="top: 36px;left: 770px;width: 297px;height: 272px;margin-top: 0px;">
+			    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="top: 36px;left: 513px;width: 297px;height: 272px;margin-top: 0px;">
 			     <li role="presentation" style="padding-bottom: 10px;padding-top: 10px;"><a class="feedDropdown" role="menuitem" tabindex="-1" title="connections">일촌<br/>팔로우하시는 1촌</a></li>
 			     <li role="presentation" style="padding-bottom: 10px;padding-top: 10px;"><a class="feedDropdown" role="menuitem" tabindex="-1" title="connectionEtc">인맥 밖<br/>1촌이 아니면서 회원님을 팔로우하는 사람</a></li>
 			     <li role="presentation" style="padding-bottom: 10px;padding-top: 10px;"><a class="feedDropdown" role="menuitem" tabindex="-1" title="company">회사<br/>팔로우하시는 회사</a></li>
@@ -80,14 +111,15 @@ $(document).ready(function() {
 				<div style="width: 225px;">
 					<div class="corporation">
 						<div
-							style="width: 59px;height: 59px;background-image:url(/profile?mem_id=${corp.corp_id});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;"></div>
+							style="width: 59px;height: 59px;background-image:url(/profile?mem_id=${corp.corp_id});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;">
+						</div>
 						<div>
 							<label style="font-size: 17px;"><strong>${corp.corp_name}
 							</strong></label><br /> <label>${corp.industry_type }</label>
 						</div>
 					</div>
 					<div>
-						<button class="btn btn-default followingBtn">
+						<button class="btn btn-default followingBtn follow" title="${corp.follow_code}">
 							<i class="fas fa-check"></i> 팔로우 중
 						</button>
 					</div>

@@ -31,7 +31,6 @@ import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.pagination.PaginationVo;
 
-//@RequestMapping("/post")
 @Controller
 public class PostController {
 	

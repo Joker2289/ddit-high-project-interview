@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.users.model.UsersVo;
 
@@ -86,16 +87,43 @@ public class Personal_connectionController {
 	}
 	
 	
-	@RequestMapping(path={"/connectionApply"})
-	public String connectionApplyView() {
-		return "connectionApplyTiles";
+	@RequestMapping(path={"/connectionReceiveApply"})
+	public String connectionApplyView(HttpSession session, Model model) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		
+		String receive_id = memberVo.getMem_id();
+		
+		List<UsersVo> connectionReceiveList = personalService.select_connectionReceiveList(receive_id);
+		logger.debug("connectionReceiveList++ {}" , connectionReceiveList);
+		
+		model.addAttribute("connectionReceiveList", connectionReceiveList);
+		
+		
+		return "connectionReceiveApplyTiles";
+		
+	}
+	
+	
+	@RequestMapping(path={"/connectionSendApply"})
+	public String connectionSendApplyView(HttpSession session , Model model) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		
+		String user_id = memberVo.getMem_id();
+		
+		List<UsersVo> connectionSendList = personalService.select_connectionSendList(user_id);
+		logger.debug("connectionSendList+++ {}" , connectionSendList);
+		
+		model.addAttribute("connectionSendList", connectionSendList);
+		
+		
+		return "connectionSendApplyTiles";
 		
 	}
 	
 	
 	@RequestMapping(path={"/filterSearch"})
 	public String filterSearchView() {
-		return null;
+		return "filterSearchTiles";
 		
 	}
 	

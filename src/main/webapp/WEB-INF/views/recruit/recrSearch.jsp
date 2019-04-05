@@ -15,7 +15,7 @@
 <body>
 <div class="container">
 <div class="row">
-<div style="margin-top: 101px;">
+<div>
 		<!-- 필터. -->
 	<table border="1">
 		<tr>

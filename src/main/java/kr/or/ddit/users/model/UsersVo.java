@@ -16,9 +16,19 @@ public class UsersVo {
 	private String persnal_url;		// 외부URL
 	private String introduce;		// 소개
 	private String profile_contents;// 간단 소개글
+	private String follow_code;     // 팔로우 코드
 	
+
 	public UsersVo() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public String getFollow_code() {
+		return follow_code;
+	}
+	
+	public void setFollow_code(String follow_code) {
+		this.follow_code = follow_code;
 	}
 
 	public String getUser_id() {

@@ -4,7 +4,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <div class="container">
    <div class="row">
-      <div style="margin-top: 101px;">
+      <div>
 	      <div id="col-info" class="col-md-3">
 
 	        <div class="panel panel-default">

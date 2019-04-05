@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<div class="container"><div class="row"><div style="margin-top: 101px;">
+<div class="container"><div class="row"><div>
 	<!-- 레이아웃 잡는건 나중에.. -->
 	<h4>원하는 범위를 설정해서 채용공고를 검색해보세요.</h4>
 	<table border="1">
