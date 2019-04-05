@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="/css/recruit/recruit.css" type="text/css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회사 페이지</title>
 </head>
@@ -17,22 +18,26 @@
 				<%@ include file="/WEB-INF/views/corporation/module/top.jsp"%>
 				<br>
 				<%@ include file="/WEB-INF/views/corporation/module/left.jsp"%>
+				<br>
+				<div style="position: relative; top: -177px; left: 180px;margin-top: 20px;border: 1px solid;width: 270px; height: 180px;">
+						<label> ${corporationInfo.logo_path }</label><br>
+						<label> ${getRecruitInfo.recruit_title }</label><br>
+						<label> ${corporationInfo.corp_name }</label><br>
+						<label> ${corporationInfo.addr1 }</label><br>
+						<label> ${getRecruitInfo.job_type }</label><br>
+				</div>
 			</div>
 		</div>
 	</div>
-${SESSION_MEMBERVO.mem_id }
-${SESSION_MEMBERVO.mem_division }
-<table id="profilemenu">
-	<thead>
-<c:if test="${SESSION_MEMBERVO.mem_division == '2' }">
-			회사계정
-		
-			</c:if>
-			<c:if test="${SESSION_MEMBERVO.mem_division == '1' }">
-			일반계정
-			</c:if>
-</thead>
-</table>
+
+<div id="div_box" class="whiteBox" style="position: relative; top: -177px; left: 180px;margin-top: 20px;border: 1px solid;width: 270px; height: 180px;">
+						<label> ${corporationInfo.logo_path }</label><br>
+						<label> ${getRecruitInfo.recruit_title }</label><br>
+						<label> ${corporationInfo.corp_name }</label><br>
+						<label> ${corporationInfo.addr1 }</label><br>
+						<label> ${getRecruitInfo.job_type }</label><br>
+</div>
+
 
 
 

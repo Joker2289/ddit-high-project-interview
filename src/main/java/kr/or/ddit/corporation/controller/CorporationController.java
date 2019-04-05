@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
@@ -25,6 +27,7 @@ import kr.or.ddit.post.service.IPostService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
 import kr.or.ddit.save_recruit.model.Save_recruitVo;
+import kr.or.ddit.save_recruit.service.ISave_recruitService;
 import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.users.model.UsersVo;
@@ -51,11 +54,11 @@ public class CorporationController {
 	@Resource(name = "corporationService")
 	private ICorporationService corporationService;
 	
-	@Resource(name="corporationService")
-	private ICorporationService corpService;
-	
 	@Resource(name="recruitService")
 	private IRecruitService recrService;
+	
+	@Resource(name="save_recruitService")
+	private ISave_recruitService srecrService;
 
 	/**
 	 * 회사 홈(회사타임라인)
@@ -64,12 +67,15 @@ public class CorporationController {
 	 * @return
 	 */
 	@RequestMapping(path = { "/corporation" })
-	public String postList(Model model, PaginationVo paginationVo, HttpServletRequest request) {
+	public String postList(Model model, PaginationVo paginationVo, HttpSession session,HttpServletRequest request) {
 
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-
+		
+		CorporationVo corporationInfo = new CorporationVo();
+		model.addAttribute("corporationInfo", corporationService.select_corpInfo(memberInfo.getMem_id()));
+		
 		paginationVo.setMem_id(memberInfo.getMem_id());
-
+		
 		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
 			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
 
@@ -104,9 +110,16 @@ public class CorporationController {
 	 */
 	@RequestMapping(path = { "/corporationIntroduction" })
 	public String corporationIntro(Model model, PaginationVo paginationVo, HttpServletRequest request) {
+		
+		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-
+		CorporationVo corporationInfo = new CorporationVo();
+		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
 		paginationVo.setMem_id(memberInfo.getMem_id());
+		
+		model.addAttribute("corporationInfo", corporationInfo);
+
+		
 
 		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
 			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
@@ -141,9 +154,21 @@ public class CorporationController {
 	 */
 	@RequestMapping(path = { "/corporationRecruitment" })
 	public String corporationRecruit(String corp_id,HttpSession session, Model model, PaginationVo paginationVo, HttpServletRequest request) {
+		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
+		CorporationVo corporationInfo = new CorporationVo();
+		
+		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+		model.addAttribute("corporationInfo", corporationInfo);
+		
 		paginationVo.setMem_id(memberInfo.getMem_id());
+		
+		RecruitVo getRecruitInfo = new RecruitVo(); 
+
+		getRecruitInfo = recrService.getRecrCorpId(corporationInfo.getCorp_id());
+		
+		model.addAttribute("getRecruitInfo", getRecruitInfo);
 		
 		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
 			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
@@ -184,7 +209,8 @@ public class CorporationController {
 	@RequestMapping(path = { "/corporationEmployee" })
 	public String corporationEmployee(Model model, PaginationVo paginationVo, HttpServletRequest request) {
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-		
+		CorporationVo corporationInfo = new CorporationVo();
+		model.addAttribute("getCorpInfo", corporationService.select_corpInfo(memberInfo.getMem_id()));
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
 		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
@@ -223,9 +249,10 @@ public class CorporationController {
 	@RequestMapping(path = "/write", method = { RequestMethod.POST })
 	public String post(Model model, String smarteditor2, HttpServletRequest request) {
 
-		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-
-		String mem_id = member.getMem_id();
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		CorporationVo corporationInfo = new CorporationVo();
+		model.addAttribute("getCorpInfo", corporationService.select_corpInfo(memberInfo.getMem_id()));
+		String mem_id = memberInfo.getMem_id();
 
 		System.out.println("987654321987654321");
 
