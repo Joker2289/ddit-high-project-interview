@@ -95,7 +95,7 @@ public class Save_recruitController {
 	
 	// @채용공고 스크랩(저장)
 	@RequestMapping("/scrap")
-	public String scrap(String scrap_flag, HttpSession session, HttpServletRequest req) {
+	public String scrap(String scrap_flag, HttpSession session, HttpServletRequest req, String req_page) {
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		// 채용공고 스크랩을 한 경우. scrap_flag.substring(0, 1) -> 't'
@@ -123,7 +123,15 @@ public class Save_recruitController {
 				sVo.setUser_id(mVo.getMem_id());
 				
 				// recr_app값을 가져와야 함.
-				String recr_app = srecrService.getLastSrecr(scrap_code).getRecr_app();
+				Save_recruitVo checkSVo = srecrService.getLastSrecr(scrap_code);
+				String recr_app = "";
+				
+				if(checkSVo == null){
+					recr_app = "f";
+				}else{
+					recr_app = checkSVo.getRecr_app();
+				}
+				
 				sVo.setRecr_app(recr_app);
 				srecrService.insertSrecr(sVo);
 			}else{
@@ -142,6 +150,12 @@ public class Save_recruitController {
 			}
 		}
 
+		// req_page : 스크랩 처리를 요청한 페이지 이름.
+		// 없으면 채용공고 페이지. 'srecr'은 저장한 채용공고 페이지.
+		if(req_page != null && req_page.equals("srecr")){
+			return "redirect:" + req.getContextPath() + "/srecr";
+		}
+		
 		return "redirect:" + req.getContextPath() + "/recruit";
 	}
 	

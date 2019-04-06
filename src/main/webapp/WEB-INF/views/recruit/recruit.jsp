@@ -230,7 +230,7 @@
 					   				</td>
 					   			</tr>
 					   		</table>	
-					   		<!-- rRList1가 있으면 출력. -->
+					   		<!-- rRList2가 있으면 출력. -->
 					   		<c:if test="${rRList2.size() >= 1 }">
 					   			<ul id="content2" style="list-style: none; width: 3000px; padding-left: 5px;">
 								<c:forEach items="${rRList2 }" varStatus="i" var="rRVo">
@@ -248,11 +248,11 @@
 										<c:choose>
 											<c:when test="${scrapList2.get(i.index) == 'f' }">
 												<!-- scrap_flag에 recruit_code를 붙여주자. (예: t12) -->
-												<i id="scrap${i.index }" class="far fa-bookmark" onmouseover="" 
+												<i id="scrap2${i.index }" class="far fa-bookmark" onmouseover="" 
 														style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
 											</c:when>
 											<c:otherwise>
-												<i id="scrap${i.index }" class="fas fa-bookmark" onmouseover="" 
+												<i id="scrap2${i.index }" class="fas fa-bookmark" onmouseover="" 
 														style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
 											</c:otherwise>
 										</c:choose>
