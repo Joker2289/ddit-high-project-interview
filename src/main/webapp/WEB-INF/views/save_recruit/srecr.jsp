@@ -15,7 +15,7 @@
 <body>
 <div class="container">
 <div class="row">
-<div style="margin-top: 101px;">
+<div>
 	<!-- 검색창. -->
 	<table border="1">
 		<tr>
@@ -50,7 +50,6 @@
 							${srList.get(0).recruit_title }<br>
 							${corpNmList.get(0) }<br>
 							${srList.get(0).job_local }<br>
-							지원 버튼 (또는 'xxx전에 마감되었습니다.')<br>
 						</td>
 						<td><i id="scrap1" class="fas fa-bookmark" onmouseover="" 
 								style="margin-top: 10px; font-size: large; cursor: pointer;"></i></td>
@@ -91,7 +90,6 @@
 								${srList.get(i.index - 1).recruit_title }<br>
 								${corpNmList.get(i.index - 1) }<br>
 								${srList.get(i.index - 1).job_local }<br>
-								지원 버튼 (또는 'xxx전에 마감되었습니다.')<br>
 							</td>
 							<td><i id="scrap${i.index }" class="fas fa-bookmark" onmouseover="" 
 									style="margin-top: 10px; font-size: large; cursor: pointer;"></i></td>
@@ -119,7 +117,7 @@
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		console.log("docu");
+		console.log("${scrapList }");
 		
 		// 이미지, 채용공고 & 스크랩 클릭
 		<c:forEach begin="1" end="${srList.size() }" varStatus="i">
@@ -132,12 +130,14 @@
 			
 			$("#srecr${i.index }").on("click", function(){
 // 				alert("채용공고 ${i.index }");
+				window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code=${srList.get(i.index - 1).recruit_code }';
 			});
 			
 			$("#scrap${i.index }").on("click", function(){
 // 				alert("스크랩 ${i.index }");
-
-				// 스크랩 취소하기.
+				if(confirm("채용공고 스크랩을 취소하시겠습니까?")){
+					window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=f${srList.get(i.index - 1).recruit_code }&req_page=srecr';
+				}
 			});
 		</c:forEach>
 		

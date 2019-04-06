@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.users.model.UsersVo;
 
@@ -25,38 +26,39 @@ public class Personal_connectionController {
 	
 	@Resource(name="personalService")
 	private IPersonal_connectionService personalService; 
-
+	
 	
 	@RequestMapping(path={"/personalConnection"})
 	public String personalConnectionView(Model model , HttpSession session) {
 		
-		//MemberVo member =(MemberVo) session.getAttribute("SESSION_MEMBERVO");
-		//member.setMem_id();
-		
-		MemberVo memberVo = new MemberVo();
-		memberVo.setMem_id("lhh");
+		MemberVo memberVo =(MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		FollowVo followVo = new FollowVo();
 		followVo.setDivision("11");
-		followVo.setMem_id("lhh");
+		followVo.setMem_id(memberVo.getMem_id());
+		
+		String user_id = memberVo.getMem_id();
 		
 		int connections_count = personalService.connections_count(memberVo);
 		int coporations_count = personalService.coporations_count(followVo);
+		List<UsersVo> schoolFriends = 
+				personalService.schoolFriendsSearch(user_id);
 		
 		model.addAttribute("connections_count" , connections_count);
 		model.addAttribute("coporations_count", coporations_count);
+		model.addAttribute("schoolFriends", schoolFriends);
+		logger.debug("schoolFriends {}" , schoolFriends);
 		
 		return "personalTiles";
 	}
 	
 	
 	@RequestMapping(path={"/connections"})
-	public String connectionsView(Model model ,HttpServletRequest req) {
+	public String connectionsView(HttpSession session , Model model , HttpServletRequest req) {
 		
-		//MemberVo memberVo = (MemberVo) req.getSession().getAttribute("memberVO");
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
-		MemberVo memberVo = new MemberVo();
-		memberVo.setMem_id("lhh");
+		memberVo.setMem_id(memberVo.getMem_id());
 		
 		List<UsersVo> personalList = 
 				personalService.select_connections(memberVo);
@@ -77,8 +79,10 @@ public class Personal_connectionController {
 		followVo.setDivision("11");
 		
 		List<CorporationVo> corporationList = personalService.select_followCoporation(followVo);
+		int allFollowCount = personalService.allFollowCnt(followVo);
 		
 		model.addAttribute("corporationList", corporationList);
+		model.addAttribute("allFollowCount", allFollowCount);
 		logger.debug("corporationList {}" , corporationList);
 		
 		return "feedFollowingTiles";
@@ -86,16 +90,43 @@ public class Personal_connectionController {
 	}
 	
 	
-	@RequestMapping(path={"/connectionApply"})
-	public String connectionApplyView() {
-		return "connectionApplyTiles";
+	@RequestMapping(path={"/connectionReceiveApply"})
+	public String connectionApplyView(HttpSession session, Model model) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		
+		String receive_id = memberVo.getMem_id();
+		
+		List<UsersVo> connectionReceiveList = personalService.select_connectionReceiveList(receive_id);
+		logger.debug("connectionReceiveList++ {}" , connectionReceiveList);
+		
+		model.addAttribute("connectionReceiveList", connectionReceiveList);
+		
+		
+		return "connectionReceiveApplyTiles";
+		
+	}
+	
+	
+	@RequestMapping(path={"/connectionSendApply"})
+	public String connectionSendApplyView(HttpSession session , Model model) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		
+		String user_id = memberVo.getMem_id();
+		
+		List<UsersVo> connectionSendList = personalService.select_connectionSendList(user_id);
+		logger.debug("connectionSendList+++ {}" , connectionSendList);
+		
+		model.addAttribute("connectionSendList", connectionSendList);
+		
+		
+		return "connectionSendApplyTiles";
 		
 	}
 	
 	
 	@RequestMapping(path={"/filterSearch"})
 	public String filterSearchView() {
-		return null;
+		return "filterSearchTiles";
 		
 	}
 	

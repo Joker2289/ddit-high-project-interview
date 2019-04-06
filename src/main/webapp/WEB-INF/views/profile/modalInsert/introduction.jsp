@@ -1,45 +1,45 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal"
 		aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	</button>
-	<h4 class="modal-title">소개 수정</h4>
+	<h4 class="modal-title">소개</h4>
 </div>
 <div class="modal-body">
-<form action="/asldfkj;alskdf;laskjf;lajksdlfjk" method="post">
+<form action="/usersProfileUpdate" method="post" id="usersUpdateFrm" enctype="multipart/form-data">
 	<div class="profileHomeBackgroundPicture modalBackground" style="background-image: url(/background?mem_id=${SESSION_DETAILVO.user_id});"></div>
-	<div class="pictureInsert">
-		<button id="backgroundBtn">
+	<div class="pictureInsert" style="margin-left: 660px;">
+		<label id="backgroundBtn">
 			<span><i class="fas fa-pencil-alt"></i></span>
-		</button>
-		<input type="file" multiple="multiple" name="backgroundFile" id="backgroundFile" style="display: none;">
+		</label>
+		<input type="file" multiple="multiple" name="backgroundFile" id="backgroundFile" style="position:absolute;left:-2000px;top:-2000px;">
 	</div>
 	<div style="min-height: 328px;">
 		<div class="profileHomeProfilePicture modalprofile" style="background-image: url(/profile?mem_id=jin); margin-top: 80px;"></div>
 		<div class="pictureInsert" style="margin-left: 157px; margin-top: -30px;">
-			<button id="profileBtn">
+			<label id="profileBtn">
 				<span><i class="fas fa-pencil-alt"></i></span>
-			</button>
-			<input type="file" multiple="multiple" name="profileFile" id="profileFile" style="display: none;">
+			</label>
+			<input type="file" multiple="multiple" name="profileFile" id="profileFile" style="position:absolute;left:-2000px;top:-2000px;">
 		</div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">이름 </label>
-				<input class="form-control" type="text" name="user_name">
+				<input class="form-control" type="text" name="user_name" value="${SESSION_DETAILVO.user_name}">
 			</div>
 			<div class="modalHalfRight">
 				<label class="essential">생년월일 </label>
-				<input class="form-control" id="userBirth" type="text" name="user_birth">
+				<input class="form-control" id="userBirth" type="text" name="user_birth" value="${SESSION_DETAILVO.user_birth}">
 			</div>
 		</div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">우편번호 </label>
 			    <div class="input-group">
-			      <input class="form-control zipcode" name="zipcode" type="text" style="width:283px; height: 31px;" disabled="disabled" />
+			      <input class="form-control zipcode" name="zipcode" type="text" style="width:283px; height: 31px;" value="${SESSION_DETAILVO.zipcode}"/>
 			      <span class="input-group-btn" style="height: 33px;">
 			        <button class="btn btn-default zipcodeSearch" type="button" style="height: 31px;margin-top: -1px;">검색</button>
 			      </span>
@@ -49,27 +49,27 @@
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">주소 </label>
-				<input type="text" name="addr1" class="form-control addr1" disabled="disabled"/>
+				<input type="text" name="addr1" class="form-control addr1" value="${SESSION_DETAILVO.addr1}"/>
 			</div>
 			<div class="modalHalfRight">
 				<label class="essential">상세주소 </label>
-				<input type="text" name="addr2" class="form-control addr2" />
+				<input type="text" name="addr2" class="form-control addr2" value="${SESSION_DETAILVO.addr2}" />
 			</div>
 		</div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">이메일 </label>
-				<input class="form-control" name="email" type="text">
+				<input class="form-control" name="email" type="text" value="${SESSION_DETAILVO.email}">
 			</div>
 			<div class="modalHalfRight">
 				<label>전화번호 </label>
-				<input class="form-control" name="telno" type="text">
+				<input class="form-control" name="telno" type="text" value="${SESSION_DETAILVO.telno}">
 			</div>
 		</div>
 		<div class="modalRow" style="padding-bottom: 15px;">
 			<div style="modalHalfLeft">
 				<label>간단소개글 </label>
-				<textarea class="form-control" rows="3" name="profile_contents" style="width: 682px; height: 80px;"></textarea>
+				<textarea class="form-control" rows="3" name="profile_contents" style="width: 682px; height: 80px;">${SESSION_DETAILVO.profile_contents}</textarea>
 			</div>
 		</div>
 		<div style="margin-top: 10px;">
@@ -77,8 +77,8 @@
 				<label style="display: block;">미디어 </label>
 				<label>외부 문서, 사진, 사이트 동영상 프레젠테이션 링크 </label>
 			</div>
-			<div class="modalHalfRight" style="height: 30px;">
-				<button class="btn btn-default fileUpload" style="height: 31px; padding: 0 10px 0 10px;">업로드</button>
+			<div class="modalHalfRight" style="height: 30px; display: flex;">
+				<label class="btn btn-default fileUpload" style="font-size: 14px; width:64px; height: 31px; padding: 6px 12px 6px 12px;">업로드</label>
 				<button class="btn btn-default" style="height: 31px; padding: 0 10px 0 10px;" data-toggle="collapse" href="#link" aria-expanded="false" aria-controls="background">링크</button>
 				
 			</div>
@@ -93,7 +93,21 @@
 			    </div>
       		</div>
       	</div>
+      	<div class="modalRow" style="padding-bottom: 15px;">
+			<div  class="fileListBox" style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;">
+				<c:forEach items="${userFilesList }" var="files" > 
+					<div class="files" style="height: 25px; margin-right: 10px;font-size: 15px; font-weight: bold">
+						<a href="/fileDownload?file_code=${files.file_code }">${files.file_name}</a>
+						<input type="hidden" name="file_name" value="${files.file_name}">
+						<input type="hidden" name="file_path" value="${files.file_path}">
+						<label class="btn btn-link delBtn" style="font-size: 14px; width:64px; height: 31px; padding: 3px 12px 6px 0;">X</label>
+					</div>
+				</c:forEach>
+			</div>
+		</div>
 	</div>
+	
+	<input type="hidden" value="${SESSION_MEMBERVO.mem_id }" name="user_id">
 </form>
 </div>
 <div class="modal-footer">
@@ -101,6 +115,61 @@
 </div>
 
 <script>
+
+
+	$(document).on("change","input[name=filesVo]",function(){
+	
+		var fileValue = $(this).val().split("\\");
+		var fileName = fileValue[fileValue.length-1];
+	
+		$(".fileListBox").append('<div class="files" style="height: 25px; margin-right: 10px;font-size: 15px; font-weight: bold"><label style="height: 25px; margin-right: 10px;font-size: 15px; font-weight: bold">'+fileName+'</label><label class="btn btn-link fileVodelBtn"style="font-size: 14px; width:64px; height: 31px; padding: 3px 12px 6px 0;">X</label></div>');
+		
+	});
+
+	// 파일삭제
+	$(document).on("click",".delBtn", function(){
+		$(this).parents("div.files").remove();
+	});
+	
+	$(document).on("click",".fileVodelBtn", function(){
+		$(".fileUpload").parent().children().last().remove();
+		$(this).parents("div.files").remove();
+	});
+	
+	
+
+	
+	$("#usersSave").on("click",function(){
+		if($("input[name=user_name]").val().trim()==""){
+			alert("사용자 이름을 입력해주세요");
+			$("input[name=user_name]").focus();
+			return false;
+		}
+		if($("input[name=zipcode]").val().trim()==""){
+			alert("사용자 우편번호를 입력해주세요");
+			$("input[name=zipcode]").focus();
+			return false;
+		}
+		if($("input[name=addr1]").val().trim()==""){
+			alert("사용자 주소를 입력해주세요");
+			$("input[name=addr1]").focus();
+			return false;
+		}
+		if($("input[name=addr2]").val().trim()==""){
+			alert("사용자 상세주소를 입력해주세요");
+			$("input[name=addr2]").focus();
+			return false;
+		}
+		
+		if($("input[name=email]").val().trim()==""){
+			alert("사용자 이메일을 입력해주세요");
+			$("input[name=email]").focus();
+			return false;
+		}
+		
+		$("#usersUpdateFrm").submit();
+	});
+
 	jQuery.browser = {};
 	(function () {
 	    jQuery.browser.msie = false;
@@ -127,7 +196,7 @@
 	});
 	
    // 배경이미지 변경 버튼 클릭시 파일업로드 하기
-	$("#backgroundBtn").on("click",function(){
+	$("#backgroundBtn").on("mouseup",function(){
 		$("#backgroundFile").click();
 	});
 	
@@ -148,7 +217,7 @@
 	});
     
     // 프로필이미지 변경 버튼 클릭시 파일업로드 하기
-	$("#profileBtn").on("click",function(){
+	$("#profileBtn").on("mouseup",function(){
 		$("#profileFile").click();
 	});
    
@@ -156,6 +225,7 @@
 	$(".fileUpload").on("click",function(){
 		$(".fileUpload").parent().append('<input type="file" multiple="multiple" name="filesVo" style="display: none;">');
 		$(".fileUpload").parent().children().last().click();
+		
 	});
 	
 	// 우체국 API

@@ -24,6 +24,7 @@ import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
+import kr.or.ddit.save_recruit.model.Save_recruitVo;
 import kr.or.ddit.save_recruit.service.ISave_recruitService;
 import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
@@ -440,6 +441,45 @@ public class RecruitControllerTest extends WebTestConfig{
 
 		/***Then***/
 		assertTrue(arr_data_daejeon.length > 5);
+	}
+
+	/**
+	 * 
+	 * Method : testRecr_app
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 채용공고 지원시 지원자 수 수정 테스트.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testRecr_app() throws Exception {
+		/***Given***/
+		String recruit_code = "1";
+		RecruitVo rVo = recrService.getRecr(recruit_code);
+		String app_count = rVo.getApp_count();
+		
+		Save_recruitVo sVo = srecrService.getLastSrecr(recruit_code);
+		String recr_app = sVo.getRecr_app();
+		
+		/***When***/
+		MvcResult mvcResult = mockMvc.perform(get("/recr_app").param("recruit_code", recruit_code)).andReturn();
+		ModelAndView mav = mvcResult.getModelAndView();
+		String viewName = mav.getViewName();
+
+		String app_count_after = recrService.getRecr(recruit_code).getApp_count();
+		
+		/***Then***/
+		assertEquals("recr_detailTiles", viewName);
+		assertNotEquals(app_count, app_count_after);
+		
+		if(Integer.valueOf(app_count) > Integer.valueOf(app_count_after)){
+			app_count_after = String.valueOf(Integer.valueOf(app_count_after)+1);
+		}else{
+			app_count_after = String.valueOf(Integer.valueOf(app_count_after)-1);
+		}
+		
+		rVo.setApp_count(app_count_after);
+		recrService.updateRecr(rVo);
 	}
 	
 	

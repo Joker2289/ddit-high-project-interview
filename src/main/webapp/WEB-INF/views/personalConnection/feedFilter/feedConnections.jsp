@@ -11,9 +11,25 @@
 			</div>
 		</div>
 		<div>
-			<button class="btn btn-default followingBtn">
+			<button class="btn btn-default followingBtn follow" title="${conn.follow_code}">
 				<i class="fas fa-check"></i> 팔로우 중
 			</button>
 		</div>
 	</div>
 </c:forEach>
+<script type="text/javascript">
+$(".follow").on("click", function(){
+	var followStr = $(this).attr('title');
+	
+	if(!$(this).hasClass('Out')){
+		
+		$(this).html('<i class="fas fa-plus-circle"></i> 팔로우');
+		$(this).attr('class','btn btn-default followingBtn follow Out');
+		
+	}else{
+		$(this).html('<i class="fas fa-check"></i>팔로우 중');
+		$(this).attr('class','btn btn-default followingBtn follow');
+		
+	}
+});
+</script>

@@ -144,8 +144,8 @@ public class RecruitServiceImplTest extends LogicTestConfig{
 		arr_data = data3.split("/");
 		
 		/***When***/
-		logger.debug(data2);
-		
+		String asd = "연구소(Software) 신입/경력 채";
+		logger.debug("length : {}", asd.length());
 
 		/***Then***/
 		assertNotNull(aaa);

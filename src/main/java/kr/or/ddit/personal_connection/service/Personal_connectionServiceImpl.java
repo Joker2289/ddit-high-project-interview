@@ -10,6 +10,7 @@ import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.dao.IPersonal_connectionDao;
+import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.users.model.UsersVo;
 
 @Service("personalService")
@@ -46,6 +47,36 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	@Override
 	public List<FollowVo> select_followHashTag(MemberVo memberVo) {
 		return personalDao.select_followHashTag(memberVo);
+	}
+
+	@Override
+	public List<UsersVo> select_connectionReceiveList(String receive_id) {
+		return personalDao.select_connectionReceiveList(receive_id);
+	}
+
+	@Override
+	public List<UsersVo> select_connectionSendList(String user_id) {
+		return personalDao.select_connectionSendList(user_id);
+	}
+
+	@Override
+	public int update_connectionReceiveApply(Personal_connectionVo personalVo) {
+		return personalDao.update_connectionReceiveApply(personalVo);
+	}
+
+	@Override
+	public int delete_connectionCancel(Personal_connectionVo personalVo) {
+		return personalDao.delete_connectionCancel(personalVo);
+	}
+
+	@Override
+	public int allFollowCnt(FollowVo followVo) {
+		return personalDao.allFollowCnt(followVo);
+	}
+
+	@Override
+	public List<UsersVo> schoolFriendsSearch(String user_id) {
+		return personalDao.schoolFriendsSearch(user_id);
 	}
 
 	

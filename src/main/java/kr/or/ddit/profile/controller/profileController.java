@@ -71,15 +71,22 @@ public class profileController {
 	}
 	
 	@RequestMapping("/modalInsertView")
-	public String modalInsertView(String modalStr) {
+	public String modalInsertView(String modalStr, Model model, String user_id) {
 		
 		String result = "";
 		
 		switch (modalStr) {
 			case "introduction":
+				FilesVo filesVo = new FilesVo();
+				filesVo.setRef_code(user_id);
+				filesVo.setDivision("43");
+				List<FilesVo> userFilesList = filesService.select_usersFile(filesVo);
+				model.addAttribute("userFilesList", userFilesList);
 				result="/profile/modalInsert/introduction";
 				break;
 			case "career":
+				List<CorporationVo> corpVoList = corpService.select_allCorps();
+				model.addAttribute("corpVoList", corpVoList);
 				result="/profile/modalInsert/career";
 				break;
 			case "education":
@@ -110,6 +117,8 @@ public class profileController {
 				break;
 		}
 		
+		
+		
 		return result;
 		
 	}
@@ -121,7 +130,8 @@ public class profileController {
 	}
 	
 	@RequestMapping("/profileDropdown")
-	public String profileDropdownView() {
+	public String profileDropdownView(Model model, HttpSession session,String user_id) {
+		model.addAttribute("user_id", user_id);
 		
 		return "/profile/profileDropdown";
 	}
@@ -129,23 +139,23 @@ public class profileController {
 	@RequestMapping(path= {"/profileHome"})
 	public String profileHomeView(Model model, HttpSession session) {
 		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
-		UsersVo userVo = usersService.select_userInfo(memberVo.getMem_id());
+		UsersVo usersVo = usersService.select_userInfo(memberVo.getMem_id());
 		FilesVo filesVo = new FilesVo();
 		filesVo.setRef_code(memberVo.getMem_id());
 		filesVo.setDivision("43");
 		
-		String introduce = usersService.select_introduce(userVo.getUser_id());
-		List<Education_infoVo> education_infoList = eduService.select_educationInfo(userVo.getUser_id());
-		List<Career_infoVo> career_infoList = carService.select_careerInfo(userVo.getUser_id());
+		String introduce = usersService.select_introduce(usersVo.getUser_id());
+		List<Education_infoVo> education_infoList = eduService.select_educationInfo(usersVo.getUser_id());
+		List<Career_infoVo> career_infoList = carService.select_careerInfo(usersVo.getUser_id());
 		int peopleCount = PersonalService.connections_count(memberVo);
-		List<FilesVo> filesList = filesService.select_usersFile(filesVo);
+		List<FilesVo> userFilesList = filesService.select_usersFile(filesVo);
 		
 		model.addAttribute("education_infoList", education_infoList);
 		model.addAttribute("career_infoList", career_infoList);
 		model.addAttribute("introduce", introduce);
 		model.addAttribute("peopleCount", peopleCount);
-		model.addAttribute("userVo", userVo);
-		model.addAttribute("filesList", filesList);
+		model.addAttribute("usersVo", usersVo);
+		model.addAttribute("userFilesList", userFilesList);
 		
 		return "profileHomeTiles";
 	}
@@ -155,7 +165,8 @@ public class profileController {
 		resp.setHeader("content-Disposition", "attachment;"); 
 		resp.setContentType("image");
 		
-		
+		ServletContext application = req.getServletContext();
+		String path = application.getRealPath("/upload");
 		
 		UsersVo users = usersService.select_userInfo(memberVo.getMem_id());
 		CorporationVo corporation = null;
@@ -166,10 +177,9 @@ public class profileController {
 		
 		FileInputStream fis;
 		if((users != null && users.getBg_path() != null) || (corporation != null && corporation.getBg_path() != null))
-			fis = new FileInputStream(new File(users != null ? users.getBg_path() : corporation.getBg_path()));
+			fis = new FileInputStream(new File(users != null ? path + File.separator + users.getBg_path() : path + File.separator + corporation.getBg_path()));
 		
 		else{
-			ServletContext application = req.getServletContext();
 			String noimgPath = application.getRealPath("/images/profile/basicBackground.png");
 			fis = new FileInputStream(new File(noimgPath));
 		}
@@ -190,6 +200,9 @@ public class profileController {
 		resp.setHeader("content-Disposition", "attachment;"); 
 		resp.setContentType("image");
 		
+		ServletContext application = req.getServletContext();
+		String path = application.getRealPath("/upload");
+		
 		UsersVo users = usersService.select_userInfo(memberVo.getMem_id());
 		CorporationVo corporation = null;
 		
@@ -199,10 +212,9 @@ public class profileController {
 		
 		FileInputStream fis;
 		if((users != null && users.getProfile_path() != null) || (corporation != null && corporation.getLogo_path() != null))
-			fis = new FileInputStream(new File(users != null ? users.getProfile_path() : corporation.getLogo_path()));
+			fis = new FileInputStream(new File(users != null ? path + File.separator + users.getProfile_path() : path + File.separator + corporation.getLogo_path()));
 		
 		else{
-			ServletContext application = req.getServletContext();
 			String noimgPath = application.getRealPath("/images/profile/basicProfile.png");
 			fis = new FileInputStream(new File(noimgPath));
 		}
@@ -219,16 +231,22 @@ public class profileController {
 	}
 	
 	@RequestMapping(path={"/fileDownload"})
-	public void fileDownload(String file_code, Model model, HttpServletResponse resp) throws IOException{
+	public void fileDownload(String file_code, Model model, HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("application/octet-stream");
 		
+		ServletContext application = req.getServletContext();
+		String path = application.getRealPath("/upload");
+		
 		FilesVo filesVo = filesService.select_oneFile(file_code);
+		String realFilename = path + File.separator + filesVo.getFile_path();
+		
+		logger.debug("realFilename {}",realFilename);
 		
 		String docName = new String(filesVo.getFile_name().getBytes("UTF-8"), "ISO-8859-1");
 		
-		FileInputStream fis = new FileInputStream(new File(filesVo.getFile_path()));
+		FileInputStream fis = new FileInputStream(new File(realFilename));
 		resp.setHeader("Content-Disposition", "attachment; filename=\"" + docName + "\"");
 
 		//4.FileInputStream을 response객체의 outputStream 객체에 write

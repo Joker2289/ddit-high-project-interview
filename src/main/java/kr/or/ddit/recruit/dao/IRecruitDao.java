@@ -103,6 +103,17 @@ public interface IRecruitDao {
 	 * Method 설명 : 특정 회사 채용공고 조회.
 	 */
 	RecruitVo getRecrCorpId(String corp_id);
+
+	/**
+	 * 
+	 * Method : updateRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param rVo
+	 * @return
+	 * Method 설명 : 채용공고 수정.
+	 */
+	int updateRecr(RecruitVo rVo);
 	
 	
 	

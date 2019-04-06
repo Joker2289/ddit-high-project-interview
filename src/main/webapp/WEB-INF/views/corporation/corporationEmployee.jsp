@@ -13,7 +13,7 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div style="margin-top: 101px;">
+			<div>
 				<%@ include file="/WEB-INF/views/corporation/module/top.jsp"%>
 				<br>
 				<%@ include file="/WEB-INF/views/corporation/module/left.jsp"%>

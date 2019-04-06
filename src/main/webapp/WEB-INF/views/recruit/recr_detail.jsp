@@ -8,17 +8,13 @@
 	<title>채용공고｜InterView</title>
 		<!-- 지도 script. -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=21c4ce15b016e2f4c34196b944d9852b&libraries=services,clusterer,drawing"></script>	
-	<style type="text/css">
-		
-		
-	</style>
 	
 </head>
 
 <body>
 <div class="container">
 <div class="row">
-<div style="margin-top: 101px;">
+<div>
 
 	<!-- 레이아웃 잡는건 나중에.. -->
 	<!-- 채용공고 상세 페이지. 어떤 param을 받아야되지? - recr/corp 받음. -->
@@ -59,6 +55,21 @@
 		<tr>
 			<td>${recr.emp_type }</td>
 		</tr>
+		<tr style="width: 30px;">
+			<td>
+				<br><br>
+				<a style="padding: 10px; border: 1px solid;"><i class="fas fa-bookmark"></i>스크랩</a>
+				<c:choose>
+					<c:when test="${recr_app == 't' }">
+						<input id="btn_app" type="button" value="지원 취소" style="">
+					</c:when>
+					<c:otherwise>
+						<input id="btn_app" type="button" value="지원 하기" style="">
+					</c:otherwise>
+				</c:choose>
+				<br><br><br><br><br>
+			</td>
+		</tr>
 		<tr>
 			<td>
 				<div id="map" style="width:500px;height:400px;"></div>
@@ -74,13 +85,24 @@
 </div>		
 </div>		
 		
-		
-<script src="js/jquery-3.3.1.min.js"></script>
-<!-- font awesome icon -->
-<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		console.log("docu");
+		console.log("recr code : ${recr.recruit_code }");
+		
+		$("#btn_app").on("click", function(){
+			<c:choose>
+				<c:when test="${recr_app == 't' }">
+					if(confirm("채용공고 지원을 취소하시겠습니까?")){
+						window.location.href = '${pageContext.request.contextPath }/recr_app?recruit_code=${recr.recruit_code }';
+					}
+				</c:when>
+				<c:otherwise>
+					if(confirm("해당 채용공고에 지원하시겠습니까?")){
+						window.location.href = '${pageContext.request.contextPath }/recr_app?recruit_code=${recr.recruit_code }';
+					}
+				</c:otherwise>
+			</c:choose>
+		});
 		
 	});
 	
@@ -107,7 +129,13 @@
 	// 마커가 지도 위에 표시되도록 설정합니다
 	marker.setMap(map);	
 
-	var iwContent = '<div style="padding:5px;">${corp.corp_name } </div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+	// 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+// 	var content = "${recr.recruit_title }";
+// 	if(content.length > 21){
+// 		content = content.substr(0, 21) + "...";
+// 	}
+	
+	var iwContent = '<div style="padding:5px;">${corp.corp_name }<br>${recr.recruit_title } </div>', 
     iwPosition = new daum.maps.LatLng(data1, data2); //인포윈도우 표시 위치입니다
 
 	// 인포윈도우를 생성합니다

@@ -12,7 +12,7 @@
 <body>
 <div class="container">
 	<div class="row">
-		<div style="margin-top: 101px;">
+		<div>
 			<!-- 			<section style="text-align: center;"> -->
 			<%@ include file="/WEB-INF/views/corporation/module/top.jsp"%>
 			<br>
@@ -21,19 +21,15 @@
 
 			<div style="position: relative; top: -177px; left: 180px;margin-top: 20px;border: 1px solid;width: 650px; height: 200px;">
 				<label>한눈에 보기</label><br>
-				<label> 회사 소개 ${corporationVo.corp_profile }</label><br>
-				<label> 회사 URL ${corporationVo.corp_url }</label><br>
-				<label> 회사 URL ${corporationVo.corp_url }</label><br>
-				<label> 업계 ${corporationVo.industry_type }</label><br>
-				<label> 회사 규모 ${corporationVo.corp_size }</label><br>
-				<label> 회사 규모 ${corporationVo.corp_size }</label><br>
-				<label> 회사 주소 ${corporationVo.add1 }</label><br>
-				<label> 회사 유형 ${corporationVo.type }</label><br>
+				<label> ${corporationInfo.corp_profile }</label><br>
+				<label> 웹사이트 ${corporationInfo.corp_url }</label><br>
+				<label> 업계 ${corporationInfo.industry_type }</label><br>
+				<label> 회사 규모 ${corporationInfo.corp_size }</label><br>
+				<label> 본사 주소 ${corporationInfo.addr1 }</label><br>
+				<label> 회사 유형 ${corporationInfo.corp_type }</label><br>
 			</div>
 			
-			
 			<div id="map" style="position: relative; top: -177px; left: 180px;margin-top: 10px;border: 1px solid;width: 650px; height: 200px;">
-					
 			</div>
 		</div>
 	</div>
@@ -41,11 +37,11 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		console.log("${corpInfo.corp_name}");
+		console.log("${corporationInfo.corp_name}");
 		
 	});
 	
-	var data = "${corpInfo.corp_location }";
+	var data = "${corporationInfo.corp_location }";
 	var data1 = data.split("/")[0];
 	var data2 = data.split("/")[1];
 	

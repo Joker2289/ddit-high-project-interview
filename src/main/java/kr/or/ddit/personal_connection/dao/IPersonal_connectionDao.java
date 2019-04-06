@@ -84,6 +84,76 @@ public interface IPersonal_connectionDao {
 	
 	
 	
+	/**
+	* Method : select_connectionReceive
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param receive_id
+	* @return
+	* Method 설명 : 받은 일촌 신청 리스트 조회
+	*/
+	List<UsersVo> select_connectionReceiveList(String receive_id);
+	
+	
+	
+	/**
+	* Method : select_connectionSendList
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param user_id
+	* @return
+	* Method 설명 : 보낸 일촌 신청 리스트 조회
+	*/
+	List<UsersVo> select_connectionSendList(String user_id);
+	
+	
+	
+	/**
+	* Method : update_connectionReceiveApply
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param personalVo
+	* @return
+	* Method 설명 : 받은 일촌 신청 수락
+	*/
+	int update_connectionReceiveApply(Personal_connectionVo personalVo);
+	
+	
+	
+	/**
+	* Method : delete_connectionCancel
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param personalVo
+	* @return
+	* Method 설명 : 받은/보낸 일촌 신청 거절(취소)
+	*/
+	int delete_connectionCancel(Personal_connectionVo personalVo);
+	
+	
+	
+	/**
+	* Method : allFollowCnt
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param followVo
+	* @return
+	* Method 설명 : 전체(회사,해시태그,인맥,인맥밖) 팔로우한 수 조회
+	*/
+	int allFollowCnt(FollowVo followVo);
+	
+	
+	
+	/**
+	* Method : schoolSearch
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param user_id
+	* @return
+	* Method 설명 : 아는 동문 찾기
+	*/
+	List<UsersVo> schoolFriendsSearch(String user_id);
+	
 
 	
 }

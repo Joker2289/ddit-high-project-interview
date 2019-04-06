@@ -2,89 +2,110 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
-	<definition name="layout" template="/WEB-INF/views/layout/layout.jsp" >
+	<definition name="layout" template="/WEB-INF/views/layout/layout.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
 		<put-attribute name="content" value="" />
 	</definition>
-	
-	<definition name="homeTiles" extends="layout" >
+
+	<definition name="homeTiles" extends="layout">
 		<put-attribute name="content" value="/WEB-INF/views/home.jsp" />
 	</definition>
-	
+
 	<definition name="timeLineTiles" extends="layout">
-		<put-attribute name="content" value="/WEB-INF/views/timeline/timeline.jsp"/>
+		<put-attribute name="content"
+			value="/WEB-INF/views/timeline/timeline.jsp" />
 	</definition>
-	
-	<definition name="personalTiles" extends="layout" >
-		<put-attribute name="content" value="/WEB-INF/views/personalConnection/personalConnection.jsp" />
+
+	<definition name="personalTiles" extends="layout">
+		<put-attribute name="content"
+			value="/WEB-INF/views/personalConnection/personalConnection.jsp" />
 	</definition>
-	
-	<definition name="corporationTiles" extends="layout" >
-		<put-attribute name="content" value="/WEB-INF/views/corporation/corporationHome.jsp" />
+
+	<definition name="corporationTiles" extends="layout">
+		<put-attribute name="content"
+			value="/WEB-INF/views/corporation/corporationHome.jsp" />
 	</definition>
-	
-	<definition name="corporationIntroTiles" extends="layout" >
-		<put-attribute name="content" value="/WEB-INF/views/corporation/corporationIntroduction.jsp" />
+
+	<definition name="corporationIntroTiles" extends="layout">
+		<put-attribute name="content"
+			value="/WEB-INF/views/corporation/corporationIntroduction.jsp" />
 	</definition>
-	
-	<definition name="corporationRecruitmentTiles" extends="layout" >
-		<put-attribute name="content" value="/WEB-INF/views/corporation/corporationRecruitment.jsp" />
+
+	<definition name="corporationRecruitmentTiles" extends="layout">
+		<put-attribute name="content"
+			value="/WEB-INF/views/corporation/corporationRecruitment.jsp" />
 	</definition>
-	
-	<definition name="corporationEmployeeTiles" extends="layout" >
-		<put-attribute name="content" value="/WEB-INF/views/corporation/corporationEmployee.jsp" />
+
+	<definition name="corporationEmployeeTiles" extends="layout">
+		<put-attribute name="content"
+			value="/WEB-INF/views/corporation/corporationEmployee.jsp" />
 	</definition>
-	
-	<definition name="connectionsTiles" extends="layout" >
-		<put-attribute name="content" value="/WEB-INF/views/personalConnection/connections.jsp" />
+
+	<definition name="connectionsTiles" extends="layout">
+		<put-attribute name="content"
+			value="/WEB-INF/views/personalConnection/connections.jsp" />
 	</definition>
-	
-	<definition name="companyTiles" extends="layout" >
-		<put-attribute name="content" value="/WEB-INF/views/personalConnection/company.jsp" />
+
+	<definition name="companyTiles" extends="layout">
+		<put-attribute name="content"
+			value="/WEB-INF/views/personalConnection/company.jsp" />
 	</definition>
-	
+
 	<definition name="recruitTiles" extends="layout">
-		<put-attribute name="content" value="/WEB-INF/views/recruit/recruit.jsp"/>
-	</definition>	
-	
+		<put-attribute name="content" value="/WEB-INF/views/recruit/recruit.jsp" />
+	</definition>
+
 	<definition name="recr_detailTiles" extends="layout">
-		<put-attribute name="content" value="/WEB-INF/views/recruit/recr_detail.jsp"/>
+		<put-attribute name="content"
+			value="/WEB-INF/views/recruit/recr_detail.jsp" />
 	</definition>
-	
+
 	<definition name="profileHomeTiles" extends="layout">
-		<put-attribute name="content" value="/WEB-INF/views/profile/profileHome.jsp"/>
-	</definition>	
-	
+		<put-attribute name="content"
+			value="/WEB-INF/views/profile/profileHome.jsp" />
+	</definition>
+
 	<definition name="srecrTiles" extends="layout">
-		<put-attribute name="content" value="/WEB-INF/views/save_recruit/srecr.jsp"/>
-	</definition>	
-	
+		<put-attribute name="content"
+			value="/WEB-INF/views/save_recruit/srecr.jsp" />
+	</definition>
+
 	<definition name="recrSearchTiles" extends="layout">
-		<put-attribute name="content" value="/WEB-INF/views/recruit/recrSearch.jsp"/>
-	</definition>	
-	
+		<put-attribute name="content"
+			value="/WEB-INF/views/recruit/recrSearch.jsp" />
+	</definition>
+
 	<definition name="interestTiles" extends="layout">
-		<put-attribute name="content" value="/WEB-INF/views/interest/interest.jsp"/>
-	</definition>	
-	
+		<put-attribute name="content"
+			value="/WEB-INF/views/interest/interest.jsp" />
+	</definition>
+
 	<definition name="writeRecrTiles" extends="layout">
-		<put-attribute name="content" value="/WEB-INF/views/recruit/writeRecr.jsp"/>
+		<put-attribute name="content"
+			value="/WEB-INF/views/recruit/writeRecr.jsp" />
 	</definition>
-	
+
 	<definition name="feedFollowingTiles" extends="layout">
-		<put-attribute name="content" value="/WEB-INF/views/personalConnection/feedFollowing.jsp"/>
-	</definition>	
-	
-	<definition name="connectionApplyTiles" extends="layout">
-		<put-attribute name="content" value="/WEB-INF/views/personalConnection/connectionApply.jsp"/>
-	</definition>	
-	
+		<put-attribute name="content"
+			value="/WEB-INF/views/personalConnection/feedFollowing.jsp" />
+	</definition>
+
+	<definition name="connectionReceiveApplyTiles" extends="layout">
+		<put-attribute name="content"
+			value="/WEB-INF/views/personalConnection/connectionReceiveApply.jsp" />
+	</definition>
+
 	<definition name="filterSearchTiles" extends="layout">
-		<put-attribute name="content" value="/WEB-INF/views/personalConnection/filterSearch.jsp"/>
-	</definition>	
-	
+		<put-attribute name="content"
+			value="/WEB-INF/views/personalConnection/filterSearch.jsp" />
+	</definition>
+
 	<definition name="mapTiles" extends="layout">
-		<put-attribute name="content" value="/WEB-INF/views/recruit/map.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/views/recruit/map.jsp" />
 	</definition>
 	
+	<definition name="connectionSendApplyTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/personalConnection/connectionSendApply.jsp" />
+	</definition>
+
 </tiles-definitions>

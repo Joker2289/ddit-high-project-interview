@@ -33,8 +33,8 @@
 		                                                                                                                                  from CAREER_INFO, EDUCATION_INFO
 		                                                                                                                                 where CAREER_INFO.user_id = education_info.user_id
 	                                                                                                                                 group by CAREER_INFO.user_id)) b
-		 where a.user_id = b.user_id
-		   and a.user_id = users.user_id
+		 where a.user_id = b.user_id(+)
+		   and a.user_id = users.user_id(+)
 	</select>
 	
 	
@@ -67,7 +67,8 @@
 	<!-- 팔로우한 회사 리스트 조회 -->
 	<select id="select_followCoporation" parameterType="followVo" resultType="corporationVo">
 		select
-			b.*
+			b.*,
+			a.follow_code
   		from
   			follow a, corporation b
  		where
@@ -85,7 +86,8 @@
                users.user_name,
                users.profile_img,
                b.introduce
-          from users ,( select a.user_id
+               b.follow_code
+          from users ,( select a.user_id,follow.follow_code
                           from (select user_id
                                   from personal_connection
                                  where (user_id =#{mem_id} or receive_id =#{mem_id})
@@ -96,16 +98,16 @@
                                   from personal_connection
                                  where (user_id =#{mem_id} or receive_id =#{mem_id})
                                    and receive_accept='Y'
-                                   and receive_id !=#{mem_id}) a,(select FOLLOW_CODE,
-                                                                         MEM_ID,
-                                                                         REF_KEYWORD,
-                                                                         DIVISION
-                                                                    from FOLLOW
+                                   and receive_id !=#{mem_id}) a,(select follow_code,
+                                                                         mem_id,
+                                                                         ref_keyword,
+                                                                         division
+                                                                    from follow
                                                                    where division='43' 
                                                                      and mem_id=#{mem_id})b 
                          where a.user_id = b.REF_KEYWORD) a , ( select distinct(a.user_id),
-                                                                            case when b.resign_date is null then b.corporate_name || job_position
-                                                                                 when b.resign_date is not null then a.school_name || a.degree_name
+                                                                            case when b.resign_date is null then b.corporate_name || ' ' ||  job_position
+                                                                                 when b.resign_date is not null then a.school_name ||  ' ' || a.degree_name
                                                                              end as introduce
                                                                             from EDUCATION_INFO a, CAREER_INFO b
                                                                            where a.user_id = b.user_id
@@ -132,5 +134,127 @@
 		and
 			mem_id=#{mem_id}
 	</select>
+	
+	
+	<!-- 받은 일촌 신청 리스트 조회 -->
+	<select id="select_connectionReceiveList" parameterType="String" resultType="usersVo">
+		select a.user_id,
+               users.profile_path,
+               users.user_name,
+               users.profile_img,
+               b.introduce
+          from users ,(select user_id
+                         from personal_connection
+                        where receive_id=#{receive_id}
+                          and receive_accept='N' ) a , ( select distinct(a.user_id),
+                                                                            case when b.resign_date is null then b.corporate_name || ' ' || job_position
+                                                                                 when b.resign_date is not null then a.school_name ||' ' || a.degree_name
+                                                                             end as introduce
+                                                                            from EDUCATION_INFO a, CAREER_INFO b
+                                                                           where a.user_id = b.user_id
+                                                                             and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select CAREER_INFO.user_id,  max(nvl(CAREER_INFO.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+                                                                                                                                                          from CAREER_INFO, EDUCATION_INFO
+                                                                                                                                                         where CAREER_INFO.user_id = education_info.user_id
+                                                                                                                                                      group by CAREER_INFO.user_id)) b
+		 where a.user_id = b.user_id(+)
+		   and a.user_id = users.user_id(+)
+	</select>
+	
+	
+	<!-- 보낸 일촌 신청 리스트 조회 -->
+	<select id="select_connectionSendList" parameterType="String" resultType="usersVo">
+		select a.receive_id as user_id,
+               users.profile_path,
+               users.user_name,
+               users.profile_img,
+               users.addr1,
+               b.introduce
+          from users ,(select receive_id
+						 from personal_connection 
+						where user_id=#{user_id}
+						  and receive_accept='N' ) a , ( select distinct(a.user_id),
+                                                                            case when b.resign_date is null then b.corporate_name || ' ' || job_position
+                                                                                 when b.resign_date is not null then a.school_name ||' ' || a.degree_name
+                                                                             end as introduce
+                                                                            from EDUCATION_INFO a, CAREER_INFO b
+                                                                           where a.user_id = b.user_id
+                                                                             and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select CAREER_INFO.user_id,  max(nvl(CAREER_INFO.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+                                                                                                                                                          from CAREER_INFO, EDUCATION_INFO
+                                                                                                                                                         where CAREER_INFO.user_id = education_info.user_id
+                                                                                                                                                      group by CAREER_INFO.user_id)) b
+		 where a.RECEIVE_ID = b.user_id(+)
+		   and a.RECEIVE_ID = users.user_id(+)
+	</select>
+	
+	
+	<!-- 받은 일촌 신청 수락 -->
+	<update id="update_connectionReceiveApply" parameterType="personalVo">
+		update
+			personal_connection
+		set
+			receive_accept='Y'
+		where
+			receive_id=#{receive_id}
+		and
+			user_id=#{user_id}
+		and
+			receive_accept='N'
+	</update>
+	
+	
+	<!-- 받은/보낸 일촌 신청 거절(취소) -->
+	<delete id="delete_connectionCancel" parameterType="personalVo">
+		delete
+		from
+			personal_connection
+		where
+			user_id=#{user_id}
+		and  
+			receive_id=#{receive_id}
+		and
+			receive_accept='N'
+	</delete>
+	
+	
+	<!-- 전체(회사,해시태그,인맥,인맥밖) 팔로우한 수 조회 -->
+	<select id="allFollowCnt" parameterType="followVo" resultType="int">
+		select
+			count(*)
+		from
+			follow
+		where
+			mem_id=#{mem_id}
+	</select>
+	
+	
+	<!-- 아는 동문 찾기 -->
+	<select id="schoolFriendsSearch" parameterType="String" resultType="usersVo">
+		select a.user_id as user_id,
+               users.profile_path,
+               users.user_name,
+               users.profile_img,
+               b.introduce
+          from users ,(select user_id
+			             from EDUCATION_INFO
+			            where SCHOOL_NAME = ( select a.*
+                                              from (select SCHOOL_NAME
+                                                      from education_info
+                                                     where user_id=#{user_id}
+                                                  order by graduation desc) a
+                                            		 where rownum &lt;=1 )) a , ( select distinct(a.user_id),
+                                                                                 case when b.resign_date is null then b.corporate_name || ' ' || job_position
+                                                                                      when b.resign_date is not null then a.school_name ||' ' || a.degree_name
+                                                                                  end as introduce
+                                                                                 from EDUCATION_INFO a, CAREER_INFO b
+                                                                                where a.user_id = b.user_id
+                                                                                  and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select CAREER_INFO.user_id,  max(nvl(CAREER_INFO.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+                                                                                                                                                               from CAREER_INFO, EDUCATION_INFO
+                                                                                                                                                              where CAREER_INFO.user_id = education_info.user_id
+                                                                                                                                                           group by CAREER_INFO.user_id)) b
+		 where a.user_id = b.user_id(+)
+		   and a.user_id = users.user_id(+)
+           and a.user_id != #{user_id}
+	</select>
+	
 	
 </mapper>
