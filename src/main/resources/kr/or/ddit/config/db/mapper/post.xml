@@ -41,26 +41,62 @@
 	<select id="select_timelinePost" parameterType="paginationVo" resultType="postVo">
 		select *
 		  from (select b.*,  rownum rn
-		          from (select post.*
-		                  from post, (
-		                          select user_id
-		                            from personal_connection
-		                           where (user_id = #{mem_id} or receive_id = #{mem_id})
-		                             and receive_accept='Y'
-		                           union
-		                          select receive_id
-		                            from personal_connection
-		                           where (user_id = #{mem_id} or receive_id = #{mem_id})
-		                             and receive_accept='Y'
-		                           union
-		                          select ref_keyword
-		                            from follow
-		                           where mem_id = #{mem_id}
-		                             and (division='43' or division='11') 
-		                                                                                ) a
-		                 where post.mem_id = a.user_id
-		                 order by post_date desc) b )
-		 where rn between (#{page} - 1) * #{pageSize} + 1 and #{page} * #{pageSize}
+		          from (select post.*, (select count(ref_code)
+		                                  from post_comment
+		                                 where ref_code = post_code
+		                                   and division = 28) commentcount,
+		                               (select count(ref_code)
+		                                  from good
+		                                 where ref_code = post_code
+		                                   and division = 28) goodcount
+		                  from post, ( select user_id
+		                                 from personal_connection
+		                                where (user_id = #{mem_id} or receive_id = #{mem_id})
+		                                  and receive_accept='Y'
+		                                union
+		                               select receive_id
+		                                 from personal_connection
+		                                where (user_id = #{mem_id} or receive_id = #{mem_id})
+		                                  and receive_accept='Y'
+		                                union
+		                               select ref_keyword
+		                                 from follow
+		                                where mem_id = #{mem_id}
+		                                  and (division='43' or division='11')) a
+		         where post.mem_id = a.user_id
+		        order by post_date desc) b ) 
+		where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
+	</select>
+	 
+	<select id="select_nextPost" parameterType="paginationVo" resultType="postVo">
+		select *
+		  from (select b.*,  rownum rn
+		          from (select post.*, (select count(ref_code)
+		                                  from post_comment
+		                                 where ref_code = post_code
+		                                   and division = 28) commentcount,
+		                               (select count(ref_code)
+		                                  from good
+		                                 where ref_code = post_code
+		                                   and division = 28) goodcount
+		                  from post, ( select user_id
+		                                 from personal_connection
+		                                where (user_id = #{mem_id} or receive_id = #{mem_id})
+		                                  and receive_accept='Y'
+		                                union
+		                               select receive_id
+		                                 from personal_connection
+		                                where (user_id = #{mem_id} or receive_id = #{mem_id})
+		                                  and receive_accept='Y'
+		                                union
+		                               select ref_keyword
+		                                 from follow
+		                                where mem_id = #{mem_id}
+		                                  and (division='43' or division='11')) a
+		         where post.mem_id = a.user_id
+		        order by post_date desc) b ) 
+		where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
+		  and post_code &lt; #{criteria_code}
 	</select>
 	
 	<!-- 특정 게시물 조회 -->	
@@ -69,5 +105,7 @@
 		  from post
 		 where post_code = #{post_code}
 	</select>
+	
+	
 	
 </mapper>

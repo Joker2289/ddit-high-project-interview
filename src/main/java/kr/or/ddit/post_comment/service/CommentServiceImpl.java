@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.post_comment.dao.ICommentDao;
 import kr.or.ddit.post_comment.model.Post_commentVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 @Service("commentService")
 public class CommentServiceImpl implements ICommentService {
@@ -31,8 +32,13 @@ public class CommentServiceImpl implements ICommentService {
 	}
 
 	@Override
-	public List<Post_commentVo> select_commentList(Post_commentVo post_commentVo) {
-		return commentDao.select_commentList(post_commentVo);
+	public List<Post_commentVo> select_commentList(PaginationVo PaginationVo) {
+		return commentDao.select_commentList(PaginationVo);
+	}
+	
+	@Override
+	public List<Post_commentVo> select_nextComment(PaginationVo paginationVo) {
+		return commentDao.select_nextComment(paginationVo);
 	}
 
 	@Override

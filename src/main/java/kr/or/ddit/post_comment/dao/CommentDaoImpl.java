@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.post_comment.model.Post_commentVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 @Repository("commentDao")
 public class CommentDaoImpl implements ICommentDao {
@@ -31,8 +32,13 @@ public class CommentDaoImpl implements ICommentDao {
 	}
 
 	@Override
-	public List<Post_commentVo> select_commentList(Post_commentVo post_commentVo) {
-		return sqlSession.selectList("comment.select_commentList", post_commentVo);
+	public List<Post_commentVo> select_commentList(PaginationVo paginationVo) {
+		return sqlSession.selectList("comment.select_commentList", paginationVo);
+	}
+	
+	@Override
+	public List<Post_commentVo> select_nextComment(PaginationVo paginationVo) {
+		return sqlSession.selectList("comment.select_nextComment", paginationVo);
 	}
 
 	@Override
@@ -40,6 +46,4 @@ public class CommentDaoImpl implements ICommentDao {
 		return sqlSession.selectOne("comment.select_commentCount", commentVo);
 	}
 
-	
-	
 }

@@ -6,13 +6,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.post_comment.model.Post_commentVo;
 import kr.or.ddit.test.LogicTestConfig;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 public class CommentServiceTest extends LogicTestConfig {
 	
@@ -67,13 +67,13 @@ public class CommentServiceTest extends LogicTestConfig {
 	@Test
 	public void testSelect_commentList(){
 		/***Given***/
-		Post_commentVo commentVo = new Post_commentVo();
+		PaginationVo paginationVo = new PaginationVo();
 		
 		/***When***/
-		commentVo.setRef_code("121");
-		commentVo.setDivision("28");
+		paginationVo.setRef_code("172");
+		paginationVo.setDivision("28");
 		
-		List<Post_commentVo> commentList = commentService.select_commentList(commentVo);
+		List<Post_commentVo> commentList = commentService.select_commentList(paginationVo);
 		
 		for(int i=0; i<commentList.size(); i++){
 			logger.debug("comment content : {}, {}",commentList.get(i).getComment_code() ,commentList.get(i).getComment_contents());
@@ -81,6 +81,22 @@ public class CommentServiceTest extends LogicTestConfig {
 		
 		/***Then***/
 		assertTrue(commentList.size() > 0);
+	}
+	
+	@Test
+	public void testSelect_nextComment(){
+		/***Given***/
+		PaginationVo paginationVo = new PaginationVo();
+		
+		/***When***/
+		paginationVo.setRef_code("172");
+		paginationVo.setDivision("28");
+		paginationVo.setCriteria_code("10000");
+		
+		List<Post_commentVo> nextCommentList = commentService.select_nextComment(paginationVo);
+		
+		/***Then***/
+		assertTrue(nextCommentList.size() > 0);
 	}
 
 }

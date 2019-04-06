@@ -4,6 +4,9 @@ public class PaginationVo {
 	private int page;		//page번호
 	private int pageSize;	//page당 사이즈
 	private String mem_id;
+	private String criteria_code; //다음페이지 기준 코드(불러올 게시글 기준코드)
+	private String ref_code;
+	private String division;
 	
 	public PaginationVo() {
 		
@@ -13,6 +16,24 @@ public class PaginationVo {
 		this.pageSize = pageSize;
 	}
 	
+	public String getRef_code() {
+		return ref_code;
+	}
+	public void setRef_code(String ref_code) {
+		this.ref_code = ref_code;
+	}
+	public String getDivision() {
+		return division;
+	}
+	public void setDivision(String division) {
+		this.division = division;
+	}
+	public String getCriteria_code() {
+		return criteria_code;
+	}
+	public void setCriteria_code(String criteria_code) {
+		this.criteria_code = criteria_code;
+	}
 	public String getMem_id() {
 		return mem_id;
 	}
@@ -33,6 +54,7 @@ public class PaginationVo {
 	}
 	@Override
 	public String toString() {
-		return "PageVo [page=" + page + ", pageSize=" + pageSize + "]";
+		return "PaginationVo [page=" + page + ", pageSize=" + pageSize + ", mem_id=" + mem_id + ", criteria_code="
+				+ criteria_code + ", ref_code=" + ref_code + ", division=" + division + "]";
 	}
 }

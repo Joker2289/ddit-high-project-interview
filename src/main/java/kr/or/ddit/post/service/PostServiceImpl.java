@@ -47,4 +47,9 @@ public class PostServiceImpl implements IPostService {
 		return postDao.select_postInfo(post_code);
 	}
 
+	@Override
+	public List<PostVo> select_nextPost(PaginationVo paginationVo) {
+		return postDao.select_nextPost(paginationVo);
+	}
+
 }

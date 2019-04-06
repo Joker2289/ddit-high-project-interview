@@ -95,15 +95,14 @@
 	          <button id="btn-upload-video" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-play-circle"></i></a></span></button>
 	          <button id="btn-upload-document" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-file-alt"></i></a></span></button>
 	        </div><hr>
-	        <!-- feed -->
-	        <div>
 	        
+	        <!-- feed -->
+	        <div class="post-group">
 	          <!-- post -->
 	          <c:forEach items="${timelinePost }" var="post">
 		          
 		        <div id="col-post" class="scrolling" data-post="${post.post_code }">
 				  <div class="col-post">
-				
 					<div class="col-post-body">
 					  <a href="#" >
 						<div class="writer_info" style="float: left;">
@@ -161,6 +160,18 @@
 					  <span></span>
 					</div>
 					
+					<!-- 댓글수, 좋아요 수 출력 -->
+					<div class="post_socialCount">
+					  <ul style="padding-left: 10px;">
+					  	<li style="list-style: none; float: left;">
+					  		<button class="btn_goodcount btn_count" style="font-size: 12px;">추천 ${post.goodcount }</button>
+					  	</li>
+					  	<li style="list-style: none; float: left;">
+					  		<button class="btn_commentcount btn_count" style="font-size: 12px;">댓글 ${post.commentcount }</button>
+					  	</li>
+					  </ul>
+					</div>
+					
 					<div class="col-post-social">
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-thumbs-up"></i></span></button>
 					  <button title="${post.post_code }" class="btn-social btn_comment"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
@@ -194,8 +205,8 @@
 					    	<input style="border: 0px solid #fff; width: 100%; outline: 0; padding-top: 5px; padding-bottom: 5px;">
 					      </div>
 					      <div class="comment-input-button" style="padding-top: 5px; padding-bottom: 5px;">
-					    	<button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="fas fa-camera"></i></button>
 					    	<button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="far fa-thumbs-up"></i></button>
+					    	<button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="far fa-comments"></i></i></button>
 					      </div>
 					      
 					    </div>
@@ -236,22 +247,12 @@
 
 <script type="text/javascript">
 
-	var select_file;
+	$(".col-comment").hide();
 
 	//작성 모달창 푸쉬
 	function pushModal() {
 		$("div.writemodal").modal();
 	}
-	
-	$("#btn_upload_img").on("click",function(){
-		pushModal();
-		$(".note-insert").children()[1].click();
-	});
-	
-	$("#btn_upload_video").on("click",function(){
-		pushModal();
-		$(".note-insert").children()[2].click();
-	});
 	
 	$(document).ready(function() {
 		
@@ -266,7 +267,7 @@
 		
 		
 		
-		$(".col-comment").hide();
+// 		$(".col-comment").hide();
 
 		//summernote 툴바 숨기기
 		$(".note-toolbar").hide();
@@ -276,10 +277,27 @@
 		//게시글 댓글 버튼 클릭 시 댓글 영역 출력
 		$(".btn_comment").on("click", function() {
 			
+			var commentPageNum = 2;
+			
 			var className = $(this).attr('title');
 			
 			if (!$("."+className).attr('class').endsWith('On')) {
-				$("."+className).show();
+				
+				$.ajax({
+					type : 'POST',
+					url : '/commentArea',
+					data : {},
+					success : function(data) {
+						
+						console.log(data);
+						pageNum++;
+						
+						if(data != ""){
+							$(".col-comment").append(data);
+						}
+					}
+				});
+				
 				$("."+className).attr('class', 'col-comment '+className+' On');
 			}else {
 				$("."+className).hide();
@@ -292,32 +310,6 @@
 	});
 	
 	
-
-	
-	
-	
-	
-	//이미지 첨부 핸들러(이미지 미리보기 -> 수정필요)
-	function handleImgFileSelect(e) {
-		var img_file = e.target.files;
-		var img_fileArr = Array.prototype.slice.call(img_file);
-		
-		img_fileArr.forEach(function (f) {
-			if(!f.typematch("image.*")){
-				return;
-			}
-			
-			select_file = f;
-			
-			var reader = new fileReader();
-			reader.onload = function(e) {
-				$("#img").attr("src", e.target.result);
-			}
-			reader.readAsDataURL(f);
-		})
-		
-	}
-	
 	$(function () {
 		$("#btn-write_modal").on("click", function () {
 			pushModal();
@@ -329,12 +321,12 @@
 		
 		$("#btn-upload-img").on("click", function () {
 			pushModal();
-			$("#input_img").click();
-			handleImgFileSelect();
+			$(".note-insert").children()[1].click();
 		});
 		
 		$("#btn-upload-video").on("click", function () {
 			pushModal();
+			$(".note-insert").children()[2].click();
 		});
 		
 		$("#btn-upload-document").on("click", function () {
@@ -349,11 +341,17 @@
 		$(window).scrollTop() = $(window).height();
 	});
 	
+	
+	console.log($(".scrolling").length);
+	
+	var pageNum = 2;
+	var lastPost;
+	
 	//스크롤 이벤트 발생 시
 	$(window).scroll(function () {
 		
-		console.log($(window).scrollTop());
-		console.log($(document).height() - $(window).height() - 200);
+// 		console.log($(window).scrollTop());
+// 		console.log($(document).height() - $(window).height());
 		
 		var currentTop = $(window).scrollTop();
 		
@@ -365,49 +363,32 @@
 			$("#col-info").stop().animate({top: 0 + "px"}, 250);
 		}
 		
-		if(currentTop >= $(document).height() - $(window).height() - 200){
-			
-// 			var postData = $(".scrolling:last").attr("data-post");
-			var lastPost = $(".scrolling:last").attr("data-post")
+		lastPost = $(".scrolling:last").attr("data-post");
+
+		if($(window).scrollTop() >= $(document).height() - $(window).height()-1){
 			
 			$.ajax({
 				type : 'POST',
-				url : 'timeline',
-				headers : {"Content-Type" : "application/json"},
-				dataType : 'json',
-				data : JSON.stringify({data : lastPost}),
+				url : '/appendpost',
+//				headers : {"Content-Type" : "application/json"},
+// 				dataType : 'json',
+				data : {"lastPost" : lastPost, "pageNum" : pageNum},
 				success : function(data) {
 					
 					console.log(data);
+					pageNum++;
+					
 					if(data != ""){
-						for(var i=0; i<5; i++){
-							$(".col-md-6").append('<div><div id="col-post"class="scrolling"data-post="${post.post_code }"><div class="col-post"><div class="col-post-body"><div class="col-post-controll"><button class="btn_postControll"><i class="fas fa-ellipsis-h"></i></button></div><div class="writer_info"><span><a style="font-size: 20px;"href="#">${post.writer_name}</a></span><br></div><div class="post_info"><span>${post.post_date}</span><br><span>${post.post_contents}</span></div></div><div class="col-post-footer"><span>게시물하단(동영상 혹은 공유게시물 출력란)</span></div><div class="col-post-social"><button class="btn-social"><span style="font-size: 18px;"><i class="far fa-thumbs-up"></i></span></button><button class="btn-social"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button><button class="btn-social"><span style="font-size: 18px;"><i class="far fa-share-square"></i></span></button></div></div></div></div>');
-						}
+						$(".col-md-6").append(data);
 					}
 				}
-			}); //jsp 미사용
-			
-// 			$.ajax({
-// 				type : 'GET',
-// 				url : 'appendpost',
-// 				headers : {"Content-Type" : "application/json"},
-// 				dataType : 'text',
-// 				data : JSON.stringify({data : lastPost}),
-// 				success : function(data) {
-					
-// 					console.log(data);
-// 					if(data != ""){
-// 						for(var i=0; i<5; i++){
-// 							$(".col-md-6").append(data);
-// 						}
-// 					}
-// 				}
-// 			}); //jsp 호출
-			
+			});
+		
 		}
 		
-	
 	});
+	
+
 
 	
 </script>

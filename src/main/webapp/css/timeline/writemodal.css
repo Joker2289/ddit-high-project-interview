@@ -19,15 +19,6 @@
 	width: 553.02
 }
 
-.col-post-controll{
-/* 	text-align: right; */
-/* 	position: absolute; */
-}
-
-.col-post-footer{
-/* 	padding : 15px; */
-}
-
 .col-post-social{
 	background-color : #f3f6f8;
 	border-top: 1px solid #e5e6e8;
@@ -35,6 +26,21 @@
 	border-bottom-left-radius: 4px;
 	padding: 5px;
 	height: 45px;
+}
+
+.btn_count{
+	border: 0px solid #fff;
+	background: #fff;
+	outline: 0;
+}
+
+.btn_count:hover{
+	text-decoration: underline;
+}
+
+.post_socialCount{
+	height: 30px;
+	padding:5px;
 }
 
 .writer-info{
@@ -273,16 +279,17 @@
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;	
 	box-shadow: none;
+	padding: 0px;
 }
 
 .post-info img, video{
 	height: 100%;
 	width: 532px;
+	border-radius: 0px;
 }
 
 .note-editor{
-	padding: 0px;
-/* 	border: 0px solid #fff; */
+	padding: 0;
 	border-radius: 0px;
 	border-color: #fff;
 	border: 0px solid;
@@ -319,3 +326,22 @@
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
 }
+
+.note-placeholder{
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+/* pre{ */
+/* 	padding: 0px; */
+/* 	margin: 0px; */
+/* 	border: 0px; */
+/* 	border-radius: 0px; */
+/* } */
+/* p{ */
+/* 	border-radius: 0px; */
+/* 	margin: 0px; */
+/* } */
+

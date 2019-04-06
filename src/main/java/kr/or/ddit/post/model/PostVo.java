@@ -9,11 +9,29 @@ public class PostVo {
 	private String post_contents;	// 내용
 	private Date post_date; 		// 작성일
 	private String writer_name;		// 작성자 이름
+	private String commentcount;	// 댓글 수
+	private String goodcount;		// 좋아요 수
 	
 	public PostVo() {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public String getCommentcount() {
+		return commentcount;
+	}
+
+	public void setCommentcount(String commentcount) {
+		this.commentcount = commentcount;
+	}
+
+	public String getGoodcount() {
+		return goodcount;
+	}
+
+	public void setGoodcount(String goodcount) {
+		this.goodcount = goodcount;
+	}
+
 	public String getWriter_name() {
 		return writer_name;
 	}
@@ -57,7 +75,8 @@ public class PostVo {
 	@Override
 	public String toString() {
 		return "PostVo [post_code=" + post_code + ", mem_id=" + mem_id + ", post_contents=" + post_contents
-				+ ", post_date=" + post_date + ", writer_name=" +  writer_name + "]";
+				+ ", post_date=" + post_date + ", writer_name=" + writer_name + ", commentcount=" + commentcount
+				+ ", goodcount=" + goodcount + "]";
 	}
-	
+
 }

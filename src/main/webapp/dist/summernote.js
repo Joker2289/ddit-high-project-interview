@@ -2684,7 +2684,7 @@
               deferred.reject($img);
           }).css({
               display: 'none',
-              width: '545',
+              width: '553',
               height: 'auto'
           }).appendTo(document.body).attr('src', url);
       }).promise();

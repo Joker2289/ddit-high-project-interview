@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.or.ddit.post.dao.IPostDao;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.test.LogicTestConfig;
 import kr.or.ddit.util.pagination.PaginationVo;
@@ -20,6 +21,9 @@ public class PostServiceTest extends LogicTestConfig {
 
 	@Resource(name="postService")
 	private IPostService postService;
+	
+	@Resource(name="postDao")
+	private IPostDao postDao;
 	
 	@Test
 	public void testInsert_post() {
@@ -93,5 +97,25 @@ public class PostServiceTest extends LogicTestConfig {
 		/***Then***/
 		assertTrue(timelinePosts.size() > 0);
 	}
+	
+	@Test
+	public void testSelect_nextPost(){
+		/***Given***/
+		PaginationVo paginationVo = new PaginationVo();
+		paginationVo.setMem_id("goo8455");
+		paginationVo.setPage(2);
+		paginationVo.setCriteria_code("70");
+		
+		/***When***/
+		List<PostVo> nextPage = postService.select_nextPost(paginationVo);
+		
+		for(PostVo posts : nextPage){
+			logger.debug("post info : {}", posts.getPost_code());
+		}
+		
+		/***Then***/
+		assertTrue(nextPage.size() > 0);
+	}
+
 
 }

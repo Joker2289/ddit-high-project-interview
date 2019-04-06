@@ -56,6 +56,16 @@ public interface IPostDao {
 	 * Method 설명 : 타임라인 게시글 목록 조회
 	 */
 	List<PostVo> select_timelinePost(PaginationVo paginationVo);
+
+	/**
+	 * Method : select_nextPost
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param paginationVo
+	 * @return
+	 * Method 설명 : 타임라인 뉴스피드 다음 스크롤 게시물 조회
+	 */
+	List<PostVo> select_nextPost(PaginationVo paginationVo);
 	
 	/**
 	 * Method : select_postInfo

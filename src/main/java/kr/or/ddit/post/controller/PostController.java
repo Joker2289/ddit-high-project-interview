@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.corporation.model.CorporationVo;
@@ -25,13 +26,14 @@ import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
+import kr.or.ddit.post_comment.model.Post_commentVo;
+import kr.or.ddit.post_comment.service.ICommentService;
 import kr.or.ddit.save_post.model.Save_postVo;
 import kr.or.ddit.save_post.service.ISave_postService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.pagination.PaginationVo;
 
-//@RequestMapping("/post")
 @Controller
 public class PostController {
 	
@@ -57,6 +59,9 @@ public class PostController {
 	
 	@Resource(name="save_postService")
 	private ISave_postService savepostService;
+	
+	@Resource(name="commentService")
+	private ICommentService commentService;
 	 
 	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
@@ -124,47 +129,44 @@ public class PostController {
 	}
 	
 	
-	@RequestMapping(path={"/appendpost"}, method=RequestMethod.GET)
-	public String appendPost(PostVo postVo, PaginationVo paginationVo, HttpServletRequest request, Model model, int page){
+	@RequestMapping(path={"/appendpost"}, method=RequestMethod.POST)
+	public String appendPost(@RequestParam String pageNum, @RequestParam String lastPost, HttpServletRequest request, Model model){
 		
-		List<PostVo> afterPost = new ArrayList<PostVo>();
+		logger.debug("lastPost asdasd : {}", lastPost);
+		logger.debug("pageNum asdasdasd : {}", pageNum);
 		
-		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_DETAILVO");
+		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+
+		logger.debug("mem_id asdasd : {}", member.getMem_id());
 		
-		
+		int page = Integer.parseInt(pageNum);
+//		
+		PaginationVo paginationVo = new PaginationVo();
 		paginationVo.setMem_id(member.getMem_id());
-		paginationVo.setPageSize(1);
+		paginationVo.setPage(page);
+		paginationVo.setCriteria_code(lastPost);
 		
-		if(member.getMem_division().equals("1")){
-			UsersVo userInfo = usersService.select_userInfo(member.getMem_id());
-			model.addAttribute("userInfo", userInfo);
-		} else if(member.getMem_division().equals("2")){
-			CorporationVo corpInfo = corporationService.select_corpInfo(member.getMem_id());
-			model.addAttribute("corpInfo", corpInfo);
-		} else {
-			
-		}
+		List<PostVo> nextPostList = postService.select_nextPost(paginationVo);
 		
-		afterPost = postService.select_timelinePost(paginationVo);
-		model.addAttribute("timelinePost", afterPost);
+		model.addAttribute("nextPostList", nextPostList);
+		model.addAttribute("memberInfo", member);
 		
 		return "timeline/appendPost";
 	}
 	
 	
-//	@ResponseBody
 	@RequestMapping(value="/timeline", method=RequestMethod.POST)
-	public List<PostVo> infiniteScroll(@RequestBody PostVo postVo, PaginationVo paginationVo, HttpServletRequest request,
-											Model model, @RequestBody Map<String, Object> param){
+	@ResponseBody
+	public List<PostVo> infiniteScroll(@RequestBody PostVo postVo, PaginationVo paginationVo, HttpServletRequest request, Model model){
 		
-		String pageNum = (String) param.get("pageNum");
+//		String pageNum = (String) param.get("pageNum");
 		
 		List<PostVo> afterPost = new ArrayList<PostVo>();
 		
 		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		paginationVo.setMem_id(member.getMem_id());
-		paginationVo.setPage(Integer.parseInt(pageNum)); 
+//		paginationVo.setPage(Integer.parseInt(pageNum)); 
 		
 		if(member.getMem_division().equals("1")){
 			UsersVo userInfo = usersService.select_userInfo(member.getMem_id());
@@ -222,7 +224,42 @@ public class PostController {
 		} else {
 			return "redirect:/timeline";
 		}
+	}
+	
+	@RequestMapping("/commentArea")
+	public String commentArea(String post_code, Model model){
 		
+		PaginationVo paginationVo = new PaginationVo();
+		
+		paginationVo.setDivision("28");
+		paginationVo.setRef_code(post_code);
+		
+		List<Post_commentVo> commentList = commentService.select_commentList(paginationVo);
+		
+		model.addAttribute("commentList", commentList);
+		
+		return "timelist/postComment";
+	}
+	
+	@RequestMapping("/appendnextcomment")
+	public String appendnextcomment(String post_code, String pageNum, String comment_code, Model model){
+		logger.debug("pageNum : {}", pageNum);
+		logger.debug("comment_code : {}", comment_code);
+		
+		int page = Integer.parseInt(pageNum);
+		
+		PaginationVo paginationVo = new PaginationVo();
+		
+		paginationVo.setDivision("28");
+		paginationVo.setRef_code(post_code);		
+		paginationVo.setPage(page);
+		paginationVo.setCriteria_code(comment_code);
+		
+		List<Post_commentVo> appendcommentList = commentService.select_nextComment(paginationVo);
+		
+		model.addAttribute("appendcommentList", appendcommentList);
+		
+		return "timeline/appendComment";
 	}
 	
 }
