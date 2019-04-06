@@ -797,16 +797,26 @@ public class RecruitController {
 		Save_recruitVo sVo = srecrService.getLastSrecr(recruit_code);
 		String recr_app = "";
 		
+		// 채용공고의 지원자 수(app_count) 수정하기.
+		RecruitVo rVo = recrService.getRecr(recruit_code);
+		String app_count = rVo.getApp_count();
+		
 		// recr_app값이 t면 f로, f면 t로 수정.
 		if(sVo.getRecr_app().equals("t")){
 			recr_app = "f";
+			
+			app_count = String.valueOf(Integer.valueOf(app_count) - 1);
 		}else{
 			recr_app = "t";
+			
+			app_count = String.valueOf(Integer.valueOf(app_count) + 1);
 		}
 		
 		sVo.setRecr_app(recr_app);
+		rVo.setApp_count(app_count);
 		
 		srecrService.updateSrecr(sVo);
+		recrService.updateRecr(rVo);
 		
 		// 지원여부 넘기기.
 		model.addAttribute("recr_app", recr_app);
@@ -815,7 +825,6 @@ public class RecruitController {
 		CorporationVo corp = corpService.select_corpInfo(recr.getCorp_id());
 		model.addAttribute("recr", recr);
 		model.addAttribute("corp", corp);
-		
 
 		return "recr_detailTiles";
 	}

@@ -158,6 +158,22 @@ public class RecruitServiceImpl implements IRecruitService{
 		return rVo;
 	}
 
+	/**
+	 * 
+	 * Method : updateRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param rVo
+	 * @return
+	 * Method 설명 : 채용공고 수정.
+	 */
+	@Override
+	public int updateRecr(RecruitVo rVo) {
+		int updateCnt = recrDao.updateRecr(rVo);
+		
+		return updateCnt;
+	}
+
 	
 	
 	

@@ -87,6 +87,26 @@ public class RecruitDaoImplTest extends LogicTestConfig{
 		/***Then***/
 		assertNotNull(searchList);
 	}
+
+	/**
+	 * 
+	 * Method : testUpdateRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 채용공고 수정 테스트.
+	 */
+	@Test
+	public void testUpdateRecr() {
+		/***Given***/
+		RecruitVo rVo = recrDao.getRecr("1");
+		rVo.setApp_count(rVo.getApp_count());
+
+		/***When***/
+		int updateCnt = recrDao.updateRecr(rVo);
+
+		/***Then***/
+		assertNotNull(updateCnt);
+	}
 	
 	
 	

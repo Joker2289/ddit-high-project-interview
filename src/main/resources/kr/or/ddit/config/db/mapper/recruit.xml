@@ -71,6 +71,13 @@
 		  FROM RECRUIT
 		 WHERE CORP_ID = #{corp_id}	
 	</select>
+	
+	<!-- 채용공고 수정. -->
+	<update id="updateRecr" parameterType="recruitVo">
+		UPDATE RECRUIT
+		   SET APP_COUNT = #{app_count}
+		 WHERE RECRUIT_CODE = #{recruit_code}
+	</update>
 
 
   	
