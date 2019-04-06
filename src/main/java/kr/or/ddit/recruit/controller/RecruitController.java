@@ -185,7 +185,7 @@ public class RecruitController {
 		
 		model.addAttribute("rRList2", rRList2);
 
-		// 저장한 검색어 리스트 넘기기.
+		// 저장한 검색어 리스트 (saveList) 넘기기.
 		Search_logVo sVo = new Search_logVo();
 
 		sVo.setUser_id(mVo.getMem_id());
