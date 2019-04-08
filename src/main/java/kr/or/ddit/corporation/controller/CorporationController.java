@@ -207,11 +207,21 @@ public class CorporationController {
 	 * @return
 	 */
 	@RequestMapping(path = { "/corporationEmployee" })
-	public String corporationEmployee(Model model, PaginationVo paginationVo, HttpServletRequest request) {
-		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+	public String corporationEmployee(String corp_id,HttpSession session, Model model, PaginationVo paginationVo, HttpServletRequest request) {
+MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
 		CorporationVo corporationInfo = new CorporationVo();
-		model.addAttribute("getCorpInfo", corporationService.select_corpInfo(memberInfo.getMem_id()));
+		
+		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+		model.addAttribute("corporationInfo", corporationInfo);
+		
 		paginationVo.setMem_id(memberInfo.getMem_id());
+		
+		RecruitVo getRecruitInfo = new RecruitVo(); 
+
+		getRecruitInfo = recrService.getRecrCorpId(corporationInfo.getCorp_id());
+		
+		model.addAttribute("getRecruitInfo", getRecruitInfo);
 		
 		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
 			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
@@ -234,6 +244,9 @@ public class CorporationController {
 		
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("timelinePost", timelinePost);
+
+
+	
 		
 		return "corporationEmployeeTiles";
 	}

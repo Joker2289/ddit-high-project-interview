@@ -67,9 +67,8 @@
 
 
 </script>
-
-
-<div style="position: relative; top: -177px; left: 180px; "> 
+ 
+<div style="position: relative; top: -177px; margin-left: 240px;"> 
 	<form id="frm" action="${pageContext.request.contextPath}/corporation" method="post" >
 		<textarea rows="10" cols="30" id="smarteditor2" name="smarteditor2" style="width:650px; height:350px; "></textarea>
 		<input type="button" id="savebutton" value="저장"/>

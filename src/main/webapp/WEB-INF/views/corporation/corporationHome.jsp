@@ -11,7 +11,7 @@
 <body>
 <div class="container">
 	<div class="row">
-		<div>
+		<div style="margin-left: 15px;" >
 <!-- 			<section style="text-align: center;"> -->
 				<%@ include file="/WEB-INF/views/corporation/module/top.jsp"%>
 				<br>
