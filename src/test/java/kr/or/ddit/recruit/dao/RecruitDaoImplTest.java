@@ -108,6 +108,24 @@ public class RecruitDaoImplTest extends LogicTestConfig{
 		assertNotNull(updateCnt);
 	}
 	
+	/**
+	 * 
+	 * Method : testSearchRecrListByCorp_name
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 특정 회사 이름으로 검색한 채용공고 목록 조회 테스트.
+	 */
+	@Test
+	public void testSearchRecrListByCorp_name() {
+		/***Given***/
+
+		/***When***/
+		List<RecruitVo> recrList = recrDao.searchRecrListByCorp_name("lg");
+
+		/***Then***/
+		assertNotNull(recrList);
+	}
+	
 	
 	
 

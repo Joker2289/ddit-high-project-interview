@@ -44,18 +44,25 @@
 			<td>
 				<table>
 					<tr>
-						<td>저장한 검색어 :&nbsp;</td>
-						<!-- 6개만 출력하기. -->
-						<c:forEach begin="1" end="${saveList.size() }" varStatus="i">
-							<td>
-								<a href="" style="color: white;">
-									${saveList.get(i.index - 1).search_word } ${saveList.get(i.index - 1).search_local }&nbsp; &nbsp;
-								</a>
-							</td>
-						</c:forEach>
-						<c:if test="${saveList.size() > 5 }">
-							<td>...&nbsp; &nbsp; </td>
-						</c:if>
+						<td>저장한 검색어 :&nbsp; &nbsp;</td>
+						<c:choose>
+							<c:when test="${saveList.size() == 0 }">
+								<td style="color: white;">
+									자주 쓰는 검색어를 등록해보세요.&nbsp; &nbsp;
+								</td>
+							</c:when>
+						</c:choose>
+							<!-- 6개만 출력하기. -->
+							<c:forEach begin="1" end="${saveList.size() }" varStatus="i">
+								<td>
+									<a href="" style="color: white;">
+										${saveList.get(i.index - 1).search_word } ${saveList.get(i.index - 1).search_local }&nbsp; &nbsp;
+									</a>
+								</td>
+							</c:forEach>
+							<c:if test="${saveList.size() > 5 }">
+								<td>...&nbsp; &nbsp; </td>
+							</c:if>
 						<td>｜&nbsp; &nbsp; </td>
 						<td>
 							<span id="alarm_manage" onmouseover="" style="cursor: pointer;">검색어 관리</span>
@@ -102,7 +109,7 @@
 						<!-- 저장한 검색어 테이블. -->
 						<table border="1" style="margin-left: 10px;">
 							<tr>
-								<td>저장한 검색어 / 관리</td>
+								<td>지원한 채용공고</td>
 							</tr>
 							
 							<c:forEach begin="1" end="3" varStatus="i">

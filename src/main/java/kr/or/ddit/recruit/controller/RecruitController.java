@@ -610,7 +610,15 @@ public class RecruitController {
 		model.addAttribute("lSLog", lSLog);
 		
 		// 채용공고 리스트 넘기기. <- corpImgList / corpNmList도 추가해야됨.
-		List<RecruitVo> recrList = recrService.getAllRecr();
+		// 검색어를 통한 결과 리스트를 넘기기. search_word가 '전체'이면 전체 채용공고 리스트 넘기기.
+		List<RecruitVo> recrList = new ArrayList<>();
+		
+		if(lSLog.getSearch_word().equals("전체")){
+			recrList = recrService.getAllRecr();
+		}else{
+			recrList = recrService.searchRecrListByCorp_name(lSLog.getSearch_word());
+		}
+		
 		List<String> corpImgList = new ArrayList<>();
 		List<String> corpNmList = new ArrayList<>();
 		

@@ -172,6 +172,22 @@ public class RecruitDaoImpl implements IRecruitDao{
 		
 		return updateCnt;
 	}
+
+	/**
+	 * 
+	 * Method : searchRecrListByCorp_name
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param search_word
+	 * @return
+	 * Method 설명 : 특정 회사 이름으로 검색한 채용공고 목록 조회.
+	 */
+	@Override
+	public List<RecruitVo> searchRecrListByCorp_name(String search_word) {
+		List<RecruitVo> recrList = sqlSessionTemplate.selectList("recr.searchRecrListByCorp_name", search_word);
+		
+		return recrList;
+	}
 	
 	
 	
