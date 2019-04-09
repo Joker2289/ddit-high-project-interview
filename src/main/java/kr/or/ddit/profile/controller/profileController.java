@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.imageio.stream.FileImageInputStream;
+import javax.imageio.stream.ImageInputStream;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -184,39 +185,39 @@ public class profileController {
 			corporation = corpService.select_corpInfo(memberVo.getMem_id());
 		}
 		
-		InputStream fis;
+		ImageInputStream fis;
 		String filePath = "";
 		if((users != null && users.getBg_path() != null) || (corporation != null && corporation.getBg_path() != null))
 			if(users != null) {
 				if (users.getBg_path().contains("http")){
 					URL url = new URL(users.getBg_path());
 					URLConnection t_connection = url.openConnection(); 
-					t_connection.setReadTimeout(20000); 
-					fis = t_connection.getInputStream();
+					t_connection.setReadTimeout(10000); 
+					fis = (ImageInputStream) t_connection.getInputStream();
 				}else{
 					filePath = path + File.separator + users.getBg_path();
-					fis = new FileInputStream(new File(filePath));
+					fis = (ImageInputStream) new FileInputStream(new File(filePath));
 				}
 				
 			}else {
 				if (corporation.getBg_path().contains("http")){
 					URL url = new URL(corporation.getBg_path());
 					URLConnection t_connection = url.openConnection(); 
-					t_connection.setReadTimeout(20000); 
-					fis = t_connection.getInputStream();
+					t_connection.setReadTimeout(10000); 
+					fis = (ImageInputStream) t_connection.getInputStream();
 				}else{
 					filePath = path + File.separator + corporation.getBg_path();
-					fis = new FileInputStream(new File(filePath));
+					fis = (ImageInputStream) new FileInputStream(new File(filePath));
 				}
 			}
 		
 		else{
 			String noimgPath = application.getRealPath("/images/profile/basicBackground.png");
-			fis = new FileInputStream(new File(noimgPath));
+			fis = (ImageInputStream) new FileInputStream(new File(noimgPath));
 		}
 		
 		ServletOutputStream sos = resp.getOutputStream();
-		byte[] buff = new byte[512];
+		byte[] buff = new byte[8192];
 		int len = 0;
 		while ((len = fis.read(buff)) > -1) {
 			sos.write(buff);
