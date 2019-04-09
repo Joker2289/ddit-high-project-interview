@@ -19,13 +19,18 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
+import kr.or.ddit.follow.model.FollowVo;
+import kr.or.ddit.follow.service.IFollowService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.post.controller.PostController;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
+import kr.or.ddit.save_post.model.Save_postVo;
+import kr.or.ddit.save_post.service.ISave_postService;
 import kr.or.ddit.save_recruit.model.Save_recruitVo;
 import kr.or.ddit.save_recruit.service.ISave_recruitService;
 import kr.or.ddit.search_log.model.Search_logVo;
@@ -38,6 +43,9 @@ import kr.or.ddit.util.pagination.PaginationVo;
 public class CorporationController {
 
 	private Logger logger = LoggerFactory.getLogger(PostController.class);
+	
+	@Resource(name="personalService")
+	private IPersonal_connectionService personal_connectionService; 
 	
 	@Resource(name="search_logService")
 	private ISearch_logService sLogService;
@@ -59,6 +67,12 @@ public class CorporationController {
 	
 	@Resource(name="save_recruitService")
 	private ISave_recruitService srecrService;
+	
+	@Resource(name="save_postService")
+	private ISave_postService savepostService;
+	
+	@Resource(name="followService")
+	private IFollowService followService; 
 
 	/**
 	 * 회사 홈(회사타임라인)
@@ -68,36 +82,14 @@ public class CorporationController {
 	 */
 	@RequestMapping(path = { "/corporation" })
 	public String postList(Model model, PaginationVo paginationVo, HttpSession session,HttpServletRequest request) {
-
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-		
 		CorporationVo corporationInfo = new CorporationVo();
-		model.addAttribute("corporationInfo", corporationService.select_corpInfo(memberInfo.getMem_id()));
-		
+		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
-		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+		model.addAttribute("corporationInfo", corporationInfo);
 
-			// 인맥 수 출력을 위한 세팅
-
-			// 팔로우 한 해쉬태그 출력을 위한 세팅
-
-			model.addAttribute("userInfo", userInfo);
-		} else if (memberInfo.getMem_division().equals("2")) { // 회사일 경우
-			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
-
-			// 회사 회원 로그인 시 홈 화면 출력을 위한 세팅
-
-			model.addAttribute("corpInfo", corpInfo);
-		} else { // 관리자일 경우
-			// 관리자 로그인 시 홈 화면 출력을 위한 세팅
-
-		}
-
-		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
-		model.addAttribute("timelinePost", timelinePost);
-
+	
 		return "corporationTiles";
 	}
 
@@ -164,9 +156,7 @@ public class CorporationController {
 		
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
-		RecruitVo getRecruitInfo = new RecruitVo(); 
-
-		getRecruitInfo = recrService.getRecrCorpId(corporationInfo.getCorp_id());
+		List<RecruitVo> getRecruitInfo = recrService.getRecrListCorp_id(corporationInfo.getCorp_id());
 		
 		model.addAttribute("getRecruitInfo", getRecruitInfo);
 		
@@ -217,9 +207,7 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
-		RecruitVo getRecruitInfo = new RecruitVo(); 
-
-		getRecruitInfo = recrService.getRecrCorpId(corporationInfo.getCorp_id());
+		List<RecruitVo> getRecruitInfo = recrService.getRecrListCorp_id(corporationInfo.getCorp_id());
 		
 		model.addAttribute("getRecruitInfo", getRecruitInfo);
 		

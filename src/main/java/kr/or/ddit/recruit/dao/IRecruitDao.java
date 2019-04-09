@@ -102,7 +102,7 @@ public interface IRecruitDao {
 	 * @return
 	 * Method 설명 : 특정 회사 채용공고 조회.
 	 */
-	RecruitVo getRecrCorpId(String corp_id);
+	List<RecruitVo> getRecrListCorp_id(String corp_id);
 
 	/**
 	 * 

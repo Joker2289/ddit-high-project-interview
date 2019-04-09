@@ -66,7 +66,7 @@
 	</select>
 
 	<!-- 특정 회사의 전체 채용공고 조회. -->
-	<select id="getRecrCorpId" parameterType="String" resultType="recruitVo">
+	<select id="getRecrListCorp_id" parameterType="String" resultType="recruitVo">
 		SELECT *
 		  FROM RECRUIT
 		 WHERE CORP_ID = #{corp_id}	

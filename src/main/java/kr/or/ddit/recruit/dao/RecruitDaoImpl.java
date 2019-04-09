@@ -151,10 +151,10 @@ public class RecruitDaoImpl implements IRecruitDao{
 	 * Method 설명 : 특정 회사 채용공고 목록 조회.
 	 */
 	@Override
-	public RecruitVo getRecrCorpId(String corp_id) {
-	RecruitVo rVo = sqlSessionTemplate.selectOne("recr.getRecrCorpId", corp_id);
+	public List<RecruitVo> getRecrListCorp_id(String corp_id) {
+	List<RecruitVo> rVoList = sqlSessionTemplate.selectList("recr.getRecrListCorp_id", corp_id);
 		
-	return rVo;
+	return rVoList;
 	}
 
 	/**
