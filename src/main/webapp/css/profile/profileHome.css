@@ -204,17 +204,24 @@
 	height:30px; 
 	padding: 0 10px 0 10px;
 }
-.modal-dialog,
+/* .modal-dialog,
 .modal-content {
-    /* 80% of window height */
-    height: 80%;
+    80% of window height
+    height: calc(
 }
 
 .modal-body {
-    /* 100% = dialog height, 120px = header + footer */
-    max-height: calc(100% - 121px);
+    100% = dialog height, 120px = header + footer
+    height: calc(100% - 120px);
     overflow-y: scroll;
+} */
+
+.searchDropDown{
+	 height: 100px;
+     overflow-y: scroll;
+     top: 75px;
+     left: 15px;
+     width: 337px;
+     min-height: 50px;
 }
-
-
 

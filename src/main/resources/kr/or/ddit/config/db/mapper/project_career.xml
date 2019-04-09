@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project_career">
+	
+	<!-- 프로젝트 등록 -->
+	<insert id="insert_project_career" parameterType="project_careerVo">
+		insert into project_career
+		values(
+			project_code_seq.nextval,
+			#{user_id},
+			nvl(#{project_name, jdbcType=VARCHAR}, null),
+			nvl(#{start_date, jdbcType=VARCHAR}, null),
+			nvl(#{end_date, jdbcType=VARCHAR}, null),
+			nvl(#{project_leader, jdbcType=VARCHAR}, null),
+			nvl(#{project_url, jdbcType=VARCHAR}, null),
+			nvl(#{contents, jdbcType=VARCHAR}, null)
+		)
+	</insert>
+	
+	<!-- 사용자의 프로젝트정보 조회 -->
+	<select id="select_project_career" parameterType="String" resultType="project_careerVo">
+		select project_code,
+			   user_id,
+			   project_name,
+			   start_date,
+			   end_date,
+			   project_leader,
+			   project_url,
+			   contents
+		  from project_career
+		 where user_id = #{user_id}
+		 order by end_date desc
+	</select>
+</mapper>

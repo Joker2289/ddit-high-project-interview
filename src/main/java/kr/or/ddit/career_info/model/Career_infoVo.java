@@ -14,6 +14,7 @@ public class Career_infoVo {
 	private Date   resign_date;		// 퇴사일
 	private String contents;		// 설명
 	private String corp_code;		// 회사코드
+	private String currval;			// 현재 시퀀스값
 	
 	public Career_infoVo() {
 		
@@ -97,6 +98,14 @@ public class Career_infoVo {
 
 	public void setCorp_code(String corp_code) {
 		this.corp_code = corp_code;
+	}
+	
+	public String getCurrval() {
+		return currval;
+	}
+
+	public void setCurrval(String currval) {
+		this.currval = currval;
 	}
 
 	@Override

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="thesis_list">
+	
+	<!-- 논문저서 등록 -->
+	<insert id="insert_thesis_list" parameterType="thesis_listVo">
+		insert into thesis_list
+		values(
+			thesis_code_seq.nextval,
+			#{user_id},
+			nvl(#{thesis_name, jdbcType=VARCHAR}, null),
+			nvl(#{publication_date, jdbcType=VARCHAR}, null),
+			nvl(#{publisher, jdbcType=VARCHAR}, null),
+			nvl(#{thesis_url, jdbcType=VARCHAR}, null),
+			nvl(#{contents, jdbcType=VARCHAR}, null),
+			nvl(#{writer, jdbcType=VARCHAR}, null)
+		)
+	</insert>
+	
+	<!-- 사용자의 논문저서 조회 -->
+	<select id="select_thesis_list" parameterType="String" resultType="thesis_listVo">
+		select thesis_code, user_id, thesis_name, publication_date, publisher, thesis_url, contents,writer
+		  from thesis_list
+		 where user_id = #{user_id}
+		 order by publication_date desc
+	</select>
+</mapper>

@@ -1,16 +1,51 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal"
 		aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	</button>
-	<h4 class="modal-title">language</h4>
+	<h4 class="modal-title">외국어</h4>
 </div>
 <div class="modal-body">
-	<p>One fine body&hellip;</p>
+<form action="/languageInsert" method="post" id="languageInsertFrm" enctype="multipart/form-data">
+	<div>
+		<div class="modalRow">
+			<div class="modalHalfLeft">
+				<label class="essential">외국어</label>
+				<input class="form-control" type="text" name="lang_kind">
+			</div>
+			<div class="modalHalfRight">
+				<label class="essential">점수</label>
+				<input class="form-control" type="text" name="grade">
+			</div>
+		</div>
+	</div>
+	
+	<input type="hidden" value="${SESSION_MEMBERVO.mem_id }" name="user_id">
+</form>
 </div>
 <div class="modal-footer">
-	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	<button type="button" class="btn btn-primary">Save changes</button>
+	<button type="button" class="btn btn-primary" id="languageSave">저장</button>
 </div>
+<script>
+	// 입력 제어
+	$("#languageSave").on("click",function(){
+		
+		if($("input[name=lang_kind]").val().trim()==""){
+			alert("외국어를 입력해주세요");
+			$("input[name=lang_kind]").focus();
+			return false;
+		}
+		
+		if($("input[name=grade]").val().trim()==""){
+			alert("점수를 입력해주세요");
+			$("input[name=grade]").focus();
+			return false;
+		}
+		
+ 		$("#languageInsertFrm").submit();
+	});
+	
+</script>
