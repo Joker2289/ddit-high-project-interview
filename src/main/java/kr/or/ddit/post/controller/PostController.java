@@ -1,6 +1,5 @@
 package kr.or.ddit.post.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,11 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
@@ -155,35 +152,6 @@ public class PostController {
 	}
 	
 	
-	@RequestMapping(value="/timeline", method=RequestMethod.POST)
-	@ResponseBody
-	public List<PostVo> infiniteScroll(@RequestBody PostVo postVo, PaginationVo paginationVo, HttpServletRequest request, Model model){
-		
-//		String pageNum = (String) param.get("pageNum");
-		
-		List<PostVo> afterPost = new ArrayList<PostVo>();
-		
-		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-		
-		paginationVo.setMem_id(member.getMem_id());
-//		paginationVo.setPage(Integer.parseInt(pageNum)); 
-		
-		if(member.getMem_division().equals("1")){
-			UsersVo userInfo = usersService.select_userInfo(member.getMem_id());
-			model.addAttribute("userInfo", userInfo);
-		} else if(member.getMem_division().equals("2")){
-			CorporationVo corpInfo = corporationService.select_corpInfo(member.getMem_id());
-			model.addAttribute("corpInfo", corpInfo);
-		} else {
-			
-		}
-		
-		afterPost = postService.select_timelinePost(paginationVo);
-		model.addAttribute("timelinePost", afterPost);
-		
-		return afterPost;
-	}
-	
 	@RequestMapping(path={"/writepost_timeline"}, method=RequestMethod.POST)
 	public String writePost_timeline(Model model, String post_contents, HttpServletRequest request){
 		
@@ -226,38 +194,58 @@ public class PostController {
 		}
 	}
 	
-	@RequestMapping("/commentArea")
-	public String commentArea(String post_code, Model model){
+	@RequestMapping(path={"/commentArea"}, method=RequestMethod.POST)
+	public String commentArea(String ref_code, Model model, HttpServletRequest request){
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		if(memberInfo.getMem_division() == "1"){
+			UsersVo user = (UsersVo) request.getSession().getAttribute("SESSION_DETAILVO");
+			model.addAttribute("commentwriter", user);
+		} else if (memberInfo.getMem_division() == "2"){
+			CorporationVo corp = (CorporationVo) request.getSession().getAttribute("SESSION_DETAILVO");
+			model.addAttribute("commentwriter", corp);
+		} else {
+			
+		}
 		
 		PaginationVo paginationVo = new PaginationVo();
 		
 		paginationVo.setDivision("28");
-		paginationVo.setRef_code(post_code);
+		paginationVo.setRef_code(ref_code);
 		
-		List<Post_commentVo> commentList = commentService.select_commentList(paginationVo);
+		Map<String, Object> resultMap = commentService.select_commentList(paginationVo);
 		
+		List<Post_commentVo> commentList = (List<Post_commentVo>) resultMap.get("commentList");
+		int commentCnt = (int) resultMap.get("commentCnt");
+		
+		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("commentList", commentList);
+		model.addAttribute("commentCnt", commentCnt);
+		model.addAttribute("ref_code", ref_code);
 		
-		return "timelist/postComment";
+		return "timeline/postComment";
 	}
 	
-	@RequestMapping("/appendnextcomment")
-	public String appendnextcomment(String post_code, String pageNum, String comment_code, Model model){
-		logger.debug("pageNum : {}", pageNum);
-		logger.debug("comment_code : {}", comment_code);
+	@RequestMapping(path={"/appendnextcomment"}, method=RequestMethod.POST)
+	public String appendnextcomment(String commentPageNum, String ref_code, String last_comment, Model model){
 		
-		int page = Integer.parseInt(pageNum);
+		logger.debug("commentPageNum : {}", commentPageNum);
+		logger.debug("ref_code : {}", ref_code);
+		logger.debug("last_comment : {}", last_comment);
+		
+		int page = Integer.parseInt(commentPageNum);
 		
 		PaginationVo paginationVo = new PaginationVo();
 		
+		paginationVo.setRef_code(ref_code);
 		paginationVo.setDivision("28");
-		paginationVo.setRef_code(post_code);		
 		paginationVo.setPage(page);
-		paginationVo.setCriteria_code(comment_code);
+		paginationVo.setCriteria_code(last_comment);
 		
-		List<Post_commentVo> appendcommentList = commentService.select_nextComment(paginationVo);
+		List<Post_commentVo> nextCommentList = commentService.select_nextComment(paginationVo);
 		
-		model.addAttribute("appendcommentList", appendcommentList);
+		model.addAttribute("nextCommentList", nextCommentList);
+		model.addAttribute("ref_code", ref_code);
 		
 		return "timeline/appendComment";
 	}

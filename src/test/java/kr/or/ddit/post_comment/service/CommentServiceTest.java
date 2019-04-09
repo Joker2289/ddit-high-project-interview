@@ -3,6 +3,7 @@ package kr.or.ddit.post_comment.service;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -73,7 +74,9 @@ public class CommentServiceTest extends LogicTestConfig {
 		paginationVo.setRef_code("172");
 		paginationVo.setDivision("28");
 		
-		List<Post_commentVo> commentList = commentService.select_commentList(paginationVo);
+		Map<String, Object> resultMap = commentService.select_commentList(paginationVo);
+		
+		List<Post_commentVo> commentList = (List<Post_commentVo>) resultMap.get("commentList");
 		
 		for(int i=0; i<commentList.size(); i++){
 			logger.debug("comment content : {}, {}",commentList.get(i).getComment_code() ,commentList.get(i).getComment_contents());
@@ -97,6 +100,23 @@ public class CommentServiceTest extends LogicTestConfig {
 		
 		/***Then***/
 		assertTrue(nextCommentList.size() > 0);
+	}
+	
+	@Test
+	public void testSelect_moreCommentCount(){
+		/***Given***/
+		PaginationVo paginationVo = new PaginationVo();
+		
+		/***When***/
+		paginationVo.setDivision("28");
+		paginationVo.setRef_code("172");
+		
+		Map<String, Object> resultMap = commentService.select_commentList(paginationVo);
+		int commentCnt = (int) resultMap.get("commentCnt");
+		logger.debug("comment Count : {}", commentCnt);
+		
+		/***Then***/
+		assertTrue(commentCnt > 0);
 	}
 
 }

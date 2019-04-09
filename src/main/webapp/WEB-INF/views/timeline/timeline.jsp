@@ -27,8 +27,8 @@
 	            	  	<c:if test="${sessionScope.SESSION_DETAILVO.bg_path == null }">
 	            	    	<span><a href="#">사진 올리기</a></span>
 	            	    </c:if>
-	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }"><!-- 관리자일 경우 -->
-	            	    	<span><a href="#"><img src="sessionScope.detailVO.bg_path"></a></span>
+	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }">
+	            	    	<span><a href="#">${sessionScope.SESSION_DETAILVO.bg_path }</a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:otherwise>
@@ -51,8 +51,8 @@
 	            	  	<c:if test="${sessionScope.SESSION_DETAILVO.logo_path == null }">
 	            	    	<span><a href="#">사진 올리기</a></span>
 	            	    </c:if>
-	            	    <c:if test="${sessionScope.SESSION_DETAILVO.logo_path != null }"><!-- 관리자일 경우 -->
-	            	    	<span><a href="#"><img src="${sessionScope.SESSION_DETAILVO.logo_path }"></a></span>
+	            	    <c:if test="${sessionScope.SESSION_DETAILVO.logo_path != null }">
+	            	    	<span><a href="#">${sessionScope.SESSION_DETAILVO.logo_path }</a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:otherwise>
@@ -174,45 +174,15 @@
 					
 					<div class="col-post-social">
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-thumbs-up"></i></span></button>
-					  <button title="${post.post_code }" class="btn-social btn_comment"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
+					  <button class="btn-social btn_comment" title="${post.post_code }">
+					  	<span style="font-size: 18px;"><i class="far fa-comments"></i></span>
+					  </button>
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-share-square"></i></span></button>
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-bookmark"></i></span></button>
 					</div>
 					
 					<!-- comment -->
-					<div class="col-comment ${post.post_code }" style="height: 100px; padding: 5px;">
-					
-					  <div class="comment-profile-img" style="float: left; padding: 5px; width: 10%;">
-					  	<img src="" style="border-radius: 100px;">이미지
-					  </div>
-					  
-					  <div class="comment-area-input" style="float:right; border: 1px solid #e1e3e8; border-radius: 30px; height: 30px; padding: 5px; width: 90%;">
-					    <div class="comment-input-text" style="float: left; width: 80%;">
-					    	<form>
-					    	  <input placeholder="댓글달기" style="border: 0px solid #fff; width: 100%; outline: 0;">
-					    	</form>
-					    </div>
-					    <div class="comment-input-img" style="float: right;">
-					    	<button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="fas fa-camera"></i></button>
-					    </div>
-					  </div>
-					  
-					  <!-- comment print -->
-<%-- 					  <c:forEach items="${ }" var=""> --%>
-					    <div class="comment-area" style="float:right; border: 1px solid #e1e3e8; border-radius: 30px; height: 30px; padding: 5px; width: 90%;">
-					      
-					      <div class="comment-text">
-					    	<input style="border: 0px solid #fff; width: 100%; outline: 0; padding-top: 5px; padding-bottom: 5px;">
-					      </div>
-					      <div class="comment-input-button" style="padding-top: 5px; padding-bottom: 5px;">
-					    	<button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="far fa-thumbs-up"></i></button>
-					    	<button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="far fa-comments"></i></i></button>
-					      </div>
-					      
-					    </div>
-<%-- 					  </c:forEach> --%>
-						<!-- /comment print -->
-					</div>
+					<div class="col-comment-area ${post.post_code }" id="post_comment ${post.post_code }"></div>
 					<!-- /comment -->
 				
 				  </div>
@@ -247,7 +217,6 @@
 
 <script type="text/javascript">
 
-	$(".col-comment").hide();
 
 	//작성 모달창 푸쉬
 	function pushModal() {
@@ -267,48 +236,43 @@
 		
 		
 		
-// 		$(".col-comment").hide();
+// 		$(".col-comment-area").hide();
 
 		//summernote 툴바 숨기기
 		$(".note-toolbar").hide();
 		$(".note-resizebar").hide();
 		$(".note-status-output").hide();
 		
+		var flag = false;
+		
 		//게시글 댓글 버튼 클릭 시 댓글 영역 출력
 		$(".btn_comment").on("click", function() {
 			
-			var commentPageNum = 2;
 			
-			var className = $(this).attr('title');
+			var ref_code = $(this).attr('title');
 			
-			if (!$("."+className).attr('class').endsWith('On')) {
-				
+			if (flag == false) {
 				$.ajax({
 					type : 'POST',
 					url : '/commentArea',
-					data : {},
+					data : {"ref_code" : ref_code},
 					success : function(data) {
 						
-						console.log(data);
-						pageNum++;
-						
 						if(data != ""){
-							$(".col-comment").append(data);
+							$("." + ref_code).append(data);
 						}
 					}
 				});
-				
-				$("."+className).attr('class', 'col-comment '+className+' On');
-			}else {
-				$("."+className).hide();
-				$("."+className).attr('class', 'col-comment '+className);
+				flag = true;
+			} 
+			else {
+				flag = false;
+				$(".col-comment").remove();
 			}
+			
 		});
 		
-		
-		
 	});
-	
 	
 	$(function () {
 		$("#btn-write_modal").on("click", function () {
@@ -342,8 +306,6 @@
 	});
 	
 	
-	console.log($(".scrolling").length);
-	
 	var pageNum = 2;
 	var lastPost;
 	
@@ -375,7 +337,6 @@
 				data : {"lastPost" : lastPost, "pageNum" : pageNum},
 				success : function(data) {
 					
-					console.log(data);
 					pageNum++;
 					
 					if(data != ""){

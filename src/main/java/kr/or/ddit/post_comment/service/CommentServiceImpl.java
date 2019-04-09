@@ -1,6 +1,8 @@
 package kr.or.ddit.post_comment.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -32,8 +34,15 @@ public class CommentServiceImpl implements ICommentService {
 	}
 
 	@Override
-	public List<Post_commentVo> select_commentList(PaginationVo PaginationVo) {
-		return commentDao.select_commentList(PaginationVo);
+	public Map<String, Object> select_commentList(PaginationVo paginationVo) {
+		HashMap<String, Object> resultMap = new HashMap<>();
+		List<Post_commentVo> commentList = commentDao.select_commentList(paginationVo);
+		int commentCnt = commentDao.select_moreCommentCount(paginationVo);
+
+		resultMap.put("commentList", commentList);
+		resultMap.put("commentCnt", commentCnt);
+		
+		return resultMap;
 	}
 	
 	@Override
@@ -44,6 +53,11 @@ public class CommentServiceImpl implements ICommentService {
 	@Override
 	public int select_commentCount(Post_commentVo commentVo) {
 		return commentDao.select_commentCount(commentVo);
+	}
+
+	@Override
+	public int select_moreCommentCount(PaginationVo paginationVo) {
+		return commentDao.select_moreCommentCount(paginationVo);
 	}
 
 }

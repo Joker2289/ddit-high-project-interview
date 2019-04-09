@@ -67,4 +67,14 @@ public interface ICommentDao {
 	 */
 	int select_commentCount(Post_commentVo commentVo);
 	
+	/**
+	 * Method : select_moreCommentCount
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param commentVo
+	 * @return
+	 * Method 설명 : 댓글 더보기에 필요한 댓글 수 조회
+	 */
+	int select_moreCommentCount(PaginationVo paginationVo);
+	
 }

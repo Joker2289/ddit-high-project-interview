@@ -35,8 +35,13 @@
 		select *
 		  from (select b.*, rownum rn
 		          from (select post_comment.*, (select count(*)
-		                                  from good
-		                                 where division = 15) goodCount
+		                                   		  from good
+		                                  		 where division = 15) goodCount, (select profile_path
+		                                                                     		from users
+		                                                                    	   where user_id = post_comment.mem_id) profile_path,
+		                                                                  		 (select logo_path
+		                                                                     		from corporation
+		                                                                    	   where corp_id = post_comment.mem_id) logo_path
 		                  from post_comment
 		                 where ref_code = #{ref_code}
 		                   and division = #{division}
@@ -49,13 +54,18 @@
 		select *
 		  from (select b.*, rownum rn
 		          from (select post_comment.*, (select count(*)
-		                                  from good
-		                                 where division = 15) goodCount
+		                                   		  from good
+		                                  		 where division = 15) goodCount, (select profile_path
+		                                                                     		from users
+		                                                                    	   where user_id = post_comment.mem_id) profile_path,
+		                                                                  		 (select logo_path
+		                                                                     		from corporation
+		                                                                    	   where corp_id = post_comment.mem_id) logo_path
 		                  from post_comment
 		                 where ref_code = #{ref_code}
 		                   and division = #{division}
 		                order by comment_date desc) b)
-		 where rn between (#{page}-1) * #{pageSize} and #{page} * #{pageSize}
+		 where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
 		   and comment_code &lt; #{criteria_code}
 	</select>
 	
@@ -65,5 +75,23 @@
 		  from post_comment
 		 where ref_code = #{ref_code}
 		   and division = #{division}
+	</select>
+	
+	<!-- 댓글 더보기에 필요한 댓글 수 -->
+	<select id="select_moreCommentCount" parameterType="post_commentVo" resultType="int">
+		select count(*)
+		  from (select b.*, rownum rn
+		          from (select post_comment.*, (select count(*)
+		                                          from good
+		                                         where division = 15) goodCount, (select profile_path
+		                                                                            from users
+		                                                                           where user_id = post_comment.mem_id) profile_path,
+		                                                                         (select logo_path
+		                                                                            from corporation
+		                                                                           where corp_id = post_comment.mem_id) logo_path
+		                  from post_comment
+		                 where ref_code = #{ref_code}
+		                   and division = #{division}
+		                order by comment_date desc) b)
 	</select>
 </mapper>

@@ -1,6 +1,7 @@
 package kr.or.ddit.post_comment.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.post_comment.model.Post_commentVo;
 import kr.or.ddit.util.pagination.PaginationVo;
@@ -45,7 +46,7 @@ public interface ICommentService {
 	 * @return
 	 * Method 설명 : 댓글목록 조회
 	 */
-	List<Post_commentVo> select_commentList(PaginationVo paginationVo);
+	Map<String, Object> select_commentList(PaginationVo paginationVo);
 	
 	/**
 	 * Method : select_nextComment
@@ -66,4 +67,14 @@ public interface ICommentService {
 	 * Method 설명 : 게시글 댓글 수
 	 */
 	int select_commentCount(Post_commentVo commentVo);
+	
+	/**
+	 * Method : select_moreCommentCount
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param commentVo
+	 * @return
+	 * Method 설명 : 댓글 더보기에 필요한 댓글 수 조회
+	 */
+	int select_moreCommentCount(PaginationVo paginationVo);
 }
