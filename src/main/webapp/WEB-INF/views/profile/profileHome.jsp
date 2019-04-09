@@ -148,9 +148,9 @@ $(document).ready(function() {
 			
 			<div class="whiteBox" style="padding: 10px 10px 10px 10px;">
 				<h4>경력 사항</h2>
-				<c:forEach items="${corpVoList }" var="corpVo">
-  					<li><a class="corp_nameClick" title="${fn:split(corpVo.addr1,' ')[0]}">${corpVo.corp_name }</a></li>
-  				</c:forEach>
+<%-- 				<c:forEach items="${career_infoList }" var="career_infoVo"> --%>
+  					<div class="corpProfilePicture" style="background-image: url(/profile?mem_id=10);"></div>
+<%--   				</c:forEach> --%>
 			</div>
 			<div class="whiteBox">
 				학력사항
