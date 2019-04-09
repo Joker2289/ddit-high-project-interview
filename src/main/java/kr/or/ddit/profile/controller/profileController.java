@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.career_info.service.ICareer_infoService;
@@ -149,6 +148,7 @@ public class profileController {
 		List<Career_infoVo> career_infoList = carService.select_careerInfo(usersVo.getUser_id());
 		int peopleCount = PersonalService.connections_count(memberVo);
 		List<FilesVo> userFilesList = filesService.select_usersFile(filesVo);
+		List<CorporationVo> corpVoList = corpService.select_allCorps();
 		
 		model.addAttribute("education_infoList", education_infoList);
 		model.addAttribute("career_infoList", career_infoList);
@@ -156,6 +156,7 @@ public class profileController {
 		model.addAttribute("peopleCount", peopleCount);
 		model.addAttribute("usersVo", usersVo);
 		model.addAttribute("userFilesList", userFilesList);
+		model.addAttribute("corpVoList", corpVoList);
 		
 		return "profileHomeTiles";
 	}
@@ -261,6 +262,8 @@ public class profileController {
 		fis.close();
 		
 	}
+	
+	
 	
 	
 	

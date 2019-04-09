@@ -13,6 +13,7 @@ public class Education_infoVo {
 	private Date graduation;		// 졸업(예정)년도
 	private String grade;			// 학점
 	private String contents;		// 설명
+	private String currval;			// 현재 시퀀스값
 	
 	public Education_infoVo() {
 		
@@ -88,6 +89,14 @@ public class Education_infoVo {
 
 	public void setContents(String contents) {
 		this.contents = contents;
+	}
+
+	public String getCurrval() {
+		return currval;
+	}
+
+	public void setCurrval(String currval) {
+		this.currval = currval;
 	}
 
 	@Override

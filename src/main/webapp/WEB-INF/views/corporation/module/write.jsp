@@ -1,31 +1,15 @@
 <%@page import="ch.qos.logback.classic.Logger"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
-
-<!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
-<%-- <title>${memberVO.mem_id }</title> --%>
-	
-
-
-
+<!DOCTYPE html>
+<html>
+<head>
 </head> 
-
 <body>
-
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="/SE2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-// 	$(document).ready(function(){
-// 		console.log(111);
-// 		$("#insertBtn").on("click", function(){
-// 			$("#mem_id").val("${memberVO.mem_id}");
-			
-// 			$("#frm").submit();
-// 		});
-// 	});
-
 	
 	$(function(){
 	    //전역변수선언
@@ -65,11 +49,9 @@
 	});
  
 
-
 </script>
-
-
-<div style="position: relative; top: -177px; left: 180px; "> 
+ 
+<div style="position: relative; top: -177px; margin-left: 240px;"> 
 	<form id="frm" action="${pageContext.request.contextPath}/corporation" method="post" >
 		<textarea rows="10" cols="30" id="smarteditor2" name="smarteditor2" style="width:650px; height:350px; "></textarea>
 		<input type="button" id="savebutton" value="저장"/>
@@ -77,3 +59,24 @@
 	</form>
 </div>
 
+
+
+	      <div class="col-md-6">
+	        <div class="input-group">
+	          <button id="btn-write_modal" class="btn-write_modal"  style="height: 73.6px; margin-top: -9px;"><span class="span-text"><a><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></span></button>
+	          <button id="btn-upload-img" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-images"></i></a></span></button>
+	          <button id="btn-upload-video" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-play-circle"></i></a></span></button>
+	          <button id="btn-upload-document" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-file-alt"></i></a></span></button>
+	        </div>
+	       </div><hr>
+
+	        
+	        
+	        
+	       
+	        
+	        
+	        
+
+</body>
+</html>

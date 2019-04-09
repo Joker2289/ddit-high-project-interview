@@ -19,6 +19,11 @@
 			nvl(#{contents, jdbcType=VARCHAR}, null),
 			nvl(#{corp_code, jdbcType=VARCHAR}, null)
 		)
+		
+		 <selectKey keyProperty="currval" resultType="java.lang.String" order="AFTER">
+	          select career_code_seq.currval 
+	            from dual
+	     </selectKey>
 	</insert>
 	
 	<!-- 사용자의 경력정보 조회 -->

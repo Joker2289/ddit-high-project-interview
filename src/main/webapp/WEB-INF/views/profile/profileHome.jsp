@@ -145,16 +145,26 @@ $(document).ready(function() {
 					</div>
 				</div>
 			</div>
+			
+			<div class="whiteBox" style="padding: 10px 10px 10px 10px;">
+				<h4>경력 사항</h2>
+				<c:forEach items="${corpVoList }" var="corpVo">
+  					<li><a class="corp_nameClick" title="${fn:split(corpVo.addr1,' ')[0]}">${corpVo.corp_name }</a></li>
+  				</c:forEach>
+			</div>
+			<div class="whiteBox">
+				학력사항
+			</div>
 		</div>
 		<div class="col-md-3" style="padding-left: 5px;">
 			<div class="whiteBox" style="width: 314px; min-height: 481px;">
-			asdfasdfasdfasdffffffdsfasdfasfdasfasd
+			asdfasdfasdfasdffffffd.sfasdfasfdasfasd
 			</div>
 		</div>
 	</div>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog" style="width: 744px;">
-    <div class="modal-content" style="width: 744px;">
+    <div class="modal-content" style="width: 744px; min-width: 100px; min-height: 100px;">
 		
 	</div>
     </div>

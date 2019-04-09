@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="possesion_skills">
+	
+	<!-- 논문저서 등록 -->
+	<insert id="insert_possesion_skills" parameterType="possesion_skillsVo">
+		insert into possesion_skills
+		values(
+			pskill_code_seq.nextval,
+			#{user_id},
+			nvl(#{pskill_name, jdbcType=VARCHAR}, null),
+			nvl(#{issue_org, jdbcType=VARCHAR}, null),
+			nvl(#{issue_date, jdbcType=VARCHAR}, null),
+			nvl(#{contents, jdbcType=VARCHAR}, null)
+		)
+	</insert>
+	
+	<!-- 사용자의 논문저서 조회 -->
+	<select id="select_possesion_skills" parameterType="String" resultType="possesion_skillsVo">
+		select pskill_code,
+			   user_id,
+			   pskill_name,
+			   issue_org,
+			   issue_date,
+			   contents
+		  from possesion_skills
+		 where user_id = #{user_id}
+		 order by issue_date desc
+	</select>
+</mapper>

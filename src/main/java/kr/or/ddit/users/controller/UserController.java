@@ -23,6 +23,7 @@ import kr.or.ddit.files.service.IFilesService;
 import kr.or.ddit.profile.controller.profileController;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
+import kr.or.ddit.util.fileupload.FileUpload;
 
 @Controller
 public class UserController {
@@ -33,32 +34,6 @@ public class UserController {
 	
 	@Resource(name="filesService")
 	private IFilesService filesService;
-	
-	private HashMap<String, String> fileUpload(MultipartFile file, HttpServletRequest req){
-		HashMap<String, String> result = new HashMap<String, String>();
-		
-		ServletContext application = req.getServletContext();
-		String path = application.getRealPath("/upload");
-		String filename = file.getOriginalFilename();
-		
-		if (file.getSize() > 0 && !filename.equals("")) {
-			int pos = filename.lastIndexOf( "." );
-			String ext = filename.substring( pos + 1 );
-			String uuidFilename = UUID.randomUUID().toString();
-			String realFilename = path + File.separator + uuidFilename;
-			try {
-				file.transferTo(new File(realFilename));
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-			}
-			
-			result.put("filename", filename);
-			result.put("realFilename", uuidFilename);
-		}
-		
-		return file.getSize() > 0 && !filename.equals("") ? result : null;
-	}
-	
 	
 	@RequestMapping("/usersProfileUpdate")
 	public String otherDropdownView(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req) {
@@ -77,13 +52,13 @@ public class UserController {
 		filesService.delete_allFile(delfilesVo);
 		
 		
-		result = fileUpload(backgroundFile,req);
+		result = FileUpload.fileUpload(backgroundFile,req);
 		if (result != null){
 			usersVo.setBg_img(result.get("filename"));
 			usersVo.setBg_path(result.get("realFilename"));
 		}
 		
-		result = fileUpload(profileFile,req);
+		result = FileUpload.fileUpload(profileFile,req);
 		if (result != null){
 			usersVo.setProfile_img(result.get("filename"));
 			usersVo.setProfile_path(result.get("realFilename"));
@@ -101,7 +76,7 @@ public class UserController {
 		}
 		
 		for(MultipartFile part : fileList){
-			result = fileUpload(part,req);
+			result = FileUpload.fileUpload(part,req);
 			
 			if (result != null){
 				FilesVo filesVo = new FilesVo();

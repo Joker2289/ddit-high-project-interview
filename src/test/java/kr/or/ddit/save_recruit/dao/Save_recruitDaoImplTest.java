@@ -52,9 +52,31 @@ public class Save_recruitDaoImplTest extends LogicTestConfig{
 		assertNotNull(USList);
 	}
 	
+	/**
+	 * 
+	 * Method : testGetAppList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 특정 유저가 지원한 채용공고 목록 조회 테스트.
+	 */
+	@Test
+	public void testGetAppList() {
+		/***Given***/
+		Save_recruitVo sVo = new Save_recruitVo();
+		sVo.setRecr_app("t");
+		sVo.setUser_id("brown");
+
+		/***When***/
+		List<Save_recruitVo> appList = srecrDao.getAppList(sVo);
+
+		/***Then***/
+		assertNotNull(appList);
+	}
+	
+	
+	
 	
 }
-
 
 
 

@@ -46,8 +46,8 @@ public class Search_logController {
 		if(mVo != null){
 			sVo.setUser_id(mVo.getMem_id());
 		}else{
-			// 임시로 아이디 brown 입력.
-			sVo.setUser_id("brown");
+			// 유저정보 없을경우 로그인 페이지로 이동.
+			return "redirect:" + req.getContextPath() + "/login";
 		}
 		
 		sLogService.insertSearch_log(sVo);		

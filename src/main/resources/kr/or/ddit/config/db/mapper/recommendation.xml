@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="recommendation">
+	
+	<!-- 논문저서 등록 -->
+	<insert id="insert_recommendation" parameterType="recommendationVo">
+		insert into recommendation
+		values(
+			recom_code_seq.nextval,
+			#{user_id},
+			nvl(#{recom_id, jdbcType=VARCHAR}, null),
+			nvl(#{recom_contents, jdbcType=VARCHAR}, null),
+			nvl(#{recom_relation, jdbcType=VARCHAR}, null),
+			nvl(#{recom_date, jdbcType=VARCHAR}, null)
+		)
+	</insert>
+	
+	<!-- 사용자의 논문저서 조회 -->
+	<select id="select_recommendation" parameterType="String" resultType="recommendationVo">
+		select recom_code,
+			   user_id,
+			   recom_id,
+			   recom_contents,
+			   recom_relation,
+			   recom_date
+		  from recommendation
+		 where user_id = #{user_id}
+		 order by recom_date desc
+	</select>
+</mapper>

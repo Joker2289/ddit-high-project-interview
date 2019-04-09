@@ -20,6 +20,8 @@ import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
 import kr.or.ddit.save_recruit.model.Save_recruitVo;
 import kr.or.ddit.save_recruit.service.ISave_recruitService;
+import kr.or.ddit.search_log.model.Search_logVo;
+import kr.or.ddit.search_log.service.ISearch_logService;
 
 @Controller
 public class Save_recruitController {
@@ -33,6 +35,9 @@ public class Save_recruitController {
 
 	@Resource(name="corporationService")
 	private ICorporationService corpService;
+	
+	@Resource(name="search_logService")
+	private ISearch_logService sLogService;
 
 	// @채용공고저장 페이지 요청.
 	@RequestMapping("/srecr")
@@ -84,6 +89,41 @@ public class Save_recruitController {
 			corpImgList.add(cVo.getLogo_path());
 			corpNmList.add(cVo.getCorp_name());
 		}
+		
+		// 저장한 검색어 리스트 (saveList) 넘기기.
+		Search_logVo sVo = new Search_logVo();
+
+		sVo.setUser_id(mVo.getMem_id());
+		sVo.setSearch_save("2");
+		List<Search_logVo> saveList = sLogService.getSaveList(sVo);
+		
+		model.addAttribute("saveList", saveList);
+		
+		// 지원한 채용공고 리스트 (appList) 넘기기.
+		tempSVo = new Save_recruitVo();
+		tempSVo.setRecr_app("t");
+		tempSVo.setUser_id(mVo.getMem_id());
+		
+		// 이어서. sList 말고 그에맞는 recrList를 보내야 됨.
+		tempList = srecrService.getAppList(tempSVo);
+		List<RecruitVo> appList = new ArrayList<>();
+		List<String> corpImgList_app = new ArrayList<>();
+		List<String> corpNmList_app = new ArrayList<>();
+		
+		for(int i=0; i < tempList.size(); i++){
+			tempSVo = tempList.get(i);
+			RecruitVo rVo = recrService.getRecr(tempSVo.getRecruit_code());
+			appList.add(rVo);
+			
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			
+			corpImgList_app.add(cVo.getLogo_path());
+			corpNmList_app.add(cVo.getCorp_name());
+		}		
+		
+		model.addAttribute("appList", appList);
+		model.addAttribute("corpNmList_app", corpNmList_app);
+		model.addAttribute("corpImgList_app", corpImgList_app);
 		
 		// sSrecrList를 보내야되는게 아니고 그걸 통한 recrList를 보내야되네? (srList)
 		model.addAttribute("srList", srList);

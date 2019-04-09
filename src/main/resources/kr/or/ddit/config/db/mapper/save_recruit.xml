@@ -61,6 +61,18 @@
 		   AND SAVE_FLAG = #{save_flag}	
 	</select>
 	
+	<!-- 특정 유저가 지원한 채용공고 목록 조회. -->
+	<select id="getAppList" parameterType="save_recruitVo" resultType="save_recruitVo">
+		SELECT *
+		  FROM SAVE_RECRUIT
+		 WHERE RECR_APP = 't'
+		   AND USER_ID = 'brown'
+		   AND ROWID IN (SELECT MAX(ROWID) 
+		                   FROM SAVE_RECRUIT
+		                 GROUP BY RECRUIT_CODE)	
+	</select>
+	
+	
 
   	
   	

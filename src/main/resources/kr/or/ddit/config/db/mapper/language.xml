@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="language">
+	
+	<!-- 외국어 등록 -->
+	<insert id="insert_language" parameterType="languageVo">
+		insert into language
+		values(
+			lang_code_seq.nextval,
+			#{user_id},
+			nvl(#{lang_kind, jdbcType=VARCHAR}, null),
+			nvl(#{grade, jdbcType=VARCHAR}, null)
+		)
+	</insert>
+	
+	<!-- 사용자의 외국어 조회 -->
+	<select id="select_language" parameterType="String" resultType="languageVo">
+		select lang_code,
+			   user_id,
+			   lang_kind,
+			   grade
+		  from language
+		 where user_id = #{user_id}
+		 order by lang_code desc
+	</select>
+</mapper>

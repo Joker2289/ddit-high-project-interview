@@ -142,6 +142,22 @@ public class Save_recruitServiceImpl implements ISave_recruitService{
 		
 		return sSrecrList;
 	}
+
+	/**
+	 * 
+	 * Method : getAppList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param tempSVo
+	 * @return
+	 * Method 설명 : 특정 유저가 지원한 채용공고 목록 조회.
+	 */
+	@Override
+	public List<Save_recruitVo> getAppList(Save_recruitVo tempSVo) {
+		List<Save_recruitVo> appList = srecrDao.getAppList(tempSVo);
+		
+		return appList;
+	}
 	
 	
 	

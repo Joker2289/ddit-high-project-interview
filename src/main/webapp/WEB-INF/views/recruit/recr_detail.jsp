@@ -23,7 +23,9 @@
 	<!-- 회사 배경이미지 넣어야 됨. -->
 	<table border="1">
 		<tr>
-			<td>${corp.logo_path }</td>
+			<td>
+				<img src="${corp.logo_path }" width="200">
+			</td>
 		</tr>
 		<tr>
 			<td>${recr.recruit_title }</td>
@@ -87,18 +89,18 @@
 		
 <script type="text/javascript">
 	$(document).ready(function(){
-		console.log("recr code : ${recr.recruit_code }");
+		console.log("scrap_flag? : ${scrap_flag }");
 		
 		$("#btn_app").on("click", function(){
 			<c:choose>
 				<c:when test="${recr_app == 't' }">
 					if(confirm("채용공고 지원을 취소하시겠습니까?")){
-						window.location.href = '${pageContext.request.contextPath }/recr_app?recruit_code=${recr.recruit_code }';
+						window.location.href = '${pageContext.request.contextPath }/recr_app?recruit_code=${recr.recruit_code }&scrap_flag=${scrap_flag }';
 					}
 				</c:when>
 				<c:otherwise>
 					if(confirm("해당 채용공고에 지원하시겠습니까?")){
-						window.location.href = '${pageContext.request.contextPath }/recr_app?recruit_code=${recr.recruit_code }';
+						window.location.href = '${pageContext.request.contextPath }/recr_app?recruit_code=${recr.recruit_code }&scrap_flag=${scrap_flag }';
 					}
 				</c:otherwise>
 			</c:choose>

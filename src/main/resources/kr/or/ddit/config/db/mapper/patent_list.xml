@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="patent_list">
+	
+	<!-- 특허 등록 -->
+	<insert id="insert_patent_list" parameterType="patent_listVo">
+		insert into patent_list
+		values(
+			patent_code_seq.nextval,
+			#{user_id},
+			nvl(#{patent_name, jdbcType=VARCHAR}, null),
+			nvl(#{nation, jdbcType=VARCHAR}, null),
+			nvl(#{patent_no, jdbcType=VARCHAR}, null),
+			nvl(#{inventer, jdbcType=VARCHAR}, null),
+			nvl(#{patent_date, jdbcType=VARCHAR}, null),
+			nvl(#{patent_url, jdbcType=VARCHAR}, null),
+			nvl(#{contents, jdbcType=VARCHAR}, null)
+		)
+	</insert>
+	
+	<!-- 사용자의 특허정보 조회 -->
+	<select id="select_patent_list" parameterType="String" resultType="patent_listVo">
+		select patent_code,
+			   user_id,
+			   patent_name,
+			   nation,
+			   patent_no,
+			   inventer,
+			   patent_date,
+			   patent_url,
+			   contents
+		  from patent_list
+		 where user_id = #{user_id}
+		 order by patent_date desc
+	</select>
+</mapper>

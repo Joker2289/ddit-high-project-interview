@@ -25,8 +25,14 @@
 		<typeAlias alias="interestVo" type="kr.or.ddit.interest.model.InterestVo"/>
 		<typeAlias alias="savepostVo" type="kr.or.ddit.save_post.model.Save_postVo"/>
 		<typeAlias alias="filesVo" type="kr.or.ddit.files.model.FilesVo"/>
+		<typeAlias alias="thesis_listVo" type="kr.or.ddit.thesis_list.model.Thesis_listVo"/>
+		<typeAlias alias="patent_listVo" type="kr.or.ddit.patent_list.model.Patent_listVo"/>
+		<typeAlias alias="project_careerVo" type="kr.or.ddit.project_career.model.Project_careerVo"/>
+		<typeAlias alias="award_historyVo" type="kr.or.ddit.award_history.model.Award_historyVo"/>
+		<typeAlias alias="languageVo" type="kr.or.ddit.language.model.LanguageVo"/>
+		<typeAlias alias="recommendationVo" type="kr.or.ddit.recommendation.model.RecommendationVo"/>
+		<typeAlias alias="possesion_skillsVo" type="kr.or.ddit.possesion_skills.model.Possesion_skillsVo"/>
 	</typeAliases> 
-	
   
 	<mappers>
 		<mapper resource="kr/or/ddit/config/db/mapper/member.xml"/>
@@ -48,6 +54,13 @@
 		<mapper resource="kr/or/ddit/config/db/mapper/interest.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/save_post.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/files.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/thesis_list.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/patent_list.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/project_career.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/award_history.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/language.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/recommendation.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/possesion_skills.xml"/>
 	</mappers>
 </configuration>
 
