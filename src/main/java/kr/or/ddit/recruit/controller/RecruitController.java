@@ -795,7 +795,9 @@ public class RecruitController {
 	
 	// @ajax로 지도 검색 페이지의 회사와의 거리 그리기.
 	@RequestMapping("/mapAjaxHtml")
-	public String mapAjaxHtml(String result, Model model) {
+	public String mapAjaxHtml(String result, String width_value, HttpSession session, Model model) {
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		
 		List<CorporationVo> corpList = corpService.select_allCorps();
 		List<RecruitVo> recrList = recrService.getAllRecr();
 		
@@ -808,8 +810,12 @@ public class RecruitController {
 		
 		List<String> corpNmList = new ArrayList<>();
 		List<String> corpImgList = new ArrayList<>();
-		List<String> corpDList = new ArrayList<>();
+		List<String> corpDList = new ArrayList<>();	
 		
+		// 스크랩 여부 리스트.
+		List<String> scrapList = new ArrayList<>();
+		List<Save_recruitVo> uSRList = srecrService.getUserSrecrList(mVo.getMem_id());
+				
 		for(int i=0; i < recr_num; i++){
 			String data = arr_result[i];
 			String recruit_code = data.split(",")[0].split(":")[1];
@@ -821,13 +827,30 @@ public class RecruitController {
 			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
 			corpImgList.add(cVo.getLogo_path());
 			corpNmList.add(cVo.getCorp_name());
+			
+			boolean scrapCheck_flag = false;
+			for(Save_recruitVo scrapCheckSVo : uSRList){
+				if(scrapCheckSVo.getRecruit_code().equals(rVo.getRecruit_code()) 
+						&& scrapCheckSVo.getSave_flag().equals("t")){
+					scrapCheck_flag = true;
+					scrapList.add("t");
+					break;
+				}
+			}
+			
+			if(scrapCheck_flag == false){
+				scrapList.add("f");
+			}			
 		}
 		
 		model.addAttribute("recrList2", recrList2);
 		model.addAttribute("corpImgList", corpImgList);
 		model.addAttribute("corpNmList", corpNmList);
+		model.addAttribute("scrapList", scrapList);
 
-		
+		// 슬라이드 출력할 박스 width 넘기기.
+		model.addAttribute("width_value", width_value);
+
 		return "recruit/mapAjaxHtml";
 	}
 	

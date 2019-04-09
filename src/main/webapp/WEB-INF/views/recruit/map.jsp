@@ -16,29 +16,68 @@
 </head>
 
 <body>
-<div class="container"><div class="row"><div style="margin-top: 101px;">
+<div class="container"><div class="row"><div>
+
+	<div class="col-md-12" >
+		<div id="div_box" class="whiteBox" style="width: 1150px; margin-left: 0px; height: 62px; margin-bottom: 0px;
+				text-align: center; padding-top: 10px; background-color: #edf1f5; border-bottom: 0px;
+				font-size: 22px;">
+			<span>
+				<img width="37" src="http://mblogthumb4.phinf.naver.net/20160920_175/kokoa2100_1474368430239vv9yY_PNG/mzl.xnmoezsr.png?type=w800">   	
+				 원하는 범위를 설정해서 채용공고를 검색해보세요.
+			</span>
+		</div>
+	</div>
+	
+	<div class="col-md-12" >
+		<div id="div_box" class="whiteBox" style="width: 1150px; margin-left: 0px; height: auto; margin-bottom: -1px;
+				text-align: center; padding: 15px; font-size: auto;">
+			<table border="0">
+				<tr>
+					<td><div id="map" style="width:950px; height:600px;"></div></td>
+					<td style="width: 200px;">
+						<input id="btn_circle" type="button" value="범위 설정" style="margin-top: -15px; 
+								margin-left: 10px; height: 38px; width: 122px; background-color: #0174b0; 
+								border: 0px; font-size: 18px; color: white;"> <br><br>
+						<input id="btn_userAddr" type="button" value="내 주소로 이동" style="margin-top: -15px; 
+								margin-left: 10px; height: 38px; width: 122px; background-color: #0174b0; 
+								border: 0px; font-size: 18px; color: white;"> <br><br>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
 	<!-- 레이아웃 잡는건 나중에.. -->
-	<h4><i class="fas fa-map-marked-alt" style="font-size: 18px;"></i> 원하는 범위를 설정해서 채용공고를 검색해보세요.</h4>
-	<table border="1">
-		<tr>
-			<td><div id="map" style="width:750px;height:600px;"></div></td>
-			<td>
-				<input id="btn_circle" type="button" value="범위 설정"> <br><br>
-				<input id="btn_userAddr" type="button" value="내 주소로 이동"> <br><br>
-			</td>
-		</tr>
-	</table>
-	
-	
-	<table>
-		<tr>
-			<td id="td_map">
-<%-- 				<c:forEach begin="1" end="${corpList.size() }" varStatus="i"> --%>
-<%-- 					${i.index }. ${corpList.get(i.index - 1).corp_name } / ${corpList.get(i.index - 1).addr1 } / 거리 : xxx <br> --%>
-<%-- 				</c:forEach> <br><br> --%>
-			</td>
-		</tr>
-	</table>
+	<div class="col-md-12" >
+		<div id="div_result" class="whiteBox" style="width: 1150px; margin-left: 0px; height: auto; margin-bottom: 20px;
+				text-align: center; padding: 15px; font-size: auto; overflow:hidden;">
+	   		<table style="margin-bottom: 20px;">
+	   			<tr>
+	   				<td id="td_info" style="width: 800px; text-align: left; font-size: 18px;">
+			   			<strong>반경 0m 내의 0개의 채용공고</strong><br> 
+	   				</td>
+	   				<td>
+						<a id="btn_slt1" class="btn btn-default" style="border: 0px; margin-left: 200px;">
+							<i class="fas fa-chevron-left" style="font-size: 17px;"></i>
+						</a>
+						<a id="btn_sgt1" class="btn btn-default" style="border: 0px;">
+							<i class="fas fa-chevron-right" style="font-size: 17px;"></i>
+						</a><br>
+	   				</td>
+	   			</tr>
+	   		</table>				
+				
+			<table>
+				<tr>
+					<td id="td_map">
+									
+						<%-- ajax. --%>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 	
 	
 	<table border="1" style="margin-top: 15px;">
@@ -97,11 +136,34 @@
 	// 반경 안 인포윈도우 담는 배열.
 	var newinfos = [];
 
+	// 으음 슬라이드.
+	var divWidth  = "900"; 
+	
 	$(document).ready(function(){
-// 		console.log("${corpList.size() }");	
+// 		console.log($("#hidden_size").val());	
 		
-		// ajax로 회사와의 거리 나타내기.
-		getMapHtml(result);
+		// 추천리스트1 슬라이드.
+		$("#btn_slt1").on("click",function(){
+			$("#content1").stop(true,true);
+			   var moveX   = parseInt($("#content1").css("margin-left"));
+		
+			   if( moveX < 0 ){
+					$("#content1").animate({"margin-left":"+=" + divWidth + "px"},290);
+			   }
+		});
+		$("#btn_sgt1").on("click",function(){
+			 $("#content1").stop(true,true);
+			   var moveX   = parseInt($("#content1").css("margin-left"));
+		
+			   if( ((width_value - 200) * -1) < moveX ){
+			   		 $("#content1").animate({"margin-left":"-=" + divWidth + "px"},290);
+			   }
+		});		
+		
+		// 채용공고 상세화면(리스트 항목 클릭)과 스크랩. (list size 값을 받을 필요 없음. ajax에 보내는
+		// data에 값이 들어있음.)
+// 		<c:forEach begin="1" end="">
+// 		</c:forEach>
 
 	});		
 
@@ -131,26 +193,62 @@
 		}
 	}	
 	
+	var width_value = 1000;
+	
 	function getMapHtml(result){
 		$.ajax({
 			url : "${pageContext.request.contextPath }/mapAjaxHtml",
-			data : "result="+result,
+			data : "result=" + result + "&width_value=" + ((corp_num * 290) + 70),
 			success : function(data){
-// 				$("#userListTbody").html(htmlArr[0]);
-// 				$("#pagination").html(htmlArr[1]);
+				console.log("result : " + result);
 				
-				console.log("data : " + data);
+				var arr_result = result.split("/");
+				var radius_data = arr_result[arr_result.length - 1].split(":")[1];
+				var radius = Math.round(radius_data);
 				
+				var result_num = arr_result.length - 1;
+				
+				// ajax에서 model로 받은 값은 못가져오나보네.
+				console.log("hidden size? : " + $("#hidden_size").val());
+				
+				var str_info = '<strong>반경 ' + radius + 'm 내의 ' + result_num + '개의 채용공고</strong><br>';
+				
+				// 리스트 출력할 whitebox width 조정. 'content1'의 width를 조정해야되네.
+				width_value = (result_num * 280) + 50;
+				$("#content1").css("width", width_value + "px");
+				
+				// 검색 결과 표시
+				$("#td_info").html(str_info);
+				
+				// 채용공고 리스트 출력.
 				$("#td_map").html(data);
 				
-				// * ajax를 통한 html 생성시 이벤트 핸들러 등록 방법 2.
-				// ajax callback 안에 클릭 이벤트를 넣어줌.
-// 				$(".userTr").on("click", function(){
-// 					var userId = $(this).data("userid");
+				console.log("${result_num }");
+				
+				// *** ajax를 통한 html 생성시 이벤트 핸들러 등록 방법 -> ajax callback 안에 클릭 
+				// 이벤트를 넣어줌.
+				
+				// 상세화면 이동
+				$(".recr").on("click", function(){
+					// 이벤트 핸들러를 c:forEach로 여러개 만들지 말고 태그에 'data-[변수명]' 속성을 
+					// 이용해서 el값을 가져오자.
+					// <tr data-recruit_code="...">
+					var recruit_code = $(this).data("recruit_code"); // ok!
+// 					alert(recruit_code);
 					
-// 					$("#userId").val(userId);
-// 					$("#frm").submit();
+					window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code=' + recruit_code;
+				});
+				
+				// 스크랩(을 하고나면 범위가 사라지니까.. 스크랩을 없애는게 좋겠네. 어차피 상세화면에서
+				// 스크랩 이용할수 있으니..)
+// 				$(".far").on("click", function(){
+// 					alert(1);
+// 					if(confirm("채용공고를 스크랩하시겠습니까?")){
+// 						var recruit_code = $(this).data("recruit_code");
+// 						window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=t' + recruit_code;
+// 					}
 // 				});
+				
 			}
 		});
 	}
