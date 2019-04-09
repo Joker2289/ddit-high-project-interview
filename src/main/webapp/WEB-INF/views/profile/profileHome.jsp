@@ -149,7 +149,7 @@ $(document).ready(function() {
 			<div class="whiteBox" style="padding: 10px 10px 10px 10px;">
 				<h4>경력 사항</h2>
 <%-- 				<c:forEach items="${career_infoList }" var="career_infoVo"> --%>
-  					<div class="corpProfilePicture" style="background-image: url(/profile?mem_id=10);"></div>
+  					<div class="logoPicture" style="background-image: url(/profile?mem_id=10);"></div>
 <%--   				</c:forEach> --%>
 			</div>
 			<div class="whiteBox">

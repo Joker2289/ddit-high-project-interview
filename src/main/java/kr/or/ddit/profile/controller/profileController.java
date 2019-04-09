@@ -191,7 +191,7 @@ public class profileController {
 				if (users.getBg_path().contains("http")){
 					URL url = new URL(users.getBg_path());
 					URLConnection t_connection = url.openConnection(); 
-					t_connection.setReadTimeout(3000); 
+					t_connection.setReadTimeout(20000); 
 					fis = t_connection.getInputStream();
 				}else{
 					filePath = path + File.separator + users.getBg_path();
@@ -202,7 +202,7 @@ public class profileController {
 				if (corporation.getBg_path().contains("http")){
 					URL url = new URL(corporation.getBg_path());
 					URLConnection t_connection = url.openConnection(); 
-					t_connection.setReadTimeout(3000); 
+					t_connection.setReadTimeout(20000); 
 					fis = t_connection.getInputStream();
 				}else{
 					filePath = path + File.separator + corporation.getBg_path();
