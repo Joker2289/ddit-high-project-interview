@@ -410,6 +410,35 @@ public class RecruitControllerTest extends WebTestConfig{
 		
 //		대전 중구 대종로 486, 대전 서구 계룡로 692 1층, 2층, 대전 유성구 도안대로 573, 대전 유성구 온천서로 2, 대전 유성구 대학로 82, 대전 유성구 테크노중앙로 68, 대전 대덕구 동서대로 1776, 대전 대덕구 한밭대로 1122, 대전 서구 계백로 1128, 대전 서구 관저로 142, 대전 동구 옥천로 118, 대전 대덕구 석봉동 309-10, 대전 서구 대덕대로 189 1층, 대전 서구 둔산로31번길 28 금정빌딩 1층, 대전 서구 대덕대로241번길 35
 
+//http://img.jobkorea.kr/images/logo/200/w/h/whwpwhwp_200.gif"
+//http://img.jobkorea.kr/images/logo/200/s/e/seagateJK_200.gif
+//http://img.jobkorea.kr/images/logo/200/l/o/LOTTEGROUP_200.gif
+//http://img.jobkorea.kr/images/logo/200/c/j/cjrecruit_200.gif
+//http://img.jobkorea.kr/images/logo/200/g/6/g614075_200.gif
+//http://img.jobkorea.kr/images/logo/200/k/i/kiamotor01_200.gif
+//http://img.jobkorea.kr/images/logo/200/s/e/semcorecruit_200.gif
+//http://img.jobkorea.kr/images/logo/200/p/1/p155297_200.gif
+//http://img.jobkorea.kr/images/logo/200/n/n/nnnnn210024_200.gif
+//http://img.jobkorea.kr/images/logo/200/e/b/ebonsa_200.gif
+//http://img.jobkorea.kr/images/logo/200/t/e/tesco_200.gif
+//http://img.jobkorea.kr/images/logo/200/v/1/v142945_200.gif
+//http://img.jobkorea.kr/images/logo/200/s/d/sd45237_200.gif
+//http://img.jobkorea.kr/images/logo/200/h/y/hynix_200.gif
+//http://img.jobkorea.kr/images/logo/200/k/e/kepco01_200.gif
+//http://img.jobkorea.kr/images/logo/200/w/n/wnvkfl_200.gif
+//http://img.jobkorea.kr/images/logo/200/h/1/h168693_200.gif
+//http://img.jobkorea.kr/images/logo/200/h/p/hpexpress1_200.gif 
+//http://img.jobkorea.kr/images/logo/200/k/k/kk114794_200.gif
+//
+//http://img.jobkorea.kr/images/logo/200/w/1/w198139_200.gif
+//http://img.jobkorea.kr/images/logo/200/n/1/n100012_200.gif
+//http://img.jobkorea.kr/images/logo/200/w/1/w198139_200.gif
+//http://img.jobkorea.kr/images/logo/200/j/k/jknhoras_200.gif
+//http://img.jobkorea.kr/images/logo/200/c/j/cjfoodvill_200.gif 
+//http://img.jobkorea.kr/images/logo/200/w/o/wooribank0_200.gif 
+//http://img.jobkorea.kr/images/logo/200/w/c/wc10186_200.gif
+//http://img.jobkorea.kr/images/logo/200/p/o/poscohrteam_200.gif
+//http://img.jobkorea.kr/images/logo/200/g/m/GMKCAREERS_200.gif
 
 
 		/***When***/

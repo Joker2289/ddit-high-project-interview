@@ -77,64 +77,71 @@
 <div class="container">
 <div class="row">
 <div>
-	<table border="1" style="margin-bottom: 60px; margin-top: 10px;">
+	<table border="0" style="margin-bottom: 60px; margin-top: 22px; padding: 0px; margin-left: -2px;">
 		<tr>
-			<td>
+			<td style="vertical-align: top;">
 				<div class="col-md-12">
-					<div class="whiteBox" style="">
-						<h4>저장한 채용공고 (${srList.size() })</h4>
+					<div class="whiteBox" style="width: 795px;">
+						<h4 style="font-size: 22px; margin-left: 25px; margin-top: 14px;">저장한 채용공고 (${srList.size() })</h4>
 					</div>
-					<!-- 이어서. 두 whitebox 붙이기. -->
-					<div class="whiteBox" style="border-top: 0px;">
+					<div class="whiteBox" style="width: 795px; border-top: 0px; margin-top: -2px;">
 						<c:forEach begin="1" end="${srList.size() }" varStatus="i">
-							<table style="margin: 2px;">
+							<table border="0" style="margin: 2px; margin-top: 2px;">
 								<tr>
-									<td id="img${i.index }" rowspan="6" onmouseover="" style="cursor: pointer;">${corpImgList.get(i.index - 1) }</td>
-									<td id="srecr${i.index }" onmouseover="" style="cursor: pointer;">
+									<td id="img${i.index }" rowspan="6" onmouseover="" style="cursor: pointer; 
+											border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 7px; 
+											padding-top: 7px; padding-left: 4px;">
+										<img src="${corpImgList.get(i.index - 1) }" width="200"> 
+									</td>
+									<td id="srecr${i.index }" onmouseover="" style="cursor: pointer; width: 513px;
+											border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-left: 15px;">
 										${srList.get(i.index - 1).recruit_title }<br>
 										${corpNmList.get(i.index - 1) }<br>
 										${srList.get(i.index - 1).job_local }<br>
+										<span style="color: #d11124;">(xx일 전에 마감되었습니다.)</span>
 									</td>
-									<td><i id="scrap${i.index }" class="fas fa-bookmark" onmouseover="" 
-											style="margin-top: 10px; font-size: large; cursor: pointer;"></i></td>
+									<td style="width: 77px; text-align: center; border-bottom: 1px solid; border-bottom-color: #d9d9d9;">
+										<div style="width: 56px; height: 56px; border-radius: 28px; background-color: white;
+												padding-top: 7px;" id="div_scrap${i.index }">
+											<i id="scrap${i.index }" class="fas fa-bookmark" onmouseover="" 
+													style="margin-top: 10px; font-size: 22px; cursor: pointer; 
+											color: #0174b0;"></i>
+										</div>
+									</td>
 								</tr>
 							</table>			
 						</c:forEach>					
 					</div>
 				</div>			
 			</td>
-			<td>
+			<td style="vertical-align: top; margin-left: 0px;">
 				<div class="col-md-12">
-					<div class="whiteBox">
-						<!-- 저장한 검색어 테이블. -->
-						<table border="1" style="margin-left: 10px;">
-							<tr>
-								<td>지원한 채용공고</td>
-							</tr>
-							
-							<c:forEach begin="1" end="3" varStatus="i">
+					<div class="whiteBox" style="width: 330px; margin-left: -14px; font-size: 20px; padding-bottom: 7px;
+							padding-top: 7px; padding-left: 7px;">
+						지원한 채용공고 (${appList.size() })
+					</div>
+					<div class="whiteBox" style="width: 330px; margin-left: -14px; margin-top: -1px; padding-bottom: 2px;">
+						<table border="0" style="margin-left: 10px; width: 310px; margin-top: 10px;">
+							<c:forEach begin="1" end="${appList.size() }" varStatus="i">
 								<tr>
-									<td>${i.index }</td>
+									<td id="app${i.index }" onmouseover="" style="cursor: pointer; 
+											border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 7px; 
+											padding-top: 0px; padding-left: 4px;">
+										<img src="${corpImgList_app.get(i.index - 1) }" width="150"><br>
+										${appList.get(i.index - 1).recruit_title }<br>
+										${corpNmList_app.get(i.index - 1) }<br>
+										${appList.get(i.index - 1).job_local }<br>
+										지원일: xx일 전
+									</td>
 								</tr>
 							</c:forEach>
-							
-							
-							<tr>
-								<td>더보기</td>
-							</tr>
-							<tr>
-								<td>알림만들기</td>
-							</tr>
 						</table>						
 					</div>
 				</div>			
 			</td>
 		</tr>
 	</table>
-	
-	
-	<br><br><br><br><br><br><br>
-	<a href="${pageContext.request.contextPath }/recruit">채용공고 페이지로 이동 -></a>
+	<br><br><br>
 	
 <%@ include file="/WEB-INF/views/recruit/alarm_manage_modal.jsp" %><!-- 모달창 -->		
 </div>		
@@ -185,6 +192,24 @@
 				if(confirm("채용공고 스크랩을 취소하시겠습니까?")){
 					window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=f${srList.get(i.index - 1).recruit_code }&req_page=srecr';
 				}
+			});
+			
+			// 스크랩버튼 마우스오버.
+			$("#scrap${i.index }").on("mouseover", function(){
+// 				alert(1);
+				$("#div_scrap${i.index }").css("background-color", "#e5f5fb");
+			});
+			$("#scrap${i.index }").on("mouseout", function(){
+				$("#div_scrap${i.index }").css("background-color", "white");
+			});
+			
+		</c:forEach>
+		
+		<c:forEach begin="1" end="${appList.size() }" varStatus="i">
+			// 지원한 채용공고 클릭
+			$("#app${i.index }").on("click", function(){
+// 				alert("${i.index }");
+				window.location.href = '${pageContext.request.contextPath}/recr_detail?recruit_code=${appList.get(i.index - 1).recruit_code }';
 			});
 		</c:forEach>
 		

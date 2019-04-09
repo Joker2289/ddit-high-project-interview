@@ -325,21 +325,28 @@ public class RecruitController {
 		// 마지막 조회/스크랩 채용공고를 리스트의 맨앞으로 옮기자. lVRVo가 리스트에 없을수도 있음.
 		// 있을 땐 인덱스 저장해놓기. (lVIdx)
 		boolean lVRVo_flag = false;
+		int tempIdx = 0;
+		int lVIdx = 0;
 		
 		for(RecruitVo rVo : rRList1){
 			if(rVo.getRecruit_code().equals(lVRVo.getRecruit_code())){
 				lVRVo_flag = true;
+				lVIdx = tempIdx;
 				break;
 			}
+			
+			tempIdx++;
 		}
 		
 		// list.add(index, element); 이용. 여기 만들다 말았었군.
 		if(lVRVo_flag == false){
 			// 없을 땐 lVRVo를 0번에 넣고 마지막 항목을 지움.
-			
+			rRList1.add(0, lVRVo);
+			rRList1.remove(rRList1.size() - 1);
 		}else{
 			// 있을 땐 add([lVIdx])하고 remove([lVIdx+1]) <- 테스트 해보기.
-			
+			rRList1.add(0, rRList1.get(lVIdx));
+			rRList1.remove(lVIdx + 1);
 		}
 		
 		model.addAttribute("rRList1", rRList1);
@@ -661,7 +668,27 @@ public class RecruitController {
 		// 지원여부 넘기기.
 		model.addAttribute("recr_app", recr_app);
 		
+		// 스크랩여부.
+		Save_recruitVo tempSVo = new Save_recruitVo();
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		tempSVo.setUser_id(mVo.getMem_id());
+		tempSVo.setSave_flag("t");
+		
+		List<Save_recruitVo> sSrecrlist = srecrService.getSSrecrList(tempSVo);
+		String scrap_flag = "f";
+		
+		// 특정 유저가 스크랩한 채용공고 리스트에서 recruit_code와 일치하는 게 있으면 t.
+		for(int i=0; i < sSrecrlist.size(); i++){
+			tempSVo = sSrecrlist.get(i);
+			
+			if(tempSVo.getRecruit_code().equals(recruit_code)){
+				scrap_flag = "t";
+				break;
+			}
+		}
+		
+		model.addAttribute("scrap_flag", scrap_flag);
+		
 		sVo.setUser_id(mVo.getMem_id());
 		srecrService.insertSrecr(sVo);
 		
@@ -695,6 +722,11 @@ public class RecruitController {
 		
 		// 지원여부 넘기기.
 		model.addAttribute("recr_app", recr_app);
+		
+		// 스크랩여부. get방식은 저장한 채용공고 페이지에서 요청하므로 모두 스크랩 't'이다.
+		// recr_detail, post에는 스크랩여부를 파악해서 넘겨줘야됨.
+		String scrap_flag = "t";
+		model.addAttribute("scrap_flag", scrap_flag);
 		
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		sVo.setUser_id(mVo.getMem_id());
@@ -801,7 +833,7 @@ public class RecruitController {
 	
 	// @채용공고 지원
 	@RequestMapping("/recr_app")
-	public String recr_app(String recruit_code, Model model) {
+	public String recr_app(String recruit_code, String scrap_flag, Model model) {
 		Save_recruitVo sVo = srecrService.getLastSrecr(recruit_code);
 		String recr_app = "";
 		
@@ -820,8 +852,12 @@ public class RecruitController {
 			app_count = String.valueOf(Integer.valueOf(app_count) + 1);
 		}
 		
+		sVo.setSave_flag(scrap_flag);
 		sVo.setRecr_app(recr_app);
 		rVo.setApp_count(app_count);
+		
+		// 스크랩 여부. 받은 것 다시 넘겨줘야 됨.
+		model.addAttribute("scrap_flag", scrap_flag);
 		
 		srecrService.updateSrecr(sVo);
 		recrService.updateRecr(rVo);

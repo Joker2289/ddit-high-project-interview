@@ -92,6 +92,17 @@ public interface ISave_recruitService {
 	 * Method 설명 : 특정 유저가 스크랩한 채용공고 목록 조회.
 	 */
 	List<Save_recruitVo> getSSrecrList(Save_recruitVo sVo);
+
+	/**
+	 * 
+	 * Method : getAppList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param tempSVo
+	 * @return
+	 * Method 설명 : 특정 유저가 지원한 채용공고 목록 조회.
+	 */
+	List<Save_recruitVo> getAppList(Save_recruitVo tempSVo);
 	
 	
 	

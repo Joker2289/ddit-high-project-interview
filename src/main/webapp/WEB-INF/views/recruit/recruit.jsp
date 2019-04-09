@@ -68,7 +68,7 @@
 		<div class="col-md-12" style="height: 148px;">
 			<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 148px; text-align: center;
 					background-color: #edf1f5;">
-				<h3 style="color: black;">꿈꾸시던 직장 - 검색하면 바로 뜹니다. (mem_id : ${SESSION_MEMBERVO.mem_id })</h3><br>
+				<h3 style="color: black;">꿈꾸시던 직장 - 검색하면 바로 뜹니다.</h3><br>
 				<span style="margin-top: -15px; margin-left: -40px; margin-right: 10px;">
 					<i class="fas fa-search" style="font-size: 20px; margin-right: 10px;"></i>
 					<input id="txt_name" type="text" style="width: 400px; height: 40px; border: 0px; 
@@ -120,7 +120,7 @@
 									<td>
 										<i id="t_alarm_alarm${i.index }" class="fas fa-bell" onmouseover="" style="
 												cursor: pointer; margin-left: 0px; margin-top: 10px; margin-left: 0px; 
-												font-size: 22px;"></i>
+												font-size: 22px; color: #0174b0;"></i>
 									</td>
 								</tr>
 							</table>
@@ -143,7 +143,7 @@
 					   		<table style="margin-bottom: 20px;">
 					   			<tr>
 					   				<td style="width: 800px; text-align: left;">
-							   			<strong>조회/스크랩하신 항목을 참고하여..</strong> <br> 
+							   			<strong>조회하신 항목을 참고하여..</strong> <br> 
 							   			<c:choose>
 							   				<c:when test="${lVRVo.recruit_title.substring(0, 9) == '원하는 채용공고를' }">
 									   			<a href="${pageContext.request.contextPath }/recrSearch">
@@ -176,7 +176,7 @@
 											margin-right: 10px; padding: 8px; font-size: 16px; height: 270px;">
 										<div id="recr${i.index }" onmouseover="" style="cursor: pointer;">
 											<div class="table_div">
-												${corpImgList1.get(i.index) }
+												<img src="${corpImgList1.get(i.index) }" width="200">
 											</div> <br>
 											<strong>${rRVo.recruit_title }</strong> <br>
 											${corpNmList1.get(i.index) } <br>
@@ -238,7 +238,7 @@
 											margin-right: 10px; padding: 8px; font-size: 16px; height: 270px;">
 										<div id="recr${i.index }" onmouseover="" style="cursor: pointer;">
 											<div class="table_div">
-												${corpImgList2.get(i.index) }
+												<img src="${corpImgList2.get(i.index) }" width="200"> 
 											</div> <br>
 											<strong>${rRVo.recruit_title }</strong> <br>
 											${corpNmList2.get(i.index) } <br>
@@ -301,7 +301,7 @@
 	});
 
 	$(document).ready(function(){
-// 		console.log("msg_flag? : ${msg_flag }");
+		console.log("saveList size? : ${saveList.size() }");
 		
 		<c:forEach items="${rRList1 }" varStatus="i">
 			console.log("i? : ${i.index }");
@@ -467,7 +467,21 @@
 			
 		</c:forEach>
 		
+		// 모달창 버튼
+		$("#btn_save").on("click", function(){
+			alert("save");
+		});
+		$("#btn_cancel").on("click", function(){
+			alert("cancel");
+		});
 		
+		// 모달창 div
+		$("#div_save").on("click", function(){
+// 			alert("div_save");
+		});
+		$("#div_search").on("click", function(){
+			
+		});
 		
 	});
 

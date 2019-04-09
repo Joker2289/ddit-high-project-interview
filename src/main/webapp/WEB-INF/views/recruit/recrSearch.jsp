@@ -123,7 +123,9 @@
 				<table id="recr1" border="1" onmouseover="" style="margin: 2px; cursor: pointer;">
 					<c:if test="${recrList.size() > 0 }">
 						<tr>
-							<td rowspan="6">${corpImgList.get(0) }</td>
+							<td rowspan="6">
+								<img src="${corpImgList.get(0) }" width="200">
+							</td>
 							<td>${recrList.get(0).recruit_title }</td>
 						</tr>
 						<tr>
@@ -174,7 +176,9 @@
 					<td>
 						<table id="recr${i.index }" border="1" style="margin: 2px; cursor: pointer;" onmouseover="">
 							<tr>
-								<td rowspan="6">${corpImgList.get(i.index - 1) }</td>
+								<td rowspan="6">
+									<img src="${corpImgList.get(i.index - 1) }" width="200">
+								</td>
 								<td>${recrList.get(i.index - 1).recruit_title }</td>
 							</tr>
 							<tr>
@@ -217,6 +221,10 @@
 				window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code=${recrList.get(i.index - 1).recruit_code }&otherParam=1';
 			});
 		</c:forEach>
+		
+		// input text에 검색중인 값 출력하기.
+		$("#txt_word").val("${lSLog.search_word }");
+		$("#txt_local").val("${lSLog.search_local }");
 		
 		// 검색 버튼
 		$("#btn_search").on("click", function(){

@@ -97,7 +97,33 @@ public class Save_recruitController {
 		sVo.setSearch_save("2");
 		List<Search_logVo> saveList = sLogService.getSaveList(sVo);
 		
-		model.addAttribute("saveList", saveList);		
+		model.addAttribute("saveList", saveList);
+		
+		// 지원한 채용공고 리스트 (appList) 넘기기.
+		tempSVo = new Save_recruitVo();
+		tempSVo.setRecr_app("t");
+		tempSVo.setUser_id(mVo.getMem_id());
+		
+		// 이어서. sList 말고 그에맞는 recrList를 보내야 됨.
+		tempList = srecrService.getAppList(tempSVo);
+		List<RecruitVo> appList = new ArrayList<>();
+		List<String> corpImgList_app = new ArrayList<>();
+		List<String> corpNmList_app = new ArrayList<>();
+		
+		for(int i=0; i < tempList.size(); i++){
+			tempSVo = tempList.get(i);
+			RecruitVo rVo = recrService.getRecr(tempSVo.getRecruit_code());
+			appList.add(rVo);
+			
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			
+			corpImgList_app.add(cVo.getLogo_path());
+			corpNmList_app.add(cVo.getCorp_name());
+		}		
+		
+		model.addAttribute("appList", appList);
+		model.addAttribute("corpNmList_app", corpNmList_app);
+		model.addAttribute("corpImgList_app", corpImgList_app);
 		
 		// sSrecrList를 보내야되는게 아니고 그걸 통한 recrList를 보내야되네? (srList)
 		model.addAttribute("srList", srList);

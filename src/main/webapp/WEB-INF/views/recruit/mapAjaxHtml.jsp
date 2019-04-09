@@ -11,7 +11,7 @@
 				<td style="width: 5px; height: 5px;">
 					<div id="recr${i.index }" onmouseover="" style="cursor: pointer;">
 						<div class="table_div">
-							${corpImgList.get(i.index) }
+							<img src="${corpImgList.get(i.index) }" width="200">
 						</div> <br>
 						<strong>${rRVo.recruit_title }</strong> <br>
 						${corpNmList.get(i.index) } <br>
