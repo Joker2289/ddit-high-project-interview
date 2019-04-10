@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>채용공고｜4444</title>
+	<title>채용공고｜111</title>
 		<!-- 지도 script. -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=21c4ce15b016e2f4c34196b944d9852b&libraries=services,clusterer,drawing"></script>	
 	
@@ -16,7 +16,7 @@
 <div class="row">
 <div>
 	<!-- 레이아웃 잡는건 나중에.. -->
-	<table border="0" style="margin-bottom: 60px; margin-top: 0px; padding: 0px; margin-left: -2px;">
+	<table border="0" style="margin-bottom: 60px; margin-top: -4px; padding: 0px; margin-left: -2px;">
 		<tr>
 			<td style="vertical-align: top;">
 				<div class="col-md-12">
@@ -34,7 +34,7 @@
 								<td style="text-align: right;">
 									<i class="far fa-share-square" style="color: #0174b0; font-size: 22px;"></i> 
 									<i class="far fa-flag" style="color: #0174b0; font-size: 22px;
-											margin-left: 10px; margin-right: 28px;"></i>
+											margin-left: 10px; margin-right: 57px;"></i>
 								</td>
 							</tr>
 							<tr>
@@ -52,7 +52,7 @@
 														color: #0174b0; font-weight: bold; margin-right: 15px; margin-top: 15px;">
 												<input type="button" value="지원" style="border: 0px;
 														width: 60px; background-color: #0174b0; font-size: 18px; height: 38px;
-														color: white; font-weight: bold; margin-top: 15px;">
+														color: white; font-weight: bold; margin-top: 15px;" id="btn_app">
 											</td>
 										</tr>
 									</table>
@@ -60,59 +60,24 @@
 							</tr>
 							<tr>
 								<td>
-									<table border="1" style="width: 795px;">
+									<table border="0" style="width: 794px; border-top: 1px solid; border-color: #a6a6a6;
+											margin-top: 15px;">
 										<tr>
-											<td style="width: 500px; padding-left: 20px;">
-												<span style="font-size: 17px;">(상세내용)</span><br>
+											<td style="width: 520px; padding: 20px; padding-left: 25px;">
+												<span style="font-size: 17px;">
+													${recr.recruit_contents }
+												</span><br>
 											</td>
-											<td>
-												직급<br>
+											<td style="vertical-align: top; padding: 20px; font-size: 17px;">
+												<strong>직급</strong><br>
+												...<br>
+												<strong>업계</strong><br>
+												...<br>
+												<strong>고용형태</strong><br>
 												...<br>
 											</td>
 										</tr>
 									</table>								
-								</td>
-							</tr>
-							<tr>
-								<td>${corp.corp_name }</td>
-							</tr>
-							<tr>
-								<td>게시일: xxx</td>
-							</tr>
-							<tr>
-								<td>지원자: ${recr.app_count }</td>
-							</tr>
-							<tr>
-								<td>간편지원여부: ${recr.app_type }</td>
-							</tr>
-							<tr>
-								<td>${recr.job_local }</td>
-							</tr>
-							<tr>
-								<td>${recr.job_type }</td>
-							</tr>
-							<tr>
-								<td>${recr.recruit_contents }</td>
-							</tr>
-							<tr>
-								<td>${recr.job_rank }</td>
-							</tr>
-							<tr>
-								<td>${recr.emp_type }</td>
-							</tr>
-							<tr style="width: 30px;">
-								<td>
-									<br><br>
-									<a style="padding: 10px; border: 1px solid;"><i class="fas fa-bookmark"></i>스크랩</a>
-									<c:choose>
-										<c:when test="${recr_app == 't' }">
-											<input id="btn_app" type="button" value="지원 취소" style="">
-										</c:when>
-										<c:otherwise>
-											<input id="btn_app" type="button" value="지원 하기" style="">
-										</c:otherwise>
-									</c:choose>
-									<br><br><br><br><br>
 								</td>
 							</tr>
 						</table>
@@ -122,6 +87,7 @@
 					</div>
 				</div>			
 			</td>
+			
 			<td style="vertical-align: top; margin-left: 0px;">
 				<div class="col-md-12">
 					<div class="whiteBox" style="width: 330px; margin-left: -14px; font-size: 20px; padding-bottom: 7px;
@@ -148,67 +114,11 @@
 		</tr>
 	</table>
 	
-	<table border="1">
-		<tr>
-			<td>
-				<img src="${corp.logo_path }" width="200">
-			</td>
-		</tr>
-		<tr>
-			<td>${recr.recruit_title }</td>
-		</tr>
-		<tr>
-			<td>${corp.corp_name }</td>
-		</tr>
-		<tr>
-			<td>게시일: xxx</td>
-		</tr>
-		<tr>
-			<td>지원자: ${recr.app_count }</td>
-		</tr>
-		<tr>
-			<td>간편지원여부: ${recr.app_type }</td>
-		</tr>
-		<tr>
-			<td>${recr.job_local }</td>
-		</tr>
-		<tr>
-			<td>${recr.job_type }</td>
-		</tr>
-		<tr>
-			<td>${recr.recruit_contents }</td>
-		</tr>
-		<tr>
-			<td>${recr.job_rank }</td>
-		</tr>
-		<tr>
-			<td>${recr.emp_type }</td>
-		</tr>
-		<tr style="width: 30px;">
-			<td>
-				<br><br>
-				<a style="padding: 10px; border: 1px solid;"><i class="fas fa-bookmark"></i>스크랩</a>
-				<c:choose>
-					<c:when test="${recr_app == 't' }">
-						<input id="btn_app" type="button" value="지원 취소" style="">
-					</c:when>
-					<c:otherwise>
-						<input id="btn_app" type="button" value="지원 하기" style="">
-					</c:otherwise>
-				</c:choose>
-				<br><br><br><br><br>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div id="map" style="width:500px;height:400px;"></div>
-			</td>
-		</tr>
-	</table>	
 	<br>
 	<a href="#" onclick="history.back(-1); return false;">뒤로 가기</a>
 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
 	<a href="${pageContext.request.contextPath }/recruit">채용공고 페이지로 이동 -></a>
+	<br><br>
 		
 </div>		
 </div>		
