@@ -39,10 +39,10 @@
 								<button id="btnSlidegt" class="btn btn-default" style="border: 0px; margin-left: 10px; font-size: 150%;">&gt;</button><br/>
 <!-- 								<ul  id="content" style="list-style:none;width:3000px; padding-left: 5px;"> -->
 									<c:forEach items="${getRecruitInfo }" var="getRecruitInfo">
-										<div class="whiteBox" style="margin-left: 10px; width: 300px;height: 200px;">
-											<img alt="" src="${corporationInfo.logo_path}"><br>
-											<div style="font-size: 150%">${getRecruitInfo.recruit_title}</div><br> 
-											${corporationInfo.corp_name}<br>
+										<div class="whiteBox" style="margin-left: 10px; width: 300px;height: 200px;margin-top: 20px;">
+											<img style="margin-left: 10px;" alt="" src="${corporationInfo.logo_path}"><br>
+											<div style="font-size: 150%;margin-left: 10px;">${getRecruitInfo.recruit_title}</div><br> 
+											<div style="margin-left: 10px;">${corporationInfo.corp_name}</div><br>
 										</div> 
 									</c:forEach>
 								</ul>

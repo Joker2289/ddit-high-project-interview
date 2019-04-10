@@ -5,7 +5,26 @@
 <head>
 	<link href="/css/recruit/recruit.css" type="text/css" rel="stylesheet">
 	<title>채용공고｜11</title>
-	
+<style>
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+/*   min-width: 160px; */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+</style>
 </head>
 
 <body>
@@ -24,7 +43,17 @@
 	<div style="margin-left: 220px; margin-top: 10px" > 
 		<label for="corporationNm" style="font-size: 200%" > ${corporationInfo.corp_name} </label> 
 			<div style="float: right; margin-right: 10px; ">
-				<button id="report&follw" name="report&follw"  style="border: 0px;font-size: 50%;background-color: #FFFFFF;">• • •</button>
+				
+				<div class="dropdown" style="margin-right: -120px;">
+				  <span>• • •</span>
+  					<div style="margin-right: 30px;" class="dropdown-content">
+    					<p ><a>신고</a></p>
+    					<p ><a>+팔로워</a></p>
+  					</div>
+				</div>
+				
+				
+  				
 			</div>
 			<br>
 		<label for="addr1">${corporationInfo.addr1 }</label> 
@@ -35,6 +64,8 @@
 		<button value="웹사이트 가기 ↗" name="corp_url" onclick="window.open('http://www.naver.com')" style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;">웹사이트 가기↗</button> <br>
 	</div>
 </div>
+
+
 
 
 </body>

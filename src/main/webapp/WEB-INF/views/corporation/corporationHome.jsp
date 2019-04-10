@@ -3,34 +3,84 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
-<head> 
-
+<head>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<style>
+textarea {
+    font-size: 100%;
+    letter-spacing: 1px;
+}
+textarea {
+    padding: 10px;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+}
+</style>
 </head>
 <body>
-<div class="container">
-	<div class="row">
-		<div style="margin-left: 15px;" >
-<!-- 			<section style="text-align: center;"> -->
+	<div class="container">
+		<div class="row">
+			<div style="margin-left: 15px;">
+				<!-- 			<section style="text-align: center;"> -->
 				<%@ include file="/WEB-INF/views/corporation/module/top.jsp"%>
 				<br>
 				<%@ include file="/WEB-INF/views/corporation/module/left.jsp"%>
 				<br> <br>
 				<%@ include file="/WEB-INF/views/corporation/module/write.jsp"%>
 
-				------------- 회사 타임라인 ------------- <br>
+				
+				
+		
 
+	<div class="input-group" style="margin-top: -178px; margin-left: 240px;border: 1px solid #AAAAAA;border-radius: 4px;background-color: #FFFFFF;box-shadow: 0px 2px 5px #aaa;">
+	          <button id="btn-write_modal" class="btn-write_modal"  style="height: 72.6px; margin-top: -9px;"><span class="span-text"><a data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></span></button>
+	          <button id="btn-upload-img" class="btn-upload"><span style="font-size: 25px;"><a data-toggle="collapse" href="#img" aria-expanded="false" aria-controls="img"><i class="far fa-images"></i></a></span></button>
+	          <button id="btn-upload-video" class="btn-upload"><span style="font-size: 25px;"><a data-toggle="collapse" href="#video" aria-expanded="false" aria-controls="video"><i class="far fa-play-circle"></i></a></span></button>
+	          <button id="btn-upload-document" class="btn-upload"><span style="font-size: 25px;"><a data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="far fa-file-alt"></i></a></span></button>
+	          
+	          
+				<div class="collapse" id="collapseExample" >
+				  <div class="well">
+				    <textarea id="story" name="story" rows="5" cols="33" style="width: 550px;"></textarea>
+				    <br>
+				    <div align="center"><button style="background-color: #FFFFFF;border: 1px solid #AAAAAA;box-shadow: 0px 2px 5px #aaa;border-radius: 4px;font-size: 120%;">글 등록</button></div>
+				  </div><hr>
+  				</div>
+				<div class="collapse" id="img" >
+				  <div class="well">
+				    <div align="right"><button style="background-color: #FFFFFF;border: 1px solid #AAAAAA;box-shadow: 0px 2px 5px #aaa;border-radius: 4px;font-size: 120%;margin-right: 10px;margin-top: 10px;">파일 선택</button></div>
+				    <br>
+				    <div align="right">
+				    	<input type="text" id="img_path" name="img_path" style="width: 420px;"/>
+				    	<button style="background-color: #FFFFFF;border: 1px solid #AAAAAA;box-shadow: 0px 2px 5px #aaa;border-radius: 4px;font-size: 120%;margin-right: 10px;">경로 입력</button>
+				    </div>
+				  </div><hr>
+  				</div>
+				<div class="collapse" id="video" >
+				  <div class="well">
+				    <div align="right"><button style="background-color: #FFFFFF;border: 1px solid #AAAAAA;box-shadow: 0px 2px 5px #aaa;border-radius: 4px;font-size: 120%;margin-right: 10px;margin-top: 10px;">파일 선택</button></div>
+				    <br>
+				    <div align="right">
+				    	<input type="text" id="video_path" name="video_path" style="width: 420px;" />
+				    	<button style="background-color: #FFFFFF;border: 1px solid #AAAAAA;box-shadow: 0px 2px 5px #aaa;border-radius: 4px;font-size: 120%;margin-right: 10px;">경로 입력</button>
+				    </div>
+				  </div><hr>
+  				</div>
+			
+	</div>
 
+			
 
-
-
-				------------------------------------------ <br>	      
+				<br>
+			</div>
 		</div>
 	</div>
-</div>
 
-	
+
 
 </body>
 
