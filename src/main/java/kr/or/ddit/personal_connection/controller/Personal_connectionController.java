@@ -37,9 +37,9 @@ public class Personal_connectionController {
 	public String personalConnectionView(Model model , HttpSession session, HttpServletRequest req) {
 		
 		ServletContext application = req.getServletContext();
-	      String path = application.getRealPath("/upload");
+		String path = application.getRealPath("/upload");
 	      
-	         logger.debug(path + File.separator);
+		logger.debug(path + File.separator);
 		
 		MemberVo memberVo =(MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
@@ -53,13 +53,30 @@ public class Personal_connectionController {
 		int coporations_count = personalService.coporations_count(followVo);
 		List<UsersVo> schoolFriends = 
 				personalService.schoolFriendsSearch(user_id);
+		List<UsersVo> userList = personalService.recommendUsers(user_id);
 		
 		model.addAttribute("connections_count" , connections_count);
 		model.addAttribute("coporations_count", coporations_count);
 		model.addAttribute("schoolFriends", schoolFriends);
-		logger.debug("schoolFriends {}" , schoolFriends);
+		model.addAttribute("userList", userList);
 		
 		return "personalTiles";
+	}
+	
+	
+	@RequestMapping(path={"/recommend"})
+	public String recommendView(HttpSession session , String str) {
+		
+//		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		
+		if (str.equals("recommendCorpor")) {
+			
+			
+			return "/personalConnection/recommend/recommendCorpor";
+		}
+		
+		return null;
+		
 	}
 	
 	

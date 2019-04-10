@@ -192,6 +192,18 @@ public interface IPersonal_connectionDao {
 	List<HashtagVo> feedFollowHashTag(String mem_id);
 	
 	
+	
+	/**
+	* Method : recommendUsers
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param user_id
+	* @return
+	* Method 설명 : 회원님을 위한 맞춤 추천 - 사람(users)
+	*/
+	List<UsersVo> recommendUsers(String user_id);
+	
+	
 
 	
 }

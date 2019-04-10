@@ -27,7 +27,7 @@
 						<div 
 						style="width: 59px;height: 59px;background-image:url(${result.imgPath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;">
 						</div>
-						<div>
+						<div style="text-overflow: ellipsis; display: inline-block; width: 196px; white-space: nowrap; overflow: hidden;">
 							<label style="font-size: 18px;"><strong>${result.title }</strong></label><br/>
 							<label>${result.content }</label>
 						</div>

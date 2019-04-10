@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
+import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.test.LogicTestConfig;
@@ -339,6 +340,118 @@ public class Personal_connectionDaoImplTest extends LogicTestConfig{
 
 		/***Then***/
 		assertNotNull(friendList);
+		
+	}
+	
+	
+	
+	/**
+	* Method : testFeedFollowCorporation
+	* 작성자 : PC09
+	* 변경이력 :
+	* Method 설명 : 인맥 - 회사 - 신선한 시각 필로우에 출력되는 회사
+	*/
+	@Test
+	public void testFeedFollowCorporation() {
+		
+		/***Given***/
+		UsersVo usersVo = new UsersVo();
+		usersVo.setUser_id("lhh");
+		
+		String mem_id = usersVo.getUser_id();
+		
+		/***When***/
+		List<CorporationVo> followList = personalDao.feedFollowCorporation(mem_id);
+		for(CorporationVo list : followList) {
+			logger.debug("list!! {}" , list);
+		}
+
+		/***Then***/
+		assertNotNull(followList);
+		
+	}
+	
+	
+	
+	/**
+	* Method : testFeedFollowUser
+	* 작성자 : PC09
+	* 변경이력 :
+	* Method 설명 : 인맥 - 회사 - 신선한 시각 필로우에 출력되는 유저
+	*/
+	@Test
+	public void testFeedFollowUser() {
+		
+		/***Given***/
+		UsersVo usersVo = new UsersVo();
+		usersVo.setUser_id("lhh");
+		
+		String mem_id = usersVo.getUser_id();
+		
+		/***When***/
+		List<UsersVo> userList = personalDao.feedFollowUser(mem_id);
+		for(UsersVo list :userList) {
+			logger.debug("list!! {}" , list);
+		}
+
+		/***Then***/
+		assertNotNull(userList);
+		
+	}
+	
+	
+	
+	/**
+	* Method : testFeedFollowHashTag
+	* 작성자 : PC09
+	* 변경이력 :
+	* Method 설명 : 인맥 - 회사 - 신선한 시각 필로우에 출력되는 해시태그
+	*/
+	@Test
+	public void testFeedFollowHashTag() {
+		
+		/***Given***/
+		UsersVo usersVo = new UsersVo();
+		usersVo.setUser_id("lhh");
+		
+		String mem_id = usersVo.getUser_id();
+		
+		/***When***/
+		List<HashtagVo> hashTagList = personalDao.feedFollowHashTag(mem_id);
+		for(HashtagVo list : hashTagList) {
+			logger.debug("list!! {}", list);
+		}
+
+		/***Then***/
+		assertNotNull(hashTagList);
+		
+	}
+	
+	
+	
+	/**
+	* Method : testRecommendUsers
+	* 작성자 : PC09
+	* 변경이력 :
+	* Method 설명 : 회원님을 위한 맞춤 추천 - 사람(users)
+	*/
+	@Test
+	public void testRecommendUsers() {
+		
+		/***Given***/
+		UsersVo usersVo = new UsersVo();
+		usersVo.setUser_id("lhh");
+		
+		String user_id = usersVo.getUser_id();
+		
+		/***When***/
+		List<UsersVo> recommendUserList = personalDao.recommendUsers(user_id);
+		for(UsersVo list : recommendUserList) {
+			logger.debug("recommendList, {}" , list);
+		}
+
+		/***Then***/
+		assertNotNull(recommendUserList);
 		
 	}
 	

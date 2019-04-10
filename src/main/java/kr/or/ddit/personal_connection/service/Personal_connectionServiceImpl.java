@@ -95,5 +95,10 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 		return personalDao.feedFollowHashTag(mem_id);
 	}
 
+	@Override
+	public List<UsersVo> recommendUsers(String user_id) {
+		return personalDao.recommendUsers(user_id);
+	}
+
 	
 }

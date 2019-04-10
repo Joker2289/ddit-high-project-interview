@@ -6,7 +6,7 @@
 			<div
 				style="width: 59px;height: 59px;background-image:url(${corp.logo_path});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;"></div>
 			<div>
-				<label style="font-size: 17px;"><strong>${corp.corp_name}
+				<label style="font-size: 18px;"><strong>${corp.corp_name}
 				</strong></label><br /> <label>${corp.industry_type }</label>
 			</div>
 		</div>

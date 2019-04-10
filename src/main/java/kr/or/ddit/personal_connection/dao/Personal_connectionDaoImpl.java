@@ -111,6 +111,12 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 		return HashTag;
 	}
 
+	@Override
+	public List<UsersVo> recommendUsers(String user_id) {
+		List<UsersVo> UserList = sqlSessionTemplate.selectList("personal.recommendUsers", user_id);
+		return UserList;
+	}
+
 
 
 }

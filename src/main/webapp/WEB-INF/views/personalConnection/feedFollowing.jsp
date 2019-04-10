@@ -11,9 +11,9 @@ $(document).ready(function() {
 		
 		$.ajax({
             type : "POST",
-               url : "/feed",
-               dataType : "HTML",
-               data : {"str" : str},
+            url : "/feed",
+            dataType : "HTML",
+            data : {"str" : str},
             success : function(result) {
             	
                $(".corporationList").empty();
@@ -23,13 +23,13 @@ $(document).ready(function() {
          }); 
 		
 		switch (str) {
-		  case "connections" : str = "필터: 인맥";
+		  case "connections" : str = "필터 : 인맥";
 		               break;
-		  case "connectionEtc" : str = "필터: 인맥 밖";
+		  case "connectionEtc" : str = "필터 : 인맥 밖";
 		               break;
-		  case "company" : str = "필터: 회사";
+		  case "company" : str = "필터 : 회사";
 		               break;
-		  case "hashTag" : str = "필터: 해시태그";
+		  case "hashTag" : str = "필터 : 해시태그";
 		               break;
 		}
 		$("#feedName").text(str);
@@ -40,31 +40,31 @@ $(document).ready(function() {
 		
 		if(!$(this).hasClass('Out')){
 			
-			$.ajax({
+			/* $.ajax({
 	            type : "POST",
 	               url : "/followOut",
 // 	               dataType : "HTML",
 	               data : {"followStr" : followStr},
-	            success : function() {
+	            success : function() { */
 	            	
 	            	$(this).html('<i class="fas fa-plus-circle"></i> 팔로우');
 	    			$(this).attr('class','btn btn-default followingBtn follow Out');
 	               
-	            } 
-	         }); 
+	            /* } 
+	         }); */ 
 		}else{
-			$.ajax({
+			/* $.ajax({
 	            type : "POST",
 	               url : "/follow",
 	               dataType : "json",
 	               data : {"followStr" : followStr},
-	            success : function(result) {
-	            	$(this).attr('title',result);
+	            success : function(result) { */
+	            	/* $(this).attr('title',result); */
 	            	$(this).html('<i class="fas fa-check"></i> 팔로우 중');
 	    			$(this).attr('class','btn btn-default followingBtn follow');
 	               
-	            } 
-	         }); 
+	            /* } 
+	         }); */ 
 			
 		}
 	});
