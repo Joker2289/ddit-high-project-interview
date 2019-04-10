@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -185,44 +186,44 @@ public class profileController {
 			corporation = corpService.select_corpInfo(memberVo.getMem_id());
 		}
 		
-		ImageInputStream fis;
+		InputStream fis;
+		URLConnection t_connection = null ;
 		String filePath = "";
 		if((users != null && users.getBg_path() != null) || (corporation != null && corporation.getBg_path() != null))
 			if(users != null) {
 				if (users.getBg_path().contains("http")){
 					URL url = new URL(users.getBg_path());
-					URLConnection t_connection = url.openConnection(); 
-					t_connection.setReadTimeout(10000); 
-					fis = (ImageInputStream) t_connection.getInputStream();
+					t_connection = url.openConnection(); 
+					t_connection.setReadTimeout(3000); 
+					fis =  t_connection.getInputStream();
 				}else{
 					filePath = path + File.separator + users.getBg_path();
-					fis = (ImageInputStream) new FileInputStream(new File(filePath));
+					fis = new FileInputStream(new File(filePath));
 				}
 				
 			}else {
 				if (corporation.getBg_path().contains("http")){
 					URL url = new URL(corporation.getBg_path());
-					URLConnection t_connection = url.openConnection(); 
-					t_connection.setReadTimeout(10000); 
-					fis = (ImageInputStream) t_connection.getInputStream();
+					t_connection = url.openConnection(); 
+					t_connection.setReadTimeout(3000); 
+					fis =  t_connection.getInputStream();
 				}else{
 					filePath = path + File.separator + corporation.getBg_path();
-					fis = (ImageInputStream) new FileInputStream(new File(filePath));
+					fis =  new FileInputStream(new File(filePath));
 				}
 			}
 		
 		else{
 			String noimgPath = application.getRealPath("/images/profile/basicBackground.png");
-			fis = (ImageInputStream) new FileInputStream(new File(noimgPath));
+			fis =  new FileInputStream(new File(noimgPath));
 		}
 		
 		ServletOutputStream sos = resp.getOutputStream();
-		byte[] buff = new byte[8192];
+		byte[] buff = new byte[512];
 		int len = 0;
 		while ((len = fis.read(buff)) > -1) {
 			sos.write(buff);
 		}
-		
 		sos.close();
 		fis.close();
 	}
@@ -242,45 +243,52 @@ public class profileController {
 			corporation = corpService.select_corpInfo(memberVo.getMem_id());
 		}
 		
-		InputStream fis;
+		InputStream fis = null;
 		String filePath = "";
-		if((users != null && users.getProfile_path() != null) || (corporation != null && corporation.getLogo_path() != null)) {
-			
-			if(users != null) {
-				if (users.getProfile_path().contains("http")){
-					URL url = new URL(users.getProfile_path());
-					URLConnection t_connection = url.openConnection(); 
-					t_connection.setReadTimeout(3000); 
-					fis = t_connection.getInputStream();
-				}else{
-					filePath = path + File.separator + users.getProfile_path();
-					fis = new FileInputStream(new File(filePath));
-				}
+		HttpURLConnection t_connection = null;
+		if(users != null) {
+			if (users.getProfile_path() == null){
+				String noimgPath = application.getRealPath("/images/profile/basicProfile.png");
+				fis =  new FileInputStream(new File(noimgPath));
 				
-			}else {
-				if (corporation.getLogo_path().contains("http")){
-					URL url = new URL(corporation.getLogo_path());
-					URLConnection t_connection = url.openConnection(); 
-					t_connection.setReadTimeout(3000); 
-					fis = t_connection.getInputStream();
-				}else{
-					filePath = path + File.separator + corporation.getLogo_path();
-					fis = new FileInputStream(new File(filePath));
-				}
+			}else if(users.getProfile_path().contains("http")){
+				URL url = new URL(users.getProfile_path());
+				t_connection = (HttpURLConnection) url.openConnection(); 
+				t_connection.setConnectTimeout(5000);
+				t_connection.setReadTimeout(5000); 
+				fis = t_connection.getInputStream();
+				
+			}else{
+				filePath = path + File.separator + users.getProfile_path();
+				fis = new FileInputStream(new File(filePath));
 			}
 		
-		}else{
-			String noimgPath = application.getRealPath("/images/profile/basicProfile.png");
-			fis = new FileInputStream(new File(noimgPath));
-		}
-		
+		}else if(corporation != null){
+			if (corporation.getLogo_path() == null){
+				String noimgPath = application.getRealPath("/images/corporation/basic/basicCorporation.png");
+				fis =  new FileInputStream(new File(noimgPath));
+				
+			}else if(corporation.getLogo_path().contains("http")){
+				URL url = new URL(corporation.getLogo_path());
+				t_connection = (HttpURLConnection) url.openConnection();
+				t_connection.setConnectTimeout(5000);
+				t_connection.setReadTimeout(5000); 
+				fis = t_connection.getInputStream();
+				
+			}else{
+				filePath = path + File.separator + corporation.getLogo_path();
+				fis = new FileInputStream(new File(filePath));
+			}
+		}	
 		ServletOutputStream sos = resp.getOutputStream();
 		byte[] buff = new byte[512];
 		int len = 0;
 		while ((len = fis.read(buff)) > -1) {
 			sos.write(buff);
 		}
-		
+		if (t_connection != null) {
+			t_connection.disconnect();
+		}
 		sos.close();
 		fis.close();
 	}
