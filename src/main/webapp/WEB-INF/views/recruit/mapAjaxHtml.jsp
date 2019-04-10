@@ -54,12 +54,12 @@
 			<c:choose>
 				<c:when test="${scrapList.get(i.index) == 'f' }">
 					<!-- scrap_flag에 recruit_code를 붙여주자. (예: t12) -->
-					<i id="scrap${i.index }" class="far fa-bookmark" onmouseover="" data-recruit_code="${rRVo.recruit_code }"
-							style="margin-top: 10px; font-size: 22px; cursor: pointer; color: #0174b0;"></i><br>
+					<i id="scrap${i.index }" class="far fa-bookmark" data-recruit_code="${rRVo.recruit_code }"
+							style="margin-top: 10px; font-size: 22px; color: #0174b0;"></i><br>
 				</c:when>
 				<c:otherwise>
-					<i id="scrap${i.index }" class="fas fa-bookmark" onmouseover="" data-recruit_code="${rRVo.recruit_code }"
-							style="margin-top: 10px; font-size: 22px; cursor: pointer; color: #0174b0;"></i><br>
+					<i id="scrap${i.index }" class="fas fa-bookmark" data-recruit_code="${rRVo.recruit_code }"
+							style="margin-top: 10px; font-size: 22px; color: #0174b0;"></i><br>
 				</c:otherwise>
 			</c:choose>
 		</div></li>

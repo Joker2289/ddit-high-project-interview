@@ -8,14 +8,20 @@
 	<link href="/css/recruit/recruit.css" type="text/css" rel="stylesheet">
 	<title>채용공고｜11</title>
 	
+	<style type="text/css">
+	</style>
 </head>
 
 <body>
 
+
+
+
+
+
 <div class="container">
 <div class="row">
 <div>
-
 
 	<div class="col-md-12" >
 		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: 20px;
@@ -54,9 +60,9 @@
 	<div class="col-md-12" >
 		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: 20px;
 				text-align: center; padding-top: 12px; font-size: 21px;">
-			<img width="30" src="https://lh3.googleusercontent.com/sMhe3GxpmWD6NISZBzhy--dtwcAcVvLFDxOGe1Kat3d0YA0nhq9ICwTSFN3UQ7uEZA">
 			<a href="https://media.daum.net/digital/">
-				 뉴스로 IT 업계 동향을 확인해보세요.
+				<img width="30" src="https://lh3.googleusercontent.com/sMhe3GxpmWD6NISZBzhy--dtwcAcVvLFDxOGe1Kat3d0YA0nhq9ICwTSFN3UQ7uEZA">
+				 뉴스로 IT 업계 동향을 확인해보세요. 1
 			</a>
 		</div>
 	</div>

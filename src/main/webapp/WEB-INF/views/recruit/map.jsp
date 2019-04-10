@@ -55,7 +55,7 @@
 	   		<table style="margin-bottom: 20px;">
 	   			<tr>
 	   				<td id="td_info" style="width: 800px; text-align: left; font-size: 18px;">
-			   			<strong>반경 0m 내의 0개의 채용공고</strong><br> 
+			   			<strong>반경 0km 내의 0개의 채용공고</strong><br> 
 	   				</td>
 	   				<td>
 						<a id="btn_slt1" class="btn btn-default" style="border: 0px; margin-left: 200px;">
@@ -204,14 +204,15 @@
 				
 				var arr_result = result.split("/");
 				var radius_data = arr_result[arr_result.length - 1].split(":")[1];
-				var radius = Math.round(radius_data);
+				var radius_temp = Math.round(radius_data / 100);
+				var radius = radius_temp / 10;
 				
 				var result_num = arr_result.length - 1;
 				
 				// ajax에서 model로 받은 값은 못가져오나보네.
 				console.log("hidden size? : " + $("#hidden_size").val());
 				
-				var str_info = '<strong>반경 ' + radius + 'm 내의 ' + result_num + '개의 채용공고</strong><br>';
+				var str_info = '<strong>반경 ' + radius + 'km 내의 ' + result_num + '개의 채용공고</strong><br>';
 				
 				// 리스트 출력할 whitebox width 조정. 'content1'의 width를 조정해야되네.
 				width_value = (result_num * 280) + 50;
@@ -257,7 +258,7 @@
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 	mapOption = { 
 	    center: new daum.maps.LatLng(36.32485, 127.42009), // 지도의 중심좌표
-	    level: 3 // 지도의 확대 레벨  
+	    level: 5 // 지도의 확대 레벨  
 	};
 	
 	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -317,7 +318,7 @@
 	var addr = "${uVo.addr1 }";
 	var user_id = "${uVo.user_id }";
 	
-	changeUserAddr(addr, user_id);
+	changeUserAddrFirst(addr, user_id);
 	
 	var drawingFlag = false; // 원이 그려지고 있는 상태를 가지고 있을 변수입니다
 	var centerPosition; // 원의 중심좌표 입니다
@@ -546,23 +547,6 @@
 	        arr_mflag = [];
 	        
 	        <c:forEach begin="1" end="${recrList.size() }" varStatus="i">
-		        // 회사의 좌표
-// 			    var corp_location = "${corpList.get(i.index - 1).corp_location }";
-// 			    var corp_lat = corp_location.split("/")[0];
-// 			    var corp_lng = corp_location.split("/")[1];
-// 			    var corp_position = "(" + corp_lat + ", " + corp_lng + ")";
-			    
-				// 좌표를 통해 직접 거리를 계산해야겠다. 함수로 가져온 좌표값은 자료형이 뭔지 모르겠네.
-				// 아무튼 문자열로 변환해주는 'String([object])'을 이용해서 문자열로 바꿨음.
-// 				var center_location = String(tempCenterValue);
-// 				center_location = center_location.substr(1, center_location.length);
-// 				center_location = center_location.substr(0, center_location.length - 1);
-// 				var center_lat = center_location.split(", ")[0];
-// 				var center_lng = center_location.split(", ")[1];
-				
-				// 원 중심에서 corpList.get(0)까지의 거리.
-// 				var tempDistance = 94344.35355830716 * (Math.sqrt( ((corp_lat+0)-(center_lat+0))*((corp_lat+0)-(center_lat+0)) + ((corp_lng+0)-(center_lng+0))*((corp_lng+0)-(center_lng+0)) ));
-				
 				if(arr_corpD[${i.index - 1 }] < tempDistanceValue){
 					// '회사1:신세계,거리:100m/회사2:삼성,거리:200m...'
 					result += "회사${i.index }:${recrList.get(i.index - 1).recruit_code },거리:" + arr_corpD[${i.index - 1 }] + "/";
@@ -689,7 +673,7 @@
 	// 주소 - 좌표 변환 메서드.
 	var marker = null;	
 	var coords = null;
-	function changeUserAddr(addr, user_id){
+	function changeUserAddrFirst(addr, user_id){
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new daum.maps.services.Geocoder();
 
@@ -718,6 +702,14 @@
 		    } 
 		});
 	}	
+	
+	// 주소로 위치 이동, 지도 확대 레벨 변경.
+	function changeUserAddr(addr){
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);	
+        
+        map.setLevel(5);
+	}
 	
 	function changeAddr(addr){
 		// 주소-좌표 변환 객체를 생성합니다
