@@ -31,10 +31,10 @@
 								</td>
 							</tr>
 							<tr style="height: 40px;">
-								<td style="text-align: right;">
-									<i class="far fa-share-square" style="color: #0174b0; font-size: 22px;"></i> 
-									<i class="far fa-flag" style="color: #0174b0; font-size: 22px;
-											margin-left: 10px; margin-right: 57px;"></i>
+								<td style="text-align: right; padding-top: 20px;">
+									<i class="far fa-share-square" style="color: #0174b0; font-size: 24px;"></i> 
+									<i class="far fa-flag" style="color: #0174b0; font-size: 24px;
+											margin-left: 22px; margin-right: 57px;"></i>
 								</td>
 							</tr>
 							<tr>
@@ -59,17 +59,17 @@
 								</td>
 							</tr>
 							<tr>
-								<td>
+								<td style="height: 200px;">
 									<table border="0" style="width: 794px; border-top: 1px solid; border-color: #a6a6a6;
 											margin-top: 15px;">
-										<tr>
+										<tr style="">
 											<td style="width: 520px; padding: 20px; padding-left: 25px;">
 												<span style="font-size: 17px;">
 													${recr.recruit_contents }
 												</span><br>
 											</td>
 											<td style="vertical-align: top; padding: 20px; font-size: 17px;">
-												<strong>직급</strong><br>
+												<strong>직급222</strong><br>
 												...<br>
 												<strong>업계</strong><br>
 												...<br>

@@ -135,9 +135,6 @@
 							<td>${recrList.get(0).job_local }</td>
 						</tr>
 						<tr>
-							<td>${recrList.get(0).recruit_contents }</td>
-						</tr>
-						<tr>
 							<td>${recrList.get(0).app_count }명이 지원했습니다</td>
 						</tr>
 						<tr>
@@ -186,9 +183,6 @@
 							</tr>
 							<tr>
 								<td>${recrList.get(i.index - 1).job_local }</td>
-							</tr>
-							<tr>
-								<td>${recrList.get(i.index - 1).recruit_contents }</td>
 							</tr>
 							<tr>
 								<td>${recrList.get(i.index - 1).app_count }명이 지원했습니다</td>

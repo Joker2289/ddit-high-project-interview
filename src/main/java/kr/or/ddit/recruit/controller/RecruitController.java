@@ -612,7 +612,17 @@ public class RecruitController {
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		// 회원이 검색한 값 가져오기. (getLSLog - get last search_log)
+		// 검색 내역이 없는 경우 새로 sVo 만들고 insert하기.
 		Search_logVo lSLog = sLogService.getLSLog(mVo.getMem_id());
+		
+		if(lSLog == null){
+			lSLog = new Search_logVo();
+			lSLog.setSearch_code(String.valueOf(sLogService.getAllCnt()+1));
+			lSLog.setSearch_local("전국");
+			lSLog.setSearch_save("1");
+			lSLog.setSearch_word("전체");
+			lSLog.setUser_id(mVo.getMem_id());
+		}
 		
 		model.addAttribute("lSLog", lSLog);
 		
