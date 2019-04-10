@@ -1,14 +1,18 @@
 package kr.or.ddit.post.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import kr.or.ddit.post.dao.IPostDao;
 import kr.or.ddit.post.model.PostVo;
@@ -117,5 +121,40 @@ public class PostServiceTest extends LogicTestConfig {
 		assertTrue(nextPage.size() > 0);
 	}
 
-
+	
+	/**
+	 * Method : testHashtag
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * Method 설명 : controller에서 해시태그를 처리하는 방법
+	 */
+	@Test
+	public void testHashtag(){
+		
+		Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣]*)");
+		String newHashtag = "#개발자 ㅁㄴㅇㅁㄴㅇ #웹개발 #집에가고싶다 #진도가너무안나간다";
+		Matcher m = p.matcher(newHashtag);
+		
+		String hashtag = "";
+		
+		while(m.find()){
+			hashtag = hashtag_replace(m.group());
+			
+			if(hashtag != null){
+				logger.debug("추출된 해시태그 : {}", hashtag);
+			}
+		}
+		
+	}
+	
+	public String hashtag_replace(String str){
+		
+		str = StringUtils.replace(str, "-_+=!@#$%^&*()[]{}|\\;:'\"<>,.?/~`） ","");
+		
+		if(str.length() < 1){
+			return null;
+		}
+		
+		return str;
+	}
 }

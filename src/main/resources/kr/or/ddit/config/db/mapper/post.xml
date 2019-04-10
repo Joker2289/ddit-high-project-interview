@@ -14,6 +14,12 @@
 		    sysdate,
 		    #{writer_name}
 		)
+		
+		<selectKey resultType="String" keyProperty="post_code" order="AFTER">
+			select post_code_seq.currval
+			  from dual
+		</selectKey>
+		
 	</insert>
 	
 	<!-- 게시글 수정 -->
@@ -112,6 +118,16 @@
 		 where post_code = #{post_code}
 	</select>
 	
-	
+	<!-- 해시태그 목록 등록 -->
+	<insert id="insert_hashtaglist" parameterType="taglistVo">
+		insert into hashtag_list
+		values(
+			taglist_code_seq.nextval,
+			#{hashtag_name},
+			#{ref_code},
+			#{division},
+			sysdate
+		)
+	</insert>
 	
 </mapper>

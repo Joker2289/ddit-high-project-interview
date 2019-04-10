@@ -17,22 +17,22 @@ public class Hashtag_listDaoImpl implements IHashtag_listDao {
 	
 	@Override
 	public int insert_hashtaglist(Hashtag_listVo hashtag_listVo) {
-		return sqlSession.insert("taglist.insert_hashtaglist", hashtag_listVo);
+		return sqlSession.insert("post.insert_hashtaglist", hashtag_listVo);
 	}
 
 	@Override
 	public int update_hashtaglist(Hashtag_listVo hashtag_listVo) {
-		return sqlSession.update("taglist.update_hashtaglist", hashtag_listVo);
+		return sqlSession.update("hashtag.update_hashtaglist", hashtag_listVo);
 	}
 
 	@Override
 	public int delete_hashtaglist(String taglist_code) {
-		return sqlSession.delete("taglist.delete_hashtaglist", taglist_code);
+		return sqlSession.delete("hashtag.delete_hashtaglist", taglist_code);
 	}
 
 	@Override
 	public List<Hashtag_listVo> select_hashtaglist(Hashtag_listVo hashtag_listVo) {
-		return sqlSession.selectList("taglist.select_hashtaglist", hashtag_listVo);
+		return sqlSession.selectList("hashtag.select_hashtaglist", hashtag_listVo);
 	}
 
 }

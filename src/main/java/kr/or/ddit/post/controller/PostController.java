@@ -2,6 +2,8 @@ package kr.or.ddit.post.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +21,9 @@ import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.follow.service.IFollowService;
+import kr.or.ddit.hashtag.service.IHashtagService;
+import kr.or.ddit.hashtag_list.model.Hashtag_listVo;
+import kr.or.ddit.hashtag_list.service.IHashtag_listService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
@@ -59,7 +65,12 @@ public class PostController {
 	
 	@Resource(name="commentService")
 	private ICommentService commentService;
-	 
+	
+	@Resource(name="hashtagService")
+	private IHashtagService hashtagService;
+	
+	@Resource(name="hashtag_listService")
+	private IHashtag_listService taglistService;
 	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
 	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request){
@@ -164,6 +175,7 @@ public class PostController {
 		PostVo insertPost = new PostVo();
 		String writer_name = "";
 		
+		
 		if(member.getMem_division().equals("1")){
 			UsersVo user = usersService.select_userInfo(mem_id);
 			writer_name = user.getUser_name();
@@ -186,12 +198,53 @@ public class PostController {
 		
 		int insertCnt = postService.insert_post(insertPost);
 		
+		Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣]*)");
+		Matcher m = p.matcher(post_contents);
+		
+		String hashtag = "";
+		
+		Hashtag_listVo taglistVo = new Hashtag_listVo();
+		String hashtag_name = "";
+		taglistVo.setDivision("28");
+		taglistVo.setRef_code(insertPost.getPost_code());
+		
+		while(m.find()){
+			hashtag = hashtag_replace(m.group());
+			
+			if(hashtag != null){
+				logger.debug("추출된 해시태그 : {}", hashtag);
+				taglistVo.setHashtag_name(hashtag);
+				
+				hashtagService.insert_hashtag(hashtag);
+				taglistService.insert_hashtaglist(taglistVo);
+				
+			}
+		}
 		
 		if(insertCnt == 1){
 			return "redirect:/timeline";
 		} else {
 			return "redirect:/timeline";
 		}
+	}
+	
+	
+	/**
+	 * Method : hashtag_replace
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param str
+	 * @return
+	 * Method 설명 : 해시태그 추출을 위한 메소드
+	 */
+	public String hashtag_replace(String str){
+		
+		str = StringUtils.replace(str, "-_+=!@#$%^&*()[]{}|\\;:'\"<>,.?/~`） ","");
+		
+		if(str.length() < 1){
+			return null;
+		}
+		return str;
 	}
 	
 	@RequestMapping(path={"/commentArea"}, method=RequestMethod.POST)

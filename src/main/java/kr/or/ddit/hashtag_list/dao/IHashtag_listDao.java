@@ -11,14 +11,14 @@ public interface IHashtag_listDao {
 	 * 
 	 * @return Method 설명 : 해시태그 목록 등록
 	 */
-	int insert_hashtaglist(Hashtag_listVo hashtag_listVo);
+	int insert_hashtaglist(Hashtag_listVo taglistVo);
 
 	/**
 	 * Method : update_hashtaglist 작성자 : goo84 변경이력 :
 	 * 
 	 * @return Method 설명 : 해시태그 목록 수정
 	 */
-	int update_hashtaglist(Hashtag_listVo hashtag_listVo);
+	int update_hashtaglist(Hashtag_listVo taglistVo);
 
 	/**
 	 * Method : delete_hashtaglist 작성자 : goo84 변경이력 :
@@ -32,6 +32,6 @@ public interface IHashtag_listDao {
 	 * 
 	 * @return Method 설명 : 포함된 해시태그 조회
 	 */
-	List<Hashtag_listVo> select_hashtaglist(Hashtag_listVo hashtag_listVo);
+	List<Hashtag_listVo> select_hashtaglist(Hashtag_listVo taglistVo);
 
 }

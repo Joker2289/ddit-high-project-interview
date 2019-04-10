@@ -16,13 +16,13 @@ public class Hashtag_listServiceImpl implements IHashtag_listService {
 	private IHashtag_listDao hashtag_listDao;
 
 	@Override
-	public int insert_hashtaglist(Hashtag_listVo hashtag_listVo) {
-		return hashtag_listDao.insert_hashtaglist(hashtag_listVo);
+	public int insert_hashtaglist(Hashtag_listVo taglistVo) {
+		return hashtag_listDao.insert_hashtaglist(taglistVo);
 	}
 
 	@Override
-	public int update_hashtaglist(Hashtag_listVo hashtag_listVo) {
-		return hashtag_listDao.update_hashtaglist(hashtag_listVo);
+	public int update_hashtaglist(Hashtag_listVo taglistVo) {
+		return hashtag_listDao.update_hashtaglist(taglistVo);
 	}
 
 	@Override
@@ -31,8 +31,8 @@ public class Hashtag_listServiceImpl implements IHashtag_listService {
 	}
 
 	@Override
-	public List<Hashtag_listVo> select_hashtaglist(Hashtag_listVo hashtag_listVo) {
-		return hashtag_listDao.select_hashtaglist(hashtag_listVo);
+	public List<Hashtag_listVo> select_hashtaglist(Hashtag_listVo taglistVo) {
+		return hashtag_listDao.select_hashtaglist(taglistVo);
 	}
 	
 	

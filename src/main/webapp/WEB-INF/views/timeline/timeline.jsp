@@ -125,7 +125,6 @@
 				              <span>${fn:split((post.resultMinute/43200),'.')[0] }달 전</span>
 				            </c:when>
 						  </c:choose>
-<%-- 						  <span>${post.post_date }</span><br> --%>
 						</div>
 					  </a>
 					  <!-- 게시물 관리버튼(dropdown) -->
@@ -209,7 +208,6 @@
 	      <!-- add friend -->
 	        <div class="panel panel-default">
 	          <div class="panel-body">
-<!-- 	            <a id="scroll-top" href="#btn-write_modal"><h4>광고란</h4></a> -->
 	            <a id="scroll-top" href="#"><h4>광고란</h4></a>
 	            <ul>
 	              <li>
@@ -282,7 +280,7 @@
 				$(".col-comment").remove();
 			}
 			
-			console.log($('.col-comment-area ' + ref_code).children($('.comment-area' + ref_code)).length);
+// 			console.log($('.col-comment-area ' + ref_code).children($('.comment-area' + ref_code)).length);
 			
 		});
 		
@@ -293,7 +291,20 @@
 			pushModal();
 			
 			$("#btn_write_upload").on("click", function() {
+				
+				var txt = $("#summernote").val();
+				var tags = [];
+				
+				txt = txt.replace(/#[^#\s,;]+/gm, function(tag) {
+				  tags.push(tag);
+				});
+				
+				$("#tags").html(tags.join('<br/>'));
+				
+				
+				
 				$("#frm_writePost").submit();
+				
 			})
 		});
 		
