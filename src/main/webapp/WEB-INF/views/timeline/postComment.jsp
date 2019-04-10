@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- comment -->
-<div class="col-comment" >
+<div class="col-comment" title="${ref_code }">
 <!-- comment input area -->
-  <div class="comment_inputarea"  style="min-height: 40px;">
-    <div class="comment-profile-img" style="float: left; padding: 5px; width: 7%; display: inline-block;">
+  <div class="comment_inputarea">
+    <div class="comment-profile-img">
       <!-- 로그인 한 회원의 프로필 사진 -->
       <c:choose>
         <c:when test="${memberInfo.mem_division == '1' }">
@@ -29,23 +30,56 @@
   
     <div class="comment-area-input">
       <div class="comment-input-text">
-    	  <form>
-    	    <!-- 작성 내용 -->
-    	    <textarea id="input_comment_contents ${ref_code }" class="input_comment_contents" placeholder="댓글달기" name="input_comment_contents"></textarea>
-    	  </form>
+    	  <!-- 작성 내용 -->
+    	<textarea id="input_comment_contents ${ref_code }" class="input_comment_contents" name="input_comment_contents"></textarea>
       </div>
-      
-      <div class="comment-input-img" style="float: right;">
+      <div class="comment-input-img">
     	<button class="input_comment_img"><i class="fas fa-camera"></i></button>
       </div>
+      <form>
+    	<button type="button" class="btn_commentWrite ${ref_code} }">올리기</button>
+      </form>
     </div>
   </div>
 <!-- /comment input area -->  
-  
-  <!-- comment print area -->
+<!-- comment print area -->
   <div class="comment-printarea">
     <c:forEach items="${commentList }" var="comment">
       <div class="comment-area ${ref_code }" data-comment="${comment.comment_code }">
+        <div class="comment-date-info">
+          <c:choose>
+            <c:when test="${comment.resultMinute <= 1 }">
+              <span>방금 전</span>
+            </c:when>
+            <c:when test="${comment.resultMinute < 60 }">
+              <span>${comment.resultMinute }분 전</span>
+            </c:when>
+            <c:when test="${comment.resultMinute < 1440 }">
+              <span>${fn:split((comment.resultMinute/60), '.')[0] }시간 전</span>
+            </c:when>
+            <c:when test="${comment.resultMinute < 43200 }">
+              <span>${fn:split((comment.resultMinute/1440),'.')[0] }일 전</span>
+            </c:when>
+            <c:when test="${comment.resultMinute < 518400 }">
+              <span>${fn:split((comment.resultMinute/43200),'.')[0] }달 전</span>
+            </c:when>
+          </c:choose>
+		  <c:if test="${comment.mem_id eq memberInfo.mem_id }">
+            <div class="dropdown" >
+              <button class="btn_commentControll" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		        <i class="fas fa-ellipsis-h"></i>
+		      </button>
+			  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+     			<button class="btn_controll-list">
+	              <i class="fas fa-edit"></i>&nbsp;<span>댓글 수정</span>
+	            </button>
+	      	    <button class="btn_controll-list">
+		          <i class="far fa-trash-alt"></i>&nbsp;<span>삭제</span>
+		        </button>
+		      </ul>
+            </div>
+		  </c:if>
+        </div>
         <div class="comment-profile-img" style="float: left; padding: 5px; width: 10%;">
           <c:choose>
             <c:when test="${comment.profile_path != null && comment.logo_path == null }">
@@ -60,26 +94,32 @@
 	      </c:choose>
         </div>
         <div class="comment-text">
-  	      <div style="border: 0px solid #fff; width: 100%; outline: 0; padding-top: 5px; padding-bottom: 5px;">${comment.comment_contents }</div>
+  	      <div class="comment-contents">${comment.comment_contents }</div>
         </div>
-        <div class="comment-input-button" style="padding-top: 5px; padding-bottom: 5px;">
-          <button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="far fa-thumbs-up"></i></button>
-          <button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="far fa-comments"></i></button>
+        <div class="comment-input-button">
+          <button class="btn-comment-social"><i class="far fa-thumbs-up"></i></button>
+          <button class="btn-comment-social"><i class="far fa-comments"></i></button>
+          <c:if test="${comment.mem_id != memberInfo.mem_id }">
+            <button class="btn-comment-social"><i class="far fa-flag"></i></button>
+          </c:if>
         </div>
       </div>
     </c:forEach>
   </div>
   <!-- /comment print area -->
   <div class="morecomment">
-  	<a><button type="button" id="btn_moreComment" class="btn_moreComment" title="${ref_code }" style="border: 0px solid #fff; background: #fff; padding: 10px; outline: 0;">댓글 더 보기</button></a>
-  	<input id="commentCnt ${ref_code }" type="hidden" value="${commentCnt }">
+  	<a><button type="button" id="btn_moreComment" class="btn_moreComment" title="${ref_code }">댓글 더 보기</button></a>
+  	<input id="commentCnt" class="commentCnt" type="hidden" value="${commentCnt }">
   </div>
 </div>
 <!-- /comment -->
 
 <script>
-
-	$(".input_comment_contents").summernote();
+	
+	$(".input_comment_contents").summernote({
+		placeholder: '댓글달기'
+	});
+	
 	
 	$(".note-toolbar").hide();
 	$(".note-resizebar").hide();
@@ -96,16 +136,17 @@
 	});
 	
 	
-	console.log("commentCnt : " + $("#commentCnt").val());
 	
 	//댓글 더보기 버튼 숨기기(해당 게시물의 댓글 총 갯수와 조회된 댓글의 수가 같을 때 버튼 숨기기)
-	if($(".comment-area").length = $("#commentCnt").val()){
+	if($('.comment-area').length == $('.commentCnt').val()){
 		$(".morecomment").hide();
 	}
 	
 	var commentPageNum = 2;
 	var last_comment;
-	var comment_ref_code = $("#btn_moreComment").attr('title');
+	var comment_ref_code = $(".col-comment").attr('title');
+	
+// 	console.log($('.col-comment-area ' + comment_ref_code).children($('.comment-printarea ' + comment_ref_code)).length);
 	
 	
 	$("#btn_moreComment").on("click", function() {
@@ -116,17 +157,39 @@
 			url : '/appendnextcomment',
 			data : {"ref_code" : comment_ref_code, "commentPageNum" : commentPageNum, "last_comment" : last_comment},
 			success : function(data) {
-				console.log(data);
 				
 				if(data != ""){
 					$(".comment-printarea").append(data);
 				}
-				
 			}
 		});
 		commentPageNum++;
+		if($('.comment-area').length == $('.commentCnt').val()){
+			$(".morecomment").hide();
+		}
 	});
 	
-	console.log("current comment : " + $(".comment-area").length);
+	
+	$(".btn_commentWrite").on("click", function() {
+		
+		var contents = $(".input_comment_contents").val();
+		
+		$.ajax({
+			type : 'POST',
+			url : '/writecomment',
+			data : {"ref_code" : comment_ref_code, "contents" : contents},
+			success : function(data) {
+				$(".col-comment").remove();
+				
+				if(data != ""){
+					$("." + comment_ref_code).append(data);
+				}
+				
+				
+			}
+		});
+		
+	});
+	
 	
 </script>

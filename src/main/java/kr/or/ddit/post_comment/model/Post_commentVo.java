@@ -11,9 +11,16 @@ public class Post_commentVo {
 	private Date comment_date;			// 작성일
 	private String profile_path;
 	private String logo_path;
-	
+	private int resultMinute;			// (현재시간 - 작성일) 분단위
+
 	public Post_commentVo() {
 		// TODO Auto-generated constructor stub
+	}
+	public int getResultMinute() {
+		return resultMinute;
+	}
+	public void setResultMinute(int resultMinute) {
+		this.resultMinute = resultMinute;
 	}
 	public String getProfile_path() {
 		return profile_path;

@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <c:forEach items="${nextPostList }" var="post">
   <div id="col-post" class="scrolling" data-post="${post.post_code }">
@@ -10,7 +10,24 @@
   	  <a href="#" >
   		<div class="writer_info" style="float: left;">
   		  <a style="font-size: 20px;" href="#">${post.writer_name }</a>
-  		  <span>${post.post_date }</span><br>
+		  <c:choose>
+		    <c:when test="${post.resultMinute <= 1 }">
+		      <span>방금 전</span>
+		    </c:when>
+		    <c:when test="${post.resultMinute < 60 }">
+              <span>${post.resultMinute }분 전</span>
+            </c:when>
+            <c:when test="${post.resultMinute < 1440 }">
+              <span>${fn:split((post.resultMinute/60), '.')[0] }시간 전</span>
+            </c:when>
+            <c:when test="${post.resultMinute < 43200 }">
+              <span>${fn:split((post.resultMinute/1440),'.')[0] }일 전</span>
+            </c:when>
+            <c:when test="${post.resultMinute < 518400 }">
+              <span>${fn:split((post.resultMinute/43200),'.')[0] }달 전</span>
+            </c:when>
+		  </c:choose>  		  
+<%--   		  <span>${post.post_date }</span><br> --%>
   		</div>
   	  </a>
   	  <!-- 게시물 관리버튼(dropdown) -->

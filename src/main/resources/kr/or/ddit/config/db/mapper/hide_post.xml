@@ -2,43 +2,27 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="post">
+<mapper namespace="hide_post">
 	
-	<!-- 게시글 작성 -->
-	<insert id="insert_post" parameterType="postVo">
-		insert into post
-		values (
-		    post_code_seq.nextval, 
-		    #{mem_id},
-		    #{post_contents},
-		    sysdate,
-		    #{writer_name}
+	<!-- 숨긴글 등록 -->
+	<insert id="insert_hidepostInfo" parameterType="hideVo">
+		insert into hide_post
+		values(
+			hide_code_seq.nextval,
+			#{post_code},
+			#{mem_id},
+			sysdate
 		)
 	</insert>
 	
-	<!-- 게시글 수정 -->
-	<update id="update_post" parameterType="postVo">
-		update post
-		   set post_contents = #{post_contents}
-		 where post_code = #{post_code}
-	</update>
-	
-	<!-- 게시글 삭제 -->
-	<delete id="delete_post" parameterType="String">
-		delete post
-		 where post_code = #{post_code}
+	<!-- 숨긴글 해제 -->
+	<delete id="delete_hidepostInfo" parameterType="String">
+		delete hide_post
+		 where hide_code = #{hide_code}
 	</delete>
 	
-	<!-- 특정회원 글  조회(일반회원 프로필 혹은 회사 페이지에서 사용) -->
-	<select id="select_memberPost" parameterType="String" resultType="postVo">
-		select post_code, mem_id, post_contents, post_date, writer_name
-		  from post
-		 where mem_id = #{mem_id} 
-		order by post_date desc 
-	</select>
-	
-	<!-- 타임라인 게시물 목록 출력(page적용) -->
-	<select id="select_timelinePost" parameterType="paginationVo" resultType="postVo">
+	<!-- 숨긴글 조회 -->
+	<select id="select_hidepostList" parameterType="paginationVo" resultType="postVo">
 		select *
 		  from (select b.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
 		          from (select post.*, (select count(ref_code)
@@ -64,14 +48,15 @@
 		                                where mem_id = #{mem_id}
 		                                  and (division='43' or division='11')) a
 		         where post.mem_id = a.user_id
-		           and post.post_code not in (select post_code
+		           and post.post_code in (select post_code
                                             from hide_post
                                            where mem_id = #{mem_id})
 		        order by post_date desc) b ) 
 		where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
 	</select>
-	 
-	<select id="select_nextPost" parameterType="paginationVo" resultType="postVo">
+
+	<!-- 숨긴글 조회(다음페이지) -->
+	<select id="select_nextHidepost" parameterType="paginationVo" resultType="postVo">
 		select *
 		  from (select b.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
 		          from (select post.*, (select count(ref_code)
@@ -97,21 +82,12 @@
 		                                where mem_id = #{mem_id}
 		                                  and (division='43' or division='11')) a
 		         where post.mem_id = a.user_id
-		           and post.post_code not in (select post_code
+		           and post.post_code in (select post_code
                                             from hide_post
                                            where mem_id = #{mem_id})
 		        order by post_date desc) b ) 
 		where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
 		  and post_code &lt; #{criteria_code}
 	</select>
-	
-	<!-- 특정 게시물 조회 -->	
-	<select id="select_postInfo" parameterType="String" resultType="postVo">
-		select post_code, mem_id, post_contents, post_date, writer_name
-		  from post
-		 where post_code = #{post_code}
-	</select>
-	
-	
 	
 </mapper>

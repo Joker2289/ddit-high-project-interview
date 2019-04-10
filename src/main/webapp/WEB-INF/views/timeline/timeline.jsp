@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <div class="container">
    <div class="row">
@@ -107,7 +108,24 @@
 					  <a href="#" >
 						<div class="writer_info" style="float: left;">
 						  <a style="font-size: 20px;" href="#">${post.writer_name }</a>
-						  <span>${post.post_date }</span><br>
+						  <c:choose>
+						    <c:when test="${post.resultMinute <= 1 }">
+						      <span>방금 전</span>
+						    </c:when>
+						    <c:when test="${post.resultMinute < 60 }">
+				              <span>${post.resultMinute }분 전</span>
+				            </c:when>
+				            <c:when test="${post.resultMinute < 1440 }">
+				              <span>${fn:split((post.resultMinute/60), '.')[0] }시간 전</span>
+				            </c:when>
+				            <c:when test="${post.resultMinute < 43200 }">
+				              <span>${fn:split((post.resultMinute/1440),'.')[0] }일 전</span>
+				            </c:when>
+				            <c:when test="${post.resultMinute < 518400 }">
+				              <span>${fn:split((post.resultMinute/43200),'.')[0] }달 전</span>
+				            </c:when>
+						  </c:choose>
+<%-- 						  <span>${post.post_date }</span><br> --%>
 						</div>
 					  </a>
 					  <!-- 게시물 관리버튼(dropdown) -->
@@ -118,9 +136,6 @@
 					    <c:choose>
 					      <c:when test="${post.mem_id eq memberInfo.mem_id }">
 							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-		      			    	<button class="btn_controll-list">
-				            		<i class="fas fa-link"></i>&nbsp;<span>링크 복사</span>
-				            	</button>
 				      	    	<button class="btn_controll-list">
 					            	<i class="fas fa-edit"></i>&nbsp;<span>글 수정</span>
 					            </button>
@@ -134,9 +149,6 @@
 					      </c:when>
 					      <c:otherwise>
 				        	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-	      			    		<button class="btn_controll-list" style="padding-right: 70.22px;">
-				            		<i class="fas fa-link"></i>&nbsp;<span>링크 복사</span>
-				            	</button>
 				      	    	<button class="btn_controll-list" style="padding-right: 65.69px;">
 					            	<i class="far fa-eye-slash">&nbsp;</i><span>글 숨기기</span>
 					            </button>
@@ -167,7 +179,7 @@
 					  		<button class="btn_goodcount btn_count" style="font-size: 12px;">추천 ${post.goodcount }</button>
 					  	</li>
 					  	<li style="list-style: none; float: left;">
-					  		<button class="btn_commentcount btn_count" style="font-size: 12px;">댓글 ${post.commentcount }</button>
+					  		<button class="btn_commentcount btn_count" id="btn_commentcount ${post.post_code }" title="commentCount ${post.post_code }" style="font-size: 12px;">댓글 ${post.commentcount }</button>
 					  	</li>
 					  </ul>
 					</div>
@@ -244,12 +256,12 @@
 		$(".note-status-output").hide();
 		
 		var flag = false;
+		var ref_code;
 		
 		//게시글 댓글 버튼 클릭 시 댓글 영역 출력
 		$(".btn_comment").on("click", function() {
 			
-			
-			var ref_code = $(this).attr('title');
+			ref_code = $(this).attr('title');
 			
 			if (flag == false) {
 				$.ajax({
@@ -269,6 +281,8 @@
 				flag = false;
 				$(".col-comment").remove();
 			}
+			
+			console.log($('.col-comment-area ' + ref_code).children($('.comment-area' + ref_code)).length);
 			
 		});
 		

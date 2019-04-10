@@ -250,4 +250,44 @@ public class PostController {
 		return "timeline/appendComment";
 	}
 	
+	@RequestMapping(path={"/writecomment"}, method=RequestMethod.POST)
+	public String writecomment(String ref_code, String contents, Model model, HttpServletRequest request){
+		logger.debug("comment_ref_code : {}", ref_code);
+		logger.debug("contents : {}", contents);
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+
+		if(memberInfo.getMem_division() == "1"){
+			UsersVo user = (UsersVo) request.getSession().getAttribute("SESSION_DETAILVO");
+			model.addAttribute("commentwriter", user);
+		} else if (memberInfo.getMem_division() == "2"){
+			CorporationVo corp = (CorporationVo) request.getSession().getAttribute("SESSION_DETAILVO");
+			model.addAttribute("commentwriter", corp);
+		} else {
+			
+		}
+		
+		Post_commentVo commentVo = new Post_commentVo();
+		PaginationVo paginationVo = new PaginationVo();
+		
+		commentVo.setMem_id(memberInfo.getMem_id());
+		commentVo.setComment_contents(contents);
+		commentVo.setRef_code(ref_code);
+		commentVo.setDivision("28");
+		commentService.insert_comment(commentVo);
+		
+		paginationVo.setRef_code(ref_code);
+		paginationVo.setDivision("28");
+		Map<String, Object> resultMap = commentService.select_commentList(paginationVo);
+		List<Post_commentVo> commentList = (List<Post_commentVo>) resultMap.get("commentList");
+		int commentCnt = (int) resultMap.get("commentCnt");
+		
+		model.addAttribute("memberInfo", memberInfo);
+		model.addAttribute("commentList", commentList);
+		model.addAttribute("commentCnt", commentCnt);
+		model.addAttribute("ref_code", ref_code);
+		
+		return "timeline/postComment";
+	}
+	
 }

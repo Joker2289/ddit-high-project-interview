@@ -11,9 +11,18 @@ public class PostVo {
 	private String writer_name;		// 작성자 이름
 	private String commentcount;	// 댓글 수
 	private String goodcount;		// 좋아요 수
+	private int resultMinute;		// 작성 경과시간
 	
 	public PostVo() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public int getResultMinute() {
+		return resultMinute;
+	}
+
+	public void setResultMinute(int resultMinute) {
+		this.resultMinute = resultMinute;
 	}
 	
 	public String getCommentcount() {
