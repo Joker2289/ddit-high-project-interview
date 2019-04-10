@@ -8,14 +8,20 @@
 	<link href="/css/recruit/recruit.css" type="text/css" rel="stylesheet">
 	<title>채용공고｜11</title>
 	
+	<style type="text/css">
+	</style>
 </head>
 
 <body>
 
+
+
+
+
+
 <div class="container">
 <div class="row">
 <div>
-
 
 	<div class="col-md-12" >
 		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: 20px;
@@ -54,9 +60,9 @@
 	<div class="col-md-12" >
 		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: 20px;
 				text-align: center; padding-top: 12px; font-size: 21px;">
-			<img width="30" src="https://lh3.googleusercontent.com/sMhe3GxpmWD6NISZBzhy--dtwcAcVvLFDxOGe1Kat3d0YA0nhq9ICwTSFN3UQ7uEZA">
 			<a href="https://media.daum.net/digital/">
-				 뉴스로 IT 업계 동향을 확인해보세요.
+				<img width="30" src="https://lh3.googleusercontent.com/sMhe3GxpmWD6NISZBzhy--dtwcAcVvLFDxOGe1Kat3d0YA0nhq9ICwTSFN3UQ7uEZA">
+				 뉴스로 IT 업계 동향을 확인해보세요. 1
 			</a>
 		</div>
 	</div>
@@ -88,12 +94,11 @@
 	</form>
 	
 	<div class="col-md-12" >
+		<!-- height: 160px; -->
 		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 160px; margin-bottom: 20px;
 				text-align: center; border-top: 0px; font-size: 18px; padding-top: 15px; padding-left: 15px;
 				overflow:hidden;">
-			<span style="">
-				채용공고 검색어
-			</span>
+			<strong>저장한 검색어</strong>
 			<span id="alarm_manage" class="button-group-area mt-10" onmouseover="" style="margin-left: 790px; cursor: pointer;
 					color: #0174b0; margin-right: 10px;">
 				<strong>관리</strong>
@@ -105,6 +110,9 @@
 				<i class="fas fa-chevron-right" style="font-size: 17px;"></i>
 			</button><br/>
 			
+			<c:if test="${saveList == null || saveList.size() == 0 }">
+				검색어를 등록해보세요.
+			</c:if>
 			<div style="text-align: left;">		
 				<ul id="content" style="list-style: none; width: 3000px; padding-left: 5px;">			
 					<c:forEach items="${saveList }" var="search" varStatus="i">
@@ -135,7 +143,8 @@
 		<input type="hidden" id="recruit_code" name="recruit_code">	
 		
 		<div class="col-md-12" >
-			<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 790px; margin-bottom: 20px;
+			<!-- 260px, 525px, 790px -->
+			<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 525px; margin-bottom: 20px;
 					text-align: center; padding-top: 20px; font-size: 18px; padding-left: 20px; overflow:hidden;">
 				<table>
 					<tr>

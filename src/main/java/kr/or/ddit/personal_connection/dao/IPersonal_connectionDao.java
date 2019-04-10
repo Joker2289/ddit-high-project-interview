@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
+import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.users.model.UsersVo;
@@ -153,6 +154,55 @@ public interface IPersonal_connectionDao {
 	* Method 설명 : 아는 동문 찾기
 	*/
 	List<UsersVo> schoolFriendsSearch(String user_id);
+	
+	
+	
+	/**
+	* Method : feedFollowCorporation
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param mem_id
+	* @return
+	* Method 설명 : 인맥 - 회사 - 신선한 시각 필로우에 출력되는 회사
+	*/
+	List<CorporationVo> feedFollowCorporation(String mem_id);
+	
+	
+	
+	/**
+	* Method : feedFollowUser
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param mem_id
+	* @return
+	* Method 설명 : 인맥 - 회사 - 신선한 시각 필로우에 출력되는 유저
+	*/
+	List<UsersVo> feedFollowUser(String mem_id);
+	
+	
+	
+	/**
+	* Method : feedFollowHashTag
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param mem_id
+	* @return
+	* Method 설명 : 인맥 - 회사 - 신선한 시각 필로우에 출력되는 해시태그
+	*/
+	List<HashtagVo> feedFollowHashTag(String mem_id);
+	
+	
+	
+	/**
+	* Method : recommendUsers
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param user_id
+	* @return
+	* Method 설명 : 회원님을 위한 맞춤 추천 - 사람(users)
+	*/
+	List<UsersVo> recommendUsers(String user_id);
+	
 	
 
 	

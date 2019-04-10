@@ -85,9 +85,9 @@
                users.profile_path,
                users.user_name,
                users.profile_img,
-               b.introduce
-               b.follow_code
-          from users ,( select a.user_id,follow.follow_code
+               b.introduce,
+               a.follow_code
+          from users ,( select a.user_id,b.follow_code
                           from (select user_id
                                   from personal_connection
                                  where (user_id =#{mem_id} or receive_id =#{mem_id})
@@ -234,7 +234,7 @@
                users.user_name,
                users.profile_img,
                b.introduce
-          from users ,(select user_id
+          from users ,(select distinct(user_id)
 			             from EDUCATION_INFO
 			            where SCHOOL_NAME = ( select a.*
                                               from (select SCHOOL_NAME
@@ -255,6 +255,90 @@
 		   and a.user_id = users.user_id(+)
            and a.user_id != #{user_id}
 	</select>
+	
+	
+	<!-- 인맥 - 회사 - 신선한 시각 필로우에 출력되는 회사 -->
+	<!-- 추후  a.corp_name을 a.corp_id로 변경 해야 함-->
+	<select id="feedFollowCorporation" parameterType="String" resultType="corporationVo">
+	select
+		a.*
+    from
+    	corporation a
+    where not
+    	a.corp_name in (select ref_keyword
+                          from follow
+                         where mem_id=#{mem_id}
+                           and division='11')
+	</select>
+	
+	
+	<!-- 인맥 - 회사 - 신선한 시각 필로우에 출력되는 유저 -->
+	<select id="feedFollowUser" parameterType="String" resultType="usersVo">
+		select users.* , b.introduce
+		  from users ,( select introduce , user_id
+		                  from (select distinct(a.user_id),
+		                           case when b.resign_date is null then b.corporate_name || ' ' || job_position
+		                                when b.resign_date is not null then  a.school_name || ' ' || a.degree_name
+		                           end as introduce
+		                          from education_info a, career_info b
+		                         where a.user_id = b.user_id
+		                           and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select career_info.user_id,  max(nvl(career_info.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+		                                                                                                        from career_info, education_info
+		                                                                                                       where career_info.user_id = education_info.user_id
+		                                                                                                       group by career_info.user_id) ))b           
+		 where not users.user_id in (select ref_keyword
+	                                   from follow
+	                                  where mem_id=#{mem_id}
+	                                    and division='43')
+		   and users.user_id !=#{mem_id}
+		   and users.user_id = b.user_id(+)
+	</select>
+	
+	
+	<!-- 인맥 - 회사 - 신선한 시각 필로우에 출력되는 해시태그 -->
+	<select id="feedFollowHashTag" parameterType="String" resultType="hashtagVo">
+		select
+			a.*
+     	from
+     		hashtag a
+     	where not
+     		a.hashtag_name in (select ref_keyword
+                           		 from follow
+                           		where mem_id=#{mem_id}
+                           		  and division='16')
+	</select>
+	
+	
+	<!-- 회원님을 위한 맞춤 추천 - 사람(users) -->
+	<select id="recommendUsers" parameterType="String" resultType="usersVo">
+		select distinct(a.user_id) as user_id,
+		               users.profile_path,
+		               users.user_name,
+		               users.profile_img,
+		               b.introduce
+          from users ,( select a.user_id , b.SCHOOL_NAME
+			              from EDUCATION_INFO a,  (select a.*
+                                                      from (select SCHOOL_NAME
+                                                              from education_info
+                                                             where user_id=#{user_id}
+                                                             order by graduation desc) a) b
+			             where a.SCHOOL_NAME = b.school_name
+                         group by a.user_id,b.school_name) a , ( select distinct(a.user_id),
+                                                                                 case when b.resign_date is null then b.corporate_name || ' ' || job_position
+                                                                                      when b.resign_date is not null then a.school_name ||' ' || a.degree_name
+                                                                                  end as introduce
+                                                                                 from EDUCATION_INFO a, CAREER_INFO b
+                                                                                where a.user_id = b.user_id
+                                                                                  and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select CAREER_INFO.user_id,  max(nvl(CAREER_INFO.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+                                                                                                                                                               from CAREER_INFO, EDUCATION_INFO
+                                                                                                                                                              where CAREER_INFO.user_id = education_info.user_id
+                                                                                                                                                           group by CAREER_INFO.user_id)) b
+		 where a.user_id = b.user_id(+)
+		   and a.user_id = users.user_id(+)
+           and a.user_id != #{user_id}
+	</select>
+	
+	
 	
 	
 </mapper>

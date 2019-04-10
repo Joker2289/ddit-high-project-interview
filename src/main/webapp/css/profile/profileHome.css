@@ -224,4 +224,10 @@
      width: 337px;
      min-height: 50px;
 }
+.logoPicture{
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	box-shadow: 0 1.5px 4px 3px rgba(0,0,0,.15);
+}
 

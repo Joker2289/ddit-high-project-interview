@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	
 	var divWidth  = "511"; 
 	$("#btnslidelt").on("click",function(){
 		$("#content").stop(true,true);
@@ -29,22 +31,43 @@ $(document).ready(function() {
 	$(document).scroll(function() {
 	    var maxHeight = $(document).height();
 	    var currentScroll = $(window).scrollTop() + $(window).height();
-
+		var title = $(this).attr('title');
 	    if (maxHeight <= currentScroll + 100) {
 	    	$.ajax({
 	    		type : "POST",
  	    		url : "/personalConnection",
 //  	    		dataType : "JSON",    //옵션이므로 JSON으로 받을게 아니면 안써도 됨
- 	    		data : { },
+ 	    		data : {"title" : title },
 	    		success : function(result) {
 	    		//통신이 성공적으로 이루어졌을 때 처리하고 싶은 함수
-	    			$("#content2").append('<li><div class="whiteBox">1sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">2sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">3sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">4sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">5sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">6sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">7sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">8sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">9sdfgsdfgsdfgsdfg<br>sadf</div></li>');
+	    			//$("#content2").append('<li><div class="whiteBox">1sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">2sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">3sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">4sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">5sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">6sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">7sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">8sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">9sdfgsdfgsdfgsdfg<br>sadf</div></li>');
 	    		}
 	    	});
 	    }
 	});
-});
+	
+	
+	
+						$("#recommendCorpor").on("click", function() {
 
+							var str = $(this).attr('title');
+
+							$.ajax({
+								type : "POST",
+								url : "/recommend",
+								dataType : "HTML",
+								data : {
+									"str" : str
+								},
+								success : function(result) {
+									$(".recommendClass").empty();
+									$(".recommendClass").append(result);
+
+								}
+							});
+
+						});
+					});
 </script>
 <div class="container">
 <div class="row">
@@ -69,33 +92,37 @@ $(document).ready(function() {
 						</div>
 						<div class="col-md-12" style="padding: 20px 0 20px 15px; ">
 							<div id="pc_find" class="whiteBox">
-								<label style="padding-right: 330px;">아는 동문 찾기</label>
-								<button id="btnslidelt" class="btn btn-default" style="border: 0px;">&lt;</button>
+								<label style="padding-right: 300px;padding-top: 10px">아는 동문 찾기</label>
+								<button id="btnslidelt" class="btn btn-default" style="border: 0px;margin-left: 28px;">&lt;</button>
 								<button id="btnSlidegt" class="btn btn-default" style="border: 0px;">&gt;</button><br/>
 								<ul  id="content" style="list-style:none;width:3000px; padding-left: 5px;">
 									<c:forEach items="${schoolFriends }" var="friend">
-										<%-- <li><div style="width: 88px;height: 88px;background-image:url(/profile?mem_id=${friend.user_id });background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 20px;border: 4px solid #E3EEF2;border-radius: 100px;">
-										</div></li> --%>
-										<li><div class="whiteBox"><div>${friend.user_name}</div> <div>${friend.introduce}</div></div></li>
-										<li><div class="whiteBox">${friend.introduce}</div></li>
+										<li>
+											<div class="whiteBox">
+												<div style="background-image: url(/background?mem_id=${friend.user_id});height: 70px; margin-top: -15px;"></div>
+												<div style=" margin-top: -50px;">
+													<div style="width: 108px;height: 108px;background-image:url(/profile?mem_id=${friend.user_id});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 30px;border: 4px solid #E3EEF2;border-radius: 100px;"></div>
+													<div style="margin-top: 5px;"><strong>${friend.user_name}</strong></div>
+													<div style="font-size: 16px;padding-left: 5px;padding-right: 5px; text-overflow: ellipsis; display: inline-block; width: 146.97px; white-space: nowrap; overflow: hidden;margin-bottom: 50px;">${friend.introduce}</div>
+													<button class="btn btn-default" style="border-color: #0073b1;border-style: solid;padding-left: 40px;padding-right: 40px;">1촌 맺기</button>
+												</div>
+											</div>
+										</li>
 									</c:forEach>
-									
 								</ul>
 							</div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-md-12 recommendClass">
 							<div id="pc_find" class="whiteBox" style="width:512px;height:auto; box-sizing: content-box; ">
-								<label style="font-size: 17px;">회원님을 위한 맞춤 추천</label>
+								<label style="font-size: 19px;">회원님을 위한 맞춤 추천</label>
+								<label style="font-size: 17px;padding-top: 10px;padding-bottom: 2px;">
+									<a id="recommendUsers" title="recommendUsers" style="padding: 5px 5px 5px 5px;">사람</a>
+									<a id="recommendCorpor" title="recommendCorpor" style="padding: 5px 5px 5px 5px;margin-left: 20px;">회사</a>
+								</label>
 								<ul  id="content2" style="list-style:none;width:553px; padding-left: 0px; padding-top: 10px">
-									<li><div class="whiteBox">1sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">2sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">3sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">4sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">5sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">6sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">7sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">8sdfgsdfgsdfgsdfg<br>sadf</div></li>
-									<li><div class="whiteBox">9sdfgsdfgsdfgsdfg<br>sadf</div></li>
+									<c:forEach items="${userList }" var="user">
+											<li><div class="whiteBox">${user.user_name}</div></li>
+									</c:forEach>
 								</ul>
 							</div>
 						</div>

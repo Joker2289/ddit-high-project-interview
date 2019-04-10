@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=21c4ce15b016e2f4c34196b944d9852b&libraries=services,clusterer,drawing"></script>
 </head>
@@ -21,7 +22,7 @@
 				<br>
 
 
-				<div style="position: relative; top: -177px; left: 240px; margin-top: 20px; width: 650px;border: 1px solid #AAAAAA;border-radius: 4px;background-color: #FFFFFF;box-shadow: 1px 1px 3px #aaa;">
+				<div style="position: relative; top: -177px; left: 240px; margin-top: 20px; width: 650px;border: 1px solid #AAAAAA;border-radius: 4px;background-color: #FFFFFF;box-shadow: 0px 2px 5px #aaa;">
 					<table style="margin-left: 10px">
 						<tr>
 							<td colspan="2" ><h4 style="font-weight: 600;padding: 5px;">한눈에 보기</h4></td>
@@ -53,14 +54,14 @@
 				</div>	
 
 				
-				<div style="position: relative; top: -177px; left: 240px; margin-top: 20px; width: 650px;border: 1px solid #AAAAAA;border-radius: 4px;background-color: #FFFFFF;box-shadow: 1px 1px 3px #aaa;">
+				<div style="position: relative; top: -177px; left: 240px; margin-top: 20px; width: 650px;border: 1px solid #AAAAAA;border-radius: 4px;background-color: #FFFFFF;box-shadow: 0px 2px 5px #aaa;">
 					<table style="margin-left: 10px">
 						<tr>
 							<td colspan="2"><h4 style="font-weight: 600;padding: 5px; margin-left: 10px;">위치</h4></td>
 						</tr>
 						<tr>
-							<td border="1" ><label  style="padding:5px;">${corporationInfo.addr1 }, ${corporationInfo.addr2 },${corporationInfo.zipcode } </label></td>
-							<td><div id="map" style="width: 400px; height: 200px;"></div></td>
+							<td style="border-top:1px solid #A0A0C8;border-right: 1px solid #A0A0C8;"><label style="padding:5px;">${corporationInfo.addr1 }, ${corporationInfo.addr2 },${corporationInfo.zipcode } </label></td>
+							<td><div id="map" style="width: 400px; height: 198px;border-bottom-right-radius: 4px;border-top:1px solid #A0A0C8 "></div></td>
 						</tr>
 					</table>
 				</div>

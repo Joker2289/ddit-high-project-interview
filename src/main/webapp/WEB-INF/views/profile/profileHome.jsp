@@ -1,6 +1,8 @@
+<%@ page import="java.sql.Timestamp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"/>
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
@@ -146,11 +148,29 @@ $(document).ready(function() {
 				</div>
 			</div>
 			
-			<div class="whiteBox" style="padding: 10px 10px 10px 10px;">
-				<h4>경력 사항</h2>
-				<c:forEach items="${corpVoList }" var="corpVo">
-  					<li><a class="corp_nameClick" title="${fn:split(corpVo.addr1,' ')[0]}">${corpVo.corp_name }</a></li>
-  				</c:forEach>
+			<div class="whiteBox" style="padding: 20px 20px 20px 20px;">
+				<h3 style="margin: 0 0 20px 0 ">경력 사항</h3>
+				<c:forEach items="${career_infoList }" var="career_infoVo">
+					<fmt:formatDate value="${career_infoVo.join_date}" pattern="yyyyMMdd" var="joinDate"/>
+					<fmt:formatDate value="${career_infoVo.resign_date }" pattern="yyyyMMdd" var="resignDate"/>
+					<fmt:parseNumber value="${(resignDate.time - joinDate.time) / (1000*60*60*24)}" integerOnly="true" var="ingDate" />
+					<ul class="list-unstyled">
+						<li class="list-unstyled">
+							<a style="display: flex;">
+								<div class="logoPicture" style="background-image: url(/profile?mem_id=10); width: 50px; height: 50px;"></div>
+								<div style="margin-left: 30px;">
+									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${career_infoVo.job_rank }</h4>
+									<label style="font-size: 17px; color: rgba(0,0,0,.9);">${career_infoVo.corporate_name }</label></br>
+									<label>${endDate} ${strDate } ${ingDate }</label></br>
+									<label>${career_infoVo.corp_local }</label></br>
+									<label>${career_infoVo.job_position }</label></br>
+								</div>
+							</a>
+						</li>
+					</ul>
+						
+  					
+   				</c:forEach>
 			</div>
 			<div class="whiteBox">
 				학력사항

@@ -152,10 +152,10 @@ public class RecruitServiceImpl implements IRecruitService{
 	 * Method 설명 : 특정 회사 채용공고 조회.
 	 */
 	@Override
-	public RecruitVo getRecrCorpId(String corp_id) {
-		RecruitVo rVo = recrDao.getRecrCorpId(corp_id);
+	public List<RecruitVo> getRecrListCorp_id(String corp_id) {
+		List<RecruitVo> rVoList = recrDao.getRecrListCorp_id(corp_id);
 		
-		return rVo;
+		return rVoList;
 	}
 
 	/**
