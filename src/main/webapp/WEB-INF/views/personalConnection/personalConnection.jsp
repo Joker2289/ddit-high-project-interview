@@ -69,23 +69,30 @@ $(document).ready(function() {
 						</div>
 						<div class="col-md-12" style="padding: 20px 0 20px 15px; ">
 							<div id="pc_find" class="whiteBox">
-								<label style="padding-right: 330px;">아는 동문 찾기</label>
-								<button id="btnslidelt" class="btn btn-default" style="border: 0px;">&lt;</button>
+								<label style="padding-right: 300px;padding-top: 10px">아는 동문 찾기</label>
+								<button id="btnslidelt" class="btn btn-default" style="border: 0px;margin-left: 28px;">&lt;</button>
 								<button id="btnSlidegt" class="btn btn-default" style="border: 0px;">&gt;</button><br/>
 								<ul  id="content" style="list-style:none;width:3000px; padding-left: 5px;">
 									<c:forEach items="${schoolFriends }" var="friend">
-										<%-- <li><div style="width: 88px;height: 88px;background-image:url(/profile?mem_id=${friend.user_id });background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 20px;border: 4px solid #E3EEF2;border-radius: 100px;">
-										</div></li> --%>
-										<li><div class="whiteBox"><div>${friend.user_name}</div> <div>${friend.introduce}</div></div></li>
-										<li><div class="whiteBox">${friend.introduce}</div></li>
+										<li>
+											<div class="whiteBox">
+												<div style="background-image: url(/background?mem_id=${friend.user_id});height: 70px; margin-top: -15px;"></div>
+												<div style=" margin-top: -50px;">
+													<div style="width: 108px;height: 108px;background-image:url(/profile?mem_id=${friend.user_id});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 30px;border: 4px solid #E3EEF2;border-radius: 100px;"></div>
+													<div style="margin-top: 5px;"><strong>${friend.user_name}</strong></div>
+													<div style="font-size: 16px;padding-left: 5px;padding-right: 5px; text-overflow: ellipsis; display: inline-block; width: 146.97px; white-space: nowrap; overflow: hidden;margin-bottom: 50px;">${friend.introduce}</div>
+													<button class="btn btn-default" style="border-color: #0073b1;border-style: solid;padding-left: 40px;padding-right: 40px;">1촌 맺기</button>
+												</div>
+											</div>
+										</li>
 									</c:forEach>
-									
 								</ul>
 							</div>
 						</div>
 						<div class="col-md-12">
 							<div id="pc_find" class="whiteBox" style="width:512px;height:auto; box-sizing: content-box; ">
 								<label style="font-size: 17px;">회원님을 위한 맞춤 추천</label>
+								<label style="font-size: 17px;"><a href="*">mentos</a></label>
 								<ul  id="content2" style="list-style:none;width:553px; padding-left: 0px; padding-top: 10px">
 									<li><div class="whiteBox">1sdfgsdfgsdfgsdfg<br>sadf</div></li>
 									<li><div class="whiteBox">2sdfgsdfgsdfgsdfg<br>sadf</div></li>

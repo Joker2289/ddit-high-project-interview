@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
+import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.users.model.UsersVo;
@@ -90,6 +91,24 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 	public List<UsersVo> schoolFriendsSearch(String user_id) {
 		List<UsersVo> schoolSearch = sqlSessionTemplate.selectList("personal.schoolFriendsSearch", user_id);
 		return schoolSearch;
+	}
+
+	@Override
+	public List<CorporationVo> feedFollowCorporation(String mem_id) {
+		List<CorporationVo> Corporation = sqlSessionTemplate.selectList("personal.feedFollowCorporation", mem_id);
+		return Corporation;
+	}
+
+	@Override
+	public List<UsersVo> feedFollowUser(String mem_id) {
+		List<UsersVo> User = sqlSessionTemplate.selectList("personal.feedFollowUser", mem_id);
+		return User;
+	}
+
+	@Override
+	public List<HashtagVo> feedFollowHashTag(String mem_id) {
+		List<HashtagVo> HashTag = sqlSessionTemplate.selectList("personal.feedFollowHashTag", mem_id);
+		return HashTag;
 	}
 
 

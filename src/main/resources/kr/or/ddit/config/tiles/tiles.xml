@@ -107,5 +107,9 @@
 	<definition name="connectionSendApplyTiles" extends="layout">
 		<put-attribute name="content" value="/WEB-INF/views/personalConnection/connectionSendApply.jsp" />
 	</definition>
+	
+	<definition name="feedFollowTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/personalConnection/feedFollow.jsp" />
+	</definition>
 
 </tiles-definitions>

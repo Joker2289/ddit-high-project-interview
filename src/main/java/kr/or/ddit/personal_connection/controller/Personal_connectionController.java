@@ -1,8 +1,12 @@
 package kr.or.ddit.personal_connection.controller;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
+import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
@@ -29,7 +34,12 @@ public class Personal_connectionController {
 	
 	
 	@RequestMapping(path={"/personalConnection"})
-	public String personalConnectionView(Model model , HttpSession session) {
+	public String personalConnectionView(Model model , HttpSession session, HttpServletRequest req) {
+		
+		ServletContext application = req.getServletContext();
+	      String path = application.getRealPath("/upload");
+	      
+	         logger.debug(path + File.separator);
 		
 		MemberVo memberVo =(MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
@@ -166,6 +176,56 @@ public class Personal_connectionController {
 			return "/personalConnection/feedFilter/feedHashTag";
 			
 		}
+		
+	}
+	
+	
+	@RequestMapping(path={"/feedFollow"})
+	public String feedFollowView(HttpSession session , Model model) {
+		
+		MemberVo memberVo =(MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		String mem_id = memberVo.getMem_id();
+		
+		
+		FollowVo followVo = new FollowVo();
+		followVo.setMem_id(memberVo.getMem_id());
+		followVo.setDivision("11");
+		int allFollowCount = personalService.allFollowCnt(followVo);
+		
+		
+		List<HashMap<String,String>> resultMapList = new ArrayList<HashMap<String,String>>();
+		
+		List<CorporationVo> corpList = personalService.feedFollowCorporation(mem_id);
+		for(CorporationVo list : corpList) {
+			HashMap<String, String> resultMap = new HashMap<String, String>();
+			resultMap.put("title", list.getCorp_name());
+			resultMap.put("content", list.getIndustry_type());
+			resultMap.put("id", list.getCorp_id());
+			resultMap.put("imgPath", list.getLogo_path());
+			resultMapList.add(resultMap);
+		}
+		
+		List<UsersVo> UserList = personalService.feedFollowUser(mem_id);
+		for(UsersVo list : UserList) {
+			HashMap<String, String> resultMap = new HashMap<String, String>();
+			resultMap.put("title", list.getUser_name());
+			resultMap.put("content", list.getIntroduce());
+			resultMap.put("id", list.getUser_id());
+			resultMap.put("imgPath", list.getProfile_path());
+			resultMapList.add(resultMap);
+		}
+		
+		List<HashtagVo> hashTagList = personalService.feedFollowHashTag(mem_id);
+		for(HashtagVo list : hashTagList) {
+			HashMap<String, String> resultMap = new HashMap<String, String>();
+			resultMap.put("title", list.getHashtag_name());
+			resultMapList.add(resultMap);
+		}
+		
+		model.addAttribute("resultMapList",resultMapList);
+		model.addAttribute("allFollowCount", allFollowCount);
+
+		return "feedFollowTiles";
 		
 	}
 	

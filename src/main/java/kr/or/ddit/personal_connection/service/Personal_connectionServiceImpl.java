@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
+import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.dao.IPersonal_connectionDao;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
@@ -77,6 +78,21 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	@Override
 	public List<UsersVo> schoolFriendsSearch(String user_id) {
 		return personalDao.schoolFriendsSearch(user_id);
+	}
+
+	@Override
+	public List<CorporationVo> feedFollowCorporation(String mem_id) {
+		return personalDao.feedFollowCorporation(mem_id);
+	}
+
+	@Override
+	public List<UsersVo> feedFollowUser(String mem_id) {
+		return personalDao.feedFollowUser(mem_id);
+	}
+
+	@Override
+	public List<HashtagVo> feedFollowHashTag(String mem_id) {
+		return personalDao.feedFollowHashTag(mem_id);
 	}
 
 	
