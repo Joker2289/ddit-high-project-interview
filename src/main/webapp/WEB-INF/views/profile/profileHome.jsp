@@ -1,4 +1,5 @@
 <%@ page import="java.sql.Timestamp"%>
+<%@ page import="java.sql.Time"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -8,6 +9,18 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	$(".contentsBtn").on("click",function(e){
+		if($(e.target).parents(".contentsDiv").children(".contents").hasClass("contents")){
+			$(e.target).parents(".contentsDiv").children(".contentsBtn").empty();
+			$(e.target).parents(".contentsDiv").children(".contentsBtn").append('더 보기 취소 ');
+			$(e.target).parents(".contentsDiv").children(".contents").attr('class', 'contentsOn');
+		}else{
+			$(e.target).parents(".contentsDiv").children(".contentsBtn").empty();
+			$(e.target).parents(".contentsDiv").children(".contentsBtn").append('더 보기');
+			$(e.target).parents(".contentsDiv").children(".contentsOn").attr('class', 'contents');
+		}		
+	});
+	
 	$(".userContentsShow").on("click",function(e){
 		if ($(e.target).closest(".userContentsSkip").hasClass('userContentsSkip')) {
 			$(".userContentsShow").empty();
@@ -77,9 +90,20 @@ $(document).ready(function() {
 	<div class="row profileHomeBox">
 		<div class="col-md-9 mainAllBox">
 			<div class="whiteBox introduceBox">
-				<div class="profileHomeBackgroundPicture" style="background-image: url(/background?mem_id=${usersVo.user_id});"></div>
+				<c:set var="bg_addrpath" value="/background?mem_id=${usersVo.user_id }"/>
+				<c:set var="profile_addrpath" value="/profile?mem_id=${usersVo.user_id }"/> 
+				<c:choose>
+					<c:when test="${fn:contains(usersVo.bg_path, 'http')}">
+						<c:set var="bg_path" value="${usersVo.bg_path }"/> 
+					</c:when>
+					<c:when test="${fn:contains(usersVo.profile_path, 'http')}">
+						<c:set var="profile_path" value="${usersVo.profile_path }"/> 
+					</c:when>
+					
+				</c:choose>
+				<div class="profileHomeBackgroundPicture" style="background-image: url(${not empty bg_path ? bg_path : bg_addrpath});"></div>
 				<div style="min-height: 328px;">
-					<div class="profileHomeProfilePicture" style="background-image: url(/profile?mem_id=${usersVo.user_id});"></div>
+					<div class="profileHomeProfilePicture" style="background-image: url(${not empty profile_path ? profile_path : profile_addrpath});"></div>
 					<div style="width: 791px; padding:24px; margin-top: -72px;">
 						<span style="font-size: 20px;padding-left: 717px; color: #0073B1;"><i class="fas fa-pencil-alt"></i></span>
 						<div class="memberBox" style="display: flex;">
@@ -127,7 +151,7 @@ $(document).ready(function() {
 							
 						</div>
 						
-						<c:if test="${(not empty usersVo.profile_contents) or (not empty usersVo.profile_contents)}">
+						<c:if test="${(not empty usersVo.profile_contents) or (not empty usersVo.file_name)}">
 							<div class="userContentsSkip" style="border-top: 1px solid #CDCFD2; margin-top: 20px; padding-top: 10px;">
 								<p>${usersVo.profile_contents }</p>
 								<div style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;">
@@ -148,33 +172,98 @@ $(document).ready(function() {
 				</div>
 			</div>
 			
-			<div class="whiteBox" style="padding: 20px 20px 20px 20px;">
-				<h3 style="margin: 0 0 20px 0 ">경력 사항</h3>
-				<c:forEach items="${career_infoList }" var="career_infoVo">
-					<fmt:formatDate value="${career_infoVo.join_date}" pattern="yyyyMMdd" var="joinDate"/>
-					<fmt:formatDate value="${career_infoVo.resign_date }" pattern="yyyyMMdd" var="resignDate"/>
-					<fmt:parseNumber value="${(resignDate.time - joinDate.time) / (1000*60*60*24)}" integerOnly="true" var="ingDate" />
-					<ul class="list-unstyled">
-						<li class="list-unstyled">
-							<a style="display: flex;">
-								<div class="logoPicture" style="background-image: url(/profile?mem_id=10); width: 50px; height: 50px;"></div>
-								<div style="margin-left: 30px;">
-									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${career_infoVo.job_rank }</h4>
-									<label style="font-size: 17px; color: rgba(0,0,0,.9);">${career_infoVo.corporate_name }</label></br>
-									<label>${endDate} ${strDate } ${ingDate }</label></br>
-									<label>${career_infoVo.corp_local }</label></br>
-									<label>${career_infoVo.job_position }</label></br>
-								</div>
-							</a>
+			<!-- 경력  -->
+			<c:if test="${not empty career_infoList }">
+			<div class="whiteBox" style="padding: 20px 20px 20px 20px; margin-top: 20px;">
+				<h3 style="margin: 0 0 0 0 ">경력 사항</h3>
+				<ul class="list-unstyled">
+					<c:forEach items="${career_infoList.career_infoVoList }" var="career_infoVo" varStatus="i">
+						<fmt:formatDate value="${career_infoVo.join_date }" var="strDate" pattern="yyyy년 MM월"/>
+						<fmt:formatDate value="${career_infoVo.resign_date }" var="endDate" pattern="yyyy년 MM월"/>
+						<fmt:parseNumber var="year" integerOnly="true" value="${career_infoVo.month / 12}"/>
+						<fmt:parseNumber var="month" integerOnly="true" value="${career_infoVo.month % 12}"/>
+						<li class="list-unstyled" style="margin-top: 20px; display: flex;">
+							<div>
+								<a style="display: flex; iwidth: 720px;">
+									<c:set var="profile_addrPath" value="/profile?mem_id=${career_infoVo.corp_id }"/>
+									<c:choose>
+										<c:when test="${fn:contains(career_infoVo.logo_path, 'http')}">
+											<c:set var="logo_path" value="${career_infoVo.logo_path }"/> 
+										</c:when>
+									</c:choose>
+									<div class="logoPicture" style="background-image: url(${not empty logo_path ? logo_path : profile_addrPath}); width: 120px; height: 50px;"></div>
+									<div style="margin-left: 30px;">
+										<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${career_infoVo.job_rank }</h4>
+										<label style="font-size: 17px; color: rgba(0,0,0,.9);">${career_infoVo.corporate_name }</label><br>
+										<label>${strDate } - ${endDate  == null ? '현재' : endDate} · (${year > 1 ? year : ''}${year > 1 ? '년 ' : '' }${month > 1 ? month : '1'}개월)</label><br>
+										<label>${career_infoVo.corp_local }</label><br>
+										<label>${career_infoVo.job_position }</label><br>
+									</div>
+								</a>
+								
+								<!-- 경력 상세 내용 -->
+								<c:if test="${not empty career_infoVo.contents }">
+									<div class="contentsDiv" style="padding: 10px 30px 0 150px; width: 720px;">
+										<span class="contents" style="width: 536px; margin: 0 0 0 0;">${career_infoVo.contents }</span>
+										<c:if test="${fn:length(career_infoVo.contents) > 45}">
+									 		<span class="contentsBtn" style="color: #0073B1; cursor: pointer;">더 보기 </span>
+										</c:if>
+									</div>
+								</c:if>
+								
+								<!-- 경력 첨부파일 -->
+								<c:if test="${not empty career_infoList.career_infoFileVoList }">
+									<div style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;">
+										<c:forEach var="career_infoFilesVo" items="${career_infoList.career_infoFileVoList[i.index] }">
+										
+											<div style="height: 25px; margin: 10px 30px 0 150px;border: 2px solid #CDCFD2; font-size: 15px; font-weight: bold">
+												<a href="/fileDownload?file_code=${career_infoFilesVo.file_code }">${career_infoFilesVo.file_name}</a>
+											</div>
+										</c:forEach>
+									</div>
+								</c:if>
+							</div>
+							<div>
+								<span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span>
+							</div>
 						</li>
+					</c:forEach>
+				</ul>
+			</div>
+			</c:if>
+			
+			<%-- <!-- 학력  -->
+			<c:if test="${not empty career_infoList }">
+			<div class="whiteBox" style="padding: 20px 20px 20px 20px; margin-top: 20px;">
+				<h3 style="margin: 0 0 0 0 ">학력</h3>
+					<ul class="list-unstyled">
+						<c:forEach items="${education_infoList }" var="education_info">
+							<fmt:formatDate value="${education_info.admission }" var="strDate" pattern="yyyy년 "/>
+							<fmt:formatDate value="${education_info.graduation }" var="endDate" pattern="yyyy년 "/>
+							<li class="list-unstyled" style="margin-top: 20px; display: flex;">
+								<a style="display: flex; width: 720px;">
+									<c:set var="profile_addrPath" value="/profile?mem_id=5"/>
+									<c:choose>
+										<c:when test="${fn:contains(education_info.logo_path, 'http')}">
+											<c:set var="logo_path" value="${education_info.logo_path }"/> 
+										</c:when>
+									</c:choose>
+									<div class="logoPicture" style="background-image: url('/profile?mem_id=5'); width: 120px; height: 50px;"></div>
+									<div style="margin-left: 30px;">
+										<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${education_info.school_name }</h4>
+										<label style="font-size: 17px; color: rgba(0,0,0,.9);">${education_info.degree_name }, ${education_info.major }, ${education_info.grade }</label><br>
+										<label>${strDate } - ${endDate}</label><br>
+										<label>${education_info.contents }</label><br>
+									</div>
+								</a>
+								<span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span>
+							</li>
+						</c:forEach>
 					</ul>
-						
-  					
-   				</c:forEach>
 			</div>
-			<div class="whiteBox">
-				학력사항
-			</div>
+			</c:if> --%>
+			
+			
 		</div>
 		<div class="col-md-3" style="padding-left: 5px;">
 			<div class="whiteBox" style="width: 314px; min-height: 481px;">

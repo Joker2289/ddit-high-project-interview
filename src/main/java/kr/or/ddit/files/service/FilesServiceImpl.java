@@ -10,6 +10,38 @@ import kr.or.ddit.education_info.dao.IEducation_infoDao;
 import kr.or.ddit.files.dao.IFilesDao;
 import kr.or.ddit.files.model.FilesVo;
 
+/**
+* FilesServiceImpl.java
+*
+* @author jin
+* @version 1.0
+* @see
+*
+* <pre>
+* << 개정이력(Modification Information) >>
+*
+* 수정자 수정내용
+* ------ ------------------------
+* jin 최초 생성
+*
+* </pre>
+*/
+/**
+* FilesServiceImpl.java
+*
+* @author jin
+* @version 1.0
+* @see
+*
+* <pre>
+* << 개정이력(Modification Information) >>
+*
+* 수정자 수정내용
+* ------ ------------------------
+* jin 최초 생성
+*
+* </pre>
+*/
 @Service("filesService")
 public class FilesServiceImpl implements IFilesService{
 	
@@ -22,11 +54,11 @@ public class FilesServiceImpl implements IFilesService{
 	 * 변경이력 :
 	 * @param filesVo
 	 * @return
-	 * Method 설명 : users 첨부파일 조회
+	 * Method 설명 : 첨부파일 조회
 	 */
 	@Override
-	public List<FilesVo> select_usersFile(FilesVo filesVo) {
-		return filesDao.select_usersFile(filesVo);
+	public List<FilesVo> select_file(FilesVo filesVo) {
+		return filesDao.select_file(filesVo);
 	}
 	
 	/**
@@ -67,4 +99,5 @@ public class FilesServiceImpl implements IFilesService{
 	public int delete_allFile(FilesVo filesVo) {
 		return filesDao.delete_allFile(filesVo);
 	}
+
 }

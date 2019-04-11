@@ -128,6 +128,20 @@
   -webkit-box-orient: vertical;
 
 }
+.contents{
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  white-space: nowrap; 
+  height: 17px;
+  
+  white-space: normal; 
+  line-height: 1.2; 
+  text-align: left; 
+  word-wrap: break-word; 
+  display: -webkit-box; 
+  -webkit-line-clamp: 1; 
+  -webkit-box-orient: vertical;
+}
 
 .userContentsShow{
 	width: 793px;
@@ -226,7 +240,7 @@
 }
 .logoPicture{
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-size: contain;
 	background-position: center;
 	box-shadow: 0 1.5px 4px 3px rgba(0,0,0,.15);
 }

@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.imageio.stream.FileImageInputStream;
@@ -89,7 +90,7 @@ public class profileController {
 				FilesVo filesVo = new FilesVo();
 				filesVo.setRef_code(user_id);
 				filesVo.setDivision("43");
-				List<FilesVo> userFilesList = filesService.select_usersFile(filesVo);
+				List<FilesVo> userFilesList = filesService.select_file(filesVo);
 				model.addAttribute("userFilesList", userFilesList);
 				result="/profile/modalInsert/introduction";
 				break;
@@ -155,9 +156,9 @@ public class profileController {
 		
 		String introduce = usersService.select_introduce(usersVo.getUser_id());
 		List<Education_infoVo> education_infoList = eduService.select_educationInfo(usersVo.getUser_id());
-		List<Career_infoVo> career_infoList = carService.select_careerInfo(usersVo.getUser_id());
+		Map<String, Object> career_infoList = carService.select_careerInfo(usersVo.getUser_id());
 		int peopleCount = PersonalService.connections_count(memberVo);
-		List<FilesVo> userFilesList = filesService.select_usersFile(filesVo);
+		List<FilesVo> userFilesList = filesService.select_file(filesVo);
 		List<CorporationVo> corpVoList = corpService.select_allCorps();
 		
 		model.addAttribute("education_infoList", education_infoList);
@@ -191,26 +192,13 @@ public class profileController {
 		String filePath = "";
 		if((users != null && users.getBg_path() != null) || (corporation != null && corporation.getBg_path() != null))
 			if(users != null) {
-				if (users.getBg_path().contains("http")){
-					URL url = new URL(users.getBg_path());
-					t_connection = url.openConnection(); 
-					t_connection.setReadTimeout(3000); 
-					fis =  t_connection.getInputStream();
-				}else{
-					filePath = path + File.separator + users.getBg_path();
-					fis = new FileInputStream(new File(filePath));
-				}
+				filePath = path + File.separator + users.getBg_path();
+				fis = new FileInputStream(new File(filePath));
 				
 			}else {
-				if (corporation.getBg_path().contains("http")){
-					URL url = new URL(corporation.getBg_path());
-					t_connection = url.openConnection(); 
-					t_connection.setReadTimeout(3000); 
-					fis =  t_connection.getInputStream();
-				}else{
-					filePath = path + File.separator + corporation.getBg_path();
-					fis =  new FileInputStream(new File(filePath));
-				}
+				
+				filePath = path + File.separator + corporation.getBg_path();
+				fis =  new FileInputStream(new File(filePath));
 			}
 		
 		else{
@@ -245,18 +233,10 @@ public class profileController {
 		
 		InputStream fis = null;
 		String filePath = "";
-		HttpURLConnection t_connection = null;
 		if(users != null) {
 			if (users.getProfile_path() == null){
 				String noimgPath = application.getRealPath("/images/profile/basicProfile.png");
 				fis =  new FileInputStream(new File(noimgPath));
-				
-			}else if(users.getProfile_path().contains("http")){
-				URL url = new URL(users.getProfile_path());
-				t_connection = (HttpURLConnection) url.openConnection(); 
-				t_connection.setConnectTimeout(5000);
-				t_connection.setReadTimeout(5000); 
-				fis = t_connection.getInputStream();
 				
 			}else{
 				filePath = path + File.separator + users.getProfile_path();
@@ -268,13 +248,6 @@ public class profileController {
 				String noimgPath = application.getRealPath("/images/corporation/basic/basicCorporation.png");
 				fis =  new FileInputStream(new File(noimgPath));
 				
-			}else if(corporation.getLogo_path().contains("http")){
-				URL url = new URL(corporation.getLogo_path());
-				t_connection = (HttpURLConnection) url.openConnection();
-				t_connection.setConnectTimeout(5000);
-				t_connection.setReadTimeout(5000); 
-				fis = t_connection.getInputStream();
-				
 			}else{
 				filePath = path + File.separator + corporation.getLogo_path();
 				fis = new FileInputStream(new File(filePath));
@@ -285,9 +258,6 @@ public class profileController {
 		int len = 0;
 		while ((len = fis.read(buff)) > -1) {
 			sos.write(buff);
-		}
-		if (t_connection != null) {
-			t_connection.disconnect();
 		}
 		sos.close();
 		fis.close();
