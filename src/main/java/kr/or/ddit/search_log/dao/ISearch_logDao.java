@@ -81,6 +81,17 @@ public interface ISearch_logDao {
 	 * Method 설명 : 특정 회원이 검색하려는 값 조회.
 	 */
 	Search_logVo getLSLog(String mem_id);
+
+	/**
+	 * 
+	 * Method : getSList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 특정 유저의 최근 검색어 리스트 조회.
+	 */
+	List<Search_logVo> getSList(String mem_id);
 	
 	
 }

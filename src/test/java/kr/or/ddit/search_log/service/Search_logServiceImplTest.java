@@ -3,6 +3,8 @@ package kr.or.ddit.search_log.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -66,6 +68,24 @@ public class Search_logServiceImplTest extends LogicTestConfig{
 
 		/***Then***/
 		assertNotNull(lSLog);
+	}
+
+	/**
+	 * 
+	 * Method : testGetSList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 특정 유저의 최근 검색어 리스트 조회 테스트.
+	 */
+	@Test
+	public void testGetSList() {
+		/***Given***/
+
+		/***When***/
+		List<Search_logVo> sList = sLogService.getSList("brown");
+
+		/***Then***/
+		assertNotNull(sList);
 	}
 	
 	

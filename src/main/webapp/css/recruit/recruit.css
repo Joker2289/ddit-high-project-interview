@@ -4,6 +4,12 @@
 	display: inline-block;
 }
 
+#div_list_box{
+	margin-bottom: 200px;
+	width: 1100px;
+	display: inline-block;
+}
+
 table.tb_recruit{
 	border-spacing: 15px;
 }

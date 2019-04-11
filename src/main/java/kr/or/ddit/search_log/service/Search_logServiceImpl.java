@@ -127,6 +127,22 @@ public class Search_logServiceImpl implements ISearch_logService{
 		return lSLog;
 	}
 
+	/**
+	 * 
+	 * Method : getSList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 특정 유저의 최근 검색어 리스트 조회.
+	 */
+	@Override
+	public List<Search_logVo> getSList(String mem_id) {
+		List<Search_logVo> sList = sLogDao.getSList(mem_id);
+		
+		return sList;
+	}
+
 	
 	
 	

@@ -191,8 +191,11 @@ public class RecruitController {
 		sVo.setUser_id(mVo.getMem_id());
 		sVo.setSearch_save("2");
 		List<Search_logVo> saveList = sLogService.getSaveList(sVo);
-		
 		model.addAttribute("saveList", saveList);
+		
+		// 최근 검색어 리스트 (sList) 넘기기.
+		List<Search_logVo> sList = sLogService.getSList(mVo.getMem_id());
+		model.addAttribute("sList", sList);
 		
 		List<RecruitVo> recrList = recrService.getAllRecr();
 		model.addAttribute("recrList", recrList);

@@ -42,6 +42,9 @@ public class Search_logController {
 		// search_save 임시로 2로 설정. -> 나중에 1로 바꾸기.
 		sVo.setSearch_save("1");
 		
+		// sarch_alarm 알림 설정 기본값 - '2' (알림 받기)
+		sVo.setSearch_alarm("2");
+		
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		if(mVo != null){
 			sVo.setUser_id(mVo.getMem_id());
@@ -69,7 +72,22 @@ public class Search_logController {
 		return "redirect:" + req.getContextPath() + "/recruit";
 	}
 	
-	
+	// @채용공고 알림여부 수정.
+	@RequestMapping("/updateAlarm")
+	public String updateAlarm(HttpServletRequest req, String search_alarm, String search_code) {
+		Search_logVo sVo = sLogService.getSearch_log(search_code);
+		
+		if(search_alarm.equals("2")){
+			// 알람 끄기.
+			sVo.setSearch_alarm("1");
+		}else{
+			sVo.setSearch_alarm("2");
+		}
+		
+		sLogService.updateSearch_log(sVo);
+
+		return "redirect:" + req.getContextPath() + "/recruit";
+	}
 	
 	
 	

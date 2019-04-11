@@ -6,7 +6,7 @@
 <html>
 <head>
 	<link href="/css/recruit/recruit.css" type="text/css" rel="stylesheet">
-	<title>채용공고｜11</title>
+	<title>채용공고｜22222</title>
 	
 	<style type="text/css">
 	</style>
@@ -98,7 +98,7 @@
 		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 160px; margin-bottom: 20px;
 				text-align: center; border-top: 0px; font-size: 18px; padding-top: 15px; padding-left: 15px;
 				overflow:hidden;">
-			<strong>저장한 검색어</strong>
+			<strong>채용공고 검색어</strong>
 			<span id="alarm_manage" class="button-group-area mt-10" onmouseover="" style="margin-left: 790px; cursor: pointer;
 					color: #0174b0; margin-right: 10px;">
 				<strong>관리</strong>
@@ -117,18 +117,30 @@
 				<ul id="content" style="list-style: none; width: 3000px; padding-left: 5px;">			
 					<c:forEach items="${saveList }" var="search" varStatus="i">
 						<li style="float: left;"><div class="whiteBox" style="width: 280px; box-shadow: 0 3px 3px rgba(0, 0, 0, .175);
-								margin-right: 10px; padding: 8px; font-size: 16px; height: 66px;">
-							<table class="tb_alarm" style="margin-right: 20px; float: left; margin-left: 10px;">
+								margin-right: 10px; padding: 8px; padding-right: 0px; font-size: 16px; height: 66px;">
+							<table border="0" class="tb_alarm" style="margin-right: 10px; float: left; margin-left: 10px;">
 								<tr>
 									<td class="t_alarm${i.index }" onmouseover="" style="cursor: pointer;
-											width: 250px;">
+											width: 270px;">
 										${search.search_word }<br>
 										${search.search_local }
 									</td>
-									<td>
-										<i id="t_alarm_alarm${i.index }" class="fas fa-bell" onmouseover="" style="
-												cursor: pointer; margin-left: 0px; margin-top: 10px; margin-left: 0px; 
-												font-size: 22px; color: #0174b0;"></i>
+									<td style="width: 60px; text-align: center;">
+										<div style="border: 0px solid; width: 50px; height: 50px; border-radius: 50%;
+												background-color: white; padding-top: 2px;" id="div_alarm${i.index }">
+											<c:choose>
+												<c:when test="${search.search_alarm == 2 }">
+													<i id="t_alarm_alarm${i.index }" class="fas fa-bell" onmouseover="" style="
+															cursor: pointer; margin-left: 0px; margin-top: 10px; margin-left: 0px; 
+															font-size: 22px; color: #0174b0;"></i>
+												</c:when>
+												<c:otherwise>
+													<i id="t_alarm_alarm${i.index }" class="far fa-bell" onmouseover="" style="
+															cursor: pointer; margin-left: 0px; margin-top: 10px; margin-left: 0px; 
+															font-size: 22px; color: #0174b0;"></i>
+												</c:otherwise>
+											</c:choose>
+										</div>
 									</td>
 								</tr>
 							</table>
@@ -144,7 +156,7 @@
 		
 		<div class="col-md-12" >
 			<!-- 260px, 525px, 790px -->
-			<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 525px; margin-bottom: 20px;
+			<div id="div_list_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 790px; margin-bottom: 20px;
 					text-align: center; padding-top: 20px; font-size: 18px; padding-left: 20px; overflow:hidden;">
 				<table>
 					<tr>
@@ -211,9 +223,9 @@
 					</tr>
 					<tr>
 						<td>
-					   		<table style="margin-bottom: 20px; margin-top: 30px;">
+					   		<table border="0" style="margin-bottom: 20px; margin-top: 30px;">
 					   			<tr>
-					   				<td style="width: 800px; text-align: left;">
+					   				<td style="width: 950px; text-align: left;">
 							   			<strong>회원님의 프로필과 커리어 관심분야를 참고함</strong> <br>
 										<c:choose>
 											<c:when test="${inteVo == null }">
@@ -230,7 +242,7 @@
 										</c:choose>
 					   				</td>
 					   				<td>
-										<a id="btn_slt2" class="btn btn-default" style="border: 0px; margin-left: 200px;">
+										<a id="btn_slt2" class="btn btn-default" style="border: 0px; margin-left: 50px;">
 											<i class="fas fa-chevron-left" style="font-size: 17px;"></i>
 										</a>
 										<a id="btn_sgt2" class="btn btn-default" style="border: 0px;">
@@ -310,16 +322,22 @@
 	});
 
 	$(document).ready(function(){
-		console.log("saveList size? : ${saveList.size() }");
+		console.log("list null");
 		
-		<c:forEach items="${rRList1 }" varStatus="i">
-			console.log("i? : ${i.index }");
-		</c:forEach>
-		// " i? : 0 ~ 5 "
-				
-		var divWidth  = "511"; 
+		
+		// 추천 리스트 whitebox height 조절.
+		<c:choose>
+			<c:when test="${rRList1.size() == 0 && rRList2.size() == 0 }">
+				$("#div_list_box").css("height", "260px");
+			</c:when>
+			<c:when test="${rRList1.size() == 0 || rRList2.size() == 0 }">
+				$("#div_list_box").css("height", "525px");
+			</c:when>
+		</c:choose>
 		
 		// 검색어 슬라이드.
+		var divWidth  = "511"; 
+		
 		$("#btnslidelt").on("click",function(){
 			$("#content").stop(true,true);
 			   var moveX   = parseInt($("#content").css("margin-left"));
@@ -403,22 +421,37 @@
 		// 채용공고 검색어 (저장한 검색어)
 		<c:forEach items="${saveList }" varStatus="i">
 			$(".t_alarm${i.index }").on("click", function(){
-// 				alert("${saveList.get(i.index).search_word } / ${saveList.get(i.index).search_local }");
-
 				// 여기서도 /recrSearch로 파라미터를 넘기지 말고 검색어를 등록하면 됨. - 
 				// /insertSLog
 				window.location.href = '${pageContext.request.contextPath }/insertSLog?search_word=${saveList.get(i.index).search_word }&search_local=${saveList.get(i.index).search_local }';
 			});
 			
 			$("#t_alarm_alarm${i.index }").on("click", function(){
-// 				alert("t_alarm_alarm${i.index }");
-				// 저장한 검색어에서 제외. 확인창 띄우기
-				if(confirm("검색어를 목록에서 제거하시겠습니까?")) {
-					// alarm_flag를 우선 save_flag로 변경. 저장되어있는 항목은 flag 't'를 보낸다.
-					// 컨트롤러에서 't'를 받으면 search_save를 '1'로 변경(저장을 해제).
-					window.location.href = 'http://localhost${pageContext.request.contextPath }/updateSave?save_flag=t&search_code=${saveList.get(i.index).search_code }';					
-				}					
+				// ajax로 처리해야됨.
+				
+				// 저장한 검색어에서 제외. 확인창 띄우기 X -> 알림 켜고 끄기.
+				if("${saveList.get(i.index).search_alarm }" == 2){
+					if(confirm("채용공고 알림을 끄시겠습니까?")) {
+						// alarm_flag를 우선 save_flag로 변경. 저장되어있는 항목은 flag 't'를 보낸다.
+						// 컨트롤러에서 't'를 받으면 search_save를 '1'로 변경(저장을 해제).
+// 						window.location.href = 'http://localhost${pageContext.request.contextPath }/updateSave?save_flag=t&search_code=${saveList.get(i.index).search_code }';					
+
+						window.location.href = 'http://localhost${pageContext.request.contextPath }/updateAlarm?search_alarm=${saveList.get(i.index).search_alarm }&search_code=${saveList.get(i.index).search_code }';					
+					}					
+				}else{
+					if(confirm("채용공고 알림을 받으시겠습니까?")) {
+						window.location.href = 'http://localhost${pageContext.request.contextPath }/updateAlarm?search_alarm=${saveList.get(i.index).search_alarm }&search_code=${saveList.get(i.index).search_code }';					
+					}					
+				}
 			});
+			
+			// 알림 버튼 마우스오버
+			$("#t_alarm_alarm${i.index }").on("mouseover", function(){
+				$("#div_alarm${i.index }").css("background-color", "#e5f5fb");
+			});
+			$("#t_alarm_alarm${i.index }").on("mouseout", function(){
+				$("#div_alarm${i.index }").css("background-color", "white");
+			});			
 		</c:forEach>
 		
 		// 채용공고 리스트
@@ -476,19 +509,118 @@
 			
 		</c:forEach>
 		
+		var test_str = "";
+		
 		// 모달창 버튼
 		$("#btn_save").on("click", function(){
-			alert("save");
+// 			alert("save");
+			test_str = 'save';
 		});
 		$("#btn_cancel").on("click", function(){
-			alert("cancel");
+			test_str = 'cancel';
 		});
 		
 		// 모달창 div
-		$("#div_save").on("click", function(){
-// 			alert("div_save");
+		$("#div_save").on("mouseover", function(){
+			$("#lb_save").css("color", "#0174b0");
+			$("#lb_save").css("border-bottom", "2px solid");
+			$("#lb_save").css("border-bottom-color", "#0174b0");
 		});
-		$("#div_search").on("click", function(){
+		$("#div_save").on("mouseout", function(){
+			$("#lb_save").css("color", "black");
+			$("#lb_save").css("border-bottom", "0px solid");
+		});
+		$("#div_search").on("mouseover", function(){
+			$("#lb_search").css("color", "#0174b0");
+			$("#lb_search").css("border-bottom", "2px solid");
+			$("#lb_search").css("border-bottom-color", "#0174b0");
+		});
+		$("#div_search").on("mouseout", function(){
+			$("#lb_search").css("color", "black");
+			$("#lb_search").css("border-bottom", "0px solid");
+		});
+		
+		// 모달창 save, search 마우스오버
+		var idx = 0;
+		
+		$(".save_alarm").on("mouseover", function(){
+			idx = $(".save_alarm").index(this);
+			$(".save_alarm:eq("+idx+")").css("background-color", "#f3f3f3");
+// 			alert($(this).data("idx"));
+		});
+		$(".save_alarm").on("mouseout", function(){
+			$(this).css("background-color", "white");
+		});
+		$(".save_save").on("mouseover", function(){
+			$(this).css("background-color", "#f3f3f3");
+		});
+		$(".save_save").on("mouseout", function(){
+			$(this).css("background-color", "white");
+		});
+		$(".search_alarm").on("mouseover", function(){
+			$(this).css("background-color", "#f3f3f3");
+		});
+		$(".search_alarm").on("mouseout", function(){
+			$(this).css("background-color", "white");
+		});
+		$(".search_save").on("mouseover", function(){
+			$(this).css("background-color", "#f3f3f3");
+		});
+		$(".search_save").on("mouseout", function(){
+			$(this).css("background-color", "white");
+		});
+		
+		// 모달창 save 클릭
+		$(".save_alarm").on("click", function(){
+// 			console.log($(this).text());
+			// 저장을 안했을때는 알림을 켤 수 없음.
+			if($(".save_save:eq("+ (($(this).data("idx"))-1) +")").text() == '저장하기'){
+				alert("먼저 검색어 저장을 해야합니다.");
+				return;
+			}
+			
+			if( (($(this).text()).split("알림 ")[1]).startsWith("켜기")){
+				$(this).html('<i class="fas fa-bell" style="margin-right: 5px; color: #0174b0;"></i>알림 끄기');
+			}else{
+				$(this).html('<i class="far fa-bell" style="margin-right: 5px; color: black;"></i>알림 켜기');
+			}
+		});
+		$(".save_save").on("click", function(){
+// 			alert($(this).data("idx"));
+			if($(this).text() == '저장하기'){
+				$(this).html('<i class="far fa-save" style="margin-right: 5px; color: #0174b0;"></i>저장 취소');
+				
+				// 저장 취소를 하면 알림도 꺼지고 저장을 하면 알림도 자동으로 설정됨.
+				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").html('<i class="fas fa-bell" style="margin-right: 5px; color: #0174b0;"></i>알림 끄기');
+			}else{
+				$(this).html('<i class="far fa-save" style="margin-right: 5px; color: black;"></i>저장하기');
+				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").html('<i class="far fa-bell" style="margin-right: 5px; color: black;"></i>알림 켜기');
+			}
+			
+		});
+		
+		// 모달창 search 클릭
+		$(".search_alarm").on("click", function(){
+			// 삭제한 검색어는 저장할 수 없음.
+			if($(".search_save:eq("+ (($(this).data("idx"))-1) +")").text() == '삭제 취소'){
+				alert("삭제한 데이터는 저장할 수 없습니다.");
+				return;
+			}
+			
+			if( (($(this).text()).split("저장")[1]).startsWith("하기")){
+				$(this).html('<i class="fas fa-bell" style="margin-right: 5px; color: #0174b0;"></i>알림 끄기');
+			}else{
+				$(this).html('<i class="far fa-bell" style="margin-right: 5px; color: black;"></i>알림 켜기');
+			}
+		});
+		$(".search_save").on("click", function(){
+			if($(this).text() == '저장하기'){
+				$(this).html('<i class="far fa-save" style="margin-right: 5px; color: #0174b0;"></i>저장 취소');
+				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").html('<i class="fas fa-bell" style="margin-right: 5px; color: #0174b0;"></i>알림 끄기');
+			}else{
+				$(this).html('<i class="far fa-save" style="margin-right: 5px; color: black;"></i>저장하기');
+				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").html('<i class="far fa-bell" style="margin-right: 5px; color: black;"></i>알림 켜기');
+			}
 			
 		});
 		

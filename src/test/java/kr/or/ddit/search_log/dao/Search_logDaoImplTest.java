@@ -64,6 +64,7 @@ public class Search_logDaoImplTest extends LogicTestConfig{
 		sVo.setSearch_local("대전");
 		sVo.setUser_id("brown");
 		sVo.setSearch_save("1");
+		sVo.setSearch_alarm("2");
 		
 		/***When***/
 		int insertCnt = search_logDao.insertSearch_log(sVo);

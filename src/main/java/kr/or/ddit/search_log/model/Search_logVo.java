@@ -6,8 +6,10 @@ public class Search_logVo {
 	private String search_word;		// 검색어
 	private String search_local;	// 검색지역
 	private String search_save;		// 검색어 저장여부
+	private String search_alarm;	// 채용공고 알림여부
 	
-	// search_save : 1-저장안함, 2-저장함.
+	// search_save 	: 1-저장안함, 2-저장함.
+	// search_alarm : 1-알림 끔, 2-알림 켬.
 	
 	public Search_logVo() {
 		// TODO Auto-generated constructor stub
@@ -16,7 +18,8 @@ public class Search_logVo {
 	@Override
 	public String toString() {
 		return "Search_logVo [search_code=" + search_code + ", user_id=" + user_id + ", search_word=" + search_word
-				+ ", search_local=" + search_local + ", search_save=" + search_save + "]";
+				+ ", search_local=" + search_local + ", search_save=" + search_save + ", search_alarm=" + search_alarm
+				+ "]";
 	}
 
 	public String getSearch_code() {
@@ -58,6 +61,16 @@ public class Search_logVo {
 	public void setSearch_save(String search_save) {
 		this.search_save = search_save;
 	}
+
+	public String getSearch_alarm() {
+		return search_alarm;
+	}
+
+	public void setSearch_alarm(String search_alarm) {
+		this.search_alarm = search_alarm;
+	}
+
+
 
 	
 }
