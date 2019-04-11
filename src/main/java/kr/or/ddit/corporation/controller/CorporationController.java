@@ -103,7 +103,7 @@ public class CorporationController {
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		CorporationVo corporationInfo = new CorporationVo();
 		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
-		paginationVo.setMem_id(memberInfo.getMem_id());
+//		paginationVo.setMem_id(memberInfo.getMem_id());
 		
 		List<PostVo> postList = postService.select_memberPost(memberInfo.getMem_id());
 		String mem_id = memberInfo.getMem_id();
@@ -119,19 +119,8 @@ public class CorporationController {
 //		private int resultMinute;		// 작성 경과시간
 		
 		
-		PostVo insertPost = new PostVo();
-		
-		String writer_name = "";
 		
 		
-		
-		writer_name = corporationInfo.getCorp_name();
-		insertPost.setMem_id(mem_id);
-		insertPost.setPost_contents(post_contents);
-		insertPost.setWriter_name(writer_name);
-		logger.debug("123456789987654321 : {}", insertPost);
-		
-//		int insertCnt = postService.insert_post(insertPost);
 
 		model.addAttribute("corporationInfo", corporationInfo);
 
@@ -146,23 +135,34 @@ public class CorporationController {
 		return "corporationTiles";
 	}
 	
-	/**
-	 * Method : hashtag_replace
-	 * 작성자 : goo84
-	 * 변경이력 :
-	 * @param str
-	 * @return
-	 * Method 설명 : 해시태그 추출을 위한 메소드
-	 */
-	public String hashtag_replace(String str){
+	
+	
+	@RequestMapping(path={"/postInsert"})
+	public String postInsert(HttpServletRequest request,String post_contents2, HttpSession session){
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		CorporationVo corporationInfo = new CorporationVo();
+		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+		PostVo insertPost = new PostVo();
+		String mem_id = memberInfo.getMem_id();
+		String writer_name = "";	
 		
-		str = StringUtils.replace(str, "-_+=!@#$%^&*()[]{}|\\;:'\"<>,.?/~`） ","");
+		writer_name = corporationInfo.getCorp_name();
+		insertPost.setMem_id(mem_id);
+		insertPost.setPost_contents(post_contents2);
+		insertPost.setWriter_name(writer_name);
+		logger.debug("123456789987654321 : {}", insertPost);
+
+		int insertCnt;
 		
-		if(str.length() < 1){
-			return null;
-		}
-		return str;
+		insertCnt = postService.insert_post(insertPost);
+		
+		return "redirect:" + request.getContextPath() + "/corporation";
 	}
+	
+	
+	
+
+	
 	/**
 	 * 회사 소개
 	 * @param model

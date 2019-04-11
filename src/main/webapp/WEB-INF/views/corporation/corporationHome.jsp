@@ -43,7 +43,9 @@ textarea {
 	          <button id="btn-upload-video" class="btn-upload"><span style="font-size: 25px;"><a parent="#accordion" data-toggle="collapse" href="#video" aria-expanded="false" aria-controls="video"><i class="far fa-play-circle"></i></a></span></button>
 	          <button id="btn-upload-document" class="btn-upload"><span style="font-size: 25px;"><a parent="#accordion" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="far fa-file-alt"></i></a></span></button>
 	          
-	          <form id="frm_writePost" action="/corporation" method="post">
+	          <form id="frm_writePost" action="${pageContext.request.contextPath }/postInsert" method="post">
+	          <input type="hidden" id="post_contents2" name="post_contents2">
+	          
 				<div class="collapse" id="collapseExample" >
 				  <div class="well">
 				    <textarea id="post_contents" name="post_contents" rows="5" cols="33" style="width: 550px;"></textarea>
@@ -76,7 +78,7 @@ ${postList}
 <script>	
 $(function () {
 	$("#btn_write_upload").on("click", function () {
-	$("#post_contents").val(post_contents);
+		$("#post_contents2").val($("#post_contents").val());
 				$("#frm_writePost").submit();
 		});
 });
