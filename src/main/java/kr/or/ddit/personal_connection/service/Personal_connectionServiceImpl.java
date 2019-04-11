@@ -96,8 +96,8 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	}
 
 	@Override
-	public List<UsersVo> recommendUsers(String user_id) {
-		return personalDao.recommendUsers(user_id);
+	public List<UsersVo> recommendUsers(String mem_id) {
+		return personalDao.recommendUsers(mem_id);
 	}
 
 	

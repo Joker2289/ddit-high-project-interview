@@ -54,28 +54,32 @@ public class Personal_connectionController {
 		List<UsersVo> schoolFriends = 
 				personalService.schoolFriendsSearch(user_id);
 		List<UsersVo> userList = personalService.recommendUsers(user_id);
+		logger.debug("userList 11 {}" , userList);
 		
 		model.addAttribute("connections_count" , connections_count);
 		model.addAttribute("coporations_count", coporations_count);
 		model.addAttribute("schoolFriends", schoolFriends);
 		model.addAttribute("userList", userList);
+		logger.debug("schoolFriends++ {}" , schoolFriends);
 		
 		return "personalTiles";
 	}
 	
 	
-	@RequestMapping(path={"/recommend"})
-	public String recommendView(HttpSession session , String str) {
+	@RequestMapping(path={"/recommendUsers"})
+	public String recommendView(HttpSession session , String str , Model model) {
 		
-//		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
-		if (str.equals("recommendCorpor")) {
-			
-			
-			return "/personalConnection/recommend/recommendCorpor";
-		}
+		String mem_id = memberVo.getMem_id();
+		logger.debug("mem_id++ {} " , mem_id);
 		
-		return null;
+		List<UsersVo> userList = personalService.recommendUsers(mem_id);
+		logger.debug("userList 22 {}" , userList);
+		
+		model.addAttribute("userList", userList);
+		
+		return "/personalConnection/recommend/recommendUsers";
 		
 	}
 	

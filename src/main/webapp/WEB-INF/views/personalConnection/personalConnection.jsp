@@ -2,72 +2,57 @@
 <link href="/css/personalConnection/personalConnection.css" rel="stylesheet">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
-$(document).ready(function() {
-	
-	
-	var divWidth  = "511"; 
-	$("#btnslidelt").on("click",function(){
-		$("#content").stop(true,true);
+
+	$(document).ready(function() {
 		
-		   var moveX   = parseInt($("#content").css("margin-left"));
-	
-		   if( moveX < 0 )
-		   {
-		    $("#content").animate({"margin-left":"+=" + divWidth + "px"},500);
-		   }
+		var reCount =  1;
+		
+		$("#recommendUsers").click();
+
+		var str = $(this).attr('title');
+
+		
+
+		var divWidth = "511";
+		$("#btnslidelt").on("click", function() {
+			$("#content").stop(true, true);
+
+			var moveX = parseInt($("#content").css("margin-left"));
+
+			if (moveX < 0) {
+				$("#content").animate({"margin-left" : "+=" + divWidth + "px"}, 500);
+			}
+		});
+
+		$("#btnSlidegt").on("click", function() {
+			$("#content").stop(true, true);
+
+			var moveX = parseInt($("#content").css("margin-left"));
+
+			if (-1022 < moveX) {
+				$("#content").animate({"margin-left" : "-=" + divWidth + "px"}, 500);
+			}
+		});
+
+		$(document).scroll(function() {
+			var maxHeight = $(document).height();
+			var currentScroll = $(window).scrollTop() + $(window).height();
+			var title = $(this).attr('title');
+			if (maxHeight <= currentScroll + 100) {
+				$.ajax({
+					type : "POST",
+					url : "/recommendUsers",
+					dataType : "HTML",
+					data : {"str" : str, "reCount" : reCount},
+					success : function(result) {
+						reCount++;
+						$("#content2").append(result);
+					}
+				});
+			}
+		});
+
 	});
-
-	$("#btnSlidegt").on("click",function(){
-		 $("#content").stop(true,true);
-	
-		   var moveX   = parseInt($("#content").css("margin-left"));
-	
-		   if( -1022 < moveX )
-		   {
-		    $("#content").animate({"margin-left":"-=" + divWidth + "px"},500);
-		   }
-	});
-	
-	$(document).scroll(function() {
-	    var maxHeight = $(document).height();
-	    var currentScroll = $(window).scrollTop() + $(window).height();
-		var title = $(this).attr('title');
-	    if (maxHeight <= currentScroll + 100) {
-	    	$.ajax({
-	    		type : "POST",
- 	    		url : "/personalConnection",
-//  	    		dataType : "JSON",    //옵션이므로 JSON으로 받을게 아니면 안써도 됨
- 	    		data : {"title" : title },
-	    		success : function(result) {
-	    		//통신이 성공적으로 이루어졌을 때 처리하고 싶은 함수
-	    			//$("#content2").append('<li><div class="whiteBox">1sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">2sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">3sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">4sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">5sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">6sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">7sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">8sdfgsdfgsdfgsdfg<br>sadf</div></li><li><div class="whiteBox">9sdfgsdfgsdfgsdfg<br>sadf</div></li>');
-	    		}
-	    	});
-	    }
-	});
-	
-	
-	
-						$("#recommendCorpor").on("click", function() {
-
-							var str = $(this).attr('title');
-
-							$.ajax({
-								type : "POST",
-								url : "/recommend",
-								dataType : "HTML",
-								data : {
-									"str" : str
-								},
-								success : function(result) {
-									$(".recommendClass").empty();
-									$(".recommendClass").append(result);
-
-								}
-							});
-
-						});
-					});
 </script>
 <div class="container">
 <div class="row">
@@ -120,8 +105,8 @@ $(document).ready(function() {
 									<a id="recommendCorpor" title="recommendCorpor" style="padding: 5px 5px 5px 5px;margin-left: 20px;">회사</a>
 								</label>
 								<ul  id="content2" style="list-style:none;width:553px; padding-left: 0px; padding-top: 10px">
-									<c:forEach items="${userList }" var="user">
-											<li><div class="whiteBox">${user.user_name}</div></li>
+									<c:forEach items="${userList }" var="user"> 
+										<li><div class="whiteBox">${user.user_name}</div></li>
 									</c:forEach>
 								</ul>
 							</div>

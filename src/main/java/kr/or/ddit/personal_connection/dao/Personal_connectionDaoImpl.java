@@ -112,8 +112,8 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 	}
 
 	@Override
-	public List<UsersVo> recommendUsers(String user_id) {
-		List<UsersVo> UserList = sqlSessionTemplate.selectList("personal.recommendUsers", user_id);
+	public List<UsersVo> recommendUsers(String mem_id) {
+		List<UsersVo> UserList = sqlSessionTemplate.selectList("personal.recommendUsers", mem_id);
 		return UserList;
 	}
 

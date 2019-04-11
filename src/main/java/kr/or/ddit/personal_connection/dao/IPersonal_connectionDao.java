@@ -201,7 +201,7 @@ public interface IPersonal_connectionDao {
 	* @return
 	* Method 설명 : 회원님을 위한 맞춤 추천 - 사람(users)
 	*/
-	List<UsersVo> recommendUsers(String user_id);
+	List<UsersVo> recommendUsers(String mem_id);
 	
 	
 
