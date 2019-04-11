@@ -46,7 +46,7 @@
 				
 				<div class="dropdown" style="margin-right: -120px;">
 				  <span>• • •</span>
-  					<div style="margin-right: 30px;" class="dropdown-content">
+  					<div style="margin-right: 40px;margin-left: -40px" class="dropdown-content">
     					<p ><a>신고</a></p>
     					<p ><a>+팔로워</a></p>
   					</div>

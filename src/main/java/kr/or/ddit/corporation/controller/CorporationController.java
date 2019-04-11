@@ -1,7 +1,10 @@
 package kr.or.ddit.corporation.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.mail.Session;
@@ -12,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,12 +25,16 @@ import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.follow.service.IFollowService;
+import kr.or.ddit.hashtag.service.IHashtagService;
+import kr.or.ddit.hashtag_list.model.Hashtag_listVo;
+import kr.or.ddit.hashtag_list.service.IHashtag_listService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.post.controller.PostController;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
+import kr.or.ddit.post_comment.service.ICommentService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
 import kr.or.ddit.save_post.model.Save_postVo;
@@ -44,15 +52,9 @@ public class CorporationController {
 
 	private Logger logger = LoggerFactory.getLogger(PostController.class);
 	
-	@Resource(name="personalService")
-	private IPersonal_connectionService personal_connectionService; 
-	
-	@Resource(name="search_logService")
-	private ISearch_logService sLogService;
-
 	@Resource(name = "postService")
 	private IPostService postService;
-
+	
 	@Resource(name = "memberService")
 	private IMemberService memberService;
 
@@ -62,17 +64,33 @@ public class CorporationController {
 	@Resource(name = "corporationService")
 	private ICorporationService corporationService;
 	
+	@Resource(name="personalService")
+	private IPersonal_connectionService personal_connectionService; 
+	
+	@Resource(name="followService")
+	private IFollowService followService; 
+
+	@Resource(name="save_postService")
+	private ISave_postService savepostService;
+	
+	@Resource(name="commentService")
+	private ICommentService commentService;
+	
+	@Resource(name="hashtagService")
+	private IHashtagService hashtagService;
+	
+	@Resource(name="hashtag_listService")
+	private IHashtag_listService taglistService;
+	
+	@Resource(name="search_logService")
+	private ISearch_logService sLogService;
+
 	@Resource(name="recruitService")
 	private IRecruitService recrService;
 	
 	@Resource(name="save_recruitService")
 	private ISave_recruitService srecrService;
 	
-	@Resource(name="save_postService")
-	private ISave_postService savepostService;
-	
-	@Resource(name="followService")
-	private IFollowService followService; 
 
 	/**
 	 * 회사 홈(회사타임라인)
@@ -81,18 +99,70 @@ public class CorporationController {
 	 * @return
 	 */
 	@RequestMapping(path = { "/corporation" })
-	public String postList(Model model, PaginationVo paginationVo, HttpSession session,HttpServletRequest request) {
+	public String postList(HttpServletRequest request,Model model, PaginationVo paginationVo,String post_contents, HttpSession session) {
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		CorporationVo corporationInfo = new CorporationVo();
 		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
+		List<PostVo> postList = postService.select_memberPost(memberInfo.getMem_id());
+		String mem_id = memberInfo.getMem_id();
+		logger.debug("mem_id : {}", mem_id);
+		
+//		private String post_code;		// 글 코드
+//		private String mem_id; 			// 작성자
+//		private String post_contents;	// 내용
+//		private Date post_date; 		// 작성일
+//		private String writer_name;		// 작성자 이름
+//		private String commentcount;	// 댓글 수
+//		private String goodcount;		// 좋아요 수
+//		private int resultMinute;		// 작성 경과시간
+		
+		
+		PostVo insertPost = new PostVo();
+		
+		String writer_name = "";
+		
+		
+		
+		writer_name = corporationInfo.getCorp_name();
+		insertPost.setMem_id(mem_id);
+		insertPost.setPost_contents(post_contents);
+		insertPost.setWriter_name(writer_name);
+		logger.debug("123456789987654321 : {}", insertPost);
+		
+//		int insertCnt = postService.insert_post(insertPost);
+
 		model.addAttribute("corporationInfo", corporationInfo);
 
+		model.addAttribute("postList", postList);
 	
+		
+		
+		
+//		-------------
+
+//		-----------------------------------
 		return "corporationTiles";
 	}
-
+	
+	/**
+	 * Method : hashtag_replace
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param str
+	 * @return
+	 * Method 설명 : 해시태그 추출을 위한 메소드
+	 */
+	public String hashtag_replace(String str){
+		
+		str = StringUtils.replace(str, "-_+=!@#$%^&*()[]{}|\\;:'\"<>,.?/~`） ","");
+		
+		if(str.length() < 1){
+			return null;
+		}
+		return str;
+	}
 	/**
 	 * 회사 소개
 	 * @param model

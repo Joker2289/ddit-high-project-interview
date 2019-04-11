@@ -197,7 +197,7 @@ public class PostController {
 		}
 		
 		int insertCnt = postService.insert_post(insertPost);
-		
+		logger.debug("123456789987654321123412341234 : {}", insertPost);
 		Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣]*)");
 		Matcher m = p.matcher(post_contents);
 		
