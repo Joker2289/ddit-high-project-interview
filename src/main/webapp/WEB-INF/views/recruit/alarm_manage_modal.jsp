@@ -83,7 +83,7 @@
 										</div>
 										<div style="border: 0px solid; width: 100px; float: left; text-align: center; margin-left: 10px;
 												background-color: white; cursor: pointer; margin-top: 6px;" onmouseover="" 
-												class="search_alarm" data-idx="${i.index }">
+												class="search_save" data-idx="${i.index }">
 											<i class="far fa-times-circle" style="margin-right: 5px;"></i>기록 삭제
 <!-- 											<i class="far fa-times-circle" style="margin-right: 5px; color: red;"></i>삭제 취소 -->
 										</div>

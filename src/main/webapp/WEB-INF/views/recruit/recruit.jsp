@@ -608,20 +608,18 @@
 			}
 			
 			if( (($(this).text()).split("저장")[1]).startsWith("하기")){
-				$(this).html('<i class="fas fa-bell" style="margin-right: 5px; color: #0174b0;"></i>알림 끄기');
+				$(this).html('<i class="fas fa-save" style="margin-right: 5px; color: #0174b0;"></i>저장 취소');
 			}else{
-				$(this).html('<i class="far fa-bell" style="margin-right: 5px; color: black;"></i>알림 켜기');
+				$(this).html('<i class="far fa-save" style="margin-right: 5px;"></i>저장하기');
 			}
 		});
 		$(".search_save").on("click", function(){
-			if($(this).text() == '저장하기'){
-				$(this).html('<i class="far fa-save" style="margin-right: 5px; color: #0174b0;"></i>저장 취소');
-				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").html('<i class="fas fa-bell" style="margin-right: 5px; color: #0174b0;"></i>알림 끄기');
+			if($(this).text() == '삭제 취소'){
+				$(this).html('<i class="far fa-times-circle" style="margin-right: 5px;"></i>기록 삭제');
 			}else{
-				$(this).html('<i class="far fa-save" style="margin-right: 5px; color: black;"></i>저장하기');
-				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").html('<i class="far fa-bell" style="margin-right: 5px; color: black;"></i>알림 켜기');
+				$(this).html('<i class="far fa-times-circle" style="margin-right: 5px; color: red;"></i>삭제 취소');
+				$(".search_alarm:eq("+ (($(this).data("idx"))-1) +")").html('<i class="far fa-save" style="margin-right: 5px;"></i>저장하기');
 			}
-			
 		});
 		
 	});
