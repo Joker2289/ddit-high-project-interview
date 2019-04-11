@@ -60,17 +60,20 @@
 	<!-- 프로필 조회 -->
 	<select id="select_introduce" parameterType="String" resultType="String">
 	select introduce
-	  from (select distinct(a.user_id),
-			   case when b.resign_date is null then b.corporate_name || ' ' || job_position
-			    	when b.resign_date is not null then  a.school_name || ' ' || a.degree_name
-			   end as introduce
-			  from education_info a, career_info b
-			 where a.user_id = b.user_id
-			   and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select career_info.user_id,  max(nvl(career_info.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
-					                                                                        from career_info, education_info
-					                                                                       where career_info.user_id = education_info.user_id
-					                                                                       group by career_info.user_id)
-			   and a.user_id=#{user_id})
+     from (select distinct(a.user_id),
+            case when b.resign_date is null then b.corporate_name || ' ' || job_position
+                when b.resign_date is not null then  a.school_name || ' ' || a.degree_name
+            end as introduce,
+               a.graduation
+           from education_info a, career_info b
+          where a.user_id = b.user_id
+            and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select career_info.user_id,  max(nvl(career_info.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+                                                                                       from career_info, education_info
+                                                                                      where career_info.user_id = education_info.user_id
+                                                                                      group by career_info.user_id)
+            and a.user_id=#{user_id}
+               order by a.graduation desc)
+     where rownum &lt;=1
 	</select>
 	
 </mapper>

@@ -155,7 +155,7 @@ public class profileController {
 		filesVo.setDivision("43");
 		
 		String introduce = usersService.select_introduce(usersVo.getUser_id());
-		List<Education_infoVo> education_infoList = eduService.select_educationInfo(usersVo.getUser_id());
+		Map<String, Object> education_infoList = eduService.select_educationInfo(usersVo.getUser_id());
 		Map<String, Object> career_infoList = carService.select_careerInfo(usersVo.getUser_id());
 		int peopleCount = PersonalService.connections_count(memberVo);
 		List<FilesVo> userFilesList = filesService.select_file(filesVo);

@@ -99,7 +99,6 @@ $(document).ready(function() {
 					<c:when test="${fn:contains(usersVo.profile_path, 'http')}">
 						<c:set var="profile_path" value="${usersVo.profile_path }"/> 
 					</c:when>
-					
 				</c:choose>
 				<div class="profileHomeBackgroundPicture" style="background-image: url(${not empty bg_path ? bg_path : bg_addrpath});"></div>
 				<div style="min-height: 328px;">
@@ -113,10 +112,10 @@ $(document).ready(function() {
 							</div>
 							
 							<div style="height: 100px;">
-								<c:if test="${not empty career_infoList}">
+								<c:if test="${not empty career_infoList.career_infoVoList}">
 									<div>
 										<span style="color: #B3B6B9;font-size: 18px;"><i style="width:30px;" class="fas fa-building"></i></span>
-										<label class="memberRight">${career_infoList[0].corporate_name }</label>
+										<label class="memberRight">${career_infoList.career_infoVoList[0].corporate_name }</label>
 									</div>
 								</c:if>
 								
@@ -151,7 +150,7 @@ $(document).ready(function() {
 							
 						</div>
 						
-						<c:if test="${(not empty usersVo.profile_contents) or (not empty usersVo.file_name)}">
+						<c:if test="${(not empty usersVo.profile_contents) or (not empty userFilesList)}">
 							<div class="userContentsSkip" style="border-top: 1px solid #CDCFD2; margin-top: 20px; padding-top: 10px;">
 								<p>${usersVo.profile_contents }</p>
 								<div style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;">
@@ -173,7 +172,7 @@ $(document).ready(function() {
 			</div>
 			
 			<!-- 경력  -->
-			<c:if test="${not empty career_infoList }">
+			<c:if test="${not empty career_infoList.career_infoVoList }">
 			<div class="whiteBox" style="padding: 20px 20px 20px 20px; margin-top: 20px;">
 				<h3 style="margin: 0 0 0 0 ">경력 사항</h3>
 				<ul class="list-unstyled">
@@ -183,16 +182,14 @@ $(document).ready(function() {
 						<fmt:parseNumber var="year" integerOnly="true" value="${career_infoVo.month / 12}"/>
 						<fmt:parseNumber var="month" integerOnly="true" value="${career_infoVo.month % 12}"/>
 						<li class="list-unstyled" style="margin-top: 20px; display: flex;">
-							<div>
-								<a style="display: flex; iwidth: 720px;">
+							<div style="width: 720px;">
+								<a style="display: flex; width: 720px;">
 									<c:set var="profile_addrPath" value="/profile?mem_id=${career_infoVo.corp_id }"/>
-									<c:choose>
-										<c:when test="${fn:contains(career_infoVo.logo_path, 'http')}">
+										<c:if test="${fn:contains(career_infoVo.logo_path, 'http')}">
 											<c:set var="logo_path" value="${career_infoVo.logo_path }"/> 
-										</c:when>
-									</c:choose>
+										</c:if>
 									<div class="logoPicture" style="background-image: url(${not empty logo_path ? logo_path : profile_addrPath}); width: 120px; height: 50px;"></div>
-									<div style="margin-left: 30px;">
+									<div style="margin-left: 30px; width: 570px;">
 										<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${career_infoVo.job_rank }</h4>
 										<label style="font-size: 17px; color: rgba(0,0,0,.9);">${career_infoVo.corporate_name }</label><br>
 										<label>${strDate } - ${endDate  == null ? '현재' : endDate} · (${year > 1 ? year : ''}${year > 1 ? '년 ' : '' }${month > 1 ? month : '1'}개월)</label><br>
@@ -232,36 +229,55 @@ $(document).ready(function() {
 			</div>
 			</c:if>
 			
-			<%-- <!-- 학력  -->
-			<c:if test="${not empty career_infoList }">
+		    <!-- 학력  -->
+			<c:if test="${not empty education_infoList.education_infoVoList }">
 			<div class="whiteBox" style="padding: 20px 20px 20px 20px; margin-top: 20px;">
 				<h3 style="margin: 0 0 0 0 ">학력</h3>
-					<ul class="list-unstyled">
-						<c:forEach items="${education_infoList }" var="education_info">
-							<fmt:formatDate value="${education_info.admission }" var="strDate" pattern="yyyy년 "/>
-							<fmt:formatDate value="${education_info.graduation }" var="endDate" pattern="yyyy년 "/>
-							<li class="list-unstyled" style="margin-top: 20px; display: flex;">
+				<ul class="list-unstyled">
+					<c:forEach items="${education_infoList.education_infoVoList }" var="education_infoVo" varStatus="i">
+						<fmt:formatDate value="${education_infoVo.admission }" var="strDate" pattern="yyyy년 MM월"/>
+						<fmt:formatDate value="${education_infoVo.graduation }" var="endDate" pattern="yyyy년 MM월"/>
+						<li class="list-unstyled" style="margin-top: 20px; display: flex;">
+							<div style="width: 720px;">
 								<a style="display: flex; width: 720px;">
-									<c:set var="profile_addrPath" value="/profile?mem_id=5"/>
-									<c:choose>
-										<c:when test="${fn:contains(education_info.logo_path, 'http')}">
-											<c:set var="logo_path" value="${education_info.logo_path }"/> 
-										</c:when>
-									</c:choose>
-									<div class="logoPicture" style="background-image: url('/profile?mem_id=5'); width: 120px; height: 50px;"></div>
-									<div style="margin-left: 30px;">
-										<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${education_info.school_name }</h4>
-										<label style="font-size: 17px; color: rgba(0,0,0,.9);">${education_info.degree_name }, ${education_info.major }, ${education_info.grade }</label><br>
+									<div class="logoPicture" style="background-image: url(/images/corporation/basic/basicShool.png); width: 120px; height: 50px;"></div>
+									<div style="margin-left: 30px; width: 570px;">
+										<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${education_infoVo.school_name }</h4>
+										<label style="font-size: 17px; color: rgba(0,0,0,.9);">${education_infoVo.degree_name }, ${education_infoVo.major }, ${education_infoVo.grade }</label><br>
 										<label>${strDate } - ${endDate}</label><br>
-										<label>${education_info.contents }</label><br>
 									</div>
 								</a>
+								
+								<!-- 학력 내용 -->
+								<c:if test="${not empty education_infoVo.contents }">
+									<div class="contentsDiv" style="padding: 10px 30px 0 150px; width: 720px;">
+										<span class="contents" style="width: 536px; margin: 0 0 0 0;">${education_infoVo.contents }</span>
+										<c:if test="${fn:length(education_infoVo.contents) > 45}">
+									 		<span class="contentsBtn" style="color: #0073B1; cursor: pointer;">더 보기 </span>
+										</c:if>
+									</div>
+								</c:if>
+								
+								<!-- 학력 첨부파일 -->
+								<c:if test="${not empty education_infoList.education_infoFileVoList }">
+									<div style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;">
+										<c:forEach var="education_infoFileVo" items="${education_infoList.education_infoFileVoList[i.index] }">
+										
+											<div style="height: 25px; margin: 10px 30px 0 150px;border: 2px solid #CDCFD2; font-size: 15px; font-weight: bold">
+												<a href="/fileDownload?file_code=${education_infoFileVo.file_code }">${education_infoFileVo.file_name}</a>
+											</div>
+										</c:forEach>
+									</div>
+								</c:if>
+							</div>
+							<div>
 								<span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span>
-							</li>
-						</c:forEach>
-					</ul>
+							</div>
+						</li>
+					</c:forEach>
+				</ul>
 			</div>
-			</c:if> --%>
+			</c:if>
 			
 			
 		</div>
