@@ -1,9 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="java.util.Enumeration"%>
+<%@page import="org.json.simple.JSONObject"%>
+
+
+
+
+	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +29,7 @@ textarea {
     box-shadow: 1px 1px 1px #999;
 }
 </style>
+
 </head>
 <body>
 	<div class="container">
@@ -65,7 +74,6 @@ textarea {
 		
 	</div>
 			
-
 
 
 <div style="height: 300px; width: 555px; margin-left: 242px;">
@@ -186,13 +194,12 @@ textarea {
 	</div>
 
 
-
-
-
 	
 			          
 
 <script>	
+
+            
 $(function () {
 	$("#btn_write_upload").on("click", function () {
 		$("#post_contents2").val($("#post_contents").val());
