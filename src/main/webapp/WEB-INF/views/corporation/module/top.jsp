@@ -32,7 +32,7 @@
 <div class="row">
 
 <div class="whiteBox"  style=" width:1140px; height: 170px; border-radius: 4px;" >
-	<img src="${corporationInfo.logo_path}" alt="이미지를 찾을 수 없습니다." width="1138px" height="170px" style="border-radius: 4px;"></img><br>
+	<img src="${corporationInfo.bg_path}" alt="이미지를 찾을 수 없습니다." width="1138px" height="170px" style="border-radius: 4px;"></img><br>
 		<div style="position: relative; top: -50px; left: 30px; height: 105px; width: 172px;border-radius: 4px; border: 1px solid #AAAAAA;">
 	        <img src="${corporationInfo.logo_path}"  height="103" width="170" style="border-radius: 4px; alt="이미지를 찾을 수 없습니다."/><br> 
 	    </div>	

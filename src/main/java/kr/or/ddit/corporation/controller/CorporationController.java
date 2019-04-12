@@ -103,40 +103,25 @@ public class CorporationController {
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		CorporationVo corporationInfo = new CorporationVo();
 		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
-//		paginationVo.setMem_id(memberInfo.getMem_id());
 		
 		List<PostVo> postList = postService.select_memberPost(memberInfo.getMem_id());
 		String mem_id = memberInfo.getMem_id();
 		logger.debug("mem_id : {}", mem_id);
 		
-//		private String post_code;		// 글 코드
-//		private String mem_id; 			// 작성자
-//		private String post_contents;	// 내용
-//		private Date post_date; 		// 작성일
-//		private String writer_name;		// 작성자 이름
-//		private String commentcount;	// 댓글 수
-//		private String goodcount;		// 좋아요 수
-//		private int resultMinute;		// 작성 경과시간
-		
-		
-		
-		
-
 		model.addAttribute("corporationInfo", corporationInfo);
-
 		model.addAttribute("postList", postList);
 	
-		
-		
-		
-//		-------------
-
-//		-----------------------------------
 		return "corporationTiles";
 	}
 	
 	
-	
+	/**
+	 * 타임라인 글쓰기
+	 * @param request
+	 * @param post_contents2
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(path={"/postInsert"})
 	public String postInsert(HttpServletRequest request,String post_contents2, HttpSession session){
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
@@ -159,8 +144,6 @@ public class CorporationController {
 		return "redirect:" + request.getContextPath() + "/corporation";
 	}
 	
-	
-	
 
 	
 	/**
@@ -171,7 +154,7 @@ public class CorporationController {
 	 * @return
 	 */
 	@RequestMapping(path = { "/corporationIntroduction" })
-	public String corporationIntro(Model model, PaginationVo paginationVo, HttpServletRequest request) {
+	public String corporationIntro(Model model, PaginationVo paginationVo, HttpServletRequest request, CorporationVo corporationVo) {
 		
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
