@@ -1,18 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link href="/css/personalConnection/personalConnection.css" rel="stylesheet">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script type="text/javascript">
+	var userPage =  1;
+	var corpPage = 1;
+
 
 	$(document).ready(function() {
+		$.ajax({
+			type : "POST",
+			url : "/recommendUsers",
+			dataType : "HTML",
+			data : {"page" : userPage},
+			success : function(result) {
+				userPage++;
+				$("#content2").append(result);
+			}
+		}); 
 		
-		var reCount =  1;
 		
 		$("#recommendUsers").click();
 
-		var str = $(this).attr('title');
-
+		 var str = $(this).attr('title');
 		
-
 		var divWidth = "511";
 		$("#btnslidelt").on("click", function() {
 			$("#content").stop(true, true);
@@ -34,22 +45,59 @@
 			}
 		});
 
+		
 		$(document).scroll(function() {
 			var maxHeight = $(document).height();
 			var currentScroll = $(window).scrollTop() + $(window).height();
-			var title = $(this).attr('title');
-			if (maxHeight <= currentScroll + 100) {
-				$.ajax({
+		
+			if (maxHeight <= currentScroll) {
+				 $.ajax({
 					type : "POST",
 					url : "/recommendUsers",
 					dataType : "HTML",
-					data : {"str" : str, "reCount" : reCount},
+					data : {"page" : userPage},
 					success : function(result) {
-						reCount++;
+						userPage++;
 						$("#content2").append(result);
 					}
-				});
+				}); 
 			}
+		});
+		
+		
+		$("#recommendCorpor").on("click", function() {
+			if(corpPage == 1) {
+				$("#content2").empty();
+				
+				 $.ajax({
+					type : "POST",
+					url : "/recommendCorpor",
+					dataType : "HTML",
+					data : {"page" : corpPage},
+					success : function(result) {
+						corpPage++;
+						$("#content2").append(result);
+					}
+				}); 
+			}
+			$(document).scroll(function() {
+				
+				var maxHeight = $(document).height();
+				var currentScroll = $(window).scrollTop() + $(window).height();
+			
+				if (maxHeight <= currentScroll) {
+					 $.ajax({
+						type : "POST",
+						url : "/recommendCorpor",
+						dataType : "HTML",
+						data : {"page" : corpPage},
+						success : function(result) {
+							corpPage++;
+							$("#content2").append(result);
+						}
+					}); 
+				}
+			});
 		});
 
 	});
@@ -82,11 +130,21 @@
 								<button id="btnSlidegt" class="btn btn-default" style="border: 0px;">&gt;</button><br/>
 								<ul  id="content" style="list-style:none;width:3000px; padding-left: 5px;">
 									<c:forEach items="${schoolFriends }" var="friend">
+									<c:set var="bg_addrpath" value="/background?mem_id=${friend.user_id }"/>
+						            <c:set var="profile_addrpath" value="/profile?mem_id=${friend.user_id }"/> 
+						            <c:choose>
+						               <c:when test="${fn:contains(friend.bg_path, 'http')}">
+						                  <c:set var="bg_path" value="${friend.usersVo.bg_path }"/> 
+						               </c:when>
+						               <c:when test="${fn:contains(friend.profile_path, 'http')}">
+						                  <c:set var="profile_path" value="${friend.profile_path }"/> 
+						               </c:when>
+						            </c:choose>
 										<li>
 											<div class="whiteBox">
-												<div style="background-image: url(/background?mem_id=${friend.user_id});height: 70px; margin-top: -15px;"></div>
+												<div style="background-image: url(${not empty bg_path ? bg_path : bg_addrpath});height: 70px; margin-top: -15px;"></div>
 												<div style=" margin-top: -50px;">
-													<div style="width: 108px;height: 108px;background-image:url(/profile?mem_id=${friend.user_id});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 30px;border: 4px solid #E3EEF2;border-radius: 100px;"></div>
+													<div style="width: 108px;height: 108px;background-image: url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 30px;border: 4px solid #E3EEF2;border-radius: 100px;"></div>
 													<div style="margin-top: 5px;"><strong>${friend.user_name}</strong></div>
 													<div style="font-size: 16px;padding-left: 5px;padding-right: 5px; text-overflow: ellipsis; display: inline-block; width: 146.97px; white-space: nowrap; overflow: hidden;margin-bottom: 50px;">${friend.introduce}</div>
 													<button class="btn btn-default" style="border-color: #0073b1;border-style: solid;padding-left: 40px;padding-right: 40px;">1촌 맺기</button>
@@ -105,9 +163,9 @@
 									<a id="recommendCorpor" title="recommendCorpor" style="padding: 5px 5px 5px 5px;margin-left: 20px;">회사</a>
 								</label>
 								<ul  id="content2" style="list-style:none;width:553px; padding-left: 0px; padding-top: 10px">
-									<c:forEach items="${userList }" var="user"> 
+									<%-- <c:forEach items="${userList }" var="user"> 
 										<li><div class="whiteBox">${user.user_name}</div></li>
-									</c:forEach>
+									</c:forEach> --%>
 								</ul>
 							</div>
 						</div>

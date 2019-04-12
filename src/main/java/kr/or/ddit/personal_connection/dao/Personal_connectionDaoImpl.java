@@ -13,6 +13,7 @@ import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.users.model.UsersVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 @Repository("personalDao")
 public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
@@ -112,8 +113,8 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 	}
 
 	@Override
-	public List<UsersVo> recommendUsers(String mem_id) {
-		List<UsersVo> UserList = sqlSessionTemplate.selectList("personal.recommendUsers", mem_id);
+	public List<UsersVo> recommendUsers(PaginationVo paginationVo) {
+		List<UsersVo> UserList = sqlSessionTemplate.selectList("personal.recommendUsers", paginationVo);
 		return UserList;
 	}
 

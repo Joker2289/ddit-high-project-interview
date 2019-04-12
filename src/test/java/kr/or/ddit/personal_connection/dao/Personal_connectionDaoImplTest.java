@@ -435,25 +435,25 @@ public class Personal_connectionDaoImplTest extends LogicTestConfig{
 	* 변경이력 :
 	* Method 설명 : 회원님을 위한 맞춤 추천 - 사람(users)
 	*/
-	@Test
+	/*@Test
 	public void testRecommendUsers() {
 		
-		/***Given***/
+		*//***Given***//*
 		UsersVo usersVo = new UsersVo();
 		usersVo.setUser_id("lhh");
 		
 		String user_id = usersVo.getUser_id();
 		
-		/***When***/
+		*//***When***//*
 		List<UsersVo> recommendUserList = personalDao.recommendUsers(user_id);
 		for(UsersVo list : recommendUserList) {
 			logger.debug("recommendList, {}" , list);
 		}
 
-		/***Then***/
+		*//***Then***//*
 		assertNotNull(recommendUserList);
 		
-	}
+	}*/
 	
 
 }

@@ -7,6 +7,8 @@ public class PaginationVo {
 	private String criteria_code; //다음페이지 기준 코드(불러올 게시글 기준코드)
 	private String ref_code;
 	private String division;
+	private String user_id;
+	private String corp_id;
 	
 	public PaginationVo() {
 		
@@ -51,6 +53,19 @@ public class PaginationVo {
 	}
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
+	}
+	
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	public String getCorp_id() {
+		return corp_id;
+	}
+	public void setCorp_id(String corp_id) {
+		this.corp_id = corp_id;
 	}
 	@Override
 	public String toString() {
