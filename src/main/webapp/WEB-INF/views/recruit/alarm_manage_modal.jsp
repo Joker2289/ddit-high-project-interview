@@ -30,7 +30,7 @@
 	<div class="modal-body" style="height: 400px; border: 0px solid; padding: 0px; padding-left: 15px;">
 		<table border="0" style="width: 737px;">
 			<tr>
-				<td style="width: 361px;">
+				<td style="width: 361px; border: 0px solid;">
 					<div style="overflow: auto; overflow-x:hidden; float: left; height: 360px; border: 0px solid;"
 							id="div_save">
 						<table border="0" style="font-size: 17px; width: 341px;">
@@ -42,7 +42,8 @@
 										<div style="border: 0px solid; width: 100px; float: left; text-align: center; cursor: pointer;
 												margin-top: 6px; margin-left: -6px;"
 												onmouseover="" class="save_alarm" data-idx="${i.index }"
-												data-alarm="${saveList.get(i.index - 1).search_alarm }">
+												data-alarm="${saveList.get(i.index - 1).search_alarm }"
+												data-code="${saveList.get(i.index - 1).search_code }">
 											<c:choose>
 												<c:when test="${saveList.get(i.index - 1).search_alarm == 2 }">
 													<i class="fas fa-bell" style="margin-right: 5px; color: #0174b0;"></i>알림 끄기
@@ -54,7 +55,8 @@
 										</div>
 										<div style="border: 0px solid; width: 100px; float: left; text-align: center; margin-left: 10px;
 												background-color: white; cursor: pointer; margin-top: 6px;" onmouseover="" 
-												class="save_save"data-idx="${i.index }">
+												class="save_save" data-idx="${i.index }" data-save="2"
+												data-code="${saveList.get(i.index - 1).search_code }">
 											<i class="far fa-save" style="margin-right: 5px; color: #0174b0;"></i>저장 취소
 											<!-- 저장하기 -->
 										</div>
@@ -67,7 +69,8 @@
 				<td>
 					<!-- 최근 검색어 리스트. -->
 					<div style="overflow: auto; overflow-x:hidden; height: 360px; margin-left: 10px; border: 0px solid;
-							margin-left: 0px; border-left: 1px solid; border-color: #d9d9d9;" id="div_search">
+							margin-left: 0px; border-left: 1px solid; border-color: #d9d9d9;" 
+							id="div_search">
 						<table border="0" style="font-size: 17px; width: 341px; margin-left: 20px;">
 							<c:forEach begin="1" end="${sList.size() }" varStatus="i">
 								<tr>
@@ -76,14 +79,17 @@
 										${sList.get(i.index - 1).search_local }<br>
 										<div style="border: 0px solid; width: 100px; float: left; text-align: center; cursor: pointer;
 												margin-top: 6px; margin-left: -6px;"
-												onmouseover="" class="search_alarm" data-idx="${i.index }">
+												onmouseover="" class="search_save" data-idx="${i.index }"
+												data-code="${sList.get(i.index - 1).search_code }"
+												data-save="${sList.get(i.index - 1).search_save }">
 											<i class="far fa-save" style="margin-right: 5px;"></i>저장하기
 <!-- 											<i class="fas fa-save" style="margin-right: 5px; color: #0174b0;"></i>저장 취소 -->
 											
 										</div>
 										<div style="border: 0px solid; width: 100px; float: left; text-align: center; margin-left: 10px;
 												background-color: white; cursor: pointer; margin-top: 6px;" onmouseover="" 
-												class="search_save" data-idx="${i.index }">
+												class="search_del" data-idx="${i.index }" data-del="1"
+												data-code="${sList.get(i.index - 1).search_code }">
 											<i class="far fa-times-circle" style="margin-right: 5px;"></i>기록 삭제
 <!-- 											<i class="far fa-times-circle" style="margin-right: 5px; color: red;"></i>삭제 취소 -->
 										</div>
@@ -101,12 +107,18 @@
 
 	</div>
   	  
-	<div class="modal-foot" style="padding: 10px; text-align: right; padding-bottom: 15px;">
-		<input type="button" id="btn_save" value="저장" style="border: 0px; width: 65px; height: 40px; font-size: 19px;
-				color: white; background-color: #0174b0; border-radius: 3px;">
-		<input type="button" id="btn_cancel" value="취소" style="border: 1px solid; width: 65px; height: 40px; font-size: 19px;
-				color: #0174b0; background-color: white; border-radius: 3px; margin-left: 8px; margin-right: 15px;">
-	</div>
+	<form id="frm" action="${pageContext.request.contextPath }/updateAllAlarm" method="post">
+		<input type="hidden" id="result" name="result">
+	
+		<div class="modal-foot" style="padding: 10px; text-align: right; padding-bottom: 15px;">
+			<input type="button" id="btn_save" value="저장" style="border: 0px; width: 65px; height: 40px; font-size: 19px;
+					color: white; background-color: #0174b0; border-radius: 3px;">
+			<input type="button" id="btn_cancel" value="취소" style="border: 1px solid; width: 65px; height: 40px; font-size: 19px;
+					color: #0174b0; background-color: white; border-radius: 3px; margin-left: 8px; margin-right: 15px;"
+					data-dismiss="">
+			<input type="hidden" id="btn_cancel_hidden" data-dismiss="modal">
+		</div>
+	</form>
   	  
   	</div>
   </div>

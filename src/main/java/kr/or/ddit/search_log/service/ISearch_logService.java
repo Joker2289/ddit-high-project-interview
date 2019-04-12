@@ -92,13 +92,35 @@ public interface ISearch_logService {
 	 * Method 설명 : 특정 유저의 최근 검색어 리스트 조회.
 	 */
 	List<Search_logVo> getSList(String mem_id);
+
+	/**
+	 * 
+	 * Method : updateSLogNotDel
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param sVo
+	 * @return
+	 * Method 설명 : 검색내역 수정. (del_flag가 '1'인 경우)
+	 */
+	int updateSLogNotDel(Search_logVo sVo);
+
+	/**
+	 * 
+	 * Method : getSLogByCond
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param sVo
+	 * @return
+	 * Method 설명 : id, word, local로 특정 검색내역 조회.
+	 */
+	Search_logVo getSLogByCond(Search_logVo sVo);
+
+	
+	
+	
 	
 	
 }
-
-
-
-
 
 
 

@@ -95,6 +95,7 @@ public class Save_recruitController {
 
 		sVo.setUser_id(mVo.getMem_id());
 		sVo.setSearch_save("2");
+		sVo.setDel_flag("2");
 		List<Search_logVo> saveList = sLogService.getSaveList(sVo);
 		
 		model.addAttribute("saveList", saveList);

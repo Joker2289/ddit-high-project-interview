@@ -4,6 +4,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import kr.or.ddit.search_log.service.ISearch_logService;
 
 @Controller
 public class Search_logController {
+	private Logger logger = LoggerFactory.getLogger(Search_logController.class);
 
 	@Resource(name="search_logService")
 	private ISearch_logService sLogService;
@@ -39,12 +42,6 @@ public class Search_logController {
 		
 		sVo.setSearch_code(String.valueOf(sLogService.getAllCnt()+1));
 		
-		// search_save 임시로 2로 설정. -> 나중에 1로 바꾸기.
-		sVo.setSearch_save("1");
-		
-		// sarch_alarm 알림 설정 기본값 - '2' (알림 받기)
-		sVo.setSearch_alarm("2");
-		
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		if(mVo != null){
 			sVo.setUser_id(mVo.getMem_id());
@@ -52,6 +49,20 @@ public class Search_logController {
 			// 유저정보 없을경우 로그인 페이지로 이동.
 			return "redirect:" + req.getContextPath() + "/login";
 		}
+		
+		// search_save, sarch_alarm은 id/word/local로 검색한뒤 데이터가 없으면 default (save-1, alarm-1), 
+		// 있으면 그 데이터의 값으로 설정해야 함
+		Search_logVo compSVo = sLogService.getSLogByCond(sVo);
+		
+		if(compSVo == null){
+			sVo.setSearch_save("1");
+			sVo.setSearch_alarm("1");
+		}else{
+			sVo.setSearch_save(compSVo.getSearch_save());
+			sVo.setSearch_alarm(compSVo.getSearch_alarm());
+		}
+		
+		sVo.setDel_flag("1");
 		
 		sLogService.insertSearch_log(sVo);		
 
@@ -89,6 +100,55 @@ public class Search_logController {
 		return "redirect:" + req.getContextPath() + "/recruit";
 	}
 	
+	// @수정한 전체 검색내역 업데이트.
+	@RequestMapping("/updateAllAlarm")
+	public String updateAllAlarm(HttpServletRequest req, String result, Model model) {
+		// result parsing. split("\\?\\?\\?"): [0]-save, [1]-search
+		String data_save = result.split("\\?\\?\\?")[0];
+		String data_search = result.split("\\?\\?\\?")[1];
+		
+		// split("::")후 length 확인. - 갯수만큼 나옴.
+		String[] arr_save = data_save.split("::");
+		String[] arr_search = data_search.split("::");
+		
+		// split("/")후 data 확인. - ok. - search_code/search_alarm/search_save
+		if( ! arr_save[0].startsWith("xxx")){
+			for(int i=0; i < arr_save.length; i++){
+				String search_code = arr_save[i].split("/")[0];
+				String search_alarm = arr_save[i].split("/")[1];
+				String search_save = arr_save[i].split("/")[2];
+				
+				Search_logVo sVo = sLogService.getSearch_log(search_code);
+				sVo.setSearch_alarm(search_alarm);
+				sVo.setSearch_save(search_save);
+				
+				sLogService.updateSLogNotDel(sVo);
+			}
+		}
+		
+		// search_code/search_save/del
+		if( ! arr_search[0].startsWith("xxx")){
+			for(int i=0; i < arr_search.length; i++){
+				String search_code = arr_search[i].split("/")[0];
+				String search_save = arr_search[i].split("/")[1];
+				String del_flag = arr_search[i].split("/")[2];
+				
+				// del_flag '1'은 다른 쿼리(updateSLogNotDel) 사용.
+				Search_logVo sVo = sLogService.getSearch_log(search_code);
+				sVo.setSearch_save(search_save);
+				
+				if(del_flag.equals("2")){
+					sLogService.updateSearch_log(sVo);
+				}else{
+					sLogService.updateSLogNotDel(sVo);
+				}
+			}
+		}
+		
+		logger.debug("result? : {}", result);
+		
+		return "redirect:" + req.getContextPath() + "/recruit";
+	}
 	
 	
 	

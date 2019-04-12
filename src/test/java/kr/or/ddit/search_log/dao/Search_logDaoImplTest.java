@@ -20,7 +20,7 @@ public class Search_logDaoImplTest extends LogicTestConfig{
 	private Logger logger = LoggerFactory.getLogger(Search_logDaoImplTest.class);
 	
 	@Resource(name="search_logDao")
-	private ISearch_logDao search_logDao;
+	private ISearch_logDao sLogDao;
 	
 	@Before
 	public void setup(){
@@ -40,10 +40,10 @@ public class Search_logDaoImplTest extends LogicTestConfig{
 		/***Given***/
 		
 		/***When***/
-		int search_logCnt = search_logDao.getAllCnt();
+		int search_logCnt = sLogDao.getAllCnt();
 
 		/***Then***/
-		assertEquals(0, search_logCnt);
+		assertNotNull(search_logCnt);
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class Search_logDaoImplTest extends LogicTestConfig{
 	@Test
 	public void testInsertSearch_log(){
 		/***Given***/
-		search_logDao.deleteSearch_logForTest("2");
+		sLogDao.deleteSearch_logForTest("2");
 		
 		Search_logVo sVo = new Search_logVo();
 		sVo.setSearch_code("2");
@@ -65,9 +65,10 @@ public class Search_logDaoImplTest extends LogicTestConfig{
 		sVo.setUser_id("brown");
 		sVo.setSearch_save("1");
 		sVo.setSearch_alarm("2");
+//		sVo.setDel_flag("1");
 		
 		/***When***/
-		int insertCnt = search_logDao.insertSearch_log(sVo);
+		int insertCnt = sLogDao.insertSearch_log(sVo);
 
 		/***Then***/
 		assertEquals(1, insertCnt);
@@ -86,12 +87,14 @@ public class Search_logDaoImplTest extends LogicTestConfig{
 		Search_logVo sVo = new Search_logVo();
 		sVo.setUser_id("brown");
 		sVo.setSearch_save("2");
+		sVo.setDel_flag("2");
 		
 		/***When***/
-		List<Search_logVo> saveList = search_logDao.getSaveList(sVo);
+		List<Search_logVo> saveList = sLogDao.getSaveList(sVo);
 		
 		/***Then***/
 		assertNotNull(saveList);
+//		assertEquals(10, saveList.size());
 	}
 	
 	/**
@@ -106,11 +109,31 @@ public class Search_logDaoImplTest extends LogicTestConfig{
 		/***Given***/
 
 		/***When***/
-		Search_logVo sVo = search_logDao.getSearch_log("1");
+		Search_logVo sVo = sLogDao.getSearch_log("1");
 		logger.debug("sVo - word : {}", sVo.getSearch_word());
 
 		/***Then***/
 		assertNotNull(sVo);
+	}
+	
+	/**
+	 * 
+	 * Method : testUpdateSLogNotDel
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 검색내역 수정 (del_flag가 '1'인 경우) 테스트.
+	 */
+	@Test
+	public void testUpdateSLogNotDel() {
+		/***Given***/
+		Search_logVo sVo = sLogDao.getSearch_log("11");
+		sVo.setSearch_alarm("1");
+
+		/***When***/
+		int updateCnt = sLogDao.updateSLogNotDel(sVo);
+
+		/***Then***/
+		assertNotNull(updateCnt);
 	}
 	
 	

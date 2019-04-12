@@ -62,7 +62,7 @@
 				text-align: center; padding-top: 12px; font-size: 21px;">
 			<a href="https://media.daum.net/digital/">
 				<img width="30" src="https://lh3.googleusercontent.com/sMhe3GxpmWD6NISZBzhy--dtwcAcVvLFDxOGe1Kat3d0YA0nhq9ICwTSFN3UQ7uEZA">
-				 뉴스로 IT 업계 동향을 확인해보세요. 1
+				 뉴스로 IT 업계 동향을 확인해보세요.
 			</a>
 		</div>
 	</div>
@@ -509,16 +509,84 @@
 			
 		</c:forEach>
 		
-		var test_str = "";
+		var arr_save = new Array();
+		var arr_search = new Array();
+		var result_save = "";
+		var result_search = "";
+		var result = "";
 		
 		// 모달창 버튼
 		$("#btn_save").on("click", function(){
-// 			alert("save");
-			test_str = 'save';
+			result_save = '';
+			result_search = '';
+			result = '';
+			
+			// 수정을 안했을 경우 컨트롤러에서 로직을 건너뛸 수 있게 설정. 'xxx/xxx/xxx::'
+			if(arr_save.length == 0){
+				result_save = 'xxx/xxx/xxx::';
+			}else{
+				for(var i=0; i < arr_save.length; i++){
+	// 				alert( $(".save_alarm:eq("+i+")").data("code")+"/"+$(".save_alarm:eq("+i+")").data("alarm")+"/"+$(".save_save:eq("+i+")").data("save") );
+					result_save += $(".save_alarm:eq("+i+")").data("code")+"/"+$(".save_alarm:eq("+i+")").data("alarm")+"/"+$(".save_save:eq("+i+")").data("save")+"::"		
+				}
+			}
+			
+			if(arr_search.length == 0){
+				result_search = 'xxx/xxx/xxx::';
+			}else{
+				for(var i=0; i < arr_search.length; i++){
+					result_search += $(".search_save:eq("+i+")").data("code")+"/"+$(".search_save:eq("+i+")").data("save")+"/"+$(".search_del:eq("+i+")").data("del")+"::"		
+				}
+			}
+			
+// 			alert("result : " + result_save + "???" + result_search);
+			result = result_save + "???" + result_search;
+			
+			// 수정할 result 문자열 만들기
+			// 저장한 검색어???최근 검색어
+			// 저장1::저장2::...???최근1::최근2::...
+			// search_code/search_save/search_alarm::...???search_code/search_save/delete::...
+			$("#result").val(result);
+			$("#frm").submit();			
 		});
 		$("#btn_cancel").on("click", function(){
-			test_str = 'cancel';
+// 			alert($(".save_alarm:eq(0)").data("code"));
+			if(confirm("저장하지 않고 나가시겠습니까?")){
+				$("#btn_cancel_hidden").trigger("click");
+			}
 		});
+		
+		// arr_save/search에 해당 search_code가 있는지 확인하고 추가하는 메서드.
+		// 구분 division(div): 'save'-저장한 검색어, 'search'-최근 검색어
+		function checkAdd(div, code){
+			if(div == 'save'){
+				var add_flag = true;
+				
+				for(var i=0; i < arr_save.length; i++){
+					if(arr_save[i] == code){
+						add_flag = false;						
+						break;
+					}
+				}
+				
+				if(add_flag){
+					arr_save[arr_save.length] = code;
+				}
+			}else{
+				var add_flag = true;
+				
+				for(var i=0; i < arr_search.length; i++){
+					if(arr_search[i] == code){
+						add_flag = false;						
+						break;
+					}
+				}
+				
+				if(add_flag){
+					arr_search[arr_search.length] = code;
+				}
+			}		
+		}
 		
 		// 모달창 div
 		$("#div_save").on("mouseover", function(){
@@ -572,7 +640,7 @@
 		
 		// 모달창 save 클릭
 		$(".save_alarm").on("click", function(){
-// 			console.log($(this).text());
+// 			alert($(this).data("alarm"));
 			// 저장을 안했을때는 알림을 켤 수 없음.
 			if($(".save_save:eq("+ (($(this).data("idx"))-1) +")").text() == '저장하기'){
 				alert("먼저 검색어 저장을 해야합니다.");
@@ -580,45 +648,68 @@
 			}
 			
 			if( (($(this).text()).split("알림 ")[1]).startsWith("켜기")){
+				alert($(this).data("code") + "번 알림 켬");
 				$(this).html('<i class="fas fa-bell" style="margin-right: 5px; color: #0174b0;"></i>알림 끄기');
+				$(this).data("alarm", "2");
+				checkAdd("save", $(this).data("code"));
 			}else{
+				alert($(this).data("code") + "번 알림 끔");
 				$(this).html('<i class="far fa-bell" style="margin-right: 5px; color: black;"></i>알림 켜기');
+				$(this).data("alarm", "1");
+				checkAdd("save", $(this).data("code"));
 			}
 		});
 		$(".save_save").on("click", function(){
 // 			alert($(this).data("idx"));
 			if($(this).text() == '저장하기'){
 				$(this).html('<i class="far fa-save" style="margin-right: 5px; color: #0174b0;"></i>저장 취소');
+				$(this).data("save", "2");
 				
 				// 저장 취소를 하면 알림도 꺼지고 저장을 하면 알림도 자동으로 설정됨.
 				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").html('<i class="fas fa-bell" style="margin-right: 5px; color: #0174b0;"></i>알림 끄기');
+				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").data("alarm", "2");
+				checkAdd("save", $(this).data("code"));
 			}else{
 				$(this).html('<i class="far fa-save" style="margin-right: 5px; color: black;"></i>저장하기');
+				$(this).data("save", "1");
+				
 				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").html('<i class="far fa-bell" style="margin-right: 5px; color: black;"></i>알림 켜기');
+				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").data("alarm", "1");
+				checkAdd("save", $(this).data("code"));
 			}
-			
 		});
 		
 		// 모달창 search 클릭
-		$(".search_alarm").on("click", function(){
+		$(".search_save").on("click", function(){
+// 			alert(arr_search.length);
 			// 삭제한 검색어는 저장할 수 없음.
-			if($(".search_save:eq("+ (($(this).data("idx"))-1) +")").text() == '삭제 취소'){
-				alert("삭제한 데이터는 저장할 수 없습니다.");
+			if($(".search_del:eq("+ (($(this).data("idx"))-1) +")").text() == '삭제 취소'){
+				alert("삭제한 검색어는 저장할 수 없습니다.");
 				return;
 			}
 			
 			if( (($(this).text()).split("저장")[1]).startsWith("하기")){
 				$(this).html('<i class="fas fa-save" style="margin-right: 5px; color: #0174b0;"></i>저장 취소');
+				$(this).data("save", "2");
+				checkAdd("search", $(this).data("code"));
 			}else{
 				$(this).html('<i class="far fa-save" style="margin-right: 5px;"></i>저장하기');
+				$(this).data("save", "1");
+				checkAdd("search", $(this).data("code"));
 			}
 		});
-		$(".search_save").on("click", function(){
+		$(".search_del").on("click", function(){
 			if($(this).text() == '삭제 취소'){
 				$(this).html('<i class="far fa-times-circle" style="margin-right: 5px;"></i>기록 삭제');
+				$(this).data("del", "1");
+				checkAdd("search", $(this).data("code"));
 			}else{
 				$(this).html('<i class="far fa-times-circle" style="margin-right: 5px; color: red;"></i>삭제 취소');
-				$(".search_alarm:eq("+ (($(this).data("idx"))-1) +")").html('<i class="far fa-save" style="margin-right: 5px;"></i>저장하기');
+				$(this).data("del", "2");
+				
+				$(".search_save:eq("+ (($(this).data("idx"))-1) +")").html('<i class="far fa-save" style="margin-right: 5px;"></i>저장하기');
+				$(".search_save:eq("+ (($(this).data("idx"))-1) +")").data("save", "1");
+				checkAdd("search", $(this).data("code"));
 			}
 		});
 		

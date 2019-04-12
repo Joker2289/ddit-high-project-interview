@@ -39,17 +39,29 @@ public class Search_logServiceImplTest extends LogicTestConfig{
 		assertNotNull(sVo);
 	}
 	
+	/**
+	 * 
+	 * Method : testUpdateSearch_log
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 검색내역 수정 테스트.
+	 */
 	@Test
 	public void testUpdateSearch_log() {
 		/***Given***/
-		Search_logVo sVo = sLogService.getSearch_log("1");
-		sVo.setSearch_save("1");
+		Search_logVo sVo = sLogService.getSearch_log("5");
+		String search_alarm = sVo.getSearch_alarm();
+		
+		sVo.setSearch_alarm("1");
 		
 		/***When***/
 		int updateCnt = sLogService.updateSearch_log(sVo);
 
 		/***Then***/
 		assertNotNull(updateCnt);
+		
+		sVo.setSearch_alarm(search_alarm);
+		sLogService.updateSearch_log(sVo);
 	}
 	
 	/**
@@ -86,6 +98,29 @@ public class Search_logServiceImplTest extends LogicTestConfig{
 
 		/***Then***/
 		assertNotNull(sList);
+		assertEquals(5, sList.size());
+	}
+	
+	/**
+	 * 
+	 * Method : testGetSLogByCond
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : id, word, local로 특정 검색내역 조회 테스트.
+	 */
+	@Test
+	public void testGetSLogByCond() {
+		/***Given***/
+		Search_logVo sVo = new Search_logVo();
+		sVo.setUser_id("brown");
+		sVo.setSearch_word("전체");
+		sVo.setSearch_local("전국");
+
+		/***When***/
+		Search_logVo compSVo = sLogService.getSLogByCond(sVo);
+
+		/***Then***/
+		assertNotNull(compSVo);
 	}
 	
 	

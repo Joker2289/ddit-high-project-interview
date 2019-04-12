@@ -143,6 +143,38 @@ public class Search_logServiceImpl implements ISearch_logService{
 		return sList;
 	}
 
+	/**
+	 * 
+	 * Method : updateSLogNotDel
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param sVo
+	 * @return
+	 * Method 설명 : 검색내역 수정. (del_flag가 '1'인 경우)
+	 */
+	@Override
+	public int updateSLogNotDel(Search_logVo sVo) {
+		int updateCnt = sLogDao.updateSLogNotDel(sVo);
+		
+		return updateCnt;
+	}
+
+	/**
+	 * 
+	 * Method : getSLogByCond
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param sVo
+	 * @return
+	 * Method 설명 : id, word, local로 특정 검색내역 조회.
+	 */
+	@Override
+	public Search_logVo getSLogByCond(Search_logVo sVo) {
+		Search_logVo compSVo = sLogDao.getSLogByCond(sVo);
+		
+		return compSVo;
+	}
+
 	
 	
 	
