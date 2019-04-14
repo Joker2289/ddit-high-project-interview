@@ -68,6 +68,9 @@
 		        order by post_date desc) b ) 
 		where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
 	</select>
+	
+	 
+	 
 	 
 	<select id="select_nextPost" parameterType="paginationVo" resultType="postVo">
 		select *

@@ -12,9 +12,9 @@ public interface IFilesDao {
 	 * 변경이력 :
 	 * @param filesVo
 	 * @return
-	 * Method 설명 : users 첨부파일 조회
+	 * Method 설명 : 첨부파일 조회
 	 */
-	List<FilesVo> select_usersFile(FilesVo filesVo);
+	List<FilesVo> select_file(FilesVo filesVo);
 	
 	/**
 	 * Method : select_oneFile
@@ -45,5 +45,6 @@ public interface IFilesDao {
 	 * Method 설명 : 구분코드에 해당하는 참조코드명 전체 파일 삭제
 	 */
 	int delete_allFile(FilesVo filesVo);
+	
 	
 }

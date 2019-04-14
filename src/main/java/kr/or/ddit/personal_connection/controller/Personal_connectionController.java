@@ -23,6 +23,7 @@ import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.users.model.UsersVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 @Controller
 public class Personal_connectionController {
@@ -44,38 +45,45 @@ public class Personal_connectionController {
 		MemberVo memberVo =(MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		FollowVo followVo = new FollowVo();
-		followVo.setDivision("11");
 		followVo.setMem_id(memberVo.getMem_id());
 		
 		String user_id = memberVo.getMem_id();
+		logger.debug("user_id++ {} " , user_id);
 		
 		int connections_count = personalService.connections_count(memberVo);
 		int coporations_count = personalService.coporations_count(followVo);
 		List<UsersVo> schoolFriends = 
 				personalService.schoolFriendsSearch(user_id);
-		List<UsersVo> userList = personalService.recommendUsers(user_id);
 		
 		model.addAttribute("connections_count" , connections_count);
 		model.addAttribute("coporations_count", coporations_count);
 		model.addAttribute("schoolFriends", schoolFriends);
-		model.addAttribute("userList", userList);
+		logger.debug("schoolFriends++ {}" , schoolFriends);
 		
 		return "personalTiles";
 	}
 	
 	
-	@RequestMapping(path={"/recommend"})
-	public String recommendView(HttpSession session , String str) {
+	@RequestMapping(path={"/recommendUsers"})
+	public String recommendUsersView(HttpSession session , Model model, PaginationVo paginationVo) {
 		
-//		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		paginationVo.setUser_id(memberVo.getMem_id());
+		paginationVo.setPageSize(4);
 		
-		if (str.equals("recommendCorpor")) {
-			
-			
-			return "/personalConnection/recommend/recommendCorpor";
-		}
+		List<UsersVo> userList = personalService.recommendUsers(paginationVo);
 		
-		return null;
+		model.addAttribute("userList", userList);
+		
+		return "/personalConnection/recommend/recommendUsers";
+		
+	}
+	
+	
+	@RequestMapping(path={"/recommendCorpor"})
+	public String recommendCorporView() {
+		
+		return "/personalConnection/recommend/recommendCorpor";
 		
 	}
 	
@@ -164,7 +172,6 @@ public class Personal_connectionController {
 		
 		FollowVo followVo = new FollowVo();
 		followVo.setMem_id(memberVo.getMem_id());
-		followVo.setDivision("11");
 		
 		
 		if (str.equals("connections")) {
@@ -181,6 +188,7 @@ public class Personal_connectionController {
 		}else if(str.equals("company")) {
 			
 			followVo.setDivision("11");
+			
 			List<CorporationVo> corporationList = personalService.select_followCoporation(followVo);
 			model.addAttribute("corporationList", corporationList);
 			return "/personalConnection/feedFilter/feedCompany";
@@ -217,7 +225,7 @@ public class Personal_connectionController {
 			HashMap<String, String> resultMap = new HashMap<String, String>();
 			resultMap.put("title", list.getCorp_name());
 			resultMap.put("content", list.getIndustry_type());
-			resultMap.put("id", list.getCorp_id());
+			resultMap.put("corp_id", list.getCorp_id());
 			resultMap.put("imgPath", list.getLogo_path());
 			resultMapList.add(resultMap);
 		}
@@ -227,7 +235,7 @@ public class Personal_connectionController {
 			HashMap<String, String> resultMap = new HashMap<String, String>();
 			resultMap.put("title", list.getUser_name());
 			resultMap.put("content", list.getIntroduce());
-			resultMap.put("id", list.getUser_id());
+			resultMap.put("user_id", list.getUser_id());
 			resultMap.put("imgPath", list.getProfile_path());
 			resultMapList.add(resultMap);
 		}

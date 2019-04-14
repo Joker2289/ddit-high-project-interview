@@ -1,6 +1,7 @@
 package kr.or.ddit.education_info.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.education_info.model.Education_infoVo;
 
@@ -25,5 +26,5 @@ public interface IEducation_infoService {
 	 * @return
 	 * Method 설명 : 사용자 학력 조회
 	 */
-	List<Education_infoVo> select_educationInfo(String user_id);
+	Map<String, Object> select_educationInfo(String user_id);
 }

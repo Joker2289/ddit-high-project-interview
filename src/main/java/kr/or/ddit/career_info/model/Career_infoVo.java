@@ -15,6 +15,9 @@ public class Career_infoVo {
 	private String contents;		// 설명
 	private String corp_code;		// 회사코드
 	private String currval;			// 현재 시퀀스값
+	private String month;			// 현재 개월수
+	private String logo_path;		// logo
+	private String corp_id;			// 회사아이디
 	
 	public Career_infoVo() {
 		
@@ -106,6 +109,33 @@ public class Career_infoVo {
 
 	public void setCurrval(String currval) {
 		this.currval = currval;
+	}
+	
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+	
+
+	public String getLogo_path() {
+		return logo_path;
+	}
+
+	public void setLogo_path(String logo_path) {
+		this.logo_path = logo_path;
+	}
+	
+	
+
+	public String getCorp_id() {
+		return corp_id;
+	}
+
+	public void setCorp_id(String corp_id) {
+		this.corp_id = corp_id;
 	}
 
 	@Override

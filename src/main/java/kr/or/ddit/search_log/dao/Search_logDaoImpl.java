@@ -124,14 +124,59 @@ public class Search_logDaoImpl implements ISearch_logDao{
 		Search_logVo lSLog = sqlSessionTemplate.selectOne("search_log.getLSLog", mem_id);
 		
 		return lSLog;
+	}
+
+	/**
+	 * 
+	 * Method : getSList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 특정 유저의 최근 검색어 리스트 조회.
+	 */
+	@Override
+	public List<Search_logVo> getSList(String mem_id) {
+		List<Search_logVo> sList = sqlSessionTemplate.selectList("search_log.getSList", mem_id);
+		
+		return sList;
+	}
+
+	/**
+	 * 
+	 * Method : updateSLogNotDel
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param sVo
+	 * @return
+	 * Method 설명 : 검색내역 수정. (del_flag가 '1'인 경우)
+	 */
+	@Override
+	public int updateSLogNotDel(Search_logVo sVo) {
+		int updateCnt = sqlSessionTemplate.update("search_log.updateSLogNotDel", sVo);
+		
+		return updateCnt;
+	}
+
+	/**
+	 * 
+	 * Method : getSLogByCond
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param sVo
+	 * @return
+	 * Method 설명 : id, word, local로 특정 검색내역 조회.
+	 */
+	@Override
+	public Search_logVo getSLogByCond(Search_logVo sVo) {
+		Search_logVo compSVo = sqlSessionTemplate.selectOne("search_log.getSLogByCond", sVo);
+		
+		return compSVo;
 	}	
 
 	
 	
-	
 }
-
-
 
 
 

@@ -8,6 +8,7 @@ import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.users.model.UsersVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 public interface IPersonal_connectionService {
 	
@@ -201,7 +202,7 @@ public interface IPersonal_connectionService {
 	* @return
 	* Method 설명 : 회원님을 위한 맞춤 추천 - 사람(users)
 	*/
-	List<UsersVo> recommendUsers(String user_id);
+	List<UsersVo> recommendUsers(PaginationVo paginationVo);
 	
 	
 	

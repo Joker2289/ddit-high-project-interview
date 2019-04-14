@@ -1,6 +1,7 @@
 package kr.or.ddit.career_info.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.career_info.model.Career_infoVo;
 
@@ -25,5 +26,5 @@ public interface ICareer_infoService {
 	 * @return
 	 * Method 설명 : 사용자의 경력 사항 조회
 	 */
-	List<Career_infoVo> select_careerInfo(String user_id);
+	Map<String, Object> select_careerInfo(String user_id);
 }

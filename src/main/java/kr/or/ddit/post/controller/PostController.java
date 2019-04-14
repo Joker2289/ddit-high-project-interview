@@ -175,9 +175,6 @@ public class PostController {
 		PostVo insertPost = new PostVo();
 		String writer_name = "";
 		
-		
-		
-		
 		if(member.getMem_division().equals("1")){
 			UsersVo user = usersService.select_userInfo(mem_id);
 			writer_name = user.getUser_name();
@@ -201,6 +198,7 @@ public class PostController {
 		int insertCnt = postService.insert_post(insertPost);
 		
 		//해시태그 추출 및 등록
+		logger.debug("123456789987654321123412341234 : {}", insertPost);
 		Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣]*)");
 		Matcher m = p.matcher(post_contents);
 		
@@ -245,12 +243,11 @@ public class PostController {
 			}
 		}
 		
+		//등록된 게시물 내용을 치환된 게시물 내용으로 update
 		insertPost.setPost_contents(replacedPost_contents);
-		
 		int postInsertCnt =  postService.update_post(insertPost);
 		
 		logger.debug("치환된 해시태그 : {}", replacedPost_contents);
-		
 		
 		if(postInsertCnt == 1){
 			logger.debug("으응? : {}", writer_name);

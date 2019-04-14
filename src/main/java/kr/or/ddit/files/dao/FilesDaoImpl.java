@@ -21,11 +21,11 @@ public class FilesDaoImpl implements IFilesDao{
 	 * 변경이력 :
 	 * @param filesVo
 	 * @return
-	 * Method 설명 : users 첨부파일 조회
+	 * Method 설명 : 첨부파일 조회
 	 */
 	@Override
-	public List<FilesVo> select_usersFile(FilesVo filesVo) {
-		return sqlSessionTemplate.selectList("files.select_usersFile", filesVo);
+	public List<FilesVo> select_file(FilesVo filesVo) {
+		return sqlSessionTemplate.selectList("files.select_file", filesVo);
 	}
 
 	/**

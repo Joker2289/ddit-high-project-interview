@@ -13,6 +13,7 @@ import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.dao.IPersonal_connectionDao;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.users.model.UsersVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 @Service("personalService")
 public class Personal_connectionServiceImpl implements IPersonal_connectionService {
@@ -96,8 +97,8 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	}
 
 	@Override
-	public List<UsersVo> recommendUsers(String user_id) {
-		return personalDao.recommendUsers(user_id);
+	public List<UsersVo> recommendUsers(PaginationVo paginationVo) {
+		return personalDao.recommendUsers(paginationVo);
 	}
 
 	
