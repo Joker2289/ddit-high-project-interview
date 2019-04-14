@@ -15,20 +15,18 @@
 	            	<c:choose>
 	            	  <c:when test="${memberInfo.mem_division == '1' }"><!-- 일반회원일 경우 -->
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path == null }">
-	            	      <span><a href="#"><img src=""></a></span>
-	            	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>일촌 수<span style="float: right;">${connectionCnt }명</span></span></a></pre>
-	            	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${savepostCnt }개</span></span></a></pre>
+	            	      <span><a href="/profileHome"><img class="bg_img" src="/images/profile/basicBackground.png"></a></span>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }">
-	            	      <span><a href="#"><img src="${sessionScope.SESSION_DETAILVO.bg_path }"></a></span>
+	            	      <span><a href="/profileHome"><img src="${sessionScope.SESSION_DETAILVO.bg_path }"></a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
 	            	  	<c:if test="${sessionScope.SESSION_DETAILVO.bg_path == null }">
-	            	    	<span><a href="#">사진 올리기</a></span>
+	            	    	<span><a href="/profileHome"><img class="bg_img" src="/images/profile/basicBackground.png"></a></span>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }">
-	            	    	<span><a href="#">${sessionScope.SESSION_DETAILVO.bg_path }</a></span>
+	            	    	<span><a href="/profileHome">${sessionScope.SESSION_DETAILVO.bg_path }</a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:otherwise>
@@ -40,24 +38,43 @@
 	            	<c:choose>
 	            	  <c:when test="${memberInfo.mem_division == '1' }"><!-- 일반회원일 경우 -->
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.profile_path == null }">
-	            	    	<span><a href="#">사진 올리기</a></span>
+	            	    	<span><a href="/profileHome"><img class="profile_img"  src="/images/profile/profile_noimage.jpg" ></a></span>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.profile_path != null }">
-	            	    	<span><a href="#"><img src="${sessionScope.SESSION_DETAILVO.profile_path }"></a></span>
+	            	    	<span><a href="/profileHome"><img src="${sessionScope.SESSION_DETAILVO.profile_path }"></a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
 	            	  	<c:if test="${sessionScope.SESSION_DETAILVO.logo_path == null }">
-	            	    	<span><a href="#">사진 올리기</a></span>
+	            	    	<span><a href="/profileHome"><img class="profile_img" src="/images/profile/profile_noimage.jpg" ></a></span>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.logo_path != null }">
-	            	    	<span><a href="#">${sessionScope.SESSION_DETAILVO.logo_path }</a></span>
+	            	    	<span><a href="/profileHome">${sessionScope.SESSION_DETAILVO.logo_path }</a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:otherwise>
 	            	  	<span>관리자 화면용 image(profile)</span>
 	            	  </c:otherwise>
 	            	</c:choose>
+	            </div>
+	            <div style="text-align: center;">
+	              <c:choose>
+	                <c:when test="${memberInfo.mem_division == '1' }">
+	                  <h4>${SESSION_DETAILVO.user_name }님! 어서오세요!</h4>
+	                </c:when>
+	                <c:when test="${memberInfo.mem_division == '2' }">
+	                  <h4>${SESSION_DETAILVO.corp_name }님!</h4>
+	                  <h4>어서오세요!</h4>
+	                </c:when>
+	                <c:otherwise>
+	                  <h4>금일 업데이트된 신고 목록을</h4>
+	                  <h4>확인해주세요</h4>
+	                </c:otherwise>
+	              </c:choose>
+	            </div>
+	            <div class="col-etcinfo">
+	              <pre style="background: #fff; border-color: #fff;"><a href="/personalConnection"><span>일촌 수<span style="float: right;">${connectionCnt }명</span></span></a></pre>
+           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${savepostCnt }개</span></span></a></pre>
 	            </div>
 	          </div>
 	        </div>
@@ -66,7 +83,7 @@
 	        <!-- friend requests -->
 	        <div class="panel panel-default" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
 	          <div class="panel-body">
-	            <h4>팔로우한 해시태그</h4>
+	            <a href=""><h4>팔로우한 해시태그</h4></a>
 	            <ul>
 	              <c:choose>
 	                <c:when test="${followHashtag eq 'notfollow'}">

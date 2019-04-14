@@ -6,6 +6,21 @@
 	font-size: 20px;
 }
 
+.bg_img{
+ width: 261px;
+ height: 71px;
+ margin: -15px;
+}
+
+.profile_img{
+	width: 70px;
+	height: 70px;
+	border: 2px solid #fff;
+	margin-left: 90px;
+	margin-top: -20px;
+	border-radius: 100px;
+}
+
 .input-group{
 	box-shadow: 0 6px 12px rgba(0, 0, 0, .15);
 }
