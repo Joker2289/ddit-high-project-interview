@@ -249,7 +249,6 @@
              alert(JSON.stringify(err));
            }
          });
-         
        };
        
         //회원가입 유저 클릭
