@@ -73,8 +73,16 @@
 	              </c:choose>
 	            </div>
 	            <div class="col-etcinfo">
-	              <pre style="background: #fff; border-color: #fff;"><a href="/personalConnection"><span>일촌 수<span style="float: right;">${connectionCnt }명</span></span></a></pre>
-           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${savepostCnt }개</span></span></a></pre>
+	              <c:choose>
+	                <c:when test="${memberInfo.mem_division == '1' }">
+		              <pre style="background: #fff; border-color: #fff;"><a href="/personalConnection"><span>일촌 수<span style="float: right;">${connectionCnt }명</span></span></a></pre>
+	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${savepostCnt }개</span></span></a></pre>
+	                </c:when>
+	                <c:when test="${memberInfo.mem_division == '2' }">
+<!-- 	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>팔로우한 회원<span style="float: right;">명</span></span></a></pre> -->
+	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${savepostCnt }개</span></span></a></pre>
+	                </c:when>
+	              </c:choose>
 	            </div>
 	          </div>
 	        </div>
@@ -87,7 +95,7 @@
 	            <ul>
 	              <c:choose>
 	                <c:when test="${followHashtag eq 'notfollow'}">
-                   	  <li>팔로우한 태그가 읎스요.</li>
+                   	  <li>팔로우한 태그가 없다요.</li>
                    	  <li>해시태그를 팔로우 해보세요!</li>
                     </c:when>
                     <c:otherwise>
