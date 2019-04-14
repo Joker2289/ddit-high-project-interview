@@ -154,4 +154,5 @@ $(".btn_appendcomment").on("click", function() {
 		$("."+className).attr('class', 'col-appendcomment '+className);
 	}
 });
+
 </script>

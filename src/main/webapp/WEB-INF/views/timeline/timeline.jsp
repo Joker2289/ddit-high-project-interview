@@ -164,7 +164,7 @@
 					  
 					</div>
 					<div class="post_info">
-					  <pre style="background: #ffffff; border-color: #ffffff;">${post.post_contents }</pre>
+					  <pre class="post_contents" style="background: #ffffff; border-color: #ffffff;">${post.post_contents }</pre>
 					</div>
 				
 					<div class="col-post-footer">
@@ -224,16 +224,47 @@
    </div>
 </div>
 
-
 <script type="text/javascript">
-
-
+	
 	//작성 모달창 푸쉬
 	function pushModal() {
 		$("div.writemodal").modal();
 	}
 	
 	$(document).ready(function() {
+		//정규식을 활용한 해시태그 치환법
+// 		var siteURL = '#',
+// 		entries = $('.post_contents p');
+
+// 		if ( entries.length > 0 ) {
+ 
+// 			entries.each(function(){
+// 				contents = $(this).text().replace(/#(\w*[0-9a-zA-Z가-힣]+\w*[0-9a-zA-Z가-힣])/g,'<a href="'+siteURL+'$1" title="Find more posts tagged with #$1">#$1</a>');
+// 				$(this).html(contents);
+// 			});
+// 		}
+
+		//split을 활용항 해시태그 치환법
+// 		var toTagPost = $(".post_contents").val();
+// 		console.log(toTagPost);
+		
+// 		//게시글 내용을 공백을 기준으로 자름
+// 		var splitedArray = toTagPost.split(' ');
+		
+// 		var contentsLink = "";
+		
+// 		for(var word in splitedArray){
+// 			word = splitedArray[word];
+			
+// 			//자른 문자열에 #가 있을 경우 해당 문자에 link를 덮어씌움
+// 			if(word.indexOf('#') == 0){
+// 				word = "<a href='localhost/timeline'>" + word + "</a>";
+// 			}
+// 			//치환된 문자를 다시 정렬
+// 			contentsLink += word+ '';
+// 		}
+// 		//화면에 추가
+// 		$(this).html(ContentsLink);
 		
 		$('#summernote').summernote({
 			placeholder: '소식을 업데이트 해주세요!',
@@ -245,9 +276,6 @@
 		});
 		
 		
-		
-// 		$(".col-comment-area").hide();
-
 		//summernote 툴바 숨기기
 		$(".note-toolbar").hide();
 		$(".note-resizebar").hide();
@@ -280,32 +308,24 @@
 				$(".col-comment").remove();
 			}
 			
-// 			console.log($('.col-comment-area ' + ref_code).children($('.comment-area' + ref_code)).length);
-			
 		});
 		
 	});
 	
 	$(function () {
+		
+		var contents = "";
+		
 		$("#btn-write_modal").on("click", function () {
 			pushModal();
+			qwe();
 			
 			$("#btn_write_upload").on("click", function() {
-				
-				var txt = $("#summernote").val();
-				var tags = [];
-				
-				txt = txt.replace(/#[^#\s,;]+/gm, function(tag) {
-				  tags.push(tag);
-				});
-				
-				$("#tags").html(tags.join('<br/>'));
-				
-				
 				
 				$("#frm_writePost").submit();
 				
 			})
+			
 		});
 		
 		$("#btn-upload-img").on("click", function () {
@@ -322,8 +342,8 @@
 			pushModal();
 		});
 		
-		
 	});
+	
 	
 	//현재 스크롤 위치에서 화면 최상단으로 이동
 	$("#scroll-top").on("click", function() {
@@ -373,8 +393,5 @@
 		}
 		
 	});
-	
-
-
 	
 </script>

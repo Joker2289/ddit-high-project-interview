@@ -41,6 +41,7 @@
 	
 // 	$("#btn_attend_document").on("click",function(){
 // 		$(".note-insert").children()[2].click();
-// 	});
+// 	});note-editabl")
 	
+
 </script>
