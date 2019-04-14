@@ -3,16 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<link href="/css/timeline/writemodal.css" rel="stylesheet">
 <div class="container">
    <div class="row">
       <div>
 	      <div id="col-info" class="col-md-3">
-
-	        <div class="panel panel-default">
+			
+	        <div class="panel panel-default" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
 	          <div class="panel-body">
-	            <h4>프로필 정보란</h4>
 	            <div class="col-user-bgimg">
-	            	<label>배경 사진란</label><br>
 	            	<c:choose>
 	            	  <c:when test="${memberInfo.mem_division == '1' }"><!-- 일반회원일 경우 -->
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path == null }">
@@ -38,7 +37,6 @@
 	            	</c:choose>
 	            </div>
 	            <div class="col-user-profileimg">
-	            	<span>프로필 사진란</span><br>
 	            	<c:choose>
 	            	  <c:when test="${memberInfo.mem_division == '1' }"><!-- 일반회원일 경우 -->
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.profile_path == null }">
@@ -66,7 +64,7 @@
 	        <!-- ./profile brief -->
 	
 	        <!-- friend requests -->
-	        <div class="panel panel-default">
+	        <div class="panel panel-default" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
 	          <div class="panel-body">
 	            <h4>팔로우한 해시태그</h4>
 	            <ul>
@@ -90,8 +88,8 @@
 	      </div>
 	      
 	      <div class="col-md-6">
-	        <div class="input-group">
-	          <button id="btn-write_modal" class="btn-write_modal"  style="height: 73.6px; margin-top: -9px;"><span class="span-text"><a><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></span></button>
+	        <div class="input-group" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
+	          <button id="btn-write_modal" class="btn-write_modal"  style="height: 73.6px; margin-top: -7px;"><span class="span-text"><a><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></span></button>
 	          <button id="btn-upload-img" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-images"></i></a></span></button>
 	          <button id="btn-upload-video" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-play-circle"></i></a></span></button>
 	          <button id="btn-upload-document" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-file-alt"></i></a></span></button>
@@ -102,7 +100,7 @@
 	          <!-- post -->
 	          <c:forEach items="${timelinePost }" var="post">
 		          
-		        <div id="col-post" class="scrolling" data-post="${post.post_code }">
+		        <div id="col-post" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
 				  <div class="col-post">
 					<div class="col-post-body">
 					  <a href="#" >
@@ -232,39 +230,6 @@
 	}
 	
 	$(document).ready(function() {
-		//정규식을 활용한 해시태그 치환법
-// 		var siteURL = '#',
-// 		entries = $('.post_contents p');
-
-// 		if ( entries.length > 0 ) {
- 
-// 			entries.each(function(){
-// 				contents = $(this).text().replace(/#(\w*[0-9a-zA-Z가-힣]+\w*[0-9a-zA-Z가-힣])/g,'<a href="'+siteURL+'$1" title="Find more posts tagged with #$1">#$1</a>');
-// 				$(this).html(contents);
-// 			});
-// 		}
-
-		//split을 활용항 해시태그 치환법
-// 		var toTagPost = $(".post_contents").val();
-// 		console.log(toTagPost);
-		
-// 		//게시글 내용을 공백을 기준으로 자름
-// 		var splitedArray = toTagPost.split(' ');
-		
-// 		var contentsLink = "";
-		
-// 		for(var word in splitedArray){
-// 			word = splitedArray[word];
-			
-// 			//자른 문자열에 #가 있을 경우 해당 문자에 link를 덮어씌움
-// 			if(word.indexOf('#') == 0){
-// 				word = "<a href='localhost/timeline'>" + word + "</a>";
-// 			}
-// 			//치환된 문자를 다시 정렬
-// 			contentsLink += word+ '';
-// 		}
-// 		//화면에 추가
-// 		$(this).html(ContentsLink);
 		
 		$('#summernote').summernote({
 			placeholder: '소식을 업데이트 해주세요!',
