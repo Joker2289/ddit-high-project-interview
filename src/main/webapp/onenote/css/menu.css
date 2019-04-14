@@ -1,0 +1,153 @@
+.tab-menu {
+     background-color: blueviolet;
+     
+}
+
+.tab-menu a {
+    color: white;
+    
+    
+    padding-top: 3px !important;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    padding-bottom: 3px !important;
+    
+}
+
+.tab-menu a:hover {
+    background-color: white;
+    color: blueviolet;
+}
+
+.tab-content {
+    background-color: white !important;
+}
+
+
+/*modal Css*/
+
+.modal-dialog.modal-fullsize {
+	width: 100%;
+	height: 100%;
+}
+
+.jk-modalsasun {
+	position: absolute;
+	top: 0;
+	display: none;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 500;
+}
+
+.jk-modal {
+	position: absolute;
+	display: table;
+	top: 100px;
+	left: 50%;
+	margin-left: -300px;
+	width: 100%;
+	max-width: 600px;
+	min-height: 500px;
+	background: #fff;
+	border-radius: 20px;
+/*    overflow:hidden; */
+}
+
+.jk-row {
+	display: table-row;
+}
+
+.jk-modal-head {
+	width: 100%;
+	display: table-cell;
+	height: 50px;
+	vertical-align: middle;
+	text-align: center;
+	/* 	위, 오른쪽, 아래, 왼 */
+	padding: 50px 0 0 0;
+	/* 	padding-top:50px; */
+}
+
+.jk-modal-head h1 {
+	font-weight: 800;
+}
+
+.jk-modal-body {
+	width: 100%;
+	display: block;
+	vertical-align: middle;
+	width: 100%;
+	height: 500px;
+	overflow: auto;
+}
+
+.jk-modal-footer {
+	width: 100%;
+	height: 100px;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.jk-modal-footer button {
+	margin: 0 10px;
+	padding: 10px 30px 10px 30px;
+	background: #000;
+	opacity: 0.9;
+	color: #fff;
+	border-radius: 5px;
+}
+
+.jk-btn {
+	margin: 0 10px;
+	padding: 10px 30px 10px 30px;
+	background: #000;
+	opacity: 0.9;
+	color: #fff;
+	border-radius: 5px;
+}
+
+.jk-btn-long {
+	margin: 0 10px;
+	padding: 6px 169px 6px 169px;
+	background: #000;
+	opacity: 0.9;
+	color: #fff;
+	border-radius: 5px;
+}
+
+.jk-btn-long2 {
+	margin: 20px 10px;
+	padding: 10px 139px 10px 139px;
+	background: #000;
+	opacity: 0.9;
+	color: #fff;
+	border-radius: 5px;
+}
+
+.jk-btn-long3 {
+	margin: 10px 10px;
+	padding: 10px 144px 10px 144px;
+	background: #000;
+	opacity: 0.9;
+	color: #fff;
+	border-radius: 5px;
+}
+
+.jk-join-btn {
+	background: #323ad3;
+}
+
+.jk-modal-footer button:hover {
+	background: #8546B3;
+	/* opacity:0.4; */
+}
+
+.jk-modal-body button:hover {
+	background: #8546B3;
+	/* opacity:0.4; */
+}
+
+
