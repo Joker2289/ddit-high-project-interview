@@ -8,6 +8,9 @@
 	
     <script src="https://unpkg.com/konva@3.2.0/konva.min.js"></script>
     <script src="https://unpkg.com/konva@3.2.3/konva.min.js"></script>
+    
+    <!-- jquery-ui - 1.12.4버전과 충돌-->
+    <script src="/js/jquery-3.3.1.min.js"></script>
 
     <!-- jquery-ui-->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -28,8 +31,7 @@
 
 
 
-    <!--    jquery-ui - 1.12.4버전과 충돌-->
-    <!--    <script src="/z_Test/jquery-3.3.1.min.js"></script>-->
+    
 
 
     <!-- color picker js-->
@@ -418,8 +420,9 @@
                 <button id="imageBtn" class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="bottom" title="이미지 삽입">
                     <i class="far fa-images"></i>
                 </button>
-                <input id="imageStorage" class="btn btn-primary" type="file" onchange="addImg(this);">
-                <input type="hidden" id='tmpTag'>
+                <form id="imageForm">
+                	<input id="imageStorage" name="imageStorage" class="btn btn-primary" type="file" onchange="imageUpload(this);">
+                </form>
 
 
                 <button id="codeBtn" class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="bottom" title="코드 작성">
@@ -731,7 +734,7 @@ editor.setSize(600, 800);
 </body>
 
 <script>
-    //$('#code_capture').hide();
+    
 
     //이미지 첨부 - 미완
     $('#imageStorage').hide();
@@ -746,9 +749,8 @@ editor.setSize(600, 800);
     });
 
     var options = {};
-    $("#effect").hide();
-
-    var colorPicker = new iro.ColorPicker("#color-picker-container", {
+    
+	var colorPicker = new iro.ColorPicker("#color-picker-container", {
         width: 250,
         color: "#f00", //기본색
         borderWidth: 3, //컨트롤 테두리 너비입니다
@@ -779,7 +781,7 @@ editor.setSize(600, 800);
     // 4. 클릭했을때 zIndex 
 
 
-    var data = '';
+    var data = '{"attrs":{"width":3000,"height":3000,"name":"stage"},"className":"Stage","children":[{"attrs":{"name":"layer 14"},"className":"Layer","children":[{"attrs":{"x":551.0104160308838,"y":255.47567749023438,"width":300,"height":300,"name":"emoticon 1","draggable":true,"src":"/onenote/emoticon/holly.png"},"className":"Image"}]},{"attrs":{"name":"layer 14"},"className":"Layer","children":[]},{"attrs":{"name":"layer 15"},"className":"Layer","children":[]}]}';
 
     var node_num = 0;
     var state = '';
