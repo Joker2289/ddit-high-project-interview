@@ -29,6 +29,7 @@ stage.on('click', function (e) {
     }
 });
 
+
 //도형 그룹핑
 function shapeGrouping(e) {
     target = e.target;
