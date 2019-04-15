@@ -80,49 +80,9 @@
 	</div>
 	
 	
-	<table border="1" style="margin-top: 15px;">
-		<tr>
-			<td>
-				<input type="text" id="sample6_postcode" placeholder="우편번호">
-				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-				<!-- 여기의 값으로 corp_location 등록. -->
-				<input type="text" id="sample6_address" placeholder="주소"><br>
-				<input type="text" id="sample6_detailAddress" placeholder="상세주소">
-				<input type="text" id="sample6_extraAddress" placeholder="참고항목">
-			</td>
-			<td>
-				원 그리기 on/off <input id="cb_circle" type="checkbox"><br><br>
-				<input id="btn_removeCircles" type="button" value="원 제거하기"> <br><br>			
-				<input id="btn_changeAddr" type="button" value="주소 - 좌표 변환"> <br><br>
-				<input id="btn_check" type="button" value="확인"> <br><br>
-				<input id="btn_all" type="button" value="좌표 확인"> <br><br>
-				<input id="btn_marker" type="button" value="마커 하나 찍기"> <br><br>			
-			</td>
-		</tr>		
-		<tr>
-			<td>
-				전체 좌표 : <strong id="txt_location"></strong><br>
-				회사 리스트 <br><br>
-				<c:forEach begin="1" end="${corpList.size() }" varStatus="i">
-					${i.index }. ${corpList.get(i.index - 1).corp_name } / ${corpList.get(i.index - 1).addr1 } / ${corpList.get(i.index - 1).corp_location } <br>
-				</c:forEach> <br><br>
-			</td>
-			<td>11</td>
-		</tr>
-		<tr>
-			<td>
-				채용공고 리스트 <br><br>
-				<c:forEach begin="1" end="${recrList.size() }" varStatus="i">
-					${i.index }. ${recrList.get(i.index - 1).recruit_title } / ${addrList.get(i.index - 1) } / ${locationList.get(i.index - 1) } <br>
-				</c:forEach>
-			</td>
-			<td>11</td>
-		</tr>
-	</table>
-	
-	
-	
 	<br><br>
+	<br><br><br><br><br><br>	
+	<br><br><br><br><br><br>	
 	<a href="${pageContext.request.contextPath }/recruit">채용공고 페이지로 이동 -></a>
 	<br><br><br><br><br><br>	
 		

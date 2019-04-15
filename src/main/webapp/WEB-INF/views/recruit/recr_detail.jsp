@@ -44,15 +44,26 @@
 											<td style="width: 600px; padding-left: 20px;">
 												<strong style="font-size: 22px;">${recr.recruit_title }</strong><br>
 												<span style="font-size: 17px;">${corp.corp_name } ｜ ${recr.job_local }</span><br>
-												<span style="font-size: 17px;">게시일: xx일 전 ｜ 지원자 수: xx명 미만</span><br>
+												<span style="font-size: 17px;">게시일: xx일 전12 ｜ 지원자 수: xx명 미만</span><br>
 											</td>
 											<td>
 												<input type="button" value="저장" style="border: 1px solid; border-color: #0174b0;
 														width: 60px; background-color: white; font-size: 18px; height: 38px;
 														color: #0174b0; font-weight: bold; margin-right: 15px; margin-top: 15px;">
-												<input type="button" value="지원" style="border: 0px;
-														width: 60px; background-color: #0174b0; font-size: 18px; height: 38px;
-														color: white; font-weight: bold; margin-top: 15px;" id="btn_app">
+												<c:choose>
+													<c:when test="${recr_app == 't' }">
+														<input type="button" value="지원 취소" style="border: 0px;
+																width: auto; background-color: #0174b0; font-size: 18px; height: 38px;
+																color: white; font-weight: bold; margin-top: 15px; padding-left: 10px;
+																padding-right: 10px;" id="btn_app">
+													</c:when>
+													<c:otherwise>
+														<input type="button" value="지원하기" style="border: 0px;
+																width: auto; background-color: #0174b0; font-size: 18px; height: 38px;
+																color: white; font-weight: bold; margin-top: 15px; padding-left: 10px;
+																padding-right: 10px;" id="btn_app">
+													</c:otherwise>
+												</c:choose>
 											</td>
 										</tr>
 									</table>
@@ -69,7 +80,7 @@
 												</span><br>
 											</td>
 											<td style="vertical-align: top; padding: 20px; font-size: 17px;">
-												<strong>직급222</strong><br>
+												<strong>직급</strong><br>
 												...<br>
 												<strong>업계</strong><br>
 												...<br>
