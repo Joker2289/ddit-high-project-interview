@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:formatDate value="${usersMap.usersVo.user_birth}" pattern="yy/MM/dd" var="birth"/>
 
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal"
@@ -32,7 +34,7 @@
 			</div>
 			<div class="modalHalfRight">
 				<label class="essential">생년월일 </label>
-				<input class="form-control" id="userBirth" type="text" name="user_birth" value="${usersMap.usersVo.user_birth}">
+				<input class="form-control" id="userBirth" type="text" name="user_birth">
 			</div>
 		</div>
 		<div class="modalRow">
@@ -259,7 +261,7 @@
 	});
 	
 	$("#userBirth").datepicker({
-        dateFormat: "yy-mm-dd" //Input Display Format 변경
+        dateFormat: "yy/mm/dd" //Input Display Format 변경
         ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
         ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
         ,changeYear: true //콤보박스에서 년 선택 가능
@@ -277,6 +279,5 @@
         //,maxDate: "+1M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
     });                    
     
-    //초기값을 오늘 날짜로 설정
-	$("#userBirth").datepicker("setDate", "today"); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+	$("#userBirth").datepicker("setDate", "${birth}"); 
 </script>

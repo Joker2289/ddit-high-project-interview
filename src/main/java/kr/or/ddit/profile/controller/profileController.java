@@ -206,6 +206,12 @@ public class profileController {
 		return result;
 		
 	}
+	@RequestMapping("/telInfo")
+	public String telInfoView(String user_id, Model model) {
+		model.addAttribute("usersVo", usersService.select_userInfo(user_id));
+		
+		return "/profile/telInfo";
+	}
 	
 	@RequestMapping("/otherDropdown")
 	public String otherDropdownView() {

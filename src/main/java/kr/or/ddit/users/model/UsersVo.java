@@ -1,5 +1,7 @@
 package kr.or.ddit.users.model;
 
+import java.util.Date;
+
 public class UsersVo {
 	private String user_id;			// 회원아이디
 	private String user_name;		// 회원이름
@@ -12,7 +14,7 @@ public class UsersVo {
 	private String zipcode;			// 우편번호
 	private String email;			// 이메일
 	private String telno;			// 전화번호
-	private String user_birth;		// 생년월일
+	private Date user_birth;		// 생년월일
 	private String persnal_url;		// 외부URL
 	private String introduce;		// 소개
 	private String profile_contents;// 간단 소개글
@@ -119,11 +121,11 @@ public class UsersVo {
 		this.telno = telno;
 	}
 
-	public String getUser_birth() {
+	public Date getUser_birth() {
 		return user_birth;
 	}
 
-	public void setUser_birth(String user_birth) {
+	public void setUser_birth(Date user_birth) {
 		this.user_birth = user_birth;
 	}
 

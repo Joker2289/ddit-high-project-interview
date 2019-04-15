@@ -9,6 +9,9 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	$(".skils").hide();
+	
 	$(".modalA").on("click",function(){
 		var modalStr = $(this).attr("title");
 		var code = $(this).attr("role");
@@ -19,6 +22,21 @@ $(document).ready(function() {
 	    		url : "/modalUpdateView",
 	    		dataType : "HTML",
 	    		data : {"modalStr" :  modalStr, "code" : code },
+			success : function(result) {
+				
+				$(".modal-content").html(result);
+			}
+		}); 
+	});
+	
+	$(".telInfoA").on("click",function(){
+		var user_id = $(this).attr("title");
+		
+		$.ajax({
+			type : "POST",
+	    		url : "/telInfo",
+	    		dataType : "HTML",
+	    		data : {"user_id" : user_id },
 			success : function(result) {
 				
 				$(".modal-content").html(result);
@@ -52,15 +70,17 @@ $(document).ready(function() {
 	});
 	
 	$(".possesion_skillsVoShow").on("click",function(e){
-		if ($(e.target).closest(".userContentsSkip").hasClass('userContentsSkip')) {
-			$(".userContentsShow").empty();
-			$(".userContentsShow").append('더 보기 취소 <i class="fas fa-angle-up"></i>');
-			$(".userContentsSkip").attr('class', 'userContentsSkipOn');
+		if ($(e.target).closest(".possesion_skillsVoShowSkip").hasClass('possesion_skillsVoShowSkip')) {
+			$(".possesion_skillsVoShow").empty();
+			$(".possesion_skillsVoShow").append('더 보기 취소 <i class="fas fa-angle-up"></i>');
+			$(".possesion_skillsVoShowSkip").attr('class', 'possesion_skillsVoShowSkipOn');
+			$(".skils").show();
 			
 		}else {
-			$(".userContentsShow").empty();
-			$(".userContentsShow").append('더 보기 <i class="fas fa-angle-down"></i>');
-			$(".userContentsSkipOn").attr('class', 'userContentsSkip');
+			$(".possesion_skillsVoShow").empty();
+			$(".possesion_skillsVoShow").append('더 보기 <i class="fas fa-angle-down"></i>');
+			$(".possesion_skillsVoShowSkipOn").attr('class', 'possesion_skillsVoShowSkip');
+			$(".skils").hide();
 		}
 	});
 	
@@ -116,7 +136,7 @@ $(document).ready(function() {
 <link href="/css/profile/profileHome.css" rel="stylesheet">    
 <div class="container">
 <div class="row">
-<div>
+<div data-spy="scroll" data-target=".navbar-spy">
 	<div class="row profileHomeBox">
 		<div class="col-md-9 mainAllBox">
 			<div class="whiteBox introduceBox" style="margin-bottom: 20px;">
@@ -139,26 +159,29 @@ $(document).ready(function() {
 							<div style="width: 500px;">
 								<label class="member" >${usersMap.usersVo.user_name }</label>
 								<label class="member simpleInfo" style="font-size: 20px; font-weight: 100;">${usersMap.usersVo.introduce }</label>
+								<c:if test="${not empty usersMap.usersVo.persnal_url}">
+									<a href="http://${usersMap.usersVo.persnal_url}" style="font-size: 20px; font-weight: 100;">${usersMap.usersVo.persnal_url}</a>
+								</c:if>
 							</div>
 							
 							<div style="height: 100px;">
 								<c:if test="${not empty career_infoMap.career_infoVoList}">
 									<div>
-										<span style="color: #B3B6B9;font-size: 18px;"><i style="width:30px;" class="fas fa-building"></i></span>
-										<label class="memberRight">${career_infoMap.career_infoVoList[0].corporate_name }</label>
+										<a href="#careerFirst"><span style="color: #B3B6B9;font-size: 18px;"><i style="width:30px;" class="fas fa-building"></i></span>
+										<label class="memberRight">${career_infoMap.career_infoVoList[0].corporate_name }</label></a>
 									</div>
 								</c:if>
 								
 								<c:if test="${not empty education_infoMap.education_infoVoList}">
 								<div>
-									<span style="color: #B3B6B9;font-size: 18px;"><i style="width:30px;" class="fas fa-graduation-cap"></i></span>
-									<label class="memberRight">${education_infoMap.education_infoVoList[0].school_name }</label>
+									<a href="#educationFirst"><span style="color: #B3B6B9;font-size: 18px;"><i style="width:30px;" class="fas fa-graduation-cap"></i></span>
+									<label class="memberRight">${education_infoMap.education_infoVoList[0].school_name }</label></a>
 								</div>
 								</c:if>
 								
 								<div>
 									<span style="color: #B3B6B9;font-size: 18px;"> <i style="width:30px;" class="fas fa-address-card"></i></span>
-									<label class="memberRight">연락처 보기</label>
+									<a class="telInfoA" data-toggle="modal" data-target="#myModal" title="${usersMap.usersVo.user_id }" ><label class="memberRight">연락처 보기</label></a>
 								</div>
 								<div>
 									<span style="color: #B3B6B9;font-size: 18px;"><i style="width:30px;" class="fas fa-users"></i></span>
@@ -185,9 +208,7 @@ $(document).ready(function() {
 								<c:if test="${not empty usersMap.usersVo.profile_contents}">
 									<p>${usersMap.usersVo.profile_contents }</p>
 								</c:if>
-								<c:if test="${not empty usersMap.usersVo.persnal_url}">
-									<a href="http://${usersMap.usersVo.persnal_url}">${usersMap.usersVo.persnal_url}</a>
-								</c:if>
+								
 								<div style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;">
 									<c:forEach items="${usersMap.filesVoList }" var="files" > 
 										<div style="height: 25px; margin-right: 10px;border: 2px solid #CDCFD2; font-weight: bold">
@@ -208,7 +229,7 @@ $(document).ready(function() {
 			
 			<!-- 경력  -->
 			<c:if test="${not empty career_infoMap.career_infoVoList }">
-			<div class="whiteBox" style="padding: 20px 20px 20px 20px; margin-bottom: 20px;">
+			<div class="whiteBox navbar-spy" style="padding: 20px 20px 20px 20px; margin-bottom: 20px;" >
 				<h3 style="margin: 0 0 0 0 ">경력 사항</h3>
 				<ul class="list-unstyled">
 					<c:forEach items="${career_infoMap.career_infoVoList }" var="career_infoVo" varStatus="i">
@@ -216,7 +237,7 @@ $(document).ready(function() {
 						<fmt:formatDate value="${career_infoVo.resign_date }" var="endDate" pattern="yyyy년 MM월"/>
 						<fmt:parseNumber var="year" integerOnly="true" value="${career_infoVo.month / 12}"/>
 						<fmt:parseNumber var="month" integerOnly="true" value="${career_infoVo.month % 12}"/>
-						<li class="list-unstyled" style="margin-top: 20px; display: flex;">
+						<li class="list-unstyled" style="margin-top: 20px; display: flex;position: relative;" <c:if test="${i.first}">id="careerFirst"</c:if>>
 							<div style="width: 720px;">
 								<a style="display: flex; width: 720px;">
 									<c:set var="profile_addrPath" value="/profile?mem_id=${career_infoVo.corp_id }"/>
@@ -266,13 +287,13 @@ $(document).ready(function() {
 			
 		    <!-- 학력  -->
 			<c:if test="${not empty education_infoMap.education_infoVoList }">
-			<div class="whiteBox" style="padding: 20px 20px 20px 20px; margin-bottom: 20px;">
+			<div class="whiteBox navbar-spy" style="padding: 20px 20px 20px 20px; margin-bottom: 20px;">
 				<h3 style="margin: 0 0 0 0 ">학력</h3>
 				<ul class="list-unstyled">
 					<c:forEach items="${education_infoMap.education_infoVoList }" var="education_infoVo" varStatus="i">
 						<fmt:formatDate value="${education_infoVo.admission }" var="strDate" pattern="yyyy년 MM월"/>
 						<fmt:formatDate value="${education_infoVo.graduation }" var="endDate" pattern="yyyy년 MM월"/>
-						<li class="list-unstyled" style="margin-top: 20px; display: flex;">
+						<li class="list-unstyled" style="margin-top: 20px; display: flex;position: relative;" <c:if test="${i.first}">id="educationFirst"</c:if>>
 							<div style="width: 720px;">
 								<a style="display: flex; width: 720px;">
 									<div class="logoPicture" style="background-image: url(/images/corporation/basic/basicShool.png); width: 120px; height: 50px;"></div>
@@ -314,36 +335,44 @@ $(document).ready(function() {
 			</div>
 			</c:if>
 			
-			
+		
 			<!-- 보유 기술  -->
 			<c:if test="${not empty possesion_skillsVoList }">
 			<div class="whiteBox" style="padding: 20px 20px 20px 20px; margin-bottom: 20px;">
 				<h3 style="margin: 0 0 0 0 ">보유기술</h3>
 				<ul class="list-unstyled possesion_skillsHide">
-					<c:forEach items="${possesion_skillsVoList}" var="possesion_skillsVo">
-						<fmt:formatDate value="${possesion_skillsVo.issue_date }" var="strDate" pattern="yyyy년 MM월"/>
-						<li class="list-unstyled" style="margin-top: 20px; display: flex;">
-							<div style="width: 720px;">
-								<div style="width: 570px;">
-									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${possesion_skillsVo.pskill_name }</h4>
-									<label style="font-size: 17px; color: rgba(0,0,0,.9);">${possesion_skillsVo.issue_org }</label><br>
-									<label>${strDate }</label><br>
-								</div>
-								<!-- 보유기술 내용 -->
-								<c:if test="${not empty possesion_skillsVo.contents }">
-									<div class="contentsDiv" style="padding: 10px 30px 0 0; width: 720px;">
-										<span class="contents" style="width: 700px; margin: 0 0 0 0;">${possesion_skillsVo.contents }</span>
-										<c:if test="${fn:length(possesion_skillsVo.contents) > 57}">
-									 		<span class="contentsBtn" style="color: #0073B1; cursor: pointer;">더 보기 </span>
-										</c:if>
+					<li class="list-unstyled" style="margin-top: 20px;">
+						<c:forEach items="${possesion_skillsVoList}" var="possesion_skillsVo" varStatus="i">
+							<fmt:formatDate value="${possesion_skillsVo.issue_date }" var="strDate" pattern="yyyy년 MM월"/>
+							<li class="list-unstyled <c:if test='${!i.first}'>skils</c:if>" style="margin-top: 20px; display: flex;">
+								<div style="width: 720px;">
+									<div style="width: 570px;">
+										<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${possesion_skillsVo.pskill_name }</h4>
+										<label style="font-size: 17px; color: rgba(0,0,0,.9);">${possesion_skillsVo.issue_org }</label><br>
+										<label>${strDate }</label><br>
 									</div>
-								</c:if>
-							</div>
-							<div>
-								<a class="modalA" role="${possesion_skillsVo.pskill_code}" data-toggle="modal" data-target="#myModal" title="skills"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
-							</div>
-						</li>
-					</c:forEach>
+									<!-- 보유기술 내용 -->
+									<c:if test="${not empty possesion_skillsVo.contents }">
+										<div class="contentsDiv" style="padding: 10px 30px 0 0; width: 720px;">
+											<span class="contents" style="width: 700px; margin: 0 0 0 0;">${possesion_skillsVo.contents }</span>
+											<c:if test="${fn:length(possesion_skillsVo.contents) > 57}">
+										 		<span class="contentsBtn" style="color: #0073B1; cursor: pointer;">더 보기 </span>
+											</c:if>
+										</div>
+									</c:if>
+								</div>
+								<div>
+									<a class="modalA" role="${possesion_skillsVo.pskill_code}" data-toggle="modal" data-target="#myModal" title="skills"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
+								</div>
+							</li>
+						</c:forEach>
+					</li>
+					<c:if test="${fn:length(possesion_skillsVoList) > 1}">
+					<li class="possesion_skillsVoShowSkip" >
+						<button class="btn btn-link possesion_skillsVoShow" style="outline: 0; text-decoration: none;">더 보기 <i class="fas fa-angle-down"></i></button>
+					</li>
+					
+					</c:if>
 				</ul>
 			</div>
 			</c:if>
@@ -399,7 +428,7 @@ $(document).ready(function() {
 									<label style="font-size: 17px; color: rgba(0,0,0,.9);">특허 출원 번호 : ${patent_listVo.patent_no }</label><br>
 									<label>특허 국가 : ${patent_listVo.nation }</label><br>
 									<label>${strDate }</label><br>
-									<label>논문 URL : <a href="http://${patent_listVo.patent_url }">${patent_listVo.patent_url }</a></a></label><br>
+									<label>특허 URL : <a href="http://${patent_listVo.patent_url }">${patent_listVo.patent_url }</a></a></label><br>
 									<label>저자 : ${patent_listVo.inventer }</label><br>
 								</div>
 								<!-- 특허 내용 -->
