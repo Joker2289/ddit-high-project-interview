@@ -38,7 +38,7 @@
 				인재를 찾고 계세요?
 				<a href="${pageContext.request.contextPath }/writeRecr" class="genric-btn info-border" style="
 						border: 1px solid; padding: 9px; margin-left: 15px; border-color: #0174b0; 
-						color: #0174b0;">
+						color: #0174b0;" id="btn_write">
 					<i class="fas fa-edit" style="color: #0174b0;"></i>
 					채용공고 올리기
 				</a>
@@ -99,10 +99,10 @@
 				text-align: center; border-top: 0px; font-size: 18px; padding-top: 15px; padding-left: 15px;
 				overflow:hidden;">
 			<strong>채용공고 검색어</strong>
-			<span id="alarm_manage" class="button-group-area mt-10" onmouseover="" style="margin-left: 790px; cursor: pointer;
-					color: #0174b0; margin-right: 10px;">
+			<div id="alarm_manage" class="button-group-area mt-10" onmouseover="" style="margin-left: 790px; cursor: pointer;
+					color: #0174b0; margin-right: 10px; display: inline; text-align: center;">
 				<strong>관리</strong>
-			</span>
+			</div>
 			<button id="btnslidelt" class="btn btn-default" style="border: 0px;">
 				<i class="fas fa-chevron-left" style="font-size: 17px;"></i>
 			</button>
@@ -322,8 +322,21 @@
 	});
 
 	$(document).ready(function(){
-		console.log("list null");
+// 		console.log("list null");
 		
+		// 버튼 마우스오버
+		$("#btn_write").on("mouseover", function(){
+			$("#btn_write").css("background-color", "#e5f5fc");
+		});
+		$("#btn_write").on("mouseout", function(){
+			$("#btn_write").css("background-color", "white");
+		});
+		$("#btn_search").on("mouseover", function(){
+			$("#btn_search").css("background-color", "#01537f");
+		});
+		$("#btn_search").on("mouseout", function(){
+			$("#btn_search").css("background-color", "#026397");
+		});
 		
 		// 추천 리스트 whitebox height 조절.
 		<c:choose>
@@ -338,17 +351,16 @@
 		// 검색어 슬라이드.
 		var divWidth  = "511"; 
 		
-		$("#btnslidelt").on("click",function(){
-			$("#content").stop(true,true);
+		$("#btnslidelt").on("click", function(){
+			$("#content").stop(true, true);
 			   var moveX   = parseInt($("#content").css("margin-left"));
 		
 			   if( moveX < 0 ){
 					$("#content").animate({"margin-left":"+=" + divWidth + "px"},500);
 			   }
 		});
-	
-		$("#btnSlidegt").on("click",function(){
-			 $("#content").stop(true,true);
+		$("#btnSlidegt").on("click", function(){
+			 $("#content").stop(true, true);
 			   var moveX   = parseInt($("#content").css("margin-left"));
 		
 			   if( -1022 < moveX ){
@@ -357,17 +369,16 @@
 		});		
 		
 		// 추천리스트1 슬라이드.
-		$("#btn_slt1").on("click",function(){
-			$("#content1").stop(true,true);
+		$("#btn_slt1").on("click", function(){
+			$("#content1").stop(true, true);
 			   var moveX   = parseInt($("#content1").css("margin-left"));
 		
 			   if( moveX < 0 ){
 					$("#content1").animate({"margin-left":"+=" + divWidth + "px"},340);
 			   }
 		});
-	
-		$("#btn_sgt1").on("click",function(){
-			 $("#content1").stop(true,true);
+		$("#btn_sgt1").on("click", function(){
+			 $("#content1").stop(true, true);
 			   var moveX   = parseInt($("#content1").css("margin-left"));
 		
 			   if( -1022 < moveX ){
@@ -376,24 +387,22 @@
 		});				
 		
 		// 추천리스트2 슬라이드.
-		$("#btn_slt2").on("click",function(){
-			$("#content2").stop(true,true);
+		$("#btn_slt2").on("click", function(){
+			$("#content2").stop(true, true);
 			   var moveX   = parseInt($("#content2").css("margin-left"));
 		
 			   if( moveX < 0 ){
 					$("#content2").animate({"margin-left":"+=" + divWidth + "px"},340);
 			   }
-		});
-	
-		$("#btn_sgt2").on("click",function(){
-			 $("#content2").stop(true,true);
+		});	
+		$("#btn_sgt2").on("click", function(){
+			 $("#content2").stop(true, true);
 			   var moveX   = parseInt($("#content2").css("margin-left"));
 		
 			   if( -1022 < moveX ){
 			   		 $("#content2").animate({"margin-left":"-=" + divWidth + "px"},340);
 			   }
 		});				
-				
 				
 		// msg 출력.
 		var msg_flag = "${msg_flag }";
@@ -409,8 +418,7 @@
 			
 		// 채용공고 검색
 		$("#btn_search").on("click", function(){
-// 			alert($("#txt_name").val() + " / " + $("#txt_location").val());
-			
+// 			alert($("#txt_name").val() + " / " + $("#txt_location").val());		
 			// hidden에 값 넣어주기.
 			$("#search_word").val($("#txt_name").val());
 			$("#search_local").val($("#txt_location").val());
@@ -435,7 +443,6 @@
 						// alarm_flag를 우선 save_flag로 변경. 저장되어있는 항목은 flag 't'를 보낸다.
 						// 컨트롤러에서 't'를 받으면 search_save를 '1'로 변경(저장을 해제).
 // 						window.location.href = 'http://localhost${pageContext.request.contextPath }/updateSave?save_flag=t&search_code=${saveList.get(i.index).search_code }';					
-
 						window.location.href = 'http://localhost${pageContext.request.contextPath }/updateAlarm?search_alarm=${saveList.get(i.index).search_alarm }&search_code=${saveList.get(i.index).search_code }';					
 					}					
 				}else{
@@ -459,9 +466,8 @@
 		// 지금은 12개인데...
 		<c:forEach items="${rRList1 }" varStatus="i">
 			$("#recr${i.index }").on("click", function(){
-// 				alert("${i.index }"); // 첫번째 채용공고 : i.index-1 -> '0'
-				
-				$("#recruit_code").val(${rRList1.get(i.index).recruit_code});
+// 				alert("${rRList1.get(i.index).recruit_code}");
+				$("#recruit_code").val("${rRList1.get(i.index).recruit_code}");
 				
 				$("#frm_detail").submit();
 			});
@@ -527,7 +533,7 @@
 			}else{
 				for(var i=0; i < arr_save.length; i++){
 	// 				alert( $(".save_alarm:eq("+i+")").data("code")+"/"+$(".save_alarm:eq("+i+")").data("alarm")+"/"+$(".save_save:eq("+i+")").data("save") );
-					result_save += $(".save_alarm:eq("+i+")").data("code")+"/"+$(".save_alarm:eq("+i+")").data("alarm")+"/"+$(".save_save:eq("+i+")").data("save")+"::"		
+					result_save += $(".save_alarm:eq("+(arr_save[i]-1)+")").data("code")+"/"+$(".save_alarm:eq("+(arr_save[i]-1)+")").data("alarm")+"/"+$(".save_save:eq("+(arr_save[i]-1)+")").data("save")+"::"		
 				}
 			}
 			
@@ -535,7 +541,7 @@
 				result_search = 'xxx/xxx/xxx::';
 			}else{
 				for(var i=0; i < arr_search.length; i++){
-					result_search += $(".search_save:eq("+i+")").data("code")+"/"+$(".search_save:eq("+i+")").data("save")+"/"+$(".search_del:eq("+i+")").data("del")+"::"		
+					result_search += $(".search_save:eq("+(arr_search[i]-1)+")").data("code")+"/"+$(".search_save:eq("+(arr_search[i]-1)+")").data("save")+"/"+$(".search_del:eq("+(arr_search[i]-1)+")").data("del")+"::"		
 				}
 			}
 			
@@ -558,32 +564,32 @@
 		
 		// arr_save/search에 해당 search_code가 있는지 확인하고 추가하는 메서드.
 		// 구분 division(div): 'save'-저장한 검색어, 'search'-최근 검색어
-		function checkAdd(div, code){
+		function checkAdd(div, idx){
 			if(div == 'save'){
 				var add_flag = true;
 				
 				for(var i=0; i < arr_save.length; i++){
-					if(arr_save[i] == code){
+					if(arr_save[i] == idx){
 						add_flag = false;						
 						break;
 					}
 				}
 				
 				if(add_flag){
-					arr_save[arr_save.length] = code;
+					arr_save[arr_save.length] = idx;
 				}
 			}else{
 				var add_flag = true;
 				
 				for(var i=0; i < arr_search.length; i++){
-					if(arr_search[i] == code){
+					if(arr_search[i] == idx){
 						add_flag = false;						
 						break;
 					}
 				}
 				
 				if(add_flag){
-					arr_search[arr_search.length] = code;
+					arr_search[arr_search.length] = idx;
 				}
 			}		
 		}
@@ -648,15 +654,15 @@
 			}
 			
 			if( (($(this).text()).split("알림 ")[1]).startsWith("켜기")){
-				alert($(this).data("code") + "번 알림 켬");
+// 				alert($(this).data("code") + "번 알림 켬");
 				$(this).html('<i class="fas fa-bell" style="margin-right: 5px; color: #0174b0;"></i>알림 끄기');
 				$(this).data("alarm", "2");
-				checkAdd("save", $(this).data("code"));
+				checkAdd("save", $(this).data("idx"));
 			}else{
-				alert($(this).data("code") + "번 알림 끔");
+// 				alert($(this).data("code") + "번 알림 끔");
 				$(this).html('<i class="far fa-bell" style="margin-right: 5px; color: black;"></i>알림 켜기');
 				$(this).data("alarm", "1");
-				checkAdd("save", $(this).data("code"));
+				checkAdd("save", $(this).data("idx"));
 			}
 		});
 		$(".save_save").on("click", function(){
@@ -668,14 +674,14 @@
 				// 저장 취소를 하면 알림도 꺼지고 저장을 하면 알림도 자동으로 설정됨.
 				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").html('<i class="fas fa-bell" style="margin-right: 5px; color: #0174b0;"></i>알림 끄기');
 				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").data("alarm", "2");
-				checkAdd("save", $(this).data("code"));
+				checkAdd("save", $(this).data("idx"));
 			}else{
 				$(this).html('<i class="far fa-save" style="margin-right: 5px; color: black;"></i>저장하기');
 				$(this).data("save", "1");
 				
 				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").html('<i class="far fa-bell" style="margin-right: 5px; color: black;"></i>알림 켜기');
 				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").data("alarm", "1");
-				checkAdd("save", $(this).data("code"));
+				checkAdd("save", $(this).data("idx"));
 			}
 		});
 		
@@ -691,25 +697,25 @@
 			if( (($(this).text()).split("저장")[1]).startsWith("하기")){
 				$(this).html('<i class="fas fa-save" style="margin-right: 5px; color: #0174b0;"></i>저장 취소');
 				$(this).data("save", "2");
-				checkAdd("search", $(this).data("code"));
+				checkAdd("search", $(this).data("idx"));
 			}else{
 				$(this).html('<i class="far fa-save" style="margin-right: 5px;"></i>저장하기');
 				$(this).data("save", "1");
-				checkAdd("search", $(this).data("code"));
+				checkAdd("search", $(this).data("idx"));
 			}
 		});
 		$(".search_del").on("click", function(){
 			if($(this).text() == '삭제 취소'){
 				$(this).html('<i class="far fa-times-circle" style="margin-right: 5px;"></i>기록 삭제');
 				$(this).data("del", "1");
-				checkAdd("search", $(this).data("code"));
+				checkAdd("search", $(this).data("idx"));
 			}else{
 				$(this).html('<i class="far fa-times-circle" style="margin-right: 5px; color: red;"></i>삭제 취소');
 				$(this).data("del", "2");
 				
 				$(".search_save:eq("+ (($(this).data("idx"))-1) +")").html('<i class="far fa-save" style="margin-right: 5px;"></i>저장하기');
 				$(".search_save:eq("+ (($(this).data("idx"))-1) +")").data("save", "1");
-				checkAdd("search", $(this).data("code"));
+				checkAdd("search", $(this).data("idx"));
 			}
 		});
 		

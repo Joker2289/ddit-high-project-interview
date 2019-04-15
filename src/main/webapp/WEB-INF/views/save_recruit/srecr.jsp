@@ -98,7 +98,7 @@
 										${srList.get(i.index - 1).recruit_title }<br>
 										${corpNmList.get(i.index - 1) }<br>
 										${srList.get(i.index - 1).job_local }<br>
-										<span style="color: #d11124;">(xx일 전에 마감되었습니다.)</span>
+<!-- 										<span style="color: #d11124;">(xx일 전에 마감되었습니다.)</span> -->
 									</td>
 									<td style="width: 77px; text-align: center; border-bottom: 1px solid; border-bottom-color: #d9d9d9;">
 										<div style="width: 56px; height: 56px; border-radius: 28px; background-color: white;

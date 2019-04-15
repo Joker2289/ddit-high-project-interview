@@ -8,7 +8,7 @@
   	<div class="modal-content" style="margin-left: -100px; width: 755px; height: 580px;">
 
 	<div class="modal-head" style="border-bottom: 1px solid; border-color: #d9d9d9;">
-		<table border="1" style="width: 753px; margin-top: 10px;">
+		<table border="0" style="width: 753px; margin-top: 10px;">
 			<tr style="font-size: 24px; ">
 				<td colspan="2" style="padding-left: 15px;">채용공고 검색어</td>
 			</tr>
