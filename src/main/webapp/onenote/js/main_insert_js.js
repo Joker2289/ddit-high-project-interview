@@ -1,16 +1,21 @@
 var emoticon_src;
 
 
+
+
 // 이모티콘 효과
 function addEmoticon() {
     var con = stage.container();
+    
+    
     con.addEventListener('dragover', function (e) {
-        e.preventDefault(); // !important
+    	e.preventDefault(); // !important 
+        
     });
 
-
+    
     con.addEventListener('drop', function (e) {
-        e.preventDefault();
+    	e.preventDefault();
 
         node_num++;
         
@@ -18,30 +23,51 @@ function addEmoticon() {
         var dropPosition = stage.getPointerPosition();
         
         var imageObj = new Image();
+        imageObj.src = emoticon_src;
+        
         imageObj.onload = function () {
-            var image = new Konva.Image({
+        	square = new Konva.Image({
                 x: dropPosition.x,
                 y: dropPosition.y,
                 image: imageObj,
                 width: 300,
                 height: 300,
                 name: 'emoticon ' + node_num,
-                draggable: true,
+                // draggable: true,
                 src: emoticon_src,
             });
             
-            layer.add(image);
+            
+            shape_group = new Konva.Group({
+                name: 'emoticon group ' + node_num,
+                draggable: true
+            });
+            
+            shape_group.add(square);
+            
+            // anchor 추가
+            addAnchor(shape_group, dropPosition.x, dropPosition.y, 'anchor topLeft');
+            addAnchor(shape_group, (dropPosition.x + 300), dropPosition.y, 'anchor topRight');
+            addAnchor(shape_group, (dropPosition.x + 300), (dropPosition.y + 300), 'anchor bottomRight');
+            addAnchor(shape_group, dropPosition.x, (dropPosition.y + 300), 'anchor bottomLeft');
+            
+            layer.add(shape_group);
             layer.draw();
         };
-        imageObj.src = emoticon_src;
         
+        //이모티콘 창숨기기
+        $('#emoticonBtn').click();
+        
+//        con.removeEventListener('drop');
+//        con.removeEventListener('dragover');
         
     });
 
+    $('.emoticon').off('mousedown');
     $('.emoticon').on('mousedown', function () {
 
         emoticon_src = $(this).attr('src');
-        console.log("이모티콘 추가 : " + emoticon_src);
+        
 
     });
 }
@@ -63,7 +89,7 @@ function imageUpload() {
 	        contentType: false,
 	        cache: false,
 	        timeout: 600000,
-// async : true,
+
 			success : function(data){
 				
 				console.log(data);
@@ -82,22 +108,40 @@ function addImage(data) {
 	 imageObj.src = "/page/imageView?src=" + data;
 	 
 	 // imageObj의 이미지 로딩이 제대로 되지 않았을시
-// imageObj.onerror = function() {
-// imageObj.src = "/page/imageView?src=" + data;
-// };
+	// imageObj.onerror = function() {
+	// imageObj.src = "/page/imageView?src=" + data;
+	// };
+	 
+	 
 	 
 	 
 	 imageObj.onload = function () {
-		 var image = new Konva.Image({
+		 square = new Konva.Image({
              x: 300,
              y: 300,
              image: imageObj,
-             name: 'iamge ' + node_num,
-             draggable: true,
+             name: 'image ' + node_num,
+             //draggable: true,
              src: this.src,
          });
+		 
+		 shape_group = new Konva.Group({
+	         name: 'image group ' + node_num,
+	         draggable: true
+	     });
+	     
+		 console.log();
+		 
+		 
+	     shape_group.add(square);
+	     
+	     // anchor 추가
+	     addAnchor(shape_group, 300, 300, 'anchor topLeft');
+	     addAnchor(shape_group, (300 + imageObj.width), 300, 'anchor topRight');
+	     addAnchor(shape_group, (300 + imageObj.width), (300 + imageObj.height), 'anchor bottomRight');
+	     addAnchor(shape_group, 300, (300 + imageObj.height), 'anchor bottomLeft');
          
-         layer.add(image);
+         layer.add(shape_group);
          layer.draw();
      };
      
