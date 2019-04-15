@@ -261,13 +261,17 @@ public class PostController {
 			}
 		}
 		
+		if(!replacedPost_contents.equals("")){
+			insertPost.setPost_contents(replacedPost_contents);
+			int postInsertCnt =  postService.update_post(insertPost);
+		}
+		
+		
 		//등록된 게시물 내용을 치환된 게시물 내용으로 update
-		insertPost.setPost_contents(replacedPost_contents);
-		int postInsertCnt =  postService.update_post(insertPost);
 		
 		logger.debug("치환된 해시태그 : {}", replacedPost_contents);
 		
-		if(postInsertCnt == 1){
+		if(insertCnt == 1){
 			logger.debug("으응? : {}", writer_name);
 			return "redirect:/timeline";
 		} else {
