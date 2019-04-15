@@ -85,8 +85,22 @@
 	<br><br><br><br><br><br>	
 	<a href="${pageContext.request.contextPath }/recruit">채용공고 페이지로 이동 -></a>
 	<br><br><br><br><br><br>	
+	<br><br><br><br><br><br>	
+	<br><br><br><br><br><br>	
+	<br><br><br><br><br><br>	
 		
-		
+	<table border="1" style="margin-top: 15px;">
+		<tr>
+			<td>
+				원 그리기 on/off <input id="cb_circle" type="checkbox"><br><br>
+				<input id="btn_removeCircles" type="button" value="원 제거하기"> <br><br>			
+				<input id="btn_changeAddr" type="button" value="주소 - 좌표 변환"> <br><br>
+				<input id="btn_check" type="button" value="확인"> <br><br>
+				<input id="btn_all" type="button" value="좌표 확인"> <br><br>
+				<input id="btn_marker" type="button" value="마커 하나 찍기"> <br><br>			
+			</td>
+		</tr>		
+	</table>		
 		
 </div></div></div>		
 		
