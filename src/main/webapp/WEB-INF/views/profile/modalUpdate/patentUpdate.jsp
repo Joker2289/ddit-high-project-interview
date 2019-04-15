@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:formatDate value="${patent_listVo.patent_date}" pattern="yy/MM/dd" var="fmtPatent_date"/>
 
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal"
@@ -9,12 +11,12 @@
 	<h4 class="modal-title">특허</h4>
 </div>
 <div class="modal-body">
-<form action="/patent_listInsert" method="post" id="patent_listInsertFrm">
+<form action="/patent_listUpdate" method="post" id="patent_listUpdateFrm">
 	<div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">특허명 </label>
-				<input class="form-control" type="text" name="patent_name">
+				<input class="form-control" type="text" name="patent_name" value="${patent_listVo.patent_name}">
 			</div>
 			<div class="modalHalfRight">
 				<label class="essential">특허발급 국가 </label>
@@ -118,38 +120,40 @@
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">특허출원번호</label>
-				<input class="form-control" type="text" name="patent_no">
+				<input class="form-control" type="text" name="patent_no" value="${patent_listVo.patent_no}">
 			</div>
 			<div class="modalHalfRight">
 				<label class="essential">발명자</label>
-				<input class="form-control" type="text" name="inventer" value="${SESSION_MEMBERVO.mem_id }">
+				<input class="form-control" type="text" name="inventer" value="${patent_listVo.inventer}">
 			</div>
 		</div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">취득일</label>
-				<input class="form-control select_date" type="text" name="patent_date">
+				<input class="form-control select_date" type="text" name="patent_date" value="${patent_listVo.patent_date}">
 			</div>
 			<div class="modalHalfRight">
 				<label>특허 URL</label>
-				<input class="form-control" type="text" name="patent_url">
+				<input class="form-control" type="text" name="patent_url" value="${patent_listVo.patent_url}">
 			</div>
 		</div>
 		<div class="modalRow" style="padding-bottom: 15px;">
 			<div class="modalHalfLeft">
 				<label>설명 </label>
-				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;"></textarea>
+				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;">${patent_listVo.contents}</textarea>
 			</div>
 		</div>
 	</div>
 	
-	<input type="hidden" value="${SESSION_MEMBERVO.mem_id }" name="user_id">
+	<input type="hidden" value="${patent_listVo.patent_code }" name="patent_code">
 </form>
 </div>
 <div class="modal-footer">
 	<button type="button" class="btn btn-primary" id="patent_listSave">저장</button>
 </div>
 <script>
+	$("select[name=nation]").val("${patent_listVo.nation}").prop("selected", true);
+	
 	// 입력 제어
 	$("#patent_listSave").on("click",function(){
 		if($("input[name=patent_name]").val().trim()==""){
@@ -178,7 +182,7 @@
 			return false;
 		}
 		
- 		$("#patent_listInsertFrm").submit();
+ 		$("#patent_listUpdateFrm").submit();
 	});
 	
 	// 캘린더 오류 구문
@@ -210,6 +214,6 @@
         ,dayNames: ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"] //달력의 요일 부분 Tooltip 텍스트
         //,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
         //,maxDate: "+1M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
-    });                    
-    
+    });             
+	$("input[name=patent_date]").datepicker('setDate', '${fmtPatent_date}');
 </script>

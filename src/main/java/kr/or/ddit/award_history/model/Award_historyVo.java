@@ -1,12 +1,14 @@
 package kr.or.ddit.award_history.model;
 
+import java.util.Date;
+
 public class Award_historyVo {
 	
 	private String award_code;	// 수상이력코드
 	private String user_id;		// 회원아이디
 	private String award_name;	// 상이름
 	private String award_org;	// 발급기관
-	private String award_date;	// 수상일자
+	private Date award_date;	// 수상일자
 	private String contents;	// 설명
 	
 	public Award_historyVo() {
@@ -45,11 +47,11 @@ public class Award_historyVo {
 		this.award_org = award_org;
 	}
 
-	public String getAward_date() {
+	public Date getAward_date() {
 		return award_date;
 	}
 
-	public void setAward_date(String award_date) {
+	public void setAward_date(Date award_date) {
 		this.award_date = award_date;
 	}
 

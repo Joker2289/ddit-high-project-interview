@@ -23,9 +23,18 @@ public class Project_careerController {
 	private IProject_careerService project_careerService;
 	
 	@RequestMapping("/project_careerInsert")
-	public String careerInsert(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, Project_careerVo project_careerVo) {
+	public String project_careerInsert(UsersVo usersVo, HttpServletRequest req, Project_careerVo project_careerVo) {
 		
 		project_careerService.insert_project_career(project_careerVo);
+		
+		return "redirect:/profileHome";
+		
+	}
+	
+	@RequestMapping("/project_careerUpdate")
+	public String project_careerUpdate(UsersVo usersVo, HttpServletRequest req, Project_careerVo project_careerVo) {
+		
+		project_careerService.update_project_career(project_careerVo);
 		
 		return "redirect:/profileHome";
 		

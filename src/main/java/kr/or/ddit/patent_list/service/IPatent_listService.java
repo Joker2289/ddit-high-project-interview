@@ -26,4 +26,24 @@ public interface IPatent_listService {
 	 * Method 설명 : 사용자 특허 조회
 	 */
 	List<Patent_listVo> select_patent_list(String user_id);
+	
+	/**
+	 * Method : select_onePatent_list
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param patent_code
+	 * @return
+	 * Method 설명 : 사용자의 한 건의 특허정보 조회
+	 */
+	Patent_listVo select_onePatent_list(String patent_code);
+	
+	/**
+	 * Method : update_patent_list
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param patent_listVo
+	 * @return
+	 * Method 설명 : 사용자의 특허정보 업데이트
+	 */
+	int update_patent_list(Patent_listVo patent_listVo);
 }

@@ -80,6 +80,7 @@
 			<div class="modalHalfRight" style="height: 30px; display: flex;">
 				<label class="btn btn-default fileUpload" style="font-size: 14px; width:64px; height: 31px; padding: 6px 12px 6px 12px;">업로드</label>
 				<button class="btn btn-default" style="height: 31px; padding: 0 10px 0 10px;" data-toggle="collapse" href="#link" aria-expanded="false" aria-controls="background">링크</button>
+				
 			</div>
 		</div>
 		<div class="collapse url" id="link" style="margin-top: 10px; border: 0px;" aria-expanded="false">

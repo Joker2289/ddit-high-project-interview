@@ -45,5 +45,5 @@ public interface IUsersDao {
 	 * @return
 	 * Method 설명 : 사용자의 간단프로필 (학력이나 경력사항) 
 	 */
-	String select_introduce(String user_id);
+	UsersVo select_introduce(String user_id);
 }

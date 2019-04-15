@@ -56,20 +56,8 @@
 			</div>
 			<div class="modalHalfRight" style="height: 30px; display: flex;">
 				<label class="btn btn-default fileUpload" style="font-size: 14px; width:64px; height: 31px; padding: 6px 12px 6px 12px;">업로드</label>
-				<button class="btn btn-default" style="height: 31px; padding: 0 10px 0 10px;" data-toggle="collapse" href="#link" aria-expanded="false" aria-controls="background">링크</button>
-				
 			</div>
 		</div>
-		<div class="collapse" id="link" style="margin-top: 10px; border: 0px;">
-      		<div class="well modalHalfLeft" style="padding: 0 0 0 0; border-top: 0px;">
-				<div class="input-group">
-     					<input class="form-control" type="text" name="persnal_url" style="width:283px; height: 31px;"/>
-				    <span class="input-group-btn" style="height: 33px;">
-				    	<button class="btn btn-default" type="button" style="height: 31px;margin-top: -1px;">등록</button>
-				    </span>
-			    </div>
-      		</div>
-      	</div>
       	<div class="modalRow" style="padding-bottom: 15px;">
 			<div  class="fileListBox" style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;">
 			</div>

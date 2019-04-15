@@ -1,10 +1,12 @@
 package kr.or.ddit.thesis_list.model;
 
+import java.util.Date;
+
 public class Thesis_listVo {
 	private String thesis_code;			// 논문코드
 	private String user_id;				// 회원아이디
 	private String thesis_name;			// 논문저서명
-	private String publication_date;	// 발표출판일
+	private Date publication_date;	// 발표출판일
 	private String publisher;			// 발행인출판사
 	private String thesis_url;			// 논문저서URL
 	private String contents;			// 설명
@@ -45,11 +47,11 @@ public class Thesis_listVo {
 		this.thesis_name = thesis_name;
 	}
 
-	public String getPublication_date() {
+	public Date getPublication_date() {
 		return publication_date;
 	}
 
-	public void setPublication_date(String publication_date) {
+	public void setPublication_date(Date publication_date) {
 		this.publication_date = publication_date;
 	}
 

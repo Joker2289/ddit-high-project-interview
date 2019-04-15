@@ -28,9 +28,37 @@
 			   end_date,
 			   project_leader,
 			   project_url,
-			   contents
+			   contents,
+			   decode(end_date,null,ceil(months_between(sysdate, start_date)),ceil(months_between(end_date, start_date))) as month
 		  from project_career
 		 where user_id = #{user_id}
 		 order by end_date desc
 	</select>
+	
+	<!-- 사용자의 한 건의 프로젝트정보 조회 -->
+	<select id="select_oneProject_career" parameterType="String" resultType="project_careerVo">
+		 select project_code,
+			   user_id,
+			   project_name,
+			   start_date,
+			   end_date,
+			   project_leader,
+			   project_url,
+			   contents,
+			   decode(end_date,null,ceil(months_between(sysdate, start_date)),ceil(months_between(end_date, start_date))) as month
+		  from project_career
+		 where project_code = #{project_code}
+	</select>
+	
+	<!-- 사용자의 프로젝트정보 업데이트 -->
+	<update id="update_project_career" parameterType="project_careerVo">
+		update project_career
+		   set project_name = nvl(#{project_name, jdbcType=VARCHAR}, null),
+			   start_date = nvl(#{start_date, jdbcType=VARCHAR}, null),
+			   end_date = nvl(#{end_date, jdbcType=VARCHAR}, null),
+			   project_leader = nvl(#{project_leader, jdbcType=VARCHAR}, null),
+			   project_url = nvl(#{project_url, jdbcType=VARCHAR}, null),
+			   contents = nvl(#{contents, jdbcType=VARCHAR}, null)
+		 where project_code = #{project_code}
+	</update>
 </mapper>

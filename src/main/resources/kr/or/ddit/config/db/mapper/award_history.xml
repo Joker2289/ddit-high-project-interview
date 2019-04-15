@@ -29,4 +29,26 @@
 		 where user_id = #{user_id}
 		 order by award_date desc
 	</select>
+	
+	<!-- 사용자의 한 건의 수상경력 조회 -->
+	<select id="select_oneAward_history" parameterType="String" resultType="award_historyVo">
+		 select award_code,
+			    user_id,
+			    award_name,
+			    award_org,
+			    award_date,
+			    contents
+		   from award_history
+		  where award_code = #{award_code}
+	</select>
+	
+	<!-- 사용자의 수상경력 업데이트 -->
+	<update id="update_award_history" parameterType="award_historyVo">
+		update award_history
+		   set award_name = nvl(#{award_name, jdbcType=VARCHAR}, null),
+			   award_org = nvl(#{award_org, jdbcType=VARCHAR}, null),
+			   award_date = nvl(#{award_date, jdbcType=VARCHAR}, null),
+			   contents = nvl(#{contents, jdbcType=VARCHAR}, null)
+		 where award_code = #{award_code}
+	</update>
 </mapper>

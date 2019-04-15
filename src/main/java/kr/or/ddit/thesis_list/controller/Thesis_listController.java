@@ -22,9 +22,18 @@ public class Thesis_listController {
 	private IThesis_listService thesis_listService;
 	
 	@RequestMapping("/thesis_listInsert")
-	public String careerInsert(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, Thesis_listVo thesis_listVo) {
+	public String thesis_listInsert(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, Thesis_listVo thesis_listVo) {
 		
 		thesis_listService.insert_thesis_list(thesis_listVo);
+		
+		return "redirect:/profileHome";
+		
+	}
+	
+	@RequestMapping("/thesis_listUpdate")
+	public String thesis_listUpdate(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, Thesis_listVo thesis_listVo) {
+		
+		thesis_listService.update_thesis_list(thesis_listVo);
 		
 		return "redirect:/profileHome";
 		

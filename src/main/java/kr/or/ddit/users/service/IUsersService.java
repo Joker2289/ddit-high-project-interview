@@ -1,5 +1,7 @@
 package kr.or.ddit.users.service;
 
+import java.util.Map;
+
 import kr.or.ddit.users.model.UsersVo;
 
 public interface IUsersService {
@@ -45,5 +47,5 @@ public interface IUsersService {
 	 * @return
 	 * Method 설명 : 사용자의 간단프로필 (학력이나 경력사항)
 	 */
-	String select_introduce(String user_id);
+	Map<String, Object> select_introduce(String user_id);
 }

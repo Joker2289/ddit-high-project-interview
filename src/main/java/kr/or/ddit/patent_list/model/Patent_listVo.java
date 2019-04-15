@@ -1,5 +1,7 @@
 package kr.or.ddit.patent_list.model;
 
+import java.util.Date;
+
 public class Patent_listVo {
 	private String patent_code;		// 특허코드
 	private String user_id;			// 회원아이디
@@ -7,7 +9,7 @@ public class Patent_listVo {
 	private String nation;			// 특허발급국가
 	private String patent_no;		// 특허출원번호
 	private String inventer;		// 발명자
-	private String patent_date;		// 취득일
+	private Date patent_date;		// 취득일
 	private String patent_url;		// 특허URL
 	private String contents;		// 설명
 	public Patent_listVo() {
@@ -55,10 +57,10 @@ public class Patent_listVo {
 	public void setInventer(String inventer) {
 		this.inventer = inventer;
 	}
-	public String getPatent_date() {
+	public Date getPatent_date() {
 		return patent_date;
 	}
-	public void setPatent_date(String patent_date) {
+	public void setPatent_date(Date patent_date) {
 		this.patent_date = patent_date;
 	}
 	public String getPatent_url() {

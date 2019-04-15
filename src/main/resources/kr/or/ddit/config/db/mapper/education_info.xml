@@ -33,4 +33,24 @@
 		 order by graduation desc
 		
 	</select>
+	
+	<!-- 사용자의 한 건의 학력정보 조회 -->
+	<select id="select_oneEducationInfo" parameterType="String" resultType="education_infoVo">
+		 select education_code, user_id, school_name, degree_name, major, admission, graduation, grade, contents
+		  from education_info
+		 where education_code = #{education_code}
+	</select>
+	
+	<!-- 사용자의 학력정보 업데이트 -->
+	<update id="update_educationInfo" parameterType="education_infoVo">
+		update education_info
+		   set school_name =  nvl(#{school_name, jdbcType=VARCHAR}, null),
+		       degree_name = nvl(#{degree_name, jdbcType=VARCHAR}, null),
+		       major = nvl(#{major, jdbcType=VARCHAR}, null),
+		       admission = nvl(#{admission, jdbcType=VARCHAR}, null),
+		       graduation = nvl(#{graduation, jdbcType=VARCHAR}, null),
+		       grade = nvl(#{grade, jdbcType=VARCHAR}, null),
+		       contents = nvl(#{contents, jdbcType=VARCHAR}, null)
+		 where education_code = #{education_code}
+	</update>
 </mapper>

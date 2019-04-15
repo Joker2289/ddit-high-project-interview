@@ -32,9 +32,18 @@ public class Possesion_skillsController {
 	private IPossesion_skillsService possesion_skillsService;
 	
 	@RequestMapping("/possesion_skillsInsert")
-	public String careerInsert(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, Possesion_skillsVo possesion_skillsVo) {
+	public String possesion_skillsInsert(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, Possesion_skillsVo possesion_skillsVo) {
 		
 		possesion_skillsService.insert_possesion_skills(possesion_skillsVo);
+		
+		return "redirect:/profileHome";
+		
+	}
+	
+	@RequestMapping("/possesion_skillsUpdate")
+	public String possesion_skillsUpdate(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, Possesion_skillsVo possesion_skillsVo) {
+		
+		possesion_skillsService.update_possesion_skills(possesion_skillsVo);
 		
 		return "redirect:/profileHome";
 		

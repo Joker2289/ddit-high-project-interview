@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:formatDate value="${career_infoMap.career_infoVo.join_date}" pattern="yy/MM/dd" var="fmtJoin_date"/>
+<fmt:formatDate value="${career_infoMap.career_infoVo.resign_date}" pattern="yy/MM/dd" var="fmtResign_date"/>
 
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal"
@@ -10,35 +13,35 @@
 	<h4 class="modal-title">경력</h4>
 </div>
 <div class="modal-body">
-<form action="/careerInsert" method="post" id="careerInsertFrm" enctype="multipart/form-data">
+<form action="/careerUpdate" method="post" id="careerUpdateFrm" enctype="multipart/form-data">
 	<div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">회사 </label>
-				<input class="form-control" type="text" name="corporate_name" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+				<input class="form-control" type="text" name="corporate_name" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" value="${career_infoMap.career_infoVo.corporate_name}"> 
 			</div>
 			<ul class="dropdown-menu searchDropDown">
   				<c:forEach items="${corpVoList }" var="corpVo">
-  					<li><a class="corp_nameClick" title="${fn:split(corpVo.addr1,' ')[0]}">${corpVo.corp_name }</a></li>
+  					<li><a class="corp_nameClick" title="${fn:split(corpVo.addr1,' ')[0]}">${career_infoMap.corpVo.corp_name }</a></li>
   				</c:forEach>
 			</ul>
 			<div class="modalHalfRight">
 				<label class="essential">회사코드 </label>
-				<input class="form-control" type="text" name="corp_code">
+				<input class="form-control" type="text" name="corp_code" value="${career_infoMap.career_infoVo.corp_code}">
 			</div>
 		</div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<div class="modalHalfRight">
 					<label class="essential">지역 </label>
-					<input class="form-control" type="text" name="corp_local">
+					<input class="form-control" type="text" name="corp_local" value="${career_infoMap.career_infoVo.corp_local}">
 				</div>
 			</div>
 		</div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">직군</label>
-				<input type="text" name="job_position" class="form-control addr1"/>
+				<input type="text" name="job_position" class="form-control addr1" value="${career_infoMap.career_infoVo.job_position}"/>
 			</div>
 			<div class="modalHalfRight">
 				<label>직급 </label>
@@ -71,7 +74,7 @@
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">시작일 </label>
-				<input class="form-control select_date"  name="join_date" type="text" >
+				<input class="form-control select_date"  name="join_date" type="text">
 			</div>
 			<div class="modalHalfRight resign_date">
 				<label class="essential">종료일 </label>
@@ -81,7 +84,7 @@
 		<div class="modalRow" style="padding-bottom: 15px;">
 			<div style="modalHalfLeft">
 				<label>설명 </label>
-				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;"></textarea>
+				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;">${career_infoMap.career_infoVo.contents}</textarea>
 			</div>
 		</div>
 		<div style="margin-top: 10px;">
@@ -100,13 +103,21 @@
 			    </div>
       		</div>
       	</div>
-      	<div class="modalRow" style="padding-bottom: 15px;">
+		<div class="modalRow" style="padding-bottom: 15px;">
 			<div  class="fileListBox" style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;">
+				<c:forEach items="${career_infoMap.filesVoList }" var="files" > 
+					<div class="files" style="height: 25px; margin-right: 10px;font-size: 15px; font-weight: bold">
+						<a href="/fileDownload?file_code=${files.file_code }">${files.file_name}</a>
+						<input type="hidden" name="file_name" value="${files.file_name}">
+						<input type="hidden" name="file_path" value="${files.file_path}">
+						<label class="btn btn-link delBtn" style="font-size: 14px; width:64px; height: 31px; padding: 3px 12px 6px 0;">X</label>
+					</div>
+				</c:forEach>
 			</div>
 		</div>
 	</div>
 	
-	<input type="hidden" value="${SESSION_MEMBERVO.mem_id }" name="user_id">
+	<input type="hidden" value="${career_infoMap.career_infoVo.career_code }" name="career_code">
 </form>
 </div>
 <div class="modal-footer">
@@ -114,6 +125,8 @@
 </div>
 
 <script>
+	$("select[name=job_rank]").val("${career_infoMap.career_infoVo.job_rank}").prop("selected", true);
+
 	// 검색시 다른 곳 클릭할때 숨기기 기능
 	$(document).on("click", function(e){
 		if (!$(e.target).closest(".searchDropDown").hasClass("searchDropDown")){
@@ -122,8 +135,6 @@
 	});
 	
 	// 현 직장일경우 종료일 숨기기 기능(체크박스)
-	$(".resign_date").hide();
-	
 	$(".resign_dateIng").on("click",function(){
 		if($(".resign_dateIng").is(":checked")){
 			$(".resign_date").hide();
@@ -213,7 +224,7 @@
 			}
 		}
 		
- 		$("#careerInsertFrm").submit();
+ 		$("#careerUpdateFrm").submit();
 	});
 	
 	// 캘린더 오류 구문
@@ -227,6 +238,7 @@
 	    }
 	})();
 	
+
 	// 캘린더
 	$(".select_date").datepicker({
         dateFormat: "yy/mm/dd" //Input Display Format 변경
@@ -245,6 +257,16 @@
         ,dayNames: ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"] //달력의 요일 부분 Tooltip 텍스트
         //,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
         //,maxDate: "+1M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
-    });                    
+    }); 
+	
+	$("input[name=join_date]").datepicker('setDate', '${fmtJoin_date}');
+	
+	if ($("input[name=resign_date]").val().trim()==""){
+		$(".resign_dateIng").prop('checked', true);
+		$(".resign_date").hide();
+	}else{
+		$(".resign_dateIng").prop('checked', false);
+		$("input[name=resign_date]").datepicker('setDate', '${fmtResign_date}');
+	}
     
 </script>

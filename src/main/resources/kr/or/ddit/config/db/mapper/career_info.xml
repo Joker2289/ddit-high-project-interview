@@ -34,4 +34,27 @@
            and b.corp_code(+) = a.corp_code
 		 order by a.resign_date desc
 	</select>
+	
+	<!-- 사용자의 한 건의 경력정보 조회 -->
+	<select id="select_oneCareerInfo" parameterType="String" resultType="career_infoVo">
+		select a.*, decode(resign_date,null,ceil(months_between(sysdate, join_date)),ceil(months_between(resign_date, join_date))) as month, b.logo_path, b.corp_id
+		  from career_info a, corporation b
+		 where b.corp_code(+) = a.corp_code
+           and a.career_code = #{career_code}
+	</select>
+	
+	<!-- 사용자의 경력정보 업데이트 -->
+	<update id="update_career_info" parameterType="career_infoVo">
+		update career_info
+		   set job_position = nvl(#{job_position, jdbcType=VARCHAR}, null), 
+		       job_rank = nvl(#{job_rank, jdbcType=VARCHAR}, null), 
+		       corporate_name = nvl(#{corporate_name, jdbcType=VARCHAR}, null), 
+		       corp_local = nvl(#{corp_local, jdbcType=VARCHAR}, null), 
+		       join_date = nvl(#{join_date, jdbcType=VARCHAR}, null), 
+		       resign_date = nvl(#{resign_date, jdbcType=VARCHAR}, null), 
+		       contents = nvl(#{contents, jdbcType=VARCHAR}, null),
+		       corp_code =  nvl(#{corp_code, jdbcType=VARCHAR}, null)
+		 where career_code = #{career_code}
+	</update>
+	
 </mapper>

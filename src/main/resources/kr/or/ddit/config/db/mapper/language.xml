@@ -25,4 +25,22 @@
 		 where user_id = #{user_id}
 		 order by lang_code desc
 	</select>
+	
+	<!-- 사용자의 한 건의 외국어 조회 -->
+	<select id="select_oneLanguage" parameterType="String" resultType="languageVo">
+		 select lang_code,
+				user_id,
+				lang_kind,
+				grade
+		   from language
+		  where lang_code = #{lang_code}
+	</select>
+	
+	<!-- 사용자의 외국어 업데이트 -->
+	<update id="update_language" parameterType="languageVo">
+		update language
+		   set lang_kind = nvl(#{lang_kind, jdbcType=VARCHAR}, null),
+			   grade = 	nvl(#{grade, jdbcType=VARCHAR}, null) 
+		 where lang_code = #{lang_code}
+	</update>
 </mapper>

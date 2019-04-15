@@ -57,4 +57,51 @@ public class Career_infoController {
 		return "redirect:/profileHome";
 		
 	}
+	
+	@RequestMapping("/careerUpdate")
+	public String careerUpdate(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, Career_infoVo career_infoVo) {
+		String[] file_name = req.getParameterValues("file_name");
+		String[] file_path = req.getParameterValues("file_path");
+		List<MultipartFile> fileList = file.getFiles("filesVo");
+		List<FilesVo> filesVoList = new ArrayList<FilesVo>();
+		HashMap<String, String> result = new HashMap<String, String>();
+		
+		FilesVo delfilesVo = new FilesVo();
+		delfilesVo.setDivision("05");
+		delfilesVo.setRef_code(career_infoVo.getCareer_code());
+		filesService.delete_allFile(delfilesVo);
+		
+		careerService.update_career_info(career_infoVo);
+		
+		if(file_name != null) {
+			for(int i = 0; i < file_name.length; i++) {
+				FilesVo filesVo = new FilesVo();
+				filesVo.setRef_code(career_infoVo.getCareer_code());
+				filesVo.setFile_name(file_name[i]);
+				filesVo.setFile_path(file_path[i]);
+				filesVo.setDivision("05");
+				filesVoList.add(filesVo);
+			}
+		}
+		
+		for(MultipartFile part : fileList){
+			result = FileUpload.fileUpload(part,req);
+			
+			if (result != null){
+				FilesVo filesVo = new FilesVo();
+				filesVo.setFile_name(result.get("filename"));
+				filesVo.setFile_path(result.get("realFilename"));
+				filesVo.setDivision("05");
+				filesVo.setRef_code(career_infoVo.getCareer_code());
+				filesVoList.add(filesVo);
+			}
+		}
+		
+		for (FilesVo filesVo:filesVoList) {
+			filesService.insert_usersFile(filesVo);
+		}
+		
+		return "redirect:/profileHome";
+		
+	}
 }
