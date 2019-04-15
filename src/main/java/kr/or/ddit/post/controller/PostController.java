@@ -1,7 +1,5 @@
 package kr.or.ddit.post.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -82,9 +80,9 @@ public class PostController {
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		logger.debug("asdasdasd {}", memberInfo);
 		
-		FollowVo followInfo = new FollowVo();
-		followInfo.setMem_id(memberInfo.getMem_id());
-		followInfo.setDivision("16");
+		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
+		tagCountPageVo.setMem_id(memberInfo.getMem_id());
+		tagCountPageVo.setDivision("16");
 		
 		Save_postVo savepost = new Save_postVo();
 		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
@@ -99,7 +97,7 @@ public class PostController {
 			int connectionCnt = personal_connectionService.connections_count(memberInfo);
 			
 			//팔로우 한 해쉬태그 출력을 위한 세팅
-			List<FollowVo> followHashtag = followService.select_followKindList(followInfo);
+			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
 			
 			if(!followHashtag.isEmpty()){
 				model.addAttribute("followHashtag", followHashtag);
@@ -114,7 +112,7 @@ public class PostController {
 			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
 			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
 			
-			List<FollowVo> followHashtag = followService.select_followKindList(followInfo);
+			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
 	         
 	         if(!followHashtag.isEmpty()){
 	            model.addAttribute("followHashtag", followHashtag);
@@ -129,10 +127,8 @@ public class PostController {
 			
 		}
 		
-		
-		model.addAttribute("memberInfo", memberInfo);
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
-		
+		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("timelinePost", timelinePost);
 		
 		return "timeLineTiles";
@@ -140,10 +136,11 @@ public class PostController {
 	
 	
 	@RequestMapping(path={"/appendpost"}, method=RequestMethod.POST)
-	public String appendPost(@RequestParam String pageNum, @RequestParam String lastPost, HttpServletRequest request, Model model){
+	public String appendPost(@RequestParam String pageNum, @RequestParam String lastPost, HttpServletRequest request, Model model, String ref_code){
 		
 		logger.debug("lastPost asdasd : {}", lastPost);
 		logger.debug("pageNum asdasdasd : {}", pageNum);
+		logger.debug("ref_code : {}", ref_code);
 		
 		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 
@@ -162,6 +159,28 @@ public class PostController {
 		model.addAttribute("memberInfo", member);
 		
 		return "timeline/appendPost";
+	}
+	
+	@RequestMapping(path={"/morefollowtag"}, method=RequestMethod.POST)
+	public String moreFollowTag(Model model, HttpServletRequest request){
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		PaginationVo paginationVo = new PaginationVo(1, 1000000);
+		String mem_id = memberInfo.getMem_id();
+		
+		paginationVo.setMem_id(mem_id);
+		paginationVo.setDivision("16");
+		
+		List<FollowVo> allTag = followService.select_followKindList(paginationVo);
+		model.addAttribute("alltag", allTag);
+		
+		if(!allTag.isEmpty()){
+			model.addAttribute("alltag", allTag);
+		} else {
+			model.addAttribute("alltag","notfollow");
+		}
+		
+		return "timeline/moreFollowTag";
 	}
 	
 	
@@ -198,7 +217,6 @@ public class PostController {
 		int insertCnt = postService.insert_post(insertPost);
 		
 		//해시태그 추출 및 등록
-		logger.debug("123456789987654321123412341234 : {}", insertPost);
 		Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣]*)");
 		Matcher m = p.matcher(post_contents);
 		

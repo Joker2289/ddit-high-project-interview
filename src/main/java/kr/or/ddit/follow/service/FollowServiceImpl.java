@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.follow.dao.IFollowDao;
 import kr.or.ddit.follow.model.FollowVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 @Service("followService")
 public class FollowServiceImpl implements IFollowService {
@@ -31,8 +32,8 @@ public class FollowServiceImpl implements IFollowService {
 	}
 
 	@Override
-	public List<FollowVo> select_followKindList(FollowVo followVo) {
-		return followDao.select_followKindList(followVo);
+	public List<FollowVo> select_followKindList(PaginationVo paginationVo) {
+		return followDao.select_followKindList(paginationVo);
 	}
 	
 }

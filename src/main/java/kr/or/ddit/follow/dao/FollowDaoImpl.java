@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.follow.model.FollowVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 @Repository("followDao")
 public class FollowDaoImpl implements IFollowDao {
@@ -31,8 +32,8 @@ public class FollowDaoImpl implements IFollowDao {
 	}
 
 	@Override
-	public List<FollowVo> select_followKindList(FollowVo followVo) {
-		return sqlSession.selectList("follow.select_followKindList", followVo);
+	public List<FollowVo> select_followKindList(PaginationVo paginationVo) {
+		return sqlSession.selectList("follow.select_followKindList", paginationVo);
 	}
 	
 }

@@ -3,6 +3,7 @@ package kr.or.ddit.follow.dao;
 import java.util.List;
 
 import kr.or.ddit.follow.model.FollowVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 public interface IFollowDao {
 
@@ -36,6 +37,6 @@ public interface IFollowDao {
 	 */
 	List<FollowVo> select_followList(String mem_id);
 	
-	List<FollowVo> select_followKindList(FollowVo followVo);
+	List<FollowVo> select_followKindList(PaginationVo paginationVo);
 	
 }

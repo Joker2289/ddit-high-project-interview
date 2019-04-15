@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<link href="/css/timeline/writemodal.css" rel="stylesheet">
 
 <c:forEach items="${nextPostList }" var="post">
   <div id="col-post" class="scrolling" data-post="${post.post_code }">
@@ -98,41 +99,9 @@
   	  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-share-square"></i></span></button>
   	  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-bookmark"></i></span></button>
   	</div>
-  	
+
   	<!-- comment -->
-  	<div class="col-appendcomment ${post.post_code }" style="height: 100px; padding: 5px;">
-  	
-  	  <div class="comment-profile-img" style="float: left; padding: 5px; width: 10%;">
-  	  	<img src="" style="border-radius: 100px;">이미지
-  	  </div>
-  	  
-  	  <div class="comment-area-input" style="float:right; border: 1px solid #e1e3e8; border-radius: 30px; height: 30px; padding: 5px; width: 90%;">
-  	    <div class="comment-input-text" style="float: left; width: 80%;">
-  	    	<form>
-  	    	  <input placeholder="댓글달기" style="border: 0px solid #fff; width: 100%; outline: 0;">
-  	    	</form>
-  	    </div>
-  	    <div class="comment-input-img" style="float: right;">
-  	    	<button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="fas fa-camera"></i></button>
-  	    </div>
-  	  </div>
-  	  
-  	  <!-- comment print -->
-  <%-- 					  <c:forEach items="${ }" var=""> --%>
-  	    <div class="comment-area" style="float:right; border: 1px solid #e1e3e8; border-radius: 30px; height: 30px; padding: 5px; width: 90%;">
-  	      
-  	      <div class="comment-text">
-  	    	<input style="border: 0px solid #fff; width: 100%; outline: 0; padding-top: 5px; padding-bottom: 5px;">
-  	      </div>
-  	      <div class="comment-input-button" style="padding-top: 5px; padding-bottom: 5px;">
-  	    	<button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="far fa-thumbs-up"></i></button>
-  	    	<button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="far fa-comments"></i></i></button>
-  	      </div>
-  	      
-  	    </div>
-  <%-- 					  </c:forEach> --%>
-  		<!-- /comment print -->
-  	</div>
+  	<div class="col-comment-area ${post.post_code }" id="post_comment ${post.post_code }"></div>
   	<!-- /comment -->
   
     </div>
@@ -140,6 +109,34 @@
 </c:forEach>
 
 <script>
+//게시글 댓글 버튼 클릭 시 댓글 영역 출력
+
+var flag = false;
+$(".btn_appendcomment").on("click", function() {
+	
+	var ref_code = $(this).attr('title');
+	console.log(ref_code);
+	
+	if (flag == false) {
+		$.ajax({
+			type : 'POST',
+			url : '/commentArea',
+			data : {"ref_code" : ref_code},
+			success : function(data) {
+				
+				if(data != ""){
+					$("." + ref_code).append(data);
+				}
+			}
+		});
+		flag = true;
+	} else {
+		flag = false;
+		$(".col-comment").remove();
+	}
+	
+});
+
 $(".col-appendcomment").hide();
 
 $(".btn_appendcomment").on("click", function() {

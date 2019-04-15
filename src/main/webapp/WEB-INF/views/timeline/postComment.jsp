@@ -1,16 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link href="/css/timeline/writemodal.css" rel="stylesheet">
 <!-- comment -->
 <div class="col-comment" title="${ref_code }">
 <!-- comment input area -->
   <div class="comment_inputarea">
-    <div class="comment-profile-img">
+    <div class="comment-profile-img" style="float: left; width: 10%; padding-top: 20px;">
       <!-- 로그인 한 회원의 프로필 사진 -->
       <c:choose>
         <c:when test="${memberInfo.mem_division == '1' }">
       	  <c:if test="${commentwriter.profile_path == null }">
-      	    <a class="contents_writer_image"><button class="contents_writer_image"><i class="far fa-user"></i></button></a>
+      	    <a class="contents_writer_image"><button class="contents_writer_image"style="padding: 5px;"><i class="far fa-user"></i></button></a>
       	  </c:if>
       	  <c:if test="${commentwriter.profile_path != null} ">
       	    <a class="contents_writer_image"><img class="contents_writer_image" src="${commentwriter.profile_path }"></a>
@@ -28,16 +29,16 @@
       </c:choose>
     </div>
   
-    <div class="comment-area-input">
-      <div class="comment-input-text">
+    <div class="comment-area-input" style="padding-top: 20px; position : 50px;">
+      <div class="comment-input-img" style="float: right; width: 8%;">
+    	<button class="input_comment_img"><i class="fas fa-camera"></i></button>
+      </div>    
+      <div class="comment-input-text" style="float: right; width: 80%">
     	  <!-- 작성 내용 -->
     	<textarea id="input_comment_contents ${ref_code }" class="input_comment_contents" name="input_comment_contents"></textarea>
       </div>
-      <div class="comment-input-img">
-    	<button class="input_comment_img"><i class="fas fa-camera"></i></button>
-      </div>
       <form>
-    	<button type="button" class="btn_commentWrite ${ref_code} }">올리기</button>
+    	<button type="button" class="btn_commentWrite ${ref_code}">올리기</button>
       </form>
     </div>
   </div>
@@ -92,6 +93,7 @@
 			  <a class="contents_writer_image"><button class="contents_writer_image"><i class="far fa-user"></i></button></a>
 		    </c:otherwise>
 	      </c:choose>
+	      <a></a>
         </div>
         <div class="comment-text">
   	      <div class="comment-contents">${comment.comment_contents }</div>
@@ -145,8 +147,6 @@
 	var commentPageNum = 2;
 	var last_comment;
 	var comment_ref_code = $(".col-comment").attr('title');
-	
-// 	console.log($('.col-comment-area ' + comment_ref_code).children($('.comment-printarea ' + comment_ref_code)).length);
 	
 	
 	$("#btn_moreComment").on("click", function() {

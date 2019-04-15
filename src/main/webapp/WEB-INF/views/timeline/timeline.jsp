@@ -108,6 +108,9 @@
                   </c:choose>     
 	            </ul>
 	          </div>
+	          <div>
+              	<button type="button" class="btn_moretag">더보기</button>
+              </div>
 	        </div>
 	        <!-- ./friend requests -->
 	      </div>
@@ -208,10 +211,7 @@
 					
 					<div class="col-post-social">
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-thumbs-up"></i></span></button>
-					  <button class="btn-social btn_comment" title="${post.post_code }">
-					  	<span style="font-size: 18px;"><i class="far fa-comments"></i></span>
-					  </button>
-					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-share-square"></i></span></button>
+					  <button class="btn-social btn_comment" title="${post.post_code }"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
 					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-bookmark"></i></span></button>
 					</div>
 					
@@ -273,6 +273,23 @@
 		
 		var flag = false;
 		var ref_code;
+		
+		$(".btn_moretag").on("click", function() {
+			
+// 			$.ajax({
+// 				type : 'POST',
+// 				url : '/',
+// 				data : {"" : },
+// 				success : function(data) {
+					
+// 					if(data != ""){
+						
+// 					}
+// 				}
+// 			});
+			
+			$(".btn_moretag").hide();
+		});
 		
 		//게시글 댓글 버튼 클릭 시 댓글 영역 출력
 		$(".btn_comment").on("click", function() {
@@ -362,13 +379,11 @@
 		
 		lastPost = $(".scrolling:last").attr("data-post");
 
-		if($(window).scrollTop() >= $(document).height() - $(window).height()-1){
+		if($(window).scrollTop() >= $(document).height() - $(window).height() - 1){
 			
 			$.ajax({
 				type : 'POST',
 				url : '/appendpost',
-//				headers : {"Content-Type" : "application/json"},
-// 				dataType : 'json',
 				data : {"lastPost" : lastPost, "pageNum" : pageNum},
 				success : function(data) {
 					
