@@ -3,19 +3,17 @@
 <%@page import="java.util.Enumeration"%>
 <%@page import="org.json.simple.JSONObject"%>
 
-
-
-
-	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
+
 <!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link href="/css/timeline/writemodal.css" rel="stylesheet">
 <style>
 textarea {
     font-size: 100%;
@@ -78,10 +76,14 @@ textarea {
 
 <div style="height: 300px; width: 555px; margin-left: 242px;">
 
+	 
+	        <!-- feed -->
+	        <div class="post-group">
+	          <!-- post -->
 	          <c:forEach items="${postList }" var="post">
 		          
-		        <div id="col-post" class="scrolling"  data-post="${post.post_code }">
-				  <div class="col-post" style="box-shadow: 0px 1px 3px;">
+		        <div id="col-post" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
+				  <div class="col-post">
 					<div class="col-post-body">
 					  <a href="#" >
 						<div class="writer_info" style="float: left;">
@@ -127,13 +129,10 @@ textarea {
 					      <c:otherwise>
 				        	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 				      	    	<button class="btn_controll-list" style="padding-right: 65.69px;">
-					            	<i class="far fa-eye-slash">&nbsp;</i><span>글 숨기기</span>
+					            	<i class="far fa-eye-slash">&nbsp;</i><span>글 수정</span>
 					            </button>
-				      	    	<button class="btn_controll-list" style="padding-right: 24.33px;">
-					            	<i class="fas fa-ban"></i>&nbsp;<span>${post.writer_name }&nbsp;언 팔로우</span>
-					        	</button>
 				      	    	<button class="btn_controll-list" style="padding-right: 84.22px;">
-					            	<i class="far fa-flag"></i>&nbsp;<span>글 신고</span>
+					            	<i class="far fa-flag"></i>&nbsp;<span>글 삭제</span>
 					            </button>
 					        </ul>
 					      </c:otherwise>  
@@ -142,7 +141,7 @@ textarea {
 					  
 					</div>
 					<div class="post_info">
-					  <pre style="background: #ffffff; border-color: #ffffff;">${post.post_contents }</pre>
+					  <pre class="post_contents" style="background: #ffffff; border-color: #ffffff;">${post.post_contents }</pre>
 					</div>
 				
 					<div class="col-post-footer">
@@ -178,7 +177,10 @@ textarea {
 				</div>
 
 	          </c:forEach>
-
+	          <!-- ./post -->
+	        </div>
+	        <!-- ./feed -->
+	      </div>
 
 
 </div>
@@ -190,7 +192,7 @@ textarea {
 
 
 			</div>
-		</div>
+		
 	</div>
 
 
