@@ -19,10 +19,10 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <!-- FileSaver-->
-<!--    <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/5ed507ef8aa53d8ecfea96d96bc7214cd2476fd2/FileSaver.min.js"></script>-->
+	<script src="https://cdn.rawgit.com/eligrey/FileSaver.js/5ed507ef8aa53d8ecfea96d96bc7214cd2476fd2/FileSaver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
    
-<!--    <script src="/html2/html2canvas.js"></script>-->
+
     
     <!-- html2canvas : tag를 캡쳐하여 image로 변환-->
 <!--    <script src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>-->
@@ -781,7 +781,7 @@ editor.setSize(600, 800);
     // 4. 클릭했을때 zIndex 
 
 
-    var data = '{"attrs":{"width":3000,"height":3000,"name":"stage"},"className":"Stage","children":[{"attrs":{"name":"layer 14"},"className":"Layer","children":[{"attrs":{"x":551.0104160308838,"y":255.47567749023438,"width":300,"height":300,"name":"emoticon 1","draggable":true,"src":"/onenote/emoticon/holly.png"},"className":"Image"}]},{"attrs":{"name":"layer 14"},"className":"Layer","children":[]},{"attrs":{"name":"layer 15"},"className":"Layer","children":[]}]}';
+    var data = '{"attrs":{"width":3000,"height":3000,"name":"stage"},"className":"Stage","children":[{"attrs":{"name":"layer 15"},"className":"Layer","children":[{"attrs":{"name":"image group 1","draggable":true,"x":683,"y":69},"className":"Group","children":[{"attrs":{"x":300,"y":300,"name":"image 1","src":"http://localhost:8080/page/imageView?src=/Users/pjk/workspace_spring/.metadata/.plugins/org.eclipse.wst.server.core/tmp2/wtpwebapps/interview/images/onenote/7e162cf5-0ed8-4b51-a7de-a1bd6269493e","width":312,"height":288},"className":"Image"},{"attrs":{"x":300,"y":300,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor topLeft","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"},{"attrs":{"x":612,"y":300,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor topRight","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"},{"attrs":{"x":300,"y":588,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor bottomLeft","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"},{"attrs":{"x":612,"y":588,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor bottomRight","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"}]},{"attrs":{"name":"emoticon group 3","draggable":true,"x":-64,"y":-22},"className":"Group","children":[{"attrs":{"x":467.0104160308838,"y":453.80902099609375,"width":300,"height":300,"name":"emoticon 3","src":"/onenote/emoticon/holly.png"},"className":"Image"},{"attrs":{"x":467.0104160308838,"y":453.80902099609375,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor topLeft","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"},{"attrs":{"x":767.0104160308838,"y":453.80902099609375,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor topRight","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"},{"attrs":{"x":767.0104160308838,"y":753.8090209960938,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor bottomRight","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"},{"attrs":{"x":467.0104160308838,"y":753.8090209960938,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor bottomLeft","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"}]}]}]}';
 
     var node_num = 0;
     var state = '';
@@ -1194,8 +1194,10 @@ editor.setSize(600, 800);
             onrendered: function(canvas) {
 
                 canvas.toBlob(function(blob) {
-
-                    saveAs(blob, 'test.png');
+                	
+                	drawImg(canvas.toDataURL('image/png'));
+					
+                	saveAs(canvas.toDataURL(), 'file-name.png');
 
                 });
 
@@ -1337,7 +1339,8 @@ editor.setSize(600, 800);
 
             var destroy_node = null;
 
-            if (selectNode.hasName('text') || selectNode.hasName('square')) {
+            if (selectNode.hasName('text') || selectNode.hasName('square')
+            	|| selectNode.hasName('emoticon') || selectNode.hasName('image') ) {
                 destroy_node = selectNode.findAncestor('Group');
             } else {
                 destroy_node = selectNode;

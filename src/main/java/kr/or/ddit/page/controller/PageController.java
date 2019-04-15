@@ -56,7 +56,7 @@ public class PageController {
 		String realFileName = "";
 		String returnFileName = "";
 		
-		// 이미지를 업로드 한경우
+		// 이미지를 업로드 한경우		//spring 프로젝트에 ProfileImgView
 		if (imageStorage.getSize() > 0) {
 			String fileName = imageStorage.getOriginalFilename();
 			
@@ -65,11 +65,31 @@ public class PageController {
 			realFileName = req.getServletContext().getRealPath("/images/onenote/" + tmpFileName);
 			imageStorage.transferTo(new File(realFileName));
 			
-			returnFileName = "/images/onenote/" + tmpFileName;
+			//returnFileName = "/images/onenote/" + tmpFileName;
 
 			logger.debug("fileName : {}", fileName);
 			logger.debug("realFileName : {}", realFileName);
 		}
-		return returnFileName;
+		
+		return realFileName;
 	}
+	
+	/**
+	 * 
+	 * Method : ImageView
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param src
+	 * @param model
+	 * @return
+	 * Method 설명 : model에 이미지경로를 속성으로 저장해주고 servlte-context 에 등록한 imageView 요청
+	 */
+	@RequestMapping("/imageView")
+	public String imageView(@RequestParam(name="src") String src, Model model) {
+		
+		model.addAttribute("src", src);
+		
+		return "imageView";
+	}
+	
 }

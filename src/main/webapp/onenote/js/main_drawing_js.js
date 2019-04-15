@@ -11,7 +11,7 @@ stage.on('click', function (e) {
 
     shapeGrouping(e);
 
-    if (target.hasName('square')) {
+    if (target.hasName('square') || target.hasName('emoticon') || target.hasName('image')) {
         square_anchor_E();
     }
     
@@ -29,6 +29,7 @@ stage.on('click', function (e) {
     }
 });
 
+
 //도형 그룹핑
 function shapeGrouping(e) {
     target = e.target;
@@ -42,6 +43,14 @@ function shapeGrouping(e) {
         layer = group.findAncestor('Layer');
         anchor = group.find('.anchor');
         triangle = group.findOne('.triangle');
+    } else if (target.hasName('emoticon')) {
+    	layer = group.findAncestor('Layer');
+        anchor = group.find('.anchor');
+        square = group.findOne('.emoticon');
+    } else if (target.hasName('image')) {
+    	layer = group.findAncestor('Layer');
+        anchor = group.find('.anchor');
+        square = group.findOne('.image');
     } else {
         return;
     }
@@ -426,9 +435,15 @@ function resize_square(anchor) {
 
     if (group.get('.square')[0] != null) {
         shape = group.get('.square')[0];
-    } else if (group.get('.triangle')[0] != null) {
-        shape = group.get('.triangle')[0];
-    }
+    } 
+    
+    if (group.get('.emoticon')[0] != null) {
+        shape = group.get('.emoticon')[0];
+    } 
+    
+    if (group.get('.image')[0] != null) {
+        shape = group.get('.image')[0];
+    } 
 
     var anchorX = anchor.getX();
     var anchorY = anchor.getY();

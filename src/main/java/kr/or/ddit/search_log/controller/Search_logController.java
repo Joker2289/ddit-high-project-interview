@@ -95,7 +95,7 @@ public class Search_logController {
 			sVo.setSearch_alarm("2");
 		}
 		
-		sLogService.updateSearch_log(sVo);
+		sLogService.updateSLogNotDel(sVo);
 
 		return "redirect:" + req.getContextPath() + "/recruit";
 	}

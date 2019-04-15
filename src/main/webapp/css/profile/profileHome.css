@@ -152,6 +152,15 @@
     
 }
 
+.possesion_skillsVoShow{
+	width: 793px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: -25px;
+    color: #0073b1; 
+    font-size: 17px;
+}
+
 .essential:after{
 	content: '*';
     color: #0073b1;
@@ -243,4 +252,5 @@
 	background-position: center;
 	box-shadow: 0 1.5px 4px 3px rgba(0,0,0,.15);
 }
+
 

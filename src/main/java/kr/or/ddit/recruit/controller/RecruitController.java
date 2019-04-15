@@ -206,6 +206,10 @@ public class RecruitController {
 		// 조회한 채용공고가 없는 경우도 처리해줘야 함.
 		// 변수 첫 자는 소문자로.
 		RecruitVo lVRVo = recrService.getLastViewRecr(mVo.getMem_id());
+		
+		
+		
+		
 		List<RecruitVo> rRList1 = new ArrayList<>();
 		if(lVRVo == null){
 			lVRVo = new RecruitVo();
@@ -221,6 +225,7 @@ public class RecruitController {
 			
 			// jsp에서 <c:if test="${RRList == null"> 이면 추천채용공고 리스트 출력하지 않기.
 		}else{
+			rRList1.add(lVRVo);
 			model.addAttribute("lVRVo", lVRVo);
 			
 			// 조회한 항목을 참고한 추천채용공고리스트 넘기기. (RRList1)
@@ -328,30 +333,31 @@ public class RecruitController {
 		
 		// 마지막 조회/스크랩 채용공고를 리스트의 맨앞으로 옮기자. lVRVo가 리스트에 없을수도 있음.
 		// 있을 땐 인덱스 저장해놓기. (lVIdx)
-		boolean lVRVo_flag = false;
-		int tempIdx = 0;
-		int lVIdx = 0;
-		
-		for(RecruitVo rVo : rRList1){
-			if(rVo.getRecruit_code().equals(lVRVo.getRecruit_code())){
-				lVRVo_flag = true;
-				lVIdx = tempIdx;
-				break;
-			}
-			
-			tempIdx++;
-		}
-		
-		// list.add(index, element); 이용. 여기 만들다 말았었군.
-		if(lVRVo_flag == false){
-			// 없을 땐 lVRVo를 0번에 넣고 마지막 항목을 지움.
-			rRList1.add(0, lVRVo);
-			rRList1.remove(rRList1.size() - 1);
-		}else{
-			// 있을 땐 add([lVIdx])하고 remove([lVIdx+1]) <- 테스트 해보기.
-			rRList1.add(0, rRList1.get(lVIdx));
-			rRList1.remove(lVIdx + 1);
-		}
+		// 옮겼으면 corpNmList1, corpImgList1, scrapList1도 옮겨야 함.
+//		boolean lVRVo_flag = false;
+//		int tempIdx = 0;
+//		int lVIdx = 0;
+//		
+//		for(RecruitVo rVo : rRList1){
+//			if(rVo.getRecruit_code().equals(lVRVo.getRecruit_code())){
+//				lVRVo_flag = true;
+//				lVIdx = tempIdx;
+//				break;
+//			}
+//			
+//			tempIdx++;
+//		}
+//		
+//		// list.add(index, element); 이용. 여기 만들다 말았었군.
+//		if(lVRVo_flag == false){
+//			// 없을 땐 lVRVo를 0번에 넣고 마지막 항목을 지움.
+//			rRList1.add(0, lVRVo);
+//			rRList1.remove(rRList1.size() - 1);
+//		}else{
+//			// 있을 땐 add([lVIdx])하고 remove([lVIdx+1]) <- 테스트 해보기.
+//			rRList1.add(0, rRList1.get(lVIdx));
+//			rRList1.remove(lVIdx + 1);
+//		}
 		
 		model.addAttribute("rRList1", rRList1);
 //		logger.debug("flag?? : {}", scrap_flag); // 설마 로그 너무 많아서..
