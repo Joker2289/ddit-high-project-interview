@@ -1,19 +1,43 @@
+.panel{
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .15);
+}
+
 .span-text{
 	font-size: 20px;
+}
+
+.bg_img{
+ width: 261px;
+ height: 71px;
+ margin: -15px;
+}
+
+.profile_img{
+	width: 70px;
+	height: 70px;
+	border: 2px solid #fff;
+	margin-left: 90px;
+	margin-top: -20px;
+	border-radius: 100px;
+}
+
+.input-group{
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .15);
 }
 
 .col-post{
 	background: #ffffff;
 	margin: 10px;
-	border: 1px solid #c7c8c9;
+	border: 1px solid #ddd;
 	border-radius: 4px;
 	border-spacing: normal;
 	margin-left: 0px;
-	margin-right: 0px; 
+	margin-right: 0px;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .15);
 }
 
 .col-post-body{
-	border-bottom : 1px solid #e5e6e8;
+	border-bottom : 1px solid #ddd;
 	padding : 15px;
 	padding-bottom : 35px;
 	width: 553.02
@@ -21,7 +45,7 @@
 
 .col-post-social{
 	background-color : #f3f6f8;
-	border-top: 1px solid #e5e6e8;
+	border-top: 1px solid #ddd;
 	border-bottom-right-radius: 4px;
 	border-bottom-left-radius: 4px;
 	padding: 5px;
@@ -45,7 +69,7 @@
 
 .writer-info{
 	border-style: 1px solid;
-	border-color: #e5e5e5;
+	border-color: #ddd;
 /* 	margin: 200px; */
 }
 

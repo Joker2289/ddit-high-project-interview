@@ -27,8 +27,6 @@ public class Patent_listServiceImpl implements IPatent_listService {
 	public int insert_patent_list(Patent_listVo patent_listvo) {
 		return patent_listDao.insert_patent_list(patent_listvo);
 	}
-	
-
 
 	/**
 	 * Method : select_patent_list
@@ -41,6 +39,32 @@ public class Patent_listServiceImpl implements IPatent_listService {
 	@Override
 	public List<Patent_listVo> select_patent_list(String user_id) {
 		return patent_listDao.select_patent_list(user_id);
+	}
+
+	/**
+	 * Method : select_onePatent_list
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param patent_code
+	 * @return
+	 * Method 설명 : 사용자의 한 건의 특허정보 조회
+	 */
+	@Override
+	public Patent_listVo select_onePatent_list(String patent_code) {
+		return patent_listDao.select_onePatent_list(patent_code);
+	}
+
+	/**
+	 * Method : update_patent_list
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param patent_listVo
+	 * @return
+	 * Method 설명 : 사용자의 특허정보 업데이트
+	 */
+	@Override
+	public int update_patent_list(Patent_listVo patent_listVo) {
+		return patent_listDao.update_patent_list(patent_listVo);
 	}
 
 }

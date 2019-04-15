@@ -26,4 +26,24 @@ public interface ICareer_infoDao {
 	 * Method 설명 : 사용자의 경력 사항 조회
 	 */
 	List<Career_infoVo> select_careerInfo(String user_id);
+	
+	/**
+	 * Method : select_oneCareerInfo
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param career_code
+	 * @return
+	 * Method 설명 : 사용자의 한 건의 경력정보 조회
+	 */
+	Career_infoVo select_oneCareerInfo(String career_code);
+	
+	/**
+	 * Method : update_career_info
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param career_infoVo
+	 * @return
+	 * Method 설명 : 사용자의 경력정보 업데이트
+	 */
+	int update_career_info (Career_infoVo career_infoVo);
 }

@@ -26,4 +26,23 @@
 		 where user_id = #{user_id}
 		 order by publication_date desc
 	</select>
+	
+	<!-- 사용자의 한 건의 논문저서 조회 -->
+	<select id="select_oneThesis_list" parameterType="String" resultType="thesis_listVo">
+		 select thesis_code, user_id, thesis_name, publication_date, publisher, thesis_url, contents, writer
+		  from thesis_list
+		 where thesis_code = #{thesis_code}
+	</select>
+	
+	<!-- 사용자의 논문저서 업데이트 -->
+	<update id="update_thesis_list" parameterType="thesis_listVo">
+		update thesis_list
+		   set thesis_name = nvl(#{thesis_name, jdbcType=VARCHAR}, null),
+		   	   publication_date =  nvl(#{publication_date, jdbcType=VARCHAR}, null),
+		       publisher =  nvl(#{publisher, jdbcType=VARCHAR}, null),
+		       thesis_url =  nvl(#{thesis_url, jdbcType=VARCHAR}, null),
+		       contents = nvl(#{contents, jdbcType=VARCHAR}, null),
+		       writer = nvl(#{writer, jdbcType=VARCHAR}, null)
+		 where thesis_code = #{thesis_code}
+	</update>
 </mapper>

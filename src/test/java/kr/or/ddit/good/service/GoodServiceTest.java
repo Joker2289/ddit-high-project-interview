@@ -3,6 +3,7 @@ package kr.or.ddit.good.service;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -113,7 +114,9 @@ public class GoodServiceTest extends LogicTestConfig {
 			
 			member = memberSerivce.select_memberInfo(goodinfo.get(i).getMem_id());
 			if(member.getMem_division().equals("1")){
-				introduce 	= usersService.select_introduce(member.getMem_id());
+				Map<String, Object> map = usersService.select_introduce(member.getMem_id());
+				UsersVo usersVo = (UsersVo) map.get("usersVo");
+				introduce 	= usersVo.getIntroduce();
 				users = usersService.select_userInfo(member.getMem_id());
 				member_name = users.getUser_name();
 				

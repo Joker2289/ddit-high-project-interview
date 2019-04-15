@@ -40,5 +40,31 @@ public class Award_historyDaoImpl implements IAward_historyDao {
 	public List<Award_historyVo> select_award_history(String user_id) {
 		return sqlSessionTemplate.selectList("award_history.select_award_history", user_id);
 	}
+	
+	/**
+	 * Method : select_oneAward_history
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param award_code
+	 * @return
+	 * Method 설명 : 사용자의 한 건의 수상경력 조회
+	 */
+	@Override
+	public Award_historyVo select_oneAward_history(String award_code) {
+		return sqlSessionTemplate.selectOne("award_history.select_oneAward_history", award_code);
+	}
+	
+	/**
+	 * Method : update_award_history
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param award_historyVo
+	 * @return
+	 * Method 설명 : 사용자의 수상경력 업데이트
+	 */
+	@Override
+	public int update_award_history(Award_historyVo award_historyVo) {
+		return sqlSessionTemplate.update("award_history.update_award_history", award_historyVo);
+	}
 
 }

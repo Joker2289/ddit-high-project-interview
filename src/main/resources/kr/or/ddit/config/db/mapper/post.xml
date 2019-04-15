@@ -55,24 +55,16 @@
 		                                  from good
 		                                 where ref_code = post_code
 		                                   and division = 28) goodcount
-		                  from post, ( select user_id
-		                                 from personal_connection
-		                                where (user_id = #{mem_id} or receive_id = #{mem_id})
-		                                  and receive_accept='Y'
-		                                union
-		                               select receive_id
-		                                 from personal_connection
-		                                where (user_id = #{mem_id} or receive_id = #{mem_id})
-		                                  and receive_accept='Y'
-		                                union
-		                               select ref_keyword
+		                  from post
+		                  
+		         where (post.mem_id in (select ref_keyword
 		                                 from follow
 		                                where mem_id = #{mem_id}
-		                                  and (division='43' or division='11')) a
-		         where post.mem_id = a.user_id
+		                                  and (division = '43' or division = '11'))
 		           and post.post_code not in (select post_code
-                                            from hide_post
-                                           where mem_id = #{mem_id})
+		                                    from hide_post
+		                                   where mem_id = #{mem_id}))
+		            or post.mem_id = #{mem_id}
 		        order by post_date desc) b ) 
 		where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
 	</select>
@@ -91,24 +83,15 @@
 		                                  from good
 		                                 where ref_code = post_code
 		                                   and division = 28) goodcount
-		                  from post, ( select user_id
-		                                 from personal_connection
-		                                where (user_id = #{mem_id} or receive_id = #{mem_id})
-		                                  and receive_accept='Y'
-		                                union
-		                               select receive_id
-		                                 from personal_connection
-		                                where (user_id = #{mem_id} or receive_id = #{mem_id})
-		                                  and receive_accept='Y'
-		                                union
-		                               select ref_keyword
+		                  from post
+		         where (post.mem_id in (select ref_keyword
 		                                 from follow
 		                                where mem_id = #{mem_id}
-		                                  and (division='43' or division='11')) a
-		         where post.mem_id = a.user_id
+		                                  and (division = '43' or division = '11'))
 		           and post.post_code not in (select post_code
-                                            from hide_post
-                                           where mem_id = #{mem_id})
+		                                    from hide_post
+		                                   where mem_id = #{mem_id}))
+		            or post.mem_id = #{mem_id}
 		        order by post_date desc) b ) 
 		where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
 		  and post_code &lt; #{criteria_code}

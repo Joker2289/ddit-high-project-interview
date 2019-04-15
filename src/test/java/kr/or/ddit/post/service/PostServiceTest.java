@@ -14,9 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
+import kr.or.ddit.post.controller.PostController;
 import kr.or.ddit.post.dao.IPostDao;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.test.LogicTestConfig;
+import kr.or.ddit.util.hashtagUtil.ReplaceContents;
 import kr.or.ddit.util.pagination.PaginationVo;
 
 public class PostServiceTest extends LogicTestConfig {
@@ -126,7 +128,7 @@ public class PostServiceTest extends LogicTestConfig {
 	 * Method : testHashtag
 	 * 작성자 : goo84
 	 * 변경이력 :
-	 * Method 설명 : controller에서 해시태그를 처리하는 방법
+	 * Method 설명 : controller에서 해시태그를 추출하는 방법
 	 */
 	@Test
 	public void testHashtag(){
@@ -157,4 +159,75 @@ public class PostServiceTest extends LogicTestConfig {
 		
 		return str;
 	}
+	
+	ReplaceContents replaceContents = new ReplaceContents() {
+		@Override
+		public String replace(String findToken) {
+			
+			return "<a href='localhost/timeline'>" + findToken + "</a>";
+		}
+		@Override
+		public String regexp() {
+//			/#(\\w*[0-9a-zA-Z]+\\w*[0-9a-zA-Z])
+//			return "([A-Za-z]+://[A-Za-z0-9-_]+.[A-Za-z0-9-_:%&~?/.=]+)";
+//			return "(?:\\s|\\A)[##]+([A-Za-z0-9가-힣-_]+)";
+//			return "(#[^#\\s]+|@[^#\\s]+|@[^@\\s]+)";
+//			return "(?:^|\\s)#(\\w*[a-zA-Z가-힣_]+\\w*)";
+//			return "#(\\w*[0-9a-zA-Z]+\\w*[0-9a-zA-Z])";
+//			return "(/(^|\\s)@(\\w+)";
+//			return "(?:^|\\s)(#[\\p{L}0-9a-zA-Z가-힣_-]+)";
+			//(?:^|\\s)(#[\\p{L}0-9a-zA-Z가-힣_-]+)
+//			return "(?:^|\\s)(#[\\p{L}0-9_-]+)";
+//			return "(?:^|\\s|[\\p{Punct}&&[^/]])(#[\\p{L}0-9a-zA-Z가-힣_-]+)";
+			return "(?:^|\\s|[\\p{Punct}&&[^/]])(#[\\p{L}0-9-_]+)";
+		}
+	};
+	
+	@Test
+	public void replaceHashtag2() throws Exception{
+		String contents = "<p><span>#정규식 #링크로변환 제발되라 #부탁합니다 제발요...</span></p><p><span>#제발 #정규식씨부레</span></p><p><img src='asd'></p>";
+		
+		Pattern replacePattern = Pattern.compile("(?:^|\\s|[\\p{Punct}&&[^/]])(#[\\p{L}0-9-_]+)");
+		Matcher matcher = replacePattern.matcher(PostController.hashtagToLink(contents, replaceContents));
+		
+		String afterContents = PostController.hashtagToLink(contents, replaceContents);
+		
+		//치환된 게시글 내용 인서트
+		logger.debug("치환된 게시물 내용 : {}", afterContents);
+		
+		Pattern extractPattern = Pattern.compile("\\#([0-9a-zA-Z가-힣]*)");
+		matcher = extractPattern.matcher(contents);
+		
+		String hashtag = "";
+		
+		while(matcher.find()){
+			hashtag = hashtag_replace(matcher.group());
+			
+			if(hashtag != null){
+				//해시태그, 해시태그 목록 인서트
+				logger.debug("추출된 해시태그 : {}", hashtag);
+			}
+		}
+	}
+	
+	@Test
+	public void tagtolink(){
+		String contents = "<p> #정규식 #링크로변환 제발되라 #부탁합니다 제발요...</p><p> #제발 #정규식씨부레</p><p><img src='asd'></p>";
+		
+		String[] splitContents = contents.split(" ");
+		String replaceedWord = "";
+		String splitedWord = "";
+		
+		for(int i=0; i<splitContents.length; i++){
+			splitedWord = splitContents[i];
+			
+			if(splitedWord.indexOf("#") == 0){
+				splitedWord = "<a href='localhost/timeline'>" + splitedWord + "</a>";
+			}
+			replaceedWord += splitedWord+"";
+		}
+		logger.debug("replacedWord : {}", replaceedWord);
+		
+	}
+	
 }

@@ -1,5 +1,8 @@
 package kr.or.ddit.post.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -35,6 +38,7 @@ import kr.or.ddit.save_post.model.Save_postVo;
 import kr.or.ddit.save_post.service.ISave_postService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
+import kr.or.ddit.util.hashtagUtil.ReplaceContents;
 import kr.or.ddit.util.pagination.PaginationVo;
 
 @Controller
@@ -74,8 +78,6 @@ public class PostController {
 	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
 	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request){
-		// 작업 완류 후 loginController로 이동시켜야 함
-		
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		logger.debug("asdasdasd {}", memberInfo);
@@ -120,8 +122,8 @@ public class PostController {
 	            model.addAttribute("followHashtag","notfollow");
 	         }
 			
-			
 			model.addAttribute("corpInfo", corpInfo);
+			
 		} else { //관리자일 경우
 			//관리자 로그인 시 홈 화면 출력을 위한 세팅
 			
@@ -170,11 +172,8 @@ public class PostController {
 		
 		String mem_id = member.getMem_id();
 		
-		logger.debug("asdasd : {}", post_contents);
-		
 		PostVo insertPost = new PostVo();
 		String writer_name = "";
-		
 		
 		if(member.getMem_division().equals("1")){
 			UsersVo user = usersService.select_userInfo(mem_id);
@@ -197,6 +196,8 @@ public class PostController {
 		}
 		
 		int insertCnt = postService.insert_post(insertPost);
+		
+		//해시태그 추출 및 등록
 		logger.debug("123456789987654321123412341234 : {}", insertPost);
 		Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣]*)");
 		Matcher m = p.matcher(post_contents);
@@ -205,11 +206,14 @@ public class PostController {
 		
 		Hashtag_listVo taglistVo = new Hashtag_listVo();
 		String hashtag_name = "";
+		
 		taglistVo.setDivision("28");
 		taglistVo.setRef_code(insertPost.getPost_code());
 		
+		List<String> tagList = new ArrayList<String>();
 		while(m.find()){
 			hashtag = hashtag_replace(m.group());
+			tagList.add(hashtag);
 			
 			if(hashtag != null){
 				logger.debug("추출된 해시태그 : {}", hashtag);
@@ -217,11 +221,36 @@ public class PostController {
 				
 				hashtagService.insert_hashtag(hashtag);
 				taglistService.insert_hashtaglist(taglistVo);
-				
 			}
 		}
 		
-		if(insertCnt == 1){
+		//게시물 내용 중 해시태그를 링크로 치환
+		String replacedPost_contents = "";
+		for(int i=0; i<tagList.size(); i++){
+			String[] temp = post_contents.split(tagList.get(i), 2);
+			
+			if(temp.length == 1){
+				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";
+				post_contents = temp[0];
+			} else {
+				replacedPost_contents += temp[0];
+				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";
+				post_contents = temp[1];
+			}
+			
+			if(i == tagList.size() - 1){
+				replacedPost_contents += temp[1];
+			}
+		}
+		
+		//등록된 게시물 내용을 치환된 게시물 내용으로 update
+		insertPost.setPost_contents(replacedPost_contents);
+		int postInsertCnt =  postService.update_post(insertPost);
+		
+		logger.debug("치환된 해시태그 : {}", replacedPost_contents);
+		
+		if(postInsertCnt == 1){
+			logger.debug("으응? : {}", writer_name);
 			return "redirect:/timeline";
 		} else {
 			return "redirect:/timeline";
@@ -238,13 +267,38 @@ public class PostController {
 	 * Method 설명 : 해시태그 추출을 위한 메소드
 	 */
 	public String hashtag_replace(String str){
-		
 		str = StringUtils.replace(str, "-_+=!@#$%^&*()[]{}|\\;:'\"<>,.?/~`） ","");
 		
 		if(str.length() < 1){
 			return null;
 		}
 		return str;
+	}
+	
+	/**
+	 * Method : hashtagToURL
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param contents
+	 * @param replaceContents
+	 * @return
+	 * Method 설명 : 해시태그를 link로 변환하는데 사용되는 메소드
+	 */
+	public static String hashtagToLink(String contents, ReplaceContents replaceContents){
+		
+		StringBuffer sb = new StringBuffer();
+		try {
+			Pattern compilePattern = Pattern.compile(replaceContents.regexp(), Pattern.CASE_INSENSITIVE);
+			Matcher matcher = compilePattern.matcher(contents);
+			
+			while(matcher.find()){
+				String replaceTag = replaceContents.replace(matcher.group(1).trim());
+				matcher.appendReplacement(sb, replaceTag);
+			}
+			
+		} catch (Exception e) {}
+		
+		return sb.toString();
 	}
 	
 	@RequestMapping(path={"/commentArea"}, method=RequestMethod.POST)

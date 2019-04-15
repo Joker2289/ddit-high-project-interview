@@ -1,12 +1,14 @@
 package kr.or.ddit.possesion_skills.model;
 
+import java.util.Date;
+
 public class Possesion_skillsVo {
 	private String pskill_code;		// 자격증코드
 	private String user_id;			// 회원아이디
 	private String pskill_name;		// 자격기술명
 	private String issue_org;		// 발급처
-	private String issue_date;		// 발급일자
-	private String contents;		// 발급일자
+	private Date   issue_date;		// 발급일자
+	private String contents;		// 설명
 	
 	public Possesion_skillsVo() {
 		// TODO Auto-generated constructor stub
@@ -44,11 +46,11 @@ public class Possesion_skillsVo {
 		this.issue_org = issue_org;
 	}
 
-	public String getIssue_date() {
+	public Date getIssue_date() {
 		return issue_date;
 	}
 
-	public void setIssue_date(String issue_date) {
+	public void setIssue_date(Date issue_date) {
 		this.issue_date = issue_date;
 	}
 

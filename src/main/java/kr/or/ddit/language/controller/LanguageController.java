@@ -23,9 +23,18 @@ private Logger logger = LoggerFactory.getLogger(Possesion_skillsController.class
 	private ILanguageService languageService;
 	
 	@RequestMapping("/languageInsert")
-	public String careerInsert(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, LanguageVo languageVo) {
+	public String languageInsert(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, LanguageVo languageVo) {
 		
 		languageService.insert_language(languageVo);
+		
+		return "redirect:/profileHome";
+		
+	}
+	
+	@RequestMapping("/languageUpdate")
+	public String languageUpdate(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, LanguageVo languageVo) {
+		
+		languageService.update_language(languageVo);
 		
 		return "redirect:/profileHome";
 		

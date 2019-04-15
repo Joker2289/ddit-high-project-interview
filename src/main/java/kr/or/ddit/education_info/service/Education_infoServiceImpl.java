@@ -39,7 +39,7 @@ public class Education_infoServiceImpl implements IEducation_infoService{
 	 */ 
 	@Override
 	public Map<String, Object> select_educationInfo(String user_id) {
-		Map<String, Object> education_infoList = new HashMap<String, Object>();
+		Map<String, Object> education_infoMap = new HashMap<String, Object>();
 		List<List<FilesVo>> education_infoFileVoList = new ArrayList<List<FilesVo>>(); 
 		List<Education_infoVo> education_infoVoList = educationDao.select_educationInfo(user_id);
 		
@@ -52,10 +52,46 @@ public class Education_infoServiceImpl implements IEducation_infoService{
 			
 		}
 		
-		education_infoList.put("education_infoVoList", education_infoVoList);
-		education_infoList.put("education_infoFileVoList", education_infoFileVoList);
+		education_infoMap.put("education_infoVoList", education_infoVoList);
+		education_infoMap.put("education_infoFileVoList", education_infoFileVoList);
 		
-		return education_infoList;
+		return education_infoMap;
+	}
+	
+	/**
+	 * Method : select_oneEducationInfo
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param education_code
+	 * @return
+	 * Method 설명 : 사용자의 한 건의 학력정보 조회
+	 */
+	@Override
+	public Map<String, Object> select_oneEducationInfo(String education_code) {
+		Map<String, Object> educationInfoMap = new HashMap<String, Object>();
+		Education_infoVo education_infoVo = educationDao.select_oneEducationInfo(education_code);
+		
+		FilesVo filesVo = new FilesVo();
+		filesVo.setRef_code(education_infoVo.getEducation_code());
+		filesVo.setDivision("12");
+		List<FilesVo> filesVoList = filesDao.select_file(filesVo);
+	
+		educationInfoMap.put("education_infoVo", education_infoVo);
+		educationInfoMap.put("filesVoList", filesVoList);
+		return educationInfoMap;
+	}
+	
+	/**
+	 * Method : update_educationInfo
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param education_infoVo
+	 * @return
+	 * Method 설명 : 사용자의 학력정보 업데이트
+	 */
+	@Override
+	public int update_educationInfo(Education_infoVo education_infoVo) {
+		return educationDao.update_educationInfo(education_infoVo);
 	}
 
 }

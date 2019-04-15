@@ -4,31 +4,26 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.imageio.stream.FileImageInputStream;
-import javax.imageio.stream.ImageInputStream;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.beanutils.converters.URLConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.util.UriComponents;
 
+import kr.or.ddit.award_history.model.Award_historyVo;
+import kr.or.ddit.award_history.service.IAward_historyService;
 import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.career_info.service.ICareer_infoService;
 import kr.or.ddit.corporation.model.CorporationVo;
@@ -37,8 +32,18 @@ import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.education_info.service.IEducation_infoService;
 import kr.or.ddit.files.model.FilesVo;
 import kr.or.ddit.files.service.IFilesService;
+import kr.or.ddit.language.model.LanguageVo;
+import kr.or.ddit.language.service.ILanguageService;
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.patent_list.model.Patent_listVo;
+import kr.or.ddit.patent_list.service.IPatent_listService;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
+import kr.or.ddit.possesion_skills.model.Possesion_skillsVo;
+import kr.or.ddit.possesion_skills.service.IPossesion_skillsService;
+import kr.or.ddit.project_career.model.Project_careerVo;
+import kr.or.ddit.project_career.service.IProject_careerService;
+import kr.or.ddit.thesis_list.model.Thesis_listVo;
+import kr.or.ddit.thesis_list.service.IThesis_listService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 
@@ -53,17 +58,35 @@ public class profileController {
 	@Resource(name="corporationService")
 	private ICorporationService corpService;
 	
+	@Resource(name="career_infoService")
+	private ICareer_infoService carService;
+	
 	@Resource(name="education_infoService")
 	private IEducation_infoService eduService;
 	
-	@Resource(name="career_infoService")
-	private ICareer_infoService carService;
+	@Resource(name="possesion_skillsService")
+	private IPossesion_skillsService possesion_skillsService;
 	
 	@Resource(name="personalService")
 	private IPersonal_connectionService PersonalService;
 	
 	@Resource(name="filesService")
 	private IFilesService filesService;
+	
+	@Resource(name="thesis_listService")
+	private IThesis_listService thesis_listService;
+	
+	@Resource(name="patent_listService")
+	private IPatent_listService patent_listService;
+	
+	@Resource(name="project_careerService")
+	private IProject_careerService project_careerService;
+	
+	@Resource(name="award_historyService")
+	private IAward_historyService award_historyService;
+	
+	@Resource(name="languageService")
+	private ILanguageService languageService;
 	
 	@RequestMapping("/menu")
 	public String menuDropdownView(String str) {
@@ -87,11 +110,8 @@ public class profileController {
 		
 		switch (modalStr) {
 			case "introduction":
-				FilesVo filesVo = new FilesVo();
-				filesVo.setRef_code(user_id);
-				filesVo.setDivision("43");
-				List<FilesVo> userFilesList = filesService.select_file(filesVo);
-				model.addAttribute("userFilesList", userFilesList);
+				Map<String, Object> usersMap = usersService.select_introduce(user_id);
+				model.addAttribute("usersMap", usersMap);
 				result="/profile/modalInsert/introduction";
 				break;
 			case "career":
@@ -120,14 +140,68 @@ public class profileController {
 			case "language":
 				result="/profile/modalInsert/language";
 				break;
-			case "recommendation":
-				result="/profile/modalInsert/recommendation";
-				break;
 			default:
 				break;
 		}
 		
+		return result;
 		
+	}
+	
+	@RequestMapping("/modalUpdateView")
+	public String modalUpdateView(String modalStr, Model model, String code) {
+		
+		String result = "";
+		
+		switch (modalStr) {
+			case "introduction":
+				Map<String, Object> usersMap = usersService.select_introduce(code);
+				model.addAttribute("usersMap", usersMap);
+				result="/profile/modalInsert/introduction";
+				break;
+			case "career":
+				Map<String, Object> career_infoMap = carService.select_oneCareerInfo(code);
+				model.addAttribute("career_infoMap", career_infoMap);
+				result="/profile/modalUpdate/careerUpdate";
+				break;
+			case "education":
+				Map<String, Object> education_infoMap = eduService.select_oneEducationInfo(code);
+				model.addAttribute("education_infoMap", education_infoMap);
+				result="/profile/modalUpdate/educationUpdate";
+				break;
+			case "skills":
+				Possesion_skillsVo possesion_skillsVo = possesion_skillsService.select_onePossesion_skills(code);
+				model.addAttribute("possesion_skillsVo", possesion_skillsVo);
+				result="/profile/modalUpdate/skillsUpdate";
+				break;
+			case "Thesis":
+				Thesis_listVo thesis_listVo = thesis_listService.select_oneThesis_list(code);
+				model.addAttribute("thesis_listVo", thesis_listVo);
+				result="/profile/modalUpdate/ThesisUpdate";
+				break;
+			case "patent":
+				Patent_listVo patent_listVo = patent_listService.select_onePatent_list(code);
+				model.addAttribute("patent_listVo", patent_listVo);
+				result="/profile/modalUpdate/patentUpdate";
+				break;
+			case "project":
+				Project_careerVo project_careerVo = project_careerService.select_oneProject_career(code);
+				model.addAttribute("project_careerVo", project_careerVo);
+				result="/profile/modalUpdate/projectUpdate";
+				break;
+			case "award":
+				Award_historyVo award_historyVo = award_historyService.select_oneAward_history(code);
+				model.addAttribute("award_historyVo", award_historyVo);
+				result="/profile/modalUpdate/awardUpdate";
+				break;
+			case "language":
+				LanguageVo languageVo = languageService.select_oneLanguage(code);
+				model.addAttribute("languageVo", languageVo);
+				result="/profile/modalUpdate/languageUpdate";
+				break;
+			default:
+				break;
+		}
 		
 		return result;
 		
@@ -147,27 +221,34 @@ public class profileController {
 	}
 	
 	@RequestMapping(path= {"/profileHome"})
-	public String profileHomeView(Model model, HttpSession session) {
-		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
-		UsersVo usersVo = usersService.select_userInfo(memberVo.getMem_id());
-		FilesVo filesVo = new FilesVo();
-		filesVo.setRef_code(memberVo.getMem_id());
-		filesVo.setDivision("43");
+	public String profileHomeView(Model model, HttpSession session, String user_id) {
+		if (user_id == null) {
+			MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+			user_id = memberVo.getMem_id();
+		}
 		
-		String introduce = usersService.select_introduce(usersVo.getUser_id());
-		Map<String, Object> education_infoList = eduService.select_educationInfo(usersVo.getUser_id());
-		Map<String, Object> career_infoList = carService.select_careerInfo(usersVo.getUser_id());
+		MemberVo memberVo = new MemberVo();
+		memberVo.setMem_id(user_id);
+		
 		int peopleCount = PersonalService.connections_count(memberVo);
-		List<FilesVo> userFilesList = filesService.select_file(filesVo);
-		List<CorporationVo> corpVoList = corpService.select_allCorps();
+		Map<String, Object> usersMap = usersService.select_introduce(user_id);
+		Map<String, Object> career_infoMap = carService.select_careerInfo(user_id);
+		Map<String, Object> education_infoMap = eduService.select_educationInfo(user_id);
+		List<Possesion_skillsVo> possesion_skillsVoList =  possesion_skillsService.select_possesion_skills(user_id);
+		Map<String, Object> recordMap = new HashMap<String, Object>();
 		
-		model.addAttribute("education_infoList", education_infoList);
-		model.addAttribute("career_infoList", career_infoList);
-		model.addAttribute("introduce", introduce);
+		recordMap.put("thesis_listVoList", thesis_listService.select_thesis_list(user_id));
+		recordMap.put("patent_listVoList", patent_listService.select_patent_list(user_id));
+		recordMap.put("project_careerList", project_careerService.select_project_career(user_id));
+		recordMap.put("award_historyList", award_historyService.select_award_history(user_id));
+		recordMap.put("languageVoList", languageService.select_language(user_id));
+		
 		model.addAttribute("peopleCount", peopleCount);
-		model.addAttribute("usersVo", usersVo);
-		model.addAttribute("userFilesList", userFilesList);
-		model.addAttribute("corpVoList", corpVoList);
+		model.addAttribute("usersMap", usersMap);
+		model.addAttribute("career_infoMap", career_infoMap);
+		model.addAttribute("education_infoMap", education_infoMap);
+		model.addAttribute("possesion_skillsVoList", possesion_skillsVoList);
+		model.addAttribute("recordMap", recordMap);
 		
 		return "profileHomeTiles";
 	}
@@ -274,8 +355,6 @@ public class profileController {
 		
 		FilesVo filesVo = filesService.select_oneFile(file_code);
 		String realFilename = path + File.separator + filesVo.getFile_path();
-		
-		logger.debug("realFilename {}",realFilename);
 		
 		String docName = new String(filesVo.getFile_name().getBytes("UTF-8"), "ISO-8859-1");
 		

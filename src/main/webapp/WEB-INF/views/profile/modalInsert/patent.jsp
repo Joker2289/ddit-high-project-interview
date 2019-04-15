@@ -9,12 +9,12 @@
 	<h4 class="modal-title">특허</h4>
 </div>
 <div class="modal-body">
-<form action="/patent_listInsert" method="post" id="patent_listInsertFrm" enctype="multipart/form-data">
+<form action="/patent_listInsert" method="post" id="patent_listInsertFrm">
 	<div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">특허명 </label>
-				<input class="form-control" type="text" name="patent_name" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+				<input class="form-control" type="text" name="patent_name">
 			</div>
 			<div class="modalHalfRight">
 				<label class="essential">특허발급 국가 </label>
@@ -157,7 +157,7 @@
 			$("input[name=patent_name]").focus();
 			return false;
 		}
-		if($("input[name=nation]").val().trim()==""){
+		if($("input[name=nation]").val() == ""){
 			alert("특허발급 국가를 입력해주세요");
 			$("input[name=nation]").focus();
 			return false;

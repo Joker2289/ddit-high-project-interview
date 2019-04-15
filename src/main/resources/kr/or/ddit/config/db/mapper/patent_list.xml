@@ -35,4 +35,32 @@
 		 where user_id = #{user_id}
 		 order by patent_date desc
 	</select>
+	
+	<!-- 사용자의 한 건의 특허정보 조회 -->
+	<select id="select_onePatent_list" parameterType="String" resultType="patent_listVo">
+		 select patent_code,
+			    user_id,
+			    patent_name,
+			    nation,
+			    patent_no,
+			    inventer,
+			    patent_date,
+			    patent_url,
+			    contents
+		  from patent_list
+		 where patent_code = #{patent_code}
+	</select>
+	
+	<!-- 사용자의 특허정보 업데이트 -->
+	<update id="update_patent_list" parameterType="patent_listVo">
+		update patent_list
+		   set patent_name = nvl(#{patent_name, jdbcType=VARCHAR}, null),
+			   nation = nvl(#{nation, jdbcType=VARCHAR}, null),
+			   patent_no = nvl(#{patent_no, jdbcType=VARCHAR}, null),
+			   inventer = nvl(#{inventer, jdbcType=VARCHAR}, null),
+			   patent_date = nvl(#{patent_date, jdbcType=VARCHAR}, null),
+			   patent_url = nvl(#{patent_url, jdbcType=VARCHAR}, null),
+			   contents = nvl(#{contents, jdbcType=VARCHAR}, null)
+		 where patent_code = #{patent_code}
+	</update>
 </mapper>

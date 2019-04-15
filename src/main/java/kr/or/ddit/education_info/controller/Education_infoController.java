@@ -54,11 +54,58 @@ public class Education_infoController {
 			
 			if (result != null){
 				FilesVo filesVo = new FilesVo();
-				filesVo.setRef_code(usersVo.getUser_id());
 				filesVo.setFile_name(result.get("filename"));
 				filesVo.setFile_path(result.get("realFilename"));
 				filesVo.setDivision("12");
-				filesVo.setRef_code(education_infoVo.getCurrval());
+				filesVo.setRef_code(education_infoVo.getEducation_code());
+				filesVoList.add(filesVo);
+			}
+		}
+		
+		for (FilesVo filesVo:filesVoList) {
+			filesService.insert_usersFile(filesVo);
+		}
+		
+		return "redirect:/profileHome";
+		
+	}
+	
+	@RequestMapping("/educationUpdate")
+	public String educationUpdate(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, Education_infoVo education_infoVo) {
+		String[] file_name = req.getParameterValues("file_name");
+		String[] file_path = req.getParameterValues("file_path");
+		List<MultipartFile> fileList = file.getFiles("filesVo");
+		List<FilesVo> filesVoList = new ArrayList<FilesVo>();
+		HashMap<String, String> result = new HashMap<String, String>();
+		
+		FilesVo delfilesVo = new FilesVo();
+		delfilesVo.setDivision("12");
+		delfilesVo.setRef_code(education_infoVo.getEducation_code());
+		filesService.delete_allFile(delfilesVo);
+		
+		education_infoservice.update_educationInfo(education_infoVo);
+		
+		if(file_name != null) {
+			for(int i = 0; i < file_name.length; i++) {
+				FilesVo filesVo = new FilesVo();
+				filesVo.setRef_code(education_infoVo.getEducation_code());
+				filesVo.setFile_name(file_name[i]);
+				filesVo.setFile_path(file_path[i]);
+				filesVo.setDivision("12");
+				filesVoList.add(filesVo);
+			}
+		}
+		
+		for(MultipartFile part : fileList){
+			result = FileUpload.fileUpload(part,req);
+			
+			if (result != null){
+				FilesVo filesVo = new FilesVo();
+				filesVo.setRef_code(education_infoVo.getEducation_code());
+				filesVo.setFile_name(result.get("filename"));
+				filesVo.setFile_path(result.get("realFilename"));
+				filesVo.setDivision("12");
+				filesVo.setRef_code(education_infoVo.getEducation_code());
 				filesVoList.add(filesVo);
 			}
 		}

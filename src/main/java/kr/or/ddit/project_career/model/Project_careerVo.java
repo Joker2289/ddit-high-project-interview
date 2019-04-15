@@ -1,14 +1,17 @@
 package kr.or.ddit.project_career.model;
 
+import java.util.Date;
+
 public class Project_careerVo {
 	private String project_code;	// 프로젝트코드
 	private String user_id;			// 회원아이디
 	private String project_name;	// 프로젝트이름
-	private String start_date;		// 시작일
-	private String end_date;		// 종료일
+	private Date start_date;		// 시작일
+	private Date end_date;		// 종료일
 	private String project_leader;	// 프로젝트리더
 	private String project_url;		// 프로젝트URL
 	private String contents;		// 설명
+	private String month;			// 연차
 
 	public Project_careerVo() {
 		// TODO Auto-generated constructor stub
@@ -38,19 +41,19 @@ public class Project_careerVo {
 		this.project_name = project_name;
 	}
 
-	public String getStart_date() {
+	public Date getStart_date() {
 		return start_date;
 	}
 
-	public void setStart_date(String start_date) {
+	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
 	}
 
-	public String getEnd_date() {
+	public Date getEnd_date() {
 		return end_date;
 	}
 
-	public void setEnd_date(String end_date) {
+	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
 
@@ -76,6 +79,14 @@ public class Project_careerVo {
 
 	public void setContents(String contents) {
 		this.contents = contents;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
 	}
 
 	@Override

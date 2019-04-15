@@ -10,7 +10,7 @@
 </div>
 <div class="modal-body">
 <form action="/usersProfileUpdate" method="post" id="usersUpdateFrm" enctype="multipart/form-data">
-	<div class="profileHomeBackgroundPicture modalBackground" style="background-image: url(/background?mem_id=${SESSION_DETAILVO.user_id});"></div>
+	<div class="profileHomeBackgroundPicture modalBackground" style="background-image: url(/background?mem_id=${usersMap.usersVo.user_id});"></div>
 	<div class="pictureInsert" style="margin-left: 660px;">
 		<label id="backgroundBtn">
 			<span><i class="fas fa-pencil-alt"></i></span>
@@ -28,18 +28,18 @@
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">이름 </label>
-				<input class="form-control" type="text" name="user_name" value="${SESSION_DETAILVO.user_name}">
+				<input class="form-control" type="text" name="user_name" value="${usersMap.usersVo.user_name}">
 			</div>
 			<div class="modalHalfRight">
 				<label class="essential">생년월일 </label>
-				<input class="form-control" id="userBirth" type="text" name="user_birth" value="${SESSION_DETAILVO.user_birth}">
+				<input class="form-control" id="userBirth" type="text" name="user_birth" value="${usersMap.usersVo.user_birth}">
 			</div>
 		</div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">우편번호 </label>
 			    <div class="input-group">
-			      <input class="form-control zipcode" name="zipcode" type="text" style="width:283px; height: 31px;" value="${SESSION_DETAILVO.zipcode}"/>
+			      <input class="form-control zipcode" name="zipcode" type="text" style="width:283px; height: 31px;" value="${usersMap.usersVo.zipcode}"/>
 			      <span class="input-group-btn" style="height: 33px;">
 			        <button class="btn btn-default zipcodeSearch" type="button" style="height: 31px;margin-top: -1px;">검색</button>
 			      </span>
@@ -49,27 +49,27 @@
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">주소 </label>
-				<input type="text" name="addr1" class="form-control addr1" value="${SESSION_DETAILVO.addr1}"/>
+				<input type="text" name="addr1" class="form-control addr1" value="${usersMap.usersVo.addr1}"/>
 			</div>
 			<div class="modalHalfRight">
 				<label class="essential">상세주소 </label>
-				<input type="text" name="addr2" class="form-control addr2" value="${SESSION_DETAILVO.addr2}" />
+				<input type="text" name="addr2" class="form-control addr2" value="${usersMap.usersVo.addr2}" />
 			</div>
 		</div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
 				<label class="essential">이메일 </label>
-				<input class="form-control" name="email" type="text" value="${SESSION_DETAILVO.email}">
+				<input class="form-control" name="email" type="text" value="${usersMap.usersVo.email}">
 			</div>
 			<div class="modalHalfRight">
 				<label>전화번호 </label>
-				<input class="form-control" name="telno" type="text" value="${SESSION_DETAILVO.telno}">
+				<input class="form-control" name="telno" type="text" value="${usersMap.usersVo.telno}">
 			</div>
 		</div>
 		<div class="modalRow" style="padding-bottom: 15px;">
 			<div style="modalHalfLeft">
 				<label>간단소개글 </label>
-				<textarea class="form-control" rows="3" name="profile_contents" style="width: 682px; height: 80px;">${SESSION_DETAILVO.profile_contents}</textarea>
+				<textarea class="form-control" rows="3" name="profile_contents" style="width: 682px; height: 80px;">${usersMap.usersVo.profile_contents}</textarea>
 			</div>
 		</div>
 		<div style="margin-top: 10px;">
@@ -80,22 +80,18 @@
 			<div class="modalHalfRight" style="height: 30px; display: flex;">
 				<label class="btn btn-default fileUpload" style="font-size: 14px; width:64px; height: 31px; padding: 6px 12px 6px 12px;">업로드</label>
 				<button class="btn btn-default" style="height: 31px; padding: 0 10px 0 10px;" data-toggle="collapse" href="#link" aria-expanded="false" aria-controls="background">링크</button>
-				
 			</div>
 		</div>
-		<div class="collapse" id="link" style="margin-top: 10px; border: 0px;">
+		<div class="collapse url" id="link" style="margin-top: 10px; border: 0px;" aria-expanded="false">
       		<div class="well modalHalfLeft" style="padding: 0 0 0 0; border-top: 0px;">
 				<div class="input-group">
      					<input class="form-control" type="text" name="persnal_url" style="width:283px; height: 31px;"/>
-				    <span class="input-group-btn" style="height: 33px;">
-				    	<button class="btn btn-default" type="button" style="height: 31px;margin-top: -1px;">등록</button>
-				    </span>
 			    </div>
       		</div>
       	</div>
       	<div class="modalRow" style="padding-bottom: 15px;">
 			<div  class="fileListBox" style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;">
-				<c:forEach items="${userFilesList }" var="files" > 
+				<c:forEach items="${usersMap.filesVoList }" var="files" > 
 					<div class="files" style="height: 25px; margin-right: 10px;font-size: 15px; font-weight: bold">
 						<a href="/fileDownload?file_code=${files.file_code }">${files.file_name}</a>
 						<input type="hidden" name="file_name" value="${files.file_name}">
@@ -107,7 +103,7 @@
 		</div>
 	</div>
 	
-	<input type="hidden" value="${SESSION_MEMBERVO.mem_id }" name="user_id">
+	<input type="hidden" value="${usersMap.usersVo.user_id }" name="user_id">
 </form>
 </div>
 <div class="modal-footer">
@@ -115,7 +111,6 @@
 </div>
 
 <script>
-
 
 	$(document).on("change","input[name=filesVo]",function(){
 	
@@ -135,9 +130,6 @@
 		$(".fileUpload").parent().children().last().remove();
 		$(this).parents("div.files").remove();
 	});
-	
-	
-
 	
 	$("#usersSave").on("click",function(){
 		if($("input[name=user_name]").val().trim()==""){
@@ -165,6 +157,10 @@
 			alert("사용자 이메일을 입력해주세요");
 			$("input[name=email]").focus();
 			return false;
+		}
+		
+		if($(".url").attr('aria-expanded') == 'false'){
+			$("input[name=persnal_url]").val('');
 		}
 		
 		$("#usersUpdateFrm").submit();

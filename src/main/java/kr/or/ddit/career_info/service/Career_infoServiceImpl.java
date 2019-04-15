@@ -15,7 +15,7 @@ import kr.or.ddit.files.dao.IFilesDao;
 import kr.or.ddit.files.model.FilesVo;
 
 @Service("career_infoService")
-public class ICareer_infoServiceImpl implements ICareer_infoService{
+public class Career_infoServiceImpl implements ICareer_infoService{
 	
 	@Resource(name="career_infoDao")
 	private ICareer_infoDao careerDao;
@@ -38,7 +38,7 @@ public class ICareer_infoServiceImpl implements ICareer_infoService{
 	 */
 	@Override
 	public Map<String, Object> select_careerInfo(String user_id) {
-		Map<String, Object> career_infoList = new HashMap<String, Object>();
+		Map<String, Object> career_infoMap = new HashMap<String, Object>();
 		List<List<FilesVo>> career_infoFileVoList = new ArrayList<List<FilesVo>>(); 
 		List<Career_infoVo> career_infoVoList = careerDao.select_careerInfo(user_id);
 		
@@ -48,12 +48,47 @@ public class ICareer_infoServiceImpl implements ICareer_infoService{
 			filesVo.setDivision("05");
 			List<FilesVo> filesVoList = filesDao.select_file(filesVo);
 			career_infoFileVoList.add(filesVoList);
-			
 		}
 		
-		career_infoList.put("career_infoVoList", career_infoVoList);
-		career_infoList.put("career_infoFileVoList", career_infoFileVoList);
+		career_infoMap.put("career_infoVoList", career_infoVoList);
+		career_infoMap.put("career_infoFileVoList", career_infoFileVoList);
 		
-		return career_infoList;
+		return career_infoMap;
+	}
+	
+	/**
+	 * Method : select_oneCareerInfo
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param career_code
+	 * @return
+	 * Method 설명 : 사용자의 한 건의 경력정보 조회
+	 */
+	@Override
+	public Map<String, Object> select_oneCareerInfo(String career_code) {
+		Map<String, Object> career_infoMap = new HashMap<String, Object>();
+		Career_infoVo career_infoVo = careerDao.select_oneCareerInfo(career_code);
+		
+		FilesVo filesVo = new FilesVo();
+		filesVo.setRef_code(career_infoVo.getCareer_code());
+		filesVo.setDivision("05");
+		List<FilesVo> filesVoList = filesDao.select_file(filesVo);
+	
+		career_infoMap.put("career_infoVo", career_infoVo);
+		career_infoMap.put("filesVoList", filesVoList);
+		return career_infoMap;
+	}
+
+	/**
+	 * Method : update_career_info
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param career_infoVo
+	 * @return
+	 * Method 설명 : 사용자의 경력정보 업데이트
+	 */
+	@Override
+	public int update_career_info(Career_infoVo career_infoVo) {
+		return careerDao.update_career_info(career_infoVo);
 	}
 }

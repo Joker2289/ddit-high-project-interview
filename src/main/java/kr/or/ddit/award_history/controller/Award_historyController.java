@@ -23,9 +23,18 @@ public class Award_historyController {
 	private IAward_historyService award_historyService;
 	
 	@RequestMapping("/award_historyInsert")
-	public String careerInsert(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, Award_historyVo award_historyVo) {
+	public String award_historyInsert(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, Award_historyVo award_historyVo) {
 		
 		award_historyService.insert_award_history(award_historyVo);
+		
+		return "redirect:/profileHome";
+		
+	}
+	
+	@RequestMapping("/award_historyUpdate")
+	public String award_historyUpdate(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, Award_historyVo award_historyVo) {
+		
+		award_historyService.update_award_history(award_historyVo);
 		
 		return "redirect:/profileHome";
 		

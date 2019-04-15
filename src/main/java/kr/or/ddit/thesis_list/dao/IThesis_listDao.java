@@ -26,4 +26,24 @@ public interface IThesis_listDao {
 	 */
 	List<Thesis_listVo> select_thesis_list(String user_id);
 	
+	/**
+	 * Method : select_oneThesis_list
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param thesis_code
+	 * @return
+	 * Method 설명 : 사용자의 한 건의 논문저서 조회
+	 */
+	Thesis_listVo select_oneThesis_list(String thesis_code);
+	
+	/**
+	 * Method : update_thesis_list
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param thesis_listVo
+	 * @return
+	 * Method 설명 : 사용자의 논문저서 업데이트
+	 */
+	int update_thesis_list(Thesis_listVo thesis_listVo);
+	
 }

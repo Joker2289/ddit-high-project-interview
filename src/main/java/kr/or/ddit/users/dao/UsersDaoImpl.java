@@ -39,7 +39,7 @@ public class UsersDaoImpl implements IUsersDao{
 	 * Method 설명 : 사용자의 간단프로필 (학력이나 경력사항) 
 	 */
 	@Override
-	public String select_introduce(String user_id) {
+	public UsersVo select_introduce(String user_id) {
 		return sqlSessionTemplate.selectOne("users.select_introduce", user_id);
 	}
 	

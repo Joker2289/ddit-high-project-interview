@@ -3,33 +3,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<link href="/css/timeline/writemodal.css" rel="stylesheet">
 <div class="container">
    <div class="row">
       <div>
 	      <div id="col-info" class="col-md-3">
-
-	        <div class="panel panel-default">
+			
+	        <div class="panel panel-default" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
 	          <div class="panel-body">
-	            <h4>프로필 정보란</h4>
 	            <div class="col-user-bgimg">
-	            	<label>배경 사진란</label><br>
 	            	<c:choose>
 	            	  <c:when test="${memberInfo.mem_division == '1' }"><!-- 일반회원일 경우 -->
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path == null }">
-	            	      <span><a href="#"><img src=""></a></span>
-	            	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>일촌 수<span style="float: right;">${connectionCnt }명</span></span></a></pre>
-	            	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${savepostCnt }개</span></span></a></pre>
+	            	      <span><a href="/profileHome"><img class="bg_img" src="/images/profile/basicBackground.png"></a></span>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }">
-	            	      <span><a href="#"><img src="${sessionScope.SESSION_DETAILVO.bg_path }"></a></span>
+	            	      <span><a href="/profileHome"><img src="${sessionScope.SESSION_DETAILVO.bg_path }"></a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
 	            	  	<c:if test="${sessionScope.SESSION_DETAILVO.bg_path == null }">
-	            	    	<span><a href="#">사진 올리기</a></span>
+	            	    	<span><a href="/profileHome"><img class="bg_img" src="/images/profile/basicBackground.png"></a></span>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }">
-	            	    	<span><a href="#">${sessionScope.SESSION_DETAILVO.bg_path }</a></span>
+	            	    	<span><a href="/profileHome">${sessionScope.SESSION_DETAILVO.bg_path }</a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:otherwise>
@@ -38,22 +35,21 @@
 	            	</c:choose>
 	            </div>
 	            <div class="col-user-profileimg">
-	            	<span>프로필 사진란</span><br>
 	            	<c:choose>
 	            	  <c:when test="${memberInfo.mem_division == '1' }"><!-- 일반회원일 경우 -->
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.profile_path == null }">
-	            	    	<span><a href="#">사진 올리기</a></span>
+	            	    	<span><a href="/profileHome"><img class="profile_img"  src="/images/profile/profile_noimage.jpg" ></a></span>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.profile_path != null }">
-	            	    	<span><a href="#"><img src="${sessionScope.SESSION_DETAILVO.profile_path }"></a></span>
+	            	    	<span><a href="/profileHome"><img src="${sessionScope.SESSION_DETAILVO.profile_path }"></a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
 	            	  	<c:if test="${sessionScope.SESSION_DETAILVO.logo_path == null }">
-	            	    	<span><a href="#">사진 올리기</a></span>
+	            	    	<span><a href="/profileHome"><img class="profile_img" src="/images/profile/profile_noimage.jpg" ></a></span>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.logo_path != null }">
-	            	    	<span><a href="#">${sessionScope.SESSION_DETAILVO.logo_path }</a></span>
+	            	    	<span><a href="/profileHome">${sessionScope.SESSION_DETAILVO.logo_path }</a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:otherwise>
@@ -61,18 +57,45 @@
 	            	  </c:otherwise>
 	            	</c:choose>
 	            </div>
+	            <div style="text-align: center;">
+	              <c:choose>
+	                <c:when test="${memberInfo.mem_division == '1' }">
+	                  <h4>${SESSION_DETAILVO.user_name }님! 어서오세요!</h4>
+	                </c:when>
+	                <c:when test="${memberInfo.mem_division == '2' }">
+	                  <h4>${SESSION_DETAILVO.corp_name }님!</h4>
+	                  <h4>어서오세요!</h4>
+	                </c:when>
+	                <c:otherwise>
+	                  <h4>금일 업데이트된 신고 목록을</h4>
+	                  <h4>확인해주세요</h4>
+	                </c:otherwise>
+	              </c:choose>
+	            </div>
+	            <div class="col-etcinfo">
+	              <c:choose>
+	                <c:when test="${memberInfo.mem_division == '1' }">
+		              <pre style="background: #fff; border-color: #fff;"><a href="/personalConnection"><span>일촌 수<span style="float: right;">${connectionCnt }명</span></span></a></pre>
+	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${savepostCnt }개</span></span></a></pre>
+	                </c:when>
+	                <c:when test="${memberInfo.mem_division == '2' }">
+<!-- 	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>팔로우한 회원<span style="float: right;">명</span></span></a></pre> -->
+	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${savepostCnt }개</span></span></a></pre>
+	                </c:when>
+	              </c:choose>
+	            </div>
 	          </div>
 	        </div>
 	        <!-- ./profile brief -->
 	
 	        <!-- friend requests -->
-	        <div class="panel panel-default">
+	        <div class="panel panel-default" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
 	          <div class="panel-body">
-	            <h4>팔로우한 해시태그</h4>
+	            <a href="#"><h4>팔로우한 해시태그</h4></a>
 	            <ul>
 	              <c:choose>
 	                <c:when test="${followHashtag eq 'notfollow'}">
-                   	  <li>팔로우한 태그가 읎스요.</li>
+                   	  <li>팔로우한 태그가 없다요.</li>
                    	  <li>해시태그를 팔로우 해보세요!</li>
                     </c:when>
                     <c:otherwise>
@@ -90,8 +113,8 @@
 	      </div>
 	      
 	      <div class="col-md-6">
-	        <div class="input-group">
-	          <button id="btn-write_modal" class="btn-write_modal"  style="height: 73.6px; margin-top: -9px;"><span class="span-text"><a><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></span></button>
+	        <div class="input-group" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
+	          <button id="btn-write_modal" class="btn-write_modal"  style="height: 73.6px; margin-top: -7px;"><span class="span-text"><a><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></span></button>
 	          <button id="btn-upload-img" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-images"></i></a></span></button>
 	          <button id="btn-upload-video" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-play-circle"></i></a></span></button>
 	          <button id="btn-upload-document" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-file-alt"></i></a></span></button>
@@ -102,7 +125,7 @@
 	          <!-- post -->
 	          <c:forEach items="${timelinePost }" var="post">
 		          
-		        <div id="col-post" class="scrolling" data-post="${post.post_code }">
+		        <div id="col-post" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
 				  <div class="col-post">
 					<div class="col-post-body">
 					  <a href="#" >
@@ -164,7 +187,7 @@
 					  
 					</div>
 					<div class="post_info">
-					  <pre style="background: #ffffff; border-color: #ffffff;">${post.post_contents }</pre>
+					  <pre class="post_contents" style="background: #ffffff; border-color: #ffffff;">${post.post_contents }</pre>
 					</div>
 				
 					<div class="col-post-footer">
@@ -224,10 +247,8 @@
    </div>
 </div>
 
-
 <script type="text/javascript">
-
-
+	
 	//작성 모달창 푸쉬
 	function pushModal() {
 		$("div.writemodal").modal();
@@ -245,9 +266,6 @@
 		});
 		
 		
-		
-// 		$(".col-comment-area").hide();
-
 		//summernote 툴바 숨기기
 		$(".note-toolbar").hide();
 		$(".note-resizebar").hide();
@@ -280,32 +298,24 @@
 				$(".col-comment").remove();
 			}
 			
-// 			console.log($('.col-comment-area ' + ref_code).children($('.comment-area' + ref_code)).length);
-			
 		});
 		
 	});
 	
 	$(function () {
+		
+		var contents = "";
+		
 		$("#btn-write_modal").on("click", function () {
 			pushModal();
+			qwe();
 			
 			$("#btn_write_upload").on("click", function() {
-				
-				var txt = $("#summernote").val();
-				var tags = [];
-				
-				txt = txt.replace(/#[^#\s,;]+/gm, function(tag) {
-				  tags.push(tag);
-				});
-				
-				$("#tags").html(tags.join('<br/>'));
-				
-				
 				
 				$("#frm_writePost").submit();
 				
 			})
+			
 		});
 		
 		$("#btn-upload-img").on("click", function () {
@@ -322,8 +332,8 @@
 			pushModal();
 		});
 		
-		
 	});
+	
 	
 	//현재 스크롤 위치에서 화면 최상단으로 이동
 	$("#scroll-top").on("click", function() {
@@ -373,8 +383,5 @@
 		}
 		
 	});
-	
-
-
 	
 </script>
