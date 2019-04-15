@@ -31,7 +31,7 @@
 		<table border="0" style="width: 737px;">
 			<tr>
 				<td style="width: 361px; border: 0px solid;">
-					<div style="overflow: auto; overflow-x:hidden; float: left; height: 360px; border: 0px solid;"
+					<div style="overflow: auto; overflow-x:hidden; float: left; height: 370px; border: 0px solid;"
 							id="div_save">
 						<table border="0" style="font-size: 17px; width: 341px;">
 							<c:forEach begin="1" end="${saveList.size() }" varStatus="i">
@@ -68,7 +68,7 @@
 				</td>
 				<td>
 					<!-- 최근 검색어 리스트. -->
-					<div style="overflow: auto; overflow-x:hidden; height: 360px; margin-left: 10px; border: 0px solid;
+					<div style="overflow: auto; overflow-x:hidden; height: 370px; margin-left: 10px; border: 0px solid;
 							margin-left: 0px; border-left: 1px solid; border-color: #d9d9d9;" 
 							id="div_search">
 						<table border="0" style="font-size: 17px; width: 341px; margin-left: 20px;">

@@ -44,7 +44,7 @@
 											<td style="width: 600px; padding-left: 20px;">
 												<strong style="font-size: 22px;">${recr.recruit_title }</strong><br>
 												<span style="font-size: 17px;">${corp.corp_name } ｜ ${recr.job_local }</span><br>
-												<span style="font-size: 17px;">게시일: xx일 전12 ｜ 지원자 수: xx명 미만</span><br>
+												<span style="font-size: 17px;">게시일: xx일 전 ｜ 지원자 수: xx명 미만</span><br>
 											</td>
 											<td>
 												<input type="button" value="저장" style="border: 1px solid; border-color: #0174b0;

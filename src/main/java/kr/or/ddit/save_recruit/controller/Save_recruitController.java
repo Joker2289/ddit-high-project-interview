@@ -54,20 +54,21 @@ public class Save_recruitController {
 		List<Save_recruitVo> sSrecrList = new ArrayList<>();
 		
 		for(int i=0; i < tempList.size(); i++){
-			if(i == 0){
+			boolean add_flag = true;
+			
+			if(tempList.get(i).getRecr_app().equals("t")){
+				// add하지 않음.
+				continue;
+			}
+			
+			for(int j=0; j < sSrecrList.size(); j++){
+				if( tempList.get(i).getRecruit_code().equals(sSrecrList.get(j).getRecruit_code()) ){
+					add_flag = false;
+				}
+			}
+			
+			if(add_flag == true){
 				sSrecrList.add(tempList.get(i));
-			}else{
-				boolean add_flag = true;
-				
-				for(int j=0; j < sSrecrList.size(); j++){
-					if(tempList.get(i).getRecruit_code().equals( sSrecrList.get(j).getRecruit_code() )){
-						add_flag = false;
-					}
-				}
-				
-				if(add_flag == true){
-					sSrecrList.add(tempList.get(i));
-				}
 			}
 		}
 		
@@ -164,7 +165,11 @@ public class Save_recruitController {
 				sVo.setUser_id(mVo.getMem_id());
 				
 				// recr_app값을 가져와야 함.
-				Save_recruitVo checkSVo = srecrService.getLastSrecr(scrap_code);
+				Save_recruitVo tempSVo = new Save_recruitVo();
+				tempSVo.setUser_id(mVo.getMem_id());
+				tempSVo.setRecruit_code(scrap_code);
+				
+				Save_recruitVo checkSVo = srecrService.getLastSrecr(tempSVo);
 				String recr_app = "";
 				
 				if(checkSVo == null){

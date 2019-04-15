@@ -54,11 +54,11 @@ public interface ISave_recruitDao {
 	 * Method : getLastSrecr
 	 * 작성자 : PC19
 	 * 변경이력 :
-	 * @param recruit_code
+	 * @param tempSVo
 	 * @return
 	 * Method 설명 : 특정 채용공고저장 중 마지막 항목 조회.
 	 */
-	Save_recruitVo getLastSrecr(String recruit_code);
+	Save_recruitVo getLastSrecr(Save_recruitVo tempSVo);
 
 	/**
 	 * 

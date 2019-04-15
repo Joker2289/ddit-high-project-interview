@@ -142,6 +142,7 @@
 		</tr>
 	</table>
 	<br><br><br>
+	<!-- 이어서. '목록으로' 버튼 만들기. -->
 	
 <%@ include file="/WEB-INF/views/recruit/alarm_manage_modal.jsp" %><!-- 모달창 -->		
 </div>		
@@ -176,8 +177,7 @@
 		// 이미지, 채용공고 & 스크랩 클릭
 		<c:forEach begin="1" end="${srList.size() }" varStatus="i">
 			$("#img${i.index }").on("click", function(){
-				alert("code : ${srList.get(i.index - 1).recruit_code }");
-				
+// 				alert("code : ${srList.get(i.index - 1).recruit_code }");
 				// 상세보기 페이지로 이동.
 				window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code=${srList.get(i.index - 1).recruit_code }';
 			});

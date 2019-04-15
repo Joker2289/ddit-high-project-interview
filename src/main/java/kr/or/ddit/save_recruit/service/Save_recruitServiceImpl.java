@@ -84,13 +84,13 @@ public class Save_recruitServiceImpl implements ISave_recruitService{
 	 * Method : getLastSrecr
 	 * 작성자 : PC19
 	 * 변경이력 :
-	 * @param recruit_code
+	 * @param tempSVo
 	 * @return
 	 * Method 설명 : 특정 채용공고저장 중 마지막 항목 조회.
 	 */
 	@Override
-	public Save_recruitVo getLastSrecr(String recruit_code) {
-		Save_recruitVo sVo = srecrDao.getLastSrecr(recruit_code);
+	public Save_recruitVo getLastSrecr(Save_recruitVo tempSVo) {
+		Save_recruitVo sVo = srecrDao.getLastSrecr(tempSVo);
 		
 		return sVo;
 	}
