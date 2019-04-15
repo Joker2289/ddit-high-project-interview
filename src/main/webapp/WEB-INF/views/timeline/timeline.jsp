@@ -26,7 +26,7 @@
 	            	    	<span><a href="/profileHome"><img class="bg_img" src="/images/profile/basicBackground.png"></a></span>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }">
-	            	    	<span><a href="/profileHome">${sessionScope.SESSION_DETAILVO.bg_path }</a></span>
+	            	    	<span><a href="/profileHome"><img class="bg_img" src="${sessionScope.SESSION_DETAILVO.bg_path }"></a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:otherwise>
@@ -49,7 +49,7 @@
 	            	    	<span><a href="/profileHome"><img class="profile_img" src="/images/profile/profile_noimage.jpg" ></a></span>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.logo_path != null }">
-	            	    	<span><a href="/profileHome">${sessionScope.SESSION_DETAILVO.logo_path }</a></span>
+	            	    	<span><a href="/profileHome"><img class="profile_img" src="${sessionScope.SESSION_DETAILVO.logo_path }"></a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:otherwise>
