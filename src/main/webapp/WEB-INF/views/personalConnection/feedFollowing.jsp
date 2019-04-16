@@ -29,7 +29,7 @@ $(document).ready(function() {
 		               break;
 		  case "company" : str = "필터 : 회사";
 		               break;
-		  case "hashTag" : str = "필터 : 해시태그";
+		  case "hashTag" : str = "필터 : 해시태그";	
 		               break;
 		}
 		$("#feedName").text(str);

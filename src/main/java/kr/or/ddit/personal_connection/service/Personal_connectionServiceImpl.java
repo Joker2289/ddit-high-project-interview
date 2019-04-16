@@ -101,5 +101,10 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 		return personalDao.recommendUsers(paginationVo);
 	}
 
+	@Override
+	public List<UsersVo> filterSearchLocal(String user_id) {
+		return personalDao.filterSearchLocal(user_id);
+	}
+
 	
 }

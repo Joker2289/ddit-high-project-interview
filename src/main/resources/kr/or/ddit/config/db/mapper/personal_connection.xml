@@ -361,6 +361,26 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 	</select>
 	
 	
+	<!--  -->
+	<select id="filterSearchLocal" parameterType="String" resultType="usersVo">
+		select substr(addr1,0,instr(addr1, ' ',1 ,1)) as addr1
+		  from users
+		 where substr(addr1,0,instr(addr1, ' ',1 ,1)) is not null
+		   and user_id in (select user_id
+		                     from personal_connection
+		                    where (user_id =#{user_id} or receive_id =#{user_id})
+		                      and receive_accept='Y'
+		                      and user_id !=#{user_id}
+		                    union
+		                   select receive_id
+		                     from personal_connection
+		                    where (user_id =#{user_id} or receive_id =#{user_id})
+		                      and receive_accept='Y'
+		                      and receive_id !=#{user_id})
+		 group by substr(addr1,0,instr(addr1, ' ',1 ,1))
+	</select>
+	
+	
 	
 	
 </mapper>

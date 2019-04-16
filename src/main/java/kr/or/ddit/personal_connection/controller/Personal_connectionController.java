@@ -76,7 +76,7 @@ public class Personal_connectionController {
 		model.addAttribute("userList", userList);
 		
 		return "/personalConnection/recommend/recommendUsers";
-		
+	
 	}
 	
 	
@@ -160,7 +160,16 @@ public class Personal_connectionController {
 	
 	
 	@RequestMapping(path={"/filterSearch"})
-	public String filterSearchView() {
+	public String filterSearchView(HttpSession session , Model model) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		
+		String user_id = memberVo.getMem_id();
+		
+		List<UsersVo> localList = personalService.filterSearchLocal(user_id);
+		
+		model.addAttribute("localList", localList);
+
+		
 		return "filterSearchTiles";
 		
 	}

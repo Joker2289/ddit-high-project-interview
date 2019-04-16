@@ -5,10 +5,11 @@
 <script type="text/javascript">
 	var userPage =  1;
 	var corpPage = 1;
+	var scrollIng = 'u';
 
 
 	$(document).ready(function() {
-		$.ajax({
+		/* $.ajax({
 			type : "POST",
 			url : "/recommendUsers",
 			dataType : "HTML",
@@ -17,10 +18,10 @@
 				userPage++;
 				$("#content2").append(result);
 			}
-		}); 
+		}); */
 		
 		
-		$("#recommendUsers").click();
+		
 
 		 var str = $(this).attr('title');
 		
@@ -35,6 +36,7 @@
 			}
 		});
 
+		
 		$("#btnSlidegt").on("click", function() {
 			$("#content").stop(true, true);
 
@@ -44,29 +46,30 @@
 				$("#content").animate({"margin-left" : "-=" + divWidth + "px"}, 500);
 			}
 		});
-
 		
-		$(document).scroll(function() {
-			var maxHeight = $(document).height();
-			var currentScroll = $(window).scrollTop() + $(window).height();
-		
-			if (maxHeight <= currentScroll) {
+		$("#recommendUsers").click(function() {
+			$('html').scrollTop(0);
+			scrollIng = 'u';
+			userPage =  1;
+			$("#content2").empty();
+				
 				 $.ajax({
-					type : "POST",
-					url : "/recommendUsers",
-					dataType : "HTML",
-					data : {"page" : userPage},
-					success : function(result) {
-						userPage++;
-						$("#content2").append(result);
-					}
+						type : "POST",
+						url : "/recommendUsers",
+						dataType : "HTML",
+						data : {"page" : userPage},
+						success : function(result) {
+							userPage++;
+							$("#content2").append(result);
+						}
 				}); 
-			}
 		});
 		
-		
-		$("#recommendCorpor").on("click", function() {
-			if(corpPage == 1) {
+		$("#recommendCorpor").click(function() {
+			$('html').scrollTop(0);
+			scrollIng = 'c';
+			corpPage =  1;
+					
 				$("#content2").empty();
 				
 				 $.ajax({
@@ -79,12 +82,32 @@
 						$("#content2").append(result);
 					}
 				}); 
-			}
-			$(document).scroll(function() {
-				
+			
+			
+		});
+		
+		
+		$(document).scroll(function() {
 				var maxHeight = $(document).height();
 				var currentScroll = $(window).scrollTop() + $(window).height();
 			
+			if (scrollIng == 'u'){
+				if (maxHeight <= currentScroll) {
+					
+					 $.ajax({
+						type : "POST",
+						url : "/recommendUsers",
+						dataType : "HTML",
+						data : {"page" : userPage},
+						success : function(result) {
+							userPage++;
+							$("#content2").append(result);
+						}
+					}); 
+				}
+			}
+			
+			else if (scrollIng == 'c'){
 				if (maxHeight <= currentScroll) {
 					 $.ajax({
 						type : "POST",
@@ -97,8 +120,14 @@
 						}
 					}); 
 				}
-			});
+			}
+			
 		});
+		
+		$("#recommendUsers").click();
+		
+		
+		
 
 	});
 </script>
