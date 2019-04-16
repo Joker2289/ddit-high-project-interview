@@ -63,4 +63,10 @@
 			   contents = nvl(#{contents, jdbcType=VARCHAR}, null)
 		 where patent_code = #{patent_code}
 	</update>
+	
+	<!-- 사용자의 특허정보 삭제 -->
+	<delete id="delete_patent_list" parameterType="String">
+		delete from patent_list
+			  where patent_code = #{patent_code}
+	</delete>
 </mapper>

@@ -46,4 +46,14 @@ public interface IPatent_listService {
 	 * Method 설명 : 사용자의 특허정보 업데이트
 	 */
 	int update_patent_list(Patent_listVo patent_listVo);
+	
+	/**
+	 * Method : delete_patent_list
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param patent_code
+	 * @return
+	 * Method 설명 : 사용자의 특허정보 삭제
+	 */
+	int delete_patent_list(String patent_code);
 }

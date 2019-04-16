@@ -152,4 +152,10 @@ public class Education_infoController {
 		return parse_dataSearch;
 		
 	}
+	
+	@RequestMapping("/educationDelete")
+	public String educationDelete(String education_code){
+		education_infoservice.delete_educationInfo(education_code);
+		return "redirect:/profileHome";
+	}
 }

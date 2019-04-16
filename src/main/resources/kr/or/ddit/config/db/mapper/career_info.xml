@@ -57,6 +57,12 @@
 		 where career_code = #{career_code}
 	</update>
 	
+	<!-- 사용자의 경력정보 삭제 -->
+	<delete id="delete_career_info" parameterType="String">
+		delete from career_info
+			  where career_code = #{career_code}
+	</delete>
+	
 		<!-- 회사의 직원수-->
 	<select id="employee_count" parameterType="String" resultType="Integer">
 		SELECT COUNT(*)

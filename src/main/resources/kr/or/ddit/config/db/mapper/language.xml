@@ -43,4 +43,10 @@
 			   grade = 	nvl(#{grade, jdbcType=VARCHAR}, null) 
 		 where lang_code = #{lang_code}
 	</update>
+	
+	<!-- 사용자의 외국어 삭제 -->
+	<delete id="delete_language" parameterType="String">
+		delete from language
+			  where lang_code = #{lang_code}
+	</delete>
 </mapper>

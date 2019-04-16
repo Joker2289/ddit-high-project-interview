@@ -198,7 +198,7 @@
 				// 채용공고 리스트 출력.
 				$("#td_map").html(data);
 				
-				console.log("${result_num }");
+// 				console.log("${result_num }");
 				
 				// *** ajax를 통한 html 생성시 이벤트 핸들러 등록 방법 -> ajax callback 안에 클릭 
 				// 이벤트를 넣어줌.
@@ -542,6 +542,8 @@
 	        // 반경 내의 회사 수.
 	        corp_num = arr_result.length - 1;
 	        alert("범위 내에 " + corp_num + "개의 채용공고가 있습니다.");
+	        
+	        // ajax 호출.
 	        getMapHtml(result);
 	        
 // 	        alert(arr_corpD);

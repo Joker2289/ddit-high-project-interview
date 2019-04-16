@@ -39,4 +39,13 @@ private Logger logger = LoggerFactory.getLogger(Possesion_skillsController.class
 		return "redirect:/profileHome";
 		
 	}
+	
+	@RequestMapping("/languageDelete")
+	public String languageUpdate(String lang_code) {
+		
+		languageService.delete_language(lang_code);
+		
+		return "redirect:/profileHome";
+		
+	}
 }

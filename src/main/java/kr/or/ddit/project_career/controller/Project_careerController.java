@@ -39,4 +39,13 @@ public class Project_careerController {
 		return "redirect:/profileHome";
 		
 	}
+	
+	@RequestMapping("/project_careerDelete")
+	public String project_careerUpdate(String project_code) {
+		
+		project_careerService.delete_project_career(project_code);
+		
+		return "redirect:/profileHome";
+		
+	}
 }

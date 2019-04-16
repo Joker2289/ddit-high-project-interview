@@ -41,7 +41,7 @@
 				<input class="form-control select_date"  name="publication_date" type="text" value="${thesis_listVo.publication_date }">
 			</div>
 		</div>
-		<div class="modalRow" style="padding-bottom: 15px;">
+		<div class="modalRow" style="padding-bottom: 15px; height: 100px;">
 			<div style="modalHalfLeft">
 				<label>설명 </label>
 				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;">${thesis_listVo.contents }</textarea>
@@ -53,6 +53,7 @@
 </form>
 </div>
 <div class="modal-footer">
+	<a class="btn btn-default" style="margin-right: 599px;" href="/thesis_listDelete?thesis_code=${thesis_listVo.thesis_code }">삭제</a>
 	<button type="button" class="btn btn-primary" id="thesis_listSave">저장</button>
 </div>
 

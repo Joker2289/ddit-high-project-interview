@@ -41,15 +41,15 @@
 	            	    	<span><a href="/profileHome"><img class="profile_img"  src="/images/profile/profile_noimage.jpg" ></a></span>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.profile_path != null }">
-	            	    	<span><a href="/profileHome"><img src="${sessionScope.SESSION_DETAILVO.profile_path }"></a></span>
+	            	      <span><a href="/profileHome"><img src="${sessionScope.SESSION_DETAILVO.profile_path }"></a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
 	            	  	<c:if test="${sessionScope.SESSION_DETAILVO.logo_path == null }">
-	            	    	<span><a href="/profileHome"><img class="profile_img" src="/images/profile/profile_noimage.jpg" ></a></span>
+	            	      <span><a href="/profileHome"><img class="profile_img" src="/images/profile/profile_noimage.jpg" ></a></span>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.logo_path != null }">
-	            	    	<span><a href="/profileHome"><img class="profile_img" src="${sessionScope.SESSION_DETAILVO.logo_path }"></a></span>
+	            	      <span><a href="/profileHome"><img class="profile_img" src="${sessionScope.SESSION_DETAILVO.logo_path }"></a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:otherwise>
@@ -75,12 +75,13 @@
 	            <div class="col-etcinfo">
 	              <c:choose>
 	                <c:when test="${memberInfo.mem_division == '1' }">
-		              <pre style="background: #fff; border-color: #fff;"><a href="/personalConnection"><span>일촌 수<span style="float: right;">${connectionCnt }명</span></span></a></pre>
-	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${savepostCnt }개</span></span></a></pre>
+	                  <!-- 일촌 수 조회 -->
+		              <pre style="background: #fff; border-color: #fff;"><a href="/personalConnection"><span>일촌 수<span style="float: right;">${connectionCnt }</span></span></a></pre>
+		              <!-- 저장한 글 수 조회 -->
+	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
 	                </c:when>
 	                <c:when test="${memberInfo.mem_division == '2' }">
-<!-- 	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>팔로우한 회원<span style="float: right;">명</span></span></a></pre> -->
-	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${savepostCnt }개</span></span></a></pre>
+	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
 	                </c:when>
 	              </c:choose>
 	            </div>
@@ -128,8 +129,8 @@
 	          <!-- post -->
 	          <c:forEach items="${timelinePost }" var="post">
 		          
-		        <div id="col-post" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
-				  <div class="col-post">
+		        <div id="col-post${post.post_code }" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
+				  <div class="col-post" id="post${post.post_code }">
 					<div class="col-post-body">
 					  <a href="#" >
 						<div class="writer_info" style="float: left;">
@@ -155,32 +156,32 @@
 					  </a>
 					  <!-- 게시물 관리버튼(dropdown) -->
 				      <div class="dropdown" style="float: right;">
-					    <button class="btn_postControll" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right;">
+					    <button class="btn_postControll" data-code="${post.post_code }" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right;">
 					    	<i class="fas fa-ellipsis-h"></i>
 					    </button>
 					    <c:choose>
 					      <c:when test="${post.mem_id eq memberInfo.mem_id }">
-							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-				      	    	<button class="btn_controll-list">
+							<ul class="dropdown-menu manage_mypost" role="menu" aria-labelledby="dLabel">
+				      	    	<button id="btn_modifyPost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list btn_modifyPost">
 					            	<i class="fas fa-edit"></i>&nbsp;<span>글 수정</span>
 					            </button>
-				      	    	<button class="btn_controll-list">
+				      	    	<button id="btn_deletePost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list btn_deletePost">
 					            	<i class="far fa-trash-alt"></i>&nbsp;<span>글 삭제</span>
 					        	</button>
-				      	    	<button class="btn_controll-list">
+				      	    	<button id="btn_blockComment${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list">
 					            	<i class="fas fa-comment-slash"></i>&nbsp;<span>댓글 차단</span>
 					            </button>
 					        </ul>
 					      </c:when>
 					      <c:otherwise>
-				        	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-				      	    	<button class="btn_controll-list" style="padding-right: 65.69px;">
+				        	<ul class="dropdown-menu manege_post" role="menu" aria-labelledby="dLabel">
+				      	    	<button id="btn_hidePost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list" style="padding-right: 65.69px;">
 					            	<i class="far fa-eye-slash">&nbsp;</i><span>글 숨기기</span>
 					            </button>
-				      	    	<button class="btn_controll-list" style="padding-right: 24.33px;">
+				      	    	<button id="btn_unfollowWriter${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list" style="padding-right: 24.33px;">
 					            	<i class="fas fa-ban"></i>&nbsp;<span>${post.writer_name }&nbsp;언 팔로우</span>
 					        	</button>
-				      	    	<button class="btn_controll-list" style="padding-right: 84.22px;">
+				      	    	<button id="btn_reportPost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list" style="padding-right: 84.22px;">
 					            	<i class="far fa-flag"></i>&nbsp;<span>글 신고</span>
 					            </button>
 					        </ul>
@@ -201,18 +202,52 @@
 					<div class="post_socialCount">
 					  <ul style="padding-left: 10px;">
 					  	<li style="list-style: none; float: left;">
-					  		<button class="btn_goodcount btn_count" style="font-size: 12px;">추천 ${post.goodcount }</button>
+					  		<button class="btn_count btn_goodcount" title="goodCount ${post.post_code }" style="font-size: 12px;">추천 
+					  		  <span id="txt_good_count${post.post_code }">${post.goodcount }</span>
+					  		</button>
 					  	</li>
 					  	<li style="list-style: none; float: left;">
-					  		<button class="btn_commentcount btn_count" id="btn_commentcount ${post.post_code }" title="commentCount ${post.post_code }" style="font-size: 12px;">댓글 ${post.commentcount }</button>
+					  		<button class="btn_count btn_commentcount" id="btn_commentcount ${post.post_code }" title="commentCount ${post.post_code }" style="font-size: 12px;">댓글 
+					  		  <span id="txt_comment_count${post.post_code }">${post.commentcount }</span>
+					  		</button>
 					  	</li>
 					  </ul>
 					</div>
-					
 					<div class="col-post-social">
-					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-thumbs-up"></i></span></button>
+					  <!-- 좋아요 버튼 -->
+					  <button class="btn-social btn_good" style="margin-left: 10px; margin-top: 2px;" title="${post.post_code }">
+					    <span style="font-size: 18px;">
+					      <i id="icon_good${post.post_code }"
+					          <c:if test="${not empty goodList}"> 
+					            <c:forEach items="${goodList }" var="goodpost">
+					              <c:choose>
+					                <c:when test="${goodpost.ref_code == post.post_code }">class="fas fa-thumbs-up"</c:when>
+					                <c:otherwise>class="far fa-thumbs-up"</c:otherwise>
+					              </c:choose>
+					            </c:forEach>
+					          </c:if>
+					          <c:if test="${empty goodList}">class="far fa-thumbs-up"</c:if>>
+					      </i>
+					    </span>
+					  </button>
+					  <!-- 댓글 출력 버튼 -->
 					  <button class="btn-social btn_comment" title="${post.post_code }"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
-					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-bookmark"></i></span></button>
+					  <!-- 글 저장 버튼 -->
+					  <button class="btn-social btn_save" title="${post.post_code }">
+					    <span style="font-size: 18px;">
+					      <i id="icon_save${post.post_code }"
+					        <c:if test="${not empty saveList}">
+					          <c:forEach items="${saveList }" var="savepost">
+					            <c:choose>
+					              <c:when test="${savepost.save_post_code == post.post_code }">class="fas fa-bookmark"</c:when>
+					              <c:otherwise>class="far fa-bookmark"</c:otherwise>
+					            </c:choose>
+					            </c:forEach>
+					        </c:if>
+					        <c:if test="${empty saveList}">class="far fa-bookmark"</c:if>>
+					      </i>
+					    </span>
+					  </button>
 					</div>
 					
 					<!-- comment -->
@@ -242,7 +277,8 @@
 	        <!-- ./add friend -->
 	      </div>
 	  <!-- ./main -->
-		<%@ include file="/WEB-INF/views/timeline/writeModal.jsp" %><!-- 모달창 -->
+		<%@ include file="/WEB-INF/views/timeline/writeModal.jsp" %><!-- 글 작성 모달창 -->
+		<%@ include file="/WEB-INF/views/timeline/updateModal.jsp" %><!-- 글 수정 모달창 -->
       </div>
    </div>
 </div>
@@ -254,102 +290,189 @@
 		$("div.writemodal").modal();
 	}
 	
-	$(document).ready(function() {
+	function pushUpdateModal() {
+		$("div.updatemodal").modal();
+	}
+	
+	$('#summernote').summernote({
+		placeholder: '소식을 업데이트 해주세요!',
+        tabsize: 2,
+        height: 440,
+        maxheight: 600,
+        width: 555,
+        maxwidth: 555
+	});
+	
+	$("#update_contents").summernote();
 		
-		$('#summernote').summernote({
-			placeholder: '소식을 업데이트 해주세요!',
-	        tabsize: 2,
-	        height: 440,
-	        maxheight: 600,
-	        width: 555,
-	        maxwidth: 555
-		});
 		
-		
-		//summernote 툴바 숨기기
-		$(".note-toolbar").hide();
-		$(".note-resizebar").hide();
-		$(".note-status-output").hide();
-		
-		var flag = false;
-		var ref_code;
-		
-		$(".btn_moretag").on("click", function() {
+	//summernote 툴바 숨기기
+	$(".note-toolbar").hide();
+	$(".note-resizebar").hide();
+	$(".note-status-output").hide();
+	
+	var ref_code;
+	
+	$(".btn_moretag").on("click", function() {
 			
-// 			$.ajax({
-// 				type : 'POST',
-// 				url : '/',
-// 				data : {"" : },
-// 				success : function(data) {
+// 		$.ajax({
+// 			type : 'POST',
+// 			url : '/',
+// 			data : {"" : },
+// 			success : function(data) {
+				
+// 				if(data != ""){
 					
-// 					if(data != ""){
-						
-// 					}
 // 				}
-// 			});
-			
-			$(".btn_moretag").hide();
-		});
+// 			}
+// 		});
+		$(".btn_moretag").hide();
+	});
 		
-		//게시글 댓글 버튼 클릭 시 댓글 영역 출력
-		$(".btn_comment").on("click", function() {
-			
-			ref_code = $(this).attr('title');
-			
-			if (flag == false) {
-				$.ajax({
-					type : 'POST',
-					url : '/commentArea',
-					data : {"ref_code" : ref_code},
-					success : function(data) {
-						
-						if(data != ""){
-							$("." + ref_code).append(data);
-						}
+	//게시글 댓글 버튼 클릭 시 댓글 영역 출력
+	var commentFlag = false;
+	$(".btn_comment").on("click", function() {
+		
+		ref_code = $(this).attr('title');
+		
+		if (commentFlag == false) {
+			$.ajax({
+				type : 'POST',
+				url : '/commentArea',
+				data : {"ref_code" : ref_code},
+				success : function(data) {
+					
+					if(data != ""){
+						$("." + ref_code).append(data);
 					}
-				});
-				flag = true;
-			} 
-			else {
-				flag = false;
-				$(".col-comment").remove();
-			}
+				}
+			});
+			commentFlag = true;
+		} 
+		else {
+			commentFlag = false;
+			$(".col-comment").remove();
+		}
+	});
+		
+	var good_ref_code = "";
+	
+	$(".btn_good").on("click", function() {
+		good_ref_code = $(this).attr('title');
+		var good_count = parseInt($('#txt_good_count' + good_ref_code).text());
+		
+		if($('#icon_good' + good_ref_code).attr("class") == "far fa-thumbs-up"){
+			$.ajax({
+				type : 'POST',
+				url : '/push_postgood',
+				data : {"ref_code" : good_ref_code},
+				success : function(data) {
+					$('#icon_good' + good_ref_code).attr("class", "fas fa-thumbs-up");
+					// 추천 수 + 1
+					$('#txt_good_count' + good_ref_code).text(good_count + 1);
+				}
+			});
 			
-		});
+		} else {
+			$.ajax({
+				type : 'POST',
+				url : '/push_postgoodcancel',
+				data : {"ref_code" : good_ref_code},
+				success : function(data) {
+					$('#icon_good' + good_ref_code).attr("class", "far fa-thumbs-up");
+					//추천 수 - 1
+					$('#txt_good_count' + good_ref_code).text(good_count - 1);
+				}
+			});
+		}
+	});
+	
+	var modify_code = "";
+	$('.btn_modifyPost').on("click", function() {
+		modify_code = $(this).attr('data-code');
+		
 		
 	});
 	
-	$(function () {
+	var delete_code = "";
+	$('.btn_deletePost').on("click", function() {
+		delete_code = $(this).attr('data-code');
 		
-		var contents = "";
-		
-		$("#btn-write_modal").on("click", function () {
-			pushModal();
-			qwe();
-			
-			$("#btn_write_upload").on("click", function() {
+		$.ajax({
+			type : 'POST',
+			url : '/deletepost',
+			data : {"post_code" : delete_code},
+			success : function(data) {
+				$('#post'+delete_code).remove();
 				
-				$("#frm_writePost").submit();
+				$('#col-post'+delete_code).append('<div style="padding: 15px; background: #fff; border : 1px solid #ddd; border-radius: 4px; box-shadow: 0 6px 12px rgba(0, 0, 0, .15);"><h4>글을 삭제했습니다.</h4></div>');
 				
-			})
-			
+				
+			}
 		});
 		
-		$("#btn-upload-img").on("click", function () {
-			pushModal();
-			$(".note-insert").children()[1].click();
-		});
+	})
+	
+	var savepost_code = "";
+	$(".btn_save").on("click", function() {
+		savepost_code = $(this).attr('title');
+		var save_count = parseInt($('.txt_save_count').text());
 		
-		$("#btn-upload-video").on("click", function () {
-			pushModal();
-			$(".note-insert").children()[2].click();
-		});
-		
-		$("#btn-upload-document").on("click", function () {
-			pushModal();
-		});
-		
+		if($('#icon_save' + savepost_code).attr("class") == "far fa-bookmark"){
+			$.ajax({
+				type : 'POST',
+				url : '/push_postsave',
+				data : {"post_code" : savepost_code},
+				success : function(data) {
+					$('#icon_save' + savepost_code).attr("class", "fas fa-bookmark");
+					// 추천 수 + 1
+					$('.txt_save_count').text(save_count + 1);
+				}
+			});
+		} else {
+			$.ajax({
+				type : 'POST',
+				url : '/push_postsavecancel',
+				data : {"post_code" : savepost_code},
+				success : function(data) {
+					$('#icon_save' + savepost_code).attr("class", "far fa-bookmark");
+					//추천 수 - 1
+					$('.txt_save_count').text(save_count - 1);
+				}
+			});
+		}
 	});
+	
+	
+	var contents = "";
+	$("#btn-write_modal").on("click", function () {
+		
+		pushModal();
+		$("#btn_write_upload").on("click", function() {
+			
+			$("#frm_writePost").submit();
+			
+		});
+	});
+	
+	$(".btn_modifyPost").on("click", function() {
+		pushUpdateModal();
+	});
+		
+	$("#btn-upload-img").on("click", function () {
+		pushModal();
+		$(".note-insert").children()[1].click();
+	});
+	
+	$("#btn-upload-video").on("click", function () {
+		pushModal();
+		$(".note-insert").children()[2].click();
+	});
+	
+	$("#btn-upload-document").on("click", function () {
+		pushModal();
+	});
+		
 	
 	
 	//현재 스크롤 위치에서 화면 최상단으로 이동
@@ -363,9 +486,6 @@
 	
 	//스크롤 이벤트 발생 시
 	$(window).scroll(function () {
-		
-// 		console.log($(window).scrollTop());
-// 		console.log($(document).height() - $(window).height());
 		
 		var currentTop = $(window).scrollTop();
 		

@@ -24,7 +24,7 @@ public interface ISave_postDao {
 	 * @return
 	 * Method 설명 : 저장글 삭제
 	 */
-	int delete_savepostData(String postsave_code);
+	int delete_savepostData(Save_postVo savepostVo);
 	
 	/**
 	 * Method : select_savepostData

@@ -53,4 +53,10 @@
 		       contents = nvl(#{contents, jdbcType=VARCHAR}, null)
 		 where education_code = #{education_code}
 	</update>
+	
+	<!-- 사용자의 학력정보 삭제 -->
+	<delete id="delete_educationInfo" parameterType="String">
+		delete from education_info
+			  where education_code = #{education_code}
+	</delete>
 </mapper>

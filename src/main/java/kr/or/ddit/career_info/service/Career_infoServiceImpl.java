@@ -93,6 +93,12 @@ public class Career_infoServiceImpl implements ICareer_infoService{
 		return careerDao.update_career_info(career_infoVo);
 	}
 	
+	
+	@Override
+	public int delete_career_info(String career_code) {
+		return careerDao.delete_career_info(career_code);
+	}
+	
 	/**
 	 * 회사의 직원수
 	 */

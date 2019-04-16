@@ -93,5 +93,18 @@ public class Education_infoServiceImpl implements IEducation_infoService{
 	public int update_educationInfo(Education_infoVo education_infoVo) {
 		return educationDao.update_educationInfo(education_infoVo);
 	}
+	
+	/**
+	 * Method : delete_educationInfo
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param education_code
+	 * @return
+	 * Method 설명 : 사용자의 학력정보 삭제
+	 */
+	@Override
+	public int delete_educationInfo(String education_code) {
+		return educationDao.delete_educationInfo(education_code);
+	}
 
 }

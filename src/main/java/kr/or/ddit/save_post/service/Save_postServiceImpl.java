@@ -21,8 +21,8 @@ public class Save_postServiceImpl implements ISave_postService {
 	}
 
 	@Override
-	public int delete_savepostData(String postsave_code) {
-		return save_postDao.delete_savepostData(postsave_code);
+	public int delete_savepostData(Save_postVo savepostVo) {
+		return save_postDao.delete_savepostData(savepostVo);
 	}
 
 	@Override

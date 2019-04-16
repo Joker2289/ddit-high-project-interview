@@ -45,4 +45,14 @@ public interface IProject_careerService {
 	 * Method 설명 : 사용자의 프로젝트정보 업데이트
 	 */
 	int update_project_career(Project_careerVo project_careerVo);
+	
+	/**
+	 * Method : delete_project_career
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param project_code
+	 * @return
+	 * Method 설명 : 사용자의 프로젝트정보 삭제
+	 */
+	int delete_project_career(String project_code);
 }

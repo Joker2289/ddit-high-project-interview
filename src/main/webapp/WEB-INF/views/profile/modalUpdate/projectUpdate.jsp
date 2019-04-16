@@ -46,7 +46,7 @@
 				<input class="form-control" type="text" name="project_url" value="${project_careerVo.project_url }">
 			</div>
 		</div>
-		<div class="modalRow" style="padding-bottom: 15px;">
+		<div class="modalRow" style="padding-bottom: 15px; height: 100px;">
 			<div class="modalHalfLeft">
 				<label>설명 </label>
 				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;">${project_careerVo.contents }</textarea>
@@ -58,6 +58,7 @@
 </form>
 </div>
 <div class="modal-footer">
+	<a class="btn btn-default" style="margin-right: 599px;" href="/project_careerDelete?project_code=${project_careerVo.project_code }">삭제</a>
 	<button type="button" class="btn btn-primary" id="project_careerSave">저장</button>
 </div>
 <script>

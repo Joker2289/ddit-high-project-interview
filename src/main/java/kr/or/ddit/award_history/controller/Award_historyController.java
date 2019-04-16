@@ -39,4 +39,13 @@ public class Award_historyController {
 		return "redirect:/profileHome";
 		
 	}
+	
+	@RequestMapping("/award_historyDelete")
+	public String award_historyUpdate(String award_code) {
+		
+		award_historyService.delete_award_history(award_code);
+		
+		return "redirect:/profileHome";
+		
+	}
 }

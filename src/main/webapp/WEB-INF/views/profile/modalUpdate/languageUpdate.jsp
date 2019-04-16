@@ -27,6 +27,7 @@
 </form>
 </div>
 <div class="modal-footer">
+	<a class="btn btn-default" style="margin-right: 599px;" href="/languageDelete?lang_code=${languageVo.lang_code }">삭제</a>
 	<button type="button" class="btn btn-primary" id="languageSave">저장</button>
 </div>
 <script>

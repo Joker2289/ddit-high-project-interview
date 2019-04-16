@@ -118,6 +118,12 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 		return UserList;
 	}
 
+	@Override
+	public List<UsersVo> filterSearchLocal(String user_id) {
+		List<UsersVo> localList = sqlSessionTemplate.selectList("personal.filterSearchLocal", user_id);
+		return localList;
+	}
+
 
 
 }

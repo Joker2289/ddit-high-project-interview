@@ -49,6 +49,17 @@ public interface ICareer_infoDao {
 	 */
 	int update_career_info (Career_infoVo career_infoVo);
 	
+		
+	/**
+	 * Method : delete_career_info
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param career_code
+	 * @return
+	 * Method 설명 : 사용자의 경력정보 삭제
+	 */
+	int delete_career_info (String career_code);
+	
 	/**
 	 * 회사 직원 수
 	 * @param vo

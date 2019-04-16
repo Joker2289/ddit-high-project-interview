@@ -20,8 +20,8 @@
 			</div>
 			<div class="modalHalfRight">
 				<label class="essential">특허발급 국가 </label>
-				<select class="form-control" name="nation" style="height: 30px; padding: 0 0 0 0;">
-					<option value="" hidden="">국가 선택</option>
+				<select class="form-control" id="nation" name="nation" style="height: 30px; padding: 0 0 0 0;">
+					<option value="no" hidden="">국가 선택</option>
 					<option value="대한민국">대한민국</option>
 					<option value="뉴질랜드">뉴질랜드</option>
 					<option value="대만">대만</option>
@@ -137,7 +137,7 @@
 				<input class="form-control" type="text" name="patent_url" value="${patent_listVo.patent_url}">
 			</div>
 		</div>
-		<div class="modalRow" style="padding-bottom: 15px;">
+		<div class="modalRow" style="padding-bottom: 15px; height: 100px;">
 			<div class="modalHalfLeft">
 				<label>설명 </label>
 				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;">${patent_listVo.contents}</textarea>
@@ -149,6 +149,7 @@
 </form>
 </div>
 <div class="modal-footer">
+	<a class="btn btn-default" style="margin-right: 599px;" href="/patent_listDelete?patent_code=${patent_listVo.patent_code }">삭제</a>
 	<button type="button" class="btn btn-primary" id="patent_listSave">저장</button>
 </div>
 <script>
@@ -161,7 +162,7 @@
 			$("input[name=patent_name]").focus();
 			return false;
 		}
-		if($("input[name=nation]").val() == ""){
+		if($("#nation option:selected").val() == "no"){
 			alert("특허발급 국가를 입력해주세요");
 			$("input[name=nation]").focus();
 			return false;

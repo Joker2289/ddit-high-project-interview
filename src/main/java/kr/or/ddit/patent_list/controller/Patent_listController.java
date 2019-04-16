@@ -33,4 +33,11 @@ public class Patent_listController {
 		return "redirect:/profileHome";
 		
 	}
+	
+	@RequestMapping("/patent_listDelete")
+	public String patent_listUpdate(String patent_code) {
+		patent_listService.delete_patent_list(patent_code);
+		return "redirect:/profileHome";
+		
+	}
 }

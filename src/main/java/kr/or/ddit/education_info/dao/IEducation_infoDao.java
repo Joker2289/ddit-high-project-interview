@@ -48,4 +48,14 @@ public interface IEducation_infoDao {
 	 */
 	int update_educationInfo(Education_infoVo education_infoVo);
 	
+	/**
+	 * Method : delete_educationInfo
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param education_code
+	 * @return
+	 * Method 설명 : 사용자의 학력정보 삭제
+	 */
+	int delete_educationInfo(String education_code);
+	
 }

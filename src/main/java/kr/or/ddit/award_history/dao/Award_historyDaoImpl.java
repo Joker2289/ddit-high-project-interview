@@ -66,5 +66,18 @@ public class Award_historyDaoImpl implements IAward_historyDao {
 	public int update_award_history(Award_historyVo award_historyVo) {
 		return sqlSessionTemplate.update("award_history.update_award_history", award_historyVo);
 	}
+	
+	/**
+	 * Method : delete_award_history
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param award_code
+	 * @return
+	 * Method 설명 : 사용자의 수상경력 삭제
+	 */
+	@Override
+	public int delete_award_history(String award_code) {
+		return sqlSessionTemplate.delete("award_history.delete_award_history", award_code);
+	}
 
 }

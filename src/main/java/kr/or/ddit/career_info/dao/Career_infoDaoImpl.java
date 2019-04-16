@@ -61,6 +61,19 @@ public class Career_infoDaoImpl implements ICareer_infoDao{
 	public int update_career_info(Career_infoVo career_infoVo) {
 		return sqlSessionTemplate.update("career_info.update_career_info", career_infoVo);
 	}
+		
+	/**
+	 * Method : delete_career_info
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param career_code
+	 * @return
+	 * Method 설명 : 사용자의 경력정보 삭제
+	 */
+	@Override
+	public int delete_career_info(String career_code) {
+		return sqlSessionTemplate.delete("career_info.delete_career_info", career_code);
+	}
 	
 	/**
 	 * 회사 직원 수

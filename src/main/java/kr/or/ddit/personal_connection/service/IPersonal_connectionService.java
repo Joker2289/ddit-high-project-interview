@@ -206,5 +206,17 @@ public interface IPersonal_connectionService {
 	
 	
 	
+	/**
+	* Method : filterSearchLocal
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param user_id
+	* @return
+	* Method 설명 : 필터검색-지역
+	*/
+	List<UsersVo> filterSearchLocal(String user_id);
+	
+	
+	
 
 }

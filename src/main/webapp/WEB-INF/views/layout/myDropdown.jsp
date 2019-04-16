@@ -14,18 +14,26 @@
 					<div class="col-md-6" style="width: 180px; padding-left: 0px;">간단프로필</div>
 				</div></td>
 		</tr>
-		<tr class="profiletr">
 		<c:if test="${SESSION_MEMBERVO.mem_division == '1' }">
-				<td
-					style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;"
-					onclick="javascript:location.href='/profileHome'">프로필보기</td>
+			<tr class="profiletr">
+					<td
+						style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;"
+						onclick="javascript:location.href='/profileHome'">프로필보기</td>
+			</tr>
+			<tr class="profiletr">
+					<td
+						style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;"
+						onclick="javascript:location.href='/blog/blogMainView'">블로그</td>
+			</tr>
 		</c:if>
 		<c:if test="${SESSION_MEMBERVO.mem_division == '2' }">
-				<td
-					style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;"
-					onclick="javascript:location.href='/corporation'">회사 페이지</td>
-		</c:if>
+			<tr class="profiletr">
+					<td
+						style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;"
+						onclick="javascript:location.href='/corporation'">회사 페이지</td>
 			</tr>
+		</c:if>
+		
 		<tr class="profiletr"
 			style="border-top: 1px solid #CFD1D3; border-bottom: 1px solid #CFD1D3;">
 			<td style="color: #666666; text-align: center;">프리미엄1개월무료이용</td>
