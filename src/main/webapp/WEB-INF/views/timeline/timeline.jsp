@@ -129,8 +129,8 @@
 	          <!-- post -->
 	          <c:forEach items="${timelinePost }" var="post">
 		          
-		        <div id="col-post" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
-				  <div class="col-post">
+		        <div id="col-post${post.post_code }" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
+				  <div class="col-post" id="post${post.post_code }">
 					<div class="col-post-body">
 					  <a href="#" >
 						<div class="writer_info" style="float: left;">
@@ -156,32 +156,32 @@
 					  </a>
 					  <!-- 게시물 관리버튼(dropdown) -->
 				      <div class="dropdown" style="float: right;">
-					    <button class="btn_postControll" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right;">
+					    <button class="btn_postControll" data-code="${post.post_code }" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right;">
 					    	<i class="fas fa-ellipsis-h"></i>
 					    </button>
 					    <c:choose>
 					      <c:when test="${post.mem_id eq memberInfo.mem_id }">
-							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-				      	    	<button class="btn_controll-list">
+							<ul class="dropdown-menu manage_mypost" role="menu" aria-labelledby="dLabel">
+				      	    	<button id="btn_modifyPost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list btn_modifyPost">
 					            	<i class="fas fa-edit"></i>&nbsp;<span>글 수정</span>
 					            </button>
-				      	    	<button class="btn_controll-list">
+				      	    	<button id="btn_deletePost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list btn_deletePost">
 					            	<i class="far fa-trash-alt"></i>&nbsp;<span>글 삭제</span>
 					        	</button>
-				      	    	<button class="btn_controll-list">
+				      	    	<button id="btn_blockComment${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list">
 					            	<i class="fas fa-comment-slash"></i>&nbsp;<span>댓글 차단</span>
 					            </button>
 					        </ul>
 					      </c:when>
 					      <c:otherwise>
-				        	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-				      	    	<button class="btn_controll-list" style="padding-right: 65.69px;">
+				        	<ul class="dropdown-menu manege_post" role="menu" aria-labelledby="dLabel">
+				      	    	<button id="btn_hidePost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list" style="padding-right: 65.69px;">
 					            	<i class="far fa-eye-slash">&nbsp;</i><span>글 숨기기</span>
 					            </button>
-				      	    	<button class="btn_controll-list" style="padding-right: 24.33px;">
+				      	    	<button id="btn_unfollowWriter${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list" style="padding-right: 24.33px;">
 					            	<i class="fas fa-ban"></i>&nbsp;<span>${post.writer_name }&nbsp;언 팔로우</span>
 					        	</button>
-				      	    	<button class="btn_controll-list" style="padding-right: 84.22px;">
+				      	    	<button id="btn_reportPost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list" style="padding-right: 84.22px;">
 					            	<i class="far fa-flag"></i>&nbsp;<span>글 신고</span>
 					            </button>
 					        </ul>
@@ -277,7 +277,8 @@
 	        <!-- ./add friend -->
 	      </div>
 	  <!-- ./main -->
-		<%@ include file="/WEB-INF/views/timeline/writeModal.jsp" %><!-- 모달창 -->
+		<%@ include file="/WEB-INF/views/timeline/writeModal.jsp" %><!-- 글 작성 모달창 -->
+		<%@ include file="/WEB-INF/views/timeline/updateModal.jsp" %><!-- 글 수정 모달창 -->
       </div>
    </div>
 </div>
@@ -289,6 +290,10 @@
 		$("div.writemodal").modal();
 	}
 	
+	function pushUpdateModal() {
+		$("div.updatemodal").modal();
+	}
+	
 	$('#summernote').summernote({
 		placeholder: '소식을 업데이트 해주세요!',
         tabsize: 2,
@@ -297,6 +302,8 @@
         width: 555,
         maxwidth: 555
 	});
+	
+	$("#update_contents").summernote();
 		
 		
 	//summernote 툴바 숨기기
@@ -380,6 +387,31 @@
 		}
 	});
 	
+	var modify_code = "";
+	$('.btn_modifyPost').on("click", function() {
+		modify_code = $(this).attr('data-code');
+		
+		
+	});
+	
+	var delete_code = "";
+	$('.btn_deletePost').on("click", function() {
+		delete_code = $(this).attr('data-code');
+		
+		$.ajax({
+			type : 'POST',
+			url : '/deletepost',
+			data : {"post_code" : delete_code},
+			success : function(data) {
+				$('#post'+delete_code).remove();
+				
+				$('#col-post'+delete_code).append('<div style="padding: 15px; background: #fff; border : 1px solid #ddd; border-radius: 4px; box-shadow: 0 6px 12px rgba(0, 0, 0, .15);"><h4>글을 삭제했습니다.</h4></div>');
+				
+				
+			}
+		});
+		
+	})
 	
 	var savepost_code = "";
 	$(".btn_save").on("click", function() {
@@ -409,39 +441,38 @@
 				}
 			});
 		}
-		
 	});
 	
-	$(function () {
+	
+	var contents = "";
+	$("#btn-write_modal").on("click", function () {
 		
-		var contents = "";
-		
-		$("#btn-write_modal").on("click", function () {
-			pushModal();
+		pushModal();
+		$("#btn_write_upload").on("click", function() {
 			
-			$("#btn_write_upload").on("click", function() {
-				
-				$("#frm_writePost").submit();
-				
-			})
+			$("#frm_writePost").submit();
 			
 		});
-		
-		$("#btn-upload-img").on("click", function () {
-			pushModal();
-			$(".note-insert").children()[1].click();
-		});
-		
-		$("#btn-upload-video").on("click", function () {
-			pushModal();
-			$(".note-insert").children()[2].click();
-		});
-		
-		$("#btn-upload-document").on("click", function () {
-			pushModal();
-		});
-		
 	});
+	
+	$(".btn_modifyPost").on("click", function() {
+		pushUpdateModal();
+	});
+		
+	$("#btn-upload-img").on("click", function () {
+		pushModal();
+		$(".note-insert").children()[1].click();
+	});
+	
+	$("#btn-upload-video").on("click", function () {
+		pushModal();
+		$(".note-insert").children()[2].click();
+	});
+	
+	$("#btn-upload-document").on("click", function () {
+		pushModal();
+	});
+		
 	
 	
 	//현재 스크롤 위치에서 화면 최상단으로 이동

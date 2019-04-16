@@ -549,4 +549,12 @@ public class PostController {
 		return "complate";
 	}
 	
+	@RequestMapping(path={"/deletepost"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String deletePost(String post_code){
+		postService.delete_post(post_code);
+		
+		return "complate";
+	}
+	
 }

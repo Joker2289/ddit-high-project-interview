@@ -4,8 +4,8 @@
 <link href="/css/timeline/writemodal.css" rel="stylesheet">
 
 <c:forEach items="${nextPostList }" var="post">
-  <div id="col-post" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
-	  <div class="col-post">
+  <div id="col-post${post.post_code }" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
+	  <div class="col-post${post.post_code }">
 		<div class="col-post-body">
 		  <a href="#" >
 			<div class="writer_info" style="float: left;">
@@ -108,7 +108,21 @@
 		  <!-- 댓글 출력 버튼 -->
 		  <button class="btn-social btn_appendcomment" title="${post.post_code }"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
 		  <!-- 글 저장 버튼 -->
-		  <button class="btn-social btn_save" title="${post.post_code }"><span style="font-size: 18px;"><i class="far fa-bookmark"></i></span></button>
+		  <button class="btn-social btn_save" title="${post.post_code }">
+		    <span style="font-size: 18px;">
+		      <i id="icon_save${post.post_code }"
+		        <c:if test="${not empty saveList}">
+		          <c:forEach items="${saveList }" var="savepost">
+		            <c:choose>
+		              <c:when test="${savepost.save_post_code == post.post_code }">class="fas fa-bookmark"</c:when>
+		              <c:otherwise>class="far fa-bookmark"</c:otherwise>
+		            </c:choose>
+		            </c:forEach>
+		        </c:if>
+		        <c:if test="${empty saveList}">class="far fa-bookmark"</c:if>>
+		      </i>
+		    </span>
+		  </button>
 		</div>
 		
 		<!-- comment -->
@@ -120,70 +134,100 @@
 </c:forEach>
 
 <script>
-//게시글 댓글 버튼 클릭 시 댓글 영역 출력
-
-var flag = false;
-$(".btn_appendcomment").on("click", function() {
-	
-	var ref_code = $(this).attr('title');
-	console.log(ref_code);
-	
-	if (flag == false) {
-		$.ajax({
-			type : 'POST',
-			url : '/commentArea',
-			data : {"ref_code" : ref_code},
-			success : function(data) {
-				
-				if(data != ""){
-					$("." + ref_code).append(data);
+	//게시글 댓글 버튼 클릭 시 댓글 영역 출력
+	var flag = false;
+	$(".btn_appendcomment").on("click", function() {
+		
+		var ref_code = $(this).attr('title');
+		console.log(ref_code);
+		
+		if (flag == false) {
+			$.ajax({
+				type : 'POST',
+				url : '/commentArea',
+				data : {"ref_code" : ref_code},
+				success : function(data) {
+					
+					if(data != ""){
+						$("." + ref_code).append(data);
+					}
 				}
-			}
-		});
-		flag = true;
-	} else {
-		flag = false;
-		$(".col-comment").remove();
-	}
-	
-});
+			});
+			flag = true;
+		} else {
+			flag = false;
+			$(".col-comment").remove();
+		}
+		
+	});
 
 
-var good_ref_code = "";
+	var good_ref_code = "";
+	
+	$(".btn_good").on("click", function() {
+		
+		good_ref_code = $(this).attr('title');
+		
+		var good_count = parseInt($('#txt_good_count' + good_ref_code).text());
+		
+		if($('#icon_good' + good_ref_code).attr("class") == "far fa-thumbs-up"){
+			
+			$.ajax({
+				type : 'POST',
+				url : '/push_postgood',
+				data : {"ref_code" : good_ref_code},
+				success : function(data) {
+					$('#icon_good' + good_ref_code).attr("class", "fas fa-thumbs-up");
+					// 추천 수 + 1
+					$('#txt_good_count' + good_ref_code).text(good_count + 1);
+					
+				}
+			});
+			
+		} else {
+			
+			$.ajax({
+				type : 'POST',
+				url : '/push_postgoodcancel',
+				data : {"ref_code" : good_ref_code},
+				success : function(data) {
+					$('#icon_good' + good_ref_code).attr("class", "far fa-thumbs-up");
+					//추천 수 - 1
+					$('#txt_good_count' + good_ref_code).text(good_count - 1);
+				}
+			});
+		}
+	});
 
-$(".btn_good").on("click", function() {
-	
-	good_ref_code = $(this).attr('title');
-	
-	var good_count = parseInt($('#txt_good_count' + good_ref_code).text());
-	
-	if($('#icon_good' + good_ref_code).attr("class") == "far fa-thumbs-up"){
+	var savepost_code = "";
+	$(".btn_save").on("click", function() {
+		savepost_code = $(this).attr('title');
+		var save_count = parseInt($('.txt_save_count').text());
 		
-		$.ajax({
-			type : 'POST',
-			url : '/push_postgood',
-			data : {"ref_code" : good_ref_code},
-			success : function(data) {
-				$('#icon_good' + good_ref_code).attr("class", "fas fa-thumbs-up");
-				// 추천 수 + 1
-				$('#txt_good_count' + good_ref_code).text(good_count + 1);
-				
-			}
-		});
+		if($('#icon_save' + savepost_code).attr("class") == "far fa-bookmark"){
+			$.ajax({
+				type : 'POST',
+				url : '/push_postsave',
+				data : {"post_code" : savepost_code},
+				success : function(data) {
+					$('#icon_save' + savepost_code).attr("class", "fas fa-bookmark");
+					// 추천 수 + 1
+					$('.txt_save_count').text(save_count + 1);
+				}
+			});
+		} else {
+			$.ajax({
+				type : 'POST',
+				url : '/push_postsavecancel',
+				data : {"post_code" : savepost_code},
+				success : function(data) {
+					$('#icon_save' + savepost_code).attr("class", "far fa-bookmark");
+					//추천 수 - 1
+					$('.txt_save_count').text(save_count - 1);
+				}
+			});
+		}
 		
-	} else {
-		
-		$.ajax({
-			type : 'POST',
-			url : '/push_postgoodcancel',
-			data : {"ref_code" : good_ref_code},
-			success : function(data) {
-				$('#icon_good' + good_ref_code).attr("class", "far fa-thumbs-up");
-				//추천 수 - 1
-				$('#txt_good_count' + good_ref_code).text(good_count - 1);
-			}
-		});
-	}
-});
+	});
 
 </script>
