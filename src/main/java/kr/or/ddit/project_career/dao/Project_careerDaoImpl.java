@@ -67,4 +67,17 @@ public class Project_careerDaoImpl implements IProject_careerDao{
 		return sqlSessionTemplate.update("project_career.update_project_career", project_careerVo);
 	}
 
+	/**
+	 * Method : delete_project_career
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param project_code
+	 * @return
+	 * Method 설명 : 사용자의 프로젝트정보 삭제
+	 */
+	@Override
+	public int delete_project_career(String project_code) {
+		return sqlSessionTemplate.delete("project_career.delete_project_career", project_code);
+	}
+
 }

@@ -38,4 +38,13 @@ public class Thesis_listController {
 		return "redirect:/profileHome";
 		
 	}
+	
+	@RequestMapping("/thesis_listDelete")
+	public String thesis_listUpdate(String thesis_code) {
+		
+		thesis_listService.delete_thesis_list(thesis_code);
+		
+		return "redirect:/profileHome";
+		
+	}
 }

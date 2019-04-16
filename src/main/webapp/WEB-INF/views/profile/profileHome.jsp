@@ -11,6 +11,11 @@
 $(document).ready(function() {
 	
 	$(".skils").hide();
+	$(".thesis").hide();
+	$(".patent").hide();
+	$(".project").hide();
+	$(".award").hide();
+	$(".language").hide();
 	
 	$(".modalA").on("click",function(){
 		var modalStr = $(this).attr("title");
@@ -83,6 +88,82 @@ $(document).ready(function() {
 			$(".skils").hide();
 		}
 	});
+	
+	$(".thesis_listVoShow").on("click",function(e){
+		if ($(e.target).closest(".thesis_listVoShowSkip").hasClass('thesis_listVoShowSkip')) {
+			$(".thesis_listVoShow").empty();
+			$(".thesis_listVoShow").append('<i class="fas fa-angle-up"></i>');
+			$(".thesis_listVoShowSkip").attr('class', 'thesis_listVoShowSkipOn');
+			$(".thesis").show();
+			
+		}else {
+			$(".thesis_listVoShow").empty();
+			$(".thesis_listVoShow").append('<i class="fas fa-angle-down"></i>');
+			$(".thesis_listVoShowSkipOn").attr('class', 'thesis_listVoShowSkip');
+			$(".thesis").hide();
+		}
+	});
+	
+	$(".patent_listVoShow").on("click",function(e){
+		if ($(e.target).closest(".patent_listVoShowSkip").hasClass('patent_listVoShowSkip')) {
+			$(".patent_listVoShow").empty();
+			$(".patent_listVoShow").append('<i class="fas fa-angle-up"></i>');
+			$(".patent_listVoShowSkip").attr('class', 'patent_listVoShowSkipOn');
+			$(".patent").show();
+			
+		}else {
+			$(".patent_listVoShow").empty();
+			$(".patent_listVoShow").append('<i class="fas fa-angle-down"></i>');
+			$(".patent_listVoShowSkipOn").attr('class', 'patent_listVoShowSkip');
+			$(".patent").hide();
+		}
+	});
+	
+	$(".project_careerVoShow").on("click",function(e){
+		if ($(e.target).closest(".project_careerVoShowSkip").hasClass('project_careerVoShowSkip')) {
+			$(".project_careerVoShow").empty();
+			$(".project_careerVoShow").append('<i class="fas fa-angle-up"></i>');
+			$(".project_careerVoShowSkip").attr('class', 'project_careerVoShowSkipOn');
+			$(".project").show();
+			
+		}else {
+			$(".project_careerVoShow").empty();
+			$(".project_careerVoShow").append('<i class="fas fa-angle-down"></i>');
+			$(".project_careerVoShowSkipOn").attr('class', 'project_careerVoShowSkip');
+			$(".project").hide();
+		}
+	});
+	
+	$(".award_historyVoShow").on("click",function(e){
+		if ($(e.target).closest(".award_historyVoShowSkip").hasClass('award_historyVoShowSkip')) {
+			$(".award_historyVoShow").empty();
+			$(".award_historyVoShow").append('<i class="fas fa-angle-up"></i>');
+			$(".award_historyVoShowSkip").attr('class', 'award_historyVoShowSkipOn');
+			$(".award").show();
+			
+		}else {
+			$(".award_historyVoShow").empty();
+			$(".award_historyVoShow").append('<i class="fas fa-angle-down"></i>');
+			$(".award_historyVoShowSkipOn").attr('class', 'award_historyVoShowSkip');
+			$(".award").hide();
+		}
+	});
+	
+	$(".languageVoShow").on("click",function(e){
+		if ($(e.target).closest(".languageVoShowSkip").hasClass('languageVoShowSkip')) {
+			$(".languageVoShow").empty();
+			$(".languageVoShow").append('<i class="fas fa-angle-up"></i>');
+			$(".languageVoShowSkip").attr('class', 'languageVoShowSkipOn');
+			$(".language").show();
+			
+		}else {
+			$(".languageVoShow").empty();
+			$(".languageVoShow").append('<i class="fas fa-angle-down"></i>');
+			$(".languageShowSkipOn").attr('class', 'languageVoShowSkip');
+			$(".language").hide();
+		}
+	});
+	
 	
 	$(document).on("click", function(e){
 		if($(e.target).closest(".profileBtn").hasClass("profileBtn")){
@@ -340,7 +421,7 @@ $(document).ready(function() {
 			<c:if test="${not empty possesion_skillsVoList }">
 			<div class="whiteBox" style="padding: 20px 20px 20px 20px; margin-bottom: 20px;">
 				<h3 style="margin: 0 0 0 0 ">보유기술</h3>
-				<ul class="list-unstyled possesion_skillsHide">
+				<ul class="list-unstyled">
 					<li class="list-unstyled" style="margin-top: 20px;">
 						<c:forEach items="${possesion_skillsVoList}" var="possesion_skillsVo" varStatus="i">
 							<fmt:formatDate value="${possesion_skillsVo.issue_date }" var="strDate" pattern="yyyy년 MM월"/>
@@ -371,7 +452,6 @@ $(document).ready(function() {
 					<li class="possesion_skillsVoShowSkip" >
 						<button class="btn btn-link possesion_skillsVoShow" style="outline: 0; text-decoration: none;">더 보기 <i class="fas fa-angle-down"></i></button>
 					</li>
-					
 					</c:if>
 				</ul>
 			</div>
@@ -382,22 +462,39 @@ $(document).ready(function() {
 							or not empty recordMap.project_careerList or not empty recordMap.award_historyList 
 							or not empty recordMap.languageVoList}">
 			<div class="whiteBox" style="padding: 20px 20px 20px 20px; margin-bottom: 20px;">
-				<h3 style="margin: 0 0 0 0 ">이력</h3>
-				<ul class="list-unstyled">
+				<h3 style="margin: 0 0 10px 0;">이력</h3>
+				<ul class="list-unstyled" style="padding-left: 10px;">
 					<!-- 논문저서 -->
-					<c:if test="${not empty recordMap.thesis_listVoList }">
-						<h4 style="font-weight: 700; color: #0073B1;margin: 10px 0 0 0; border-top: 2px solid #CDCFD2; padding-top: 10px;">논문·저서</h3>
-					</c:if>
-					<c:forEach items="${recordMap.thesis_listVoList}" var="thesis_listVo">
+					<li>
+						<c:if test="${not empty recordMap.thesis_listVoList }">
+							<div style="display: flex;">
+								<label style="font-weight: 700; color: #0073B1; font-size: 30px; ">${fn:length(recordMap.thesis_listVoList) }</label>
+								<div style="width: 700px;">
+									<label style="font-weight: 700; color: #0073B1; font-size: 15px; padding-left: 10px;">논문·저서</label><br>
+									<label id="" style="font-size: 15px; padding-left: 10px;">
+										<c:forEach items="${recordMap.thesis_listVoList}" var="thesis_listVo" varStatus="i">
+											${thesis_listVo.thesis_name } <c:if test="${!i.last }">·</c:if>
+										</c:forEach>
+									</label>
+								</div>
+								<div class="thesis_listVoShowSkip">
+									<span class="thesis_listVoShow" style="font-size: 24px;color: #0073B1;"><i class="fas fa-angle-down"></i></span>
+								</div>
+							</div>
+						</c:if>
+					</li>
+					<c:forEach items="${recordMap.thesis_listVoList}" var="thesis_listVo" varStatus="i">
 						<fmt:formatDate value="${thesis_listVo.publication_date }" var="strDate" pattern="yyyy년 MM월"/>
-						<li class="list-unstyled" style="margin-top: 20px; display: flex;">
-							<div style="width: 720px;">
+						<li class="list-unstyled thesis" style="padding: 10px 0 0 30px; margin-bottom : 10px; display: flex; <c:if test='${!i.first}'>border-top: 2px solid #CDCFD2;</c:if>">
+							<div style="width: 690px;">
 								<div style="width: 570px;">
 									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${thesis_listVo.thesis_name }</h4>
 									<label style="font-size: 17px; color: rgba(0,0,0,.9);">${thesis_listVo.publisher }</label><br>
 									<label>${strDate }</label><br>
-									<label>논문 URL : <a href="http://${thesis_listVo.thesis_url }">${thesis_listVo.thesis_url }</a></label><br>
-									<label>저자 : ${thesis_listVo.writer }</label><br>
+									<c:if test='${not empty thesis_listVo.thesis_url}'>
+										<label style="font-size: 17px; color: rgba(0,0,0,.9);"><a href="http://${thesis_listVo.thesis_url }">${thesis_listVo.thesis_url }</a></label><br>
+									</c:if>
+									<label>${thesis_listVo.writer }</label><br>
 								</div>
 								<!-- 논문저서 내용 -->
 								<c:if test="${not empty thesis_listVo.contents }">
@@ -416,20 +513,37 @@ $(document).ready(function() {
 					</c:forEach>
 					
 					<!-- 특허 -->
-					<c:if test="${not empty recordMap.patent_listVoList }">
-						<h4 style="font-weight: 700; color: #0073B1;margin: 10px 0 0 0; border-top: 2px solid #CDCFD2; padding-top: 10px;">특허</h3>
-					</c:if>
-					<c:forEach items="${recordMap.patent_listVoList}" var="patent_listVo">
+					<li style="margin-top: 20px;">
+						<c:if test="${not empty recordMap.patent_listVoList }">
+							<div style="display: flex;">
+								<label style="font-weight: 700; color: #0073B1; font-size: 30px; ">${fn:length(recordMap.patent_listVoList) }</label>
+								<div style="width: 700px;">
+									<label style="font-weight: 700; color: #0073B1; font-size: 15px; padding-left: 10px;">특허</label><br>
+									<label style="font-size: 15px; padding-left: 10px;">
+										<c:forEach items="${recordMap.patent_listVoList}" var="patent_listVo" varStatus="i">
+											${patent_listVo.patent_name } <c:if test="${!i.last }">·</c:if>
+										</c:forEach>
+									</label>
+								</div>
+								<div class="patent_listVoShowSkip">
+									<span class="patent_listVoShow" style="font-size: 24px;color: #0073B1;"><i class="fas fa-angle-down"></i></span>
+								</div>
+							</div>
+						</c:if>
+					</li>
+					<c:forEach items="${recordMap.patent_listVoList}" var="patent_listVo" varStatus="i">
 						<fmt:formatDate value="${patent_listVo.patent_date }" var="strDate" pattern="yyyy년 MM월"/>
-						<li class="list-unstyled" style="margin-top: 20px; display: flex;">
-							<div style="width: 720px;">
+						<li class="list-unstyled patent" style="padding: 10px 0 0 30px; margin-bottom : 10px; display: flex; <c:if test='${!i.first}'>border-top: 2px solid #CDCFD2;</c:if>">
+							<div style="width: 690px;">
 								<div style="width: 570px;">
 									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${patent_listVo.patent_name }</h4>
 									<label style="font-size: 17px; color: rgba(0,0,0,.9);">특허 출원 번호 : ${patent_listVo.patent_no }</label><br>
-									<label>특허 국가 : ${patent_listVo.nation }</label><br>
+									<label>${patent_listVo.nation }</label><br>
 									<label>${strDate }</label><br>
-									<label>특허 URL : <a href="http://${patent_listVo.patent_url }">${patent_listVo.patent_url }</a></a></label><br>
-									<label>저자 : ${patent_listVo.inventer }</label><br>
+									<c:if test='${not empty patent_listVo.patent_url}'>
+										<label style="font-size: 17px; color: rgba(0,0,0,.9);"><a href="http://${patent_listVo.patent_url }">${patent_listVo.patent_url }</a></label><br>
+									</c:if>
+									<label> ${patent_listVo.inventer }</label><br>
 								</div>
 								<!-- 특허 내용 -->
 								<c:if test="${not empty patent_listVo.contents }">
@@ -440,28 +554,45 @@ $(document).ready(function() {
 										</c:if>
 									</div>
 								</c:if>
-							</div>
+								</div>
 							<div>
 								<a class="modalA" role="${patent_listVo.patent_code}" data-toggle="modal" data-target="#myModal" title="patent"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
 							</div>
 						</li>
 					</c:forEach>
 					
-					<!-- 프로젝트 -->
-					<c:if test="${not empty recordMap.project_careerList }">
-						<h4 style="font-weight: 700; color: #0073B1;margin: 10px 0 0 0; border-top: 2px solid #CDCFD2; padding-top: 10px;">프로젝트</h3>
-					</c:if>
-					<c:forEach items="${recordMap.project_careerList}" var="project_careerVo">
+					 <!-- 프로젝트 -->
+					 <li style="margin-top: 20px;">
+						<c:if test="${not empty recordMap.project_careerList }">
+							<div style="display: flex;">
+								<label style="font-weight: 700; color: #0073B1; font-size: 30px; ">${fn:length(recordMap.project_careerList) }</label>
+								<div style="width: 700px;">
+									<label style="font-weight: 700; color: #0073B1; font-size: 15px; padding-left: 10px;">프로젝트</label><br>
+									<label style="font-size: 15px; padding-left: 10px;">
+										<c:forEach items="${recordMap.project_careerList}" var="project_careerVo" varStatus="i">
+											${project_careerVo.project_name } <c:if test="${!i.last }">·</c:if>
+										</c:forEach>
+									</label>
+								</div>
+								<div class="project_careerVoShowSkip">
+									<span class="project_careerVoShow" style="font-size: 24px;color: #0073B1;"><i class="fas fa-angle-down"></i></span>
+								</div>
+							</div>
+						</c:if>
+					</li>
+					<c:forEach items="${recordMap.project_careerList}" var="project_careerVo" varStatus="i">
 						<fmt:formatDate value="${project_careerVo.start_date }" var="strDate" pattern="yyyy년 MM월"/>
 						<fmt:formatDate value="${project_careerVo.end_date }" var="endDate" pattern="yyyy년 MM월"/>
 						<fmt:parseNumber var="year" integerOnly="true" value="${project_careerVo.month / 12}"/>
 						<fmt:parseNumber var="month" integerOnly="true" value="${project_careerVo.month % 12}"/>
-						<li class="list-unstyled" style="margin-top: 20px; display: flex;">
-							<div style="width: 720px;">
+						<li class="list-unstyled project" style="padding: 10px 0 0 30px; margin-bottom : 10px; display: flex; <c:if test='${!i.first}'>border-top: 2px solid #CDCFD2;</c:if>">
+							<div style="width: 690px;">
 								<div style="width: 570px;">
 									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${project_careerVo.project_name }</h4>
-									<label style="font-size: 17px; color: rgba(0,0,0,.9);"><a href="http://${project_careerVo.project_url }">${project_careerVo.project_url }</a></label><br>
-									<label>Leader : ${project_careerVo.project_leader }</label><br>
+									<c:if test='${not empty project_careerVo.project_url}'>
+										<label style="font-size: 17px; color: rgba(0,0,0,.9);"><a href="http://${project_careerVo.project_url }">${project_careerVo.project_url }</a></label><br>
+									</c:if>
+									<label>${project_careerVo.project_leader }</label><br>
 									<label>${strDate } - ${endDate  == null ? '현재' : endDate} · (${year > 1 ? year : ''}${year > 1 ? '년 ' : '' }${month > 1 ? month : '1'}개월)</label><br>
 								</div>
 								<!-- 프로젝트 내용 -->
@@ -480,14 +611,29 @@ $(document).ready(function() {
 						</li>
 					</c:forEach>
 					
-					<!-- 수상 경력 -->
-					<c:if test="${not empty recordMap.award_historyList }">
-						<h4 style="font-weight: 700; color: #0073B1;margin: 10px 0 0 0; border-top: 2px solid #CDCFD2; padding-top: 10px;">수상 경력</h3>
-					</c:if>
-					<c:forEach items="${recordMap.award_historyList}" var="award_historyVo">
+				 <!-- 수상 경력 -->
+				 <li style="margin-top: 20px;">
+						<c:if test="${not empty recordMap.award_historyList }">
+							<div style="display: flex;">
+								<label style="font-weight: 700; color: #0073B1; font-size: 30px; ">${fn:length(recordMap.award_historyList) }</label>
+								<div style="width: 700px;">
+									<label style="font-weight: 700; color: #0073B1; font-size: 15px; padding-left: 10px;">수상 경력</label><br>
+									<label style="font-size: 15px; padding-left: 10px;">
+										<c:forEach items="${recordMap.award_historyList}" var="award_historyVo" varStatus="i">
+											${award_historyVo.award_name } <c:if test="${!i.last }">·</c:if>
+										</c:forEach>
+									</label>
+								</div>
+								<div class="award_historyVoShowSkip">
+									<span class="award_historyVoShow" style="font-size: 24px;color: #0073B1;"><i class="fas fa-angle-down"></i></span>
+								</div>
+							</div>
+						</c:if>
+					</li>
+					<c:forEach items="${recordMap.award_historyList}" var="award_historyVo" varStatus="i">
 						<fmt:formatDate value="${award_historyVo.award_date }" var="strDate" pattern="yyyy년 MM월"/>
-						<li class="list-unstyled" style="margin-top: 20px; display: flex;">
-							<div style="width: 720px;">
+						<li class="list-unstyled award" style="padding: 10px 0 0 30px; margin-bottom : 10px; display: flex; <c:if test='${!i.first}'>border-top: 2px solid #CDCFD2;</c:if>">
+							<div style="width: 690px;">
 								<div style="width: 570px;">
 									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${award_historyVo.award_name }</h4>
 									<label style="font-size: 17px; color: rgba(0,0,0,.9);">${award_historyVo.award_org }</label><br>
@@ -510,12 +656,27 @@ $(document).ready(function() {
 					</c:forEach>
 					
 					<!-- 외국어 -->
-					<c:if test="${not empty recordMap.languageVoList }">
-						<h4 style="font-weight: 700; color: #0073B1;margin: 10px 0 0 0; border-top: 2px solid #CDCFD2; padding-top: 10px;">외국어</h3>
-					</c:if>
-					<c:forEach items="${recordMap.languageVoList}" var="languageVo">
-						<li class="list-unstyled" style="margin-top: 20px; display: flex;">
-							<div style="width: 720px;">
+					 <li style="margin-top: 20px;">
+						<c:if test="${not empty recordMap.languageVoList }">
+							<div style="display: flex;">
+								<label style="font-weight: 700; color: #0073B1; font-size: 30px; ">${fn:length(recordMap.languageVoList) }</label>
+								<div style="width: 700px;">
+									<label style="font-weight: 700; color: #0073B1; font-size: 15px; padding-left: 10px;">수상 경력</label><br>
+									<label style="font-size: 15px; padding-left: 10px;">
+										<c:forEach items="${recordMap.languageVoList}" var="languageVo" varStatus="i">
+											${languageVo.lang_kind } <c:if test="${!i.last }">·</c:if>
+										</c:forEach>
+									</label>
+								</div>
+								<div class="languageVoShowSkip">
+									<span class="languageVoShow" style="font-size: 24px;color: #0073B1;"><i class="fas fa-angle-down"></i></span>
+								</div>
+							</div>
+						</c:if>
+					</li>
+					<c:forEach items="${recordMap.languageVoList}" var="languageVo" varStatus="i">
+						<li class="list-unstyled language" style="padding: 10px 0 0 30px; margin-bottom : 10px; display: flex; <c:if test='${!i.first}'>border-top: 2px solid #CDCFD2;</c:if>">
+							<div style="width: 690px;">
 								<div style="width: 570px;">
 									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${languageVo.lang_kind }</h4>
 									<label style="font-size: 17px; color: rgba(0,0,0,.9);">${languageVo.grade }</label><br>
@@ -527,7 +688,7 @@ $(document).ready(function() {
 						</li>
 					</c:forEach>
 				</ul>
-			</div>
+			</div> 
 			</c:if>
 			
 			

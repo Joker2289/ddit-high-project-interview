@@ -45,4 +45,10 @@
 		       writer = nvl(#{writer, jdbcType=VARCHAR}, null)
 		 where thesis_code = #{thesis_code}
 	</update>
+	
+	<!-- 사용자의 논문저서 삭제 -->
+	<delete id="delete_thesis_list" parameterType="String">
+		delete from thesis_list
+			  where thesis_code = #{thesis_code}
+	</delete>
 </mapper>

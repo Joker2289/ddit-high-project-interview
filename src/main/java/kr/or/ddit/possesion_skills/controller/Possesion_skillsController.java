@@ -87,4 +87,10 @@ public class Possesion_skillsController {
 		return parse_items;
 		
 	}
+	
+	@RequestMapping("/possesion_skillsDelete")
+	public String delete_possesion_skills(String pskill_code){
+			possesion_skillsService.delete_possesion_skills(pskill_code);
+		return "redirect:/profileHome";
+	}
 }

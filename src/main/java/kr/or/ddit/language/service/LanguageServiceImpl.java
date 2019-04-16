@@ -66,5 +66,18 @@ public class LanguageServiceImpl implements ILanguageService {
 	public int update_language(LanguageVo languageVo) {
 		return languageDao.update_language(languageVo);
 	}
+	
+	/**
+	 * Method : delete_language
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param lang_code
+	 * @return
+	 * Method 설명 : 사용자의 외국어 삭제
+	 */
+	@Override
+	public int delete_language(String lang_code) {
+		return languageDao.delete_language(lang_code);
+	}
 
 }

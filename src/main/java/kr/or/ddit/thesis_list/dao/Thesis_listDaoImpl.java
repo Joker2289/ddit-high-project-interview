@@ -67,4 +67,17 @@ public class Thesis_listDaoImpl implements IThesis_listDao {
 		return sqlSessionTemplate.update("thesis_list.update_thesis_list", thesis_listVo);
 	}
 
+	/**
+	 * Method : delete_thesis_list
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param thesis_code
+	 * @return
+	 * Method 설명 : 사용자의 논문저서 삭제
+	 */
+	@Override
+	public int delete_thesis_list(String thesis_code) {
+		return sqlSessionTemplate.delete("thesis_list.delete_thesis_list", thesis_code);
+	}
+
 }

@@ -39,7 +39,7 @@
 				<input class="form-control select_date"  name="publication_date" type="text" >
 			</div>
 		</div>
-		<div class="modalRow" style="padding-bottom: 15px;">
+		<div class="modalRow" style="padding-bottom: 15px; height: 100px;">
 			<div style="modalHalfLeft">
 				<label>설명 </label>
 				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;"></textarea>

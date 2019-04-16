@@ -91,4 +91,9 @@ public class Career_infoServiceImpl implements ICareer_infoService{
 	public int update_career_info(Career_infoVo career_infoVo) {
 		return careerDao.update_career_info(career_infoVo);
 	}
+
+	@Override
+	public int delete_career_info(String career_code) {
+		return careerDao.delete_career_info(career_code);
+	}
 }

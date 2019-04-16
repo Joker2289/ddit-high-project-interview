@@ -66,7 +66,7 @@
 				<input class="form-control" name="telno" type="text" value="${usersMap.usersVo.telno}">
 			</div>
 		</div>
-		<div class="modalRow" style="padding-bottom: 15px;">
+		<div class="modalRow" style="padding-bottom: 15px; height: 100px;">
 			<div style="modalHalfLeft">
 				<label>간단소개글 </label>
 				<textarea class="form-control" rows="3" name="profile_contents" style="width: 682px; height: 80px;">${usersMap.usersVo.profile_contents}</textarea>

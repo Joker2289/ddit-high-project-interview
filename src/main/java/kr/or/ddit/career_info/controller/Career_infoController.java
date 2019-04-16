@@ -41,7 +41,6 @@ public class Career_infoController {
 			
 			if (result != null){
 				FilesVo filesVo = new FilesVo();
-				filesVo.setRef_code(usersVo.getUser_id());
 				filesVo.setFile_name(result.get("filename"));
 				filesVo.setFile_path(result.get("realFilename"));
 				filesVo.setDivision("05");
@@ -103,5 +102,11 @@ public class Career_infoController {
 		
 		return "redirect:/profileHome";
 		
+	}
+	
+	@RequestMapping("/careerDelete")
+	public String careerDelete(String career_code){
+		careerService.delete_career_info(career_code);
+		return "redirect:/profileHome";
 	}
 }

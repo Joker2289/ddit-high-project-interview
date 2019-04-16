@@ -51,4 +51,10 @@
 			   contents = nvl(#{contents, jdbcType=VARCHAR}, null)
 		 where award_code = #{award_code}
 	</update>
+	
+	<!-- 사용자의 수상경력 삭제 -->
+	<delete id="delete_award_history" parameterType="String">
+		delete from award_history
+			  where award_code = #{award_code}
+	</delete>
 </mapper>

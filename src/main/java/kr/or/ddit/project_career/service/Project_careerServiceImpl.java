@@ -66,5 +66,18 @@ public class Project_careerServiceImpl implements IProject_careerService {
 	public int update_project_career(Project_careerVo project_careerVo) {
 		return project_careerDao.update_project_career(project_careerVo);
 	}
+	
+	/**
+	 * Method : delete_project_career
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param project_code
+	 * @return
+	 * Method 설명 : 사용자의 프로젝트정보 삭제
+	 */
+	@Override
+	public int delete_project_career(String project_code) {
+		return project_careerDao.delete_project_career(project_code);
+	}
 
 }

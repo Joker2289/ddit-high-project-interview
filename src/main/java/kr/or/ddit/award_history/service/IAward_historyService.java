@@ -45,4 +45,14 @@ public interface IAward_historyService {
 	 * Method 설명 : 사용자의 수상경력 업데이트
 	 */
 	int update_award_history(Award_historyVo award_historyVo);
+	
+	/**
+	 * Method : delete_award_history
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param award_code
+	 * @return
+	 * Method 설명 : 사용자의 수상경력 삭제
+	 */
+	int delete_award_history(String award_code);
 }	

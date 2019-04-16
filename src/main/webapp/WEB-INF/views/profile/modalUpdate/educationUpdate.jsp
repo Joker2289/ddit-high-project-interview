@@ -46,7 +46,7 @@
 				<input class="form-control select_date" name="graduation" type="text" value="${education_infoMap.education_infoVo.graduation}">
 			</div>
 		</div>
-		<div class="modalRow" style="padding-bottom: 15px;">
+		<div class="modalRow" style="padding-bottom: 15px; height: 100px;">
 			<div style="modalHalfLeft">
 				<label>설명 </label>
 				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;">${education_infoMap.education_infoVo.contents}</textarea>
@@ -79,6 +79,7 @@
 </form>
 </div>
 <div class="modal-footer">
+	<a class="btn btn-default" style="margin-right: 599px;" href="/educationDelete?education_code=${education_infoMap.education_infoVo.education_code  }">삭제</a>
 	<button type="button" class="btn btn-primary" id="educationSave">저장</button>
 </div>
 
