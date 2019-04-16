@@ -42,8 +42,8 @@
 			</div>
 			<div class="modalHalfRight">
 				<label>직급 </label>
-				<select class="form-control" name="job_rank" style="height: 30px; padding: 0 0 0 0;">
-					<option value="" hidden=""> 직급 선택 </option>
+				<select class="form-control essential " id=job_rank name="job_rank" style="height: 30px; padding: 0 0 0 0;">
+					<option value="no" hidden=""> 직급 선택 </option>
 					<option value="회장">회장</option>
 					<option value="부회장">	부회장</option>               
 					<option value="사장">	사장</option>               
@@ -78,7 +78,7 @@
 				<input class="form-control select_date" name="resign_date" type="text" >
 			</div>
 		</div>
-		<div class="modalRow" style="padding-bottom: 15px;">
+		<div class="modalRow" style="padding-bottom: 15px; height: 100px;">
 			<div style="modalHalfLeft">
 				<label>설명 </label>
 				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;"></textarea>
@@ -182,9 +182,9 @@
 			$("input[name=corporate_name]").focus();
 			return false;
 		}
-		if($("input[name=career_code]").val().trim()==""){
+		if($("input[name=corp_code]").val().trim()==""){
 			alert("회사코드를 입력해주세요");
-			$("input[name=career_code]").focus();
+			$("input[name=corp_code]").focus();
 			return false;
 		}
 		if($("input[name=corp_local]").val().trim()==""){
@@ -194,6 +194,11 @@
 		}
 		if($("input[name=job_position]").val().trim()==""){
 			alert("직군을 입력해주세요");
+			$("input[name=job_position]").focus();
+			return false;
+		}
+		if($("#job_rank option:selected").val() == "no"){
+			alert("직급을 입력해주세요");
 			$("input[name=job_position]").focus();
 			return false;
 		}

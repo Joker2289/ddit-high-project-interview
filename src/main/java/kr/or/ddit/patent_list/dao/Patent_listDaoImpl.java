@@ -68,4 +68,18 @@ public class Patent_listDaoImpl implements IPatent_listDao{
 		return sqlSessionTemplate.update("patent_list.update_patent_list", patent_listVo);
 	}
 
+
+	/**
+	 * Method : delete_patent_list
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param patent_code
+	 * @return
+	 * Method 설명 : 사용자의 특허정보 삭제
+	 */
+	@Override
+	public int delete_patent_list(String patent_code) {
+		return sqlSessionTemplate.delete("patent_list.delete_patent_list", patent_code);
+	}
+
 }

@@ -46,7 +46,7 @@
 		</div>
 	</div>
 	
-	<div class="col-md-12" >
+	<div class="col-md-12" >	<!-- 연한 파랑 기존 색 - #edf1f5, 진한 색 - #adbfd2 -->
 		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: 0px;
 				text-align: center; padding-top: 10px; background-color: #edf1f5; border-bottom: 0px;
 				font-size: 22px;">
@@ -631,16 +631,16 @@
 		$(".save_save").on("mouseout", function(){
 			$(this).css("background-color", "white");
 		});
-		$(".search_alarm").on("mouseover", function(){
-			$(this).css("background-color", "#f3f3f3");
-		});
-		$(".search_alarm").on("mouseout", function(){
-			$(this).css("background-color", "white");
-		});
 		$(".search_save").on("mouseover", function(){
 			$(this).css("background-color", "#f3f3f3");
 		});
 		$(".search_save").on("mouseout", function(){
+			$(this).css("background-color", "white");
+		});
+		$(".search_del").on("mouseover", function(){
+			$(this).css("background-color", "#f3f3f3");
+		});
+		$(".search_del").on("mouseout", function(){
 			$(this).css("background-color", "white");
 		});
 		

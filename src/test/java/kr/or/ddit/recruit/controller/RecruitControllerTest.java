@@ -483,15 +483,23 @@ public class RecruitControllerTest extends WebTestConfig{
 	@Test
 	public void testRecr_app() throws Exception {
 		/***Given***/
+		MemberVo mVo = memService.select_memberInfo("brown");
+		
 		String recruit_code = "1";
 		RecruitVo rVo = recrService.getRecr(recruit_code);
 		String app_count = rVo.getApp_count();
 		
-		Save_recruitVo sVo = srecrService.getLastSrecr(recruit_code);
+		Save_recruitVo tempSVo = new Save_recruitVo();
+		tempSVo.setUser_id("brown");
+		tempSVo.setRecruit_code("1");
+		
+		Save_recruitVo sVo = srecrService.getLastSrecr(tempSVo);
 		String recr_app = sVo.getRecr_app();
 		
+		String scrap_flag = "t";
+		
 		/***When***/
-		MvcResult mvcResult = mockMvc.perform(get("/recr_app").param("recruit_code", recruit_code)).andReturn();
+		MvcResult mvcResult = mockMvc.perform(get("/recr_app").param("recruit_code", recruit_code).param("scrap_flag", scrap_flag).sessionAttr("SESSION_MEMBERVO", mVo)).andReturn();
 		ModelAndView mav = mvcResult.getModelAndView();
 		String viewName = mav.getViewName();
 

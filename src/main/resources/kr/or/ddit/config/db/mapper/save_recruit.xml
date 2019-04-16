@@ -30,12 +30,13 @@
 	</select>
 	
 	<!-- 특정 채용공고저장 중 마지막 항목 조회. -->
-	<select id="getLastSrecr" parameterType="String" resultType="save_recruitVo">
+	<select id="getLastSrecr" parameterType="save_recruitVo" resultType="save_recruitVo">
 		SELECT *
 		  FROM SAVE_RECRUIT
 		 WHERE SAVE_CODE = (SELECT MAX(SAVE_CODE)
 		                      FROM SAVE_RECRUIT
-		                     WHERE RECRUIT_CODE = #{recruit_code})	
+		                     WHERE RECRUIT_CODE = #{recruit_code}
+		                       AND USER_ID = #{user_id})	
 	</select>
 	
 	<!-- 특정 채용공고저장 목록 조회. -->

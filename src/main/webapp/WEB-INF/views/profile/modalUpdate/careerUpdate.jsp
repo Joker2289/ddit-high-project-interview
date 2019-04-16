@@ -45,8 +45,8 @@
 			</div>
 			<div class="modalHalfRight">
 				<label>직급 </label>
-				<select class="form-control" name="job_rank" style="height: 30px; padding: 0 0 0 0;">
-					<option value="" hidden=""> 직급 선택 </option>
+				<select class="form-control" id=job_rank name="job_rank" style="height: 30px; padding: 0 0 0 0;">
+					<option value="no" hidden=""> 직급 선택 </option>
 					<option value="회장">회장</option>
 					<option value="부회장">	부회장</option>               
 					<option value="사장">	사장</option>               
@@ -81,7 +81,7 @@
 				<input class="form-control select_date" name="resign_date" type="text" >
 			</div>
 		</div>
-		<div class="modalRow" style="padding-bottom: 15px;">
+		<div class="modalRow" style="padding-bottom: 15px; height: 100px;">
 			<div style="modalHalfLeft">
 				<label>설명 </label>
 				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;">${career_infoMap.career_infoVo.contents}</textarea>
@@ -120,10 +120,14 @@
 	<input type="hidden" value="${career_infoMap.career_infoVo.career_code }" name="career_code">
 </form>
 </div>
-<div class="modal-footer">
+<div class="modal-footer" style="display: flex;">
+	<a class="btn btn-default" style="margin-right: 599px;" href="/careerDelete?career_code=${career_infoMap.career_infoVo.career_code }">삭제</a>
 	<button type="button" class="btn btn-primary" id="careerSave">저장</button>
 </div>
-
+<select class="form-control">
+	<option value="" hidden=""> 직급 선택 </option>
+	<option value="회장">회장</option>
+</select>
 <script>
 	$("select[name=job_rank]").val("${career_infoMap.career_infoVo.job_rank}").prop("selected", true);
 
@@ -208,6 +212,13 @@
 			$("input[name=job_position]").focus();
 			return false;
 		}
+		
+		if($("#job_rank option:selected").val() == "no"){
+			alert("직급을 입력해주세요");
+			$("input[name=job_position]").focus();
+			return false;
+		}
+		
 		if($("input[name=join_date]").val().trim()==""){
 			alert("시작일을 입력해주세요");
 			$("input[name=join_date]").focus();

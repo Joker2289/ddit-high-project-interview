@@ -26,7 +26,11 @@ public class Save_recruitServiceImplTest extends LogicTestConfig{
 	@Test
 	public void testInsertSrecr() {
 		/***Given***/
-		Save_recruitVo sVo = srecrService.getLastSrecr("1");
+		Save_recruitVo tempSVo = new Save_recruitVo();
+		tempSVo.setUser_id("brown");
+		tempSVo.setRecruit_code("1");
+		
+		Save_recruitVo sVo = srecrService.getLastSrecr(tempSVo);
 		String recr_app = sVo.getRecr_app();
 		
 		srecrService.deleteForTest("1");
@@ -56,7 +60,11 @@ public class Save_recruitServiceImplTest extends LogicTestConfig{
 		/***Given***/
 
 		/***When***/
-		Save_recruitVo sVo = srecrService.getLastSrecr("10");
+		Save_recruitVo tempSVo = new Save_recruitVo();
+		tempSVo.setUser_id("brown");
+		tempSVo.setRecruit_code("10");
+		
+		Save_recruitVo sVo = srecrService.getLastSrecr(tempSVo);
 
 		/***Then***/
 		assertNotNull(sVo);
@@ -90,7 +98,11 @@ public class Save_recruitServiceImplTest extends LogicTestConfig{
 	@Test
 	public void testUpdateSrecr() {
 		/***Given***/
-		Save_recruitVo sVo = srecrService.getLastSrecr("1");
+		Save_recruitVo tempSVo = new Save_recruitVo();
+		tempSVo.setUser_id("brown");
+		tempSVo.setRecruit_code("1");
+		
+		Save_recruitVo sVo = srecrService.getLastSrecr(tempSVo);
 		sVo.setRecruit_code("1");
 		sVo.setSave_code("2");
 		sVo.setSave_flag("f");

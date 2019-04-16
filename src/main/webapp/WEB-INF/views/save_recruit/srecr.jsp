@@ -82,9 +82,11 @@
 			<td style="vertical-align: top;">
 				<div class="col-md-12">
 					<div class="whiteBox" style="width: 795px;">
-						<h4 style="font-size: 22px; margin-left: 25px; margin-top: 14px;">저장한 채용공고 (${srList.size() })</h4>
+						<h4 id="txt_srList" style="font-size: 22px; margin-left: 25px; margin-top: 14px;">
+							저장한 채용공고 (${srList.size() })
+						</h4>
 					</div>
-					<div class="whiteBox" style="width: 795px; border-top: 0px; margin-top: -2px;">
+					<div id="div_srList" class="whiteBox" style="width: 795px; border-top: 0px; margin-top: -2px;">
 						<c:forEach begin="1" end="${srList.size() }" varStatus="i">
 							<table border="0" style="margin: 2px; margin-top: 2px;">
 								<tr>
@@ -142,6 +144,7 @@
 		</tr>
 	</table>
 	<br><br><br>
+	<!-- '목록으로' 버튼 만들기. 변경사항을 ajax로 처리하면 뒤로 가기를 이전 페이지 이동으로 해도 됨. -->
 	
 <%@ include file="/WEB-INF/views/recruit/alarm_manage_modal.jsp" %><!-- 모달창 -->		
 </div>		
@@ -152,6 +155,9 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		console.log("${saveList }");
+		
+		// 페이지 로딩시 ajax로 srList 가져오기
+		getSRListHtml(null, "srListAjax");
 		
 		// 검색 버튼
 		$("#btn_search").on("mouseover", function(){
@@ -173,37 +179,53 @@
 			});
 		});		
 
-		// 이미지, 채용공고 & 스크랩 클릭
-		<c:forEach begin="1" end="${srList.size() }" varStatus="i">
-			$("#img${i.index }").on("click", function(){
-				alert("code : ${srList.get(i.index - 1).recruit_code }");
-				
-				// 상세보기 페이지로 이동.
-				window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code=${srList.get(i.index - 1).recruit_code }';
-			});
-			
-			$("#srecr${i.index }").on("click", function(){
-// 				alert("채용공고 ${i.index }");
-				window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code=${srList.get(i.index - 1).recruit_code }';
-			});
-			
-			$("#scrap${i.index }").on("click", function(){
-// 				alert("스크랩 ${i.index }");
-				if(confirm("채용공고 스크랩을 취소하시겠습니까?")){
-					window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=f${srList.get(i.index - 1).recruit_code }&req_page=srecr';
+		// 저장한 채용공고 스크랩 취소 ajax.
+		function getSRListHtml(scrap_flag, req_page){
+			$.ajax({
+				url : "${pageContext.request.contextPath }/scrap",
+				data : "scrap_flag=" + scrap_flag +"&req_page=" + req_page,
+				success : function(data){
+// 					alert("check : " + data);
+					
+					// sRList 출력. + 리스트 사이즈 표시. 저장한 채용공고 (${srList.size() })
+					// listSize를 data-[변수명]에 el로 저장해놔야 c:forEach의 속성값으로 쓸수 있네.
+					// 가 아니고 c:forEach를 쓰지 않는 것으로 수정.
+					$("#div_srList").html(data);
+					$("#txt_srList").text("저장한 채용공고 ("+ $("#listSize").val() +")");
+					
+					// 처음 페이지 요청때 ajax로 리스트를 출력하고 여기에 클릭 이벤트를 넣자.
+					// 이미지, 채용공고 & 스크랩 클릭
+					$(".img").on("click", function(){
+// 						alert("data : " + $(this).data("code"));
+						window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code='+$(this).data("code");		
+					});
+					
+					$(".srecr").on("click", function(){
+						window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code='+$(this).data("code");		
+					});
+					
+					// 스크랩 아이콘.
+					$(".fas").on("click", function(){
+						if(confirm("채용공고 스크랩을 취소하시겠습니까?")){
+							// ajax로 수정.
+							var scrap_flag = "f"+$(this).data("code");
+							var req_page = "srListAjax";
+							
+							getSRListHtml(scrap_flag, req_page);
+						}
+					});
+					
+					$(".fas").on("mouseover", function(){
+						$(".div_scrap:eq("+$(this).data("idx")+")").css("background-color", "#e5f5fb");
+					});
+					$(".fas").on("mouseout", function(){
+						$(".div_scrap:eq("+$(this).data("idx")+")").css("background-color", "white");
+					});
+					
+					// ajax로 수정 완료.
 				}
-			});
-			
-			// 스크랩버튼 마우스오버.
-			$("#scrap${i.index }").on("mouseover", function(){
-// 				alert(1);
-				$("#div_scrap${i.index }").css("background-color", "#e5f5fb");
-			});
-			$("#scrap${i.index }").on("mouseout", function(){
-				$("#div_scrap${i.index }").css("background-color", "white");
-			});
-			
-		</c:forEach>
+			});			
+		}
 		
 		<c:forEach begin="1" end="${appList.size() }" varStatus="i">
 			// 지원한 채용공고 클릭

@@ -149,6 +149,8 @@
 	var comment_ref_code = $(".col-comment").attr('title');
 	
 	
+	
+	
 	$("#btn_moreComment").on("click", function() {
 		last_comment = $('.comment-area:last').attr('data-comment');
 		
@@ -172,6 +174,9 @@
 	
 	$(".btn_commentWrite").on("click", function() {
 		
+		var comment_count = parseInt($('#txt_comment_count' + comment_ref_code).text());
+		console.log(comment_count);
+		
 		var contents = $(".input_comment_contents").val();
 		
 		$.ajax({
@@ -183,6 +188,8 @@
 				
 				if(data != ""){
 					$("." + comment_ref_code).append(data);
+					//댓글 수 + 1
+					$('#txt_comment_count' + comment_ref_code).text(comment_count + 1);
 				}
 				
 				

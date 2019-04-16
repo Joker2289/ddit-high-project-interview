@@ -61,4 +61,10 @@
 			   contents = nvl(#{contents, jdbcType=VARCHAR}, null)
 		 where project_code = #{project_code}
 	</update>
+	
+	<!-- 사용자의 프로젝트정보 삭제 -->
+	<delete id="delete_project_career" parameterType="String">
+		delete from project_career
+			  where project_code = #{project_code}
+	</delete>
 </mapper>

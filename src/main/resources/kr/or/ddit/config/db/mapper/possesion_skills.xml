@@ -51,4 +51,10 @@
 			    contents = nvl(#{contents, jdbcType=VARCHAR}, null)
 		 where pskill_code = #{pskill_code}
 	</update>
+	
+	<!-- 사용자의 보유기술 삭제 -->
+	<delete id="delete_possesion_skills" parameterType="String">
+		delete from possesion_skills
+			  where pskill_code = #{pskill_code}
+	</delete>
 </mapper>

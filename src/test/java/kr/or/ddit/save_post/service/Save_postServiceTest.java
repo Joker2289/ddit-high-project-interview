@@ -66,9 +66,12 @@ public class Save_postServiceTest extends LogicTestConfig {
 	@Test
 	public void testDelete_saveData(){
 		/***Given***/
+		Save_postVo saveVo = new Save_postVo();
+		saveVo.setMem_id("goo8455");
+		saveVo.setSave_post_code("1");
 		
 		/***When***/
-		int deleteCnt = savepostService.delete_savepostData("1");
+		int deleteCnt = savepostService.delete_savepostData(saveVo);
 		
 		/***Then***/
 		assertEquals(1, deleteCnt);

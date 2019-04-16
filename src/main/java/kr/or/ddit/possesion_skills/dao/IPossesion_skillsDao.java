@@ -45,4 +45,14 @@ public interface IPossesion_skillsDao {
 	 * Method 설명 : 사용자의 보유기술 업데이트
 	 */
 	int update_possesion_skills(Possesion_skillsVo possesion_skillsVo);
+	
+	/**
+	 * Method : delete_possesion_skills
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param pskill_code
+	 * @return
+	 * Method 설명 : 사용자의 보유기술 삭제
+	 */
+	int delete_possesion_skills(String pskill_code);
 }

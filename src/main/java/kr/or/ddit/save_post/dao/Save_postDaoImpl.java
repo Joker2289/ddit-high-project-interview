@@ -21,8 +21,8 @@ public class Save_postDaoImpl implements ISave_postDao {
 	}
 
 	@Override
-	public int delete_savepostData(String postsave_code) {
-		return sqlSession.delete("savepost.delete_savepostData", postsave_code);
+	public int delete_savepostData(Save_postVo savepostVo) {
+		return sqlSession.delete("savepost.delete_savepostData", savepostVo);
 	}
 
 	@Override

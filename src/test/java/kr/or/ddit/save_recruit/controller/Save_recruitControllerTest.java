@@ -49,5 +49,23 @@ public class Save_recruitControllerTest extends WebTestConfig{
 		assertEquals("srecrTiles", viewName);
 		assertNotNull(appList);
 	}
+	
+	// 반복문 테스트.
+	@Test
+	public void testLoop() {
+		/***Given***/
+
+		/***When***/
+		logger.debug("loop test");
+		
+		for(int i=0; i < 0; i++){
+			logger.debug("i : {}", i);
+		}
+
+		/***Then***/
+		//assert
+	}
+	
+	
 
 }

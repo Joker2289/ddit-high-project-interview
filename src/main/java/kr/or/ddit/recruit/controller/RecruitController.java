@@ -666,6 +666,8 @@ public class RecruitController {
 	// @채용공고 상세화면.
 	@RequestMapping(path="/recr_detail", method=RequestMethod.POST)
 	public String recr_detail(String recruit_code, HttpSession session, Model model){
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		
 		// 회원 정보를 가져와서 채용공고저장에 마지막으로 조회한 채용공고 저장. 마지막 채용공고를 따로 
 		// 설정하지는 않고 회원의 채용공고저장 리스트에서 save_code가 가장 큰 데이터를 확인하자.
 		Save_recruitVo sVo = new Save_recruitVo();
@@ -674,7 +676,11 @@ public class RecruitController {
 		sVo.setSave_flag("f");
 		
 		// recr_app값을 가져와야 함.
-		Save_recruitVo checkSVo = srecrService.getLastSrecr(recruit_code);
+		Save_recruitVo tempSVo = new Save_recruitVo();
+		tempSVo.setUser_id(mVo.getMem_id());
+		tempSVo.setRecruit_code(recruit_code);
+		
+		Save_recruitVo checkSVo = srecrService.getLastSrecr(tempSVo);
 		String recr_app = "";
 		
 		if(checkSVo == null){
@@ -689,8 +695,8 @@ public class RecruitController {
 		model.addAttribute("recr_app", recr_app);
 		
 		// 스크랩여부.
-		Save_recruitVo tempSVo = new Save_recruitVo();
-		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		tempSVo = new Save_recruitVo();
+		
 		tempSVo.setUser_id(mVo.getMem_id());
 		tempSVo.setSave_flag("t");
 		
@@ -723,13 +729,19 @@ public class RecruitController {
 	// @채용공고 상세화면 method - get
 	@RequestMapping(path="/recr_detail", method=RequestMethod.GET)
 	public String recr_detail(String recruit_code, String otherParam, HttpSession session, Model model) {
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		
 		Save_recruitVo sVo = new Save_recruitVo();
 		sVo.setRecruit_code(recruit_code);
 		sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));
 		sVo.setSave_flag("f");
 		
 		// recr_app값을 가져와야 함.
-		Save_recruitVo checkSVo = srecrService.getLastSrecr(recruit_code);
+		Save_recruitVo tempSVo = new Save_recruitVo();
+		tempSVo.setUser_id(mVo.getMem_id());
+		tempSVo.setRecruit_code(recruit_code);
+		
+		Save_recruitVo checkSVo = srecrService.getLastSrecr(tempSVo);
 		String recr_app = "";
 		
 		if(checkSVo == null){
@@ -748,7 +760,6 @@ public class RecruitController {
 		String scrap_flag = "t";
 		model.addAttribute("scrap_flag", scrap_flag);
 		
-		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		sVo.setUser_id(mVo.getMem_id());
 		srecrService.insertSrecr(sVo);
 		
@@ -876,8 +887,14 @@ public class RecruitController {
 	
 	// @채용공고 지원
 	@RequestMapping("/recr_app")
-	public String recr_app(String recruit_code, String scrap_flag, Model model) {
-		Save_recruitVo sVo = srecrService.getLastSrecr(recruit_code);
+	public String recr_app(String recruit_code, String scrap_flag, HttpSession session, Model model) {
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		
+		Save_recruitVo tempSVo = new Save_recruitVo();
+		tempSVo.setUser_id(mVo.getMem_id());
+		tempSVo.setRecruit_code(recruit_code);
+		
+		Save_recruitVo sVo = srecrService.getLastSrecr(tempSVo);
 		String recr_app = "";
 		
 		// 채용공고의 지원자 수(app_count) 수정하기.

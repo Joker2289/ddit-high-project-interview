@@ -29,10 +29,10 @@
 				<input class="form-control select_date" type="text" name="award_date" value="${award_historyVo.award_date}">
 			</div>
 		</div>
-		<div class="modalRow" style="padding-bottom: 15px;">
+		<div class="modalRow" style="padding-bottom: 15px; height: 100px;">
 			<div class="modalHalfLeft">
 				<label>설명 </label>
-				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;"></textarea>
+				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;">${award_historyVo.contents}</textarea>
 			</div>
 		</div>
 	</div>
@@ -41,6 +41,7 @@
 </form>
 </div>
 <div class="modal-footer">
+	<a class="btn btn-default" style="margin-right: 599px;" href="/award_historyDelete?award_code=${award_historyVo.award_code }">삭제</a>
 	<button type="button" class="btn btn-primary" id="award_historySave">저장</button>
 </div>
 <script>

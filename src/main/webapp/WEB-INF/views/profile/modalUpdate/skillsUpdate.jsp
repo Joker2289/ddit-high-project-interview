@@ -31,7 +31,7 @@
 				<input class="form-control select_date" type="text" name="issue_date" value="${possesion_skillsVo.issue_date }">
 			</div>
 		</div>
-		<div class="modalRow" style="padding-bottom: 15px;">
+		<div class="modalRow" style="padding-bottom: 15px; height: 100px;">
 			<div class="modalHalfLeft">
 				<label>설명 </label>
 				<textarea class="form-control" rows="3" name="contents" style="width: 682px; height: 80px;">${possesion_skillsVo.contents }</textarea>
@@ -43,6 +43,7 @@
 </form>
 </div>
 <div class="modal-footer">
+	<a class="btn btn-default" style="margin-right: 599px;" href="/possesion_skillsDelete?pskill_code=${possesion_skillsVo.pskill_code }">삭제</a>
 	<button type="button" class="btn btn-primary" id="possesion_skillsSave">저장</button>
 </div>
 <script>
