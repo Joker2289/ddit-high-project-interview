@@ -1,7 +1,9 @@
 package kr.or.ddit.corporation.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -128,5 +130,7 @@ public class CorporationDaoImpl implements ICorporationDao{
 	public int update_corpInfo(CorporationVo vo) {
 		return sqlSessionTemplate.update("corp.update_corpInfo", vo);
 	}
+
+
 
 }

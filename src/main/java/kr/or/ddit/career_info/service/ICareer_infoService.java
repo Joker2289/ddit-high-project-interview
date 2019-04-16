@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.career_info.model.Career_infoVo;
+import kr.or.ddit.education_info.model.Education_infoVo;
 
 public interface ICareer_infoService {
 	
@@ -47,4 +48,34 @@ public interface ICareer_infoService {
 	 * Method 설명 : 사용자의 경력정보 업데이트
 	 */
 	int update_career_info (Career_infoVo career_infoVo);
+	
+	/**
+	 * 회사 직원 수
+	 * @param vo
+	 * @return
+	 */
+	int employee_count(String corporate_name);
+	
+	/**
+	 * 회사 직원의 각 대학 count
+	 * @param vo
+	 * @return
+	 */
+	List<Education_infoVo> employee_education_count(String corporate_name);
+	
+	/**
+	 * 회사 직원의 각 대학 count2
+	 * @param vo
+	 * @return
+	 */
+	List<Integer> employee_education_count2(String corporate_name);
+	
+	/**
+	 * 직원들 이름과 다니는 대학교
+	 * @param vo
+	 * @return
+	 */
+	Map<String, Object> employee_education(String corporate_name);
+
+
 }

@@ -1,6 +1,8 @@
 package kr.or.ddit.career_info.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -8,6 +10,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.career_info.model.Career_infoVo;
+import kr.or.ddit.education_info.model.Education_infoVo;
 
 @Repository("career_infoDao")
 public class Career_infoDaoImpl implements ICareer_infoDao{
@@ -57,6 +60,50 @@ public class Career_infoDaoImpl implements ICareer_infoDao{
 	@Override
 	public int update_career_info(Career_infoVo career_infoVo) {
 		return sqlSessionTemplate.update("career_info.update_career_info", career_infoVo);
+	}
+	
+	/**
+	 * 회사 직원 수
+	 * @param vo
+	 * @return
+	 */
+	@Override
+	public int employee_count(String corporate_name) {
+		int empCount = sqlSessionTemplate.selectOne("career_info.employee_count",corporate_name);
+		return empCount;
+	}
+
+	/**
+	 * 회사 직원의 각 대학 count
+	 * @param vo
+	 * @return
+	 */
+	@Override
+	public List<Education_infoVo> employee_education_count(String corporate_name) {
+		List<Education_infoVo> eec = sqlSessionTemplate.selectList("career_info.employee_education_count", corporate_name);
+		return eec;
+	}
+	/**
+	 * 회사 직원의 각 대학 count
+	 * @param vo
+	 * @return
+	 */
+	@Override
+	public List<Integer> employee_education_count2(String corporate_name) {
+		List<Integer> eec = sqlSessionTemplate.selectList("career_info.employee_education_count2", corporate_name);
+		return eec;
+	}
+
+	/**
+	 * 직원들 이름과 다니는 대학교
+	 * @param vo
+	 * @return
+	 */
+	@Override
+	public Map<String, Object> employee_education(String corporate_name) {
+		Map<String, Object> ee = new HashMap<String, Object>();
+		ee = sqlSessionTemplate.selectMap("career_info.employee_education", corporate_name);
+		return ee;
 	}
 
 }

@@ -1,6 +1,7 @@
 package kr.or.ddit.corporation.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -128,5 +129,6 @@ public class CorporationServiceImpl implements ICorporationService{
 	public int update_corpInfo(CorporationVo vo) {
 		return corporationDao.update_corpInfo(vo);
 	}
+
 
 }
