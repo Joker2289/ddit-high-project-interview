@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.good.model.GoodVo;
+import kr.or.ddit.users.model.UsersVo;
 
 @Repository("goodDao")
 public class GoodDaoImpl implements IGoodDao {
@@ -36,7 +37,7 @@ public class GoodDaoImpl implements IGoodDao {
 	}
 
 	@Override
-	public List<GoodVo> select_pushGoodMember(GoodVo goodVo) {
+	public List<UsersVo> select_pushGoodMember(GoodVo goodVo) {
 		return sqlSession.selectList("good.select_pushGoodMember", goodVo);
 	}
 

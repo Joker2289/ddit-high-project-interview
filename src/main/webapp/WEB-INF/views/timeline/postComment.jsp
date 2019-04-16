@@ -149,6 +149,8 @@
 	var comment_ref_code = $(".col-comment").attr('title');
 	
 	
+	
+	
 	$("#btn_moreComment").on("click", function() {
 		last_comment = $('.comment-area:last').attr('data-comment');
 		

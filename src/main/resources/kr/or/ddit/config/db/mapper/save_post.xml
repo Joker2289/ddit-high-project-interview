@@ -16,9 +16,10 @@
 	</insert>
 	
 	<!-- 저장글 삭제  -->
-	<delete id="delete_savepostData" parameterType="String">
+	<delete id="delete_savepostData" parameterType="savepostVo">
 		delete save_post
-		 where postsave_code = #{postsave_code}
+		 where save_post_code = #{save_post_code}
+		   and mem_id = #{mem_id}
 	</delete>
 	
 	<!-- 저장글 목록 조회 -->

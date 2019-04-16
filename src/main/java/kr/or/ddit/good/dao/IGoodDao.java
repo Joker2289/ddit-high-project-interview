@@ -3,6 +3,7 @@ package kr.or.ddit.good.dao;
 import java.util.List;
 
 import kr.or.ddit.good.model.GoodVo;
+import kr.or.ddit.users.model.UsersVo;
 
 public interface IGoodDao {
 	
@@ -54,7 +55,7 @@ public interface IGoodDao {
 	 * @return
 	 * Method 설명 : 좋아요 한 회원 조회
 	 */
-	List<GoodVo> select_pushGoodMember(GoodVo goodVo);
+	List<UsersVo> select_pushGoodMember(GoodVo goodVo);
 	
 	/**
 	 * Method : select_pushedGoodPost

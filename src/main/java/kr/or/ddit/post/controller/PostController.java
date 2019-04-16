@@ -80,6 +80,9 @@ public class PostController {
 	@Resource(name="goodService")
 	private IGoodService goodService;
 	
+	@Resource(name="save_postService")
+	private ISave_postService save_postService;
+	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
 	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request){
 		
@@ -92,6 +95,12 @@ public class PostController {
 		
 		Save_postVo savepost = new Save_postVo();
 		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
+		
+		if(savepostCnt == 0){
+			model.addAttribute("savepostCnt", "0");
+		} else {
+			model.addAttribute("savepostCnt", savepostCnt+"");
+		}
 		
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
@@ -110,10 +119,10 @@ public class PostController {
 			} else {
 				model.addAttribute("followHashtag","notfollow");
 			}
-				
+			
+			
 			model.addAttribute("userInfo", userInfo);
 			model.addAttribute("connectionCnt", connectionCnt);
-			model.addAttribute("savepostCnt", savepostCnt);
 		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
 			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
 			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
@@ -140,6 +149,9 @@ public class PostController {
 
 		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
 		model.addAttribute("goodList", goodList);
+		
+		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		model.addAttribute("saveList", saveList);
 		
 		return "timeLineTiles";
 	}
@@ -170,6 +182,9 @@ public class PostController {
 		
 		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
 		model.addAttribute("goodList", goodList);
+		
+		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		model.addAttribute("saveList", saveList);
 		
 		return "timeline/appendPost";
 	}
@@ -432,6 +447,15 @@ public class PostController {
 		return "timeline/postComment";
 	}
 	
+	/**
+	 * Method : push_postGood
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param ref_code
+	 * @param request
+	 * @return
+	 * Method 설명 : 게시글 좋아요 등록
+	 */
 	@RequestMapping(path={"/push_postgood"}, method=RequestMethod.POST)
 	@ResponseBody
 	public String push_postGood(String ref_code, HttpServletRequest request){
@@ -446,14 +470,24 @@ public class PostController {
 		goodVo.setRef_code(ref_code);
 		goodVo.setDivision("28");
 		
-		int insertCnt = goodService.insert_goodInfo(goodVo);
+		goodService.insert_goodInfo(goodVo);
+		
 		return "complate";
-
 	}
 	
+	/**
+	 * Method : push_postGoodCancel
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param ref_code
+	 * @param model
+	 * @param request
+	 * @return
+	 * Method 설명 : 게시글 좋아요 취소
+	 */
 	@RequestMapping(path={"/push_postgoodcancel"}, method=RequestMethod.POST)
 	@ResponseBody
-	public String push_postGoodCancel(String ref_code, Model model, HttpServletRequest request){
+	public String push_postGoodCancel(String ref_code, HttpServletRequest request){
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		GoodVo goodVo = new GoodVo();
@@ -462,7 +496,55 @@ public class PostController {
 		goodVo.setRef_code(ref_code);
 		goodVo.setDivision("28");
 		
-		int deleteCnt = goodService.delete_goodInfo(goodVo);
+		goodService.delete_goodInfo(goodVo);
+		
+		return "complate";
+	}
+	
+	/**
+	 * Method : push_postSave
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param post_code
+	 * @param request
+	 * @return
+	 * Method 설명 : 저장한 글 등록
+	 */
+	@RequestMapping(path={"/push_postsave"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String push_postSave(String post_code, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		Save_postVo saveVo = new Save_postVo();
+		
+		saveVo.setMem_id(memberInfo.getMem_id());
+		saveVo.setSave_post_code(post_code);
+		
+		save_postService.insert_savepostData(saveVo);
+		
+		return "complate";
+	}
+	
+	/**
+	 * Method : push_postSaveCancel
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param post_code
+	 * @param request
+	 * @return
+	 * Method 설명 : 저장한 글 삭제
+	 */
+	@RequestMapping(path={"/push_postsavecancel"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String push_postSaveCancel(String post_code, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		Save_postVo saveVo = new Save_postVo();
+		
+		saveVo.setMem_id(memberInfo.getMem_id());
+		saveVo.setSave_post_code(post_code);
+		
+		save_postService.delete_savepostData(saveVo);
 		
 		return "complate";
 	}

@@ -106,7 +106,7 @@
 		    </span>
 		  </button>
 		  <!-- 댓글 출력 버튼 -->
-		  <button class="btn-social btn_comment" title="${post.post_code }"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
+		  <button class="btn-social btn_appendcomment" title="${post.post_code }"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
 		  <!-- 글 저장 버튼 -->
 		  <button class="btn-social btn_save" title="${post.post_code }"><span style="font-size: 18px;"><i class="far fa-bookmark"></i></span></button>
 		</div>
@@ -148,20 +148,6 @@ $(".btn_appendcomment").on("click", function() {
 	
 });
 
-$(".col-appendcomment").hide();
-
-$(".btn_appendcomment").on("click", function() {
-	
-	var className = $(this).attr('title');
-	
-	if (!$("."+className).attr('class').endsWith('On')) {
-		$("."+className).show();
-		$("."+className).attr('class', 'col-appendcomment '+className+' On');
-	}else {
-		$("."+className).hide();
-		$("."+className).attr('class', 'col-appendcomment '+className);
-	}
-});
 
 var good_ref_code = "";
 

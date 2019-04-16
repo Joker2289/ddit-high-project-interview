@@ -75,12 +75,13 @@
 	            <div class="col-etcinfo">
 	              <c:choose>
 	                <c:when test="${memberInfo.mem_division == '1' }">
-		              <pre style="background: #fff; border-color: #fff;"><a href="/personalConnection"><span>일촌 수<span style="float: right;">${connectionCnt }명</span></span></a></pre>
-	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${savepostCnt }개</span></span></a></pre>
+	                  <!-- 일촌 수 조회 -->
+		              <pre style="background: #fff; border-color: #fff;"><a href="/personalConnection"><span>일촌 수<span style="float: right;">${connectionCnt }</span></span></a></pre>
+		              <!-- 저장한 글 수 조회 -->
+	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
 	                </c:when>
 	                <c:when test="${memberInfo.mem_division == '2' }">
-<!-- 	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>팔로우한 회원<span style="float: right;">명</span></span></a></pre> -->
-	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span style="float: right;">${savepostCnt }개</span></span></a></pre>
+	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
 	                </c:when>
 	              </c:choose>
 	            </div>
@@ -214,7 +215,7 @@
 					</div>
 					<div class="col-post-social">
 					  <!-- 좋아요 버튼 -->
-					  <button class="btn-social btn_good" title="${post.post_code }">
+					  <button class="btn-social btn_good" style="margin-left: 10px; margin-top: 2px;" title="${post.post_code }">
 					    <span style="font-size: 18px;">
 					      <i id="icon_good${post.post_code }"
 					          <c:if test="${not empty goodList}"> 
@@ -232,7 +233,21 @@
 					  <!-- 댓글 출력 버튼 -->
 					  <button class="btn-social btn_comment" title="${post.post_code }"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
 					  <!-- 글 저장 버튼 -->
-					  <button class="btn-social btn_save" title="${post.post_code }"><span style="font-size: 18px;"><i class="far fa-bookmark"></i></span></button>
+					  <button class="btn-social btn_save" title="${post.post_code }">
+					    <span style="font-size: 18px;">
+					      <i id="icon_save${post.post_code }"
+					        <c:if test="${not empty saveList}">
+					          <c:forEach items="${saveList }" var="savepost">
+					            <c:choose>
+					              <c:when test="${savepost.save_post_code == post.post_code }">class="fas fa-bookmark"</c:when>
+					              <c:otherwise>class="far fa-bookmark"</c:otherwise>
+					            </c:choose>
+					            </c:forEach>
+					        </c:if>
+					        <c:if test="${empty saveList}">class="far fa-bookmark"</c:if>>
+					      </i>
+					    </span>
+					  </button>
 					</div>
 					
 					<!-- comment -->
@@ -274,7 +289,6 @@
 		$("div.writemodal").modal();
 	}
 	
-		
 	$('#summernote').summernote({
 		placeholder: '소식을 업데이트 해주세요!',
         tabsize: 2,
@@ -305,7 +319,6 @@
 // 				}
 // 			}
 // 		});
-			
 		$(".btn_moretag").hide();
 	});
 		
@@ -338,13 +351,10 @@
 	var good_ref_code = "";
 	
 	$(".btn_good").on("click", function() {
-		
 		good_ref_code = $(this).attr('title');
-		
 		var good_count = parseInt($('#txt_good_count' + good_ref_code).text());
 		
 		if($('#icon_good' + good_ref_code).attr("class") == "far fa-thumbs-up"){
-			
 			$.ajax({
 				type : 'POST',
 				url : '/push_postgood',
@@ -353,12 +363,10 @@
 					$('#icon_good' + good_ref_code).attr("class", "fas fa-thumbs-up");
 					// 추천 수 + 1
 					$('#txt_good_count' + good_ref_code).text(good_count + 1);
-					
 				}
 			});
 			
 		} else {
-			
 			$.ajax({
 				type : 'POST',
 				url : '/push_postgoodcancel',
@@ -370,6 +378,38 @@
 				}
 			});
 		}
+	});
+	
+	
+	var savepost_code = "";
+	$(".btn_save").on("click", function() {
+		savepost_code = $(this).attr('title');
+		var save_count = parseInt($('.txt_save_count').text());
+		
+		if($('#icon_save' + savepost_code).attr("class") == "far fa-bookmark"){
+			$.ajax({
+				type : 'POST',
+				url : '/push_postsave',
+				data : {"post_code" : savepost_code},
+				success : function(data) {
+					$('#icon_save' + savepost_code).attr("class", "fas fa-bookmark");
+					// 추천 수 + 1
+					$('.txt_save_count').text(save_count + 1);
+				}
+			});
+		} else {
+			$.ajax({
+				type : 'POST',
+				url : '/push_postsavecancel',
+				data : {"post_code" : savepost_code},
+				success : function(data) {
+					$('#icon_save' + savepost_code).attr("class", "far fa-bookmark");
+					//추천 수 - 1
+					$('.txt_save_count').text(save_count - 1);
+				}
+			});
+		}
+		
 	});
 	
 	$(function () {

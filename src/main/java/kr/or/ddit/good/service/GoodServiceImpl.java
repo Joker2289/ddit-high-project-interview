@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.good.dao.IGoodDao;
 import kr.or.ddit.good.model.GoodVo;
+import kr.or.ddit.users.model.UsersVo;
 
 @Service("goodService")
 public class GoodServiceImpl implements IGoodService {
@@ -36,7 +37,7 @@ public class GoodServiceImpl implements IGoodService {
 	}
 
 	@Override
-	public List<GoodVo> select_pushGoodMember(GoodVo goodVo) {
+	public List<UsersVo> select_pushGoodMember(GoodVo goodVo) {
 		return goodDao.select_pushGoodMember(goodVo);
 	}
 
