@@ -42,9 +42,9 @@ public class GoodServiceTest extends LogicTestConfig {
 		GoodVo goodVo = new GoodVo();
 		
 		/***When***/
-		goodVo.setRef_code("138");
+		goodVo.setRef_code("260");
 		goodVo.setDivision("28");
-		goodVo.setMem_id("jin");
+		goodVo.setMem_id("lhh");
 		
 		int insertCnt = goodService.insert_goodInfo(goodVo);
 		
@@ -55,9 +55,14 @@ public class GoodServiceTest extends LogicTestConfig {
 	@Test
 	public void testDelete_goodInfo(){
 		/***Given***/
+		GoodVo goodVo = new GoodVo();
 		
 		/***When***/
-		int deleteCnt = goodService.delete_goodInfo("1");
+		goodVo.setDivision("28");
+		goodVo.setRef_code("");
+		goodVo.setMem_id("goo8455");
+		
+		int deleteCnt = goodService.delete_goodInfo(goodVo);
 		
 		/***Then***/
 		assertEquals(1, deleteCnt);
@@ -134,6 +139,21 @@ public class GoodServiceTest extends LogicTestConfig {
 		
 		/***Then***/
 		assertTrue(goodinfo.size() > 0);
+	}
+	
+	@Test
+	public void testSelect_pushedGoodPost(){
+		/***Given***/
+		
+		/***When***/
+		List<GoodVo> goodList = goodService.select_pushedGoodPost("goo8455");
+		
+		for(GoodVo vo : goodList){
+			logger.debug("pushed good post_code : {}", vo.getRef_code());
+		}
+		
+		/***Then***/
+		assertTrue(goodList.size() > 0);
 	}
 
 }

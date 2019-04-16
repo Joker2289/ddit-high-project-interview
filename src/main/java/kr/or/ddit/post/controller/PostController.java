@@ -17,11 +17,14 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.follow.service.IFollowService;
+import kr.or.ddit.good.model.GoodVo;
+import kr.or.ddit.good.service.IGoodService;
 import kr.or.ddit.hashtag.service.IHashtagService;
 import kr.or.ddit.hashtag_list.model.Hashtag_listVo;
 import kr.or.ddit.hashtag_list.service.IHashtag_listService;
@@ -73,6 +76,9 @@ public class PostController {
 	
 	@Resource(name="hashtag_listService")
 	private IHashtag_listService taglistService;
+	
+	@Resource(name="goodService")
+	private IGoodService goodService;
 	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
 	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request){
@@ -127,9 +133,13 @@ public class PostController {
 			
 		}
 		
+		
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("timelinePost", timelinePost);
+
+		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+		model.addAttribute("goodList", goodList);
 		
 		return "timeLineTiles";
 	}
@@ -142,21 +152,24 @@ public class PostController {
 		logger.debug("pageNum asdasdasd : {}", pageNum);
 		logger.debug("ref_code : {}", ref_code);
 		
-		MemberVo member = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 
-		logger.debug("mem_id asdasd : {}", member.getMem_id());
+		logger.debug("mem_id asdasd : {}", memberInfo.getMem_id());
 		
 		int page = Integer.parseInt(pageNum);
-//		
+		
 		PaginationVo paginationVo = new PaginationVo();
-		paginationVo.setMem_id(member.getMem_id());
+		paginationVo.setMem_id(memberInfo.getMem_id());
 		paginationVo.setPage(page);
 		paginationVo.setCriteria_code(lastPost);
 		
 		List<PostVo> nextPostList = postService.select_nextPost(paginationVo);
 		
 		model.addAttribute("nextPostList", nextPostList);
-		model.addAttribute("memberInfo", member);
+		model.addAttribute("memberInfo", memberInfo);
+		
+		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+		model.addAttribute("goodList", goodList);
 		
 		return "timeline/appendPost";
 	}
@@ -417,6 +430,41 @@ public class PostController {
 		model.addAttribute("ref_code", ref_code);
 		
 		return "timeline/postComment";
+	}
+	
+	@RequestMapping(path={"/push_postgood"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String push_postGood(String ref_code, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		logger.debug("mem_id asdasdasdqwe : {}", memberInfo.getMem_id());
+		
+		GoodVo goodVo = new GoodVo();
+		
+		goodVo.setMem_id(memberInfo.getMem_id());
+		goodVo.setRef_code(ref_code);
+		goodVo.setDivision("28");
+		
+		int insertCnt = goodService.insert_goodInfo(goodVo);
+		return "complate";
+
+	}
+	
+	@RequestMapping(path={"/push_postgoodcancel"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String push_postGoodCancel(String ref_code, Model model, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		GoodVo goodVo = new GoodVo();
+		
+		goodVo.setMem_id(memberInfo.getMem_id());
+		goodVo.setRef_code(ref_code);
+		goodVo.setDivision("28");
+		
+		int deleteCnt = goodService.delete_goodInfo(goodVo);
+		
+		return "complate";
 	}
 	
 }

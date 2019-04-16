@@ -41,15 +41,15 @@
 	            	    	<span><a href="/profileHome"><img class="profile_img"  src="/images/profile/profile_noimage.jpg" ></a></span>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.profile_path != null }">
-	            	    	<span><a href="/profileHome"><img src="${sessionScope.SESSION_DETAILVO.profile_path }"></a></span>
+	            	      <span><a href="/profileHome"><img src="${sessionScope.SESSION_DETAILVO.profile_path }"></a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
 	            	  	<c:if test="${sessionScope.SESSION_DETAILVO.logo_path == null }">
-	            	    	<span><a href="/profileHome"><img class="profile_img" src="/images/profile/profile_noimage.jpg" ></a></span>
+	            	      <span><a href="/profileHome"><img class="profile_img" src="/images/profile/profile_noimage.jpg" ></a></span>
 	            	    </c:if>
 	            	    <c:if test="${sessionScope.SESSION_DETAILVO.logo_path != null }">
-	            	    	<span><a href="/profileHome"><img class="profile_img" src="${sessionScope.SESSION_DETAILVO.logo_path }"></a></span>
+	            	      <span><a href="/profileHome"><img class="profile_img" src="${sessionScope.SESSION_DETAILVO.logo_path }"></a></span>
 	            	    </c:if>
 	            	  </c:when>
 	            	  <c:otherwise>
@@ -201,18 +201,38 @@
 					<div class="post_socialCount">
 					  <ul style="padding-left: 10px;">
 					  	<li style="list-style: none; float: left;">
-					  		<button class="btn_goodcount btn_count" style="font-size: 12px;">추천 ${post.goodcount }</button>
+					  		<button class="btn_count btn_goodcount" title="goodCount ${post.post_code }" style="font-size: 12px;">추천 
+					  		  <span id="txt_good_count${post.post_code }">${post.goodcount }</span>
+					  		</button>
 					  	</li>
 					  	<li style="list-style: none; float: left;">
-					  		<button class="btn_commentcount btn_count" id="btn_commentcount ${post.post_code }" title="commentCount ${post.post_code }" style="font-size: 12px;">댓글 ${post.commentcount }</button>
+					  		<button class="btn_count btn_commentcount" id="btn_commentcount ${post.post_code }" title="commentCount ${post.post_code }" style="font-size: 12px;">댓글 
+					  		  <span id="txt_comment_count${post.post_code }">${post.commentcount }</span>
+					  		</button>
 					  	</li>
 					  </ul>
 					</div>
-					
 					<div class="col-post-social">
-					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-thumbs-up"></i></span></button>
+					  <!-- 좋아요 버튼 -->
+					  <button class="btn-social btn_good" title="${post.post_code }">
+					    <span style="font-size: 18px;">
+					      <i id="icon_good${post.post_code }"
+					          <c:if test="${not empty goodList}"> 
+					            <c:forEach items="${goodList }" var="goodpost">
+					              <c:choose>
+					                <c:when test="${goodpost.ref_code == post.post_code }">class="fas fa-thumbs-up"</c:when>
+					                <c:otherwise>class="far fa-thumbs-up"</c:otherwise>
+					              </c:choose>
+					            </c:forEach>
+					          </c:if>
+					          <c:if test="${empty goodList}">class="far fa-thumbs-up"</c:if>>
+					      </i>
+					    </span>
+					  </button>
+					  <!-- 댓글 출력 버튼 -->
 					  <button class="btn-social btn_comment" title="${post.post_code }"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
-					  <button class="btn-social"><span style="font-size: 18px;"><i class="far fa-bookmark"></i></span></button>
+					  <!-- 글 저장 버튼 -->
+					  <button class="btn-social btn_save" title="${post.post_code }"><span style="font-size: 18px;"><i class="far fa-bookmark"></i></span></button>
 					</div>
 					
 					<!-- comment -->
@@ -254,69 +274,102 @@
 		$("div.writemodal").modal();
 	}
 	
-	$(document).ready(function() {
 		
-		$('#summernote').summernote({
-			placeholder: '소식을 업데이트 해주세요!',
-	        tabsize: 2,
-	        height: 440,
-	        maxheight: 600,
-	        width: 555,
-	        maxwidth: 555
-		});
+	$('#summernote').summernote({
+		placeholder: '소식을 업데이트 해주세요!',
+        tabsize: 2,
+        height: 440,
+        maxheight: 600,
+        width: 555,
+        maxwidth: 555
+	});
 		
 		
-		//summernote 툴바 숨기기
-		$(".note-toolbar").hide();
-		$(".note-resizebar").hide();
-		$(".note-status-output").hide();
-		
-		var flag = false;
-		var ref_code;
-		
-		$(".btn_moretag").on("click", function() {
+	//summernote 툴바 숨기기
+	$(".note-toolbar").hide();
+	$(".note-resizebar").hide();
+	$(".note-status-output").hide();
+	
+	var ref_code;
+	
+	$(".btn_moretag").on("click", function() {
 			
-// 			$.ajax({
-// 				type : 'POST',
-// 				url : '/',
-// 				data : {"" : },
-// 				success : function(data) {
+// 		$.ajax({
+// 			type : 'POST',
+// 			url : '/',
+// 			data : {"" : },
+// 			success : function(data) {
+				
+// 				if(data != ""){
 					
-// 					if(data != ""){
-						
-// 					}
 // 				}
-// 			});
+// 			}
+// 		});
 			
-			$(".btn_moretag").hide();
-		});
+		$(".btn_moretag").hide();
+	});
 		
-		//게시글 댓글 버튼 클릭 시 댓글 영역 출력
-		$(".btn_comment").on("click", function() {
-			
-			ref_code = $(this).attr('title');
-			
-			if (flag == false) {
-				$.ajax({
-					type : 'POST',
-					url : '/commentArea',
-					data : {"ref_code" : ref_code},
-					success : function(data) {
-						
-						if(data != ""){
-							$("." + ref_code).append(data);
-						}
+	//게시글 댓글 버튼 클릭 시 댓글 영역 출력
+	var commentFlag = false;
+	$(".btn_comment").on("click", function() {
+		
+		ref_code = $(this).attr('title');
+		
+		if (commentFlag == false) {
+			$.ajax({
+				type : 'POST',
+				url : '/commentArea',
+				data : {"ref_code" : ref_code},
+				success : function(data) {
+					
+					if(data != ""){
+						$("." + ref_code).append(data);
 					}
-				});
-				flag = true;
-			} 
-			else {
-				flag = false;
-				$(".col-comment").remove();
-			}
-			
-		});
+				}
+			});
+			commentFlag = true;
+		} 
+		else {
+			commentFlag = false;
+			$(".col-comment").remove();
+		}
+	});
 		
+	var good_ref_code = "";
+	
+	$(".btn_good").on("click", function() {
+		
+		good_ref_code = $(this).attr('title');
+		
+		var good_count = parseInt($('#txt_good_count' + good_ref_code).text());
+		
+		if($('#icon_good' + good_ref_code).attr("class") == "far fa-thumbs-up"){
+			
+			$.ajax({
+				type : 'POST',
+				url : '/push_postgood',
+				data : {"ref_code" : good_ref_code},
+				success : function(data) {
+					$('#icon_good' + good_ref_code).attr("class", "fas fa-thumbs-up");
+					// 추천 수 + 1
+					$('#txt_good_count' + good_ref_code).text(good_count + 1);
+					
+				}
+			});
+			
+		} else {
+			
+			$.ajax({
+				type : 'POST',
+				url : '/push_postgoodcancel',
+				data : {"ref_code" : good_ref_code},
+				success : function(data) {
+					$('#icon_good' + good_ref_code).attr("class", "far fa-thumbs-up");
+					//추천 수 - 1
+					$('#txt_good_count' + good_ref_code).text(good_count - 1);
+				}
+			});
+		}
 	});
 	
 	$(function () {
@@ -325,7 +378,6 @@
 		
 		$("#btn-write_modal").on("click", function () {
 			pushModal();
-			qwe();
 			
 			$("#btn_write_upload").on("click", function() {
 				
@@ -363,9 +415,6 @@
 	
 	//스크롤 이벤트 발생 시
 	$(window).scroll(function () {
-		
-// 		console.log($(window).scrollTop());
-// 		console.log($(document).height() - $(window).height());
 		
 		var currentTop = $(window).scrollTop();
 		
