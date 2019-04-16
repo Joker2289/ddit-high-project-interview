@@ -2,7 +2,9 @@ package kr.or.ddit.personal_connection.dao;
 
 import java.util.List;
 
+import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
+import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
@@ -215,6 +217,54 @@ public interface IPersonal_connectionDao {
 	* Method 설명 : 필터검색-지역
 	*/
 	List<UsersVo> filterSearchLocal(String user_id);
+	
+	
+	
+	/**
+	 * Method : filterSearchPastCorpor
+	 * 작성자 : user
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 필터로 검색 - 전 직장 검색
+	 */
+	List<Career_infoVo> filterSearchPastCorpor(String user_id);
+	
+	
+	
+	/**
+	 * Method : filterSearchPresentCorpor
+	 * 작성자 : user
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 필터로 검색 - 현 직장 검색
+	 */
+	List<Career_infoVo> filterSearchPresentCorpor(String user_id);
+	
+	
+	
+	/**
+	 * Method : filtersearchjobPosition
+	 * 작성자 : user
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 필터로 검색 - 직군 검색
+	 */
+	List<Career_infoVo> filtersearchjobPosition(String user_id);
+	
+	
+	
+	/**
+	 * Method : filterSearchSchool
+	 * 작성자 : user
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 필터로 검색 - 학교 검색
+	 */
+	List<Education_infoVo> filterSearchSchool(String user_id);
 	
 	
 

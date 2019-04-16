@@ -361,7 +361,7 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 	</select>
 	
 	
-	<!--  -->
+	<!-- 필터로 검색 - 지역 검색 -->
 	<select id="filterSearchLocal" parameterType="String" resultType="usersVo">
 		select substr(addr1,0,instr(addr1, ' ',1 ,1)) as addr1
 		  from users
@@ -378,6 +378,84 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 		                      and receive_accept='Y'
 		                      and receive_id !=#{user_id})
 		 group by substr(addr1,0,instr(addr1, ' ',1 ,1))
+	</select>
+	
+	
+	<!-- 필터로 검색 - 전 직장 검색 -->
+	<select id="filterSearchPastCorpor" parameterType="String" resultType="usersVo">
+		select corporate_name
+		  from career_info
+		 where resign_date is not null
+		   and user_id in (select user_id                     
+		                     from personal_connection
+		                    where (user_id =#{user_id} or receive_id =#{user_id})
+		                      and receive_accept='Y'
+		                      and user_id !=#{user_id}
+		                    union
+		                   select receive_id
+		                     from personal_connection
+		                    where (user_id =#{user_id} or receive_id =#{user_id})
+		                      and receive_accept='Y'
+		                      and receive_id !=#{user_id})
+		 group by corporate_name
+	</select>
+	
+	
+	<!-- 필터로 검색 - 현 직장 검색 -->
+	<select id="filterSearchPresentCorpor" parameterType="String" resultType="usersVo">
+		select corporate_name
+		  from career_info
+		 where resign_date is null
+		   and user_id in (select user_id                     
+		                     from personal_connection
+		                    where (user_id =#{user_id} or receive_id =#{user_id})
+		                      and receive_accept='Y'
+		                      and user_id !=#{user_id}
+		                    union
+		                   select receive_id
+		                     from personal_connection
+		                    where (user_id =#{user_id} or receive_id =#{user_id})
+		                      and receive_accept='Y'
+		                      and receive_id !=#{user_id})
+		 group by corporate_name
+	</select>
+	
+	
+	<!-- 필터로 검색 - 직군 검색 -->
+	<select id="filtersearchjobPosition" parameterType="String" resultType="career_infoVo">
+		select job_position
+		  from career_info
+		 where user_id in (select user_id                     
+		                     from personal_connection
+		                    where (user_id =#{user_id} or receive_id =#{user_id})
+		                      and receive_accept='Y'
+		                      and user_id !=#{user_id}
+		                    union
+		                   select receive_id
+		                     from personal_connection
+		                    where (user_id =#{user_id} or receive_id =#{user_id})
+		                      and receive_accept='Y'
+		                      and receive_id !=#{user_id})
+		 group by job_position
+	</select>
+	
+	
+	<!-- 필터로 검색 - 학교 검색 -->
+	<select id="filterSearchSchool" parameterType="String" resultType="education_infoVo">
+		select school_name
+		  from education_info
+		 where user_id in  (select user_id                     
+		                      from personal_connection
+		                     where (user_id =#{user_id} or receive_id =#{user_id})
+		                       and receive_accept='Y'
+		                       and user_id !=#{user_id}
+		                     union
+		                    select receive_id
+		                      from personal_connection
+		                     where (user_id =#{user_id} or receive_id =#{user_id})
+		                       and receive_accept='Y'
+		                       and receive_id !=#{user_id})
+		 group by school_name
 	</select>
 	
 	
