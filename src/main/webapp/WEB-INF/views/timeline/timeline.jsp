@@ -8,7 +8,6 @@
    <div class="row">
       <div>
 	      <div id="col-info" class="col-md-3">
-			
 	        <div class="panel panel-default" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
 	          <div class="panel-body">
 	            <div class="col-user-bgimg">
@@ -303,7 +302,13 @@
         maxwidth: 555
 	});
 	
-	$("#update_contents").summernote();
+	$("#update_contents").summernote({
+        tabsize: 2,
+        height: 440,
+        maxheight: 600,
+        width: 555,
+        maxwidth: 555
+	});
 		
 		
 	//summernote 툴바 숨기기
@@ -410,7 +415,6 @@
 				
 			}
 		});
-		
 	})
 	
 	var savepost_code = "";
@@ -455,9 +459,31 @@
 		});
 	});
 	
+	
+	var update_code = "";
 	$(".btn_modifyPost").on("click", function() {
-		pushUpdateModal();
+		update_code = $(this).attr('data-code');
+		
+		console.log(update_code);
+		
+		$.ajax({
+			type : 'POST',
+			url : '/getpostinfo',
+			data : {"post_code" : update_code},
+			success : function(data) {
+				
+				pushUpdateModal();
+				$('.note-editable').html(data);
+			}
+		});
+		
+		$("#btn_update_post").on("click", function() {
+			
+			$("#frm_updatePost").submit();
+			
+		});
 	});
+	
 		
 	$("#btn-upload-img").on("click", function () {
 		pushModal();

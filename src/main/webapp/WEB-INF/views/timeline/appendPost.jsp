@@ -5,7 +5,7 @@
 
 <c:forEach items="${nextPostList }" var="post">
   <div id="col-post${post.post_code }" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
-	  <div class="col-post${post.post_code }">
+	  <div class="col-post ${post.post_code }">
 		<div class="col-post-body">
 		  <a href="#" >
 			<div class="writer_info" style="float: left;">
@@ -126,7 +126,7 @@
 		</div>
 		
 		<!-- comment -->
-		<div class="col-comment-area ${post.post_code }" id="post_comment ${post.post_code }"></div>
+		<div class="col-comment-area ${post.post_code }" id="post_comment${post.post_code }"></div>
 		<!-- /comment -->
 	
 	  </div>
@@ -149,7 +149,7 @@
 				success : function(data) {
 					
 					if(data != ""){
-						$("." + ref_code).append(data);
+						$('#post_comment' + ref_code).append(data);
 					}
 				}
 			});

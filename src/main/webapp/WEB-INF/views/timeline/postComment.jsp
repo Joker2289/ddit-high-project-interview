@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link href="/css/timeline/writemodal.css" rel="stylesheet">
+<link href="/css/timeline/comment.css" rel="stylesheet">
 <!-- comment -->
 <div class="col-comment" title="${ref_code }">
 <!-- comment input area -->
@@ -121,7 +122,6 @@
 	$(".input_comment_contents").summernote({
 		placeholder: '댓글달기'
 	});
-	
 	
 	$(".note-toolbar").hide();
 	$(".note-resizebar").hide();

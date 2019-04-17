@@ -22,8 +22,8 @@ public class FollowServiceImpl implements IFollowService {
 	}
 
 	@Override
-	public int delete_follow(String follow_code) {
-		return followDao.delete_follow(follow_code);
+	public int delete_follow(FollowVo followVo) {
+		return followDao.delete_follow(followVo);
 	}
 
 	@Override

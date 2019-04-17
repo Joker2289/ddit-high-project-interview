@@ -25,7 +25,7 @@ public interface IFollowDao {
 	 * @return
 	 * Method 설명 : 팔로우 정보 삭제
 	 */
-	int delete_follow(String follow_code);
+	int delete_follow(FollowVo followVo);
 	
 	/**
 	 * Method : select_followList
