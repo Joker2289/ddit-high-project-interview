@@ -1,6 +1,7 @@
 package kr.or.ddit.corporation.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 
@@ -92,7 +93,7 @@ public interface ICorporationService {
 	 */
 	int update_corpInfo(CorporationVo vo);
 	
-	
+
 }
 
 

@@ -1,6 +1,7 @@
 package kr.or.ddit.corporation.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.corporation.model.CorporationVo;
 
@@ -90,6 +91,8 @@ public interface ICorporationDao {
 	 * Method 설명 : 기업 정보 수정
 	 */
 	int update_corpInfo(CorporationVo vo);
+	
+
 	
 }
 

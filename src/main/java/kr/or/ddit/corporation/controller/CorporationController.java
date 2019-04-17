@@ -3,6 +3,7 @@ package kr.or.ddit.corporation.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,8 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import kr.or.ddit.career_info.model.Career_infoVo;
+import kr.or.ddit.career_info.service.ICareer_infoService;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
+import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.follow.service.IFollowService;
 import kr.or.ddit.hashtag.service.IHashtagService;
@@ -90,6 +94,9 @@ public class CorporationController {
 	
 	@Resource(name="save_recruitService")
 	private ISave_recruitService srecrService;
+	
+	@Resource(name="career_infoService")
+	private ICareer_infoService careerService;
 	
 
 	/**
@@ -254,7 +261,7 @@ public class CorporationController {
 MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		CorporationVo corporationInfo = new CorporationVo();
-		
+		Career_infoVo careerinfo = new Career_infoVo();
 		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
 		model.addAttribute("corporationInfo", corporationInfo);
 		
@@ -280,15 +287,25 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 			model.addAttribute("corpInfo", corpInfo);
 		} else { // 관리자일 경우
 			// 관리자 로그인 시 홈 화면 출력을 위한 세팅
-			
+		
 		}
 		
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("timelinePost", timelinePost);
-
-
-	
 		
+		System.out.println(corporationInfo.getCorp_name());
+		
+		int ecount = careerService.employee_count(corporationInfo.getCorp_name());
+		model.addAttribute("ecount", ecount);
+
+		List<Education_infoVo> eec = careerService.employee_education_count(corporationInfo.getCorp_name());		
+		List<Integer> eec2 = careerService.employee_education_count2(corporationInfo.getCorp_name());		
+		
+		model.addAttribute("eec", eec);
+		model.addAttribute("eec2", eec2);
+		System.out.println(eec);
+		System.out.println(eec2);
+
 		return "corporationEmployeeTiles";
 	}
 

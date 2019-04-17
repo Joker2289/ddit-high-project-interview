@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.career_info.dao.ICareer_infoDao;
 import kr.or.ddit.career_info.model.Career_infoVo;
+import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.files.dao.IFilesDao;
 import kr.or.ddit.files.model.FilesVo;
 
@@ -91,9 +92,48 @@ public class Career_infoServiceImpl implements ICareer_infoService{
 	public int update_career_info(Career_infoVo career_infoVo) {
 		return careerDao.update_career_info(career_infoVo);
 	}
-
+	
+	
 	@Override
 	public int delete_career_info(String career_code) {
 		return careerDao.delete_career_info(career_code);
 	}
+	
+	/**
+	 * 회사의 직원수
+	 */
+	@Override
+	public int employee_count(String corporate_name) {
+		int empCount = careerDao.employee_count(corporate_name);
+		return empCount;
+	}
+
+	
+	/**
+	 * 회사 직원의 각대학 count
+	 */
+	@Override
+	public List<Education_infoVo> employee_education_count(String corporate_name) {
+		List<Education_infoVo> eec = careerDao.employee_education_count(corporate_name);
+		return eec;
+	}
+	
+	/**
+	 * 회사 직원의 각대학 count
+	 */
+	@Override
+	public List<Integer> employee_education_count2(String corporate_name) {
+		List<Integer> eec = careerDao.employee_education_count2(corporate_name);
+		return eec;
+	}
+
+	/**
+	 * 직원들이름과 대학교
+	 */
+	@Override
+	public Map<String, Object> employee_education(String corporate_name) {
+		Map<String, Object> ee = careerDao.employee_education(corporate_name);
+		return ee;
+	}
+
 }

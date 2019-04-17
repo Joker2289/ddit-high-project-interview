@@ -91,24 +91,9 @@
 		SELECT * FROM CORPORATION where corp_name like '%'|| #{ value }||'%' order by corp_name 
 	</select>
 	
-	<!-- 회사의 직원들의 학력검색 -->
-	<select id="corp_employee_education" resultType="corporationVo" parameterType="String">
-		SELECT A.USER_ID, A.SCHOOL_NAME
- 		FROM EDUCATION_INFO A, (SELECT USER_ID
-                            FROM CAREER_INFO
-                           WHERE CORPORATE_NAME = #{corp_name }) B
-		WHERE A.USER_ID = B.USER_ID;
-	</select>
-	
-	<!-- 회사의 직원수-->
-	<select id="corp_employee_count" resultType="corporationVo" parameterType="String">
-		SELECT COUNT(*)
-		FROM CAREER_INFO
-		WHERE CORPORATE_NAME = #{corp_name };
-	</select>
-	
 	
 
+	
 	
 	
 </mapper>

@@ -6,7 +6,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
+import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
@@ -99,6 +101,31 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	@Override
 	public List<UsersVo> recommendUsers(PaginationVo paginationVo) {
 		return personalDao.recommendUsers(paginationVo);
+	}
+
+	@Override
+	public List<UsersVo> filterSearchLocal(String user_id) {
+		return personalDao.filterSearchLocal(user_id);
+	}
+
+	@Override
+	public List<Career_infoVo> filterSearchPastCorpor(String user_id) {
+		return personalDao.filterSearchPastCorpor(user_id);
+	}
+
+	@Override
+	public List<Career_infoVo> filterSearchPresentCorpor(String user_id) {
+		return personalDao.filterSearchPresentCorpor(user_id);
+	}
+
+	@Override
+	public List<Career_infoVo> filtersearchjobPosition(String user_id) {
+		return personalDao.filtersearchjobPosition(user_id);
+	}
+
+	@Override
+	public List<Education_infoVo> filterSearchSchool(String user_id) {
+		return personalDao.filterSearchSchool(user_id);
 	}
 
 	
