@@ -359,6 +359,8 @@ public class SignupController {
 		logger.debug("step5 : {}", profile);
 		
 		String realFileName = "";
+		String tmpFilePath = ""; 
+		String tmpFileName = UUID.randomUUID().toString(); 
 		
 		//사용자 사진을 업로드 한경우
 		if(profile.getSize() > 0) {
@@ -366,21 +368,29 @@ public class SignupController {
 			
 			//유저 프로필 등록
 			if(division.equals("1")) {
-				realFileName =  req.getServletContext().getRealPath("/images/profile/" + UUID.randomUUID().toString());
+				
+				
+				realFileName =  req.getServletContext().getRealPath("/images/profile/" + tmpFileName);
 				
 				profile.transferTo(new File(realFileName));
+				
+				tmpFilePath = "/images/profile/" + tmpFileName;
+				
 				UsersVo uVo = new UsersVo();
 				uVo.setUser_id(id);
 				uVo.setProfile_img(fileName);
-				uVo.setProfile_path(realFileName);
+				uVo.setProfile_path(tmpFilePath);
 				
 				userService.update_userInfo(uVo);
 			}
 			
 			//기업 프로필 등록
 			else {
-				realFileName =  req.getServletContext().getRealPath("/images/logo/" + UUID.randomUUID().toString());
+				realFileName =  req.getServletContext().getRealPath("/images/logo/" + tmpFileName);
 				profile.transferTo(new File(realFileName));
+				
+				tmpFilePath = "/images/logo/" + tmpFileName;
+				
 				CorporationVo cVo = new CorporationVo();
 				cVo.setCorp_id(id);
 				cVo.setCorp_logo(fileName);
