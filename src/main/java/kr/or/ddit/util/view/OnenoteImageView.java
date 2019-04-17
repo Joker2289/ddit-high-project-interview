@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.View;
 
-public class ImageView implements View{
+public class OnenoteImageView implements View{
 	
 	//getContentType : view를 통한 결과물이 html이냐 이미지냐??
 	@Override

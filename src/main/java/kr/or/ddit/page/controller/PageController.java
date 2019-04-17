@@ -85,12 +85,10 @@ public class PageController {
 	 * @return
 	 * Method 설명 : model에 이미지경로를 속성으로 저장해주고 servlte-context 에 등록한 imageView 요청
 	 */
-	@RequestMapping("/imageView")
+	@RequestMapping("/onenoteImageView")
 	public String imageView(@RequestParam(name="src") String src, Model model) {
-		
 		model.addAttribute("src", src);
-		
-		return "imageView";
+		return "onenoteImageView";
 	}
 	
 }

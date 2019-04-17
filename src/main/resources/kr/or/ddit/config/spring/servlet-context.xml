@@ -25,7 +25,7 @@
 	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 	
 	<!-- ImageView 등록 -->
-	<bean id="imageView" class="kr.or.ddit.util.view.ImageView"></bean>
+	<bean id="onenoteImageView" class="kr.or.ddit.util.view.OnenoteImageView"></bean>
 	
 	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
       <property name="order" value="1"/>
