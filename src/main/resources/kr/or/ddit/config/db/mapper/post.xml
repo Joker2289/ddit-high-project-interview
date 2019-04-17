@@ -68,9 +68,6 @@
 		where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
 	</select>
 	
-	 
-	 
-	 
 	<select id="select_nextPost" parameterType="paginationVo" resultType="postVo">
 		select *
 		  from (select b.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn

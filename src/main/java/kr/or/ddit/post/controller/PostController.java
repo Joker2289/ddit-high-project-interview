@@ -549,4 +549,59 @@ public class PostController {
 		return "complate";
 	}
 	
+	@RequestMapping(path={"/deletepost"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String deletePost(String post_code){
+		postService.delete_post(post_code);
+		
+		return "complate";
+	}
+	
+	@RequestMapping(path={"/getpostinfo"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String getPostInfo(String post_code, Model model, HttpServletRequest request){
+		logger.debug("post_code qweasdzxc : {}", post_code);
+		
+		PostVo postInfo = postService.select_postInfo(post_code);
+//		model.addAttribute("postInfo", postInfo);
+		
+//		request.getSession().setAttribute("postInfo", postInfo);
+		
+		String contents = postInfo.getPost_contents();
+		
+		return contents;
+	}
+	
+	@RequestMapping(path={"/unfollow"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String unfolow(String target_id, HttpServletRequest request){
+		
+		FollowVo followInfo = new FollowVo();
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		followInfo.setMem_id(memberInfo.getMem_id());
+		followInfo.setRef_keyword(target_id);
+		
+		followService.delete_follow(followInfo);
+		
+		return "complate";
+	}
+	
+	@RequestMapping(path={"/postreport"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String postReport(String post_code, HttpServletRequest request){
+		//게시글 신고 기능 구현 예정
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		return "complate";
+	}
+	
+	@RequestMapping(path={"/commentreport"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String commentReport(String comment_code, HttpServletRequest request){
+		//댓글 신고기능 구현 예정
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		return "complate";
+	}
 }

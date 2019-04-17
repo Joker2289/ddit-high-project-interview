@@ -22,8 +22,8 @@ public class FollowDaoImpl implements IFollowDao {
 	}
 
 	@Override
-	public int delete_follow(String follow_code) {
-		return sqlSession.delete("follow.delete_follow", follow_code);
+	public int delete_follow(FollowVo followVo) {
+		return sqlSession.delete("follow.delete_follow", followVo);
 	}
 
 	@Override

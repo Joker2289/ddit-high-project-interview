@@ -7,7 +7,9 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
+import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
@@ -117,6 +119,38 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 		List<UsersVo> UserList = sqlSessionTemplate.selectList("personal.recommendUsers", paginationVo);
 		return UserList;
 	}
+
+	@Override
+	public List<UsersVo> filterSearchLocal(String user_id) {
+		List<UsersVo> localList = sqlSessionTemplate.selectList("personal.filterSearchLocal", user_id);
+		return localList;
+	}
+
+	@Override
+	public List<Career_infoVo> filterSearchPastCorpor(String user_id) {
+		List<Career_infoVo> PastCorporList = sqlSessionTemplate.selectList("personal.filterSearchPastCorpor", user_id);
+		return PastCorporList;
+	}
+
+	@Override
+	public List<Career_infoVo> filterSearchPresentCorpor(String user_id) {
+		List<Career_infoVo> PresentCorporList = sqlSessionTemplate.selectList("personal.filterSearchPresentCorpor", user_id);
+		return PresentCorporList;
+	}
+
+	@Override
+	public List<Career_infoVo> filtersearchjobPosition(String user_id) {
+		List<Career_infoVo> jobPositionList = sqlSessionTemplate.selectList("personal.filtersearchjobPosition", user_id);
+		return jobPositionList;
+	}
+
+	@Override
+	public List<Education_infoVo> filterSearchSchool(String user_id) {
+		List<Education_infoVo> SchoolList = sqlSessionTemplate.selectList("personal.filterSearchSchool", user_id);
+		return SchoolList;
+	}
+	
+	
 
 
 

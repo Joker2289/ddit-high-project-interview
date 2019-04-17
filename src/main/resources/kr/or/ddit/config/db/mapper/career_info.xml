@@ -62,4 +62,50 @@
 		delete from career_info
 			  where career_code = #{career_code}
 	</delete>
+	
+		<!-- 회사의 직원수-->
+	<select id="employee_count" parameterType="String" resultType="Integer">
+		SELECT COUNT(*)
+		FROM CAREER_INFO
+		WHERE CORPORATE_NAME = #{corporate_name }
+	</select>
+	
+	
+	<!-- 회사 직원의 각대학 count학교명-->
+	<select id="employee_education_count" parameterType="String" resultType="education_infoVo">
+	select A.SCHOOL_NAME
+			FROM EDUCATION_INFO A, (
+									SELECT USER_ID
+									FROM CAREER_INFO
+									WHERE CORPORATE_NAME = #{corporate_name }
+									) B
+			WHERE A.USER_ID = B.USER_ID
+	group by a.school_name
+	order by count(*) desc
+	</select>
+	
+	<!-- 회사 직원의 각대학 count숫자-->
+	<select id="employee_education_count2" parameterType="String" resultType="Integer">
+	select count (*)
+			FROM EDUCATION_INFO A, (
+									SELECT USER_ID
+									FROM CAREER_INFO
+									WHERE CORPORATE_NAME = #{corporate_name }
+									) B
+			WHERE A.USER_ID = B.USER_ID
+	group by a.school_name
+	order by count(*) desc
+	</select>
+	
+	
+	
+	<!-- 직원들이름과 대학교 -->
+	<select id="employee_education" parameterType="String" resultType="Map">
+	SELECT A.USER_ID, A.SCHOOL_NAME
+ 		FROM EDUCATION_INFO A, (SELECT USER_ID
+                            FROM CAREER_INFO
+                           WHERE CORPORATE_NAME =  #{corporate_name }) B
+		WHERE A.USER_ID = B.USER_ID
+	</select>
+	
 </mapper>

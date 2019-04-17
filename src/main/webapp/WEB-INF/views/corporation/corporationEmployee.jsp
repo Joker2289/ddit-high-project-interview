@@ -22,20 +22,10 @@
 				<br>
 				<%@ include file="/WEB-INF/views/corporation/module/left.jsp"%>
 				<br>
-<!-- 				<div style="position: relative; top: -177px; left: 180px;margin-top: 20px;border: 1px solid;width: 270px; height: 180px;"> -->
+				
+ 				<div style="margin-top: -157px; margin-left: 240px; border : 1px solid;width: 370px; height: 300px;">
 
-
-
-
-<!-- 				</div> -->
-			</div>
-		</div>
-	</div>
-
-
-<div class="charts">
-  <div class="charts__chart"></div>
-
+출신학교
 <div class="charts">
 <!--   <span>chart--default</span> -->
   <div class="charts__chart chart--p100 chart--default" data-percent></div><!-- /.charts__chart -->
@@ -44,14 +34,18 @@
 <!--   <span>chart--green</span> -->
   <div class="charts__chart chart--p60 chart--green" data-percent></div><!-- /.charts__chart -->
 <!--   <span>chart--red</span> -->
-  <div class="charts__chart chart--p40 chart--red" data-percent></div><!-- /.charts__chart -->
+  <div class="charts__chart chart--p${ecount } chart--red" data-percent></div><!-- /.charts__chart -->
 <!--   <span>chart--yellow</span> -->
   <div class="charts__chart chart--p20 chart--yellow" data-percent></div><!-- /.charts__chart -->
 <!--   <span>chart--grey</span> -->
   <div class="charts__chart chart--p5 chart--grey" data-percent></div><!-- /.charts__chart -->
-</div>/.charts
-
 </div>
+${eec.get(0).school_name }
+${eec2.get(0)}
+ 				</div> 
+			</div>
+		</div>
+	</div>
 
 
 

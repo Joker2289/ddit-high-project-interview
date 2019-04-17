@@ -16,9 +16,10 @@
 	</insert>
 	
 	<!-- 팔로우 정보 삭제 -->
-	<delete id="delete_follow" parameterType="String">
+	<delete id="delete_follow" parameterType="followVo">
 		delete follow
-		 where follow_code = #{follow_code}
+		 where (mem_id = #{mem_id} or ref_keyword = #{mem_id})
+		   and (ref_keyword = #{ref_keyword} or mem_id = #{ref_keyword})
 	</delete>
  
 	<!-- 회원의 전체 팔로우 목록 조회 -->

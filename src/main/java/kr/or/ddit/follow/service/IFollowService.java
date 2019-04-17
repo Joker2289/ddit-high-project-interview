@@ -9,7 +9,7 @@ public interface IFollowService {
 
 	int insert_follow(FollowVo followVo);
 
-	int delete_follow(String follow_code);
+	int delete_follow(FollowVo followVo);
 
 	List<FollowVo> select_followList(String mem_id);
 
