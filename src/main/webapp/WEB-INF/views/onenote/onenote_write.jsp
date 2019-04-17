@@ -116,8 +116,6 @@
     <script type="text/javascript" src="/onenote/mode/javascript/javascript.js"></script>
     <script type="text/javascript" src="/onenote/mode/jinja2/jinja2.js"></script>
     <script type="text/javascript" src="/onenote/mode/jsx/jsx.js"></script>
-    <script type="text/javascript" src="/onenote/mode/julia/julia.js"></script>
-    <script type="text/javascript" src="/onenote/mode/livescript/livescript.js"></script>
     <script type="text/javascript" src="/onenote/mode/lua/lua.js"></script>
     <script type="text/javascript" src="/onenote/mode/markdown/markdown.js"></script>
     <script type="text/javascript" src="/onenote/mode/mathematica/mathematica.js"></script>
@@ -143,7 +141,6 @@
     <script type="text/javascript" src="/onenote/mode/pug/pug.js"></script>
     <script type="text/javascript" src="/onenote/mode/puppet/puppet.js"></script>
     <script type="text/javascript" src="/onenote/mode/python/python.js"></script>
-    <script type="text/javascript" src="/onenote/mode/q/q.js"></script>
     <script type="text/javascript" src="/onenote/mode/r/r.js"></script>
     <script type="text/javascript" src="/onenote/mode/rpm/rpm.js"></script>
     <script type="text/javascript" src="/onenote/mode/rst/rst.js"></script>
@@ -560,8 +557,6 @@
                         <option value="javascript">javascript</option>
                         <option value="jinja2">jinja2</option>
                         <option value="jsx">jsx</option>
-                        <option value="julia">julia</option>
-                        <option value="livescript">livescript</option>
                         <option value="lua">lua</option>
                         <option value="markdown">markdown</option>
                         <option value="mathematica">mathematica</option>
@@ -587,7 +582,6 @@
                         <option value="pug">pug</option>
                         <option value="pupuppetg">puppet</option>
                         <option value="python">python</option>
-                        <option value="q">q</option>
                         <option value="r">r</option>
                         <option value="rpm">rpm</option>
                         <option value="rst">rst</option>

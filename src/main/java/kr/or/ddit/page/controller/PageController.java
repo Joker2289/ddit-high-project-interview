@@ -33,7 +33,7 @@ public class PageController {
 	@RequestMapping(path = { "/onenote" }, method = RequestMethod.GET)
 	public String onenoteView(HttpServletRequest req, Model model) {
 
-		return "onenote/write";
+		return "onenote/onenote_write";
 	}
 
 	/**
@@ -55,6 +55,7 @@ public class PageController {
 
 		String realFileName = "";
 		String returnFileName = "";
+		
 		
 		// 이미지를 업로드 한경우		//spring 프로젝트에 ProfileImgView
 		if (imageStorage.getSize() > 0) {
