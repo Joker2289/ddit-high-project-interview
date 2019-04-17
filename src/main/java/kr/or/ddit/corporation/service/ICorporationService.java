@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.corporation.model.CorporationVo;
+import kr.or.ddit.education_info.model.Education_infoVo;
 
 public interface ICorporationService {
 	
@@ -92,6 +93,20 @@ public interface ICorporationService {
 	 * Method 설명 : 기업 정보 수정
 	 */
 	int update_corpInfo(CorporationVo vo);
+	
+	/**
+	 * 직원들 전공
+	 * @param vo
+	 * @return
+	 */
+	List<Education_infoVo> employee_major(String corp_name);
+	
+	/**
+	 * 직원들 전공 count
+	 * @param vo
+	 * @return
+	 */
+	List<Integer> employee_major_count(String corp_name);
 	
 
 }

@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -300,12 +301,33 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 
 		List<Education_infoVo> eec = careerService.employee_education_count(corporationInfo.getCorp_name());		
 		List<Integer> eec2 = careerService.employee_education_count2(corporationInfo.getCorp_name());		
-		
+		int employee_count = careerService.employee_count(corporationInfo.getCorp_name());
 		model.addAttribute("eec", eec);
 		model.addAttribute("eec2", eec2);
-		System.out.println(eec);
-		System.out.println(eec2);
-
+		model.addAttribute("employee_count", employee_count);
+		List<Integer> a = new ArrayList();
+		a.add(100*eec2.get(0)/employee_count);
+		a.add(100*eec2.get(1)/employee_count);
+		a.add(100*eec2.get(2)/employee_count);
+		model.addAttribute("a", a);
+		
+		
+		List<Education_infoVo> em = corporationService.employee_major(corporationInfo.getCorp_name());
+		List<Integer> emc = corporationService.employee_major_count(corporationInfo.getCorp_name());
+		List<Integer> b = new ArrayList();
+		b.add(100*emc.get(0)/employee_count);
+		b.add(100*emc.get(1)/employee_count);
+		b.add(100*emc.get(2)/employee_count);
+		b.add(100*emc.get(3)/employee_count);
+		model.addAttribute("em", em);
+		model.addAttribute("emc", emc);
+		model.addAttribute("b", b);
+		
+		System.out.println(b);
+		
+		
+		
+		
 		return "corporationEmployeeTiles";
 	}
 

@@ -92,7 +92,32 @@
 	</select>
 	
 	
-
+	<!-- 직원 전공 -->
+	<select id="employee_major" parameterType="String" resultType="education_infoVo">
+	select  a.major
+			FROM education_info A, (
+								SELECT USER_ID
+								FROM CAREER_INFO
+								WHERE CORPORATE_NAME = #{corp_name}
+							) B
+			WHERE A.USER_ID = B.USER_ID
+	group by a.major
+    order by count(*) desc
+	</select>
+	
+	<!-- 직원 전공 count -->
+	<select id="employee_major_count" parameterType="String" resultType="Integer">
+	select count (*)
+			FROM education_info A, (
+								SELECT USER_ID
+								FROM CAREER_INFO
+								WHERE CORPORATE_NAME = #{corp_name}
+							) B
+			WHERE A.USER_ID = B.USER_ID
+	group by a.major
+    order by count(*) desc
+	</select>
+	
 	
 	
 	

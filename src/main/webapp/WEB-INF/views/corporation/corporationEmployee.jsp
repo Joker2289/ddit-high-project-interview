@@ -23,26 +23,36 @@
 				<%@ include file="/WEB-INF/views/corporation/module/left.jsp"%>
 				<br>
 				
- 				<div style="margin-top: -157px; margin-left: 240px; border : 1px solid;width: 370px; height: 300px;">
-
-출신학교
-<div class="charts">
-<!--   <span>chart--default</span> -->
-  <div class="charts__chart chart--p100 chart--default" data-percent></div><!-- /.charts__chart -->
-<!--   <span>chart--blue</span> -->
-  <div class="charts__chart chart--p80 chart--blue" data-percent></div><!-- /.charts__chart -->
-<!--   <span>chart--green</span> -->
-  <div class="charts__chart chart--p60 chart--green" data-percent></div><!-- /.charts__chart -->
-<!--   <span>chart--red</span> -->
-  <div class="charts__chart chart--p${ecount } chart--red" data-percent></div><!-- /.charts__chart -->
-<!--   <span>chart--yellow</span> -->
-  <div class="charts__chart chart--p20 chart--yellow" data-percent></div><!-- /.charts__chart -->
-<!--   <span>chart--grey</span> -->
-  <div class="charts__chart chart--p5 chart--grey" data-percent></div><!-- /.charts__chart -->
-</div>
-${eec.get(0).school_name }
-${eec2.get(0)}
- 				</div> 
+ 				<div style="margin-top: -157px; margin-left: 240px; border : 1px solid;width: 900px;">
+		
+		
+					<div style="border : 1px solid;width:350px;margin-left: 10px;margin-top: 10px;">
+	출신학교 | ${employee_count }
+						<div class="charts">
+								${eec.get(0).school_name } | ${eec2.get(0) }
+								<div class="charts__chart chart--p${a.get(0)} chart--default" data-percent></div>
+								${eec.get(1).school_name } | ${eec2.get(1) }
+								<div class="charts__chart chart--p${a.get(1)} chart--default" data-percent></div>
+								${eec.get(2).school_name } | ${eec2.get(2) }
+								<div class="charts__chart chart--p${a.get(2)} chart--default" data-percent></div>
+						</div>
+					</div> 
+					<div style="border : 1px solid;width:350px;margin-left: 370px;margin-top: -155px;">
+	전공 | ${employee_count }
+						<div class="charts">
+								${em.get(0).major } | ${emc.get(0) }
+								<div class="charts__chart chart--p${b.get(0)} chart--default" data-percent></div>
+								${em.get(1).major } | ${emc.get(1) }
+								<div class="charts__chart chart--p${b.get(1)} chart--default" data-percent></div>
+								${em.get(2).major } | ${emc.get(2) }
+								<div class="charts__chart chart--p${b.get(2)} chart--default" data-percent></div>
+								${em.get(3).major } | ${emc.get(3) }
+								<div class="charts__chart chart--p${b.get(3)} chart--default" data-percent></div>
+						</div>
+					</div> 
+					
+					
+				</div>
 			</div>
 		</div>
 	</div>
