@@ -77,7 +77,7 @@
 <div class="container">
 <div class="row">
 <div>
-	<table border="0" style="margin-bottom: 60px; margin-top: 22px; padding: 0px; margin-left: -2px;">
+	<table border="0" style="margin-bottom: 0px; margin-top: 22px; padding: 0px; margin-left: -2px;">
 		<tr>
 			<td style="vertical-align: top;">
 				<div class="col-md-12">
@@ -112,8 +112,18 @@
 									</td>
 								</tr>
 							</table>			
-						</c:forEach>					
+						</c:forEach>
 					</div>
+					
+					<div class="col-md-12">
+						<div class="whiteBox" style="width: 795px; margin-bottom: 100px; height: 50px; padding: 10px;
+								padding-left: 20px; font-size: 20px; margin-left: -15px; margin-top: -2px;">
+							<a href="${pageContext.request.contextPath }/recruit">
+								<i class="fas fa-chevron-left" style="font-size: 19px;"></i>
+								<strong>&nbsp; &nbsp;채용공고 페이지로</strong>
+							</a>
+						</div>
+					</div>												
 				</div>			
 			</td>
 			<td style="vertical-align: top; margin-left: 0px;">
@@ -127,9 +137,10 @@
 							<c:forEach begin="1" end="${appList.size() }" varStatus="i">
 								<tr>
 									<td id="app${i.index }" onmouseover="" style="cursor: pointer; 
-											border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 7px; 
-											padding-top: 0px; padding-left: 4px;">
-										<img src="${corpImgList_app.get(i.index - 1) }" width="150"><br>
+											border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 10px; 
+											padding-top: 10px; padding-left: 4px;">
+										<img src="${corpImgList_app.get(i.index - 1) }" width="150"
+												style="margin-bottom: 10px;"><br><br>
 										${appList.get(i.index - 1).recruit_title }<br>
 										${corpNmList_app.get(i.index - 1) }<br>
 										${appList.get(i.index - 1).job_local }<br>
@@ -143,6 +154,7 @@
 			</td>
 		</tr>
 	</table>
+	
 	<br><br><br>
 	<!-- '목록으로' 버튼 만들기. 변경사항을 ajax로 처리하면 뒤로 가기를 이전 페이지 이동으로 해도 됨. -->
 	
