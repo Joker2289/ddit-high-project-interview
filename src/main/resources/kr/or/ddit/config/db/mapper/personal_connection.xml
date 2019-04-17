@@ -382,7 +382,7 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 	
 	
 	<!-- 필터로 검색 - 전 직장 검색 -->
-	<select id="filterSearchPastCorpor" parameterType="String" resultType="usersVo">
+	<select id="filterSearchPastCorpor" parameterType="String" resultType="career_infoVo">
 		select corporate_name
 		  from career_info
 		 where resign_date is not null
@@ -402,7 +402,7 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 	
 	
 	<!-- 필터로 검색 - 현 직장 검색 -->
-	<select id="filterSearchPresentCorpor" parameterType="String" resultType="usersVo">
+	<select id="filterSearchPresentCorpor" parameterType="String" resultType="career_infoVo">
 		select corporate_name
 		  from career_info
 		 where resign_date is null
@@ -456,6 +456,62 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 		                       and receive_accept='Y'
 		                       and receive_id !=#{user_id})
 		 group by school_name
+	</select>
+
+
+	<select id="peopleSearch" parameterMap="hashmap" resultType="usersVo">
+		 select a.user_id,
+	           users.profile_path,
+	           users.user_name,
+	           users.profile_img,
+	           b.introduce
+		  from users ,( select distinct(b.user_id)
+                          from (select user_id
+                                  from personal_connection
+                                 where (user_id =#{user_id} or receive_id ='#{user_id})
+                                   and receive_accept='Y'
+                                   and user_id !=#{user_id}
+                                 union
+                                select receive_id
+                                  from personal_connection
+                                 where (user_id =#{user_id} or receive_id =#{user_id})
+                                   and receive_accept='Y'
+                                   and receive_id !=#{user_id})a ,users b, CAREER_INFO c, EDUCATION_INFO d
+                         where a.user_id = b.user_id
+                           and b.user_id = c.user_id(+)
+                           and c.user_id = d.user_id(+)
+                           <if test="localList != null">
+                           and 
+	                           <foreach collection="localList" item="type"  open="and (" separator=")">
+	                           		b.addr1 like '서울%'	
+	 						   </foreach>
+						   </if>
+						   
+                           
+                            
+						  
+                          ) a , (select user_id,   
+                                                                                               substr(listagg(beintroduce, ' ') within group (order by graduation desc), 0, instr(listagg(beintroduce, ' ') within group (order by graduation desc), ' ', 1, 2)) as introduce
+                                                                                                   
+                                                                                          from (select a.user_id,
+                                                                                                  case when b.resign_date is null then b.corporate_name ||' ' ||job_position || ' '
+                                                                                                       when b.resign_date is not null then a.school_name ||' ' || a.degree_name || ' '
+                                                                                                   end as beintroduce,
+                                                                                                       a.graduation
+                                                                                                  from education_info a, career_info b
+                                                                                                 where a.user_id = b.user_id
+                                                                                                   and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select career_info.user_id,  max(nvl(career_info.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+                                                                                                                                                                                from career_info, education_info
+                                                                                                                                                                               where career_info.user_id = education_info.user_id
+                                                                                                                                                                               group by career_info.user_id)
+                                                                                                 order by a.graduation desc)
+                                                                                         group by user_id ) b
+		 where a.user_id = b.user_id(+)
+		   and a.user_id = users.user_id(+);
+		
+	
+	
+	
 	</select>
 	
 	
