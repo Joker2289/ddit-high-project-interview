@@ -14,5 +14,7 @@ public interface IFollowService {
 	List<FollowVo> select_followList(String mem_id);
 
 	List<FollowVo> select_followKindList(PaginationVo paginationVo);
+	
+	List<FollowVo> select_followingList(String mem_id);
 
 }

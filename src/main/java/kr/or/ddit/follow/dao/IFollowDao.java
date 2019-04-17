@@ -39,4 +39,15 @@ public interface IFollowDao {
 	
 	List<FollowVo> select_followKindList(PaginationVo paginationVo);
 	
+	/**
+	 * 
+	 * Method : select_followingList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 팔로잉 리스트 조회
+	 */
+	List<FollowVo> select_followingList(String mem_id);
+	
 }

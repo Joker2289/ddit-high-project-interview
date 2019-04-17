@@ -35,5 +35,10 @@ public class FollowDaoImpl implements IFollowDao {
 	public List<FollowVo> select_followKindList(PaginationVo paginationVo) {
 		return sqlSession.selectList("follow.select_followKindList", paginationVo);
 	}
+
+	@Override
+	public List<FollowVo> select_followingList(String mem_id) {
+	return sqlSession.selectList("follow.select_followingList", mem_id);
+	}
 	
 }

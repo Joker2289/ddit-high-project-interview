@@ -277,7 +277,7 @@
     from
     	corporation a
     where not
-    	a.corp_name in (select ref_keyword
+    	a.corp_id in (select ref_keyword
                           from follow
                          where mem_id=#{mem_id}
                            and division='11')

@@ -41,4 +41,43 @@
 		 where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
 	</select>
 	
+	<!-- 팔로잉 목록 조회 -->
+	<select id="select_followingList" parameterType="String" resultType="followVo">
+		select a.follow_code
+		     , a.mem_id
+		     , a.ref_keyword
+		     , a.division
+		     , b.profile_path as image_path
+		     , b.user_name as keyword_name
+		  from follow a, users b 
+		 where mem_id=#{mem_id}
+		   and  a.division = '43'
+		   and a.ref_keyword = b.user_id
+		 
+		 union all
+		 
+		select a.follow_code
+		     , a.mem_id
+		     , a.ref_keyword
+		     , a.division
+		     , c.logo_path
+		     , c.corp_name
+		  from follow a, corporation c  
+		 where mem_id=#{mem_id}
+		   and a.division = '11'
+		   and a.ref_keyword = c.corp_id
+		   
+		 union all
+		 
+		select a.follow_code
+		     , a.mem_id
+		     , a.ref_keyword
+		     , a.division
+		     , null
+		     , null
+		  from follow a  
+		 where a.mem_id=#{mem_id}
+		   and a.division = '16'
+	</select>
+	
 </mapper> 

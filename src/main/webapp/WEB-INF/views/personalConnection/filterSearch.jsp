@@ -81,6 +81,25 @@
 	          </div>	
        	    </div>
 		</div>
+		
+		<div style="padding-left: 45px; z-index: 999; max-width: 64px; margin-right: 15px; ">
+			<button type="button" class="btn btn-primary dropBoxBtn Off" style="height: 34px;"><strong>학교<span class="caret"></span></strong></button>
+			<div class="whiteBox dropBox" style="list-style: none; padding: 15px; min-width: 352px; margin: 0 0 0 0;">
+	          <div style="overflow:auto;width: 320px;height:145px;">
+	          	  <c:forEach items="${school}" var="school" >
+			          <div style="padding-bottom: 5px; font-size: 17px; display: table;">
+			          	<input class="school" type="checkbox" style="display :table-cell; vertical-align:middle; margin: 0; width: 20px; height: 20px;">
+			          	<label style="padding-left: 10px;">${school.school_name}</label>
+			          </div>
+	          	  </c:forEach>	
+	          </div>
+	          
+	          <div style="text-align: right;margin-top: 5px;">
+	          	<button type="button" class="btn btn-default schoolUnCheckBtn" style="border-style: hidden;width: 64px; height: 32px;"><strong>지우기 </strong></button>
+	          	<button type="button" class="btn btn-primary CheckBtn" style="width: 64px; height: 32px;"><strong>적용 </strong></button>
+	          </div>	
+       	    </div>
+		</div>
 	</div>
 </nav>
 
@@ -140,6 +159,9 @@ $(document).ready(function(){
 	$(".jobPositionUnCheckBtn").click(function(){
 		$(".jobPosition").prop("checked",false);
 	});
+	$(".schoolUnCheckBtn").click(function(){
+		$(".school").prop("checked",false);
+	});
 	
 	// 적용 클릭 시 배열에 저장
 	$(".CheckBtn").click(function(){
@@ -190,6 +212,13 @@ $(document).ready(function(){
 	    	arr.push($(this).next().text());    
 	    });
 	    jobPositionArr=arr;
+	    
+	    arr = new Array();
+	    
+	    $(".school:checked").each(function() {
+	    	arr.push($(this).next().text());    
+	    });
+	    schoolArr=arr;
 	    
 	}
 	
