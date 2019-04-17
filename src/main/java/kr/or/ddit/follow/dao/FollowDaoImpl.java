@@ -37,8 +37,20 @@ public class FollowDaoImpl implements IFollowDao {
 	}
 
 	@Override
+	public int getFollowingCnt(String mem_id) {
+		return sqlSession.selectOne("follow.getFollowingCnt", mem_id);
+	}
+
+	@Override
+	public int getFollowerCnt(String mem_id) {
+		return sqlSession.selectOne("follow.getFollowerCnt", mem_id);
+	}
+	
+	@Override
 	public List<FollowVo> select_followingList(String mem_id) {
 	return sqlSession.selectList("follow.select_followingList", mem_id);
 	}
+
+	
 	
 }

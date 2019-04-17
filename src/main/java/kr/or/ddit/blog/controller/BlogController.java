@@ -59,6 +59,8 @@ public class BlogController {
 		UsersVo uVo = usersService.select_userInfo(userId);
 		model.addAttribute("uVo", uVo);
 		
+		
+		
 		return "blogTiles";
 		
 	}
