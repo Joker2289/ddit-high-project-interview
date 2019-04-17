@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
+import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
@@ -166,15 +167,17 @@ public class Personal_connectionController {
 		
 		String user_id = memberVo.getMem_id();
 		
-		List<UsersVo> localList = personalService.filterSearchLocal(user_id);
+		List<UsersVo> localList 		  = personalService.filterSearchLocal(user_id);
 		List<Career_infoVo> presentCorpor = personalService.filterSearchPresentCorpor(user_id);
-		List<Career_infoVo> pastCorpor = personalService.filterSearchPastCorpor(user_id);
-		List<Career_infoVo> jobPosition = personalService.filtersearchjobPosition(user_id);
+		List<Career_infoVo> pastCorpor 	  = personalService.filterSearchPastCorpor(user_id);
+		List<Career_infoVo> jobPosition   = personalService.filtersearchjobPosition(user_id);
+		List<Education_infoVo> school 	  = personalService.filterSearchSchool(user_id);
 		
 		model.addAttribute("localList", localList);
 		model.addAttribute("presentCorpor", presentCorpor);
 		model.addAttribute("pastCorpor", pastCorpor);
 		model.addAttribute("jobPosition", jobPosition);
+		model.addAttribute("school", school);
 
 		
 		return "filterSearchTiles";
@@ -275,11 +278,11 @@ public class Personal_connectionController {
 	public String peopleSearch(String user_id, String[] localArr, String[] presentCorporArr, String[] pastCorporArr, String[] jobPositionArr, String[] schoolArr){
 		HashMap<String, Object> map = new HashMap<>();
 		
-		ArrayList<String> localList = new ArrayList<>();
+		ArrayList<String> localList 		= new ArrayList<>();
 		ArrayList<String> presentCorporList = new ArrayList<>();
-		ArrayList<String> pastCorporList = new ArrayList<>();
-		ArrayList<String> jobPositionList = new ArrayList<>();
-		ArrayList<String> schoolList = new ArrayList<>();
+		ArrayList<String> pastCorporList 	= new ArrayList<>();
+		ArrayList<String> jobPositionList 	= new ArrayList<>();
+		ArrayList<String> schoolList 		= new ArrayList<>();
 		
 		localList.toArray(localArr);
 		presentCorporList.toArray(presentCorporArr);

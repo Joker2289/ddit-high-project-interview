@@ -277,7 +277,7 @@
     from
     	corporation a
     where not
-    	a.corp_name in (select ref_keyword
+    	a.corp_id in (select ref_keyword
                           from follow
                          where mem_id=#{mem_id}
                            and division='11')
@@ -459,7 +459,7 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 	</select>
 
 
-	<select id="peopleSearch" parameterMap="hashmap" resultType="usersVo">
+	<!-- <select id="peopleSearch" parameterMap="java.util.Map hashMap" resultType="usersVo">
 		 select a.user_id,
 	           users.profile_path,
 	           users.user_name,
@@ -512,7 +512,7 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 	
 	
 	
-	</select>
+	</select> -->
 	
 	
 	
