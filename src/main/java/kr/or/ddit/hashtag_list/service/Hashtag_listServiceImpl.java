@@ -26,8 +26,8 @@ public class Hashtag_listServiceImpl implements IHashtag_listService {
 	}
 
 	@Override
-	public int delete_hashtaglist(String taglist_code) {
-		return hashtag_listDao.delete_hashtaglist(taglist_code);
+	public int delete_hashtaglist(Hashtag_listVo taglistVo) {
+		return hashtag_listDao.delete_hashtaglist(taglistVo);
 	}
 
 	@Override

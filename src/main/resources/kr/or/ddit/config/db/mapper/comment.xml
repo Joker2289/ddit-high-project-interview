@@ -94,4 +94,12 @@
 		                   and division = #{division}
 		                order by comment_date desc) b)
 	</select>
+	
+	<select id="select_commentInfo" parameterType="String" resultType="post_commentVo">
+		select comment_code, mem_id, comment_contents, ref_code, division, comment_date
+		  from post_comment
+		 where comment_code = #{comment_code}
+	</select>
+	
+	
 </mapper>

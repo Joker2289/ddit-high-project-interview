@@ -26,8 +26,8 @@ public class Hashtag_listDaoImpl implements IHashtag_listDao {
 	}
 
 	@Override
-	public int delete_hashtaglist(String taglist_code) {
-		return sqlSession.delete("hashtag.delete_hashtaglist", taglist_code);
+	public int delete_hashtaglist(Hashtag_listVo taglistVo) {
+		return sqlSession.delete("hashtag.delete_hashtaglist", taglistVo);
 	}
 
 	@Override

@@ -33,6 +33,7 @@
 		<typeAlias alias="recommendationVo" type="kr.or.ddit.recommendation.model.RecommendationVo"/>
 		<typeAlias alias="possesion_skillsVo" type="kr.or.ddit.possesion_skills.model.Possesion_skillsVo"/>
 		<typeAlias alias="hideVo" type="kr.or.ddit.hide_post.model.Hide_postVo"/>
+		<typeAlias alias="reportVo" type="kr.or.ddit.report.model.ReportVo"/>
 	</typeAliases> 
   
 	<mappers>
@@ -62,6 +63,7 @@
 		<mapper resource="kr/or/ddit/config/db/mapper/recommendation.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/possesion_skills.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/hide_post.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/reportcontent.xml"/>
 	</mappers>
 </configuration>
 

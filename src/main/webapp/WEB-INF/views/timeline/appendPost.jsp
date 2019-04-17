@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<link href="/css/timeline/writemodal.css" rel="stylesheet">
+<!-- <link href="/css/timeline/writemodal.css" rel="stylesheet"> -->
 
 <c:forEach items="${nextPostList }" var="post">
   <div id="col-post${post.post_code }" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
@@ -229,5 +229,8 @@
 		}
 		
 	});
+	
+
+	
 
 </script>

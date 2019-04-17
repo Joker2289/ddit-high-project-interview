@@ -28,6 +28,8 @@ import kr.or.ddit.good.service.IGoodService;
 import kr.or.ddit.hashtag.service.IHashtagService;
 import kr.or.ddit.hashtag_list.model.Hashtag_listVo;
 import kr.or.ddit.hashtag_list.service.IHashtag_listService;
+import kr.or.ddit.hide_post.model.Hide_postVo;
+import kr.or.ddit.hide_post.service.IHide_postService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
@@ -35,6 +37,8 @@ import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
 import kr.or.ddit.post_comment.model.Post_commentVo;
 import kr.or.ddit.post_comment.service.ICommentService;
+import kr.or.ddit.report.model.ReportVo;
+import kr.or.ddit.report.service.IReportService;
 import kr.or.ddit.save_post.model.Save_postVo;
 import kr.or.ddit.save_post.service.ISave_postService;
 import kr.or.ddit.users.model.UsersVo;
@@ -82,6 +86,12 @@ public class PostController {
 	
 	@Resource(name="save_postService")
 	private ISave_postService save_postService;
+	
+	@Resource(name="reportService")
+	private IReportService reportService;
+	
+	@Resource(name="hide_postService")
+	private IHide_postService hide_postService;
 	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
 	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request){
@@ -276,7 +286,8 @@ public class PostController {
 			String[] temp = post_contents.split(tagList.get(i), 2);
 			
 			if(temp.length == 1){
-				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";
+				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";	
+									   //"<a href='/hashtag/" + tagList.get(i).split("#")[1] + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[0];
 			} else {
 				replacedPost_contents += temp[0];
@@ -557,21 +568,117 @@ public class PostController {
 		return "complate";
 	}
 	
+	/**
+	 * Method : getPostInfo
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param post_code
+	 * @param model
+	 * @param request
+	 * @return
+	 * Method 설명 : 특정 게시물 내용 조회
+	 */
 	@RequestMapping(path={"/getpostinfo"}, method=RequestMethod.POST)
 	@ResponseBody
-	public String getPostInfo(String post_code, Model model, HttpServletRequest request){
-		logger.debug("post_code qweasdzxc : {}", post_code);
+	public String getPostInfo(String post_code){
 		
 		PostVo postInfo = postService.select_postInfo(post_code);
-//		model.addAttribute("postInfo", postInfo);
-		
-//		request.getSession().setAttribute("postInfo", postInfo);
-		
 		String contents = postInfo.getPost_contents();
 		
 		return contents;
 	}
 	
+	/**
+	 * Method : updatePost
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param post_code
+	 * @param post_contents
+	 * @param request
+	 * @param model
+	 * @return
+	 * Method 설명 : 게시물 수정
+	 */
+	@RequestMapping(path={"/updatepost"}, method=RequestMethod.POST)
+	public String updatePost(String post_code, String post_contents, HttpServletRequest request, Model model){
+		
+		PostVo updatePost = new PostVo();
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		updatePost.setPost_contents(post_contents);
+		updatePost.setPost_code(post_code);
+		
+		postService.update_post(updatePost);
+		
+		
+		//수정된 게시글의 해시태그 추출
+		Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣]*)");
+		Matcher m = p.matcher(post_contents);
+		
+		String hashtag = "";
+		
+		Hashtag_listVo taglistVo = new Hashtag_listVo();
+		String hashtag_name = "";
+		
+		taglistVo.setDivision("28");
+		taglistVo.setRef_code(post_code);
+		
+		taglistService.delete_hashtaglist(taglistVo); // 해당 글에 등록된 hashtag를 초기화(모두삭제)
+		
+		List<String> tagList = new ArrayList<String>();
+		
+		while(m.find()){
+			hashtag = hashtag_replace(m.group());
+			tagList.add(hashtag);
+			
+			List<Hashtag_listVo> beforList = taglistService.select_hashtaglist(taglistVo);
+			
+			
+			if(hashtag != null){
+				logger.debug("추출된 해시태그 : {}", hashtag);
+				taglistVo.setHashtag_name(hashtag);
+				
+				hashtagService.insert_hashtag(hashtag);
+				taglistService.insert_hashtaglist(taglistVo);
+			}
+		}
+		
+		String replacedPost_contents = "";
+		for(int i=0; i<tagList.size(); i++){
+			String[] temp = post_contents.split(tagList.get(i), 2);
+			
+			if(temp.length == 1){
+				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";	
+									   //"<a href='/hashtag/" + tagList.get(i).split("#")[1] + "'>" + tagList.get(i) + "</a>";
+				post_contents = temp[0];
+			} else {
+				replacedPost_contents += temp[0];
+				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";
+				post_contents = temp[1];
+			}
+			
+			if(i == tagList.size() - 1){
+				replacedPost_contents += temp[1];
+			}
+		}
+		
+		if(!replacedPost_contents.equals("")){
+			updatePost.setPost_contents(replacedPost_contents);
+			int postInsertCnt =  postService.update_post(updatePost);
+		}
+		
+		return "";
+	}
+	
+	/**
+	 * Method : unfolow
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param target_id
+	 * @param request
+	 * @return
+	 * Method 설명 : 언팔로우
+	 */
 	@RequestMapping(path={"/unfollow"}, method=RequestMethod.POST)
 	@ResponseBody
 	public String unfolow(String target_id, HttpServletRequest request){
@@ -587,21 +694,98 @@ public class PostController {
 		return "complate";
 	}
 	
+	/**
+	 * Method : postReport
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param post_code
+	 * @param request
+	 * @return
+	 * Method 설명 : 게시글 신고
+	 */
 	@RequestMapping(path={"/postreport"}, method=RequestMethod.POST)
 	@ResponseBody
-	public String postReport(String post_code, HttpServletRequest request){
-		//게시글 신고 기능 구현 예정
+	public String postReport(String post_code, String report_contents, HttpServletRequest request){
+		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		ReportVo report = new ReportVo();
+		report.setDivision("28");
+		report.setRef_code(post_code);
+		report.setMem_id(memberInfo.getMem_id());
+		report.setReport_contents(report_contents);
+		
+		reportService.insert_reportInfo(report);
 		
 		return "complate";
 	}
 	
+	/**
+	 * Method : commentReport
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param comment_code
+	 * @param request
+	 * @return 
+	 * Method 설명 : 댓글 신고
+	 */
 	@RequestMapping(path={"/commentreport"}, method=RequestMethod.POST)
 	@ResponseBody
-	public String commentReport(String comment_code, HttpServletRequest request){
+	public String commentReport(String comment_code, String report_contents, HttpServletRequest request){
 		//댓글 신고기능 구현 예정
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
+		ReportVo report = new ReportVo();
+		report.setDivision("29");
+		report.setRef_code(comment_code);
+		report.setMem_id(memberInfo.getMem_id());
+		report.setReport_contents(report_contents);
+		
+		reportService.insert_reportInfo(report);
+		
 		return "complate";
 	}
+	
+	@RequestMapping(path={"/hidepost"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String hidePost(String post_code, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		Hide_postVo hideVo = new Hide_postVo();
+		hideVo.setMem_id(memberInfo.getMem_id());
+		hideVo.setPost_code(post_code);
+		
+		hide_postService.insert_hidepostInfo(hideVo);
+		
+		return "complate";
+	}
+	
+	/**
+	 * Method : getCommentInfo
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param comment_code
+	 * @return
+	 * Method 설명 : 특정 댓글 내용 조회
+	 */
+	@RequestMapping(path={"/getcommentInfo"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String getCommentInfo(String comment_code){
+		
+		Post_commentVo commentInfo = commentService.select_commentInfo(comment_code);
+		String comment_contents = commentInfo.getComment_contents();
+		
+		return comment_contents;
+	}
+	
+	@RequestMapping(path={"/deletecomment"},method=RequestMethod.POST)
+	@ResponseBody
+	public String deleteComment(String comment_code){
+		
+		commentService.delete_comment(comment_code);
+		
+		return "complate";
+	}
+	
 }

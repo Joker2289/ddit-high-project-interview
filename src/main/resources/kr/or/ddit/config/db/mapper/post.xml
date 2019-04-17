@@ -61,8 +61,12 @@
 		                                where mem_id = #{mem_id}
 		                                  and (division = '43' or division = '11'))
 		           and post.post_code not in (select post_code
-		                                    from hide_post
-		                                   where mem_id = #{mem_id}))
+		                                    	from hide_post
+		                                  	   where mem_id = #{mem_id})
+				   and post.post_code not in (select ref_code
+                                        		from reportcontent
+                                       		   where division = 28
+                                         	     and mem_id = #{mem_id}))		                                   
 		            or post.mem_id = #{mem_id}
 		        order by post_date desc) b ) 
 		where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
@@ -85,8 +89,12 @@
 		                                where mem_id = #{mem_id}
 		                                  and (division = '43' or division = '11'))
 		           and post.post_code not in (select post_code
-		                                    from hide_post
-		                                   where mem_id = #{mem_id}))
+		                                    	from hide_post
+		                                   	   where mem_id = #{mem_id})
+				   and post.post_code not in (select ref_code
+                                        		from reportcontent
+                                       		   where division = 28
+                                         	     and mem_id = #{mem_id}))
 		            or post.mem_id = #{mem_id}
 		        order by post_date desc) b ) 
 		where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
