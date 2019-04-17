@@ -10,6 +10,9 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -517,6 +520,30 @@ public class RecruitControllerTest extends WebTestConfig{
 		
 		rVo.setApp_count(app_count_after);
 		recrService.updateRecr(rVo);
+	}
+	
+	// 다음 뉴스 크롤링 테스트.
+	@Test
+	public void testNewsCrawling() throws IOException {
+		/***Given***/
+		Document doc = Jsoup.connect("https://media.daum.net/digital/").get();
+		
+		Elements data = doc.select(".cate_sub").get(0).select("a");
+		
+		String temp_str1 = data.get(0).toString().split("alt=\"")[1];
+		
+		String title1 = temp_str1.substring(0, temp_str1.length()-7);
+		String link1 = data.get(0).toString().split("\"")[1];
+		
+		logger.debug("data ? : {}", data);
+		logger.debug("temp_str1 1? : {}", title1);
+		logger.debug("link 1? : {}", link1);
+//		logger.debug("title 1? : {}", temp_str1.substring(0, temp_str1.length()-4));
+		
+		/***When***/
+
+		/***Then***/
+		//assert
 	}
 	
 	

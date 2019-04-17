@@ -108,6 +108,10 @@ public class Save_recruitController {
 			}
 			
 			if(uSRList.size() == 0 || srecr_Flag  == false){
+				// last sVo(lSVo): 특정 채용공고저장(user_id, recruit_cod)의 마지막 항목.
+				// lSVo를 잘못 가져왔네.
+				Save_recruitVo lSVo = srecrService.getULSrecr(mVo.getMem_id());
+				
 				Save_recruitVo sVo = new Save_recruitVo();
 				sVo.setRecruit_code(scrap_code);
 				sVo.setSave_code(String.valueOf(srecrService.getSrecrCnt()+1));
@@ -130,6 +134,11 @@ public class Save_recruitController {
 				
 				sVo.setRecr_app(recr_app);
 				srecrService.insertSrecr(sVo);
+				
+				// rRList1가 변하지 않도록 lSVo로 lVRVo를 수정. save_code는 '기존값+2'로 수정.
+				int int_code = Integer.valueOf(lSVo.getSave_code());
+				lSVo.setSave_code(String.valueOf(int_code+2));
+				srecrService.insertSrecr(lSVo);
 			}else{
 				for(Save_recruitVo sVo : uSRList){
 					if(sVo.getRecruit_code().equals(scrap_code)){
@@ -150,10 +159,13 @@ public class Save_recruitController {
 		// 없으면 채용공고 페이지. 
 		// 'srecr'은 저장한 채용공고 페이지. 
 		// 'srListAjax'는 저장한 채용공고 리스트 ajax.
+		// 'rRList1Ajax'는 추천 채용공고1 리스트 ajax.
 		if(req_page != null && req_page.equals("srecr")){
 			return "redirect:" + req.getContextPath() + "/srecr";
 		}else if(req_page != null && req_page.equals("srListAjax")){
 			return "redirect:" + req.getContextPath() + "/srListAjaxHtml";
+		}else if(req_page != null && req_page.equals("rRList1Ajax")){
+			return "redirect:" + req.getContextPath() + "/rRList1AjaxHtml";
 		}
 		
 		return "redirect:" + req.getContextPath() + "/recruit";

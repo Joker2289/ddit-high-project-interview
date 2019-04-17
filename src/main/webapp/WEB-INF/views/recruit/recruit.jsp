@@ -13,12 +13,6 @@
 </head>
 
 <body>
-
-
-
-
-
-
 <div class="container">
 <div class="row">
 <div>
@@ -47,9 +41,8 @@
 	</div>
 	
 	<div class="col-md-12" >	<!-- 연한 파랑 기존 색 - #edf1f5, 진한 색 - #adbfd2 -->
-		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: 0px;
-				text-align: center; padding-top: 10px; background-color: #edf1f5; border-bottom: 0px;
-				font-size: 22px;">
+		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: 20px;
+				text-align: center; padding-top: 10px; background-color: #edf1f5; font-size: 22px;">
 			<a href="${pageContext.request.contextPath }/map" style="">
 				<img width="37" src="http://mblogthumb4.phinf.naver.net/20160920_175/kokoa2100_1474368430239vv9yY_PNG/mzl.xnmoezsr.png?type=w800">   	
 				 지도에서 검색 - 한 눈에 확인하는 채용공고.
@@ -58,12 +51,24 @@
 	</div>
 	
 	<div class="col-md-12" >
-		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: 20px;
-				text-align: center; padding-top: 12px; font-size: 21px;">
-			<a href="https://media.daum.net/digital/">
-				<img width="30" src="https://lh3.googleusercontent.com/sMhe3GxpmWD6NISZBzhy--dtwcAcVvLFDxOGe1Kat3d0YA0nhq9ICwTSFN3UQ7uEZA">
-				 뉴스로 IT 업계 동향을 확인해보세요.
-			</a>
+		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: -1px;
+				text-align: center; padding-top: 12px; font-size: 21px; background-color: #edf1f5;">
+			<img width="37" src="https://lh3.googleusercontent.com/sMhe3GxpmWD6NISZBzhy--dtwcAcVvLFDxOGe1Kat3d0YA0nhq9ICwTSFN3UQ7uEZA">
+			 뉴스로 IT 업계 동향을 확인해보세요.
+		</div>
+	</div>
+	
+	<div class="col-md-12" style="z-index: 2;">
+		<div id="div_news" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: 25px;
+				text-align: center; padding-top: 12px; font-size: 21px; overflow: hidden;">
+			<ul id="content_news" style="list-style: none; width: auto; padding-left: 5px; text-align: center; 
+					padding-top: 2px; margin-top: -62px;">			
+				<c:forEach begin="1" end="${titleList.size() }" varStatus="i">
+					<li style="margin-bottom: 32px;">			
+		 				<a href="${linkList.get(i.index - 1) }">${titleList.get(i.index - 1) }</a><br>
+		 			</li>
+				</c:forEach>
+		 	</ul>
 		</div>
 	</div>
 	
@@ -160,7 +165,7 @@
 					text-align: center; padding-top: 20px; font-size: 18px; padding-left: 20px; overflow:hidden;">
 				<table>
 					<tr>
-						<td>
+						<td id="">
 					   		<table style="margin-bottom: 20px;">
 					   			<tr>
 					   				<td style="width: 800px; text-align: left;">
@@ -189,36 +194,10 @@
 					   			</tr>
 					   		</table>
 					   		
-					   		<!-- rRList1가 있으면 출력. -->
-					   		<c:if test="${rRList1.size() >= 1 }">
-					   			<ul id="content1" style="list-style: none; width: 3000px; padding-left: 5px;">
-								<c:forEach items="${rRList1 }" varStatus="i" var="rRVo">
-									<li style="float: left; text-align: left;"><div class="whiteBox" style="width: 280px; box-shadow: 0 3px 3px rgba(0, 0, 0, .175);
-											margin-right: 10px; padding: 8px; font-size: 16px; height: 270px;">
-										<div id="recr${i.index }" onmouseover="" style="cursor: pointer;">
-											<div class="table_div">
-												<img src="${corpImgList1.get(i.index) }" width="200">
-											</div> <br>
-											<strong>${rRVo.recruit_title }</strong> <br>
-											${corpNmList1.get(i.index) } <br>
-											${rRVo.job_local } <br>
-											${rRVo.job_type }
-										</div>
-										<c:choose>
-											<c:when test="${scrapList1.get(i.index) == 'f' }">
-												<!-- scrap_flag에 recruit_code를 붙여주자. (예: t12) -->
-												<i id="scrap${i.index }" class="far fa-bookmark" onmouseover="" 
-														style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
-											</c:when>
-											<c:otherwise>
-												<i id="scrap${i.index }" class="fas fa-bookmark" onmouseover="" 
-														style="margin-top: 10px; font-size: large; cursor: pointer;"></i><br>
-											</c:otherwise>
-										</c:choose>
-									</div></li>
-								</c:forEach>
-								</ul>
-							</c:if> 
+					   		<!-- rRList1가 있으면 출력. -> rRList1AjaxHtml -->
+							<div id="div_rRList1">
+							</div>
+							
 						</td>
 					</tr>
 					<tr>
@@ -257,7 +236,7 @@
 								<c:forEach items="${rRList2 }" varStatus="i" var="rRVo">
 									<li style="float: left; text-align: left;"><div class="whiteBox" style="width: 280px; box-shadow: 0 3px 3px rgba(0, 0, 0, .175);
 											margin-right: 10px; padding: 8px; font-size: 16px; height: 270px;">
-										<div id="recr${i.index }" onmouseover="" style="cursor: pointer;">
+										<div id="recr2${i.index }" onmouseover="" style="cursor: pointer;">
 											<div class="table_div">
 												<img src="${corpImgList2.get(i.index) }" width="200"> 
 											</div> <br>
@@ -321,8 +300,28 @@
 		});
 	});
 
+	// 얘는 전역으로.
+	var slide_switch = 0;
+	
+	// div_news 마우스오버 시 false - 슬라이드 멈춤.
+	var slide_flag = true;
+	
 	$(document).ready(function(){
-// 		console.log("list null");
+// 		console.log('${titleList.get(0) }');
+		
+		// news 슬라이드 실행.
+		slide_switch = setInterval("fn_slide()", 4000);
+		
+		// news 마우스오버 - 슬라이드 멈춤.
+		$("#div_news").on("mouseover", function(){
+			slide_flag = false;
+		});
+		$("#div_news").on("mouseout", function(){
+			slide_flag = true;
+		});
+
+		// rRList1 ajax 요청.
+		getRRList1Html(null, "rRList1Ajax");
 		
 		// 버튼 마우스오버
 		$("#btn_write").on("mouseover", function(){
@@ -462,37 +461,9 @@
 		</c:forEach>
 		
 		// 채용공고 리스트
-		
-		// 지금은 12개인데...
-		<c:forEach items="${rRList1 }" varStatus="i">
-			$("#recr${i.index }").on("click", function(){
-// 				alert("${rRList1.get(i.index).recruit_code}");
-				$("#recruit_code").val("${rRList1.get(i.index).recruit_code}");
-				
-				$("#frm_detail").submit();
-			});
-			
-			$("#scrap${i.index }").on("click", function(){
-				<c:choose>
-					<c:when test="${scrapList1.get(i.index) == 'f' }">
-						if(confirm("채용공고를 스크랩하시겠습니까?")){
-							window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=t${rRList1.get(i.index).recruit_code }';
-						}
-					</c:when>
-					<c:otherwise>
-						if(confirm("채용공고 스크랩을 취소하시겠습니까?")){
-							window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=f${rRList1.get(i.index).recruit_code }';
-						}
-					</c:otherwise>
-				</c:choose>
-			});
-			
-		</c:forEach>
-		
 		<c:forEach items="${rRList2 }" varStatus="i">
 			$("#recr2${i.index }").on("click", function(){
 // 				alert("${i.index }"); // 첫번째 채용공고 : i.index-1 -> '0'
-				
 				$("#recruit_code").val(${rRList2.get(i.index).recruit_code});
 				
 				$("#frm_detail").submit();
@@ -720,6 +691,71 @@
 		});
 		
 	});
+	
+	// rRList1 ajax 요청 메서드.
+	function getRRList1Html(scrap_flag, req_page){
+		$.ajax({
+			// 먼저 /scrap으로 보내고 'redirect'.			
+			url : "${pageContext.request.contextPath }/scrap",
+			data : "scrap_flag=" + scrap_flag +"&req_page=" + req_page,
+			success : function(data){
+				// rRList1 출력.
+				$("#div_rRList1").html(data);
+				
+				// 클릭 이벤트.
+				$(".recr").on("click", function(){
+					$("#recruit_code").val($(this).data("code"));
+					
+					$("#frm_detail").submit();					
+				});
+
+				// class가 아이콘 모양을 나타내기 때문에.. div 추가.
+				$(".scrap").on("click", function(){
+					if($(this).data("scrap") == 'f'){
+						if(confirm("채용공고를 스크랩하시겠습니까?")){
+							// 여기도 ajax로 수정해야됨.
+							var scrap_flag = "t"+$(this).data("code");
+							var req_page = "rRList1Ajax";
+							
+							getRRList1Html(scrap_flag, req_page);							
+						}
+					}else{
+						if(confirm("채용공고 스크랩을 취소하시겠습니까?")){
+							var scrap_flag = "f"+$(this).data("code");
+							var req_page = "rRList1Ajax";
+							
+							getRRList1Html(scrap_flag, req_page);							
+						}
+					}					
+				});
+			}
+		});			
+	}
+	
+	// 자동 슬라이드 테스트
+	var news_width = 62;
+	var limit_num = 1;
+	
+	function fn_slide(){
+		if(slide_flag == false){
+			return;
+		}
+		
+		if(limit_num > 4){
+// 			clearInterval(slide_switch);
+			$("#content_news").css("margin-top", "0px");
+			limit_num = 0;
+		}
+		
+		limit_num++;
+		
+		$("#content_news").stop(true, true);
+		var moveX = parseInt($("#content_news").css("margin-top"));
+		
+		if( moveX > -500 ){
+			$("#content_news").animate({"margin-top":"-=" + news_width + "px"}, 500);
+		}
+	}
 
 </script>	
 	

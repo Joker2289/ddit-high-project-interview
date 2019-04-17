@@ -39,6 +39,15 @@
 		                       AND USER_ID = #{user_id})	
 	</select>
 	
+	<!-- 특정 유저의 마지막 채용공고저장 조회. (get user last save_recruit) -->
+	<select id="getULSrecr" parameterType="String" resultType="save_recruitVo">
+		SELECT *
+		  FROM SAVE_RECRUIT
+		 WHERE SAVE_CODE = (SELECT MAX(SAVE_CODE)
+		                      FROM SAVE_RECRUIT
+		                     WHERE USER_ID = #{user_id})
+	</select>
+	
 	<!-- 특정 채용공고저장 목록 조회. -->
 	<select id="getSrecr" parameterType="String" resultType="save_recruitVo">
 		SELECT *

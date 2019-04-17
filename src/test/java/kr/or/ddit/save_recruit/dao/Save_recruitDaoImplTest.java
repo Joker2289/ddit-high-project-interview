@@ -72,6 +72,24 @@ public class Save_recruitDaoImplTest extends LogicTestConfig{
 		/***Then***/
 		assertNotNull(appList);
 	}
+
+	/**
+	 * 
+	 * Method : testGetULSrecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 특정 유저의 마지막 채용공고저장 조회 테스트.
+	 */
+	@Test
+	public void testGetULSrecr() {
+		/***Given***/
+
+		/***When***/
+		Save_recruitVo sVo = srecrDao.getULSrecr("brown");
+
+		/***Then***/
+		assertNotNull(sVo);
+	}
 	
 	
 	

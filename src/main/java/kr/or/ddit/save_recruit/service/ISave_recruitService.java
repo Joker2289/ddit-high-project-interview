@@ -103,6 +103,17 @@ public interface ISave_recruitService {
 	 * Method 설명 : 특정 유저가 지원한 채용공고 목록 조회.
 	 */
 	List<Save_recruitVo> getAppList(Save_recruitVo tempSVo);
+
+	/**
+	 * 
+	 * Method : getULSrecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 특정 유저의 마지막 채용공고저장 조회.
+	 */
+	Save_recruitVo getULSrecr(String mem_id);
 	
 	
 	

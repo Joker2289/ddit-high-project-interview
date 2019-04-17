@@ -23,9 +23,10 @@
 			<td style="width: 77px; text-align: center; border-bottom: 1px solid; border-bottom-color: #d9d9d9;">
 				<div style="width: 56px; height: 56px; border-radius: 28px; background-color: white;
 						padding-top: 7px;" class="div_scrap">
-					<i class="fas fa-bookmark" onmouseover="" style="margin-top: 10px; font-size: 22px; 
-							cursor: pointer; color: #0174b0;" data-code="${srList.get(i.index - 1).recruit_code }"
-							data-idx="${i.index - 1 }"></i>
+					<div class="scrap" data-code="${srList.get(i.index - 1).recruit_code }" data-idx="${i.index - 1 }">
+						<i class="fas fa-bookmark" onmouseover="" style="margin-top: 10px; font-size: 22px; 
+								cursor: pointer; color: #0174b0;"></i>
+					</div>
 				</div>
 			</td>
 		</tr>

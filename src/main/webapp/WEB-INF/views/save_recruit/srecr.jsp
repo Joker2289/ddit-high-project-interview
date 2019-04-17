@@ -205,7 +205,7 @@
 					});
 					
 					// 스크랩 아이콘.
-					$(".fas").on("click", function(){
+					$(".scrap").on("click", function(){
 						if(confirm("채용공고 스크랩을 취소하시겠습니까?")){
 							// ajax로 수정.
 							var scrap_flag = "f"+$(this).data("code");
@@ -215,10 +215,10 @@
 						}
 					});
 					
-					$(".fas").on("mouseover", function(){
+					$(".scrap").on("mouseover", function(){
 						$(".div_scrap:eq("+$(this).data("idx")+")").css("background-color", "#e5f5fb");
 					});
-					$(".fas").on("mouseout", function(){
+					$(".scrap").on("mouseout", function(){
 						$(".div_scrap:eq("+$(this).data("idx")+")").css("background-color", "white");
 					});
 					
