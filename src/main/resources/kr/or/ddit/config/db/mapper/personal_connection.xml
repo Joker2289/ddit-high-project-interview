@@ -459,7 +459,7 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 	</select>
 
 
-	<select id="peopleSearch" parameterMap="hashmap" resultType="usersVo">
+	<!-- <select id="peopleSearch" parameterMap="hashmap" resultType="usersVo">
 		 select a.user_id,
 	           users.profile_path,
 	           users.user_name,
@@ -513,7 +513,7 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 	
 	
 	</select> 
-	
+	 -->
 	
 	
 	
