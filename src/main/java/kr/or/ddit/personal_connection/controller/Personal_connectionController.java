@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.hashtag.model.HashtagVo;
@@ -166,8 +167,14 @@ public class Personal_connectionController {
 		String user_id = memberVo.getMem_id();
 		
 		List<UsersVo> localList = personalService.filterSearchLocal(user_id);
+		List<Career_infoVo> presentCorpor = personalService.filterSearchPresentCorpor(user_id);
+		List<Career_infoVo> pastCorpor = personalService.filterSearchPastCorpor(user_id);
+		List<Career_infoVo> jobPosition = personalService.filtersearchjobPosition(user_id);
 		
 		model.addAttribute("localList", localList);
+		model.addAttribute("presentCorpor", presentCorpor);
+		model.addAttribute("pastCorpor", pastCorpor);
+		model.addAttribute("jobPosition", jobPosition);
 
 		
 		return "filterSearchTiles";
@@ -263,6 +270,37 @@ public class Personal_connectionController {
 		
 	}
 	
+	// 큰그림 
+	@RequestMapping(path={"/peopleSearch"})
+	public String peopleSearch(String user_id, String[] localArr, String[] presentCorporArr, String[] pastCorporArr, String[] jobPositionArr, String[] schoolArr){
+		HashMap<String, Object> map = new HashMap<>();
+		
+		ArrayList<String> localList = new ArrayList<>();
+		ArrayList<String> presentCorporList = new ArrayList<>();
+		ArrayList<String> pastCorporList = new ArrayList<>();
+		ArrayList<String> jobPositionList = new ArrayList<>();
+		ArrayList<String> schoolList = new ArrayList<>();
+		
+		localList.toArray(localArr);
+		presentCorporList.toArray(presentCorporArr);
+		pastCorporList.toArray(pastCorporArr);
+		jobPositionList.toArray(jobPositionArr);
+		schoolList.toArray(schoolArr);
+		
+		map.put("localList", localList);
+		map.put("presentCorporList", presentCorporList);
+		map.put("pastCorporList", pastCorporList);
+		map.put("jobPositionList", jobPositionList);
+		map.put("schoolList", schoolList);
+		map.put("user_id", user_id);
+				
+		
+		
+		
+		
+		
+		return null;
+	}
 	
 	
 	
