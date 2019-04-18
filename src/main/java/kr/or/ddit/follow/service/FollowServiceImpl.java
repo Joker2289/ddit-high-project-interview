@@ -47,6 +47,11 @@ public class FollowServiceImpl implements IFollowService {
 	}
 	
 	@Override
+	public List<FollowVo> select_followerList(String mem_id) {
+		return followDao.select_followerList(mem_id);
+	}
+	
+	@Override
 	public List<FollowVo> select_followingList(String mem_id) {
 		return followDao.select_followingList(mem_id);
 	}

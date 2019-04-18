@@ -53,8 +53,8 @@
 	<div class="col-md-12" >
 		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: -1px;
 				text-align: center; padding-top: 12px; font-size: 21px; background-color: #edf1f5;">
-			<img width="37" src="https://lh3.googleusercontent.com/sMhe3GxpmWD6NISZBzhy--dtwcAcVvLFDxOGe1Kat3d0YA0nhq9ICwTSFN3UQ7uEZA">
-			 뉴스로 IT 업계 동향을 확인해보세요.
+			<img width="35" src="https://lh3.googleusercontent.com/sMhe3GxpmWD6NISZBzhy--dtwcAcVvLFDxOGe1Kat3d0YA0nhq9ICwTSFN3UQ7uEZA">
+			 &nbsp;뉴스로 IT 업계 동향을 확인해보세요.
 		</div>
 	</div>
 	
@@ -264,32 +264,19 @@
 					</tr>
 				</table>				
 				<br>
-				 
 			</div>
 		</div>
-		
 	</form>
 	
-
-	
-	
 	<br><br><br><br>
 	<br><br><br><br>
-
-	
-
-
-	
 	
 <%@ include file="/WEB-INF/views/recruit/alarm_manage_modal.jsp" %><!-- 모달창 -->	
 </div>
 </div>	
 </div>	
 
-<!-- layout.jsp의 script랑 충돌나서 주석처리함. -->
-<!-- <script src="js/jquery-3.3.1.min.js"></script> -->
-<!-- font awesome icon -->
-<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<!-- layout.jsp의 script랑 충돌나서 지움. -->
 <script type="text/javascript">
 
 	// 채용공고 검색어 관리

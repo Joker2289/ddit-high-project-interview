@@ -107,9 +107,13 @@ public class BlogController {
 	}
 	
 	@RequestMapping("/activityFollower")
-	public String activityFollower(HttpServletRequest req, HttpServletResponse resp, @RequestParam("userId")String userId) {
+	public String activityFollower(HttpServletRequest req, Model model, @RequestParam("userId")String userId) {
 		
-		return "";
+		List<FollowVo> followerList = followService.select_followerList(userId);
+		
+		model.addAttribute("followList", followerList);
+		
+		return "blog/follower_body";
 	}
 	
 	@RequestMapping("/activityFollowing")
@@ -117,7 +121,7 @@ public class BlogController {
 		
 		List<FollowVo> followingList = followService.select_followingList(userId);
 		
-		model.addAttribute("followingList", followingList);
+		model.addAttribute("followList", followingList);
 		
 		return "blog/following_body";
 	}

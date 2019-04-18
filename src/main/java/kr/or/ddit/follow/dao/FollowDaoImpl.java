@@ -47,8 +47,13 @@ public class FollowDaoImpl implements IFollowDao {
 	}
 	
 	@Override
+	public List<FollowVo> select_followerList(String mem_id) {
+		return sqlSession.selectList("follow.select_followerList", mem_id);
+	}
+	
+	@Override
 	public List<FollowVo> select_followingList(String mem_id) {
-	return sqlSession.selectList("follow.select_followingList", mem_id);
+		return sqlSession.selectList("follow.select_followingList", mem_id);
 	}
 
 	/**
@@ -68,6 +73,8 @@ public class FollowDaoImpl implements IFollowDao {
 	public int select_hashtagFollowCount(String ref_keyword) {
 		return sqlSession.selectOne("follow.select_hashtagFollowCount", ref_keyword);
 	}
+
+	
 
 	
 	

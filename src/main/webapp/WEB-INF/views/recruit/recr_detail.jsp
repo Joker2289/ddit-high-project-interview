@@ -100,10 +100,10 @@
 					<div class="col-md-12">
 						<div class="whiteBox" style="width: 795px; margin-bottom: 100px; height: 50px; padding: 10px;
 								padding-left: 20px; font-size: 20px; margin-top: -1px; margin-left: -15px;">
-							<a href="${pageContext.request.contextPath }/srecr">
+							<div id="div_back" onmouseover="" style="cursor: pointer;">
 								<i class="fas fa-chevron-left" style="font-size: 19px;"></i>
 								<strong>&nbsp; &nbsp;목록으로</strong>
-							</a>
+							</div>
 						</div>
 					</div>					
 				</div>			
@@ -143,7 +143,19 @@
 		
 <script type="text/javascript">
 	$(document).ready(function(){
-		console.log("bg_path? : ${corp.bg_path }");
+// 		console.log("bg_path? : ${corp.bg_path }");
+		
+		$("#div_back").on("click", function(){
+// 			alert("req page? : ${req_page }");
+			<c:choose>
+				<c:when test="${req_page == null }">
+					window.location.href = '${pageContext.request.contextPath }/srecr';
+				</c:when>
+				<c:otherwise>
+					window.location.href = '${pageContext.request.contextPath }/recrSearch';
+				</c:otherwise>
+			</c:choose>
+		});
 		
 		$("#btn_app").on("click", function(){
 			<c:choose>
