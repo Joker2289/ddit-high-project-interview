@@ -51,12 +51,7 @@ public class ViewController {
 		
 		MemberVo mVo = memService.select_memberInfo(mem_id);
 		
-		logger.debug("division : {}", division);
-		logger.debug("mem_id : {}", mem_id);
-		logger.debug("mVo : {}", mVo);
-		
 		if(division.equals("ht")) {
-			logger.debug("path : {}", path);
 			path = "/images/profile/HashTag1.png";
 		} else {
 			
@@ -64,11 +59,11 @@ public class ViewController {
 				UsersVo uVo = userService.select_userInfo(mem_id);
 				
 				if(uVo.getProfile_path() != null && division.equals("pf")) {
-					path = uVo.getProfile_path();
+					path = "/images/profile" + uVo.getProfile_path();
 				} else if(uVo.getProfile_path() == null && division.equals("pf")){
 					path = "/images/profile/basicProfile.png";
 				} else if(uVo.getBg_path() != null && division.equals("bg")) {
-					path = uVo.getBg_path();
+					path = "/images/profile" + uVo.getBg_path();
 				} else if(uVo.getBg_path() == null && division.equals("bg")) {
 					path = "/images/profile/basicBackground.png";
 				}
@@ -77,11 +72,11 @@ public class ViewController {
 				CorporationVo cVo = corpService.select_corpInfo(mem_id);
 				
 				if(cVo.getLogo_path() != null && division.equals("pf")) {
-					path = cVo.getLogo_path();
+					path = "/images/profile" + cVo.getLogo_path();
 				} else if(cVo.getLogo_path() == null && division.equals("pf")){
 					path = "/images/corporation/basic/basicCorporation.png";
 				} else if(cVo.getBg_path() != null && division.equals("bg")) {
-					path = cVo.getBg_path();
+					path = "/images/profile" + cVo.getBg_path();
 				} else if(cVo.getBg_path() == null && division.equals("bg")) {
 					path = "/images/profile/basicBackground.png";
 				} 
