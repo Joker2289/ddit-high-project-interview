@@ -1,16 +1,9 @@
 package kr.or.ddit.blog.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.follow.service.IFollowService;
 import kr.or.ddit.login.LoginController;
-import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
@@ -68,44 +60,17 @@ public class BlogController {
 		return "blogTiles";
 	}
 	
-	
 	/**
 	 * 
-	 * Method : blogProfileImageView
+	 * Method : activityFollower
 	 * 작성자 : pjk
 	 * 변경이력 :
 	 * @param req
 	 * @param model
+	 * @param userId
 	 * @return
-	 * Method 설명 : blog 프로필 이미지 뷰
-	 * @throws IOException 
+	 * Method 설명 : 팔로워 리스트 조회
 	 */
-	@RequestMapping("/blogProfileImageView")
-	public void blogProfileImageView(HttpServletRequest req, HttpServletResponse resp, @RequestParam("userId")String userId) throws IOException {
-		
-		resp.setContentType("image");
-		ServletContext application = req.getServletContext();
-		
-		UsersVo userVO = usersService.select_userInfo(userId);
-		
-		FileInputStream fis;
-		if(userVO != null && userVO.getProfile_img() != null) {
-			fis = new FileInputStream(new File(application.getRealPath(userVO.getProfile_path())));
-		} else {
-			String noimgPath = application.getRealPath("/images/profile/profile_noimage.jpg");
-			fis = new FileInputStream(new File(noimgPath));
-		}
-		ServletOutputStream sos = resp.getOutputStream();
-		
-		byte[] buff = new byte[512];
-		int len = 0; 
-		while((len = fis.read(buff)) > -1) {
-			sos.write(buff);
-		}
-		sos.close();
-		fis.close();
-	}
-	
 	@RequestMapping("/activityFollower")
 	public String activityFollower(HttpServletRequest req, Model model, @RequestParam("userId")String userId) {
 		
@@ -116,6 +81,17 @@ public class BlogController {
 		return "blog/follower_body";
 	}
 	
+	/**
+	 * 
+	 * Method : activityFollowing
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param req
+	 * @param model
+	 * @param userId
+	 * @return
+	 * Method 설명 : 팔로잉 리스트 조회
+	 */
 	@RequestMapping("/activityFollowing")
 	public String activityFollowing(HttpServletRequest req, Model model, @RequestParam("userId")String userId) {
 		
@@ -124,6 +100,25 @@ public class BlogController {
 		model.addAttribute("followList", followingList);
 		
 		return "blog/following_body";
+	}
+	
+	/**
+	 * 
+	 * Method : settingForm
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param req
+	 * @param model
+	 * @param userId
+	 * @return
+	 * Method 설명 : 블로그 설정 페이지로 이동
+	 */
+	@RequestMapping("/blogSettingForm")
+	public String blogSettingForm(HttpServletRequest req, Model model, @RequestParam("userId")String userId) {
+		
+		
+		
+		return "blog/blog_setting_form";
 	}
 	
 	

@@ -25,8 +25,6 @@
 						</td>	
 							
 						<td>${ List.keyword_name }</td>
-							
-						
 					</c:if>
 					
 					<!-- 기업 -->
