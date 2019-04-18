@@ -49,7 +49,6 @@
 		<tr class="profiletr">
 			<td style="color: #666666;">채용공고</td>
 		</tr>
-
 		<tr class="profiletr" style="border-top: 1px solid #CFD1D3;" onclick="javascript:location.href='/login'">
 					<td style="color: #666666;">로그아웃</td>
 				</tr>

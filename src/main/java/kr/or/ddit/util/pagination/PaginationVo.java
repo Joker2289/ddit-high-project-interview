@@ -9,6 +9,7 @@ public class PaginationVo {
 	private String division;
 	private String user_id;
 	private String corp_id;
+	private String hashtag_name;
 	
 	public PaginationVo() {
 		
@@ -18,6 +19,12 @@ public class PaginationVo {
 		this.pageSize = pageSize;
 	}
 	
+	public String getHashtag_name() {
+		return hashtag_name;
+	}
+	public void setHashtag_name(String hashtag_name) {
+		this.hashtag_name = hashtag_name;
+	}
 	public String getRef_code() {
 		return ref_code;
 	}
@@ -70,6 +77,8 @@ public class PaginationVo {
 	@Override
 	public String toString() {
 		return "PaginationVo [page=" + page + ", pageSize=" + pageSize + ", mem_id=" + mem_id + ", criteria_code="
-				+ criteria_code + ", ref_code=" + ref_code + ", division=" + division + "]";
+				+ criteria_code + ", ref_code=" + ref_code + ", division=" + division + ", user_id=" + user_id
+				+ ", corp_id=" + corp_id + ", hashtag_name=" + hashtag_name + "]";
 	}
+	
 }

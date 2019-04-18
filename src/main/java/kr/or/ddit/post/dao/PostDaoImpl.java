@@ -61,4 +61,14 @@ public class PostDaoImpl implements IPostDao {
 		return sqlSession.selectList("post.select_nextSavePost", paginationVo);
 	}
 
+	@Override
+	public List<PostVo> select_hashtagPost(PaginationVo paginationVo) {
+		return sqlSession.selectList("post.select_hashtagPost", paginationVo);
+	}
+
+	@Override
+	public List<PostVo> select_nextHashtagPost(PaginationVo paginationVo) {
+		return sqlSession.selectList("post.select_nextHashtagPost", paginationVo);
+	}
+
 }
