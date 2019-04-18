@@ -128,6 +128,14 @@
 		   and ref_keyword = #{ref_keyword}
 		   and division = '43'
 	</select>
+	
+	<!-- 해시태그 팔로워 수 조회 -->
+	<select id="select_hashtagFollowCount" parameterType="String" resultType="int">
+		select count(*)
+		  from follow
+		 where division = 16
+		   and ref_keyword = #{ref_keyword}	
+	</select>
 
 	
 </mapper> 
