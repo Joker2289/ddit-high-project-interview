@@ -394,7 +394,7 @@ public class SignupController {
 				CorporationVo cVo = new CorporationVo();
 				cVo.setCorp_id(id);
 				cVo.setCorp_logo(fileName);
-				cVo.setLogo_path(realFileName);
+				cVo.setLogo_path(tmpFilePath);
 				
 				corpService.update_corpInfo(cVo);
 			}

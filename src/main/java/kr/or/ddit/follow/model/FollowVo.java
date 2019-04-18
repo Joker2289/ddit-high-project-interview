@@ -7,9 +7,8 @@ public class FollowVo {
 	private String ref_keyword;	// 참조키워드
 	private String division;	// 구분
 	
-	public FollowVo() {
-		
-	}
+	private String image_path;  // 이미지경로
+	private String keyword_name;  // 키워드이름
 
 	public String getFollow_code() {
 		return follow_code;
@@ -43,10 +42,26 @@ public class FollowVo {
 		this.division = division;
 	}
 
+	public String getImage_path() {
+		return image_path;
+	}
+
+	public void setImage_path(String image_path) {
+		this.image_path = image_path;
+	}
+	
+	public String getKeyword_name() {
+		return keyword_name;
+	}
+
+	public void setKeyword_name(String keyword_name) {
+		this.keyword_name = keyword_name;
+	}
+
 	@Override
 	public String toString() {
 		return "FollowVo [follow_code=" + follow_code + ", mem_id=" + mem_id + ", ref_keyword=" + ref_keyword
-				+ ", division=" + division + "]";
+				+ ", division=" + division + ", image_path=" + image_path + ", keyword_name=" + keyword_name + "]";
 	}
-	
+
 }

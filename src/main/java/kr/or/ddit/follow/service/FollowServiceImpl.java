@@ -35,5 +35,20 @@ public class FollowServiceImpl implements IFollowService {
 	public List<FollowVo> select_followKindList(PaginationVo paginationVo) {
 		return followDao.select_followKindList(paginationVo);
 	}
+
+	@Override
+	public int getFollowingCnt(String mem_id) {
+		return followDao.getFollowingCnt(mem_id);
+	}
+
+	@Override
+	public int getFollowerCnt(String mem_id) {
+		return followDao.getFollowerCnt(mem_id);
+	}
 	
+	@Override
+	public List<FollowVo> select_followingList(String mem_id) {
+		return followDao.select_followingList(mem_id);
+	}
+
 }

@@ -14,5 +14,11 @@ public interface IFollowService {
 	List<FollowVo> select_followList(String mem_id);
 
 	List<FollowVo> select_followKindList(PaginationVo paginationVo);
+	
+	int getFollowingCnt(String mem_id);
+	
+	int getFollowerCnt(String mem_id);
+	
+	List<FollowVo> select_followingList(String mem_id);
 
 }
