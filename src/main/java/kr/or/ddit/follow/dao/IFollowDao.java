@@ -63,6 +63,17 @@ public interface IFollowDao {
 	
 	/**
 	 * 
+	 * Method : select_followerList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 팔로워 리스트 조회
+	 */
+	List<FollowVo> select_followerList(String mem_id);
+	
+	/**
+	 * 
 	 * Method : select_followingList
 	 * 작성자 : pjk
 	 * 변경이력 :
