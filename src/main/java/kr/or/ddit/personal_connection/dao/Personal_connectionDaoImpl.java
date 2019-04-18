@@ -150,6 +150,45 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 		return SchoolList;
 	}
 	
+	/**
+	 * Method : select_oneConnections
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param personalVo
+	 * @return
+	 * Method 설명 : 나와 상대방의 일촌 확인
+	 */
+	@Override
+	public Personal_connectionVo select_oneConnections(Personal_connectionVo personalVo) {
+		return sqlSessionTemplate.selectOne("personal.select_oneConnections", personalVo);
+	}
+	
+	/**
+	 * Method : insert_connections
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param personalVo
+	 * @return
+	 * Method 설명 : 일촌 신청
+	 */
+	@Override
+	public int insert_connections(Personal_connectionVo personalVo) {
+		return sqlSessionTemplate.insert("personal.insert_connections", personalVo);
+	}
+
+	/**
+	 * Method : delete_connections
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param personalVo
+	 * @return
+	 * Method 설명 : 일촌 삭제
+	 */
+	@Override
+	public int delete_connections(Personal_connectionVo personalVo) {
+		return sqlSessionTemplate.delete("personal.delete_connections", personalVo);
+	}
+	
 	
 
 

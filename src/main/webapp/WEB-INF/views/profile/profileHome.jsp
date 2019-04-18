@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"/>
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
+<link href="/css/profile/profileHome.css" rel="stylesheet"> 
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -28,7 +29,7 @@ $(document).ready(function() {
 	    		dataType : "HTML",
 	    		data : {"modalStr" :  modalStr, "code" : code },
 			success : function(result) {
-				
+				$(".modal-content").empty();
 				$(".modal-content").html(result);
 			}
 		}); 
@@ -43,7 +44,7 @@ $(document).ready(function() {
 	    		dataType : "HTML",
 	    		data : {"user_id" : user_id },
 			success : function(result) {
-				
+				$(".modal-content").empty();
 				$(".modal-content").html(result);
 			}
 		}); 
@@ -198,9 +199,12 @@ $(document).ready(function() {
 	    		type : "POST",
 		    		url : "/otherDropdown",
 		    		dataType : "HTML",
-		    		data : { },
+		    		data : {"user_id" :  "${usersMap.usersVo.user_id}"},
 	    		success : function(result) {
 	    			$(".otherDropdownBox").append(result);
+	    			var i_position= $(e.target).position(); 
+	    			i_position.left = i_position.left + 50; 
+    			    $('.dropdown-menu').css({'left':i_position.left+ "px"});   
 	    		}
 	    	}); 
 		}else if (!$(e.target).closest(".otherBtn").hasClass("otherBtn")){
@@ -213,8 +217,6 @@ $(document).ready(function() {
 
 
 </script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link href="/css/profile/profileHome.css" rel="stylesheet">    
 <div class="container">
 <div class="row">
 <div data-spy="scroll" data-target=".navbar-spy">
@@ -235,7 +237,14 @@ $(document).ready(function() {
 				<div style="min-height: 328px;">
 					<div class="profileHomeProfilePicture" style="background-image: url(${not empty profile_path ? profile_path : profile_addrpath});"></div>
 					<div style="width: 791px; padding:24px; margin-top: -72px;">
-						<a class="modalA" role="${usersMap.usersVo.user_id}" data-toggle="modal" data-target="#myModal" title="introduction" ><span style="font-size: 20px;padding-left: 717px; color: #0073B1;"><i class="fas fa-pencil-alt"></i></span></a>
+						 <c:choose>
+							<c:when test="${SESSION_DETAILVO.user_id == usersMap.usersVo.user_id }">
+								<a class="modalA" role="${usersMap.usersVo.user_id}" data-toggle="modal" data-target="#myModal" title="introduction" ><span style="font-size: 20px;padding-left: 717px; color: #0073B1;"><i class="fas fa-pencil-alt"></i></span></a>
+						 	</c:when>
+						 	<c:otherwise>
+						 		<div class="modalA" style="height: 27px;"></div>
+						 	</c:otherwise>
+						 </c:choose>
 						<div class="memberBox" style="display: flex;">
 							<div style="width: 500px;">
 								<label class="member" >${usersMap.usersVo.user_name }</label>
@@ -266,14 +275,39 @@ $(document).ready(function() {
 								</div>
 								<div>
 									<span style="color: #B3B6B9;font-size: 18px;"><i style="width:30px;" class="fas fa-users"></i></span>
-									<label class="memberRight"><a href="/connections">1촌 ${peopleCount }명 보기</a></label>
+									<label class="memberRight">
+										<c:choose>
+											<c:when test="${SESSION_DETAILVO.user_id == usersMap.usersVo.user_id }">
+												<a href="/connections">1촌 ${peopleCount }명 보기</a>
+											</c:when>
+											<c:otherwise>
+												1촌 ${peopleCount }명 보기
+											</c:otherwise>
+										</c:choose>
+									</label>
 								</div>
 							</div>
 						</div>
 						<div>
 							<div class="btn-group" role="group" aria-label="...">
-							  <button style="width: 194px; height: 40px;font-size: 18px;" type="button" class="btn btn-primary profileBtn">
-							    프로필 항목 등록 <span class="caret"></span></button>
+							  <c:choose>
+							  	<c:when test="${SESSION_DETAILVO.user_id == usersMap.usersVo.user_id }">
+								  	<button style="width: 194px; height: 40px;font-size: 18px;" type="button" class="btn btn-primary profileBtn">
+								   	프로필 항목 등록 <span class="caret"></span>
+								   	</button>
+							  	</c:when>
+							  	<c:when test="${not empty personalVo.receive_accept }">
+							  		<button style="height: 40px;font-size: 18px;" type="button" class="btn btn-primary">
+							  		메일 보내기
+							  		</button>
+							  	</c:when>
+							  	<c:otherwise>
+							  		<button style="height: 40px;font-size: 18px;" type="button" class="btn btn-primary">
+							  		일촌맺기
+							  		</button>
+							  	</c:otherwise>
+							  </c:choose>
+							 
 						  	  <button class="btn btn-default otherBtn" style="height: 40px; margin-left: 10px;">...</button>
 							</div>
 						</div>
@@ -287,7 +321,7 @@ $(document).ready(function() {
 						<c:if test="${(not empty usersMap.usersVo.profile_contents) or (not empty usersMap.filesVoList)}">
 							<div class="userContentsSkip" style="border-top: 1px solid #CDCFD2; margin-top: 20px; padding-top: 10px;">
 								<c:if test="${not empty usersMap.usersVo.profile_contents}">
-									<p>${usersMap.usersVo.profile_contents }</p>
+									<pre>${usersMap.usersVo.profile_contents }</pre>
 								</c:if>
 								
 								<div style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;">
@@ -297,10 +331,9 @@ $(document).ready(function() {
 										</div>
 									</c:forEach>
 								</div>
-								<c:if test="${fn:length(usersMap.usersVo.profile_contents) > 187}">
+								<c:if test="${fn:length(usersMap.usersVo.profile_contents) > 75 }">
 									<button class="btn btn-link userContentsShow" style="outline: 0; text-decoration: none;">더 보기 <i class="fas fa-angle-down"></i></button>
 								</c:if>
-								
 							</div>
 						</c:if>
 						
@@ -338,10 +371,10 @@ $(document).ready(function() {
 								<!-- 경력 상세 내용 -->
 								<c:if test="${not empty career_infoVo.contents }">
 									<div class="contentsDiv" style="padding: 10px 30px 0 150px; width: 720px;">
-										<span class="contents" style="width: 536px; margin: 0 0 0 0;">${career_infoVo.contents }</span>
-										<c:if test="${fn:length(career_infoVo.contents) > 45}">
+										<pre class="contents" style="width: 536px; margin: 0 0 0 0;">${career_infoVo.contents }</pre>
+										<c:if test="${fn:length(career_infoVo.contents) > 70 }">
 									 		<span class="contentsBtn" style="color: #0073B1; cursor: pointer;">더 보기 </span>
-										</c:if>
+									 	</c:if>
 									</div>
 								</c:if>
 								
@@ -357,9 +390,11 @@ $(document).ready(function() {
 									</div>
 								</c:if>
 							</div>
-							<div>
-								<a class="modalA" role="${career_infoVo.career_code}" data-toggle="modal" data-target="#myModal" title="career"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
-							</div>
+							<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+								<div>
+									<a class="modalA" role="${career_infoVo.career_code}" data-toggle="modal" data-target="#myModal" title="career"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
+								</div>
+							</c:if>
 						</li>
 					</c:forEach>
 				</ul>
@@ -388,10 +423,10 @@ $(document).ready(function() {
 								<!-- 학력 내용 -->
 								<c:if test="${not empty education_infoVo.contents }">
 									<div class="contentsDiv" style="padding: 10px 30px 0 150px; width: 720px;">
-										<span class="contents" style="width: 536px; margin: 0 0 0 0;">${education_infoVo.contents }</span>
-										<c:if test="${fn:length(education_infoVo.contents) > 45}">
+										<pre class="contents" style="width: 536px; margin: 0 0 0 0;">${education_infoVo.contents }</pre>
+										<c:if test="${fn:length(education_infoVo.contents) > 70 }">
 									 		<span class="contentsBtn" style="color: #0073B1; cursor: pointer;">더 보기 </span>
-										</c:if>
+									 	</c:if>
 									</div>
 								</c:if>
 								
@@ -399,7 +434,6 @@ $(document).ready(function() {
 								<c:if test="${not empty education_infoMap.education_infoFileVoList }">
 									<div style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;">
 										<c:forEach var="education_infoFileVo" items="${education_infoMap.education_infoFileVoList[i.index] }">
-										
 											<div style="height: 25px; margin: 10px 30px 0 150px;border: 2px solid #CDCFD2; font-size: 15px; font-weight: bold">
 												<a href="/fileDownload?file_code=${education_infoFileVo.file_code }">${education_infoFileVo.file_name}</a>
 											</div>
@@ -407,9 +441,11 @@ $(document).ready(function() {
 									</div>
 								</c:if>
 							</div>
-							<div>
-								<a class="modalA" role="${education_infoVo.education_code}" data-toggle="modal" data-target="#myModal" title="education"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
-							</div>
+							<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+								<div>
+									<a class="modalA" role="${education_infoVo.education_code}" data-toggle="modal" data-target="#myModal" title="education"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
+								</div>
+							</c:if>
 						</li>
 					</c:forEach>
 				</ul>
@@ -435,16 +471,18 @@ $(document).ready(function() {
 									<!-- 보유기술 내용 -->
 									<c:if test="${not empty possesion_skillsVo.contents }">
 										<div class="contentsDiv" style="padding: 10px 30px 0 0; width: 720px;">
-											<span class="contents" style="width: 700px; margin: 0 0 0 0;">${possesion_skillsVo.contents }</span>
-											<c:if test="${fn:length(possesion_skillsVo.contents) > 57}">
-										 		<span class="contentsBtn" style="color: #0073B1; cursor: pointer;">더 보기 </span>
-											</c:if>
+											<pre class="contents" style="width: 700px; margin: 0 0 0 0;">${possesion_skillsVo.contents }</pre>
+												<c:if test="${fn:length(possesion_skillsVo.contents) > 91 }">
+										 			<span class="contentsBtn" style="color: #0073B1; cursor: pointer;">더 보기 </span>
+										 		</c:if>
 										</div>
 									</c:if>
 								</div>
-								<div>
-									<a class="modalA" role="${possesion_skillsVo.pskill_code}" data-toggle="modal" data-target="#myModal" title="skills"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
-								</div>
+								<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+									<div>
+										<a class="modalA" role="${possesion_skillsVo.pskill_code}" data-toggle="modal" data-target="#myModal" title="skills"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
+									</div>
+								</c:if>
 							</li>
 						</c:forEach>
 					</li>
@@ -499,16 +537,18 @@ $(document).ready(function() {
 								<!-- 논문저서 내용 -->
 								<c:if test="${not empty thesis_listVo.contents }">
 									<div class="contentsDiv" style="padding: 10px 30px 0 0; width: 720px;">
-										<span class="contents" style="width: 700px; margin: 0 0 0 0;">${thesis_listVo.contents }</span>
-										<c:if test="${fn:length(thesis_listVo.contents) > 57}">
+										<pre class="contents" style="width: 700px; margin: 0 0 0 0;">${thesis_listVo.contents }</pre>
+										<c:if test="${fn:length(thesis_listVo.contents) > 50 }">
 									 		<span class="contentsBtn" style="color: #0073B1; cursor: pointer;">더 보기 </span>
-										</c:if>
+									 	</c:if>
 									</div>
 								</c:if>
 							</div>
-							<div>
-								<a class="modalA" role="${thesis_listVo.thesis_code}" data-toggle="modal" data-target="#myModal" title="Thesis"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
-							</div>
+							<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+								<div>
+									<a class="modalA" role="${thesis_listVo.thesis_code}" data-toggle="modal" data-target="#myModal" title="Thesis"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
+								</div>
+							</c:if>
 						</li>
 					</c:forEach>
 					
@@ -548,16 +588,18 @@ $(document).ready(function() {
 								<!-- 특허 내용 -->
 								<c:if test="${not empty patent_listVo.contents }">
 									<div class="contentsDiv" style="padding: 10px 30px 0 0; width: 720px;">
-										<span class="contents" style="width: 700px; margin: 0 0 0 0;">${patent_listVo.contents }</span>
-										<c:if test="${fn:length(patent_listVo.contents) > 57}">
+										<pre class="contents" style="width: 700px; margin: 0 0 0 0;">${patent_listVo.contents }</pre>
+										<c:if test="${fn:length(patent_listVo.contents) > 50 }">
 									 		<span class="contentsBtn" style="color: #0073B1; cursor: pointer;">더 보기 </span>
-										</c:if>
+									 	</c:if>
 									</div>
 								</c:if>
-								</div>
-							<div>
-								<a class="modalA" role="${patent_listVo.patent_code}" data-toggle="modal" data-target="#myModal" title="patent"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
 							</div>
+							<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+								<div>
+									<a class="modalA" role="${patent_listVo.patent_code}" data-toggle="modal" data-target="#myModal" title="patent"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
+								</div>
+							</c:if>
 						</li>
 					</c:forEach>
 					
@@ -598,16 +640,18 @@ $(document).ready(function() {
 								<!-- 프로젝트 내용 -->
 								<c:if test="${not empty project_careerVo.contents }">
 									<div class="contentsDiv" style="padding: 10px 30px 0 0; width: 720px;">
-										<span class="contents" style="width: 700px; margin: 0 0 0 0;">${project_careerVo.contents }</span>
-										<c:if test="${fn:length(project_careerVo.contents) > 57}">
+										<pre class="contents" style="width: 700px; margin: 0 0 0 0;">${project_careerVo.contents }</pre>
+										<c:if test="${fn:length(project_careerVo.contents) > 50 }">
 									 		<span class="contentsBtn" style="color: #0073B1; cursor: pointer;">더 보기 </span>
-										</c:if>
+									 	</c:if>
 									</div>
 								</c:if>
 							</div>
-							<div>
-								<a class="modalA" role="${project_careerVo.project_code}" data-toggle="modal" data-target="#myModal" title="project"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
-							</div>
+							<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+								<div>
+									<a class="modalA" role="${project_careerVo.project_code}" data-toggle="modal" data-target="#myModal" title="project"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
+								</div>
+							</c:if>
 						</li>
 					</c:forEach>
 					
@@ -642,16 +686,18 @@ $(document).ready(function() {
 								<!-- 수상 경력 내용 -->
 								<c:if test="${not empty award_historyVo.contents }">
 									<div class="contentsDiv" style="padding: 10px 30px 0 0; width: 720px;">
-										<span class="contents" style="width: 700px; margin: 0 0 0 0;">${award_historyVo.contents }</span>
-										<c:if test="${fn:length(award_historyVo.contents) > 57}">
+										<pre class="contents" style="width: 700px; margin: 0 0 0 0;">${award_historyVo.contents }</pre>
+										<c:if test="${fn:length(award_historyVo.contents) > 50 }">
 									 		<span class="contentsBtn" style="color: #0073B1; cursor: pointer;">더 보기 </span>
-										</c:if>
+									 	</c:if>
 									</div>
 								</c:if>
 							</div>
-							<div>
-								<a class="modalA" role="${award_historyVo.award_code}" data-toggle="modal" data-target="#myModal" title="award"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
-							</div>
+							<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+								<div>
+									<a class="modalA" role="${award_historyVo.award_code}" data-toggle="modal" data-target="#myModal" title="award"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
+								</div>
+							</c:if>
 						</li>
 					</c:forEach>
 					
@@ -682,9 +728,11 @@ $(document).ready(function() {
 									<label style="font-size: 17px; color: rgba(0,0,0,.9);">${languageVo.grade }</label><br>
 								</div>
 							</div>
-							<div>
-								<a class="modalA" role="${languageVo.lang_code}" data-toggle="modal" data-target="#myModal" title="language"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
-							</div>
+							<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+								<div>
+									<a class="modalA" role="${languageVo.lang_code}" data-toggle="modal" data-target="#myModal" title="language"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
+								</div>
+							</c:if>
 						</li>
 					</c:forEach>
 				</ul>

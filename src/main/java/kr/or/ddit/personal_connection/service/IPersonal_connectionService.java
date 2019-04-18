@@ -266,6 +266,36 @@ public interface IPersonal_connectionService {
 	 */
 	List<Education_infoVo> filterSearchSchool(String user_id);
 	
+	/**
+	 * Method : select_oneConnections
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param personalVo
+	 * @return
+	 * Method 설명 : 나와 상대방의 일촌 확인
+	 */
+	Personal_connectionVo select_oneConnections(Personal_connectionVo personalVo);
+	
+	/**
+	 * Method : insert_connections
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param personalVo
+	 * @return
+	 * Method 설명 : 일촌 신청
+	 */
+	int insert_connections(Personal_connectionVo personalVo);
+	
+	/**
+	 * Method : delete_connections
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param personalVo
+	 * @return
+	 * Method 설명 : 일촌 삭제
+	 */
+	int delete_connections(Personal_connectionVo personalVo);
+	
 	
 	
 
