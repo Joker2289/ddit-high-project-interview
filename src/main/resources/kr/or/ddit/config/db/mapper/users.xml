@@ -75,7 +75,7 @@
 	                        and a.user_id = #{user_id}
 	                        order by a.graduation desc)
 	                 where rownum &lt;=1)b
-	 where a.user_id = b.user_id
+	 where a.user_id = b.user_id(+)
 	   and a.user_id = #{user_id}
 	</select>
 	
