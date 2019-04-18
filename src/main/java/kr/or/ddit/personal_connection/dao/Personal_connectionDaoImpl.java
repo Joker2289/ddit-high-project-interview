@@ -188,6 +188,19 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 	public int delete_connections(Personal_connectionVo personalVo) {
 		return sqlSessionTemplate.delete("personal.delete_connections", personalVo);
 	}
+
+	/**
+	 * Method : select_oneConnectionsWait
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param personalVo
+	 * @return
+	 * Method 설명 : 나와 상대방의 일촌 수락대기중
+	 */
+	@Override
+	public Personal_connectionVo select_oneConnectionsWait(Personal_connectionVo personalVo) {
+		return sqlSessionTemplate.selectOne("personal.select_oneConnectionsWait", personalVo);
+	}
 	
 	
 

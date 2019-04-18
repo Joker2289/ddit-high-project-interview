@@ -164,7 +164,20 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	 */
 	@Override
 	public int delete_connections(Personal_connectionVo personalVo) {
-		return personalDao.delete_connectionCancel(personalVo);
+		return personalDao.delete_connections(personalVo);
+	}
+
+	/**
+	 * Method : select_oneConnectionsWait
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param personalVo
+	 * @return
+	 * Method 설명 : 나와 상대방의 일촌 수락대기중
+	 */
+	@Override
+	public Personal_connectionVo select_oneConnectionsWait(Personal_connectionVo personalVo) {
+		return personalDao.select_oneConnectionsWait(personalVo);
 	}
 
 	

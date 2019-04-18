@@ -28,6 +28,8 @@ import kr.or.ddit.good.service.IGoodService;
 import kr.or.ddit.hashtag.service.IHashtagService;
 import kr.or.ddit.hashtag_list.model.Hashtag_listVo;
 import kr.or.ddit.hashtag_list.service.IHashtag_listService;
+import kr.or.ddit.hide_post.model.Hide_postVo;
+import kr.or.ddit.hide_post.service.IHide_postService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
@@ -35,6 +37,8 @@ import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
 import kr.or.ddit.post_comment.model.Post_commentVo;
 import kr.or.ddit.post_comment.service.ICommentService;
+import kr.or.ddit.report.model.ReportVo;
+import kr.or.ddit.report.service.IReportService;
 import kr.or.ddit.save_post.model.Save_postVo;
 import kr.or.ddit.save_post.service.ISave_postService;
 import kr.or.ddit.users.model.UsersVo;
@@ -82,6 +86,12 @@ public class PostController {
 	
 	@Resource(name="save_postService")
 	private ISave_postService save_postService;
+	
+	@Resource(name="reportService")
+	private IReportService reportService;
+	
+	@Resource(name="hide_postService")
+	private IHide_postService hide_postService;
 	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
 	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request){
@@ -160,14 +170,8 @@ public class PostController {
 	@RequestMapping(path={"/appendpost"}, method=RequestMethod.POST)
 	public String appendPost(@RequestParam String pageNum, @RequestParam String lastPost, HttpServletRequest request, Model model, String ref_code){
 		
-		logger.debug("lastPost asdasd : {}", lastPost);
-		logger.debug("pageNum asdasdasd : {}", pageNum);
-		logger.debug("ref_code : {}", ref_code);
-		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 
-		logger.debug("mem_id asdasd : {}", memberInfo.getMem_id());
-		
 		int page = Integer.parseInt(pageNum);
 		
 		PaginationVo paginationVo = new PaginationVo();
@@ -276,7 +280,8 @@ public class PostController {
 			String[] temp = post_contents.split(tagList.get(i), 2);
 			
 			if(temp.length == 1){
-				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";
+				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";	
+									   //"<a href='/hashtag/" + tagList.get(i).split("#")[1] + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[0];
 			} else {
 				replacedPost_contents += temp[0];
@@ -369,6 +374,7 @@ public class PostController {
 		
 		paginationVo.setDivision("28");
 		paginationVo.setRef_code(ref_code);
+		paginationVo.setMem_id(memberInfo.getMem_id());
 		
 		Map<String, Object> resultMap = commentService.select_commentList(paginationVo);
 		
@@ -384,11 +390,9 @@ public class PostController {
 	}
 	
 	@RequestMapping(path={"/appendnextcomment"}, method=RequestMethod.POST)
-	public String appendnextcomment(String commentPageNum, String ref_code, String last_comment, Model model){
+	public String appendnextcomment(String commentPageNum, String ref_code, String last_comment, Model model, HttpServletRequest request){
 		
-		logger.debug("commentPageNum : {}", commentPageNum);
-		logger.debug("ref_code : {}", ref_code);
-		logger.debug("last_comment : {}", last_comment);
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		int page = Integer.parseInt(commentPageNum);
 		
@@ -398,6 +402,7 @@ public class PostController {
 		paginationVo.setDivision("28");
 		paginationVo.setPage(page);
 		paginationVo.setCriteria_code(last_comment);
+		paginationVo.setMem_id(memberInfo.getMem_id());
 		
 		List<Post_commentVo> nextCommentList = commentService.select_nextComment(paginationVo);
 		
@@ -557,21 +562,117 @@ public class PostController {
 		return "complate";
 	}
 	
+	/**
+	 * Method : getPostInfo
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param post_code
+	 * @param model
+	 * @param request
+	 * @return
+	 * Method 설명 : 특정 게시물 내용 조회
+	 */
 	@RequestMapping(path={"/getpostinfo"}, method=RequestMethod.POST)
 	@ResponseBody
-	public String getPostInfo(String post_code, Model model, HttpServletRequest request){
-		logger.debug("post_code qweasdzxc : {}", post_code);
+	public String getPostInfo(String post_code){
 		
 		PostVo postInfo = postService.select_postInfo(post_code);
-//		model.addAttribute("postInfo", postInfo);
-		
-//		request.getSession().setAttribute("postInfo", postInfo);
-		
 		String contents = postInfo.getPost_contents();
 		
 		return contents;
 	}
 	
+	/**
+	 * Method : updatePost
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param post_code
+	 * @param post_contents
+	 * @param request
+	 * @param model
+	 * @return
+	 * Method 설명 : 게시물 수정
+	 */
+	@RequestMapping(path={"/updatepost"}, method=RequestMethod.POST)
+	public String updatePost(String post_code, String post_contents, HttpServletRequest request, Model model){
+		
+		PostVo updatePost = new PostVo();
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		updatePost.setPost_contents(post_contents);
+		updatePost.setPost_code(post_code);
+		
+		postService.update_post(updatePost);
+		
+		
+		//수정된 게시글의 해시태그 추출
+		Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣]*)");
+		Matcher m = p.matcher(post_contents);
+		
+		String hashtag = "";
+		
+		Hashtag_listVo taglistVo = new Hashtag_listVo();
+		String hashtag_name = "";
+		
+		taglistVo.setDivision("28");
+		taglistVo.setRef_code(post_code);
+		
+		taglistService.delete_hashtaglist(taglistVo); // 해당 글에 등록된 hashtag를 초기화(모두삭제)
+		
+		List<String> tagList = new ArrayList<String>();
+		
+		while(m.find()){
+			hashtag = hashtag_replace(m.group());
+			tagList.add(hashtag);
+			
+			List<Hashtag_listVo> beforList = taglistService.select_hashtaglist(taglistVo);
+			
+			
+			if(hashtag != null){
+				logger.debug("추출된 해시태그 : {}", hashtag);
+				taglistVo.setHashtag_name(hashtag);
+				
+				hashtagService.insert_hashtag(hashtag);
+				taglistService.insert_hashtaglist(taglistVo);
+			}
+		}
+		
+		String replacedPost_contents = "";
+		for(int i=0; i<tagList.size(); i++){
+			String[] temp = post_contents.split(tagList.get(i), 2);
+			
+			if(temp.length == 1){
+				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";	
+									   //"<a href='/hashtag/" + tagList.get(i).split("#")[1] + "'>" + tagList.get(i) + "</a>";
+				post_contents = temp[0];
+			} else {
+				replacedPost_contents += temp[0];
+				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";
+				post_contents = temp[1];
+			}
+			
+			if(i == tagList.size() - 1){
+				replacedPost_contents += temp[1];
+			}
+		}
+		
+		if(!replacedPost_contents.equals("")){
+			updatePost.setPost_contents(replacedPost_contents);
+			int postInsertCnt =  postService.update_post(updatePost);
+		}
+		
+		return "";
+	}
+	
+	/**
+	 * Method : unfolow
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param target_id
+	 * @param request
+	 * @return
+	 * Method 설명 : 언팔로우
+	 */
 	@RequestMapping(path={"/unfollow"}, method=RequestMethod.POST)
 	@ResponseBody
 	public String unfolow(String target_id, HttpServletRequest request){
@@ -587,21 +688,217 @@ public class PostController {
 		return "complate";
 	}
 	
+	/**
+	 * Method : postReport
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param post_code
+	 * @param request
+	 * @return
+	 * Method 설명 : 게시글 신고
+	 */
 	@RequestMapping(path={"/postreport"}, method=RequestMethod.POST)
 	@ResponseBody
-	public String postReport(String post_code, HttpServletRequest request){
-		//게시글 신고 기능 구현 예정
+	public String postReport(String post_code, String report_contents, HttpServletRequest request){
+		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		ReportVo report = new ReportVo();
+		report.setDivision("28");
+		report.setRef_code(post_code);
+		report.setMem_id(memberInfo.getMem_id());
+		report.setReport_contents(report_contents);
+		
+		reportService.insert_reportInfo(report);
 		
 		return "complate";
 	}
 	
+	/**
+	 * Method : commentReport
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param comment_code
+	 * @param request
+	 * @return 
+	 * Method 설명 : 댓글 신고
+	 */
 	@RequestMapping(path={"/commentreport"}, method=RequestMethod.POST)
 	@ResponseBody
-	public String commentReport(String comment_code, HttpServletRequest request){
+	public String commentReport(String comment_code, String report_contents, HttpServletRequest request){
 		//댓글 신고기능 구현 예정
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
+		ReportVo report = new ReportVo();
+		report.setDivision("29");
+		report.setRef_code(comment_code);
+		report.setMem_id(memberInfo.getMem_id());
+		report.setReport_contents(report_contents);
+		
+		reportService.insert_reportInfo(report);
+		
 		return "complate";
 	}
+	
+	
+	/**
+	 * Method : deleteComment
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param comment_code
+	 * @return
+	 * Method 설명 : 댓글 삭제
+	 */
+	@RequestMapping(path={"/deletecomment"},method=RequestMethod.POST)
+	@ResponseBody
+	public String deleteComment(String comment_code){
+		
+		commentService.delete_comment(comment_code);
+		
+		return "complate";
+	}
+	
+	/**
+	 * Method : hidePost
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param post_code
+	 * @param request
+	 * @return
+	 * Method 설명 : 글 숨기기
+	 */
+	@RequestMapping(path={"/hidepost"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String hidePost(String post_code, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		Hide_postVo hideVo = new Hide_postVo();
+		hideVo.setMem_id(memberInfo.getMem_id());
+		hideVo.setPost_code(post_code);
+		
+		hide_postService.insert_hidepostInfo(hideVo);
+		
+		return "complate";
+	}
+	
+	/**
+	 * Method : getCommentInfo
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param comment_code
+	 * @return
+	 * Method 설명 : 특정 댓글 내용 조회
+	 */
+	@RequestMapping(path={"/getcommentInfo"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String getCommentInfo(String comment_code){
+		
+		Post_commentVo commentInfo = commentService.select_commentInfo(comment_code);
+		String comment_contents = commentInfo.getComment_contents();
+		
+		return comment_contents;
+	}
+	
+	@RequestMapping(path={"/savepost"}, method=RequestMethod.GET)
+	public String savePost(Model model, HttpServletRequest request){
+		
+		PaginationVo paginationVo = new PaginationVo();
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		logger.debug("asdasdasd {}", memberInfo);
+		
+		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
+		tagCountPageVo.setMem_id(memberInfo.getMem_id());
+		tagCountPageVo.setDivision("16");
+		
+		Save_postVo savepost = new Save_postVo();
+		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
+		
+		if(savepostCnt == 0){
+			model.addAttribute("savepostCnt", "0");
+		} else {
+			model.addAttribute("savepostCnt", savepostCnt+"");
+		}
+		
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		
+		
+		if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
+			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+			
+			//인맥 수 출력을 위한 세팅
+			int connectionCnt = personal_connectionService.connections_count(memberInfo);
+			
+			//팔로우 한 해쉬태그 출력을 위한 세팅
+			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
+			
+			if(!followHashtag.isEmpty()){
+				model.addAttribute("followHashtag", followHashtag);
+			} else {
+				model.addAttribute("followHashtag","notfollow");
+			}
+			
+			
+			model.addAttribute("userInfo", userInfo);
+			model.addAttribute("connectionCnt", connectionCnt);
+		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
+			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
+			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+			
+			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
+	         
+	         if(!followHashtag.isEmpty()){
+	            model.addAttribute("followHashtag", followHashtag);
+	         } else {
+	            model.addAttribute("followHashtag","notfollow");
+	         }
+			
+			model.addAttribute("corpInfo", corpInfo);
+			
+		} else { //관리자일 경우
+			//관리자 로그인 시 홈 화면 출력을 위한 세팅
+			
+		}
+		
+		
+		List<PostVo> savePost = postService.select_savePost(paginationVo);
+		model.addAttribute("memberInfo", memberInfo);
+		model.addAttribute("savePost", savePost);
+
+		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+		model.addAttribute("goodList", goodList);
+		
+		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		model.addAttribute("saveList", saveList);
+		
+		return "savePostTiles";
+	}
+	
+	@RequestMapping(path={"/nextsavepost"}, method=RequestMethod.POST)
+	public String nextSavePost(String pageNum, String lastPost, String ref_code, Model model, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+
+		int page = Integer.parseInt(pageNum);
+		
+		PaginationVo paginationVo = new PaginationVo();
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		paginationVo.setPage(page);
+		paginationVo.setCriteria_code(lastPost);
+		
+		List<PostVo> nextSavePost = postService.select_nextSavePost(paginationVo);
+		
+		model.addAttribute("nextSavePost", nextSavePost);
+		model.addAttribute("memberInfo", memberInfo);
+		
+		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+		model.addAttribute("goodList", goodList);
+		
+		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		model.addAttribute("saveList", saveList);
+		
+		return "timeline/nextSavePost";
+	}
+	
 }

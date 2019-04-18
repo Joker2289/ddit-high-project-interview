@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!-- <link href="/css/timeline/writemodal.css" rel="stylesheet"> -->
 
-<c:forEach items="${nextPostList }" var="post">
+<c:forEach items="${nextSavePost }" var="post">
   <div id="col-post${post.post_code }" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
 	  <div class="col-post ${post.post_code }">
 		<div class="col-post-body">

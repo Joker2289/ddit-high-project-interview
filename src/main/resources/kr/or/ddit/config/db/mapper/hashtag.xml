@@ -24,9 +24,10 @@
 	</update>
 	
 	<!-- 게시물에서 해시태그 삭제(게시물에서 해시태그가 추가되거나 삭제될 때 사용) -->
-	<delete id="delete_hashtaglist" parameterType="String">
+	<delete id="delete_hashtaglist" parameterType="taglistVo">
 		delete hashtag_list
-		 where taglist_code = #{taglist_code}
+		 where ref_code = #{ref_code}
+		   and division = #{division}
 	</delete>
 	
 	<!-- 게시물에 포함된 해시태그 목록 조회 -->
