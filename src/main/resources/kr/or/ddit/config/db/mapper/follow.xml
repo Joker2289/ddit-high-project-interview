@@ -90,4 +90,12 @@
 		   and a.division = '16'
 	</select>
 	
+	<select id="" parameterType="" resultType="">
+		select *
+		  from follow
+		 where mem_id = 'jin'
+		   and ref_keyword = 'goo8455'
+		   and division = '43';
+	</select>
+	
 </mapper> 

@@ -301,8 +301,13 @@ $(document).ready(function() {
 							  		메일 보내기
 							  		</button>
 							  	</c:when>
+							  	<c:when test="${not empty personalWaitVo.receive_accept }">
+							  		<button style="height: 40px;font-size: 18px; color: #469a1f;" type="button" class="btn btn-link" disabled="disabled">
+							  			<span style="font-size: 18px; color: #469a1f;"><i class="far fa-check-circle"></i></span>일촌 대기중
+							  		</button>
+							  	</c:when>
 							  	<c:otherwise>
-							  		<button style="height: 40px;font-size: 18px;" type="button" class="btn btn-primary">
+							  		<button style="height: 40px;font-size: 18px;" type="button" class="btn btn-primary" onclick="location.href='/profileInsertConnection?user_id=${SESSION_DETAILVO.user_id}&receive_id=${usersMap.usersVo.user_id }'">
 							  		일촌맺기
 							  		</button>
 							  	</c:otherwise>

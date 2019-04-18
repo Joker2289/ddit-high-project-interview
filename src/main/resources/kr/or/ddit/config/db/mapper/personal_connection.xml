@@ -523,6 +523,15 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 		   and receive_accept = 'Y'
 	</select>
 	
+	<!-- 나와 상대방의 일촌 수락대기중 -->
+	<select id="select_oneConnectionsWait" parameterType="personalVo" resultType="personalVo">
+		select receive_accept
+		  from personal_connection
+		 where (user_id = #{user_id} or receive_id = #{user_id}) 
+		   and (receive_id = #{receive_id} or user_id = #{receive_id})
+		   and receive_accept = 'N'
+	</select>
+	
 	<!-- 일촌 신청 -->
 	<insert id="insert_connections" parameterType="personalVo">
 		insert into personal_connection

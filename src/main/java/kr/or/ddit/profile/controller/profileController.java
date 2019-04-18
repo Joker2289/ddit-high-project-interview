@@ -32,6 +32,8 @@ import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.education_info.service.IEducation_infoService;
 import kr.or.ddit.files.model.FilesVo;
 import kr.or.ddit.files.service.IFilesService;
+import kr.or.ddit.follow.model.FollowVo;
+import kr.or.ddit.follow.service.IFollowService;
 import kr.or.ddit.language.model.LanguageVo;
 import kr.or.ddit.language.service.ILanguageService;
 import kr.or.ddit.member.model.MemberVo;
@@ -69,7 +71,7 @@ public class profileController {
 	private IPossesion_skillsService possesion_skillsService;
 	
 	@Resource(name="personalService")
-	private IPersonal_connectionService PersonalService;
+	private IPersonal_connectionService personalService;
 	
 	@Resource(name="filesService")
 	private IFilesService filesService;
@@ -89,8 +91,8 @@ public class profileController {
 	@Resource(name="languageService")
 	private ILanguageService languageService;
 	
-	@Resource(name="personalService")
-	private IPersonal_connectionService personalService;
+	@Resource(name="followService")
+	private IFollowService followService;
 	
 	@RequestMapping("/menu")
 	public String menuDropdownView(String str) {
@@ -218,8 +220,18 @@ public class profileController {
 	}
 	
 	@RequestMapping("/otherDropdown")
-	public String otherDropdownView(String user_id, Model model) {
-		model.addAttribute("user_id", user_id);
+	public String otherDropdownView(String user_id, Model model, HttpSession session) {
+		MemberVo SESSION_MEMBERVO = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		if (user_id != null && user_id != SESSION_MEMBERVO.getMem_id()) {
+			
+			Personal_connectionVo  personalVo = new Personal_connectionVo();
+			personalVo.setUser_id(user_id);
+			personalVo.setReceive_id(SESSION_MEMBERVO.getMem_id());
+			personalVo = personalService.select_oneConnections(personalVo);
+			model.addAttribute("personalVo", personalVo);
+			model.addAttribute("user_id", user_id);
+		}
+		
 		return "/profile/otherDropdown";
 	}
 	
@@ -240,14 +252,16 @@ public class profileController {
 			Personal_connectionVo  personalVo = new Personal_connectionVo();
 			personalVo.setUser_id(user_id);
 			personalVo.setReceive_id(SESSION_MEMBERVO.getMem_id());
+			Personal_connectionVo  personalWaitVo = personalService.select_oneConnectionsWait(personalVo);
 			personalVo = personalService.select_oneConnections(personalVo);
 			model.addAttribute("personalVo", personalVo);
+			model.addAttribute("personalWaitVo", personalWaitVo);
 		}
 		
 		MemberVo memberVo = new MemberVo();
 		memberVo.setMem_id(user_id);
 		
-		int peopleCount = PersonalService.connections_count(memberVo);
+		int peopleCount = personalService.connections_count(memberVo);
 		Map<String, Object> usersMap = usersService.select_introduce(user_id);
 		Map<String, Object> career_infoMap = carService.select_careerInfo(user_id);
 		Map<String, Object> education_infoMap = eduService.select_educationInfo(user_id);
@@ -413,6 +427,30 @@ public class profileController {
 		model.addAttribute("recordMap", recordMap);
 		
 		return "/profile/profilePDF";
+	}
+	
+	@RequestMapping(path={"/profileInsertConnection"})
+	public String profileInsertConnection(Personal_connectionVo personalVo){
+		personalService.insert_connections(personalVo);
+		return "redirect:/profileHome?user_id="+personalVo.getReceive_id();
+	}
+	
+	@RequestMapping(path={"/profileDeleteConnection"})
+	public String profileDeleteConnection(Personal_connectionVo personalVo){
+		personalService.delete_connections(personalVo);
+		return "redirect:/profileHome?user_id="+personalVo.getReceive_id();
+	}
+	
+	@RequestMapping(path={"/profileInsertFollow"})
+	public String profileInsertFollow(FollowVo followVo){
+		followService.insert_follow(followVo);
+		return "redirect:/profileHome?user_id="+followVo.getRef_keyword();
+	}
+	
+	@RequestMapping(path={"/profileDeleteFollow"})
+	public String profileDeleteFollow(FollowVo followVo){
+		followService.delete_follow(followVo);
+		return "redirect:/profileHome?user_id="+followVo.getRef_keyword();
 	}
 	
 	
