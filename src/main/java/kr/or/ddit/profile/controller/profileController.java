@@ -228,8 +228,14 @@ public class profileController {
 			personalVo.setUser_id(user_id);
 			personalVo.setReceive_id(SESSION_MEMBERVO.getMem_id());
 			personalVo = personalService.select_oneConnections(personalVo);
+			FollowVo followVo = new FollowVo(); 
+			followVo.setMem_id(SESSION_MEMBERVO.getMem_id());
+			followVo.setRef_keyword(user_id);
+			followVo = followService.select_oneFollow(followVo);
+			
 			model.addAttribute("personalVo", personalVo);
 			model.addAttribute("user_id", user_id);
+			model.addAttribute("followVo", followVo);
 		}
 		
 		return "/profile/otherDropdown";

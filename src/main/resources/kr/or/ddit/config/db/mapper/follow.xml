@@ -90,12 +90,13 @@
 		   and a.division = '16'
 	</select>
 	
-	<select id="" parameterType="" resultType="">
+	<!-- 사용자와 상대방과의 팔로우 검색 -->
+	<select id="select_oneFollow" parameterType="followVo" resultType="followVo">
 		select *
 		  from follow
-		 where mem_id = 'jin'
-		   and ref_keyword = 'goo8455'
-		   and division = '43';
+		 where mem_id = #{mem_id}
+		   and ref_keyword = #{ref_keyword}
+		   and division = '43'
 	</select>
 	
 </mapper> 

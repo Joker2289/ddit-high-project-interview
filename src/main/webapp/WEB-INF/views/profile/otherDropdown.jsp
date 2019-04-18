@@ -10,5 +10,16 @@
 				<a href="/profileDeleteConnection?user_id=${SESSION_DETAILVO.user_id}&receive_id=${user_id }" style="padding: 0 15px 0 0; width: 140px;"><span style="font-size: 24px;"><i class="far fa-times-circle"></i></span>일촌 끊기</a>
 			</li>
 		</c:if>
+		<c:if test="${empty followVo.mem_id  }">
+			<li class="dropdownAccordion otherDropdown" style="width: 155px;">
+				<a href="/profileInsertFollow?mem_id=${SESSION_DETAILVO.user_id}&ref_keyword=${user_id }" style="padding: 0 15px 0 0; width: 140px;"><span style="font-size: 24px;"><i class="far fa-times-circle"></i></span>팔로우</a>
+			</li>
+		</c:if>
+		<c:if test="${not empty followVo.mem_id  }">
+			<li class="dropdownAccordion otherDropdown" style="width: 155px;">
+				<a href="/profileDeleteFollow?mem_id=${SESSION_DETAILVO.user_id}&ref_keyword=${user_id }" style="padding: 0 15px 0 0; width: 140px;"><span style="font-size: 24px;"><i class="far fa-times-circle"></i></span>언팔로우</a>
+			</li>
+		</c:if>
 	</c:if>
+	
 </ul>
