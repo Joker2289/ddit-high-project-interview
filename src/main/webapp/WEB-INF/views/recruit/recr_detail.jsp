@@ -16,14 +16,14 @@
 <div class="row">
 <div>
 	<!-- 레이아웃 잡는건 나중에.. -->
-	<table border="0" style="margin-bottom: 60px; margin-top: -4px; padding: 0px; margin-left: -2px;">
+	<table border="0" style="margin-bottom: 20px; margin-top: -4px; padding: 0px; margin-left: 0px;">
 		<tr>
 			<td style="vertical-align: top;">
 				<div class="col-md-12">
 					<div class="whiteBox" style="width: 795px;">
 						<table border="0" style="width: 795px;">
 							<tr>
-								<td style="background-image: url('${corp.bg_path }'); height: 100px;">
+								<td style="background-image: url('${corp.bg_path }'); height: 100px; background-color: #24a4be;">
 									<div style="position: relative; top: 40px; left: 25px;">
 										<img src="${corp.logo_path }" width="155" style="border: 1px solid;
 												border-color: #a6a6a6; border-radius: 3px; border-bottom-width: 2px;">
@@ -93,9 +93,19 @@
 							</tr>
 						</table>
 					</div>
-					<div class="whiteBox" style="width: 795px; border-top: 0px; margin-top: -2px;">
+					<div class="whiteBox" style="width: 795px; margin-top: 30px;">
 						<h4>(회사 소개)</h4>
 					</div>
+	
+					<div class="col-md-12">
+						<div class="whiteBox" style="width: 795px; margin-bottom: 100px; height: 50px; padding: 10px;
+								padding-left: 20px; font-size: 20px; margin-top: -1px; margin-left: -15px;">
+							<a href="${pageContext.request.contextPath }/srecr">
+								<i class="fas fa-chevron-left" style="font-size: 19px;"></i>
+								<strong>&nbsp; &nbsp;목록으로</strong>
+							</a>
+						</div>
+					</div>					
 				</div>			
 			</td>
 			
@@ -124,11 +134,7 @@
 			</td>
 		</tr>
 	</table>
-	
-	<br>
-	<a href="#" onclick="history.back(-1); return false;">뒤로 가기</a>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-	<a href="${pageContext.request.contextPath }/recruit">채용공고 페이지로 이동 -></a>
+
 	<br><br>
 		
 </div>		

@@ -314,7 +314,7 @@
 	});
 		
 		
-	//summernote 툴바 숨기기
+	/* summernote 툴바 숨기기 */
 	$(".note-toolbar").hide();
 	$(".note-resizebar").hide();
 	$(".note-status-output").hide();

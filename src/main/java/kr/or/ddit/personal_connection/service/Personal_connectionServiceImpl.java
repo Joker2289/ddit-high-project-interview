@@ -128,5 +128,44 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 		return personalDao.filterSearchSchool(user_id);
 	}
 
+	/**
+	 * Method : select_oneConnections
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param personalVo
+	 * @return
+	 * Method 설명 : 나와 상대방의 일촌 확인
+	 */
+	@Override
+	public Personal_connectionVo select_oneConnections(Personal_connectionVo personalVo) {
+		return personalDao.select_oneConnections(personalVo);
+	}
+
+	/**
+	 * Method : insert_connections
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param personalVo
+	 * @return
+	 * Method 설명 : 일촌 신청
+	 */
+	@Override
+	public int insert_connections(Personal_connectionVo personalVo) {
+		return personalDao.insert_connections(personalVo);
+	}
+
+	/**
+	 * Method : delete_connections
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param personalVo
+	 * @return
+	 * Method 설명 : 일촌 삭제
+	 */
+	@Override
+	public int delete_connections(Personal_connectionVo personalVo) {
+		return personalDao.delete_connectionCancel(personalVo);
+	}
+
 	
 }

@@ -23,7 +23,7 @@
 			<tr class="profiletr">
 					<td
 						style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;"
-						onclick="javascript:location.href='/blog/blogMainView'">블로그</td>
+						onclick="javascript:location.href='/blog/blogMainView?userId=${ SESSION_MEMBERVO.mem_id }'">블로그</td>
 			</tr>
 		</c:if>
 		<c:if test="${SESSION_MEMBERVO.mem_division == '2' }">

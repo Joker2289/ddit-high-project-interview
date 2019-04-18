@@ -128,8 +128,18 @@
         ,monthNames: ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"] //달력의 월 부분 Tooltip 텍스트
         ,dayNamesMin: ["일","월","화","수","목","금","토"] //달력의 요일 부분 텍스트
         ,dayNames: ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"] //달력의 요일 부분 Tooltip 텍스트
-        //,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-        //,maxDate: "+1M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
+        ,beforeShow: function(input) {
+
+		    var i_position= $(input).position();
+		    var i_offset= $(input).offset(); 
+		    i_position.top = i_position.top + 120; 
+		    
+		    setTimeout(function(){
+	
+		       $('#ui-datepicker-div').css({'top':i_position.top+"px", 'bottom':'', 'left':i_offset.left+ "px"});   
+	
+		    })
+		}                
     });                    
     
 </script>

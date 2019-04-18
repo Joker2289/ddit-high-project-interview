@@ -37,6 +37,7 @@ import kr.or.ddit.language.service.ILanguageService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.patent_list.model.Patent_listVo;
 import kr.or.ddit.patent_list.service.IPatent_listService;
+import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.possesion_skills.model.Possesion_skillsVo;
 import kr.or.ddit.possesion_skills.service.IPossesion_skillsService;
@@ -87,6 +88,9 @@ public class profileController {
 	
 	@Resource(name="languageService")
 	private ILanguageService languageService;
+	
+	@Resource(name="personalService")
+	private IPersonal_connectionService personalService;
 	
 	@RequestMapping("/menu")
 	public String menuDropdownView(String str) {
@@ -214,13 +218,13 @@ public class profileController {
 	}
 	
 	@RequestMapping("/otherDropdown")
-	public String otherDropdownView() {
-		
+	public String otherDropdownView(String user_id, Model model) {
+		model.addAttribute("user_id", user_id);
 		return "/profile/otherDropdown";
 	}
 	
 	@RequestMapping("/profileDropdown")
-	public String profileDropdownView(Model model, HttpSession session,String user_id) {
+	public String profileDropdownView(Model model, String user_id) {
 		model.addAttribute("user_id", user_id);
 		
 		return "/profile/profileDropdown";
@@ -228,9 +232,16 @@ public class profileController {
 	
 	@RequestMapping(path= {"/profileHome"})
 	public String profileHomeView(Model model, HttpSession session, String user_id) {
+		MemberVo SESSION_MEMBERVO = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		if (user_id == null) {
-			MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
-			user_id = memberVo.getMem_id();
+			
+			user_id = SESSION_MEMBERVO.getMem_id();
+		}else{
+			Personal_connectionVo  personalVo = new Personal_connectionVo();
+			personalVo.setUser_id(user_id);
+			personalVo.setReceive_id(SESSION_MEMBERVO.getMem_id());
+			personalVo = personalService.select_oneConnections(personalVo);
+			model.addAttribute("personalVo", personalVo);
 		}
 		
 		MemberVo memberVo = new MemberVo();
@@ -242,6 +253,7 @@ public class profileController {
 		Map<String, Object> education_infoMap = eduService.select_educationInfo(user_id);
 		List<Possesion_skillsVo> possesion_skillsVoList =  possesion_skillsService.select_possesion_skills(user_id);
 		Map<String, Object> recordMap = new HashMap<String, Object>();
+		
 		
 		recordMap.put("thesis_listVoList", thesis_listService.select_thesis_list(user_id));
 		recordMap.put("patent_listVoList", patent_listService.select_patent_list(user_id));
@@ -379,5 +391,33 @@ public class profileController {
 		fis.close();
 		
 	}
+	
+	@RequestMapping(path={"/profilePDF"})
+	public String profilePDF(String user_id, Model model){
+		Map<String, Object> usersMap = usersService.select_introduce(user_id);
+		Map<String, Object> career_infoMap = carService.select_careerInfo(user_id);
+		Map<String, Object> education_infoMap = eduService.select_educationInfo(user_id);
+		List<Possesion_skillsVo> possesion_skillsVoList =  possesion_skillsService.select_possesion_skills(user_id);
+		Map<String, Object> recordMap = new HashMap<String, Object>();
+		
+		recordMap.put("thesis_listVoList", thesis_listService.select_thesis_list(user_id));
+		recordMap.put("patent_listVoList", patent_listService.select_patent_list(user_id));
+		recordMap.put("project_careerList", project_careerService.select_project_career(user_id));
+		recordMap.put("award_historyList", award_historyService.select_award_history(user_id));
+		recordMap.put("languageVoList", languageService.select_language(user_id));
+		
+		model.addAttribute("usersMap", usersMap);
+		model.addAttribute("career_infoMap", career_infoMap);
+		model.addAttribute("education_infoMap", education_infoMap);
+		model.addAttribute("possesion_skillsVoList", possesion_skillsVoList);
+		model.addAttribute("recordMap", recordMap);
+		
+		return "/profile/profilePDF";
+	}
+	
+	
+	
+	
+	
 
 }
