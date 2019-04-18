@@ -126,5 +126,9 @@
 		<put-attribute name="content"
 			value="/WEB-INF/views/blog/blog_main.jsp" />
 	</definition>
+	
+	<definition name="mailTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/mail/mailHome.jsp" />
+	</definition>
 
 </tiles-definitions>
