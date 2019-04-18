@@ -43,8 +43,11 @@
 		                                                                     		from corporation
 		                                                                    	   where corp_id = post_comment.mem_id) logo_path
 		                  from post_comment
-		                 where ref_code = #{ref_code}
-		                   and division = #{division}
+		                 where (ref_code = #{ref_code} and division = #{division})
+		                   and comment_code not in (select ref_code
+		                   							  from reportcontent
+		                   							 where division = 29
+		                   							   and mem_id = #{mem_id})
 		                order by comment_date desc) b)
 		 where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
 	</select>
@@ -62,8 +65,11 @@
 		                                                                     		from corporation
 		                                                                    	   where corp_id = post_comment.mem_id) logo_path
 		                  from post_comment
-		                 where ref_code = #{ref_code}
-		                   and division = #{division}
+		                 where (ref_code = #{ref_code} and division = #{division})
+		                   and comment_code not in (select ref_code
+		                   							  from reportcontent
+		                   							 where division = 29
+		                   							   and mem_id = #{mem_id})
 		                order by comment_date desc) b)
 		 where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
 		   and comment_code &lt; #{criteria_code}

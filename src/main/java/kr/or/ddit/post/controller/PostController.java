@@ -170,14 +170,8 @@ public class PostController {
 	@RequestMapping(path={"/appendpost"}, method=RequestMethod.POST)
 	public String appendPost(@RequestParam String pageNum, @RequestParam String lastPost, HttpServletRequest request, Model model, String ref_code){
 		
-		logger.debug("lastPost asdasd : {}", lastPost);
-		logger.debug("pageNum asdasdasd : {}", pageNum);
-		logger.debug("ref_code : {}", ref_code);
-		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 
-		logger.debug("mem_id asdasd : {}", memberInfo.getMem_id());
-		
 		int page = Integer.parseInt(pageNum);
 		
 		PaginationVo paginationVo = new PaginationVo();
@@ -380,6 +374,7 @@ public class PostController {
 		
 		paginationVo.setDivision("28");
 		paginationVo.setRef_code(ref_code);
+		paginationVo.setMem_id(memberInfo.getMem_id());
 		
 		Map<String, Object> resultMap = commentService.select_commentList(paginationVo);
 		
@@ -395,11 +390,9 @@ public class PostController {
 	}
 	
 	@RequestMapping(path={"/appendnextcomment"}, method=RequestMethod.POST)
-	public String appendnextcomment(String commentPageNum, String ref_code, String last_comment, Model model){
+	public String appendnextcomment(String commentPageNum, String ref_code, String last_comment, Model model, HttpServletRequest request){
 		
-		logger.debug("commentPageNum : {}", commentPageNum);
-		logger.debug("ref_code : {}", ref_code);
-		logger.debug("last_comment : {}", last_comment);
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		int page = Integer.parseInt(commentPageNum);
 		
@@ -409,6 +402,7 @@ public class PostController {
 		paginationVo.setDivision("28");
 		paginationVo.setPage(page);
 		paginationVo.setCriteria_code(last_comment);
+		paginationVo.setMem_id(memberInfo.getMem_id());
 		
 		List<Post_commentVo> nextCommentList = commentService.select_nextComment(paginationVo);
 		
@@ -746,6 +740,33 @@ public class PostController {
 		return "complate";
 	}
 	
+	
+	/**
+	 * Method : deleteComment
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param comment_code
+	 * @return
+	 * Method 설명 : 댓글 삭제
+	 */
+	@RequestMapping(path={"/deletecomment"},method=RequestMethod.POST)
+	@ResponseBody
+	public String deleteComment(String comment_code){
+		
+		commentService.delete_comment(comment_code);
+		
+		return "complate";
+	}
+	
+	/**
+	 * Method : hidePost
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param post_code
+	 * @param request
+	 * @return
+	 * Method 설명 : 글 숨기기
+	 */
 	@RequestMapping(path={"/hidepost"}, method=RequestMethod.POST)
 	@ResponseBody
 	public String hidePost(String post_code, HttpServletRequest request){
@@ -779,13 +800,105 @@ public class PostController {
 		return comment_contents;
 	}
 	
-	@RequestMapping(path={"/deletecomment"},method=RequestMethod.POST)
-	@ResponseBody
-	public String deleteComment(String comment_code){
+	@RequestMapping(path={"/savepost"}, method=RequestMethod.GET)
+	public String savePost(Model model, HttpServletRequest request){
 		
-		commentService.delete_comment(comment_code);
+		PaginationVo paginationVo = new PaginationVo();
 		
-		return "complate";
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		logger.debug("asdasdasd {}", memberInfo);
+		
+		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
+		tagCountPageVo.setMem_id(memberInfo.getMem_id());
+		tagCountPageVo.setDivision("16");
+		
+		Save_postVo savepost = new Save_postVo();
+		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
+		
+		if(savepostCnt == 0){
+			model.addAttribute("savepostCnt", "0");
+		} else {
+			model.addAttribute("savepostCnt", savepostCnt+"");
+		}
+		
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		
+		
+		if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
+			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+			
+			//인맥 수 출력을 위한 세팅
+			int connectionCnt = personal_connectionService.connections_count(memberInfo);
+			
+			//팔로우 한 해쉬태그 출력을 위한 세팅
+			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
+			
+			if(!followHashtag.isEmpty()){
+				model.addAttribute("followHashtag", followHashtag);
+			} else {
+				model.addAttribute("followHashtag","notfollow");
+			}
+			
+			
+			model.addAttribute("userInfo", userInfo);
+			model.addAttribute("connectionCnt", connectionCnt);
+		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
+			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
+			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+			
+			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
+	         
+	         if(!followHashtag.isEmpty()){
+	            model.addAttribute("followHashtag", followHashtag);
+	         } else {
+	            model.addAttribute("followHashtag","notfollow");
+	         }
+			
+			model.addAttribute("corpInfo", corpInfo);
+			
+		} else { //관리자일 경우
+			//관리자 로그인 시 홈 화면 출력을 위한 세팅
+			
+		}
+		
+		
+		List<PostVo> savePost = postService.select_savePost(paginationVo);
+		model.addAttribute("memberInfo", memberInfo);
+		model.addAttribute("savePost", savePost);
+
+		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+		model.addAttribute("goodList", goodList);
+		
+		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		model.addAttribute("saveList", saveList);
+		
+		return "savePostTiles";
+	}
+	
+	@RequestMapping(path={"/nextsavepost"}, method=RequestMethod.POST)
+	public String nextSavePost(String pageNum, String lastPost, String ref_code, Model model, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+
+		int page = Integer.parseInt(pageNum);
+		
+		PaginationVo paginationVo = new PaginationVo();
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		paginationVo.setPage(page);
+		paginationVo.setCriteria_code(lastPost);
+		
+		List<PostVo> nextSavePost = postService.select_nextSavePost(paginationVo);
+		
+		model.addAttribute("nextSavePost", nextSavePost);
+		model.addAttribute("memberInfo", memberInfo);
+		
+		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+		model.addAttribute("goodList", goodList);
+		
+		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		model.addAttribute("saveList", saveList);
+		
+		return "timeline/nextSavePost";
 	}
 	
 }

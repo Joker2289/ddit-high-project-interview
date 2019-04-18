@@ -183,21 +183,39 @@
 		
 	});
 	
+	function pushReportModal() {
+		$("div.reportmodal").modal();
+	}
+	function closeReportModal() {
+		$("div.reportmodal").modal('hide');
+	}
+	
 	//댓글 신고
 	var report_comment_code = "";
 	$(".btn_reportComment").on("click", function () {
+		
+		pushReportModal();
+		
 		report_comment_code = $(this).attr('data-code');
 		
-		$.ajax({
-			type : 'POST',
-			url : '/reportcomment',
-			data : {"comment_code" : report_comment_code},
-			success : function(data) {
-				
-// 				$('#post'+target_code).remove();
-// 				$('#col-post'+target_code).append('<div style="padding: 15px; background: #fff; border : 1px solid #ddd; border-radius: 4px; box-shadow: 0 6px 12px rgba(0, 0, 0, .15);"><h4>' + writer_name + '님을 언팔로우 했습니다.<br>앞으로 ' + writer_name + '님의 글은 표시되지 않습니다.</h4></div>');
-				
-			}
+		$("#btn_report_post").on("click", function() {
+			
+			var report_contents = $("#report_contents").val();
+			
+// 			$.ajax({
+// 				type : 'POST',
+// 				url : '/commentreport',
+// 				data : {"comment_code" : report_comment_code, "report_contents" : report_contents},
+// 				success : function(data) {
+					
+// 					closeReportModal();
+					
+// 					$('#comment-area'+report_comment_code).remove();
+// 					//css 미적용
+// 					$('#comment-info'+report_comment_code).append('<div><span>댓글을 신고했습니다.<br>더 이상 이 댓글을 표시하지 않습니다.</span></div>');
+					
+// 				}
+// 			});
 		});
 		
 	});
