@@ -51,4 +51,9 @@ public class CommentDaoImpl implements ICommentDao {
 		return sqlSession.selectOne("comment.select_moreCommentCount", paginationVo);
 	}
 
+	@Override
+	public Post_commentVo select_commentInfo(String comment_code) {
+		return sqlSession.selectOne("comment.select_commentInfo", comment_code);
+	}
+
 }

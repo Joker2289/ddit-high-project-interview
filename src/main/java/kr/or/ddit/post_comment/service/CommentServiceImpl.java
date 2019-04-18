@@ -60,4 +60,9 @@ public class CommentServiceImpl implements ICommentService {
 		return commentDao.select_moreCommentCount(paginationVo);
 	}
 
+	@Override
+	public Post_commentVo select_commentInfo(String comment_code) {
+		return commentDao.select_commentInfo(comment_code);
+	}
+
 }

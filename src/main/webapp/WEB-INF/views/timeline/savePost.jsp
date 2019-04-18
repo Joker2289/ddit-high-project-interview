@@ -77,7 +77,7 @@
 	                  <!-- 일촌 수 조회 -->
 		              <pre style="background: #fff; border-color: #fff;"><a href="/personalConnection"><span>일촌 수<span style="float: right;">${connectionCnt }</span></span></a></pre>
 		              <!-- 저장한 글 수 조회 -->
-	           	      <pre style="background: #fff; border-color: #fff;"><a href="/savepost"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
+	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
 	                </c:when>
 	                <c:when test="${memberInfo.mem_division == '2' }">
 	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
@@ -116,17 +116,14 @@
 	      </div>
 	      
 	      <div class="col-md-6">
-	        <div class="input-group" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
-	          <button id="btn-write_modal" class="btn-write_modal"  style="height: 73.6px; margin-top: -7px;"><span class="span-text"><a><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></span></button>
-	          <button id="btn-upload-img" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-images"></i></a></span></button>
-	          <button id="btn-upload-video" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-play-circle"></i></a></span></button>
-	          <button id="btn-upload-document" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-file-alt"></i></a></span></button>
+	        <div class="input-group" style="padding-left: 15px; box-shadow: 0 0px 0 rgba(0,0,0,0);">
+	          <h3>저장한 글</h3>
 	        </div><hr>
 	        
 	        <!-- feed -->
 	        <div class="post-group">
 	          <!-- post -->
-	          <c:forEach items="${timelinePost }" var="post">
+	          <c:forEach items="${savePost }" var="post">
 		          
 		        <div id="col-post${post.post_code }" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
 				  <div class="col-post" id="post${post.post_code }">
@@ -285,16 +282,9 @@
 
 <script type="text/javascript">
 	
-	//작성 모달창 푸쉬
-	function pushModal() {
-		$("div.writemodal").modal();
-	}
-	
 	function pushUpdateModal() {
 		$("div.updatemodal").modal();
 	}
-	
-
 	
 	$('#summernote').summernote({
 		placeholder: '소식을 업데이트 해주세요!',
@@ -314,7 +304,7 @@
 	});
 		
 		
-	/* summernote 툴바 숨기기 */
+	//summernote 툴바 숨기기
 	$(".note-toolbar").hide();
 	$(".note-resizebar").hide();
 	$(".note-status-output").hide();
@@ -602,7 +592,7 @@
 			
 			$.ajax({
 				type : 'POST',
-				url : '/appendpost',
+				url : '/nextsavepost',
 				data : {"lastPost" : lastPost, "pageNum" : pageNum},
 				success : function(data) {
 					

@@ -25,7 +25,7 @@ public interface IHashtag_listDao {
 	 * 
 	 * @return Method 설명 : 해시태그 목록 삭제
 	 */
-	int delete_hashtaglist(String taglist_code);
+	int delete_hashtaglist(Hashtag_listVo taglistVo);
 
 	/**
 	 * Method : select_hashtaglist 작성자 : goo84 변경이력 :

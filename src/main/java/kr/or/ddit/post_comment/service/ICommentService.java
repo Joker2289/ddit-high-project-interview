@@ -77,4 +77,14 @@ public interface ICommentService {
 	 * Method 설명 : 댓글 더보기에 필요한 댓글 수 조회
 	 */
 	int select_moreCommentCount(PaginationVo paginationVo);
+	
+	/**
+	 * Method : select_commentInfo
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param comment_code
+	 * @return
+	 * Method 설명 : 특정 댓글 정보 조회
+	 */
+	Post_commentVo select_commentInfo(String comment_code);
 }

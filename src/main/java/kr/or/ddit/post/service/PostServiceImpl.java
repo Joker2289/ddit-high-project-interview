@@ -52,4 +52,14 @@ public class PostServiceImpl implements IPostService {
 		return postDao.select_nextPost(paginationVo);
 	}
 
+	@Override
+	public List<PostVo> select_savePost(PaginationVo paginationVo) {
+		return postDao.select_savePost(paginationVo);
+	}
+
+	@Override
+	public List<PostVo> select_nextSavePost(PaginationVo paginationVo) {
+		return postDao.select_nextSavePost(paginationVo);
+	}
+
 }

@@ -61,8 +61,12 @@
 		                                where mem_id = #{mem_id}
 		                                  and (division = '43' or division = '11'))
 		           and post.post_code not in (select post_code
-		                                    from hide_post
-		                                   where mem_id = #{mem_id}))
+		                                    	from hide_post
+		                                  	   where mem_id = #{mem_id})
+				   and post.post_code not in (select ref_code
+                                        		from reportcontent
+                                       		   where division = 28
+                                         	     and mem_id = #{mem_id}))		                                   
 		            or post.mem_id = #{mem_id}
 		        order by post_date desc) b ) 
 		where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
@@ -85,8 +89,12 @@
 		                                where mem_id = #{mem_id}
 		                                  and (division = '43' or division = '11'))
 		           and post.post_code not in (select post_code
-		                                    from hide_post
-		                                   where mem_id = #{mem_id}))
+		                                    	from hide_post
+		                                   	   where mem_id = #{mem_id})
+				   and post.post_code not in (select ref_code
+                                        		from reportcontent
+                                       		   where division = 28
+                                         	     and mem_id = #{mem_id}))
 		            or post.mem_id = #{mem_id}
 		        order by post_date desc) b ) 
 		where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
@@ -111,5 +119,46 @@
 			sysdate
 		)
 	</insert>
+	
+	<!-- 저장한 글 조회 -->
+	<select id="select_savePost" parameterType="paginationVo" resultType="postVo">
+		select *
+		  from (select b.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
+		          from (select post.*, (select count(ref_code)
+		                                  from post_comment
+		                                 where ref_code = post_code
+		                                   and division = 28) commentcount,
+		                               (select count(ref_code)
+		                                  from good
+		                                 where ref_code = post_code
+		                                   and division = 28) goodcount
+		                  from post
+		         where (post.post_code in (select save_post_code
+		                                    from save_post
+		                                   where mem_id = #{mem_id}))
+		        order by post_date desc) b )
+		 where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
+	</select>
+	
+	<!-- 저장한글 조회(스크롤 이벤트용) -->
+	<select id="select_nextSavePost" parameterType="paginationVo" resultType="postVo">
+		select *
+		  from (select b.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
+		          from (select post.*, (select count(ref_code)
+		                                  from post_comment
+		                                 where ref_code = post_code
+		                                   and division = 28) commentcount,
+		                               (select count(ref_code)
+		                                  from good
+		                                 where ref_code = post_code
+		                                   and division = 28) goodcount
+		                  from post
+		         where (post.post_code in (select save_post_code
+		                                    from save_post
+		                                   where mem_id = #{mem_id}))
+		        order by post_date desc) b )
+		 where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
+		   and post_code &lt; #{criteria_code}
+	</select>
 	
 </mapper>

@@ -76,4 +76,24 @@ public interface IPostDao {
 	 * Method 설명 : 특정 게시물 조회
 	 */
 	PostVo select_postInfo(String post_code);
+	
+	/**
+	 * Method : select_savePost
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param paginationVo
+	 * @return
+	 * Method 설명 : 저장한 글 목록 조회
+	 */
+	List<PostVo> select_savePost(PaginationVo paginationVo);
+	
+	/**
+	 * Method : select_nextSavePost
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param paginationVo
+	 * @return
+	 * Method 설명 : 저장한 글 목록 조회(스크롤 페이징 이벤트)
+	 */
+	List<PostVo> select_nextSavePost(PaginationVo paginationVo);
 }

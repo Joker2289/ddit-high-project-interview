@@ -1,12 +1,14 @@
 package kr.or.ddit.report.model;
 
+import java.util.Date;
+
 public class ReportVo {
 	private String report_code;		// 신고코드
-	private String user_id;			// 회원아이디
-	private String report_type;		// 신고유형
+	private String mem_id;			// 회원아이디
 	private String ref_code;		// 참조코드
 	private String division;		// 구분
-	private String report_date;		// 신고날짜
+	private Date report_date;		// 신고날짜
+	private String report_contents;	// 신고내용 
 	
 	public ReportVo() {
 		// TODO Auto-generated constructor stub
@@ -20,20 +22,12 @@ public class ReportVo {
 		this.report_code = report_code;
 	}
 
-	public String getUser_id() {
-		return user_id;
+	public String getMem_id() {
+		return mem_id;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
-	}
-
-	public String getReport_type() {
-		return report_type;
-	}
-
-	public void setReport_type(String report_type) {
-		this.report_type = report_type;
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
 	}
 
 	public String getRef_code() {
@@ -52,18 +46,25 @@ public class ReportVo {
 		this.division = division;
 	}
 
-	public String getReport_date() {
+	public Date getReport_date() {
 		return report_date;
 	}
 
-	public void setReport_date(String report_date) {
+	public void setReport_date(Date report_date) {
 		this.report_date = report_date;
+	}
+
+	public String getReport_contents() {
+		return report_contents;
+	}
+
+	public void setReport_contents(String report_contents) {
+		this.report_contents = report_contents;
 	}
 
 	@Override
 	public String toString() {
-		return "ReportVo [report_code=" + report_code + ", user_id=" + user_id + ", report_type=" + report_type
-				+ ", ref_code=" + ref_code + ", division=" + division + ", report_date=" + report_date + "]";
+		return "ReportVo [report_code=" + report_code + ", mem_id=" + mem_id + ", ref_code=" + ref_code + ", division="
+				+ division + ", report_date=" + report_date + ", report_contents=" + report_contents + "]";
 	}
-	
 }

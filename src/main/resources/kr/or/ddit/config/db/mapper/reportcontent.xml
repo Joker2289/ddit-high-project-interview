@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="report">
+	
+	<!-- 신고정보 등록 -->
+	<insert id="insert_reportInfo" parameterType="reportVo">
+		insert into reportcontent
+		values(
+		    report_code_seq.nextval,
+		    #{mem_id},
+		    #{ref_code},
+		    #{division},
+		    sysdate,
+		    #{report_contents}
+		)
+	</insert>
+	
+	<!-- 신고정보 삭제 -->
+	<delete id="delete_reportInfo" parameterType="String">
+		delete reportcontent
+		 where report_code = #{report_code}
+	</delete>
+	
+	<!-- 유형별 신고정보 조회 -->
+	<select id="select_reportInfo" parameterType="String" resultType="reportVo">
+		select report_code, mem_id, ref_code, division, report_date, report_contents
+		  from reportcontent
+		 where division = #{division}
+	</select>
+	
+	
+	
+</mapper>
