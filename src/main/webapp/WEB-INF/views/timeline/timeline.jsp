@@ -238,8 +238,8 @@
 					        <c:if test="${not empty saveList}">
 					          <c:forEach items="${saveList }" var="savepost">
 					            <c:choose>
-					              <c:when test="${savepost.save_post_code eq post.post_code }">class="fas fa-bookmark"</c:when>
-					              <c:when test="${!savepost.save_post_code eq post.post_code }">class="far fa-bookmark"</c:when>
+					              <c:when test="${savepost.save_post_code == post.post_code }">class="fas fa-bookmark"</c:when>
+					              <c:when test="${!(savepost.save_post_code == post.post_code) }">class="far fa-bookmark"</c:when>
 					            </c:choose>
 					          </c:forEach>
 					        </c:if>

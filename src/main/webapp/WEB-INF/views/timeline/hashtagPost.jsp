@@ -240,14 +240,14 @@
 					  <button class="btn-social btn_save" title="${post.post_code }">
 					    <span style="font-size: 18px;">
 					      <i id="icon_save${post.post_code }"
-					        <c:if test="${not empty saveList}">
+<%-- 					        <c:if test="${not empty saveList}"> --%>
 					          <c:forEach items="${saveList }" var="savepost">
 					            <c:choose>
 					              <c:when test="${savepost.save_post_code == post.post_code }">class="fas fa-bookmark"</c:when>
-					              <c:otherwise>class="far fa-bookmark"</c:otherwise>
+					              <c:when test="${!(savepost.save_post_code == post.post_code) }">class="fas fa-bookmark"</c:when>
 					            </c:choose>
 					            </c:forEach>
-					        </c:if>
+<%-- 					        </c:if> --%>
 <%-- 					        <c:if test="${empty saveList}">class="far fa-bookmark"</c:if> --%>
 					        >
 					      </i>
@@ -496,7 +496,7 @@
 	var savepost_code = "";
 	$(".btn_save").on("click", function() {
 		savepost_code = $(this).attr('title');
-		var save_count = parseInt($('.txt_save_count').text());
+// 		var save_count = parseInt($('.txt_save_count').text());
 		
 		if($('#icon_save' + savepost_code).attr("class") == "far fa-bookmark"){
 			$.ajax({
@@ -504,9 +504,11 @@
 				url : '/push_postsave',
 				data : {"post_code" : savepost_code},
 				success : function(data) {
+					
+					
 					$('#icon_save' + savepost_code).attr("class", "fas fa-bookmark");
 					// 추천 수 + 1
-					$('.txt_save_count').text(save_count + 1);
+					$('.txt_save_count').text(data);
 				}
 			});
 		} else {
@@ -517,7 +519,7 @@
 				success : function(data) {
 					$('#icon_save' + savepost_code).attr("class", "far fa-bookmark");
 					//추천 수 - 1
-					$('.txt_save_count').text(save_count - 1);
+					$('.txt_save_count').text(data);
 				}
 			});
 		}
