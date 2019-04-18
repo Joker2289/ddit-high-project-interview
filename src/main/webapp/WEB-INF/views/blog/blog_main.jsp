@@ -172,6 +172,7 @@
 
 					console.log(data);
 					$('#modal-body').html(data);
+					$('#modal_head').text("팔로워");
 					
 					$('.jk-modalsasun').css('display', 'block');			
 				}
@@ -184,6 +185,7 @@
 
 					console.log(data);
 					$('#modal-body').html(data);
+					$('#modal_head').text("팔로잉");
 					
 					$('.jk-modalsasun').css('display', 'block');			
 				}
