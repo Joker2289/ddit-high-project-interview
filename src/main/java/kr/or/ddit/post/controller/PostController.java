@@ -100,10 +100,8 @@ public class PostController {
 		tagCountPageVo.setMem_id(memberInfo.getMem_id());
 		tagCountPageVo.setDivision("16");
 		
-		Save_postVo savepost = new Save_postVo();
+		//저장글 갯수 
 		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
-		
-
 		model.addAttribute("savepostCnt", savepostCnt);
 
 		
@@ -128,6 +126,7 @@ public class PostController {
 			
 			model.addAttribute("userInfo", userInfo);
 			model.addAttribute("connectionCnt", connectionCnt);
+			
 		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
 			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
 			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
@@ -157,6 +156,12 @@ public class PostController {
 		
 		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
 		model.addAttribute("saveList", saveList);
+		
+		logger.debug("goodList hahaha : {}", goodList);
+		logger.debug("saveList hahaha : {}", saveList);
+		
+		logger.debug("goodList hahaha : {}", goodList.size());
+		logger.debug("saveList hahaha : {}", saveList.size());
 		
 		return "timeLineTiles";
 	}
@@ -877,6 +882,8 @@ public class PostController {
 		model.addAttribute("goodList", goodList);
 		
 		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
+		
+		
 		model.addAttribute("saveList", saveList);
 		
 		return "savePostTiles";
