@@ -57,12 +57,15 @@ public class BlogController {
 	public String blogMainView(HttpServletRequest req, Model model, @RequestParam("userId")String userId) {
 		
 		UsersVo uVo = usersService.select_userInfo(userId);
+		
+		int followerCnt = followService.getFollowerCnt(userId);
+		int followingCnt = followService.getFollowingCnt(userId);
+		
 		model.addAttribute("uVo", uVo);
-		
-		
+		model.addAttribute("followerCnt", followerCnt);
+		model.addAttribute("followingCnt", followingCnt);
 		
 		return "blogTiles";
-		
 	}
 	
 	

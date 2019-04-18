@@ -41,11 +41,11 @@
 									</tr>
 									<tr>
 										<td class="subject">팔로워</td>
-										<td><a href="javascript:activityClick('follower');">100명</a></td>
+										<td><a href="javascript:activityClick('follower');">${ followerCnt }명</a></td>
 									</tr>
 									<tr>
 										<td class="subject">팔로잉</td>
-										<td><a href="javascript:activityClick('following');">100명</a></td>
+										<td><a href="javascript:activityClick('following');">${ followingCnt }명</a></td>
 									</tr>
 									<tr>
 										<td class="subject">총 게시글 수</td>

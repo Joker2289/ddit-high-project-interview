@@ -106,7 +106,7 @@ public class CorporationController {
 	 * @return
 	 */
 	@RequestMapping(path = { "/corporation" })
-	public String postList(HttpServletRequest request,Model model, PaginationVo paginationVo,String post_contents, HttpSession session) {
+	public String postList(HttpServletRequest request,Model model, PaginationVo paginationVo, String post_contents, HttpSession session) {
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		CorporationVo corporationInfo = new CorporationVo();
 		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
