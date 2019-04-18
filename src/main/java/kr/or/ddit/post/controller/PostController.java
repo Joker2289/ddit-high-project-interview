@@ -84,9 +84,6 @@ public class PostController {
 	@Resource(name="goodService")
 	private IGoodService goodService;
 	
-	@Resource(name="save_postService")
-	private ISave_postService save_postService;
-	
 	@Resource(name="reportService")
 	private IReportService reportService;
 	
@@ -106,11 +103,9 @@ public class PostController {
 		Save_postVo savepost = new Save_postVo();
 		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
 		
-		if(savepostCnt == 0){
-			model.addAttribute("savepostCnt", "0");
-		} else {
-			model.addAttribute("savepostCnt", savepostCnt+"");
-		}
+
+		model.addAttribute("savepostCnt", savepostCnt);
+
 		
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
@@ -160,7 +155,7 @@ public class PostController {
 		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
 		model.addAttribute("goodList", goodList);
 		
-		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
 		model.addAttribute("saveList", saveList);
 		
 		return "timeLineTiles";
@@ -187,7 +182,7 @@ public class PostController {
 		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
 		model.addAttribute("goodList", goodList);
 		
-		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
 		model.addAttribute("saveList", saveList);
 		
 		return "timeline/appendPost";
@@ -282,15 +277,18 @@ public class PostController {
 			
 			if(temp.length == 1){
 				
-				param_hashtag = tagList.get(i).split("#")[0];
+				param_hashtag = tagList.get(i).split("#")[1];
 				logger.debug("param_hashtag : {}", param_hashtag);
 				
 				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";	
-									   //"<a href='/hashtag/" + tagList.get(i).split("#")[1] + "'>" + tagList.get(i) + "</a>";
+									   //"<a href='/hashtag/" + tagList.get(i).split("#")[0] + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[0];
 			} else {
 				replacedPost_contents += temp[0];
-				param_hashtag = tagList.get(i).split("#")[0];
+				
+				param_hashtag = tagList.get(i).split("#")[1];
+				logger.debug("param_hashtag : {}", param_hashtag);
+				
 				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[1];
 			}
@@ -523,7 +521,7 @@ public class PostController {
 	 */
 	@RequestMapping(path={"/push_postsave"}, method=RequestMethod.POST)
 	@ResponseBody
-	public String push_postSave(String post_code, HttpServletRequest request){
+	public String push_postSave(String post_code, HttpServletRequest request, Model model){
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		Save_postVo saveVo = new Save_postVo();
@@ -531,9 +529,11 @@ public class PostController {
 		saveVo.setMem_id(memberInfo.getMem_id());
 		saveVo.setSave_post_code(post_code);
 		
-		save_postService.insert_savepostData(saveVo);
+		savepostService.insert_savepostData(saveVo);
 		
-		return "complate";
+		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
+		
+		return savepostCnt+"";
 	}
 	
 	/**
@@ -555,9 +555,10 @@ public class PostController {
 		saveVo.setMem_id(memberInfo.getMem_id());
 		saveVo.setSave_post_code(post_code);
 		
-		save_postService.delete_savepostData(saveVo);
+		savepostService.delete_savepostData(saveVo);
+		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
 		
-		return "complate";
+		return savepostCnt+"";
 	}
 	
 	@RequestMapping(path={"/deletepost"}, method=RequestMethod.POST)
@@ -875,7 +876,7 @@ public class PostController {
 		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
 		model.addAttribute("goodList", goodList);
 		
-		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
 		model.addAttribute("saveList", saveList);
 		
 		return "savePostTiles";
@@ -901,7 +902,7 @@ public class PostController {
 		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
 		model.addAttribute("goodList", goodList);
 		
-		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
 		model.addAttribute("saveList", saveList);
 		
 		return "timeline/nextSavePost";
@@ -970,14 +971,14 @@ public class PostController {
 			
 		}
 		
-		List<PostVo> hashtagPost = postService.select_savePost(paginationVo);
+		List<PostVo> hashtagPost = postService.select_hashtagPost(paginationVo);
 		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("hashtagPost", hashtagPost);
 
 		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
 		model.addAttribute("goodList", goodList);
 		
-		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
 		model.addAttribute("saveList", saveList);
 		
 		int tagFollowerCount = followService.select_hashtagFollowCount("#" + hashtag_name);
@@ -986,6 +987,33 @@ public class PostController {
 		model.addAttribute("hashtag_name", hashtag_name);
 		
 		return "hashtagPostTiles";
+	}
+	
+	@RequestMapping(path={"/nexthashtagpost"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String nextHashtagPost(String pageNum, String lastPost, String ref_code, Model model, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+
+		int page = Integer.parseInt(pageNum);
+		
+		PaginationVo paginationVo = new PaginationVo();
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		paginationVo.setPage(page);
+		paginationVo.setCriteria_code(lastPost);
+		
+		List<PostVo> nextHashtagPost = postService.select_nextHashtagPost(paginationVo);
+		
+		model.addAttribute("nextHashtagPost", nextHashtagPost);
+		model.addAttribute("memberInfo", memberInfo);
+		
+		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+		model.addAttribute("goodList", goodList);
+		
+		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
+		model.addAttribute("saveList", saveList);
+		
+		return "timeline/nextHashtagPost";
 	}
 	
 }

@@ -238,10 +238,10 @@
 					        <c:if test="${not empty saveList}">
 					          <c:forEach items="${saveList }" var="savepost">
 					            <c:choose>
-					              <c:when test="${savepost.save_post_code == post.post_code }">class="fas fa-bookmark"</c:when>
-					              <c:otherwise>class="far fa-bookmark"</c:otherwise>
+					              <c:when test="${savepost.save_post_code eq post.post_code }">class="fas fa-bookmark"</c:when>
+					              <c:when test="${!savepost.save_post_code eq post.post_code }">class="far fa-bookmark"</c:when>
 					            </c:choose>
-					            </c:forEach>
+					          </c:forEach>
 					        </c:if>
 					        <c:if test="${empty saveList}">class="far fa-bookmark"</c:if>>
 					      </i>
@@ -276,9 +276,9 @@
 	        <!-- ./add friend -->
 	      </div>
 	  <!-- ./main -->
-		<%@ include file="/WEB-INF/views/timeline/writeModal.jsp" %><!-- 글 작성 모달창 -->
+		<%@ include file="/WEB-INF/views/timeline/writeModal.jsp" %> <!-- 글 작성 모달창 -->
 		<%@ include file="/WEB-INF/views/timeline/updateModal.jsp" %><!-- 글 수정 모달창 -->
-		<%@ include file="/WEB-INF/views/timeline/reportModal.jsp" %><!-- 글 수정 모달창 -->
+		<%@ include file="/WEB-INF/views/timeline/reportModal.jsp" %><!-- 글 신고 모달창 -->
       </div>
    </div>
 </div>
@@ -293,8 +293,6 @@
 	function pushUpdateModal() {
 		$("div.updatemodal").modal();
 	}
-	
-
 	
 	$('#summernote').summernote({
 		placeholder: '소식을 업데이트 해주세요!',
@@ -497,7 +495,7 @@
 	var savepost_code = "";
 	$(".btn_save").on("click", function() {
 		savepost_code = $(this).attr('title');
-		var save_count = parseInt($('.txt_save_count').text());
+// 		var save_count = parseInt($('.txt_save_count').text());
 		
 		if($('#icon_save' + savepost_code).attr("class") == "far fa-bookmark"){
 			$.ajax({
@@ -505,9 +503,11 @@
 				url : '/push_postsave',
 				data : {"post_code" : savepost_code},
 				success : function(data) {
+					
+					
 					$('#icon_save' + savepost_code).attr("class", "fas fa-bookmark");
 					// 추천 수 + 1
-					$('.txt_save_count').text(save_count + 1);
+					$('.txt_save_count').text(data);
 				}
 			});
 		} else {
@@ -518,7 +518,7 @@
 				success : function(data) {
 					$('#icon_save' + savepost_code).attr("class", "far fa-bookmark");
 					//추천 수 - 1
-					$('.txt_save_count').text(save_count - 1);
+					$('.txt_save_count').text(data);
 				}
 			});
 		}

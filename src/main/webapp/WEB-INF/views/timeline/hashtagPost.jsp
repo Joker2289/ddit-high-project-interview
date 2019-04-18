@@ -116,17 +116,22 @@
 	      </div>
 	      
 	      <div class="col-md-6">
-	      	<div class="input-group" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15); background: #fff; height: 100%; min-height: 73.33px;">
-	      	  <div  style="width: 555px; height: 80px; padding-left: 15px; background: #fff;">
-	            <h3 style="font-weight: bold;">#${hashtag_name }</h3>
-				<pre style="color: #8D9191; font-size: 14px; font-weight: bold;">팔로워 <span id="followerCnt">${tagFollowerCount }</span>명</pre>
+	      	<div class="input-group" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15); background: #fff; height: 100%; min-height: 110px;">
+	      	  <div  style="width: 555px; height: 100px; padding-left: 15px; background: #fff;">
+	            <h3 style="font-weight: bold;margin-top: 10px;">#${hashtag_name }</h3>
+				<pre style="color: #8D9191;font-size: 14px;font-weight: bold;margin-left: 0px;margin-right: 10px;margin-top: 10px;margin-bottom: 10px;">팔로워 <span id="followerCnt">${tagFollowerCount }</span>명</pre>
+<%-- 				<c:choose> --%>
+<%-- 				  <c:when test=""> --%>
+					<button class="btn_followTag" style="width: 82px; height: 27px;">팔로우 중</button>
+<%-- 				  </c:when>	 --%>
+<%-- 				</c:choose> --%>
 	      	  </div>
 	        </div><hr>
 	        
 	        <!-- feed -->
 	        <div class="post-group">
 	          <!-- post -->
-	          <c:forEach items="${savePost }" var="post">
+	          <c:forEach items="${hashtagPost }" var="post">
 		          
 		        <div id="col-post${post.post_code }" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
 				  <div class="col-post" id="post${post.post_code }">
@@ -243,7 +248,8 @@
 					            </c:choose>
 					            </c:forEach>
 					        </c:if>
-					        <c:if test="${empty saveList}">class="far fa-bookmark"</c:if>>
+<%-- 					        <c:if test="${empty saveList}">class="far fa-bookmark"</c:if> --%>
+					        >
 					      </i>
 					    </span>
 					  </button>
@@ -595,7 +601,7 @@
 			
 			$.ajax({
 				type : 'POST',
-				url : '/nextsavepost',
+				url : '/nexthashtagpost',
 				data : {"lastPost" : lastPost, "pageNum" : pageNum},
 				success : function(data) {
 					
