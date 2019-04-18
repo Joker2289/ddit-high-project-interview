@@ -66,7 +66,7 @@
 		  
 		</div>
 		<div class="post_info">
-		  <pre class="post_contents" style="background: #ffffff; border-color: #ffffff;">${post.post_contents }</pre>
+		  <pre class="post_contents" style="background: #ffffff; border-color: #ffffff; margin-left: 9px;">${post.post_contents }</pre>
 		</div>
 	
 		<div class="col-post-footer">

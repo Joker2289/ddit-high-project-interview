@@ -96,4 +96,24 @@ public interface IPostDao {
 	 * Method 설명 : 저장한 글 목록 조회(스크롤 페이징 이벤트)
 	 */
 	List<PostVo> select_nextSavePost(PaginationVo paginationVo);
+	
+	/**
+	 * Method : select_hashtagPost
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param paginationVo
+	 * @return
+	 * Method 설명 : 해시태그를 공유하는 글 조회
+	 */
+	List<PostVo> select_hashtagPost(PaginationVo paginationVo);
+	
+	/**
+	 * Method : select_nextHashtagPost
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param paginationVo
+	 * @return
+	 * Method 설명 : 해시태그를 공유하는 글 조회(스크롤 페이징 이벤트)
+	 */
+	List<PostVo> select_nextHashtagPost(PaginationVo paginationVo);
 }

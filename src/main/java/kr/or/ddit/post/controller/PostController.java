@@ -274,18 +274,24 @@ public class PostController {
 			}
 		}
 		
+		String param_hashtag = "";
 		//게시물 내용 중 해시태그를 링크로 치환
 		String replacedPost_contents = "";
 		for(int i=0; i<tagList.size(); i++){
 			String[] temp = post_contents.split(tagList.get(i), 2);
 			
 			if(temp.length == 1){
-				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";	
+				
+				param_hashtag = tagList.get(i).split("#")[0];
+				logger.debug("param_hashtag : {}", param_hashtag);
+				
+				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";	
 									   //"<a href='/hashtag/" + tagList.get(i).split("#")[1] + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[0];
 			} else {
 				replacedPost_contents += temp[0];
-				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";
+				param_hashtag = tagList.get(i).split("#")[0];
+				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[1];
 			}
 			
@@ -899,6 +905,87 @@ public class PostController {
 		model.addAttribute("saveList", saveList);
 		
 		return "timeline/nextSavePost";
+	}
+	
+	@RequestMapping(path={"/hashtagpost"}, method=RequestMethod.GET)
+	public String hashtagPost(Model model, HttpServletRequest request, String hashtag_name){
+		
+		 logger.debug("asdasdqweqwezxczxc : {}", hashtag_name); 
+		
+		PaginationVo paginationVo = new PaginationVo();
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		logger.debug("asdasdasd {}", memberInfo);
+		
+		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
+		tagCountPageVo.setMem_id(memberInfo.getMem_id());
+		tagCountPageVo.setDivision("16");
+		
+		Save_postVo savepost = new Save_postVo();
+		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
+		
+		if(savepostCnt == 0){
+			model.addAttribute("savepostCnt", "0");
+		} else {
+			model.addAttribute("savepostCnt", savepostCnt+"");
+		}
+		
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		paginationVo.setHashtag_name("#" + hashtag_name);
+		
+		if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
+			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+			
+			//인맥 수 출력을 위한 세팅
+			int connectionCnt = personal_connectionService.connections_count(memberInfo);
+			
+			//팔로우 한 해쉬태그 출력을 위한 세팅
+			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
+			
+			if(!followHashtag.isEmpty()){
+				model.addAttribute("followHashtag", followHashtag);
+			} else {
+				model.addAttribute("followHashtag","notfollow");
+			}
+			
+			
+			model.addAttribute("userInfo", userInfo);
+			model.addAttribute("connectionCnt", connectionCnt);
+		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
+			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
+			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+			
+			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
+	         
+	         if(!followHashtag.isEmpty()){
+	            model.addAttribute("followHashtag", followHashtag);
+	         } else {
+	            model.addAttribute("followHashtag","notfollow");
+	         }
+			
+			model.addAttribute("corpInfo", corpInfo);
+			
+		} else { //관리자일 경우
+			//관리자 로그인 시 홈 화면 출력을 위한 세팅
+			
+		}
+		
+		List<PostVo> hashtagPost = postService.select_savePost(paginationVo);
+		model.addAttribute("memberInfo", memberInfo);
+		model.addAttribute("hashtagPost", hashtagPost);
+
+		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+		model.addAttribute("goodList", goodList);
+		
+		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		model.addAttribute("saveList", saveList);
+		
+		int tagFollowerCount = followService.select_hashtagFollowCount("#" + hashtag_name);
+		model.addAttribute("tagFollowerCount", tagFollowerCount);
+		
+		model.addAttribute("hashtag_name", hashtag_name);
+		
+		return "hashtagPostTiles";
 	}
 	
 }

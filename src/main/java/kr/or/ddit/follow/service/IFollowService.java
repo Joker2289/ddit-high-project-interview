@@ -30,5 +30,15 @@ public interface IFollowService {
 	 * Method 설명 : 사용자와 상대방과의 팔로우 검색
 	 */
 	FollowVo select_oneFollow(FollowVo followVo);
+	
+	/**
+	 * Method : select_hashtagFollowCount
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param ref_keyword
+	 * @return
+	 * Method 설명 : 해시태그 팔로워 수 조회
+	 */
+	int select_hashtagFollowCount(String ref_keyword);
 
 }

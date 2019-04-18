@@ -16,9 +16,14 @@
 			value="/WEB-INF/views/timeline/timeline.jsp" />
 	</definition>
 	
-		<definition name="savePostTiles" extends="layout">
+	<definition name="savePostTiles" extends="layout">
 		<put-attribute name="content"
 			value="/WEB-INF/views/timeline/savePost.jsp" />
+	</definition>
+
+	<definition name="hashtagPostTiles" extends="layout">
+		<put-attribute name="content"
+			value="/WEB-INF/views/timeline/hashtagPost.jsp" />
 	</definition>
 
 	<definition name="personalTiles" extends="layout">
