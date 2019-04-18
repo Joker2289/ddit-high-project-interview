@@ -123,3 +123,25 @@
 	background: #8546B3;
 	/* opacity:0.4; */
 }
+/* modal 끝 */
+
+/* follow table */
+.follow_table {
+	width: 100%;
+	height: 100%;
+	font-size: 18px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+/* activity img */
+.modal-img {
+	width: 80px !important;
+	height: 80px !important;
+	margin-top: 5px !important;
+	margin-bottom: 5px !important;
+	border: 1px solid #A2A9AC !important;
+}
+
+
