@@ -611,6 +611,8 @@ public class PostController {
 		PostVo updatePost = new PostVo();
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
+		
+		
 		updatePost.setPost_contents(post_contents);
 		updatePost.setPost_code(post_code);
 		
@@ -649,17 +651,26 @@ public class PostController {
 			}
 		}
 		
+		String param_hashtag = "";
 		String replacedPost_contents = "";
 		for(int i=0; i<tagList.size(); i++){
 			String[] temp = post_contents.split(tagList.get(i), 2);
 			
 			if(temp.length == 1){
-				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";	
-									   //"<a href='/hashtag/" + tagList.get(i).split("#")[1] + "'>" + tagList.get(i) + "</a>";
+				
+				param_hashtag = tagList.get(i).split("#")[1];
+				logger.debug("param_hashtag : {}", param_hashtag);
+				
+				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";	
+									   //"<a href='/hashtag/" + tagList.get(i).split("#")[0] + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[0];
 			} else {
 				replacedPost_contents += temp[0];
-				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";
+				
+				param_hashtag = tagList.get(i).split("#")[1];
+				logger.debug("param_hashtag : {}", param_hashtag);
+				
+				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[1];
 			}
 			
@@ -918,8 +929,6 @@ public class PostController {
 	@RequestMapping(path={"/hashtagpost"}, method=RequestMethod.GET)
 	public String hashtagPost(Model model, HttpServletRequest request, String hashtag_name){
 		
-		 logger.debug("asdasdqweqwezxczxc : {}", hashtag_name); 
-		
 		PaginationVo paginationVo = new PaginationVo();
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
@@ -991,6 +1000,13 @@ public class PostController {
 		int tagFollowerCount = followService.select_hashtagFollowCount("#" + hashtag_name);
 		model.addAttribute("tagFollowerCount", tagFollowerCount);
 		
+		FollowVo followtag = new FollowVo();
+		followtag.setMem_id(memberInfo.getMem_id());
+		followtag.setRef_keyword("#"+hashtag_name);
+		
+		int followStatus = followService.select_followHashtagInfo(followtag);
+		model.addAttribute("followStatus", followStatus);
+		
 		model.addAttribute("hashtag_name", hashtag_name);
 		
 		return "hashtagPostTiles";
@@ -1021,6 +1037,46 @@ public class PostController {
 		model.addAttribute("saveList", saveList);
 		
 		return "timeline/nextHashtagPost";
+	}
+	
+	@RequestMapping(path={"/unfollow_hashtag"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String unfollow_hashtag(String hashtag_name, HttpServletRequest request){
+		
+		logger.debug("hashtag_name qqqqqqqqq : {}", hashtag_name);
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		FollowVo followInfo = new FollowVo();
+		
+		followInfo.setMem_id(memberInfo.getMem_id());
+		followInfo.setRef_keyword("#"+hashtag_name);
+		followInfo.setDivision("16");
+		
+		
+		followService.delete_follow(followInfo);
+		int followerCnt = followService.select_hashtagFollowCount("#"+hashtag_name);
+		
+		return followerCnt + "";
+	}
+	
+	@RequestMapping(path={"/follow_hashtag"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String follow_hashtag(String hashtag_name, HttpServletRequest request){
+		
+		logger.debug("hashtag_name qqqqqqqqq : {}", hashtag_name);
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		FollowVo followInfo = new FollowVo();
+		
+		followInfo.setMem_id(memberInfo.getMem_id());
+		followInfo.setRef_keyword("#"+hashtag_name);
+		followInfo.setDivision("16");
+		
+		followService.insert_follow(followInfo);
+		int followerCnt = followService.select_hashtagFollowCount("#"+hashtag_name);
+		
+		
+		return followerCnt + "";
 	}
 	
 }

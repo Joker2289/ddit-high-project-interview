@@ -7,124 +7,22 @@
 <div class="container">
    <div class="row">
       <div>
-	      <div id="col-info" class="col-md-3">
-	        <div class="panel panel-default" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
-	          <div class="panel-body">
-	            <div class="col-user-bgimg">
-	            	<c:choose>
-	            	  <c:when test="${memberInfo.mem_division == '1' }"><!-- 일반회원일 경우 -->
-	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path == null }">
-	            	      <span><a href="/profileHome"><img class="bg_img" src="/images/profile/basicBackground.png"></a></span>
-	            	    </c:if>
-	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }">
-	            	      <span><a href="/profileHome"><img src="${sessionScope.SESSION_DETAILVO.bg_path }"></a></span>
-	            	    </c:if>
-	            	  </c:when>
-	            	  <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
-	            	  	<c:if test="${sessionScope.SESSION_DETAILVO.bg_path == null }">
-	            	    	<span><a href="/profileHome"><img class="bg_img" src="/images/profile/basicBackground.png"></a></span>
-	            	    </c:if>
-	            	    <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }">
-	            	    	<span><a href="/profileHome"><img class="bg_img" src="${sessionScope.SESSION_DETAILVO.bg_path }"></a></span>
-	            	    </c:if>
-	            	  </c:when>
-	            	  <c:otherwise>
-	            	  	<span>관리자 화면용 image(background)</span>
-	            	  </c:otherwise>
-	            	</c:choose>
-	            </div>
-	            <div class="col-user-profileimg">
-	            	<c:choose>
-	            	  <c:when test="${memberInfo.mem_division == '1' }"><!-- 일반회원일 경우 -->
-	            	    <c:if test="${sessionScope.SESSION_DETAILVO.profile_path == null }">
-	            	    	<span><a href="/profileHome"><img class="profile_img"  src="/images/profile/profile_noimage.jpg" ></a></span>
-	            	    </c:if>
-	            	    <c:if test="${sessionScope.SESSION_DETAILVO.profile_path != null }">
-	            	      <span><a href="/profileHome"><img src="${sessionScope.SESSION_DETAILVO.profile_path }"></a></span>
-	            	    </c:if>
-	            	  </c:when>
-	            	  <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
-	            	  	<c:if test="${sessionScope.SESSION_DETAILVO.logo_path == null }">
-	            	      <span><a href="/profileHome"><img class="profile_img" src="/images/profile/profile_noimage.jpg" ></a></span>
-	            	    </c:if>
-	            	    <c:if test="${sessionScope.SESSION_DETAILVO.logo_path != null }">
-	            	      <span><a href="/profileHome"><img class="profile_img" src="${sessionScope.SESSION_DETAILVO.logo_path }"></a></span>
-	            	    </c:if>
-	            	  </c:when>
-	            	  <c:otherwise>
-	            	  	<span>관리자 화면용 image(profile)</span>
-	            	  </c:otherwise>
-	            	</c:choose>
-	            </div>
-	            <div style="text-align: center;">
-	              <c:choose>
-	                <c:when test="${memberInfo.mem_division == '1' }">
-	                  <h4>${SESSION_DETAILVO.user_name }님! 어서오세요!</h4>
-	                </c:when>
-	                <c:when test="${memberInfo.mem_division == '2' }">
-	                  <h4>${SESSION_DETAILVO.corp_name }님!</h4>
-	                  <h4>어서오세요!</h4>
-	                </c:when>
-	                <c:otherwise>
-	                  <h4>금일 업데이트된 신고 목록을</h4>
-	                  <h4>확인해주세요</h4>
-	                </c:otherwise>
-	              </c:choose>
-	            </div>
-	            <div class="col-etcinfo">
-	              <c:choose>
-	                <c:when test="${memberInfo.mem_division == '1' }">
-	                  <!-- 일촌 수 조회 -->
-		              <pre style="background: #fff; border-color: #fff;"><a href="/personalConnection"><span>일촌 수<span style="float: right;">${connectionCnt }</span></span></a></pre>
-		              <!-- 저장한 글 수 조회 -->
-	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
-	                </c:when>
-	                <c:when test="${memberInfo.mem_division == '2' }">
-	           	      <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
-	                </c:when>
-	              </c:choose>
-	            </div>
-	          </div>
-	        </div>
-	        <!-- ./profile brief -->
-	
-	        <!-- friend requests -->
-	        <div class="panel panel-default" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
-	          <div class="panel-body">
-	            <a href="#"><h4>팔로우한 해시태그</h4></a>
-	            <ul>
-	              <c:choose>
-	                <c:when test="${followHashtag eq 'notfollow'}">
-                   	  <li>팔로우한 태그가 없다요.</li>
-                   	  <li>해시태그를 팔로우 해보세요!</li>
-                    </c:when>
-                    <c:otherwise>
-	                  <c:forEach items="${followHashtag }" var="hashtags">
-                        <li>
-                          <a href="#">${hashtags.ref_keyword }</a>
-                        </li>
-                      </c:forEach>
-                    </c:otherwise>
-                  </c:choose>     
-	            </ul>
-	          </div>
-	          <div>
-              	<button type="button" class="btn_moretag">더보기</button>
-              </div>
-	        </div>
-	        <!-- ./friend requests -->
-	      </div>
+      
+	      <%@ include file="/WEB-INF/views/timeline/timeline_left.jsp" %>
 	      
 	      <div class="col-md-6">
 	      	<div class="input-group" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15); background: #fff; height: 100%; min-height: 110px;">
 	      	  <div  style="width: 555px; height: 100px; padding-left: 15px; background: #fff;">
 	            <h3 style="font-weight: bold;margin-top: 10px;">#${hashtag_name }</h3>
 				<pre style="color: #8D9191;font-size: 14px;font-weight: bold;margin-left: 0px;margin-right: 10px;margin-top: 10px;margin-bottom: 10px;">팔로워 <span id="followerCnt">${tagFollowerCount }</span>명</pre>
-<%-- 				<c:choose> --%>
-<%-- 				  <c:when test=""> --%>
-					<button class="btn_followTag" style="width: 82px; height: 27px;">팔로우 중</button>
-<%-- 				  </c:when>	 --%>
-<%-- 				</c:choose> --%>
+				<c:choose>
+				  <c:when test="${followStatus == 1}">
+					<button class="btn_followTag" data-flag="1" data-tag="${hashtag_name }" style="width: 82px; height: 27px;">팔로우 중</button>
+				  </c:when>
+				  <c:otherwise>
+				    <button class="btn_followTag" data-flag="2" data-tag="${hashtag_name }" style="width: 82px; height: 27px;">팔로우</button>
+				  </c:otherwise>
+				</c:choose>
 	      	  </div>
 	        </div><hr>
 	        
@@ -237,22 +135,11 @@
 					  <!-- 댓글 출력 버튼 -->
 					  <button class="btn-social btn_comment" id="btn_comment${post.post_code }" data-code="${post.post_code }" title="${post.post_code }"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
 					  <!-- 글 저장 버튼 -->
-					  <button class="btn-social btn_save" title="${post.post_code }">
-					    <span style="font-size: 18px;">
-					      <i id="icon_save${post.post_code }"
-<%-- 					        <c:if test="${not empty saveList}"> --%>
-					          <c:forEach items="${saveList }" var="savepost">
-					            <c:choose>
-					              <c:when test="${savepost.save_post_code == post.post_code }">class="fas fa-bookmark"</c:when>
-					              <c:when test="${!(savepost.save_post_code == post.post_code) }">class="fas fa-bookmark"</c:when>
-					            </c:choose>
-					            </c:forEach>
-<%-- 					        </c:if> --%>
-<%-- 					        <c:if test="${empty saveList}">class="far fa-bookmark"</c:if> --%>
-					        >
-					      </i>
-					    </span>
-					  </button>
+	                  <button class="btn-social btn_save" title="${post.post_code }">
+	                    <span style="font-size: 18px;">
+	                      <i id="icon_save${ post.post_code }" class="far fa-bookmark"></i>
+	                    </span>
+	                  </button>
 					</div>
 					
 					<!-- comment -->
@@ -267,313 +154,57 @@
 	        </div>
 	        <!-- ./feed -->
 	      </div>
-	      <div id="col-add" class="col-md-3">
-	      <!-- add friend -->
-	        <div class="panel panel-default">
-	          <div class="panel-body">
-	            <a id="scroll-top" href="#"><h4>광고란</h4></a>
-	            <ul>
-	              <li>
-	                <a href="#">앙 광고띠</a> 
-	              </li>
-	            </ul>
-	          </div>
-	        </div>
-	        <!-- ./add friend -->
-	      </div>
+	      <%@ include file="/WEB-INF/views/timeline/timeline_right.jsp" %>
 	  <!-- ./main -->
-		<%@ include file="/WEB-INF/views/timeline/writeModal.jsp" %><!-- 글 작성 모달창 -->
-		<%@ include file="/WEB-INF/views/timeline/updateModal.jsp" %><!-- 글 수정 모달창 -->
-		<%@ include file="/WEB-INF/views/timeline/reportModal.jsp" %><!-- 글 수정 모달창 -->
+		  <%@ include file="/WEB-INF/views/timeline/writeModal.jsp" %><!-- 글 작성 모달창 -->
+		  <%@ include file="/WEB-INF/views/timeline/updateModal.jsp" %><!-- 글 수정 모달창 -->
+		  <%@ include file="/WEB-INF/views/timeline/reportModal.jsp" %><!-- 글 수정 모달창 -->
       </div>
    </div>
 </div>
 
-<script type="text/javascript">
-	
-	function pushUpdateModal() {
-		$("div.updatemodal").modal();
-	}
-	
-	$('#summernote').summernote({
-		placeholder: '소식을 업데이트 해주세요!',
-        tabsize: 2,
-        height: 440,
-        maxheight: 600,
-        width: 555,
-        maxwidth: 555
-	});
-	
-	$("#update_contents").summernote({
-        tabsize: 2,
-        height: 440,
-        maxheight: 600,
-        width: 555,
-        maxwidth: 555
-	});
-		
-		
-	//summernote 툴바 숨기기
-	$(".note-toolbar").hide();
-	$(".note-resizebar").hide();
-	$(".note-status-output").hide();
-	
-	var ref_code;
-	
-	$(".btn_moretag").on("click", function() {
-			
-// 		$.ajax({
-// 			type : 'POST',
-// 			url : '/',
-// 			data : {"" : },
-// 			success : function(data) {
-				
-// 				if(data != ""){
-					
-// 				}
-// 			}
-// 		});
-		$(".btn_moretag").hide();
-	});
-		
-// 	게시글 댓글 버튼 클릭 시 댓글 영역 출력
-	var commentFlag = false;
-	
-	var print_code = "";
-	$(".btn_comment").on("click", function() {
-		
-		print_code = $(this).attr('data-code');
-		ref_code = $(this).attr('title');
-		
-		if (commentFlag == false) {
-			$.ajax({
-				type : 'POST',
-				url : '/commentArea',
-				data : {"ref_code" : print_code},
-				success : function(data) {
-					
-					if(data != ""){
-						$('#post' + print_code).append(data);
-					}
-				}
-			});
-			commentFlag = true;
-		} 
-		else {
-			commentFlag = false;
-			$(".col-comment").remove();
-		}
-	});
-		
-	var good_ref_code = "";
-	
-	$(".btn_good").on("click", function() {
-		good_ref_code = $(this).attr('title');
-		var good_count = parseInt($('#txt_good_count' + good_ref_code).text());
-		
-		if($('#icon_good' + good_ref_code).attr("class") == "far fa-thumbs-up"){
-			$.ajax({
-				type : 'POST',
-				url : '/push_postgood',
-				data : {"ref_code" : good_ref_code},
-				success : function(data) {
-					$('#icon_good' + good_ref_code).attr("class", "fas fa-thumbs-up");
-					// 추천 수 + 1
-					$('#txt_good_count' + good_ref_code).text(good_count + 1);
-				}
-			});
-			
-		} else {
-			$.ajax({
-				type : 'POST',
-				url : '/push_postgoodcancel',
-				data : {"ref_code" : good_ref_code},
-				success : function(data) {
-					$('#icon_good' + good_ref_code).attr("class", "far fa-thumbs-up");
-					//추천 수 - 1
-					$('#txt_good_count' + good_ref_code).text(good_count - 1);
-				}
-			});
-		}
-	});
-	
-	var modify_code = "";
-	$('.btn_modifyPost').on("click", function() {
-		modify_code = $(this).attr('data-code');
-		
-	});
-	
-	var delete_code = "";
-	$('.btn_deletePost').on("click", function() {
-		delete_code = $(this).attr('data-code');
-		
-		$.ajax({
-			type : 'POST',
-			url : '/deletepost',
-			data : {"post_code" : delete_code},
-			success : function(data) {
-				$('#post'+delete_code).remove();
-				
-				$('#col-post'+delete_code).append('<div style="padding: 15px; background: #fff; border : 1px solid #ddd; border-radius: 4px; box-shadow: 0 6px 12px rgba(0, 0, 0, .15);"><h4>글을 삭제했습니다.</h4></div>');
-				
-				
-			}
-		});
-	})
-	
-	//글 신고
-	function pushReportModal() {
-		$("div.reportmodal").modal();
-	}
-	function closeReportModal() {
-		$("div.reportmodal").modal('hide');
-	}
-	
-	var report_code = "";
-	$('.btn_reportPost').on("click", function() {
-		
-		pushReportModal();
-		
-		report_code = $(this).attr('data-code');
-		
-		$("#btn_report_post").on("click", function() {
-			
-			var report_contents = $("#report_contents").val();
-			
-			$.ajax({
-				type : 'POST',
-				url : '/postreport',
-				data : {"post_code" : report_code, "report_contents" : report_contents},
-				success : function(data) {
-					
-					closeReportModal();
-					$('#post'+report_code).remove();
-					$('#col-post'+report_code).append('<div style="padding: 15px; background: #fff; border : 1px solid #ddd; border-radius: 4px; box-shadow: 0 6px 12px rgba(0, 0, 0, .15);"><h4>글을 신고했습니다.<br> 이 업데이트는 더 이상 표시되지 않습니다. </h4></div>');
-					
-				}
-			});
-		});
-		
-	});
-	
-	var writer_id = "";
-	var writer_name = "";
-	var target_code = "";
-	$('.btn_unfollow').on("click", function() {
-		writer_id 	= $(this).attr('data-writer');
-		writer_name = $(this).attr('data-name');
-		target_code = $(this).attr('data-code');
-		
-		$.ajax({
-			type : 'POST',
-			url : '/unfollow',
-			data : {"target_id" : writer_id},
-			success : function(data) {
-				
-				$('#post'+target_code).remove();
-				$('#col-post'+target_code).append('<div style="padding: 15px; background: #fff; border : 1px solid #ddd; border-radius: 4px; box-shadow: 0 6px 12px rgba(0, 0, 0, .15);"><h4>' + writer_name + '님을 언팔로우 했습니다.<br>앞으로 ' + writer_name + '님의 글은 표시되지 않습니다.</h4></div>');
-				
-			}
-		});
-	});
-	
-	var hide_code = "";
-	$(".btn_hidePost").on("click", function() {
-		hide_code = $(this).attr('data-code');
-		
-		$.ajax({
-			type : 'POST',
-			url : '/hidepost',
-			data : {"post_code" : hide_code},
-			success : function(data) {
-				
-				$('#post'+hide_code).remove();
-				$('#col-post'+hide_code).append('<div style="padding: 15px; background: #fff; border : 1px solid #ddd; border-radius: 4px; box-shadow: 0 6px 12px rgba(0, 0, 0, .15);"><h4>글을 숨겼습니다. 이 글은 더 이상 표시되지 않습니다.</h4></div>');
-			}
-		});
-	});
-	
-	var savepost_code = "";
-	$(".btn_save").on("click", function() {
-		savepost_code = $(this).attr('title');
-// 		var save_count = parseInt($('.txt_save_count').text());
-		
-		if($('#icon_save' + savepost_code).attr("class") == "far fa-bookmark"){
-			$.ajax({
-				type : 'POST',
-				url : '/push_postsave',
-				data : {"post_code" : savepost_code},
-				success : function(data) {
-					
-					
-					$('#icon_save' + savepost_code).attr("class", "fas fa-bookmark");
-					// 추천 수 + 1
-					$('.txt_save_count').text(data);
-				}
-			});
-		} else {
-			$.ajax({
-				type : 'POST',
-				url : '/push_postsavecancel',
-				data : {"post_code" : savepost_code},
-				success : function(data) {
-					$('#icon_save' + savepost_code).attr("class", "far fa-bookmark");
-					//추천 수 - 1
-					$('.txt_save_count').text(data);
-				}
-			});
-		}
-	});
-	
-	
-	var contents = "";
-	$("#btn-write_modal").on("click", function () {
-		
-		pushModal();
-		$("#btn_write_upload").on("click", function() {
-			
-			$("#frm_writePost").submit();
-			
-		});
-	});
-	
 
-	var update_code = "";
-	$(".btn_modifyPost").on("click", function() {
-		update_code = $(this).attr('data-code');
-		
-		$.ajax({
-			type : 'POST',
-			url : '/getpostinfo',
-			data : {"post_code" : update_code},
-			success : function(data) {
-				
-				pushUpdateModal();
-				$('.note-editable').html(data);
-			}
-		});
-		
-		$("#btn_update_post").on("click", function() {
-			$("#frm_updatePost").submit();
-		});
-	});
+<script src="/js/timeline.js"></script>
+<script type="text/javascript">
+
+	console.log($(".btn_followTag").text());
+	console.log($(".btn_followTag").attr('data-tag'));
 	
+	var tag_name = "";
+	
+	$(".btn_followTag").on("click", function() {
 		
-	$("#btn-upload-img").on("click", function () {
-		pushModal();
-		$(".note-insert").children()[1].click();
-	});
-	
-	$("#btn-upload-video").on("click", function () {
-		pushModal();
-		$(".note-insert").children()[2].click();
-	});
-	
-	$("#btn-upload-document").on("click", function () {
-		pushModal();
-	});
+		tag_name = $(".btn_followTag").attr('data-tag')
 		
-	
+		if($(".btn_followTag").attr('data-flag') == 1){
+			$.ajax({
+	            type : 'POST',
+	            url : '/unfollow_hashtag',
+	            data : {"hashtag_name" : tag_name},
+	            success : function(data) {
+					$(".btn_followTag").attr('data-flag', '2');
+					$("#followerCnt").text(data);
+					
+	            	$(".btn_followTag").text('팔로우');
+	            }
+	         });
+		} else {
+			$.ajax({
+	            type : 'POST',
+	            url : '/follow_hashtag',
+	            data : {"hashtag_name" : tag_name},
+	            success : function(data) {
+					$(".btn_followTag").attr('data-flag', '1');
+					$("#followerCnt").text(data);
+					
+	            	$(".btn_followTag").text('팔로우 중');
+	            }
+	         });
+		}
+		
+		
+		
+	});
 	
 	//현재 스크롤 위치에서 화면 최상단으로 이동
 	$("#scroll-top").on("click", function() {
@@ -616,5 +247,17 @@
 			});
 		}
 	});
+	
+    //저장글 표시
+    <c:forEach items="${ saveList }" var="savepost"> 
+       $('#icon_save${savepost.save_post_code}').attr('class', 'fas fa-bookmark');   
+    </c:forEach> 
+    
+    //좋아요 표시
+    <c:forEach items="${ goodList }" var="goodpost"> 
+       $('#icon_good${ goodpost.ref_code}').attr('class', 'fas fa-thumbs-up');   
+    </c:forEach> 
+    
+    
 	
 </script>
