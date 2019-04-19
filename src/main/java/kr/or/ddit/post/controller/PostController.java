@@ -813,81 +813,81 @@ public class PostController {
 	}
 	
 	@RequestMapping(path={"/savepost"}, method=RequestMethod.GET)
-	public String savePost(Model model, HttpServletRequest request){
-		
-		PaginationVo paginationVo = new PaginationVo();
-		
-		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-		logger.debug("asdasdasd {}", memberInfo);
-		
-		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
-		tagCountPageVo.setMem_id(memberInfo.getMem_id());
-		tagCountPageVo.setDivision("16");
-		
-		Save_postVo savepost = new Save_postVo();
-		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
-		
-		if(savepostCnt == 0){
-			model.addAttribute("savepostCnt", "0");
-		} else {
-			model.addAttribute("savepostCnt", savepostCnt+"");
-		}
-		
-		paginationVo.setMem_id(memberInfo.getMem_id());
-		
-		
-		if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
-			
-			//인맥 수 출력을 위한 세팅
-			int connectionCnt = personal_connectionService.connections_count(memberInfo);
-			
-			//팔로우 한 해쉬태그 출력을 위한 세팅
-			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
-			
-			if(!followHashtag.isEmpty()){
-				model.addAttribute("followHashtag", followHashtag);
-			} else {
-				model.addAttribute("followHashtag","notfollow");
-			}
-			
-			
-			model.addAttribute("userInfo", userInfo);
-			model.addAttribute("connectionCnt", connectionCnt);
-		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
-			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
-			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
-			
-			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
+	   public String savePost(Model model, HttpServletRequest request){
+	      
+	      PaginationVo paginationVo = new PaginationVo();
+	      
+	      MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+	      logger.debug("asdasdasd {}", memberInfo);
+	      
+	      PaginationVo tagCountPageVo = new PaginationVo(1, 10);
+	      tagCountPageVo.setMem_id(memberInfo.getMem_id());
+	      tagCountPageVo.setDivision("16");
+	      
+	      Save_postVo savepost = new Save_postVo();
+	      int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
+	      
+	      if(savepostCnt == 0){
+	         model.addAttribute("savepostCnt", "0");
+	      } else {
+	         model.addAttribute("savepostCnt", savepostCnt+"");
+	      }
+	      
+	      paginationVo.setMem_id(memberInfo.getMem_id());
+	      
+	      
+	      if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
+	         UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+	         
+	         //인맥 수 출력을 위한 세팅
+	         int connectionCnt = personal_connectionService.connections_count(memberInfo);
+	         
+	         //팔로우 한 해쉬태그 출력을 위한 세팅
+	         List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
 	         
 	         if(!followHashtag.isEmpty()){
 	            model.addAttribute("followHashtag", followHashtag);
 	         } else {
 	            model.addAttribute("followHashtag","notfollow");
 	         }
-			
-			model.addAttribute("corpInfo", corpInfo);
-			
-		} else { //관리자일 경우
-			//관리자 로그인 시 홈 화면 출력을 위한 세팅
-			
-		}
-		
-		
-		List<PostVo> savePost = postService.select_savePost(paginationVo);
-		model.addAttribute("memberInfo", memberInfo);
-		model.addAttribute("savePost", savePost);
+	         
+	         
+	         model.addAttribute("userInfo", userInfo);
+	         model.addAttribute("connectionCnt", connectionCnt);
+	      } else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
+	         //회사 회원 로그인 시 홈 화면 출력을 위한 세팅
+	         CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+	         
+	         List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
+	            
+	            if(!followHashtag.isEmpty()){
+	               model.addAttribute("followHashtag", followHashtag);
+	            } else {
+	               model.addAttribute("followHashtag","notfollow");
+	            }
+	         
+	         model.addAttribute("corpInfo", corpInfo);
+	         
+	      } else { //관리자일 경우
+	         //관리자 로그인 시 홈 화면 출력을 위한 세팅
+	         
+	      }
+	      
+	      
+	      List<PostVo> savePost = postService.select_savePost(paginationVo);
+	      model.addAttribute("memberInfo", memberInfo);
+	      model.addAttribute("savePost", savePost);
 
-		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
-		model.addAttribute("goodList", goodList);
-		
-		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
-		
-		
-		model.addAttribute("saveList", saveList);
-		
-		return "savePostTiles";
-	}
+	      List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+	      model.addAttribute("goodList", goodList);
+	      
+	      List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
+	      
+	      
+	      model.addAttribute("saveList", saveList);
+	      
+	      return "savePostTiles";
+	   }
 	
 	@RequestMapping(path={"/nextsavepost"}, method=RequestMethod.POST)
 	public String nextSavePost(String pageNum, String lastPost, String ref_code, Model model, HttpServletRequest request){

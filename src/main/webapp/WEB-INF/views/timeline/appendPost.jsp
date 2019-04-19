@@ -239,7 +239,6 @@
 	<c:forEach items="${ goodList }" var="goodpost"> 
 		$('#icon_good${ goodpost.ref_code}').attr('class', 'fas fa-thumbs-up');	
 	</c:forEach> 
-
 	
 
 </script>
