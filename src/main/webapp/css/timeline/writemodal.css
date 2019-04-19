@@ -419,3 +419,19 @@
 	margin-top: 3px;
 	margin-bottom: 3px;
 }
+
+.btn_followTag{
+	background: #3c7ee8;
+	border: 0px solid #fff;
+	border-bottom: 0px;
+	border-top: 0px;
+	color: #fff;
+	border-radius: 6px;
+	width: 80px;
+	height: 25px;
+	outline: 0;
+}
+
+.btn_followTag:hover{
+	background-color: #0073b1;
+}

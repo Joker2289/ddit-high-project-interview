@@ -216,17 +216,7 @@
 					  <!-- 좋아요 버튼 -->
 					  <button class="btn-social btn_good" style="margin-left: 10px; margin-top: 2px;" title="${post.post_code }">
 					    <span style="font-size: 18px;">
-					      <i id="icon_good${post.post_code }"
-					          <c:if test="${not empty goodList}"> 
-					            <c:forEach items="${goodList }" var="goodpost">
-					              <c:choose>
-					                <c:when test="${goodpost.ref_code == post.post_code }">class="fas fa-thumbs-up"</c:when>
-					                <c:otherwise>class="far fa-thumbs-up"</c:otherwise>
-					              </c:choose>
-					            </c:forEach>
-					          </c:if>
-					          <c:if test="${empty goodList}">class="far fa-thumbs-up"</c:if>>
-					      </i>
+					      <i id="icon_good${post.post_code }" class="far fa-thumbs-up"></i>
 					    </span>
 					  </button>
 					  <!-- 댓글 출력 버튼 -->
@@ -234,17 +224,7 @@
 					  <!-- 글 저장 버튼 -->
 					  <button class="btn-social btn_save" title="${post.post_code }">
 					    <span style="font-size: 18px;">
-					      <i id="icon_save${post.post_code }"
-					        <c:if test="${not empty saveList}">
-					          <c:forEach items="${saveList }" var="savepost">
-					            <c:choose>
-					              <c:when test="${savepost.save_post_code == post.post_code }">class="fas fa-bookmark"</c:when>
-					              <c:otherwise>class="far fa-bookmark"</c:otherwise>
-					            </c:choose>
-					            </c:forEach>
-					        </c:if>
-					        <c:if test="${empty saveList}">class="far fa-bookmark"</c:if>>
-					      </i>
+					      <i id="icon_save${ post.post_code }" class="far fa-bookmark"></i>
 					    </span>
 					  </button>
 					</div>
@@ -276,9 +256,9 @@
 	        <!-- ./add friend -->
 	      </div>
 	  <!-- ./main -->
-		<%@ include file="/WEB-INF/views/timeline/writeModal.jsp" %><!-- 글 작성 모달창 -->
+		<%@ include file="/WEB-INF/views/timeline/writeModal.jsp" %> <!-- 글 작성 모달창 -->
 		<%@ include file="/WEB-INF/views/timeline/updateModal.jsp" %><!-- 글 수정 모달창 -->
-		<%@ include file="/WEB-INF/views/timeline/reportModal.jsp" %><!-- 글 수정 모달창 -->
+		<%@ include file="/WEB-INF/views/timeline/reportModal.jsp" %><!-- 글 신고 모달창 -->
       </div>
    </div>
 </div>
@@ -293,8 +273,6 @@
 	function pushUpdateModal() {
 		$("div.updatemodal").modal();
 	}
-	
-
 	
 	$('#summernote').summernote({
 		placeholder: '소식을 업데이트 해주세요!',
@@ -497,7 +475,7 @@
 	var savepost_code = "";
 	$(".btn_save").on("click", function() {
 		savepost_code = $(this).attr('title');
-		var save_count = parseInt($('.txt_save_count').text());
+// 		var save_count = parseInt($('.txt_save_count').text());
 		
 		if($('#icon_save' + savepost_code).attr("class") == "far fa-bookmark"){
 			$.ajax({
@@ -505,9 +483,11 @@
 				url : '/push_postsave',
 				data : {"post_code" : savepost_code},
 				success : function(data) {
+					
+					
 					$('#icon_save' + savepost_code).attr("class", "fas fa-bookmark");
 					// 추천 수 + 1
-					$('.txt_save_count').text(save_count + 1);
+					$('.txt_save_count').text(data);
 				}
 			});
 		} else {
@@ -518,7 +498,7 @@
 				success : function(data) {
 					$('#icon_save' + savepost_code).attr("class", "far fa-bookmark");
 					//추천 수 - 1
-					$('.txt_save_count').text(save_count - 1);
+					$('.txt_save_count').text(data);
 				}
 			});
 		}
@@ -615,5 +595,23 @@
 			});
 		}
 	});
+	
+	$(document).ready(function(){
+		//저장글 표시
+		<c:forEach items="${ saveList }" var="savepost"> 
+			$('#icon_save${savepost.save_post_code}').attr('class', 'fas fa-bookmark');	
+		</c:forEach> 
+		
+		//좋아요 표시
+		<c:forEach items="${ goodList }" var="goodpost"> 
+			$('#icon_good${ goodpost.ref_code}').attr('class', 'fas fa-thumbs-up');	
+		</c:forEach> 
+		
+
+		
+	});
+	
+	
+	
 	
 </script>

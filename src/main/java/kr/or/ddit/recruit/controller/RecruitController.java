@@ -712,6 +712,19 @@ public class RecruitController {
 		model.addAttribute("corpImgList", corpImgList);
 		model.addAttribute("corpNmList", corpNmList);
 		
+		// 저장한 검색어 리스트 (saveList) 넘기기.
+		Search_logVo sVo = new Search_logVo();
+
+		sVo.setUser_id(mVo.getMem_id());
+		sVo.setSearch_save("2");
+		List<Search_logVo> saveList = sLogService.getSaveList(sVo);
+		
+		model.addAttribute("saveList", saveList);
+		
+		// 최근 검색어 리스트 (sList) 넘기기.
+		List<Search_logVo> sList = sLogService.getSList(mVo.getMem_id());
+		model.addAttribute("sList", sList);		
+		
 		return "recrSearchTiles";
 	}	
 	
@@ -780,7 +793,7 @@ public class RecruitController {
 	
 	// @채용공고 상세화면 method - get
 	@RequestMapping(path="/recr_detail", method=RequestMethod.GET)
-	public String recr_detail(String recruit_code, String otherParam, HttpSession session, Model model) {
+	public String recr_detail(String recruit_code, String req_page, HttpSession session, Model model) {
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		Save_recruitVo sVo = new Save_recruitVo();
@@ -819,6 +832,9 @@ public class RecruitController {
 		CorporationVo corp = corpService.select_corpInfo(recr.getCorp_id());
 		model.addAttribute("recr", recr);
 		model.addAttribute("corp", corp);
+		
+		// 뒤로가기를 할 때 req_page 확인을 위해 model에 넣기.
+		model.addAttribute("req_page", req_page);
 		
 		return "recr_detailTiles";
 	}
