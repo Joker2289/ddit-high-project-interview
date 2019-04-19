@@ -197,7 +197,6 @@
 	
 	$('#settingBtn').on('click', function(){
 		
-		console.log("dd");
 		$.ajax({
 			url : "${cp}/blog/blogSettingForm",
 			data : {"userId" : userId },
