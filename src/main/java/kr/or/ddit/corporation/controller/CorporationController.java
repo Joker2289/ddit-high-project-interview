@@ -126,50 +126,7 @@ public class CorporationController {
 		return "corporationTiles";
 	}
 	
-	/**
-	 * 이미지 업로드
-	 */
-	@Resource(name = "uploadPath")
-	private String uploadPath;
 
-	// 업로드 흐름 : 업로드 버튼 클릭=> 임시디렉토리에 업로드 => 지정된 디렉토리에 저장 => 파일정보가 file에 저장
-	@RequestMapping(value = "/uploadForm", method = RequestMethod.GET)
-	public void uploadForm() throws Exception {
-	}
-
-	@RequestMapping(value = "/uploadForm", method = RequestMethod.POST)
-	public ModelAndView uploadForm(MultipartFile file, ModelAndView mav) throws Exception {
-
-		logger.info("파일이름: " + file.getOriginalFilename());
-		logger.info("파일크기: " + file.getSize());
-		logger.info("컨텐트 타입: " + file.getContentType());
-
-		String savedName = file.getOriginalFilename();
-		
-		File target = new File(uploadPath, savedName);
-		
-		//임시디렉토리에 저장된 업로드된 파일을 지정된 디렉토리로 복사
-		//FileCopyUtils.copy(바이트배열, 파일객체)
-		FileCopyUtils.copy(file.getBytes(), target);
-		
-		mav.setViewName("uploadResult");
-		mav.addObject("savedName", savedName);
-				
-
-		return mav; //uploadResult.jsp로 포워딩
-	}
-
-	private String uploadFile(String originalName, byte[] fileData) throws Exception {
-
-		UUID uid = UUID.randomUUID();
-		String savedName = uid.toString() + "_" + originalName;
-		File target = new File(uploadPath, savedName);
-		FileCopyUtils.copy(fileData, target);
-		
-		return savedName;
-	}
-	
-	
 	
 	/**
 	 * 타임라인 글쓰기
