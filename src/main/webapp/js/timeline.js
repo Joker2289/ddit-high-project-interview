@@ -231,11 +231,20 @@
                $('#icon_save' + savepost_code).attr("class", "far fa-bookmark");
                //추천 수 - 1
                $('.txt_save_count').text(data);
+               
+               console.log(document.location.pathname);
+               if(document.location.pathname == '/savepost'){
+             	  $('#post'+savepost_code).remove();
+                   $('#col-post'+savepost_code).append('<div style="padding: 15px; background: #fff; border : 1px solid #ddd; border-radius: 4px; box-shadow: 0 6px 12px rgba(0, 0, 0, .15);"><h4>글 저장을 취소했습니다.</h4></div>');
+               }
+               
             }
          });
       }
    });
-
+   
+   
+   
    
    
    var contents = "";
@@ -253,9 +262,8 @@
    var param_input = "";
    $(".btn_modifyPost").on("click", function() {
       update_code = $(this).attr('data-code');
-      console.log(update_code);
-      param_input = $("<input>").attr("type", "hidden").attr("name", "post_code").val(update_code);
       
+      param_input = $("<input>").attr("type", "hidden").attr("name", "post_code").val(update_code);
       
       $.ajax({
          type : 'POST',
