@@ -673,7 +673,7 @@ public class PostController {
 			int postInsertCnt =  postService.update_post(updatePost);
 		}
 		
-		return "";
+		return "redirect:/timeline";
 	}
 	
 	/**

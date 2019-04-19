@@ -516,10 +516,13 @@
 		});
 	});
 	
-
+	
+	
 	var update_code = "";
 	$(".btn_modifyPost").on("click", function() {
+		
 		update_code = $(this).attr('data-code');
+		console.log(update_code);
 		
 		$.ajax({
 			type : 'POST',
@@ -529,10 +532,13 @@
 				
 				pushUpdateModal();
 				$('.note-editable').html(data);
+				var param_input = $("<input>").attr('type', 'hidden').attr('name', 'post_code').val(update_code);
+				$("#frm_updatePost").append($(param_input));
 			}
 		});
 		
 		$("#btn_update_post").on("click", function() {
+			
 			$("#frm_updatePost").submit();
 		});
 	});
@@ -596,7 +602,6 @@
 		}
 	});
 	
-	$(document).ready(function(){
 		//저장글 표시
 		<c:forEach items="${ saveList }" var="savepost"> 
 			$('#icon_save${savepost.save_post_code}').attr('class', 'fas fa-bookmark');	
@@ -609,7 +614,6 @@
 		
 
 		
-	});
 	
 	
 	

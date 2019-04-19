@@ -187,7 +187,7 @@
 					  
 					</div>
 					<div class="post_info">
-					  <pre class="post_contents" style="background: #ffffff; border-color: #ffffff;">${post.post_contents }</pre>
+					  <pre class="post_contents" style="background: #ffffff; border-color: #ffffff; margin-left: 9px;">${post.post_contents }</pre>
 					</div>
 				
 					<div class="col-post-footer">
@@ -231,17 +231,7 @@
 					  <!-- 글 저장 버튼 -->
 					  <button class="btn-social btn_save" title="${post.post_code }">
 					    <span style="font-size: 18px;">
-					      <i id="icon_save${post.post_code }"
-					        <c:if test="${not empty saveList}">
-					          <c:forEach items="${saveList }" var="savepost">
-					            <c:choose>
-					              <c:when test="${savepost.save_post_code eq post.post_code }">class="fas fa-bookmark"</c:when>
-					              <c:when test="${!savepost.save_post_code eq post.post_code }">class="far fa-bookmark"</c:when>
-					            </c:choose>
-					          </c:forEach>
-					        </c:if>
-					        <c:if test="${empty saveList}">class="far fa-bookmark"</c:if>>
-					      </i>
+					      <i id="icon_save${ post.post_code }" class="far fa-bookmark"></i>
 					    </span>
 					  </button>
 					</div>

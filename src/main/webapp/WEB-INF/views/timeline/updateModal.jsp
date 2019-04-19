@@ -6,7 +6,8 @@
     <div class="modal fade updatemodal" id="update-modal" tabindex="-1" role="dialog" aria-labelledby="writeModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
       	<div class="modal-update-content">
-		  <form id="frm_updatePost" action="/updatepost_timeline" method="post" >
+		  <form id="frm_updatePost" action="/updatepost" method="post" >
+		  	
       	    <div class="modal-write-head">
       	    </div>
             
