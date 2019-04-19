@@ -199,7 +199,38 @@ public class CorporationController {
 		
 		return "redirect:" + request.getContextPath() + "/corporation";
 	}
-	
+
+	/**
+	 * 타임라인 동영상 url입력
+	 * @param request
+	 * @param post_contents2
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(path={"/videoInsert"})
+	public String videoInsert(HttpServletRequest request,String video_path, HttpSession session){
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		CorporationVo corporationInfo = new CorporationVo();
+		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+		PostVo insertPost = new PostVo();
+		String mem_id = memberInfo.getMem_id();
+		String writer_name = "";	
+		String URLA = "<p><iframe width=\"560\" height=\"315\" src=\"";
+		String URLZ = "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><p>";
+		
+		writer_name = corporationInfo.getCorp_name();
+		insertPost.setMem_id(mem_id);
+		insertPost.setPost_contents(URLA+video_path+URLZ);
+		insertPost.setWriter_name(writer_name);
+		logger.debug("123456789987654321 : {}", insertPost);
+		logger.debug("12345678998765432asdasd1 : {}", video_path);
+
+		int insertCnt;
+		
+		insertCnt = postService.insert_post(insertPost);
+		
+		return "redirect:" + request.getContextPath() + "/corporation";
+	}
 
 	
 	/**
