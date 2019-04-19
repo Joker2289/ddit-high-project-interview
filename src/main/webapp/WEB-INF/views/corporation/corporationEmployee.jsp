@@ -27,7 +27,7 @@
 		
 		
 					<div style="border : 1px solid;width:350px;margin-left: 10px;margin-top: 10px;">
-	출신학교 | ${employee_count }
+	출신학교 | ${employee_count } | ${a.get(2)}
 						<div class="charts">
 								${eec.get(0).school_name } | ${eec2.get(0) }
 								<div class="charts__chart chart--p${a.get(0)} chart--default" data-percent></div>
@@ -35,9 +35,10 @@
 								<div class="charts__chart chart--p${a.get(1)} chart--default" data-percent></div>
 								${eec.get(2).school_name } | ${eec2.get(2) }
 								<div class="charts__chart chart--p${a.get(2)} chart--default" data-percent></div>
+								<div class="charts__chart chart--p30 chart--default" data-percent></div>
 						</div>
 					</div> 
-					<div style="border : 1px solid;width:350px;margin-left: 370px;margin-top: -155px;">
+					<div style="border : 1px solid;width:350px;margin-left: 370px;margin-top: -178px;">
 	전공 | ${employee_count }
 						<div class="charts">
 								${em.get(0).major } | ${emc.get(0) }
