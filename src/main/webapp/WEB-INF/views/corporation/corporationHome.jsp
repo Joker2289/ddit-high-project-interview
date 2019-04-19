@@ -45,10 +45,10 @@ textarea {
 		
 
 	<div class="input-group" style="margin-top: -178px; margin-left: 240px;border: 1px solid #AAAAAA;border-radius: 4px;background-color: #FFFFFF;box-shadow: 0px 2px 5px #aaa;">
-	          <button id="btn-write_modal" class="btn-write_modal"  style="height: 72.6px; margin-top: -9px;"><span class="span-text"><a parent="#accordion" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></span></button>
-	          <button id="btn-upload-img" class="btn-upload"><span style="font-size: 25px;"><a parent="#accordion" data-toggle="collapse" href="#img" aria-expanded="false" aria-controls="img"><i class="far fa-images"></i></a></span></button>
-	          <button id="btn-upload-video" class="btn-upload"><span style="font-size: 25px;"><a parent="#accordion" data-toggle="collapse" href="#video" aria-expanded="false" aria-controls="video"><i class="far fa-play-circle"></i></a></span></button>
-	          <button id="btn-upload-document" class="btn-upload"><span style="font-size: 25px;"><a parent="#accordion" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="far fa-file-alt"></i></a></span></button>
+	          <button id="btn-write_modal" class="btn-write_modal"  style="height: 72.6px; margin-top: -9px;"><span class="span-text"><a data-parent="#accordion" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></span></button>
+	          <button id="btn-upload-img" class="btn-upload"><span style="font-size: 25px;"><a data-parent="#accordion" data-toggle="collapse" href="#img" aria-expanded="false" aria-controls="img"><i class="far fa-images"></i></a></span></button>
+	          <button id="btn-upload-video" class="btn-upload"><span style="font-size: 25px;"><a data-parent="#accordion" data-toggle="collapse" href="#video" aria-expanded="false" aria-controls="video"><i class="far fa-play-circle"></i></a></span></button>
+	          <button id="btn-upload-document" class="btn-upload"><span style="font-size: 25px;"><a data-parent="#accordion" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="far fa-file-alt"></i></a></span></button>
 	          
 	          <form id="frm_writePost" action="${pageContext.request.contextPath }/postInsert" method="post">
 	          <input type="hidden" id="post_contents2" name="post_contents2">
@@ -61,9 +61,17 @@ textarea {
 				  </div><hr>
   				</div>
 			 </form>
+				<div class="collapse" id="img" >
+				  <div class="well">
+				    <div align="right" style="margin-top: 10px;">
+				    	<input type="text" id="img_name" name="img_name" style="width: 420px;" readonly />
+				    	<button id="image_search" name="image_search" style="background-color: #FFFFFF;border: 1px solid #AAAAAA;box-shadow: 0px 2px 5px #aaa;border-radius: 4px;font-size: 120%;margin-right: 10px;">파일 찾기</button>
+				    </div>
+				  </div><hr>
+  				</div>
 				<div class="collapse" id="video" >
 				  <div class="well">
-				    <div align="right">
+				    <div align="right" style="margin-top: 10px;">
 				    	<input type="text" id="video_path" name="video_path" style="width: 420px;" />
 				    	<button style="background-color: #FFFFFF;border: 1px solid #AAAAAA;box-shadow: 0px 2px 5px #aaa;border-radius: 4px;font-size: 120%;margin-right: 10px;">경로 입력</button>
 				    </div>
@@ -191,6 +199,8 @@ textarea {
 
 
 
+
+
 			</div>
 		
 	</div>
@@ -208,7 +218,6 @@ $(function () {
 				$("#frm_writePost").submit();
 		});
 });
-
 
 </script>
 

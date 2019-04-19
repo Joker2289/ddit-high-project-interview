@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.corporation.dao.ICorporationDao;
 import kr.or.ddit.corporation.model.CorporationVo;
+import kr.or.ddit.education_info.model.Education_infoVo;
 
 @Service("corporationService")
 public class CorporationServiceImpl implements ICorporationService{
@@ -128,6 +129,24 @@ public class CorporationServiceImpl implements ICorporationService{
 	@Override
 	public int update_corpInfo(CorporationVo vo) {
 		return corporationDao.update_corpInfo(vo);
+	}
+
+	/**
+	 * 직원의 전공
+	 */
+	@Override
+	public List<Education_infoVo> employee_major(String corp_name) {
+		List<Education_infoVo> em = corporationDao.employee_major(corp_name);
+		return em;
+	}
+
+	/**
+	 * 직원의 전공수
+	 */
+	@Override
+	public List<Integer> employee_major_count(String corp_name) {
+		List<Integer> emc = corporationDao.employee_major_count(corp_name);
+		return emc;
 	}
 
 
