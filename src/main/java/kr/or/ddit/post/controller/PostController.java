@@ -611,6 +611,8 @@ public class PostController {
 		PostVo updatePost = new PostVo();
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
+		
+		
 		updatePost.setPost_contents(post_contents);
 		updatePost.setPost_code(post_code);
 		
@@ -649,17 +651,26 @@ public class PostController {
 			}
 		}
 		
+		String param_hashtag = "";
 		String replacedPost_contents = "";
 		for(int i=0; i<tagList.size(); i++){
 			String[] temp = post_contents.split(tagList.get(i), 2);
 			
 			if(temp.length == 1){
-				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";	
-									   //"<a href='/hashtag/" + tagList.get(i).split("#")[1] + "'>" + tagList.get(i) + "</a>";
+				
+				param_hashtag = tagList.get(i).split("#")[1];
+				logger.debug("param_hashtag : {}", param_hashtag);
+				
+				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";	
+									   //"<a href='/hashtag/" + tagList.get(i).split("#")[0] + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[0];
 			} else {
 				replacedPost_contents += temp[0];
-				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";
+				
+				param_hashtag = tagList.get(i).split("#")[1];
+				logger.debug("param_hashtag : {}", param_hashtag);
+				
+				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[1];
 			}
 			

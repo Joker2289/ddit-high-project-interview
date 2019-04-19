@@ -249,10 +249,13 @@
       });
    });
    
-
    var update_code = "";
+   var param_input = "";
    $(".btn_modifyPost").on("click", function() {
       update_code = $(this).attr('data-code');
+      console.log(update_code);
+      param_input = $("<input>").attr("type", "hidden").attr("name", "post_code").val(update_code);
+      
       
       $.ajax({
          type : 'POST',
@@ -260,12 +263,16 @@
          data : {"post_code" : update_code},
          success : function(data) {
             
+        	$("#frm_updatePost").append($(param_input));
             pushUpdateModal();
+            
             $('.note-editable').html(data);
+            
          }
       });
       
       $("#btn_update_post").on("click", function() {
+    	 
          $("#frm_updatePost").submit();
       });
    });
