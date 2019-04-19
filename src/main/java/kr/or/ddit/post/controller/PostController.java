@@ -918,8 +918,6 @@ public class PostController {
 	@RequestMapping(path={"/hashtagpost"}, method=RequestMethod.GET)
 	public String hashtagPost(Model model, HttpServletRequest request, String hashtag_name){
 		
-		 logger.debug("asdasdqweqwezxczxc : {}", hashtag_name); 
-		
 		PaginationVo paginationVo = new PaginationVo();
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
@@ -991,6 +989,13 @@ public class PostController {
 		int tagFollowerCount = followService.select_hashtagFollowCount("#" + hashtag_name);
 		model.addAttribute("tagFollowerCount", tagFollowerCount);
 		
+		FollowVo followtag = new FollowVo();
+		followtag.setMem_id(memberInfo.getMem_id());
+		followtag.setRef_keyword("#"+hashtag_name);
+		
+		int followStatus = followService.select_followHashtagInfo(followtag);
+		model.addAttribute("followStatus", followStatus);
+		
 		model.addAttribute("hashtag_name", hashtag_name);
 		
 		return "hashtagPostTiles";
@@ -1027,6 +1032,8 @@ public class PostController {
 	@ResponseBody
 	public String unfollow_hashtag(String hashtag_name, HttpServletRequest request){
 		
+		logger.debug("hashtag_name qqqqqqqqq : {}", hashtag_name);
+		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		FollowVo followInfo = new FollowVo();
 		
@@ -1035,7 +1042,7 @@ public class PostController {
 		followInfo.setDivision("16");
 		
 		
-		followService.insert_follow(followInfo);
+		followService.delete_follow(followInfo);
 		int followerCnt = followService.select_hashtagFollowCount("#"+hashtag_name);
 		
 		return followerCnt + "";
@@ -1045,6 +1052,8 @@ public class PostController {
 	@ResponseBody
 	public String follow_hashtag(String hashtag_name, HttpServletRequest request){
 		
+		logger.debug("hashtag_name qqqqqqqqq : {}", hashtag_name);
+		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		FollowVo followInfo = new FollowVo();
 		
@@ -1052,7 +1061,7 @@ public class PostController {
 		followInfo.setRef_keyword("#"+hashtag_name);
 		followInfo.setDivision("16");
 		
-		followService.delete_follow(followInfo);
+		followService.insert_follow(followInfo);
 		int followerCnt = followService.select_hashtagFollowCount("#"+hashtag_name);
 		
 		

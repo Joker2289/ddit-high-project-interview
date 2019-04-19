@@ -74,4 +74,9 @@ public class FollowDaoImpl implements IFollowDao {
 		return sqlSession.selectOne("follow.select_hashtagFollowCount", ref_keyword);
 	}
 
+	@Override
+	public int select_followHashtagInfo(FollowVo followVo) {
+		return sqlSession.selectOne("follow.select_followHashtagInfo", followVo);
+	}
+
 }

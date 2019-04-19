@@ -43,4 +43,14 @@ public interface IFollowService {
 	 */
 	int select_hashtagFollowCount(String ref_keyword);
 	
+	/**
+	 * Method : select_followHashtagInfo
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param followVo
+	 * @return
+	 * Method 설명 : 태그 팔로우 유무체크
+	 */
+	int select_followHashtagInfo(FollowVo followVo);
+
 }

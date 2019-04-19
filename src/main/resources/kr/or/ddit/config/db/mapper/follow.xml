@@ -137,5 +137,12 @@
 		   and ref_keyword = #{ref_keyword}	
 	</select>
 
+	<select id="select_followHashtagInfo" parameterType="followVo" resultType="int">
+		select count(*)
+		  from follow
+		 where mem_id = #{mem_id}
+		   and ref_keyword = #{ref_keyword}
+		   and division = 16
+	</select>
 	
 </mapper> 

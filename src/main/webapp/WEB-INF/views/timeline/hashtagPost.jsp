@@ -15,7 +15,14 @@
 	      	  <div  style="width: 555px; height: 100px; padding-left: 15px; background: #fff;">
 	            <h3 style="font-weight: bold;margin-top: 10px;">#${hashtag_name }</h3>
 				<pre style="color: #8D9191;font-size: 14px;font-weight: bold;margin-left: 0px;margin-right: 10px;margin-top: 10px;margin-bottom: 10px;">팔로워 <span id="followerCnt">${tagFollowerCount }</span>명</pre>
+				<c:choose>
+				  <c:when test="${followStatus == 1}">
 					<button class="btn_followTag" data-flag="1" data-tag="${hashtag_name }" style="width: 82px; height: 27px;">팔로우 중</button>
+				  </c:when>
+				  <c:otherwise>
+				    <button class="btn_followTag" data-flag="2" data-tag="${hashtag_name }" style="width: 82px; height: 27px;">팔로우</button>
+				  </c:otherwise>
+				</c:choose>
 	      	  </div>
 	        </div><hr>
 	        
@@ -250,5 +257,7 @@
     <c:forEach items="${ goodList }" var="goodpost"> 
        $('#icon_good${ goodpost.ref_code}').attr('class', 'fas fa-thumbs-up');   
     </c:forEach> 
+    
+    
 	
 </script>
