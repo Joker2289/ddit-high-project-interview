@@ -11,6 +11,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.corporation.model.CorporationVo;
+import kr.or.ddit.education_info.model.Education_infoVo;
 
 @Repository("corporationDao")
 public class CorporationDaoImpl implements ICorporationDao{
@@ -131,6 +132,23 @@ public class CorporationDaoImpl implements ICorporationDao{
 		return sqlSessionTemplate.update("corp.update_corpInfo", vo);
 	}
 
-
+	/**
+	 * 직원 전공
+	 */
+	public List<Education_infoVo> employee_major(String corp_name){
+		List<Education_infoVo> em = new ArrayList<Education_infoVo>();
+		em = sqlSessionTemplate.selectList("corp.employee_major", corp_name);
+		return em;
+	}
+	
+	
+	/**
+	 * 직원 전공 수
+	 */
+	public List<Integer> employee_major_count(String corp_name){
+		List<Integer> emc = new ArrayList<Integer>();
+		emc = sqlSessionTemplate.selectList("corp.employee_major_count", corp_name);
+		return emc;
+	}
 
 }

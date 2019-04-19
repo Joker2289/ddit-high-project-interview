@@ -133,6 +133,7 @@
 	</div>
 </c:forEach>
 
+
 <script>
 	//게시글 댓글 버튼 클릭 시 댓글 영역 출력
 	var flag = false;
@@ -230,7 +231,15 @@
 		
 	});
 	
-
+	//저장글 표시
+	<c:forEach items="${ saveList }" var="savepost"> 
+		$('#icon_save${savepost.save_post_code}').attr('class', 'fas fa-bookmark');	
+	</c:forEach> 
+	
+	//좋아요 표시
+	<c:forEach items="${ goodList }" var="goodpost"> 
+		$('#icon_good${ goodpost.ref_code}').attr('class', 'fas fa-thumbs-up');	
+	</c:forEach> 
 	
 
 </script>

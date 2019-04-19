@@ -102,7 +102,7 @@ public class Search_logController {
 	
 	// @수정한 전체 검색내역 업데이트.
 	@RequestMapping("/updateAllAlarm")
-	public String updateAllAlarm(HttpServletRequest req, String result, Model model) {
+	public String updateAllAlarm(HttpServletRequest req, String result, String req_page, Model model) {
 		// result parsing. split("\\?\\?\\?"): [0]-save, [1]-search
 		String data_save = result.split("\\?\\?\\?")[0];
 		String data_search = result.split("\\?\\?\\?")[1];
@@ -145,7 +145,11 @@ public class Search_logController {
 			}
 		}
 		
-		logger.debug("result? : {}", result);
+//		logger.debug("result? : {}", result);
+		// 다른 페이지에서 요청시 req_page 확인.
+		if(req_page != null && req_page.equals("recrSearch")){
+			return "redirect:" + req.getContextPath() + "/recrSearch";
+		}
 		
 		return "redirect:" + req.getContextPath() + "/recruit";
 	}

@@ -84,9 +84,6 @@ public class PostController {
 	@Resource(name="goodService")
 	private IGoodService goodService;
 	
-	@Resource(name="save_postService")
-	private ISave_postService save_postService;
-	
 	@Resource(name="reportService")
 	private IReportService reportService;
 	
@@ -103,14 +100,10 @@ public class PostController {
 		tagCountPageVo.setMem_id(memberInfo.getMem_id());
 		tagCountPageVo.setDivision("16");
 		
-		Save_postVo savepost = new Save_postVo();
+		//저장글 갯수 
 		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
-		
-		if(savepostCnt == 0){
-			model.addAttribute("savepostCnt", "0");
-		} else {
-			model.addAttribute("savepostCnt", savepostCnt+"");
-		}
+		model.addAttribute("savepostCnt", savepostCnt);
+
 		
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
@@ -133,6 +126,7 @@ public class PostController {
 			
 			model.addAttribute("userInfo", userInfo);
 			model.addAttribute("connectionCnt", connectionCnt);
+			
 		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
 			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
 			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
@@ -160,8 +154,14 @@ public class PostController {
 		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
 		model.addAttribute("goodList", goodList);
 		
-		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
 		model.addAttribute("saveList", saveList);
+		
+		logger.debug("goodList hahaha : {}", goodList);
+		logger.debug("saveList hahaha : {}", saveList);
+		
+		logger.debug("goodList hahaha : {}", goodList.size());
+		logger.debug("saveList hahaha : {}", saveList.size());
 		
 		return "timeLineTiles";
 	}
@@ -187,7 +187,7 @@ public class PostController {
 		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
 		model.addAttribute("goodList", goodList);
 		
-		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
 		model.addAttribute("saveList", saveList);
 		
 		return "timeline/appendPost";
@@ -282,15 +282,18 @@ public class PostController {
 			
 			if(temp.length == 1){
 				
-				param_hashtag = tagList.get(i).split("#")[0];
+				param_hashtag = tagList.get(i).split("#")[1];
 				logger.debug("param_hashtag : {}", param_hashtag);
 				
 				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";	
-									   //"<a href='/hashtag/" + tagList.get(i).split("#")[1] + "'>" + tagList.get(i) + "</a>";
+									   //"<a href='/hashtag/" + tagList.get(i).split("#")[0] + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[0];
 			} else {
 				replacedPost_contents += temp[0];
-				param_hashtag = tagList.get(i).split("#")[0];
+				
+				param_hashtag = tagList.get(i).split("#")[1];
+				logger.debug("param_hashtag : {}", param_hashtag);
+				
 				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[1];
 			}
@@ -523,7 +526,7 @@ public class PostController {
 	 */
 	@RequestMapping(path={"/push_postsave"}, method=RequestMethod.POST)
 	@ResponseBody
-	public String push_postSave(String post_code, HttpServletRequest request){
+	public String push_postSave(String post_code, HttpServletRequest request, Model model){
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		Save_postVo saveVo = new Save_postVo();
@@ -531,9 +534,11 @@ public class PostController {
 		saveVo.setMem_id(memberInfo.getMem_id());
 		saveVo.setSave_post_code(post_code);
 		
-		save_postService.insert_savepostData(saveVo);
+		savepostService.insert_savepostData(saveVo);
 		
-		return "complate";
+		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
+		
+		return savepostCnt+"";
 	}
 	
 	/**
@@ -555,9 +560,10 @@ public class PostController {
 		saveVo.setMem_id(memberInfo.getMem_id());
 		saveVo.setSave_post_code(post_code);
 		
-		save_postService.delete_savepostData(saveVo);
+		savepostService.delete_savepostData(saveVo);
+		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
 		
-		return "complate";
+		return savepostCnt+"";
 	}
 	
 	@RequestMapping(path={"/deletepost"}, method=RequestMethod.POST)
@@ -605,6 +611,8 @@ public class PostController {
 		PostVo updatePost = new PostVo();
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
+		
+		
 		updatePost.setPost_contents(post_contents);
 		updatePost.setPost_code(post_code);
 		
@@ -643,17 +651,26 @@ public class PostController {
 			}
 		}
 		
+		String param_hashtag = "";
 		String replacedPost_contents = "";
 		for(int i=0; i<tagList.size(); i++){
 			String[] temp = post_contents.split(tagList.get(i), 2);
 			
 			if(temp.length == 1){
-				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";	
-									   //"<a href='/hashtag/" + tagList.get(i).split("#")[1] + "'>" + tagList.get(i) + "</a>";
+				
+				param_hashtag = tagList.get(i).split("#")[1];
+				logger.debug("param_hashtag : {}", param_hashtag);
+				
+				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";	
+									   //"<a href='/hashtag/" + tagList.get(i).split("#")[0] + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[0];
 			} else {
 				replacedPost_contents += temp[0];
-				replacedPost_contents += "<a href='/timeline'>" + tagList.get(i) + "</a>";
+				
+				param_hashtag = tagList.get(i).split("#")[1];
+				logger.debug("param_hashtag : {}", param_hashtag);
+				
+				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[1];
 			}
 			
@@ -667,7 +684,7 @@ public class PostController {
 			int postInsertCnt =  postService.update_post(updatePost);
 		}
 		
-		return "";
+		return "redirect:/timeline";
 	}
 	
 	/**
@@ -807,79 +824,81 @@ public class PostController {
 	}
 	
 	@RequestMapping(path={"/savepost"}, method=RequestMethod.GET)
-	public String savePost(Model model, HttpServletRequest request){
-		
-		PaginationVo paginationVo = new PaginationVo();
-		
-		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-		logger.debug("asdasdasd {}", memberInfo);
-		
-		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
-		tagCountPageVo.setMem_id(memberInfo.getMem_id());
-		tagCountPageVo.setDivision("16");
-		
-		Save_postVo savepost = new Save_postVo();
-		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
-		
-		if(savepostCnt == 0){
-			model.addAttribute("savepostCnt", "0");
-		} else {
-			model.addAttribute("savepostCnt", savepostCnt+"");
-		}
-		
-		paginationVo.setMem_id(memberInfo.getMem_id());
-		
-		
-		if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
-			
-			//인맥 수 출력을 위한 세팅
-			int connectionCnt = personal_connectionService.connections_count(memberInfo);
-			
-			//팔로우 한 해쉬태그 출력을 위한 세팅
-			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
-			
-			if(!followHashtag.isEmpty()){
-				model.addAttribute("followHashtag", followHashtag);
-			} else {
-				model.addAttribute("followHashtag","notfollow");
-			}
-			
-			
-			model.addAttribute("userInfo", userInfo);
-			model.addAttribute("connectionCnt", connectionCnt);
-		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
-			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
-			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
-			
-			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
+	   public String savePost(Model model, HttpServletRequest request){
+	      
+	      PaginationVo paginationVo = new PaginationVo();
+	      
+	      MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+	      logger.debug("asdasdasd {}", memberInfo);
+	      
+	      PaginationVo tagCountPageVo = new PaginationVo(1, 10);
+	      tagCountPageVo.setMem_id(memberInfo.getMem_id());
+	      tagCountPageVo.setDivision("16");
+	      
+	      Save_postVo savepost = new Save_postVo();
+	      int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
+	      
+	      if(savepostCnt == 0){
+	         model.addAttribute("savepostCnt", "0");
+	      } else {
+	         model.addAttribute("savepostCnt", savepostCnt+"");
+	      }
+	      
+	      paginationVo.setMem_id(memberInfo.getMem_id());
+	      
+	      
+	      if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
+	         UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+	         
+	         //인맥 수 출력을 위한 세팅
+	         int connectionCnt = personal_connectionService.connections_count(memberInfo);
+	         
+	         //팔로우 한 해쉬태그 출력을 위한 세팅
+	         List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
 	         
 	         if(!followHashtag.isEmpty()){
 	            model.addAttribute("followHashtag", followHashtag);
 	         } else {
 	            model.addAttribute("followHashtag","notfollow");
 	         }
-			
-			model.addAttribute("corpInfo", corpInfo);
-			
-		} else { //관리자일 경우
-			//관리자 로그인 시 홈 화면 출력을 위한 세팅
-			
-		}
-		
-		
-		List<PostVo> savePost = postService.select_savePost(paginationVo);
-		model.addAttribute("memberInfo", memberInfo);
-		model.addAttribute("savePost", savePost);
+	         
+	         
+	         model.addAttribute("userInfo", userInfo);
+	         model.addAttribute("connectionCnt", connectionCnt);
+	      } else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
+	         //회사 회원 로그인 시 홈 화면 출력을 위한 세팅
+	         CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+	         
+	         List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
+	            
+	            if(!followHashtag.isEmpty()){
+	               model.addAttribute("followHashtag", followHashtag);
+	            } else {
+	               model.addAttribute("followHashtag","notfollow");
+	            }
+	         
+	         model.addAttribute("corpInfo", corpInfo);
+	         
+	      } else { //관리자일 경우
+	         //관리자 로그인 시 홈 화면 출력을 위한 세팅
+	         
+	      }
+	      
+	      
+	      List<PostVo> savePost = postService.select_savePost(paginationVo);
+	      model.addAttribute("memberInfo", memberInfo);
+	      model.addAttribute("savePost", savePost);
 
-		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
-		model.addAttribute("goodList", goodList);
-		
-		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
-		model.addAttribute("saveList", saveList);
-		
-		return "savePostTiles";
-	}
+	      List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+	      model.addAttribute("goodList", goodList);
+	      
+	      List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
+	      
+	      
+	      model.addAttribute("saveList", saveList);
+	      
+	      return "savePostTiles";
+	   }
 	
 	@RequestMapping(path={"/nextsavepost"}, method=RequestMethod.POST)
 	public String nextSavePost(String pageNum, String lastPost, String ref_code, Model model, HttpServletRequest request){
@@ -901,7 +920,7 @@ public class PostController {
 		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
 		model.addAttribute("goodList", goodList);
 		
-		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
 		model.addAttribute("saveList", saveList);
 		
 		return "timeline/nextSavePost";
@@ -909,8 +928,6 @@ public class PostController {
 	
 	@RequestMapping(path={"/hashtagpost"}, method=RequestMethod.GET)
 	public String hashtagPost(Model model, HttpServletRequest request, String hashtag_name){
-		
-		 logger.debug("asdasdqweqwezxczxc : {}", hashtag_name); 
 		
 		PaginationVo paginationVo = new PaginationVo();
 		
@@ -970,22 +987,96 @@ public class PostController {
 			
 		}
 		
-		List<PostVo> hashtagPost = postService.select_savePost(paginationVo);
+		List<PostVo> hashtagPost = postService.select_hashtagPost(paginationVo);
 		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("hashtagPost", hashtagPost);
 
 		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
 		model.addAttribute("goodList", goodList);
 		
-		List<Save_postVo> saveList = save_postService.select_savepostData(memberInfo.getMem_id());
+		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
 		model.addAttribute("saveList", saveList);
 		
 		int tagFollowerCount = followService.select_hashtagFollowCount("#" + hashtag_name);
 		model.addAttribute("tagFollowerCount", tagFollowerCount);
 		
+		FollowVo followtag = new FollowVo();
+		followtag.setMem_id(memberInfo.getMem_id());
+		followtag.setRef_keyword("#"+hashtag_name);
+		
+		int followStatus = followService.select_followHashtagInfo(followtag);
+		model.addAttribute("followStatus", followStatus);
+		
 		model.addAttribute("hashtag_name", hashtag_name);
 		
 		return "hashtagPostTiles";
+	}
+	
+	@RequestMapping(path={"/nexthashtagpost"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String nextHashtagPost(String pageNum, String lastPost, String ref_code, Model model, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+
+		int page = Integer.parseInt(pageNum);
+		
+		PaginationVo paginationVo = new PaginationVo();
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		paginationVo.setPage(page);
+		paginationVo.setCriteria_code(lastPost);
+		
+		List<PostVo> nextHashtagPost = postService.select_nextHashtagPost(paginationVo);
+		
+		model.addAttribute("nextHashtagPost", nextHashtagPost);
+		model.addAttribute("memberInfo", memberInfo);
+		
+		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+		model.addAttribute("goodList", goodList);
+		
+		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
+		model.addAttribute("saveList", saveList);
+		
+		return "timeline/nextHashtagPost";
+	}
+	
+	@RequestMapping(path={"/unfollow_hashtag"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String unfollow_hashtag(String hashtag_name, HttpServletRequest request){
+		
+		logger.debug("hashtag_name qqqqqqqqq : {}", hashtag_name);
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		FollowVo followInfo = new FollowVo();
+		
+		followInfo.setMem_id(memberInfo.getMem_id());
+		followInfo.setRef_keyword("#"+hashtag_name);
+		followInfo.setDivision("16");
+		
+		
+		followService.delete_follow(followInfo);
+		int followerCnt = followService.select_hashtagFollowCount("#"+hashtag_name);
+		
+		return followerCnt + "";
+	}
+	
+	@RequestMapping(path={"/follow_hashtag"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String follow_hashtag(String hashtag_name, HttpServletRequest request){
+		
+		logger.debug("hashtag_name qqqqqqqqq : {}", hashtag_name);
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		FollowVo followInfo = new FollowVo();
+		
+		followInfo.setMem_id(memberInfo.getMem_id());
+		followInfo.setRef_keyword("#"+hashtag_name);
+		followInfo.setDivision("16");
+		
+		followService.insert_follow(followInfo);
+		int followerCnt = followService.select_hashtagFollowCount("#"+hashtag_name);
+		
+		
+		return followerCnt + "";
 	}
 	
 }

@@ -165,8 +165,15 @@
 		
 		
 <script type="text/javascript">
+	// nav - 검색어 관리 - 모달창
+	$(function () {
+		$("#alarm_manage").on("click", function(){
+			$("div.modal").modal();
+		});
+	});	
+
 	$(document).ready(function(){
-		console.log("${saveList }");
+// 		console.log("${saveList }");
 		
 		// 페이지 로딩시 ajax로 srList 가져오기
 		getSRListHtml(null, "srListAjax");

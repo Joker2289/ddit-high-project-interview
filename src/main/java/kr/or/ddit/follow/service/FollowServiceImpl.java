@@ -69,11 +69,14 @@ public class FollowServiceImpl implements IFollowService {
 		return followDao.select_oneFollow(followVo);
 	}
 
-	
-
 	@Override
 	public int select_hashtagFollowCount(String ref_keyword) {
 		return followDao.select_hashtagFollowCount(ref_keyword);
+	}
+
+	@Override
+	public int select_followHashtagInfo(FollowVo followVo) {
+		return followDao.select_followHashtagInfo(followVo);
 	}
 
 }
