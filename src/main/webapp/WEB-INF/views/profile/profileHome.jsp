@@ -238,7 +238,7 @@ $(document).ready(function() {
 					<div class="profileHomeProfilePicture" style="background-image: url(${not empty profile_path ? profile_path : profile_addrpath});"></div>
 					<div style="width: 791px; padding:24px; margin-top: -72px;">
 						 <c:choose>
-							<c:when test="${SESSION_DETAILVO.user_id == usersMap.usersVo.user_id }">
+							<c:when test="${SESSION_MEMBERVO.mem_id == usersMap.usersVo.user_id }">
 								<a class="modalA" role="${usersMap.usersVo.user_id}" data-toggle="modal" data-target="#myModal" title="introduction" ><span style="font-size: 20px;padding-left: 717px; color: #0073B1;"><i class="fas fa-pencil-alt"></i></span></a>
 						 	</c:when>
 						 	<c:otherwise>
@@ -277,7 +277,7 @@ $(document).ready(function() {
 									<span style="color: #B3B6B9;font-size: 18px;"><i style="width:30px;" class="fas fa-users"></i></span>
 									<label class="memberRight">
 										<c:choose>
-											<c:when test="${SESSION_DETAILVO.user_id == usersMap.usersVo.user_id }">
+											<c:when test="${SESSION_MEMBERVO.mem_id == usersMap.usersVo.user_id }">
 												<a href="/connections">1촌 ${peopleCount }명 보기</a>
 											</c:when>
 											<c:otherwise>
@@ -291,7 +291,7 @@ $(document).ready(function() {
 						<div>
 							<div class="btn-group" role="group" aria-label="...">
 							  <c:choose>
-							  	<c:when test="${SESSION_DETAILVO.user_id == usersMap.usersVo.user_id }">
+							  	<c:when test="${SESSION_MEMBERVO.mem_id == usersMap.usersVo.user_id }">
 								  	<button style="width: 194px; height: 40px;font-size: 18px;" type="button" class="btn btn-primary profileBtn">
 								   	프로필 항목 등록 <span class="caret"></span>
 								   	</button>
@@ -307,7 +307,7 @@ $(document).ready(function() {
 							  		</button>
 							  	</c:when>
 							  	<c:otherwise>
-							  		<button style="height: 40px;font-size: 18px;" type="button" class="btn btn-primary" onclick="location.href='/profileInsertConnection?user_id=${SESSION_DETAILVO.user_id}&receive_id=${usersMap.usersVo.user_id }'">
+							  		<button style="height: 40px;font-size: 18px;" type="button" class="btn btn-primary" onclick="location.href='/profileInsertConnection?user_id=${SESSION_MEMBERVO.mem_id}&receive_id=${usersMap.usersVo.user_id }'">
 							  		일촌맺기
 							  		</button>
 							  	</c:otherwise>
@@ -395,7 +395,7 @@ $(document).ready(function() {
 									</div>
 								</c:if>
 							</div>
-							<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+							<c:if test="${usersMap.usersVo.user_id == SESSION_MEMBERVO.mem_id}">
 								<div>
 									<a class="modalA" role="${career_infoVo.career_code}" data-toggle="modal" data-target="#myModal" title="career"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
 								</div>
@@ -446,7 +446,7 @@ $(document).ready(function() {
 									</div>
 								</c:if>
 							</div>
-							<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+							<c:if test="${usersMap.usersVo.user_id == SESSION_MEMBERVO.mem_id}">
 								<div>
 									<a class="modalA" role="${education_infoVo.education_code}" data-toggle="modal" data-target="#myModal" title="education"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
 								</div>
@@ -483,7 +483,7 @@ $(document).ready(function() {
 										</div>
 									</c:if>
 								</div>
-								<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+								<c:if test="${usersMap.usersVo.user_id == SESSION_MEMBERVO.mem_id}">
 									<div>
 										<a class="modalA" role="${possesion_skillsVo.pskill_code}" data-toggle="modal" data-target="#myModal" title="skills"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
 									</div>
@@ -549,7 +549,7 @@ $(document).ready(function() {
 									</div>
 								</c:if>
 							</div>
-							<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+							<c:if test="${usersMap.usersVo.user_id == SESSION_MEMBERVO.mem_id}">
 								<div>
 									<a class="modalA" role="${thesis_listVo.thesis_code}" data-toggle="modal" data-target="#myModal" title="Thesis"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
 								</div>
@@ -600,7 +600,7 @@ $(document).ready(function() {
 									</div>
 								</c:if>
 							</div>
-							<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+							<c:if test="${usersMap.usersVo.user_id == SESSION_MEMBERVO.mem_id}">
 								<div>
 									<a class="modalA" role="${patent_listVo.patent_code}" data-toggle="modal" data-target="#myModal" title="patent"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
 								</div>
@@ -652,7 +652,7 @@ $(document).ready(function() {
 									</div>
 								</c:if>
 							</div>
-							<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+							<c:if test="${usersMap.usersVo.user_id == SESSION_MEMBERVO.mem_id}">
 								<div>
 									<a class="modalA" role="${project_careerVo.project_code}" data-toggle="modal" data-target="#myModal" title="project"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
 								</div>
@@ -698,7 +698,7 @@ $(document).ready(function() {
 									</div>
 								</c:if>
 							</div>
-							<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+							<c:if test="${usersMap.usersVo.user_id == SESSION_MEMBERVO.mem_id}">
 								<div>
 									<a class="modalA" role="${award_historyVo.award_code}" data-toggle="modal" data-target="#myModal" title="award"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
 								</div>
@@ -733,7 +733,7 @@ $(document).ready(function() {
 									<label style="font-size: 17px; color: rgba(0,0,0,.9);">${languageVo.grade }</label><br>
 								</div>
 							</div>
-							<c:if test="${usersMap.usersVo.user_id == SESSION_DETAILVO.user_id}">
+							<c:if test="${usersMap.usersVo.user_id == SESSION_MEMBERVO.mem_id}">
 								<div>
 									<a class="modalA" role="${languageVo.lang_code}" data-toggle="modal" data-target="#myModal" title="language"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
 								</div>
