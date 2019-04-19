@@ -101,14 +101,12 @@
 				</td>
 			</tr>
 		</table>
-		
-
-		
 
 	</div>
   	  
 	<form id="frm" action="${pageContext.request.contextPath }/updateAllAlarm" method="post">
 		<input type="hidden" id="result" name="result">
+		<input type="hidden" id="req_page" name="req_page">
 	
 		<div class="modal-foot" style="padding: 10px; text-align: right; padding-bottom: 15px;">
 			<input type="button" id="btn_save" value="저장" style="border: 0px; width: 65px; height: 40px; font-size: 19px;

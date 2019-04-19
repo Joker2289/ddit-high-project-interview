@@ -66,7 +66,7 @@
 		  
 		</div>
 		<div class="post_info">
-		  <pre class="post_contents" style="background: #ffffff; border-color: #ffffff;">${post.post_contents }</pre>
+		  <pre class="post_contents" style="background: #ffffff; border-color: #ffffff; margin-left: 9px;">${post.post_contents }</pre>
 		</div>
 	
 		<div class="col-post-footer">
@@ -230,7 +230,15 @@
 		
 	});
 	
-
+	//저장글 표시
+	<c:forEach items="${ saveList }" var="savepost"> 
+		$('#icon_save${savepost.save_post_code}').attr('class', 'fas fa-bookmark');	
+	</c:forEach> 
+	
+	//좋아요 표시
+	<c:forEach items="${ goodList }" var="goodpost"> 
+		$('#icon_good${ goodpost.ref_code}').attr('class', 'fas fa-thumbs-up');	
+	</c:forEach> 
 	
 
 </script>

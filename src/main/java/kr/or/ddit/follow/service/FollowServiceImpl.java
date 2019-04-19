@@ -47,6 +47,11 @@ public class FollowServiceImpl implements IFollowService {
 	}
 	
 	@Override
+	public List<FollowVo> select_followerList(String mem_id) {
+		return followDao.select_followerList(mem_id);
+	}
+	
+	@Override
 	public List<FollowVo> select_followingList(String mem_id) {
 		return followDao.select_followingList(mem_id);
 	}
@@ -62,6 +67,11 @@ public class FollowServiceImpl implements IFollowService {
 	@Override
 	public FollowVo select_oneFollow(FollowVo followVo) {
 		return followDao.select_oneFollow(followVo);
+	}
+
+	@Override
+	public int select_hashtagFollowCount(String ref_keyword) {
+		return followDao.select_hashtagFollowCount(ref_keyword);
 	}
 
 }

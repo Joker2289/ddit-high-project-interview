@@ -41,11 +41,11 @@
 									</tr>
 									<tr>
 										<td class="subject">팔로워</td>
-										<td><a href="javascript:activityClick('follower');">100명</a></td>
+										<td><a href="javascript:activityClick('follower');">${ followerCnt }명</a></td>
 									</tr>
 									<tr>
 										<td class="subject">팔로잉</td>
-										<td><a href="javascript:activityClick('following');">100명</a></td>
+										<td><a href="javascript:activityClick('following');">${ followingCnt }명</a></td>
 									</tr>
 									<tr>
 										<td class="subject">총 게시글 수</td>
@@ -65,9 +65,10 @@
 									</tr>
 								</table>
 
-								<p>
-									<a href="#" class="btn btn-primary" role="button">Blog 설정</a>
-								</p>
+								
+								<button id="settingBtn" class="btn btn-primary">Blog 설정</button>
+								
+								
 							</div>
 						</div>
 					</div>
@@ -86,68 +87,68 @@
 				<!-- /포트폴리오 영역 -->
 			</div>
 
-
-			<div class="col-md-6">
-
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<span class="span-text"><a>게시글 영역</a></span>
-					</div>
-
-					<div class="panel-body">
-						<span class="span-text"><a>게시글 영역</a></span>
-					</div>
-
-					<div class="panel-body">
-						<span class="span-text"><a>게시글 영역</a></span>
-					</div>
-
-					<div class="panel-body">
-						<span class="span-text"><a>게시글 영역</a></span>
-					</div>
-
-					<div class="panel-body">
-						<span class="span-text"><a>게시글 영역</a></span>
-					</div>
-
-					<div class="panel-body">
-						<span class="span-text"><a>게시글 영역</a></span>
+			<div id="content_area">
+				<div class="col-md-6">
+	
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<span class="span-text"><a>게시글 영역</a></span>
+						</div>
+	
+						<div class="panel-body">
+							<span class="span-text"><a>게시글 영역</a></span>
+						</div>
+	
+						<div class="panel-body">
+							<span class="span-text"><a>게시글 영역</a></span>
+						</div>
+	
+						<div class="panel-body">
+							<span class="span-text"><a>게시글 영역</a></span>
+						</div>
+	
+						<div class="panel-body">
+							<span class="span-text"><a>게시글 영역</a></span>
+						</div>
+	
+						<div class="panel-body">
+							<span class="span-text"><a>게시글 영역</a></span>
+						</div>
 					</div>
 				</div>
+
+
+
+				<div class="col-md-3">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<a href="#"><h4>최근 게시물</h4></a>
+							<ul>
+								<li><a href="#">앙 광고띠</a></li>
+							</ul>
+						</div>
+					</div>
+	
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<a href="#"><h4>인기 게시물</h4></a>
+							<ul>
+								<li><a href="#">앙 광고띠</a></li>
+							</ul>
+						</div>
+					</div>
+	
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<a href="#"><h4>질문 게시판</h4></a>
+							<ul>
+								<li><a href="#">앙 광고띠</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- 최근 인기 질문 -->
 			</div>
-
-
-
-			<div class="col-md-3">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<a href="#"><h4>최근 게시물</h4></a>
-						<ul>
-							<li><a href="#">앙 광고띠</a></li>
-						</ul>
-					</div>
-				</div>
-
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<a href="#"><h4>인기 게시물</h4></a>
-						<ul>
-							<li><a href="#">앙 광고띠</a></li>
-						</ul>
-					</div>
-				</div>
-
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<a href="#"><h4>질문 게시판</h4></a>
-						<ul>
-							<li><a href="#">앙 광고띠</a></li>
-						</ul>
-					</div>
-				</div>
-				<!-- ./add friend -->
-			</div>
-
 
 		</div>
 	</div>
@@ -158,7 +159,8 @@
 
 
 <script>
-
+	
+	var userId = "${ uVo.user_id }";
 	
 	function activityClick(req) {
 		
@@ -172,6 +174,7 @@
 
 					console.log(data);
 					$('#modal-body').html(data);
+					$('#modal_head').text("팔로워");
 					
 					$('.jk-modalsasun').css('display', 'block');			
 				}
@@ -184,13 +187,25 @@
 
 					console.log(data);
 					$('#modal-body').html(data);
+					$('#modal_head').text("팔로잉");
 					
 					$('.jk-modalsasun').css('display', 'block');			
 				}
 			});
 		}
-		
-
-		  
 	};
+	
+	$('#settingBtn').on('click', function(){
+		
+		$.ajax({
+			url : "${cp}/blog/blogSettingForm",
+			data : {"userId" : userId },
+			success : function(data) {
+				
+				console.log("data");
+				$('#content_area').html(data);			
+			}
+		});
+	});
+	
 </script>

@@ -359,7 +359,6 @@ public class SignupController {
 		logger.debug("step5 : {}", profile);
 		
 		String realFileName = "";
-		String tmpFilePath = ""; 
 		String tmpFileName = UUID.randomUUID().toString(); 
 		
 		//사용자 사진을 업로드 한경우
@@ -368,18 +367,13 @@ public class SignupController {
 			
 			//유저 프로필 등록
 			if(division.equals("1")) {
-				
-				
 				realFileName =  req.getServletContext().getRealPath("/images/profile/" + tmpFileName);
-				
 				profile.transferTo(new File(realFileName));
-				
-				tmpFilePath = "/images/profile/" + tmpFileName;
 				
 				UsersVo uVo = new UsersVo();
 				uVo.setUser_id(id);
 				uVo.setProfile_img(fileName);
-				uVo.setProfile_path(tmpFilePath);
+				uVo.setProfile_path(tmpFileName);
 				
 				userService.update_userInfo(uVo);
 			}
@@ -389,18 +383,16 @@ public class SignupController {
 				realFileName =  req.getServletContext().getRealPath("/images/logo/" + tmpFileName);
 				profile.transferTo(new File(realFileName));
 				
-				tmpFilePath = "/images/logo/" + tmpFileName;
-				
 				CorporationVo cVo = new CorporationVo();
 				cVo.setCorp_id(id);
 				cVo.setCorp_logo(fileName);
-				cVo.setLogo_path(tmpFilePath);
+				cVo.setLogo_path(tmpFileName);
 				
 				corpService.update_corpInfo(cVo);
 			}
 			
 		}
-		return realFileName;
+		return tmpFileName;
 	}
 	
 	/**

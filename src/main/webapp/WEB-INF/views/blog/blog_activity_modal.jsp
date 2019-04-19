@@ -10,7 +10,7 @@
         <div class="jk-modal">
             <div class="jk-row">
                 <div id="modal-head" class="jk-modal-head">
-                    <h1>${ modal_head }</h1>
+                    <h1 id="modal_head"></h1>
                 </div>
             </div>
 
