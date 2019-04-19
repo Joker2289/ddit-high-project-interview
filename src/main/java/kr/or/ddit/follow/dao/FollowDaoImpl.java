@@ -74,8 +74,4 @@ public class FollowDaoImpl implements IFollowDao {
 		return sqlSession.selectOne("follow.select_hashtagFollowCount", ref_keyword);
 	}
 
-	
-
-	
-	
 }

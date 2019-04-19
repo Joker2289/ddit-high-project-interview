@@ -42,5 +42,5 @@ public interface IFollowService {
 	 * Method 설명 : 해시태그 팔로워 수 조회
 	 */
 	int select_hashtagFollowCount(String ref_keyword);
-
+	
 }

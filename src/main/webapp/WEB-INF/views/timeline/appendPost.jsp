@@ -133,6 +133,7 @@
 	</div>
 </c:forEach>
 
+
 <script>
 	//게시글 댓글 버튼 클릭 시 댓글 영역 출력
 	var flag = false;

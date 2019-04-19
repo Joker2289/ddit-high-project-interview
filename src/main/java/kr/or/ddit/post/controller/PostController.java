@@ -1023,4 +1023,40 @@ public class PostController {
 		return "timeline/nextHashtagPost";
 	}
 	
+	@RequestMapping(path={"/unfollow_hashtag"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String unfollow_hashtag(String hashtag_name, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		FollowVo followInfo = new FollowVo();
+		
+		followInfo.setMem_id(memberInfo.getMem_id());
+		followInfo.setRef_keyword("#"+hashtag_name);
+		followInfo.setDivision("16");
+		
+		
+		followService.insert_follow(followInfo);
+		int followerCnt = followService.select_hashtagFollowCount("#"+hashtag_name);
+		
+		return followerCnt + "";
+	}
+	
+	@RequestMapping(path={"/follow_hashtag"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String follow_hashtag(String hashtag_name, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		FollowVo followInfo = new FollowVo();
+		
+		followInfo.setMem_id(memberInfo.getMem_id());
+		followInfo.setRef_keyword("#"+hashtag_name);
+		followInfo.setDivision("16");
+		
+		followService.delete_follow(followInfo);
+		int followerCnt = followService.select_hashtagFollowCount("#"+hashtag_name);
+		
+		
+		return followerCnt + "";
+	}
+	
 }
