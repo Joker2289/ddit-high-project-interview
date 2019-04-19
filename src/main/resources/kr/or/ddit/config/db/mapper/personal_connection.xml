@@ -151,19 +151,25 @@
                b.introduce
           from users ,(select user_id
                          from personal_connection
-                        where receive_id=#{receive_id}
-                          and receive_accept='N' ) a , ( select distinct(a.user_id),
-                                                                            case when b.resign_date is null then b.corporate_name || ' ' || job_position
-                                                                                 when b.resign_date is not null then a.school_name ||' ' || a.degree_name
-                                                                             end as introduce
-                                                                            from EDUCATION_INFO a, CAREER_INFO b
-                                                                           where a.user_id = b.user_id
-                                                                             and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select CAREER_INFO.user_id,  max(nvl(CAREER_INFO.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
-                                                                                                                                                          from CAREER_INFO, EDUCATION_INFO
-                                                                                                                                                         where CAREER_INFO.user_id = education_info.user_id
-                                                                                                                                                      group by CAREER_INFO.user_id)) b
+                        where receive_id = #{receive_id}
+                          and receive_accept='N' ) a , (select user_id,   
+                                                                       substr(listagg(beintroduce, ' ') within group (order by graduation desc), 0, instr(listagg(beintroduce, ' ') within group (order by graduation desc), ' ', 1, 2)) as introduce
+                                                                           
+                                                                  from (select a.user_id,
+	                                                                      case when b.resign_date is null then b.corporate_name ||' ' ||job_position || ' '
+	                                                                           when b.resign_date is not null then a.school_name ||' ' || a.degree_name || ' '
+	                                                                       end as beintroduce,
+	                                                                           a.graduation
+	                                                                      from education_info a, career_info b
+	                                                                     where a.user_id = b.user_id
+	                                                                       and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select career_info.user_id,  max(nvl(career_info.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+	                                                                                                                                                    from career_info, education_info
+	                                                                                                                                                   where career_info.user_id = education_info.user_id
+	                                                                                                                                                   group by career_info.user_id)
+	                                                                     order by a.graduation desc)
+	                                                             group by user_id ) b
 		 where a.user_id = b.user_id(+)
-		   and a.user_id = users.user_id(+)
+		   and a.user_id = users.user_id(+) 
 	</select>
 	
 	
@@ -178,16 +184,22 @@
           from users ,(select receive_id
 						 from personal_connection 
 						where user_id=#{user_id}
-						  and receive_accept='N' ) a , ( select distinct(a.user_id),
-                                                                            case when b.resign_date is null then b.corporate_name || ' ' || job_position
-                                                                                 when b.resign_date is not null then a.school_name ||' ' || a.degree_name
-                                                                             end as introduce
-                                                                            from EDUCATION_INFO a, CAREER_INFO b
-                                                                           where a.user_id = b.user_id
-                                                                             and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select CAREER_INFO.user_id,  max(nvl(CAREER_INFO.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
-                                                                                                                                                          from CAREER_INFO, EDUCATION_INFO
-                                                                                                                                                         where CAREER_INFO.user_id = education_info.user_id
-                                                                                                                                                      group by CAREER_INFO.user_id)) b
+						  and receive_accept='N' ) a , (select user_id,   
+                                                                       substr(listagg(beintroduce, ' ') within group (order by graduation desc), 0, instr(listagg(beintroduce, ' ') within group (order by graduation desc), ' ', 1, 2)) as introduce
+                                                                           
+                                                                  from (select a.user_id,
+	                                                                      case when b.resign_date is null then b.corporate_name ||' ' ||job_position || ' '
+	                                                                           when b.resign_date is not null then a.school_name ||' ' || a.degree_name || ' '
+	                                                                       end as beintroduce,
+	                                                                           a.graduation
+	                                                                      from education_info a, career_info b
+	                                                                     where a.user_id = b.user_id
+	                                                                       and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select career_info.user_id,  max(nvl(career_info.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+	                                                                                                                                                    from career_info, education_info
+	                                                                                                                                                   where career_info.user_id = education_info.user_id
+	                                                                                                                                                   group by career_info.user_id)
+	                                                                     order by a.graduation desc)
+	                                                             group by user_id ) b
 		 where a.RECEIVE_ID = b.user_id(+)
 		   and a.RECEIVE_ID = users.user_id(+)
 	</select>
@@ -235,7 +247,7 @@
 	
 	<!-- 아는 동문 찾기 -->
 	<select id="schoolFriendsSearch" parameterType="String" resultType="usersVo">
-		 select distinct(a.user_id) as user_id,
+		select distinct(a.user_id) as user_id,
 		               users.profile_path,
 		               users.user_name,
 		               users.profile_img,
@@ -265,6 +277,9 @@
 	                                                             group by user_id ) b
 		 where a.user_id = b.user_id(+)
 		   and a.user_id = users.user_id(+)
+           and a.user_id not in ( select receive_id
+                                     from personal_connection
+                                    where user_id = #{user_id} )
            and a.user_id != #{user_id}
 	</select>
 	
@@ -277,9 +292,9 @@
     	corporation a
     where not
     	a.corp_id in (select ref_keyword
-                          from follow
-                         where mem_id=#{mem_id}
-                           and division='11')
+                        from follow
+                       where mem_id=#{mem_id}
+                         and division='11')
 	</select>
 	
 	
@@ -288,8 +303,8 @@
 		select users.* , b.introduce
 		  from users ,( select introduce , user_id
 		                  from (select distinct(a.user_id),
-		                           case when b.resign_date is null then b.corporate_name || ' ' || job_position
-		                                when b.resign_date is not null then  a.school_name || ' ' || a.degree_name
+		                          case when b.resign_date is null then b.corporate_name || ' ' || job_position
+		                               when b.resign_date is not null then  a.school_name || ' ' || a.degree_name
 		                           end as introduce
 		                          from education_info a, career_info b
 		                         where a.user_id = b.user_id
@@ -325,35 +340,38 @@
 		select *
         from
               (select a.*, rownum rn
-                from (select distinct(a.user_id) as user_id,
-                               users.profile_path,
-                               users.user_name,
-                               users.profile_img,
-                               b.introduce
-                          from users ,( select a.user_id
-                                    from users a   
-                                   where a.user_id != #{user_id}
-                                     and not a.user_id in ( select ref_keyword
-                                                              from follow
-                                                             where mem_id = #{user_id}
-                                                               and division = '43')) a , ( select user_id,   
-                                                                                                substr(listagg(beintroduce, ' ') within group (order by graduation desc), 0, instr(listagg(beintroduce, ' ') within group (order by graduation desc), ' ', 1, 2)) as introduce
-                                                                                           from 
-                                                                                          (select a.user_id,
-                                                                                             case when b.resign_date is null then b.corporate_name ||' ' ||job_position || ' '
-                                                                                                  when b.resign_date is not null then a.school_name ||' ' || a.degree_name || ' '
-                                                                                              end as beintroduce,
-                                                                                              a.graduation
-                                                                                             from education_info a, career_info b
-                                                                                            where a.user_id = b.user_id
-                                                                                              and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select career_info.user_id,  max(nvl(career_info.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
-                                                                                                                                                                           from career_info, education_info
-                                                                                                                                                                          where career_info.user_id = education_info.user_id
-                                                                                                                                                                       group by career_info.user_id)
-                                                                                             order by a.graduation desc)
-                                                                                            group by user_id ) b
-                       where a.user_id = b.user_id(+)
-                         and a.user_id = users.user_id(+))a)a
+from (select distinct(a.user_id) as user_id,
+               users.profile_path,
+               users.user_name,
+               users.profile_img,
+               b.introduce
+          from users ,( select a.user_id
+                    from users a   
+                   where a.user_id != #{user_id}
+                     and not a.user_id in ( select ref_keyword
+                                              from follow
+                                             where mem_id = #{user_id}
+                                               and division = '43')) a , ( select user_id,   
+                                                                                substr(listagg(beintroduce, ' ') within group (order by graduation desc), 0, instr(listagg(beintroduce, ' ') within group (order by graduation desc), ' ', 1, 2)) as introduce
+                                                                             from 
+                                                                          (select a.user_id,
+                                                                             case when b.resign_date is null then b.corporate_name ||' ' ||job_position || ' '
+                                                                                  when b.resign_date is not null then a.school_name ||' ' || a.degree_name || ' '
+                                                                              end as beintroduce,
+                                                                              a.graduation
+                                                                             from education_info a, career_info b
+                                                                            where a.user_id = b.user_id
+                                                                              and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select career_info.user_id,  max(nvl(career_info.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+                                                                                                                                                           from career_info, education_info
+                                                                                                                                                          where career_info.user_id = education_info.user_id
+                                                                                                                                                       group by career_info.user_id)
+                                                                             order by a.graduation desc)
+                                                                            group by user_id ) b
+            where a.user_id = b.user_id(+)
+            and a.user_id = users.user_id(+)
+            and a.user_id not in ( select receive_id
+                                     from personal_connection
+                                    where user_id = #{user_id}))a)a
                   
                   
 where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}

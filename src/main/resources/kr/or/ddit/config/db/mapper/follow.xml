@@ -136,6 +136,14 @@
 		 where division = 16
 		   and ref_keyword = #{ref_keyword}	
 	</select>
+	
+	<!--  -->
+	<delete id="">
+		delete from follow
+		 where mem_id = #{mem_id}
+		   and ref_keyword = #{ref_keyword}
+		   and division = '11'
+	</delete>
 
 	
 </mapper> 
