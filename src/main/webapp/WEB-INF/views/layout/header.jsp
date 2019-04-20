@@ -47,7 +47,7 @@
             	</a>
             </li>
             <li class="menu">
-            	<a href="#" class="menugroup" style="padding-top: 7px;">
+            	<a href="/alarm" class="menugroup" style="padding-top: 7px;">
             		<div><span style="font-size: 20px;"><i class="fas fa-bell"></i></span></div>
             		<div>알람</div>
             	</a>
