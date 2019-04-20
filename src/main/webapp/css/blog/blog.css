@@ -1,6 +1,6 @@
 .panel{
 	box-shadow: 0 6px 12px rgba(0, 0, 0, .15);
-	text-align: center;
+	text-align: center !important;
 }
 
 .span-text{
@@ -87,6 +87,17 @@
 .subject {
 	width: 45%;
 	text-align: right;
+}
+
+.settingBtn {
+	width: 90%;
+	font-size: 20px;
+	background-color: pink;
+	border-color: pink;
+}
+
+.settingBtn:hover{
+	background-color: black !important;
 }
 
 

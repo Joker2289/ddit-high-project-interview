@@ -1,9 +1,11 @@
 package kr.or.ddit.corporation.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,11 +18,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.career_info.service.ICareer_infoService;
@@ -117,10 +122,11 @@ public class CorporationController {
 		
 		model.addAttribute("corporationInfo", corporationInfo);
 		model.addAttribute("postList", postList);
-	
+		
 		return "corporationTiles";
 	}
 	
+
 	
 	/**
 	 * 타임라인 글쓰기
@@ -150,7 +156,38 @@ public class CorporationController {
 		
 		return "redirect:" + request.getContextPath() + "/corporation";
 	}
-	
+
+	/**
+	 * 타임라인 동영상 url입력
+	 * @param request
+	 * @param post_contents2
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(path={"/videoInsert"})
+	public String videoInsert(HttpServletRequest request,String video_path, HttpSession session){
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		CorporationVo corporationInfo = new CorporationVo();
+		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+		PostVo insertPost = new PostVo();
+		String mem_id = memberInfo.getMem_id();
+		String writer_name = "";	
+		String URLA = "<p><iframe width=\"560\" height=\"315\" src=\"";
+		String URLZ = "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><p>";
+		
+		writer_name = corporationInfo.getCorp_name();
+		insertPost.setMem_id(mem_id);
+		insertPost.setPost_contents(URLA+video_path+URLZ);
+		insertPost.setWriter_name(writer_name);
+		logger.debug("123456789987654321 : {}", insertPost);
+		logger.debug("12345678998765432asdasd1 : {}", video_path);
+
+		int insertCnt;
+		
+		insertCnt = postService.insert_post(insertPost);
+		
+		return "redirect:" + request.getContextPath() + "/corporation";
+	}
 
 	
 	/**
@@ -196,6 +233,10 @@ public class CorporationController {
 		model.addAttribute("timelinePost", timelinePost);
 		return "corporationIntroTiles";
 	}
+	
+	
+
+
 	
 	/**
 	 * 채용정보
@@ -298,14 +339,29 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		int ecount = careerService.employee_count(corporationInfo.getCorp_name());
 		model.addAttribute("ecount", ecount);
 
+		//출신 학교 그래프
 		List<Education_infoVo> eec = careerService.employee_education_count(corporationInfo.getCorp_name());		
 		List<Integer> eec2 = careerService.employee_education_count2(corporationInfo.getCorp_name());		
-		
+		List<Integer> a = new ArrayList<>();
+		a.add(100*eec2.get(0)/ecount);
+		a.add(100*eec2.get(1)/ecount);
+		a.add(100*eec2.get(2)/ecount);
 		model.addAttribute("eec", eec);
 		model.addAttribute("eec2", eec2);
-		System.out.println(eec);
-		System.out.println(eec2);
-
+		model.addAttribute("a",a);
+		
+		//전공 그래프
+		List<Education_infoVo> em = corporationService.employee_major(corporationInfo.getCorp_name());
+		List<Integer> emc = corporationService.employee_major_count(corporationInfo.getCorp_name());
+		List<Integer> b = new ArrayList<>();
+		b.add(100*emc.get(0)/ecount);
+		b.add(100*emc.get(1)/ecount);
+		b.add(100*emc.get(2)/ecount);
+		b.add(100*emc.get(3)/ecount);
+		model.addAttribute("em", em);
+		model.addAttribute("emc", emc);
+		model.addAttribute("b",b);
+		
 		return "corporationEmployeeTiles";
 	}
 

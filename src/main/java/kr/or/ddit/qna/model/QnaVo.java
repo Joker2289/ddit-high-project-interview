@@ -3,7 +3,7 @@ package kr.or.ddit.qna.model;
 public class QnaVo {
 	private String qna_code;		// 글코드
 	private String parent_code;		// 부모글코드
-	private String blog_code;		// 블로그코드
+	private String user_id;			// 회원아이디
 	private String mem_id;			// 작성자아이디
 	private String qna_title;		// 제목
 	private String qna_contents;	// 내용
@@ -12,13 +12,6 @@ public class QnaVo {
 	
 	public QnaVo() {
 		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public String toString() {
-		return "QnaVo [qna_code=" + qna_code + ", parent_code=" + parent_code + ", blog_code=" + blog_code + ", mem_id="
-				+ mem_id + ", qna_title=" + qna_title + ", qna_contents=" + qna_contents + ", view_count=" + view_count
-				+ ", write_date=" + write_date + "]";
 	}
 
 	public String getQna_code() {
@@ -37,12 +30,12 @@ public class QnaVo {
 		this.parent_code = parent_code;
 	}
 
-	public String getBlog_code() {
-		return blog_code;
+	public String getUser_id() {
+		return user_id;
 	}
 
-	public void setBlog_code(String blog_code) {
-		this.blog_code = blog_code;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 
 	public String getMem_id() {
@@ -84,5 +77,12 @@ public class QnaVo {
 	public void setWrite_date(String write_date) {
 		this.write_date = write_date;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "QnaVo [qna_code=" + qna_code + ", parent_code=" + parent_code + ", user_id=" + user_id + ", mem_id="
+				+ mem_id + ", qna_title=" + qna_title + ", qna_contents=" + qna_contents + ", view_count=" + view_count
+				+ ", write_date=" + write_date + "]";
+	}
+
 }

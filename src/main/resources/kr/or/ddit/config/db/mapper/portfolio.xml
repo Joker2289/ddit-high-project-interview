@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="portfolio">
+
+	<!-- 포트폴리오 추가 -->
+	<insert id="insert_portfolio" parameterType="portfolioVo">
+	
+		<selectKey keyProperty="portfolio_code" resultType="String" order="AFTER">
+		  	select 
+		  		portfolio_code_seq.currval
+		  	from 
+		  		dual
+		</selectKey>
+		
+		insert into portfolio
+		values (
+			portfolio_code_seq.nextval,
+			#{user_id},
+			#{portfolio_name}
+		)
+	</insert>
+	
+	<!-- 포트폴리오 수정 -->
+	<update id="update_portfolio" parameterType="portfolioVo">
+		update portfolio
+		   set portfolio_name = #{portfolio_name}
+		 where portfolio_code = #{portfolio_code}  
+	</update>
+	
+	<!-- 포트폴리오 삭제 -->
+	<delete id="delete_portfolio" parameterType="String">
+		delete portfolio
+		 where portfolio_code = #{portfolio_code}
+	</delete>
+	
+	<!-- 회원의 전체 포트폴리오 조회 -->
+	<select id="select_portfolioList" parameterType="String" resultType="portfolioVo">
+		select *
+		  from portfolio
+		 where user_id = #{user_id}
+		 order by portfolio_code
+	</select>
+
+</mapper> 
