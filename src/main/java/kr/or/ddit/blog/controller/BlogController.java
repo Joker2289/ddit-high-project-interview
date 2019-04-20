@@ -130,8 +130,18 @@ public class BlogController {
 		return "blog/blog_setting_form";
 	}
 	
+	/**
+	 * 
+	 * Method : addPortfolio
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param req
+	 * @param model
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 포트폴리오 추가
+	 */
 	@RequestMapping("/addPortfolio")
-	@ResponseBody
 	public String addPortfolio(HttpServletRequest req, Model model, @RequestParam("user_id")String user_id) {
 		
 		PortfolioVo pVo = new PortfolioVo();
@@ -140,15 +150,30 @@ public class BlogController {
 		
 		portfolioService.insert_portfolio(pVo);
 		
-		String code = pVo.getPortfolio_code();
+		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(user_id);
+		model.addAttribute("portfolioList", portfolioList);
+		model.addAttribute("user_id", user_id);
 		
-		return code;
+		return "blog/blog_setting_form";
 	}
 	
+	/**
+	 * 
+	 * Method : updatePortfolio
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param req
+	 * @param model
+	 * @param portfolio_nm
+	 * @param portfolio_code
+	 * @return
+	 * Method 설명 : 포트폴리오 수정
+	 */
 	@RequestMapping("/updatePortfolio")
-	@ResponseBody
 	public String updatePortfolio(HttpServletRequest req, Model model, 
-			@RequestParam("portfolio_nm")String portfolio_nm, @RequestParam("portfolio_code")String portfolio_code) {
+			@RequestParam("portfolio_nm")String portfolio_nm, 
+			@RequestParam("portfolio_code")String portfolio_code,
+			@RequestParam("user_id")String user_id) {
 		
 		PortfolioVo pVo = new PortfolioVo();
 		pVo.setPortfolio_code(portfolio_code);
@@ -156,9 +181,24 @@ public class BlogController {
 		
 		portfolioService.update_portfolio(pVo);
 		
-		return "dd";
+		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(user_id);
+		model.addAttribute("portfolioList", portfolioList);
+		model.addAttribute("user_id", user_id);
+		
+		return "blog/blog_setting_form";
 	}
 	
+	/**
+	 * 
+	 * Method : deletePortfolio
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param req
+	 * @param model
+	 * @param portfolio_code
+	 * @return
+	 * Method 설명 : 포트폴리오 삭제
+	 */
 	@RequestMapping("/deletePortfolio")
 	@ResponseBody
 	public String deletePortfolio(HttpServletRequest req, Model model, @RequestParam("portfolio_code")String portfolio_code) {
@@ -166,6 +206,16 @@ public class BlogController {
 		portfolioService.delete_portfolio(portfolio_code);
 		
 		return "dd";
+	}
+	
+	@RequestMapping("/showSection")
+	public String showSection(HttpServletRequest req, Model model, 
+			@RequestParam("portfolio_code")String portfolio_code,
+			@RequestParam("user_id")String user_id) {
+		
+		
+		
+		return "blog/section_setting_form";
 	}
 	
 	

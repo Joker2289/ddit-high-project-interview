@@ -20,7 +20,7 @@
 	<div class="panel panel-default">
 		<div class="panel-body">
 		
-			<button id="addPortfolioBtn" class="btn btn-primary addPortfolioBtn"> <i class="far fa-plus-square"></i> 포트폴리오 추가</button>
+			<button id="addPortfolioBtn" class="btn btn-primary addPortfolioBtn"> <i class="far fas fa-plus"></i> 포트폴리오 추가</button>
 			
 			
 			
@@ -28,18 +28,19 @@
 			
 				<c:forEach items="${ portfolioList }" var="portfolio">
 				<div id="portfolio_area${ portfolio.portfolio_code }">
+				
 					<a id="${ portfolio.portfolio_code }" class="btn btn-primary portfolio_btn" data-toggle="collapse"
-					href="#section_area${ portfolio.portfolio_code }" aria-expanded="false"
-					aria-controls="collapseExample">${ portfolio.portfolio_name }</a>
+					href="#section_collapse${ portfolio.portfolio_code }" aria-expanded="false"
+					aria-controls="collapseExample" onclick="showSection(${ portfolio.portfolio_code });" ondblclick="updatePortfolio(${ portfolio.portfolio_code });">${ portfolio.portfolio_name }</a>
 					
 					
 					<button id="deleteBtn${ portfolio.portfolio_code }" class="btn btn-primary delete_btn" onclick="deletePortfolio(${ portfolio.portfolio_code });"><i class="fas fa-times"></i></button>
 	
 	
-					<div class="collapse" id="section_area${ portfolio.portfolio_code }" >
-						<div class="well section_area">
+					<div class="collapse" id="section_collapse${ portfolio.portfolio_code }" >
+						<div class="well section_area" id="section_area${ portfolio.portfolio_code }">
 						
-							<h1> 섹션 영역 </h1>
+							
 						
 						</div>
 					</div>
@@ -58,22 +59,11 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
 <script>
+var user_id = '${ user_id }';
 
 /* 포트폴리오 추가 */
 $('#addPortfolioBtn').on('click', function(){
-	
-	var user_id = '${ user_id }';
 	
 	$.ajax({
 		url : "${cp}/blog/addPortfolio",
@@ -81,78 +71,71 @@ $('#addPortfolioBtn').on('click', function(){
 		success : function(data) {
 
 			console.log(data);
-			$('#portfolio_All').append("<div id='portfolio_area"+ data+"'><a id='"+data+"'class='btn btn-primary portfolio_btn' data-toggle='collapse' href='#section_area"+data+"' aria-expanded='false' aria-controls='collapseExample'>포트폴리오</a><button id='deleteBtn"+data+"' class='btn btn-primary delete_btn'onclick='deletePortfolio("+data+");'><i class='fas fa-times'></i></button><div class='collapse'id='section_area"+data+"'><div class='well section_area'><h1>섹션영역</h1></div></div></div>");
-						
+			$("#content_area").html(data);						
 		}
 	});
-	
-	
 });
 
-
-
-
-$(document).off('addEffect');
-$(document).on('click', function addEffect(e){
-	var target = e.target;
+/* 포트폴리오 이름 수정 */
+function updatePortfolio(code){
 	
-	var id = target.id;
-	var classList = target.classList;	
-	var href = target.href;
+	var tmp_nm = $('#'+code).text();
+	$('#'+code).contents().unwrap().wrap("<input id='portfolio_TXT' type='text' class='form-control'>");
+	$('#portfolio_TXT').val(tmp_nm);
+	$('#portfolio_TXT').focus();
+	$('#deleteBtn'+code).hide();
 	
-	
-	/* 포트폴리오 이름 수정 */
-	if(classList[2] == 'portfolio_btn'){
+	$('#portfolio_TXT').on('keypress', function(e){
 		
-		$('#'+id).off('dblclick');
-		$('#'+id).on('dblclick', function(){
+		console.log(e.keyCode);
+		
+		if(e.keyCode == 13){
+			var portfolio_nm = $('#portfolio_TXT').val();
 			
-			var tmp_nm = $('#'+id).text();
-			
-			console.log(tmp_nm);
-			
-			$('#'+id).contents().unwrap().wrap("<input id='portfolio_TXT' type='text' class='form-control'>");
-			$('#portfolio_TXT').val(tmp_nm);
-			$('#portfolio_TXT').focus();
-			$('#deleteBtn'+id).hide();
-			
-			
-			$('#portfolio_TXT').on('keypress', function(e){
-				if(e.keyCode ==13){
-					var portfolio_nm = $('#portfolio_TXT').val();
-					e.preventDefault();
-		        	$('#portfolio_TXT').contents().unwrap().wrap("<a id='"+ id +"' class='btn btn-primary portfolio_btn' data-toggle='collapse' href='"+href+"' aria-expanded='false' aria-controls='collapseExample'></a>");
-		        	$('#'+id).text(portfolio_nm);
-		        	$('#deleteBtn'+id).show();
-		        	
-		        	$.ajax({
-		        		url : "${cp}/blog/updatePortfolio",
-		        		data : {"portfolio_nm" : portfolio_nm, "portfolio_code" : id},
-		        		success : function(data) {
-										
-		        		}
-		        	});
-					
-				
-				}
-				
-			});
-		});
-	}
-});
+        	$.ajax({
+        		url : "${cp}/blog/updatePortfolio",
+        		data : {"portfolio_nm" : portfolio_nm, "portfolio_code" : code, "user_id" : user_id},
+        		success : function(data) {
+								
+        			$("#content_area").html(data);
+                	
+        		}
+        	});
+		}
+	});
+} 
 
+/* 포트폴리오 삭제 */
 function deletePortfolio(code) {
 	
+	var result = confirm("삭제 하시겠습니까? (저장된 섹션, 페이지 데이터까지 영구삭제 됩니다)");
+	
+	if(result){
+		$.ajax({
+			url : "${cp}/blog/deletePortfolio",
+			data : {"portfolio_code" : code},
+			success : function(data) {
+				$("#portfolio_area"+code).remove();
+			}
+		});
+	}
+	
+}
+
+/* 섹션 */
+function showSection(code){
+	
 	$.ajax({
-		url : "${cp}/blog/deletePortfolio",
-		data : {"portfolio_code" : code},
+		url : "${cp}/blog/showSection",
+		data : {"portfolio_code" : code, "user_id" : user_id},
 		success : function(data) {
 			
+			$('#section_area'+code).html(data);
 			
-			
-			$("#portfolio_area"+code).remove();
 		}
 	});
+	
+	
 	
 }
 
