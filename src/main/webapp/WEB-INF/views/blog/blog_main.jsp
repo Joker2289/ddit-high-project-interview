@@ -8,6 +8,7 @@
 <link href="/css/blog/blog_activity_modal.css" rel="stylesheet">
 <link href="/css/blog/blog_setting_form.css" rel="stylesheet">
 
+
 <!DOCTYPE html>
 <div class="container B_head">
 

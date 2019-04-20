@@ -47,9 +47,9 @@
 	margin-bottom: 0px !important;
 }
 
-/* BLOG USER INFO */
+/* 회원 프로필 영역 */
 
-/* profile img */
+/* 프로필 이미지 */
 .img-circle {
 	width: 300px;
 	height: 300px;
@@ -64,7 +64,7 @@
 }
 
 
-/* act_table */
+/* 활동정보 */
 .act_table {
 	width: 100%;
 	height: 100%;
@@ -89,6 +89,7 @@
 	text-align: right;
 }
 
+/* 블로그 설정 버튼 */
 .settingBtn {
 	width: 90%;
 	font-size: 20px;
@@ -98,6 +99,41 @@
 
 .settingBtn:hover{
 	background-color: black !important;
+}
+
+
+/* 포트폴리오 영역 */
+
+/* 포트폴리오 영역 타이틀 */
+.portfolioTitle{
+	width: 100%;
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+	margin: 10px 0px 20px 0px; 
+	
+}
+
+/* 포트폴리오 */
+.portfolio{
+	width: 100%;
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	background-color: pink;
+	color: white;
+}
+
+
+/* 섹션 영역 */
+.section{
+	width: 100%;
+	font-size: 20px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	background-color: pink;
+	color: white;
 }
 
 

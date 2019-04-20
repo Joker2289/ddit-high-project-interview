@@ -63,10 +63,12 @@ public class BlogController {
 		
 		int followerCnt = followService.getFollowerCnt(userId);
 		int followingCnt = followService.getFollowingCnt(userId);
-		
 		model.addAttribute("uVo", uVo);
 		model.addAttribute("followerCnt", followerCnt);
 		model.addAttribute("followingCnt", followingCnt);
+		
+		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(userId);
+		model.addAttribute("portfolioList", portfolioList);
 		
 		return "blogTiles";
 	}
@@ -128,7 +130,6 @@ public class BlogController {
 	public String blogSettingForm(Model model, @RequestParam("userId")String userId) {
 		
 		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(userId);
-		
 		model.addAttribute("portfolioList", portfolioList);
 		model.addAttribute("user_id", userId);
 		
@@ -315,6 +316,28 @@ public class BlogController {
 		
 		return "dd";
 	}
+	
+	/**
+	 * 
+	 * Method : showSection
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param section_code
+	 * @return
+	 * Method 설명 : 팝오버 div에 섹션리스트 출력
+	 */
+	@RequestMapping("/showSection")
+	public String showSection(Model model, @RequestParam("portfolio_code")String portfolio_code) {
+		
+		List<SectionVo> sectionList = sectionService.select_sectionList(portfolio_code);
+		
+		model.addAttribute("sectionList", sectionList);
+		
+		return "blog/section_area";
+	}
+	
+	
 	
 	
 }

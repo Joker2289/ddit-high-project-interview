@@ -13,12 +13,12 @@
 	<div id="section_area${ section.section_code }">
 
 		<a id="section${ section.section_code }"
-			class="btn btn-primary portfolio_btn" 
+			class="btn btn-primary sectionBtn" 
 			ondblclick="updateSection(${ section.section_code });">${ section.section_name }</a>
 
 
 		<button id="sectionDeleteBtn${ section.section_code }"
-			class="btn btn-primary delete_btn"
+			class="btn btn-primary sectionDeleteBtn"
 			onclick="deleteSection(${ section.section_code });">
 			<i class="fas fa-times"></i>
 		</button>

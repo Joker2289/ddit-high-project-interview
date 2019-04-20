@@ -12,7 +12,7 @@
 }
 
 /* 포트폴리오 버튼 */
-.portfolio_btn{
+.portfolioBtn{
 	width:60%;
 	font-size: 25px;
 	margin-top: 3px;
@@ -22,7 +22,7 @@
 }
 
 /* 포트폴리오 삭제 버튼 */
-.delete_btn {
+.deleteBtn {
 	font-size: 25px;
 	margin-top: 3px;
 	margin-bottom: 3px;
@@ -31,10 +31,6 @@
 	border-color: red;
 }
 
-
-.delete_btn:hover, .addPortfolioBtn:hover, .portfolio_btn:hover{ 
-	background-color: black !important;
-}
 
 /* 포트폴리오 이름변경 TEXT */
 .form-control{
@@ -50,25 +46,42 @@
 	margin-top: 20px !important;
 	margin-bottom: 20px !important;
 	margin:0 auto;
-	width: 90% !important;
-	background-color: #959B9C;
+	width: 65% !important;
+	background-color: #e3e3e3;
+	border: 2px solid #e3e3e3;
 	padding: 10px 10px 20px 10px;
 }
 
 /* 섹션 추가 버튼 */
 .addSectionBtn{
-	width: 60% !important;
+	width: 80% !important;
 	font-size: 20px;
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
 
+/* 섹션 버튼 */
 .sectionBtn{
-	width:60%;
+	width:80%;
 	font-size: 20px;
 	margin-top: 3px;
 	margin-bottom: 3px;
 	background-color: #8344B2;
 	border-color: #8344B2;
+}
+
+/* 포트폴리오 삭제 버튼 */
+.sectionDeleteBtn {
+	font-size: 20px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	margin-left: 10px;
+	background-color: red;
+	border-color: red;
+}
+
+/* 버튼 호버 */
+.deleteBtn:hover, .addPortfolioBtn:hover, .portfolioBtn:hover, .sectionDeleteBtn:hover, .sectionBtn:hover, .addSectionBtn:hover{ 
+	background-color: black !important;
 }
 

@@ -7,12 +7,49 @@
 
 <div class="panel panel-default">
 	<div class="panel-body">
-		<span class="span-text"><a>포트폴리오</a></span>
+		
+		<div class="portfolioTitle">포트폴리오</div>
+			
+		<c:forEach items="${ portfolioList }" var="portfolio">
 
-
+			<button id="${ portfolio.portfolio_code }" type="button" class="btn btn-default portfolio" data-container="body" data-toggle="popover" data-placement="right" data-content=" " data-trigger="focus" data-html="true" onclick="portfolioClick(${ portfolio.portfolio_code });">
+		    	${ portfolio.portfolio_name }
+		  	</button>
+			
+			
+		</c:forEach>
 
 
 	</div>
 </div>
+
+
+
+
+<script>
+
+
+function portfolioClick(portfolio_code){
+	
+	$('#'+portfolio_code).popover('enable'); 
+	
+	$.ajax({
+		url : "${cp}/blog/showSection",
+		data : {"portfolio_code" : portfolio_code },
+		success : function(data) {
+			
+			console.log(data);
+			
+			$('.popover-content').html(data);	
+		}
+	});
+	
+	
+	
+	
+}
+
+
+</script>
 
 
