@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="section">
+
+	<!-- 섹션 추가 -->
+	<insert id="insert_section" parameterType="sectionVo">
+	
+		<selectKey keyProperty="section_code" resultType="String" order="AFTER">
+		  	select 
+		  		section_code_seq.currval
+		  	from 
+		  		dual
+		</selectKey>
+		
+		insert into section
+		values (
+			section_code_seq.nextval,
+			#{portfolio_code},
+			#{section_name}
+		)
+	</insert>
+	
+	<!-- 섹션 수정 -->
+	<update id="update_section" parameterType="sectionVo">
+		update section
+		   set section_name = #{section_name}
+		 where section_code = #{section_code}  
+	</update>
+	
+	<!-- 섹션 삭제 -->
+	<delete id="delete_section" parameterType="String">
+		delete section
+		 where section_code = #{section_code}
+	</delete>
+	
+	<!-- 포트폴리오의 전체 섹션 조회 -->
+	<select id="select_sectionList" parameterType="String" resultType="sectionVo">
+		select *
+		  from section
+		 where portfolio_code = #{portfolio_code}
+		 order by section_code
+	</select>
+
+</mapper> 
