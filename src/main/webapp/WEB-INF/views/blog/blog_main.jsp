@@ -6,6 +6,7 @@
 
 <link href="/css/blog/blog.css" rel="stylesheet">
 <link href="/css/blog/blog_activity_modal.css" rel="stylesheet">
+<link href="/css/blog/blog_setting_form.css" rel="stylesheet">
 
 <!DOCTYPE html>
 <div class="container B_head">
@@ -65,9 +66,9 @@
 									</tr>
 								</table>
 
-								
-								<button id="settingBtn" class="btn btn-primary">Blog 설정</button>
-								
+								<c:if test='${ uVo.user_id == SESSION_MEMBERVO.mem_id }'>
+									<button id="settingBtn" class="btn btn-primary settingBtn">Blog 설정</button>
+								</c:if>
 								
 							</div>
 						</div>
@@ -163,8 +164,6 @@
 	var userId = "${ uVo.user_id }";
 	
 	function activityClick(req) {
-		
-		var userId = "${ uVo.user_id }";
 		
 		if(req == 'follower'){
 			$.ajax({

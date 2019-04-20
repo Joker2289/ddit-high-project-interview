@@ -1,0 +1,31 @@
+/* 포트폴리오 추가 버튼 */
+.addPortfolioBtn{
+	width: 80% !important;
+	font-size: 25px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+/* 포트폴리오 버튼 */
+.portfolio_btn{
+	width:60%;
+	font-size: 25px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+/* 포트폴리오 이름변경 TEXT */
+.form-control{
+	margin:0 auto;
+	width: 60% !important;
+	height: 48px !important;
+	text-align: center;
+	font-size: 25px;
+}
+
+/* 섹션 리스트 영역 */
+.section_area {
+	background-color: #959B9C;
+	padding: 10px 10px 10px 10px;
+}
+
