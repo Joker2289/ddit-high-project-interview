@@ -26,8 +26,8 @@ public class PortfolioDaoImpl implements IPortfolioDao{
 	}
 
 	@Override
-	public int delete_portfolio(PortfolioVo vo) {
-		return sqlSession.delete("portfolio.delete_portfolio", vo);
+	public int delete_portfolio(String portfolio_code) {
+		return sqlSession.delete("portfolio.delete_portfolio", portfolio_code);
 	}
 
 	@Override

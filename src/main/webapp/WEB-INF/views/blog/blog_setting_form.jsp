@@ -23,13 +23,18 @@
 			<button id="addPortfolioBtn" class="btn btn-primary addPortfolioBtn"> <i class="far fa-plus-square"></i> 포트폴리오 추가</button>
 			
 			
-			<div id="portfolio_area">
 			
+			<div id="portfolio_All">
 			
 				<c:forEach items="${ portfolioList }" var="portfolio">
+				<div id="portfolio_area${ portfolio.portfolio_code }">
 					<a id="${ portfolio.portfolio_code }" class="btn btn-primary portfolio_btn" data-toggle="collapse"
 					href="#section_area${ portfolio.portfolio_code }" aria-expanded="false"
 					aria-controls="collapseExample">${ portfolio.portfolio_name }</a>
+					
+					
+					<button id="deleteBtn${ portfolio.portfolio_code }" class="btn btn-primary delete_btn" onclick="deletePortfolio(${ portfolio.portfolio_code });"><i class="fas fa-times"></i></button>
+	
 	
 					<div class="collapse" id="section_area${ portfolio.portfolio_code }" >
 						<div class="well section_area">
@@ -38,14 +43,30 @@
 						
 						</div>
 					</div>
+				</div>
 				</c:forEach>
+				
 			</div>
+				
+			
 
 
 		</div>
 	</div>
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
 
@@ -60,7 +81,7 @@ $('#addPortfolioBtn').on('click', function(){
 		success : function(data) {
 
 			console.log(data);
-			$('#portfolio_area').append("<a id='"+data+"'class='btn btn-primary portfolio_btn'data-toggle='collapse'href='#"+data+"'aria-expanded='false'aria-controls='collapseExample'>포트폴리오</a><div class='collapse'id='"+data+"'><div class='well section_area'><h1>섹션 영역</h1></div></div>");
+			$('#portfolio_All').append("<div id='portfolio_area"+ data+"'><a id='"+data+"'class='btn btn-primary portfolio_btn' data-toggle='collapse' href='#section_area"+data+"' aria-expanded='false' aria-controls='collapseExample'>포트폴리오</a><button id='deleteBtn"+data+"' class='btn btn-primary delete_btn'onclick='deletePortfolio("+data+");'><i class='fas fa-times'></i></button><div class='collapse'id='section_area"+data+"'><div class='well section_area'><h1>섹션영역</h1></div></div></div>");
 						
 		}
 	});
@@ -70,9 +91,9 @@ $('#addPortfolioBtn').on('click', function(){
 
 
 
-/* 포트폴리오 이름 수정 */
-$(document).off('name_update');
-$(document).on('click', function name_update(e){
+
+$(document).off('addEffect');
+$(document).on('click', function addEffect(e){
 	var target = e.target;
 	
 	var id = target.id;
@@ -80,7 +101,9 @@ $(document).on('click', function name_update(e){
 	var href = target.href;
 	
 	
+	/* 포트폴리오 이름 수정 */
 	if(classList[2] == 'portfolio_btn'){
+		
 		$('#'+id).off('dblclick');
 		$('#'+id).on('dblclick', function(){
 			
@@ -91,6 +114,8 @@ $(document).on('click', function name_update(e){
 			$('#'+id).contents().unwrap().wrap("<input id='portfolio_TXT' type='text' class='form-control'>");
 			$('#portfolio_TXT').val(tmp_nm);
 			$('#portfolio_TXT').focus();
+			$('#deleteBtn'+id).hide();
+			
 			
 			$('#portfolio_TXT').on('keypress', function(e){
 				if(e.keyCode ==13){
@@ -98,7 +123,7 @@ $(document).on('click', function name_update(e){
 					e.preventDefault();
 		        	$('#portfolio_TXT').contents().unwrap().wrap("<a id='"+ id +"' class='btn btn-primary portfolio_btn' data-toggle='collapse' href='"+href+"' aria-expanded='false' aria-controls='collapseExample'></a>");
 		        	$('#'+id).text(portfolio_nm);
-			    
+		        	$('#deleteBtn'+id).show();
 		        	
 		        	$.ajax({
 		        		url : "${cp}/blog/updatePortfolio",
@@ -116,7 +141,20 @@ $(document).on('click', function name_update(e){
 	}
 });
 
-
+function deletePortfolio(code) {
+	
+	$.ajax({
+		url : "${cp}/blog/deletePortfolio",
+		data : {"portfolio_code" : code},
+		success : function(data) {
+			
+			
+			
+			$("#portfolio_area"+code).remove();
+		}
+	});
+	
+}
 
 	
 	

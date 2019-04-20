@@ -36,7 +36,7 @@ public interface IPortfolioService {
 	 * @return
 	 * Method 설명 : 포트폴리오 삭제
 	 */
-	int delete_portfolio(PortfolioVo vo);
+	int delete_portfolio(String portfolio_code);
 	
 	/**
 	 * 

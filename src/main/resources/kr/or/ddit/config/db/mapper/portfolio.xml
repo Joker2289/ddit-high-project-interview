@@ -30,7 +30,7 @@
 	</update>
 	
 	<!-- 포트폴리오 삭제 -->
-	<delete id="delete_portfolio" parameterType="portfolioVo">
+	<delete id="delete_portfolio" parameterType="String">
 		delete portfolio
 		 where portfolio_code = #{portfolio_code}
 	</delete>

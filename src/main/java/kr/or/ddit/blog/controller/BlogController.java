@@ -159,5 +159,14 @@ public class BlogController {
 		return "dd";
 	}
 	
+	@RequestMapping("/deletePortfolio")
+	@ResponseBody
+	public String deletePortfolio(HttpServletRequest req, Model model, @RequestParam("portfolio_code")String portfolio_code) {
+		
+		portfolioService.delete_portfolio(portfolio_code);
+		
+		return "dd";
+	}
+	
 	
 }

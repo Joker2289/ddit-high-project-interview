@@ -96,5 +96,9 @@
 	border-color: pink;
 }
 
+.settingBtn:hover{
+	background-color: black !important;
+}
+
 
 

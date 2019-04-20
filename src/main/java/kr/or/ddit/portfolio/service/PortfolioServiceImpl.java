@@ -26,8 +26,8 @@ public class PortfolioServiceImpl implements IPortfolioService{
 	}
 
 	@Override
-	public int delete_portfolio(PortfolioVo vo) {
-		return pfDao.delete_portfolio(vo);
+	public int delete_portfolio(String portfolio_code) {
+		return pfDao.delete_portfolio(portfolio_code);
 	}
 
 	@Override
