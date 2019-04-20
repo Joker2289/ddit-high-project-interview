@@ -20,6 +20,8 @@ import kr.or.ddit.login.LoginController;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.portfolio.model.PortfolioVo;
 import kr.or.ddit.portfolio.service.IPortfolioService;
+import kr.or.ddit.section.model.SectionVo;
+import kr.or.ddit.section.service.ISectionService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 
@@ -41,6 +43,9 @@ public class BlogController {
 	@Resource(name="portfolioService")
 	private IPortfolioService portfolioService;
 	
+	@Resource(name="sectionService")
+	private ISectionService sectionService;
+	
 	/**
 	 * 
 	 * Method : blogView
@@ -52,7 +57,7 @@ public class BlogController {
 	 * Method 설명 : 나의 Blog 페이지 이동
 	 */
 	@RequestMapping(path={"blogMainView"}, method = RequestMethod.GET)
-	public String blogMainView(HttpServletRequest req, Model model, @RequestParam("userId")String userId) {
+	public String blogMainView(Model model, @RequestParam("userId")String userId) {
 		
 		UsersVo uVo = usersService.select_userInfo(userId);
 		
@@ -78,7 +83,7 @@ public class BlogController {
 	 * Method 설명 : 팔로워 리스트 조회
 	 */
 	@RequestMapping("/activityFollower")
-	public String activityFollower(HttpServletRequest req, Model model, @RequestParam("userId")String userId) {
+	public String activityFollower(Model model, @RequestParam("userId")String userId) {
 		
 		List<FollowVo> followerList = followService.select_followerList(userId);
 		
@@ -99,7 +104,7 @@ public class BlogController {
 	 * Method 설명 : 팔로잉 리스트 조회
 	 */
 	@RequestMapping("/activityFollowing")
-	public String activityFollowing(HttpServletRequest req, Model model, @RequestParam("userId")String userId) {
+	public String activityFollowing(Model model, @RequestParam("userId")String userId) {
 		
 		List<FollowVo> followingList = followService.select_followingList(userId);
 		
@@ -120,7 +125,7 @@ public class BlogController {
 	 * Method 설명 : 블로그 설정 페이지로 이동
 	 */
 	@RequestMapping("/blogSettingForm")
-	public String blogSettingForm(HttpServletRequest req, Model model, @RequestParam("userId")String userId) {
+	public String blogSettingForm(Model model, @RequestParam("userId")String userId) {
 		
 		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(userId);
 		
@@ -142,7 +147,7 @@ public class BlogController {
 	 * Method 설명 : 포트폴리오 추가
 	 */
 	@RequestMapping("/addPortfolio")
-	public String addPortfolio(HttpServletRequest req, Model model, @RequestParam("user_id")String user_id) {
+	public String addPortfolio(Model model, @RequestParam("user_id")String user_id) {
 		
 		PortfolioVo pVo = new PortfolioVo();
 		pVo.setUser_id(user_id);
@@ -170,7 +175,7 @@ public class BlogController {
 	 * Method 설명 : 포트폴리오 수정
 	 */
 	@RequestMapping("/updatePortfolio")
-	public String updatePortfolio(HttpServletRequest req, Model model, 
+	public String updatePortfolio(Model model, 
 			@RequestParam("portfolio_nm")String portfolio_nm, 
 			@RequestParam("portfolio_code")String portfolio_code,
 			@RequestParam("user_id")String user_id) {
@@ -201,21 +206,114 @@ public class BlogController {
 	 */
 	@RequestMapping("/deletePortfolio")
 	@ResponseBody
-	public String deletePortfolio(HttpServletRequest req, Model model, @RequestParam("portfolio_code")String portfolio_code) {
+	public String deletePortfolio(Model model, @RequestParam("portfolio_code")String portfolio_code) {
 		
 		portfolioService.delete_portfolio(portfolio_code);
 		
 		return "dd";
 	}
 	
-	@RequestMapping("/showSection")
-	public String showSection(HttpServletRequest req, Model model, 
-			@RequestParam("portfolio_code")String portfolio_code,
+	/**
+	 * 
+	 * Method : sectionSettingForm
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param req
+	 * @param model
+	 * @param portfolio_code
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 섹션 설정 페이지 조회
+	 */
+	@RequestMapping("/sectionSettingForm")
+	public String sectionSettingForm(Model model, @RequestParam("portfolio_code")String portfolio_code,
 			@RequestParam("user_id")String user_id) {
 		
-		
+		List<SectionVo> sectionList = sectionService.select_sectionList(portfolio_code);
+		model.addAttribute("sectionList", sectionList);
+		model.addAttribute("portfolio_code", portfolio_code);
 		
 		return "blog/section_setting_form";
+	}
+	
+	/**
+	 * 
+	 * Method : addSection
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param req
+	 * @param model
+	 * @param portfolio_code
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 섹션 추가
+	 */
+	@RequestMapping("/addSection")
+	public String addSection(Model model, @RequestParam("portfolio_code")String portfolio_code) {
+		
+		SectionVo sVo = new SectionVo();
+		sVo.setPortfolio_code(portfolio_code);
+		sVo.setSection_name("섹션");
+		
+		sectionService.insert_section(sVo);
+		
+		List<SectionVo> sectionList = sectionService.select_sectionList(portfolio_code);
+		model.addAttribute("sectionList", sectionList);
+		model.addAttribute("portfolio_code", portfolio_code);
+		model.addAttribute("section_code", sVo.getSection_code());
+		
+		return "blog/section_setting_form";
+	}
+	
+	/**
+	 * 
+	 * Method : updateSection
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param section_nm
+	 * @param section_code
+	 * @param portfolio_code
+	 * @return
+	 * Method 설명 : 섹션 수정
+	 */
+	@RequestMapping("/updateSection")
+	public String updateSection(Model model, @RequestParam("section_nm")String section_nm, 
+			@RequestParam("section_code")String section_code,
+			@RequestParam("portfolio_code")String portfolio_code) {
+		
+		SectionVo sVo = new SectionVo();
+		sVo.setSection_code(section_code);
+		sVo.setSection_name(section_nm);
+		
+		sectionService.update_section(sVo);
+		
+		List<SectionVo> sectionList = sectionService.select_sectionList(portfolio_code);
+		model.addAttribute("sectionList", sectionList);
+		model.addAttribute("portfolio_code", portfolio_code);
+		model.addAttribute("section_code", sVo.getSection_code());
+		
+		return "blog/section_setting_form";
+	}
+	
+	/**
+	 * 
+	 * Method : deleteSection
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param req
+	 * @param model
+	 * @param portfolio_code
+	 * @return
+	 * Method 설명 : 섹션 삭제
+	 */
+	@RequestMapping("/deleteSection")
+	@ResponseBody
+	public String deleteSection(Model model, @RequestParam("section_code")String section_code) {
+		
+		sectionService.delete_section(section_code);
+		
+		return "dd";
 	}
 	
 	

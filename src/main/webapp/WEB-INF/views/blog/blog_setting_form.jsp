@@ -38,7 +38,7 @@
 	
 	
 					<div class="collapse" id="section_collapse${ portfolio.portfolio_code }" >
-						<div class="well section_area" id="section_area${ portfolio.portfolio_code }">
+						<div class="well section_All" id="section_All${ portfolio.portfolio_code }">
 						
 							
 						
@@ -119,18 +119,17 @@ function deletePortfolio(code) {
 			}
 		});
 	}
-	
 }
 
 /* 섹션 */
 function showSection(code){
 	
 	$.ajax({
-		url : "${cp}/blog/showSection",
+		url : "${cp}/blog/sectionSettingForm",
 		data : {"portfolio_code" : code, "user_id" : user_id},
 		success : function(data) {
 			
-			$('#section_area'+code).html(data);
+			$('#section_All'+code).html(data);
 			
 		}
 	});
