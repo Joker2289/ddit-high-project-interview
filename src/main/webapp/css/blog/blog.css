@@ -9,8 +9,6 @@
 }
 
 /* timeline 꺼 */
-
-
 .B_head {
 	padding-left: 10px !important;
 	padding-right: 10px !important;
@@ -27,20 +25,19 @@
 
 /* title div */
 .jumbotron {
-	background-color: #4B4B4B !important;
+	background-color: #4B4B4B;
 	width: auto;
 	height: 300px;
 	text-align: center;
 	padding: auto !important;
 	border-radius: 70px;
-	box-shadow: 0 6px 12px rgba(0, 0, 0, .15) !important;
+	box-shadow: 10px 10px 10px rgba(.35, .35, .35, .35) !important;
 }
 
 /* title text */
 .head_title {
 	color: #fff !important;
 	font-size: 100px !important;
-	
 }
 
 .thumbnail {

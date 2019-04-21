@@ -10,6 +10,8 @@
 <div class="col-md-9">
 	<div class="panel panel-default">
 		<div class="panel-body">
+		
+			
 			프로필 설정 & 배너 설정 
 			<br> 
 			blog head title / blog head bg / 질문 게시판 활성화

@@ -29,7 +29,7 @@
 		   		profile_contents	= nvl(#{profile_contents, jdbcType=VARCHAR}, profile_contents),
 		   		qna_act				= nvl(#{qna_act, jdbcType=VARCHAR}, qna_act),
 		   		img_act				= nvl(#{img_act, jdbcType=VARCHAR}, img_act),
-		   		name_act				= nvl(#{name_act, jdbcType=VARCHAR}, name_act),
+		   		name_act			= nvl(#{name_act, jdbcType=VARCHAR}, name_act)
 		 where user_id = #{user_id}  
 	</update>
 	

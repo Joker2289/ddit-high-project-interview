@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.ddit.blog.model.BlogVo;
+import kr.or.ddit.blog.service.IBlogService;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.follow.service.IFollowService;
 import kr.or.ddit.login.LoginController;
@@ -37,6 +39,9 @@ public class BlogController {
 	@Resource(name="usersService")
 	private IUsersService usersService;
 	
+	@Resource(name="blogService")
+	private IBlogService blogService;
+	
 	@Resource(name="followService")
 	private IFollowService followService;
 	
@@ -46,6 +51,8 @@ public class BlogController {
 	@Resource(name="sectionService")
 	private ISectionService sectionService;
 	
+	
+	
 	/**
 	 * 
 	 * Method : blogView
@@ -54,19 +61,40 @@ public class BlogController {
 	 * @param req
 	 * @param model
 	 * @return
-	 * Method 설명 : 나의 Blog 페이지 이동
+	 * Method 설명 : Blog 페이지 이동
 	 */
 	@RequestMapping(path={"blogMainView"}, method = RequestMethod.GET)
 	public String blogMainView(Model model, @RequestParam("userId")String userId) {
 		
+		BlogVo bVo = blogService.select_blogInfo(userId);
+		
+		if(bVo == null) {
+			BlogVo blogInfo = new BlogVo();
+			blogInfo.setUser_id(userId);
+			blogInfo.setBlog_name(userId + " 님의 블로그");
+			blogInfo.setCover_color("#99B4CF");
+			blogInfo.setQna_act("y");
+			blogInfo.setImg_act("n");
+			blogInfo.setName_act("y");
+			
+			blogService.insert_blog(blogInfo);
+			
+			bVo = blogInfo;
+		}
+		
+		model.addAttribute("bVo", bVo);
+		
+		
 		UsersVo uVo = usersService.select_userInfo(userId);
 		
+		//활동 정보
 		int followerCnt = followService.getFollowerCnt(userId);
 		int followingCnt = followService.getFollowingCnt(userId);
 		model.addAttribute("uVo", uVo);
 		model.addAttribute("followerCnt", followerCnt);
 		model.addAttribute("followingCnt", followingCnt);
 		
+		//포트폴리오 리스트
 		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(userId);
 		model.addAttribute("portfolioList", portfolioList);
 		

@@ -13,7 +13,14 @@
 <div class="container B_head">
 
 	<div class="jumbotron">
-		<h1 class="head_title">${ uVo.user_name }님의 Blog</h1>
+	
+	
+	
+	
+		<h1 class="head_title">${ bVo.blog_name }</h1>
+		
+		
+		
 	</div>
 
 </div>
@@ -122,5 +129,17 @@
 			}
 		});
 	});
+	
+	
+	
+	/* 블로그 설정 */
+	function blogSetting(){
+		
+		var color = '${ bVo.cover_color }';
+		$('.jumbotron').css('background-color', color);
+		
+	}
+	
+	blogSetting();
 	
 </script>
