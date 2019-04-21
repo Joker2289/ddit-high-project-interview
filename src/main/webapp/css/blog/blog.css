@@ -130,11 +130,28 @@
 .section{
 	width: 100%;
 	font-size: 20px;
+	font-weight: bold;
 	margin-top: 3px;
 	margin-bottom: 3px;
 	background-color: pink;
 	color: white;
 }
+
+/* 팝오버 부모 */
+.popover{
+	width: 500px !important;
+	max-width:700px !important;
+	height: auto;
+}
+
+/* 팝오버 내용 */
+.popover-content{
+	width: 100% !important;
+	height: auto;
+	/* min-height: 150px; */
+	
+}
+
 
 
 

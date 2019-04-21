@@ -319,6 +319,26 @@ public class BlogController {
 	
 	/**
 	 * 
+	 * Method : showPortfolio
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param portfolio_code
+	 * @return
+	 * Method 설명 : 포트폴리오 리스트 출력
+	 */
+	@RequestMapping("/showPortfolio")
+	public String showPortfolio(Model model, @RequestParam("user_id")String user_id) {
+		
+		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(user_id);
+		
+		model.addAttribute("portfolioList", portfolioList);
+		
+		return "blog/portfolio_area";
+	}
+	
+	/**
+	 * 
 	 * Method : showSection
 	 * 작성자 : pjk
 	 * 변경이력 :

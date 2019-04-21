@@ -71,9 +71,15 @@ $('#addPortfolioBtn').on('click', function(){
 		success : function(data) {
 
 			console.log(data);
-			$("#content_area").html(data);						
+			$("#content_area").html(data);
+			
+			/* 포트폴리오 메뉴 갱신 */
+			showPortfolio(user_id);
 		}
 	});
+
+	
+	
 });
 
 /* 포트폴리오 이름 수정 */
@@ -98,6 +104,9 @@ function updatePortfolio(code){
         		success : function(data) {
 								
         			$("#content_area").html(data);
+        			
+        			/* 포트폴리오 메뉴 갱신 */
+        			showPortfolio(user_id);
                 	
         		}
         	});
@@ -116,6 +125,9 @@ function deletePortfolio(code) {
 			data : {"portfolio_code" : code},
 			success : function(data) {
 				$("#portfolio_area"+code).remove();
+				
+				/* 포트폴리오 메뉴 갱신 */
+				showPortfolio(user_id);
 			}
 		});
 	}
@@ -132,10 +144,20 @@ function showSection(code){
 			$('#section_All'+code).html(data);
 			
 		}
-	});
+	});	
+}
+
+/* 포트폴리오 */
+function showPortfolio(user_id){
+	$.ajax({
+		url : "${cp}/blog/showPortfolio",
+		data : {"user_id" : user_id },
+		success : function(data) {
 	
-	
-	
+			console.log(data);
+			$("#portfolioMenu").html(data);						
+		}
+	});	
 }
 
 	

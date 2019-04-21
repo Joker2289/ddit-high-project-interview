@@ -12,14 +12,14 @@
 			
 		<c:forEach items="${ portfolioList }" var="portfolio">
 
-			<button id="${ portfolio.portfolio_code }" type="button" class="btn btn-default portfolio" data-container="body" data-toggle="popover" data-placement="right" data-content=" " data-trigger="focus" data-html="true" onclick="portfolioClick(${ portfolio.portfolio_code });">
+			<button id="portfolio${ portfolio.portfolio_code }" type="button" class="btn btn-default portfolio" data-container="body" data-toggle="popover" data-placement="right" data-content=" " data-html="true" data-trigger="focus" onclick="portfolioClick(${ portfolio.portfolio_code });">
 		    	${ portfolio.portfolio_name }
 		  	</button>
 			
 			
 		</c:forEach>
 
-
+ <!-- data-trigger="focus" -->
 	</div>
 </div>
 
@@ -29,9 +29,14 @@
 <script>
 
 
-function portfolioClick(portfolio_code){
+<c:forEach items="${ portfolioList }" var="portfolio">
 	
-	$('#'+portfolio_code).popover('enable'); 
+	var code = '${ portfolio.portfolio_code }';
+	$('#portfolio'+code).popover('enable');
+	
+</c:forEach>
+
+function portfolioClick(portfolio_code){
 	
 	$.ajax({
 		url : "${cp}/blog/showSection",
@@ -41,13 +46,14 @@ function portfolioClick(portfolio_code){
 			console.log(data);
 			
 			$('.popover-content').html(data);	
+			
 		}
 	});
-	
-	
-	
-	
-}
+} 
+
+
+
+
 
 
 </script>

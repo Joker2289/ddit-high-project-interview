@@ -25,7 +25,10 @@
 
 			<div class="col-md-3">
 				<%@ include file="/WEB-INF/views/blog/profile_area.jsp"%><!-- /프로필영역 -->
+				
+				<div id=portfolioMenu>
 				<%@ include file="/WEB-INF/views/blog/portfolio_area.jsp"%><!-- /포트폴리오 영역 -->
+				</div>
 			</div>
 
 			<div id="content_area">
