@@ -2,7 +2,6 @@ package kr.or.ddit.blog.model;
 
 public class BlogVo {
 	
-	private String blog_code;			// 블로그코드
 	private String user_id;				// 회원아이디
 	private String blog_name;			// 블로그명
 	private String cover_img;			// 커버이미지
@@ -10,12 +9,6 @@ public class BlogVo {
 	private String profile_contents;	// 소개글
 	private String qna_act;				// 질의응답활성화
 	
-	public String getBlog_code() {
-		return blog_code;
-	}
-	public void setBlog_code(String blog_code) {
-		this.blog_code = blog_code;
-	}
 	public String getUser_id() {
 		return user_id;
 	}
@@ -54,8 +47,8 @@ public class BlogVo {
 	}
 	@Override
 	public String toString() {
-		return "BlogVo [blog_code=" + blog_code + ", user_id=" + user_id + ", blog_name=" + blog_name + ", cover_img="
-				+ cover_img + ", cover_color=" + cover_color + ", profile_contents=" + profile_contents + ", qna_act="
-				+ qna_act + "]";
+		return "BlogVo [user_id=" + user_id + ", blog_name=" + blog_name + ", cover_img=" + cover_img + ", cover_color="
+				+ cover_color + ", profile_contents=" + profile_contents + ", qna_act=" + qna_act + "]";
 	}
+	
 }
