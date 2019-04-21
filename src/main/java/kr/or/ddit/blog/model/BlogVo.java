@@ -8,7 +8,8 @@ public class BlogVo {
 	private String cover_color;			// 커버색
 	private String profile_contents;	// 소개글
 	private String qna_act;				// 질의응답활성화
-	
+	private String img_act;				// 커버이미지 사용여부
+	private String name_act;			// 블로그명 사용여부
 	public String getUser_id() {
 		return user_id;
 	}
@@ -45,10 +46,23 @@ public class BlogVo {
 	public void setQna_act(String qna_act) {
 		this.qna_act = qna_act;
 	}
+	public String getImg_act() {
+		return img_act;
+	}
+	public void setImg_act(String img_act) {
+		this.img_act = img_act;
+	}
+	public String getName_act() {
+		return name_act;
+	}
+	public void setName_act(String name_act) {
+		this.name_act = name_act;
+	}
 	@Override
 	public String toString() {
 		return "BlogVo [user_id=" + user_id + ", blog_name=" + blog_name + ", cover_img=" + cover_img + ", cover_color="
-				+ cover_color + ", profile_contents=" + profile_contents + ", qna_act=" + qna_act + "]";
+				+ cover_color + ", profile_contents=" + profile_contents + ", qna_act=" + qna_act + ", img_act="
+				+ img_act + ", name_act=" + name_act + "]";
 	}
-	
+
 }
