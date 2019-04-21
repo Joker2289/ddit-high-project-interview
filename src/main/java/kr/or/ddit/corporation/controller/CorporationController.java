@@ -174,10 +174,10 @@ public class CorporationController {
 		String writer_name = "";	
 		String URLA = "<p><iframe width=\"560\" height=\"315\" src=\"";
 		String URLZ = "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><p>";
-		
+		String video_path2 = video_path.replace("https://youtu.be/", "//www.youtube.com/embed/");
 		writer_name = corporationInfo.getCorp_name();
 		insertPost.setMem_id(mem_id);
-		insertPost.setPost_contents(URLA+video_path+URLZ);
+		insertPost.setPost_contents(URLA+video_path2+URLZ);
 		insertPost.setWriter_name(writer_name);
 		logger.debug("123456789987654321 : {}", insertPost);
 		logger.debug("12345678998765432asdasd1 : {}", video_path);
