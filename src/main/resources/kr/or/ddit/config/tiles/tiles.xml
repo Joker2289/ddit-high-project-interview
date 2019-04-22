@@ -131,4 +131,8 @@
 		<put-attribute name="content" value="/WEB-INF/views/mail/mailHome.jsp" />
 	</definition>
 
+	<definition name="alarmTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/alarm/alarm.jsp" />
+	</definition>
+
 </tiles-definitions>

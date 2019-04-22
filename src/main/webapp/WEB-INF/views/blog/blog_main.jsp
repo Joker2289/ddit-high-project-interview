@@ -6,12 +6,21 @@
 
 <link href="/css/blog/blog.css" rel="stylesheet">
 <link href="/css/blog/blog_activity_modal.css" rel="stylesheet">
+<link href="/css/blog/blog_setting_form.css" rel="stylesheet">
+
 
 <!DOCTYPE html>
 <div class="container B_head">
 
 	<div class="jumbotron">
-		<h1 class="head_title">${ uVo.user_name }님의 Blog</h1>
+	
+	
+	
+	
+		<h1 class="head_title">${ bVo.blog_name }</h1>
+		
+		
+		
 	</div>
 
 </div>
@@ -22,69 +31,11 @@
 		<div>
 
 			<div class="col-md-3">
-
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<div class="thumbnail">
-							<a href="/profileHome?user_id=${uVo.user_id}"><img
-								src="${ cp }/view/imageView?mem_id=${ uVo.user_id }&division=pf"
-								class="img-circle"></a>
-							<div class="caption">
-
-								<span class="span-name"><a
-									href="/profileHome?user_id=${uVo.user_id}">${ uVo.user_name }</a></span>
-
-
-								<table class="act_table">
-									<tr>
-										<td class="title" colspan='2'>Activity</td>
-									</tr>
-									<tr>
-										<td class="subject">팔로워</td>
-										<td><a href="javascript:activityClick('follower');">${ followerCnt }명</a></td>
-									</tr>
-									<tr>
-										<td class="subject">팔로잉</td>
-										<td><a href="javascript:activityClick('following');">${ followingCnt }명</a></td>
-									</tr>
-									<tr>
-										<td class="subject">총 게시글 수</td>
-										<td>100개</td>
-									</tr>
-									<tr>
-										<td class="subject">좋아요 수</td>
-										<td>100개</td>
-									</tr>
-									<tr>
-										<td class="subject">질문 수</td>
-										<td>100개</td>
-									</tr>
-									<tr>
-										<td class="subject">답변 수</td>
-										<td>100개</td>
-									</tr>
-								</table>
-
-								
-								<button id="settingBtn" class="btn btn-primary">Blog 설정</button>
-								
-								
-							</div>
-						</div>
-					</div>
+				<%@ include file="/WEB-INF/views/blog/profile_area.jsp"%><!-- /프로필영역 -->
+				
+				<div id=portfolioMenu>
+				<%@ include file="/WEB-INF/views/blog/portfolio_area.jsp"%><!-- /포트폴리오 영역 -->
 				</div>
-				<!-- /프로필영역 -->
-				<div class="panel panel-default">
-					<div class="panel-body">
-
-
-
-						<span class="span-text"><a>포트폴리오 영역</a></span>
-
-
-					</div>
-				</div>
-				<!-- /포트폴리오 영역 -->
 			</div>
 
 			<div id="content_area">
@@ -119,35 +70,8 @@
 
 
 
-				<div class="col-md-3">
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<a href="#"><h4>최근 게시물</h4></a>
-							<ul>
-								<li><a href="#">앙 광고띠</a></li>
-							</ul>
-						</div>
-					</div>
-	
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<a href="#"><h4>인기 게시물</h4></a>
-							<ul>
-								<li><a href="#">앙 광고띠</a></li>
-							</ul>
-						</div>
-					</div>
-	
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<a href="#"><h4>질문 게시판</h4></a>
-							<ul>
-								<li><a href="#">앙 광고띠</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<!-- 최근 인기 질문 -->
+				<%@ include file="/WEB-INF/views/blog/right_area.jsp"%><!-- 오른쪽 메뉴 영역 -->
+				
 			</div>
 
 		</div>
@@ -163,8 +87,6 @@
 	var userId = "${ uVo.user_id }";
 	
 	function activityClick(req) {
-		
-		var userId = "${ uVo.user_id }";
 		
 		if(req == 'follower'){
 			$.ajax({
@@ -207,5 +129,17 @@
 			}
 		});
 	});
+	
+	
+	
+	/* 블로그 설정 */
+	function blogSetting(){
+		
+		var color = '${ bVo.cover_color }';
+		$('.jumbotron').css('background-color', color);
+		
+	}
+	
+	blogSetting();
 	
 </script>

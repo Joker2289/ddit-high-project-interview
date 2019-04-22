@@ -34,6 +34,9 @@
 		<typeAlias alias="possesion_skillsVo" type="kr.or.ddit.possesion_skills.model.Possesion_skillsVo"/>
 		<typeAlias alias="hideVo" type="kr.or.ddit.hide_post.model.Hide_postVo"/>
 		<typeAlias alias="reportVo" type="kr.or.ddit.report.model.ReportVo"/>
+		<typeAlias alias="blogVo" type="kr.or.ddit.blog.model.BlogVo"/>
+		<typeAlias alias="portfolioVo" type="kr.or.ddit.portfolio.model.PortfolioVo"/>
+		<typeAlias alias="sectionVo" type="kr.or.ddit.section.model.SectionVo"/>
 	</typeAliases> 
   
 	<mappers>
@@ -64,6 +67,9 @@
 		<mapper resource="kr/or/ddit/config/db/mapper/possesion_skills.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/hide_post.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/reportcontent.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/blog.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/portfolio.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/section.xml"/>
 	</mappers>
 </configuration>
 
