@@ -38,6 +38,7 @@
 		<typeAlias alias="portfolioVo" type="kr.or.ddit.portfolio.model.PortfolioVo"/>
 		<typeAlias alias="alarmVo" type="kr.or.ddit.alarm.model.AlarmVo"/>
 		<typeAlias alias="sectionVo" type="kr.or.ddit.section.model.SectionVo"/>
+		<typeAlias alias="itemVo" type="kr.or.ddit.item.model.ItemVo"/>
 	</typeAliases> 
   
 	<mappers>
@@ -72,6 +73,7 @@
 		<mapper resource="kr/or/ddit/config/db/mapper/portfolio.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/alarm.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/section.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/item.xml"/>
 	</mappers>
 </configuration>
 
