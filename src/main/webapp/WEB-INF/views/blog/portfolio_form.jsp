@@ -16,12 +16,14 @@
 	<c:forEach items="${ portfolioList }" var="portfolio">
 		<div id="portfolio_area${ portfolio.portfolio_code }">
 		
-			<a id="${ portfolio.portfolio_code }" class="btn btn-primary portfolioBtn" data-toggle="collapse"
+			<a><i class="fas fa-tint"></i></a>
+		
+			<a id="${ portfolio.portfolio_code }" class="btn portfolioBtn" data-toggle="collapse"
 			href="#section_collapse${ portfolio.portfolio_code }" aria-expanded="false"
 			aria-controls="collapseExample" onclick="showSection(${ portfolio.portfolio_code });" ondblclick="updatePortfolio(${ portfolio.portfolio_code });">${ portfolio.portfolio_name }</a>
 			
 			
-			<button id="deleteBtn${ portfolio.portfolio_code }" class="btn btn-primary deleteBtn" onclick="deletePortfolio(${ portfolio.portfolio_code });"><i class="fas fa-times"></i></button>
+			<button id="deleteBtn${ portfolio.portfolio_code }" class="btn deleteBtn" onclick="deletePortfolio(${ portfolio.portfolio_code });"><i class="fas fa-times"></i></button>
 
 
 			<div class="collapse" id="section_collapse${ portfolio.portfolio_code }" >
@@ -144,6 +146,10 @@ function showPortfolio(user_id){
 		}
 	});	
 }
+
+
+	
+
 
 	
 	

@@ -1,6 +1,9 @@
 package kr.or.ddit.blog.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -13,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.blog.model.BlogVo;
 import kr.or.ddit.blog.service.IBlogService;
+import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.follow.service.IFollowService;
 import kr.or.ddit.login.LoginController;
@@ -143,6 +148,7 @@ public class BlogController {
 		return "blog/following_body";
 	}
 	
+	String id = ""; 
 	/**
 	 * 
 	 * Method : settingForm
@@ -155,14 +161,16 @@ public class BlogController {
 	 * Method 설명 : 블로그 설정 페이지로 이동
 	 */
 	@RequestMapping("/blogSettingForm")
-	public String blogSettingForm(Model model, @RequestParam("userId")String userId) {
+	public String blogSettingForm(Model model, @RequestParam("user_id")String user_id) {
 		
-		BlogVo bVo = blogService.select_blogInfo(userId);
+		id = user_id;
+		
+		BlogVo bVo = blogService.select_blogInfo(user_id);
 		model.addAttribute("bVo", bVo);
 		
-		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(userId);
+		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(user_id);
 		model.addAttribute("portfolioList", portfolioList);
-		model.addAttribute("user_id", userId);
+		model.addAttribute("user_id", user_id);
 		
 		return "blog/blog_setting_form";
 	}
@@ -203,7 +211,44 @@ public class BlogController {
 		BlogVo bVo = blogService.select_blogInfo(user_id);
 		model.addAttribute("bVo", bVo);
 		
+		return "blog/head_area";
+	}
+	
+	/**
+	 * 
+	 * Method : uploadImg
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param imageStorage
+	 * @param req
+	 * @param model
+	 * @return
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 * Method 설명 : 이미지 업로드
+	 */
+	@RequestMapping(path="/uploadImg", consumes ={"multipart/form-data"})
+	public String uploadImg(@RequestParam(value = "imageStorage") MultipartFile imageStorage, 
+			HttpServletRequest req, Model model) throws IllegalStateException, IOException {
 		
+		logger.debug("imageStorage : {}", imageStorage);
+		
+		String realFileName = "";
+		String tmpFileName = UUID.randomUUID().toString(); 
+		
+		if(imageStorage.getSize() > 0) {
+			realFileName =  req.getServletContext().getRealPath("/images/blog/cover_img/" + tmpFileName);
+			imageStorage.transferTo(new File(realFileName));
+			
+			BlogVo blogInfo = new BlogVo();
+			blogInfo.setUser_id(id);
+			blogInfo.setCover_img(tmpFileName);
+			
+			blogService.update_blog(blogInfo);
+		}
+		
+		BlogVo bVo = blogService.select_blogInfo(id);
+		model.addAttribute("bVo", bVo);
 		
 		return "blog/head_area";
 	}

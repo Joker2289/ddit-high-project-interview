@@ -84,6 +84,7 @@
 	margin-bottom: 3px;
 	background-color: #8344B2;
 	border-color: #8344B2;
+	color: #fff;
 }
 
 /* 포트폴리오 삭제 버튼 */
@@ -94,6 +95,7 @@
 	margin-left: 10px;
 	background-color: red;
 	border-color: red;
+	color: #fff;
 }
 
 
@@ -148,6 +150,7 @@
 /* 버튼 호버 */
 .deleteBtn:hover, .addPortfolioBtn:hover, .portfolioBtn:hover, .sectionDeleteBtn:hover, .sectionBtn:hover, .addSectionBtn:hover{ 
 	background-color: black !important;
+	color: #fff;
 }
 
 

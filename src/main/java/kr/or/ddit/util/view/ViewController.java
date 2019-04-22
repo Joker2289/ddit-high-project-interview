@@ -18,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.or.ddit.blog.model.BlogVo;
+import kr.or.ddit.blog.service.IBlogService;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.member.model.MemberVo;
@@ -40,6 +42,9 @@ public class ViewController {
 	@Resource(name="corporationService")
 	private ICorporationService corpService;
 	
+	@Resource(name="blogService")
+	private IBlogService blogService;
+	
 	
 	@RequestMapping("/imageView")
 	public void imageView(HttpServletRequest req, HttpServletResponse resp, @RequestParam("mem_id")String mem_id, @RequestParam("division")String division) throws IOException {
@@ -50,6 +55,18 @@ public class ViewController {
 		ServletContext application = req.getServletContext();
 		
 		MemberVo mVo = memService.select_memberInfo(mem_id);
+		
+		if(division.equals("cover_img")) {
+			BlogVo bVo = blogService.select_blogInfo(mem_id);
+			
+			if(bVo.getCover_img() == null) {
+				path = "/images/blog/cover_img/basicBackground.png";
+			} else {
+				path = "/images/blog/cover_img/" + bVo.getCover_img(); 
+			}
+			
+			
+		}
 		
 		if(division.equals("ht")) {
 			path = "/images/profile/HashTag1.png";

@@ -32,9 +32,9 @@
 	border-radius: 70px;
 	box-shadow: 10px 10px 10px rgba(.35, .35, .35, .35) !important;
 	
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
+	background-repeat: no-repeat !important;
+	background-size: cover !important;
+	background-position: center !important;
 }
 
 /* title text */
@@ -95,10 +95,12 @@
 	font-size: 20px;
 	background-color: pink;
 	border-color: pink;
+	color: #fff;
 }
 
 .settingBtn:hover{
 	background-color: black !important;
+	color: #fff;
 }
 
 

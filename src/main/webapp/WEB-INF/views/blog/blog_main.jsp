@@ -75,7 +75,7 @@
 
 <script>
 	
-	var userId = "${ uVo.user_id }";
+	var userId = '${ uVo.user_id }';
 	
 	function activityClick(req) {
 		
@@ -112,10 +112,8 @@
 		
 		$.ajax({
 			url : "${cp}/blog/blogSettingForm",
-			data : {"userId" : userId },
+			data : {"user_id" : userId },
 			success : function(data) {
-				
-				console.log("data");
 				$('#content_area').html(data);			
 			}
 		});

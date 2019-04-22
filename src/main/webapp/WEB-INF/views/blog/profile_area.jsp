@@ -47,7 +47,7 @@
 				</table>
 
 				<c:if test='${ uVo.user_id == SESSION_MEMBERVO.mem_id }'>
-					<button id="settingBtn" class="btn btn-primary settingBtn">Blog 설정</button>
+					<button id="settingBtn" class="btn settingBtn">Blog 설정</button>
 				</c:if>
 				
 			</div>

@@ -5,31 +5,28 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
 
-<c:choose>
-	<c:when test="${ bVo.img_act == 'y' }">
-		<c:set var="bg_path" value="${ usersMap.usersVo.bg_path }" />
-	</c:when>
-	<c:when test="${ bVo.img_act == 'n'}">
-		<div class="jumbotron">
-			<c:if test="${ bVo.name_act == 'y' }">
-				<h1 class="head_title">${ bVo.blog_name }</h1>
-			</c:if>
-		</div>
-	</c:when>
-</c:choose>
+<div class="jumbotron">
+	<c:if test="${ bVo.name_act == 'y' }">
+		<h1 class="head_title">${ bVo.blog_name }</h1>
+	</c:if>
+</div>
+
 
 <script>
+	blogSetting();
 
-/* 블로그 설정 */
-function blogSetting(){
-	
-	var color = '${ bVo.cover_color }';
-	$('.jumbotron').css('background-color', color);
-	
-}
+	/* 블로그 설정 */
+	function blogSetting() {
 
-blogSetting();
+		if ('${ bVo.img_act }' == 'n') {
+			var color = '${ bVo.cover_color }';
+			$('.jumbotron').css('background-color', color);
+		}
 
+		if( '${ bVo.img_act }' == 'y'){
+			$('.jumbotron').css('background-image', 'url(/view/imageView?mem_id=${bVo.user_id}&division=cover_img)');	
+		} 
+	}
 </script>
 
 
