@@ -143,13 +143,15 @@
 		
 <script type="text/javascript">
 	$(document).ready(function(){
-// 		console.log("bg_path? : ${corp.bg_path }");
-		
+		console.log("req_page? : ${req_page }");
 		$("#div_back").on("click", function(){
 // 			alert("req page? : ${req_page }");
 			<c:choose>
 				<c:when test="${req_page == null }">
 					window.location.href = '${pageContext.request.contextPath }/srecr';
+				</c:when>
+				<c:when test="${req_page == 'recruit' }"> // 이어서. 채용공고 페이지로 안가지네?
+					window.location.href = '${pageContext.request.contextPath }/recruit';
 				</c:when>
 				<c:otherwise>
 					window.location.href = '${pageContext.request.contextPath }/recrSearch';
