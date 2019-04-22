@@ -272,6 +272,7 @@ public class BlogController {
 		PortfolioVo pVo = new PortfolioVo();
 		pVo.setUser_id(user_id);
 		pVo.setPortfolio_name("포트폴리오");
+		pVo.setIndex_color("#8344B2");
 		
 		portfolioService.insert_portfolio(pVo);
 		
@@ -347,11 +348,13 @@ public class BlogController {
 	 */
 	@RequestMapping("/sectionSettingForm")
 	public String sectionSettingForm(Model model, @RequestParam("portfolio_code")String portfolio_code,
-			@RequestParam("user_id")String user_id) {
+			@RequestParam("user_id")String user_id,
+			@RequestParam("color")String color) {
 		
 		List<SectionVo> sectionList = sectionService.select_sectionList(portfolio_code);
 		model.addAttribute("sectionList", sectionList);
 		model.addAttribute("portfolio_code", portfolio_code);
+		model.addAttribute("color", color);
 		
 		return "blog/section_setting_form";
 	}
@@ -438,6 +441,54 @@ public class BlogController {
 	
 	/**
 	 * 
+	 * Method : color_menu
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @return
+	 * Method 설명 : 컬러메뉴 소환
+	 */
+	@RequestMapping("/color_menu")
+	public String color_menu(Model model, @RequestParam("portfolio_code")String portfolio_code) {
+		
+		model.addAttribute("portfolio_code", portfolio_code);
+		
+		return "blog/color_menu";
+	}
+	
+	/**
+	 * 
+	 * Method : portfoio_color_change
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 포트폴리오 인덱스 색변경
+	 */
+	@RequestMapping("/portfoio_color_change")
+	public String portfoio_color_change(Model model, @RequestParam("user_id")String user_id,
+			@RequestParam("portfolio_code")String portfolio_code,
+			@RequestParam("color_code")String color_code) {
+		
+		PortfolioVo pVo = new PortfolioVo();
+		pVo.setPortfolio_code(portfolio_code);
+		pVo.setIndex_color(color_code);
+		
+		portfolioService.update_portfolio(pVo);
+		
+		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(user_id);
+		model.addAttribute("portfolioList", portfolioList);
+		model.addAttribute("user_id", user_id);
+		
+		return "blog/portfolio_form";
+	}
+	
+	
+	
+	
+	/**
+	 * 
 	 * Method : showPortfolio
 	 * 작성자 : pjk
 	 * 변경이력 :
@@ -467,11 +518,12 @@ public class BlogController {
 	 * Method 설명 : 팝오버 div에 섹션리스트 출력
 	 */
 	@RequestMapping("/showSection")
-	public String showSection(Model model, @RequestParam("portfolio_code")String portfolio_code) {
+	public String showSection(Model model, @RequestParam("portfolio_code")String portfolio_code,
+			@RequestParam("color")String color) {
 		
 		List<SectionVo> sectionList = sectionService.select_sectionList(portfolio_code);
-		
 		model.addAttribute("sectionList", sectionList);
+		model.addAttribute("color", color);
 		
 		return "blog/section_area";
 	}

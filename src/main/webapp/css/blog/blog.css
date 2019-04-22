@@ -127,6 +127,11 @@
 	color: white;
 }
 
+.portfolio:hover {
+	background-color: #000 !important;
+	color: white !important;
+}
+
 
 /* 섹션 영역 */
 .section{
