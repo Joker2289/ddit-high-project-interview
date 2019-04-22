@@ -66,6 +66,7 @@ public class BlogController {
 	@RequestMapping(path={"blogMainView"}, method = RequestMethod.GET)
 	public String blogMainView(Model model, @RequestParam("userId")String userId) {
 		
+		//블로그 설정
 		BlogVo bVo = blogService.select_blogInfo(userId);
 		
 		if(bVo == null) {
@@ -81,13 +82,12 @@ public class BlogController {
 			
 			bVo = blogInfo;
 		}
-		
 		model.addAttribute("bVo", bVo);
 		
 		
+		//활동 정보
 		UsersVo uVo = usersService.select_userInfo(userId);
 		
-		//활동 정보
 		int followerCnt = followService.getFollowerCnt(userId);
 		int followingCnt = followService.getFollowingCnt(userId);
 		model.addAttribute("uVo", uVo);
@@ -157,12 +157,58 @@ public class BlogController {
 	@RequestMapping("/blogSettingForm")
 	public String blogSettingForm(Model model, @RequestParam("userId")String userId) {
 		
+		BlogVo bVo = blogService.select_blogInfo(userId);
+		model.addAttribute("bVo", bVo);
+		
 		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(userId);
 		model.addAttribute("portfolioList", portfolioList);
 		model.addAttribute("user_id", userId);
 		
 		return "blog/blog_setting_form";
 	}
+	
+	/**
+	 * 
+	 * Method : updateBlog
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param userId
+	 * @return
+	 * Method 설명 : 블로그 설정 수정
+	 */
+	@RequestMapping("/updateBlog")
+	public String updateBlog(Model model, @RequestParam("user_id")String user_id,
+			@RequestParam("update_param")String update_param,
+			@RequestParam("update_content")String update_content) {
+		
+		BlogVo blogInfo = new BlogVo();
+		blogInfo.setUser_id(user_id);
+		
+		switch(update_param) {
+			case "blog_name":
+				blogInfo.setBlog_name(update_content);
+				break;
+			case "name_act":
+				blogInfo.setName_act(update_content);
+				break;
+			case "img_act":
+				blogInfo.setImg_act(update_content);
+				break;
+		}
+		
+		logger.debug("blogInfo : {}", blogInfo);
+		blogService.update_blog(blogInfo);
+		
+		BlogVo bVo = blogService.select_blogInfo(user_id);
+		model.addAttribute("bVo", bVo);
+		
+		
+		
+		return "blog/head_area";
+	}
+	
+	
 	
 	/**
 	 * 
@@ -188,7 +234,7 @@ public class BlogController {
 		model.addAttribute("portfolioList", portfolioList);
 		model.addAttribute("user_id", user_id);
 		
-		return "blog/blog_setting_form";
+		return "blog/portfolio_form";
 	}
 	
 	/**
@@ -219,7 +265,7 @@ public class BlogController {
 		model.addAttribute("portfolioList", portfolioList);
 		model.addAttribute("user_id", user_id);
 		
-		return "blog/blog_setting_form";
+		return "blog/portfolio_form";
 	}
 	
 	/**

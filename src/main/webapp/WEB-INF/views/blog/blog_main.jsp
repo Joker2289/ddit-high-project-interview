@@ -11,18 +11,9 @@
 
 <!DOCTYPE html>
 <div class="container B_head">
-
-	<div class="jumbotron">
-	
-	
-	
-	
-		<h1 class="head_title">${ bVo.blog_name }</h1>
-		
-		
-		
+	<div id="head_area">
+		<%@ include file="/WEB-INF/views/blog/head_area.jsp"%><!-- /포트폴리오 영역 -->
 	</div>
-
 </div>
 
 
@@ -34,7 +25,7 @@
 				<%@ include file="/WEB-INF/views/blog/profile_area.jsp"%><!-- /프로필영역 -->
 				
 				<div id=portfolioMenu>
-				<%@ include file="/WEB-INF/views/blog/portfolio_area.jsp"%><!-- /포트폴리오 영역 -->
+					<%@ include file="/WEB-INF/views/blog/portfolio_area.jsp"%><!-- /포트폴리오 영역 -->
 				</div>
 			</div>
 
@@ -129,17 +120,5 @@
 			}
 		});
 	});
-	
-	
-	
-	/* 블로그 설정 */
-	function blogSetting(){
-		
-		var color = '${ bVo.cover_color }';
-		$('.jumbotron').css('background-color', color);
-		
-	}
-	
-	blogSetting();
 	
 </script>

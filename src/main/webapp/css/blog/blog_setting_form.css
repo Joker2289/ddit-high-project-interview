@@ -1,8 +1,73 @@
+.setting_title{ 
+	margin-top: 20px !important;
+	margin-bottom: 20px !important;
+	margin: 0 auto;
+	width: 80% !important;
+	padding-bottom: 10px !important;
+	border-bottom: 2px solid #353535 !important;
+	text-align: left !important;
+	font-weight: bold !important;
+	
+}
+
+.setting_title .fas{
+	margin-right: 10px !important;
+	margin-left: 10px !important;
+}
+
+
+.setting_menu {
+	width: 80% !important;
+	margin: 0 auto;
+	margin-top: 20px !important;
+	margin-bottom: 20px !important;
+	text-align: left !important;
+	padding-bottom: 20px !important;
+	border-bottom: 1px solid #e3e3e3 !important;
+}
+
+.setting_name{
+	display: inline-block;
+	width: 30% !important;
+	height: 100% !important;
+	font-size: 18px;
+}
+
+.setting_name .fas{
+	margin-right: 10px !important;
+	margin-left: 10px !important;
+}
+
+.setting_content{
+	display: inline-block;
+	width: 50% !important;
+}
+
+.setting_TXT {
+	display: inline-block;
+	margin: 0px 0px 0px 0px !important;
+	height: 20px !important;
+	width: 80% !important;
+	height: 33px !important;
+	text-align: center;
+	font-size: 18px;
+}
+
+.setting_Btn{
+	margin-left: 10px;
+	height: 35px !important;
+	background-color: #000;
+	font-weight: bold;
+}
+
+
+/* 포트폴리오 설정 */
+
 /* 포트폴리오 추가 버튼 */
 .addPortfolioBtn{
 	width: 80% !important;
 	font-size: 25px;
-	margin-top: 30px;
+	margin-top: 10px;
 	margin-bottom: 30px;
 }
 
@@ -33,7 +98,7 @@
 
 
 /* 포트폴리오 이름변경 TEXT */
-.form-control{
+.portfolio_TXT{
 	margin:0 auto;
 	width: 65% !important;
 	height: 48px !important;
@@ -84,4 +149,9 @@
 .deleteBtn:hover, .addPortfolioBtn:hover, .portfolioBtn:hover, .sectionDeleteBtn:hover, .sectionBtn:hover, .addSectionBtn:hover{ 
 	background-color: black !important;
 }
+
+
+
+
+
 

@@ -13,7 +13,6 @@
 	padding-left: 10px !important;
 	padding-right: 10px !important;
 	width: 1500px;
-	
 }
 
 .B_body {
@@ -32,6 +31,10 @@
 	padding: auto !important;
 	border-radius: 70px;
 	box-shadow: 10px 10px 10px rgba(.35, .35, .35, .35) !important;
+	
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 }
 
 /* title text */
