@@ -36,7 +36,15 @@
 	  							<a href="/profileHome?user_id=${users.user_id }"><div class="row" style="margin-left: 0px;">${users.introduce }</div></a>
 	  						</td>
 	  						<td style="width:100px; vertical-align: middle;"><button class="btn btn-default">메일보내기</button> </td>
-	  						<td style="vertical-align: middle;"><button class="btn btn-default" style="border-style: hidden;"><i class="fas fa-ellipsis-h"></i></button> </td>
+	  						<td style="vertical-align: middle;">
+		  						<button class="btn btn-default trashBtn Off" style="border-style: hidden;">
+		  							<i class="fas fa-ellipsis-h"></i>
+		  						</button> 
+		  						<div class="whiteBox dropBox" onclick="location.href='/connectionOff?user_id=${users.user_id}&receive_id=${SESSION_MEMBERVO.mem_id}'" style="position: absolute; z-index:1000; list-style: none; padding:6px; min-width: 68px; margin: 0 0 0 0;">
+	  								<i  class="far fa-trash-alt"></i>일촌 끊기
+	  							</div>
+	  						</td>
+	  						
   						
   						</tr>
   					</c:forEach>
@@ -50,3 +58,26 @@
 </div>
 </div>
 </div>
+
+
+<script type="text/javascript">
+
+$(".dropBox").hide();	
+
+// 버튼 클릭 시 드롭박스 보이기
+$(".trashBtn").on("click",function(){
+	if($(this).hasClass("trashBtn Off")){
+		//드롭박스 숨김
+		$(".dropBox").hide();
+		$(this).next().show();
+		$(this).attr('class','btn btn-default trashBtn On');
+	}else {
+		$(this).next().hide();
+		$(this).attr('class','btn btn-default trashBtn Off');
+	}
+	
+	
+});
+trashBtn
+
+</script>

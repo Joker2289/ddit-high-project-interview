@@ -34,8 +34,10 @@
 						 		</div>
 						 	</div>
 						 	<div>
-						 		<button class="btn btn-default" style="border-style: hidden;margin-top: 20px;">승낙</button>
-								<button class="btn btn-default" style="border-style: hidden;margin-top: 20px;">취소</button>
+						 		<button class="btn btn-default" style="border-style: hidden;margin-top: 20px;"
+						 		onclick="location.href='/receiveApply?user_id=${receive.user_id}&receive_id=${SESSION_MEMBERVO.mem_id}'">승낙</button>
+								<button class="btn btn-default" style="border-style: hidden;margin-top: 20px;"
+								onclick="location.href='/receiveCancel?user_id=${receive.user_id}&receive_id=${SESSION_MEMBERVO.mem_id}'">취소</button>
 						 	</div>
 						</div>
 						</c:forEach>

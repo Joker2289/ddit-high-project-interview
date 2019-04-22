@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
+import kr.or.ddit.follow.dao.IFollowDao;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
@@ -22,6 +23,9 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	
 	@Resource(name="personalDao")
 	private IPersonal_connectionDao personalDao;
+	
+	@Resource(name="followDao")
+	private IFollowDao followDao;
 
 	@Override
 	public List<UsersVo> select_connections(MemberVo memberVo) {
@@ -65,7 +69,20 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 
 	@Override
 	public int update_connectionReceiveApply(Personal_connectionVo personalVo) {
-		return personalDao.update_connectionReceiveApply(personalVo);
+		int result =  personalDao.update_connectionReceiveApply(personalVo);
+		if(result == 1) {
+			FollowVo followVo = new FollowVo();
+			followVo.setDivision("43");
+			followVo.setMem_id(personalVo.getUser_id());
+			followVo.setRef_keyword(personalVo.getReceive_id());
+			followDao.insert_follow(followVo);
+			
+			followVo.setMem_id(personalVo.getReceive_id());
+			followVo.setRef_keyword(personalVo.getUser_id());
+			followDao.insert_follow(followVo);
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -164,7 +181,17 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	 */
 	@Override
 	public int delete_connections(Personal_connectionVo personalVo) {
-		return personalDao.delete_connections(personalVo);
+		int result = personalDao.delete_connections(personalVo);
+		
+		if(result == 1) {
+			FollowVo followVo = new FollowVo();
+			followVo.setDivision("43");
+			followVo.setMem_id(personalVo.getUser_id());
+			followVo.setRef_keyword(personalVo.getReceive_id());
+			followDao.delete_follow(followVo);
+		}
+		
+		return result;
 	}
 
 	/**

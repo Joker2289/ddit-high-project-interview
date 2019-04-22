@@ -125,11 +125,11 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
-	var localArr = new Array();	//지역
+	var localArr 		 = new Array();	//지역
 	var presentCorporArr = new Array();	//현직장 
-	var pastCorporArr = new Array();  //전직장
-	var jobPositionArr = new Array();  //직군 
-	var schoolArr = new Array();  //학교 
+	var pastCorporArr 	 = new Array();  //전직장
+	var jobPositionArr 	 = new Array();  //직군 
+	var schoolArr 		 = new Array();  //학교 
 	
  // 지역 드롭박스 숨김
  $(".dropBox").hide();
@@ -166,6 +166,11 @@ $(document).ready(function(){
 	// 적용 클릭 시 배열에 저장
 	$(".CheckBtn").click(function(){
 		fn_total();
+		console.log(localArr);
+		console.log(presentCorporArr);
+		console.log(pastCorporArr);
+		console.log(jobPositionArr);
+		console.log(schoolArr);
 		
 		$(".dropBox").hide();
 		jQuery.ajaxSettings.traditional = true;
@@ -173,7 +178,11 @@ $(document).ready(function(){
 			type : "POST",
 			url : "/peopleSearch",
 			dataType : "HTML",
-			data : {"localArr" : localArr, "presentCorporArr": presentCorporArr, "pastCorporArr" : pastCorporArr,"jobPositionArr": jobPositionArr, "schoolArr" : schoolArr},
+			data : {"localArr" : localArr,
+					"presentCorporArr": presentCorporArr,
+					"pastCorporArr" : pastCorporArr,
+					"jobPositionArr": jobPositionArr,
+					"schoolArr" : schoolArr},
 			success : function(result) {
 				
 			}
@@ -192,6 +201,7 @@ $(document).ready(function(){
 	    });
 	    localArr=arr;
 	   
+	    //
 	    arr = new Array();
 	    
 	    $(".presentCorpor:checked").each(function() {
@@ -199,6 +209,7 @@ $(document).ready(function(){
 	    });
 	    presentCorporArr=arr;
 	    
+	    //
 	    arr = new Array();
 	    
 	    $(".pastCorpor:checked").each(function() {
@@ -208,6 +219,7 @@ $(document).ready(function(){
 	    
 	    arr = new Array();
 	    
+	    //
 	    $(".jobPosition:checked").each(function() {
 	    	arr.push($(this).next().text());    
 	    });

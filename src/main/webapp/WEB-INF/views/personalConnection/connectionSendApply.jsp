@@ -34,7 +34,7 @@
 									<%-- ${send.addr1} --%>
 								</div>
 							</div>
-								<button class="btn btn-default" style="border-style: hidden;margin-top: 20px;">취소</button>
+								<button class="btn btn-default" style="border-style: hidden;margin-top: 20px;" onclick="location.href='/sendCancel?user_id=${SESSION_MEMBERVO.mem_id}&receive_id=${send.user_id}'">취소</button>
 						</div>
 						</c:forEach>
 					</c:otherwise>
