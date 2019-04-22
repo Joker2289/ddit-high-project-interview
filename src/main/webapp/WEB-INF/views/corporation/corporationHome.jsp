@@ -110,16 +110,16 @@ textarea {
 			
 
 
-<div style="height: 300px; width: 555px; margin-left: 242px;">
+<div style="height: 150px; width: 555px; margin-left: 242px;">
 
 	 
 	        <!-- feed -->
 	        <div class="post-group">
 	          <!-- post -->
-	          <c:forEach items="${postList }" var="post">
+	          <c:forEach items="${timelinePost }" var="post">
 		          
 		        <div id="col-post" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
-				  <div class="col-post">
+				  <div class="col-post" id="post${post.post_code }">
 					<div class="col-post-body">
 					  <a href="#" >
 						<div class="writer_info" style="float: left;">
@@ -145,30 +145,30 @@ textarea {
 					  </a>
 					  <!-- 게시물 관리버튼(dropdown) -->
 				      <div class="dropdown" style="float: right;">
-					    <button class="btn_postControll" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right;">
+					    <button class="btn_postControll" data-code="${post.post_code }" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right;">
 					    	<i class="fas fa-ellipsis-h"></i>
 					    </button>
 					    <c:choose>
 					      <c:when test="${post.mem_id eq memberInfo.mem_id }">
 							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-				      	    	<button class="btn_controll-list">
-					            	<i class="fas fa-edit"></i>&nbsp;<span>글 수정</span>
-					            </button>
-				      	    	<button class="btn_controll-list">
-					            	<i class="far fa-trash-alt"></i>&nbsp;<span>글 삭제</span>
-					        	</button>
-				      	    	<button class="btn_controll-list">
-					            	<i class="fas fa-comment-slash"></i>&nbsp;<span>댓글 차단</span>
-					            </button>
+				      	    	<button id="btn_modifyPost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list btn_modifyPost">
+                              <i class="fas fa-edit"></i>&nbsp;<span>글 수정</span>
+	                           </button>
+	                            <button id="btn_deletePost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list btn_deletePost">
+	                              <i class="far fa-trash-alt"></i>&nbsp;<span>글 삭제</span>
+	                          </button>
+	                            <button id="btn_blockComment${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list btn_blockComment">
+	                              <i class="fas fa-comment-slash"></i>&nbsp;<span>댓글 차단</span>
+	                           </button>
 					        </ul>
 					      </c:when>
 					      <c:otherwise>
 				        	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 				      	    	<button class="btn_controll-list" style="padding-right: 65.69px;">
-					            	<i class="far fa-eye-slash">&nbsp;</i><span>글 수정</span>
+					            	<i class="far fa-eye-slash">&nbsp;</i><span>글 신고</span>
 					            </button>
 				      	    	<button class="btn_controll-list" style="padding-right: 84.22px;">
-					            	<i class="far fa-flag"></i>&nbsp;<span>글 삭제</span>
+					            	<i class="far fa-flag"></i>&nbsp;<span>언 팔로우</span>
 					            </button>
 					        </ul>
 					      </c:otherwise>  
@@ -177,7 +177,7 @@ textarea {
 					  
 					</div>
 					<div class="post_info">
-					  <pre class="post_contents" style="background: #ffffff; border-color: #ffffff;">${post.post_contents }</pre>
+					  <pre class="post_contents" style="background: #ffffff; border-color: #ffffff; margin-left: 9px;">${post.post_contents }</pre>
 					</div>
 				
 					<div class="col-post-footer">
