@@ -18,14 +18,16 @@
 		values (
 			portfolio_code_seq.nextval,
 			#{user_id},
-			#{portfolio_name}
+			#{portfolio_name},
+			#{index_color}
 		)
 	</insert>
 	
 	<!-- 포트폴리오 수정 -->
 	<update id="update_portfolio" parameterType="portfolioVo">
 		update portfolio
-		   set portfolio_name = #{portfolio_name}
+		   set portfolio_name   = nvl(#{portfolio_name, jdbcType=VARCHAR}, portfolio_name),
+		   	   index_color 		= nvl(#{index_color, jdbcType=VARCHAR}, index_color)
 		 where portfolio_code = #{portfolio_code}  
 	</update>
 	
