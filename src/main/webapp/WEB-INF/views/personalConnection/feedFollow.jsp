@@ -26,15 +26,17 @@
 					<div class="corporation">
 						<c:choose>
 							<c:when test="${not empty result.user_id}">
-								<div 
-								style="width: 59px;height: 59px;background-image:url(${result.imgPath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;border-radius: 100px;">
+								<a href="/profileHome?user_id=${result.user_id }">
+								<div style="width: 59px;height: 59px;background-image:url(${result.imgPath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;border-radius: 100px;">
 								</div>
+								</a>
 							</c:when>
 							
 							<c:otherwise>
-							<div 
-								style="width: 59px;height: 59px;background-image:url(${result.imgPath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;">
+								<a href="/corporation?corp_id=${result.corp_id }">
+								<div style="width: 59px;height: 59px;background-image:url(${result.imgPath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;">
 								</div>
+								</a>
 							</c:otherwise>
 						</c:choose>
 						

@@ -78,7 +78,6 @@ public class Personal_connectionController {
 		model.addAttribute("userList", userList);
 		
 		return "/personalConnection/recommend/recommendUsers";
-	
 	}
 	
 	
@@ -86,7 +85,6 @@ public class Personal_connectionController {
 	public String recommendCorporView() {
 		
 		return "/personalConnection/recommend/recommendCorpor";
-		
 	}
 	
 	
@@ -123,7 +121,6 @@ public class Personal_connectionController {
 		logger.debug("corporationList {}" , corporationList);
 		
 		return "feedFollowingTiles";
-		
 	}
 	
 	
@@ -138,9 +135,34 @@ public class Personal_connectionController {
 		
 		model.addAttribute("connectionReceiveList", connectionReceiveList);
 		
-		
 		return "connectionReceiveApplyTiles";
+	}
+	
+	
+	@RequestMapping(path={"/receiveApply"})
+		public String receiveApply(Personal_connectionVo personalVo) {
 		
+		personalService.update_connectionReceiveApply(personalVo);
+		
+		return "redirect:/connectionReceiveApply";
+		}
+	
+	
+	@RequestMapping(path={"/receiveCancel"})
+		public String receiveCancel(Personal_connectionVo personalVo) {
+		
+		personalService.delete_connectionCancel(personalVo);
+		
+			return "redirect:/connectionReceiveApply";
+	}
+	
+	
+	@RequestMapping(path={"/sendCancel"})
+		public String sendCancel(Personal_connectionVo personalVo) {
+		
+		personalService.delete_connectionCancel(personalVo);
+		
+			return "redirect:/connectionSendApply";
 	}
 	
 	
@@ -157,7 +179,6 @@ public class Personal_connectionController {
 		
 		
 		return "connectionSendApplyTiles";
-		
 	}
 	
 	
@@ -181,7 +202,6 @@ public class Personal_connectionController {
 
 		
 		return "filterSearchTiles";
-		
 	}
 	
 
@@ -197,20 +217,22 @@ public class Personal_connectionController {
 			
 			List<UsersVo> followConnections =
 					personalService.select_followConnections(memberVo);
-			
 			model.addAttribute("followConnections", followConnections);
 			
 			return "/personalConnection/feedFilter/feedConnections";
+			
 		}else if(str.equals("connectionEtc")) {
 			
 			return "/personalConnection/feedFilter/feedConnectionEtc";
+			
 		}else if(str.equals("company")) {
 			
 			followVo.setDivision("11");
-			
 			List<CorporationVo> corporationList = personalService.select_followCoporation(followVo);
 			model.addAttribute("corporationList", corporationList);
+			
 			return "/personalConnection/feedFilter/feedCompany";
+			
 		}else{
 			
 			List<FollowVo> hashTagList =
@@ -218,7 +240,6 @@ public class Personal_connectionController {
 			model.addAttribute("hashTagList", hashTagList);
 			
 			return "/personalConnection/feedFilter/feedHashTag";
-			
 		}
 		
 	}
@@ -246,6 +267,7 @@ public class Personal_connectionController {
 			resultMap.put("content", list.getIndustry_type());
 			resultMap.put("corp_id", list.getCorp_id());
 			resultMap.put("imgPath", list.getLogo_path());
+			resultMap.put("type", "c");
 			resultMapList.add(resultMap);
 		}
 		
@@ -256,6 +278,7 @@ public class Personal_connectionController {
 			resultMap.put("content", list.getIntroduce());
 			resultMap.put("user_id", list.getUser_id());
 			resultMap.put("imgPath", list.getProfile_path());
+			resultMap.put("type", "u");
 			resultMapList.add(resultMap);
 		}
 		
@@ -270,13 +293,17 @@ public class Personal_connectionController {
 		model.addAttribute("allFollowCount", allFollowCount);
 
 		return "feedFollowTiles";
-		
 	}
 	
-	// 큰그림 
+	
 	@RequestMapping(path={"/peopleSearch"})
-	public String peopleSearch(String user_id, String[] localArr, String[] presentCorporArr, String[] pastCorporArr, String[] jobPositionArr, String[] schoolArr){
-		HashMap<String, Object> map = new HashMap<>();
+	public String peopleSearch(String user_id,
+							   String[] localArr,
+							   String[] presentCorporArr,
+							   String[] pastCorporArr,
+							   String[] jobPositionArr,
+							   String[] schoolArr){
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		ArrayList<String> localList 		= new ArrayList<>();
 		ArrayList<String> presentCorporList = new ArrayList<>();
@@ -296,15 +323,36 @@ public class Personal_connectionController {
 		map.put("jobPositionList", jobPositionList);
 		map.put("schoolList", schoolList);
 		map.put("user_id", user_id);
-				
 		
-		
-		
-		
-		
-		return null;
+		return "";
 	}
 	
+	
+	@RequestMapping(path={"/connectionSend"})
+	public String connectionSend(Personal_connectionVo personalVo) {
+		
+		personalService.insert_connections(personalVo);
+		
+		return "redirect:/personalConnection";
+	}
+	
+	
+	@RequestMapping(path={"/recommendUser"})
+	public String recommendUser(Personal_connectionVo personalVo) {
+		
+		personalService.insert_connections(personalVo);
+		
+		return "redirect:/personalConnection";
+	}
+	
+	
+	@RequestMapping(path={"/connectionOff"})
+	public String connectionOff(Personal_connectionVo personalVo) {
+		
+		personalService.delete_connections(personalVo);
+		
+		return "redirect:/connections";
+	}
 	
 	
 	

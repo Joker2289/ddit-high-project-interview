@@ -730,7 +730,7 @@ public class RecruitController {
 	
 	// @채용공고 상세화면.
 	@RequestMapping(path="/recr_detail", method=RequestMethod.POST)
-	public String recr_detail(String recruit_code, HttpSession session, Model model){
+	public String recr_detail(String recruit_code, HttpSession session, String req_page, Model model){
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		// 회원 정보를 가져와서 채용공고저장에 마지막으로 조회한 채용공고 저장. 마지막 채용공고를 따로 
@@ -787,6 +787,9 @@ public class RecruitController {
 		CorporationVo corp = corpService.select_corpInfo(recr.getCorp_id());
 		model.addAttribute("recr", recr);
 		model.addAttribute("corp", corp);
+		
+		// recruit에서 넘어온 req_page 넣기.
+		model.addAttribute("req_page", req_page);
 		
 		return "recr_detailTiles";
 	}

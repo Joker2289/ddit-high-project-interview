@@ -127,7 +127,6 @@
 		$("#recommendUsers").click();
 		
 		
-		
 
 	});
 </script>
@@ -176,7 +175,8 @@
 													<div style="width: 108px;height: 108px;background-image: url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 30px;border: 4px solid #E3EEF2;border-radius: 100px;"></div>
 													<div style="margin-top: 5px;"><strong>${friend.user_name}</strong></div>
 													<div style="font-size: 16px;padding-left: 5px;padding-right: 5px; text-overflow: ellipsis; display: inline-block; width: 146.97px; white-space: nowrap; overflow: hidden;margin-bottom: 50px;">${friend.introduce}</div>
-													<button class="btn btn-default" style="border-color: #0073b1;border-style: solid;padding-left: 40px;padding-right: 40px;">1촌 맺기</button>
+													<button class="btn btn-default" style="border-color: #0073b1;border-style: solid;padding-left: 40px;padding-right: 40px;"
+													onclick="location.href='/connectionSend?user_id=${SESSION_MEMBERVO.mem_id}&receive_id=${friend.user_id }'">1촌 맺기</button>
 												</div>
 											</div>
 										</li>

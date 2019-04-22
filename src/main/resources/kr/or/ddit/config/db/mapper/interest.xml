@@ -38,10 +38,10 @@
 		CHANGE_FLAG = #{change_flag, jdbcType=VARCHAR},
 		TELL_CONTENT = #{tell_content, jdbcType=VARCHAR},
 		JOB_CONDITION = #{job_condition, jdbcType=VARCHAR},
-		INTE_TYPE = #{inte_type},
-		INTE_LOCAL = #{inte_local},
-		INTE_EMPTYPE = #{inte_emptype},
-		INTE_SIZE = #{inte_size}
+		INTE_TYPE = #{inte_type, jdbcType=VARCHAR},
+		INTE_LOCAL = #{inte_local, jdbcType=VARCHAR},
+		INTE_EMPTYPE = #{inte_emptype, jdbcType=VARCHAR},
+		INTE_SIZE = #{inte_size, jdbcType=VARCHAR}
 		WHERE INTE_CODE = #{inte_code}	
 	</update>
 	

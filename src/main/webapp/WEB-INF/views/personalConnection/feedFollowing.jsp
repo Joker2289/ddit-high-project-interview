@@ -119,7 +119,7 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<div>
-						<button class="btn btn-default followingBtn follow" title="${corp.follow_code}">
+						<button class="btn btn-default followingBtn follow" onclick="location.href='/following?ref_keyword=${corp.corp_id}&division=11'">
 							<i class="fas fa-check"></i> 팔로우 중
 						</button>
 					</div>
