@@ -14,7 +14,14 @@
 			#{division},
 			sysdate
 		)
+		
+		<selectKey resultType="String" keyProperty="good_code" order="AFTER">
+			select good_code_seq.currval
+			  from dual
+		</selectKey>
 	</insert>
+	
+	
 	
 	<!-- 좋아요 정보 삭제 -->
 	<delete id="delete_goodInfo" parameterType="goodVo">
@@ -75,6 +82,13 @@
 		   and mem_id = #{mem_id}
 	</select>
 	
-	
+	<!-- 좋아요 코드 찾기 -->
+	<select id="search_goodcode" parameterType="goodVo" resultType="java.lang.String">
+	select good_code
+	  from good
+	 where mem_id = #{mem_id}
+	   and ref_code = #{ref_code}
+	   and division = #{division}
+	</select>
 	
 </mapper>

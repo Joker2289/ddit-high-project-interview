@@ -61,7 +61,7 @@
 	margin-left: 24px; 
 	border: 4px solid #E3EEF2; 
 	border-radius: 100px;
-	box-shadow: 0 1.5px 20px 11px rgba(0,0,0,.15);
+	box-shadow: 0 1.5px 9px 9px rgba(0,0,0,.15);
 }
 
 .profileDropdownBox>ul>li>a{

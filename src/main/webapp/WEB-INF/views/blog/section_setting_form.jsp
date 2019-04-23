@@ -13,12 +13,12 @@
 	<div id="section_area${ section.section_code }">
 
 		<a id="section${ section.section_code }"
-			class="btn btn-primary sectionBtn" 
+			class="btn sectionBtn" 
 			ondblclick="updateSection(${ section.section_code });">${ section.section_name }</a>
 
 
 		<button id="sectionDeleteBtn${ section.section_code }"
-			class="btn btn-primary sectionDeleteBtn"
+			class="btn sectionDeleteBtn"
 			onclick="deleteSection(${ section.section_code });">
 			<i class="fas fa-times"></i>
 		</button>
@@ -27,6 +27,13 @@
 </c:forEach>
 
 <script>
+
+<c:forEach items="${ sectionList }" var="section">
+	$('#section${ section.section_code }').css('background-color', '${ color }');
+</c:forEach>
+
+
+
 var portfolio_code = '${ portfolio_code }';
 
 /* 섹션 추가 */
@@ -47,7 +54,7 @@ function addSection(portfolio_code){
 function updateSection(section_code){
 	
 	var tmp_nm = $('#section'+section_code).text();
-	$('#section'+section_code).contents().unwrap().wrap("<input id='section_TXT' type='text' class='form-control'>");
+	$('#section'+section_code).contents().unwrap().wrap("<input id='section_TXT' type='text' class='form-control section_TXT'>");
 	$('#section_TXT').val(tmp_nm);
 	$('#section_TXT').focus();
 	$('#sectionDeleteBtn'+section_code).hide();

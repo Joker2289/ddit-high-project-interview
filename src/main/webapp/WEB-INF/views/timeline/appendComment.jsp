@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- comment print -->
   <c:forEach items="${nextCommentList }" var="comment">
@@ -20,8 +20,9 @@
   	    <div style="border: 0px solid #fff; width: 100%; outline: 0; padding-top: 5px; padding-bottom: 5px;">${comment.comment_contents }</div>
       </div>
       <div class="comment-input-button" style="padding-top: 5px; padding-bottom: 5px;">
-        <button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="far fa-thumbs-up"></i></button>
-        <button style="border: 0px solid #fff; background: #fff; outline: 0;"><i class="far fa-comments"></i></button>
+        <button class="btn-comment-social btn_commentGood" id="btn_commentGood${comment.comment_code }" data-code="${comment.comment_code }">
+          <i id="icon_commentgood${comment.comment_code }" class="far fa-thumbs-up"></i>
+        </button>
       </div>
     </div>
   </c:forEach>

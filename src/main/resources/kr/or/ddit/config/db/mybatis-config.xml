@@ -36,7 +36,12 @@
 		<typeAlias alias="reportVo" type="kr.or.ddit.report.model.ReportVo"/>
 		<typeAlias alias="blogVo" type="kr.or.ddit.blog.model.BlogVo"/>
 		<typeAlias alias="portfolioVo" type="kr.or.ddit.portfolio.model.PortfolioVo"/>
+		<typeAlias alias="alarmVo" type="kr.or.ddit.alarm.model.AlarmVo"/>
 		<typeAlias alias="sectionVo" type="kr.or.ddit.section.model.SectionVo"/>
+		<typeAlias alias="chatroomVo" type="kr.or.ddit.chatroom.model.ChatroomVo"/>
+		<typeAlias alias="chat_memberVo" type="kr.or.ddit.chat_member.model.Chat_memberVo"/>
+		<typeAlias alias="chat_contentsVo" type="kr.or.ddit.chat_contents.model.Chat_contentsVo"/>
+		<typeAlias alias="itemVo" type="kr.or.ddit.item.model.ItemVo"/>
 	</typeAliases> 
   
 	<mappers>
@@ -69,7 +74,12 @@
 		<mapper resource="kr/or/ddit/config/db/mapper/reportcontent.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/blog.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/portfolio.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/alarm.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/section.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/chat_contents.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/chat_member.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/chatroom.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/item.xml"/>
 	</mappers>
 </configuration>
 

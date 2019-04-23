@@ -13,7 +13,6 @@
 	padding-left: 10px !important;
 	padding-right: 10px !important;
 	width: 1500px;
-	
 }
 
 .B_body {
@@ -32,6 +31,10 @@
 	padding: auto !important;
 	border-radius: 70px;
 	box-shadow: 10px 10px 10px rgba(.35, .35, .35, .35) !important;
+	
+	background-repeat: no-repeat !important;
+	background-size: cover !important;
+	background-position: center !important;
 }
 
 /* title text */
@@ -92,10 +95,12 @@
 	font-size: 20px;
 	background-color: pink;
 	border-color: pink;
+	color: #fff;
 }
 
 .settingBtn:hover{
 	background-color: black !important;
+	color: #fff;
 }
 
 
@@ -120,6 +125,11 @@
 	margin-bottom: 3px;
 	background-color: pink;
 	color: white;
+}
+
+.portfolio:hover {
+	background-color: #000 !important;
+	color: white !important;
 }
 
 

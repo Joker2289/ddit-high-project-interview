@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -27,6 +29,8 @@ import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.interest.model.InterestVo;
 import kr.or.ddit.interest.service.IInterestService;
+import kr.or.ddit.item.model.ItemVo;
+import kr.or.ddit.item.service.IItemService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.recruit.model.RecruitVo;
@@ -62,6 +66,9 @@ public class RecruitController {
 	
 	@Resource(name="interestService")
 	private IInterestService inteService;
+	
+	@Resource(name="itemService")
+	private IItemService itemService;
 
 	private List<String> img_list;
 	private List<String> str_list;
@@ -91,6 +98,9 @@ public class RecruitController {
 		
 		// 회사 좌표 업데이트.
 //		update_corp_location();
+		
+		// 업무분야 항목 등록.
+//		insert_job_type();
 		
 		// daum IT news crawling - titleList, linkList 넘기기.
 		Document doc = Jsoup.connect("https://media.daum.net/digital/").get();
@@ -668,6 +678,39 @@ public class RecruitController {
 		}		
 	}
 	
+	// 업무분야 항목 insert.
+	private void insert_job_type(){
+		String[] arr_job = new String[]{"소프트웨어개발", "백엔드", "모바일앱개발", "웹마스터", 
+				"데이터베이스", "클라이언트개발", "네트워크구축", "DBMS", "솔루션", "DataMining", 
+				"네트워크보안", "유지보수", "공공기관", "전자상거래", "웹컨텐츠", "웹테스터", 
+				"소프트웨어QA", "리눅스", "안드로이드", "C++", "Java", "HTTP·TCP", "통신", "POS", 
+				"모바일기획", "서버관리", "시스템운영", "Framework", "springboot", "Nodejs", 
+				"알고리즘", ".NET", "웹프로그래밍", "Python", "빅데이터", "머신러닝", "asp", 
+				"Oracle", "MS-SQL", "SM", "SI", "WAS", "jsp", "DBA"};	
+		
+		List<String> jobList = new ArrayList<>();
+		for(String job : arr_job){
+			jobList.add(job);
+		}
+		
+		// jobList 정렬.
+        Collections.sort(jobList, new Comparator() {
+			@Override
+			public int compare(Object o1, Object o2) {
+				return ((String) o1).compareTo((String) o2);
+			}
+        });
+        
+        for(String job_type : jobList){
+        	ItemVo iVo = new ItemVo();
+        	iVo.setItem_code(String.valueOf(itemService.getItemCnt()+1));
+        	iVo.setItem_div("job_type");
+        	iVo.setItem_content(job_type);
+        	
+        	itemService.insertItem(iVo);
+        }
+	}
+	
 	// @검색결과 저장 후 채용공고 검색 페이지 요청. -> 검색내역 저장은 Search_logController로 이동.
 	@RequestMapping("/recrSearch")
 	public String recrSearch(HttpSession session, Model model){
@@ -730,7 +773,7 @@ public class RecruitController {
 	
 	// @채용공고 상세화면.
 	@RequestMapping(path="/recr_detail", method=RequestMethod.POST)
-	public String recr_detail(String recruit_code, HttpSession session, Model model){
+	public String recr_detail(String recruit_code, HttpSession session, String req_page, Model model){
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		// 회원 정보를 가져와서 채용공고저장에 마지막으로 조회한 채용공고 저장. 마지막 채용공고를 따로 
@@ -788,6 +831,9 @@ public class RecruitController {
 		model.addAttribute("recr", recr);
 		model.addAttribute("corp", corp);
 		
+		// recruit에서 넘어온 req_page 넣기.
+		model.addAttribute("req_page", req_page);
+		
 		return "recr_detailTiles";
 	}
 	
@@ -842,7 +888,9 @@ public class RecruitController {
 	// @채용공고 올리기 페이지 요청.
 	@RequestMapping("/writeRecr")
 	public String writeRecr() {
-
+		// jobList 넘기기.
+		List<String> jobList = itemService.getItemList("job_type");
+		
 		return "writeRecrTiles";
 	}
 	
