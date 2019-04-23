@@ -154,7 +154,7 @@ textarea {
 				      	    	<button id="btn_modifyPost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list btn_modifyPost">
                               <i class="fas fa-edit"></i>&nbsp;<span>글 수정</span>
 	                           </button>
-	                            <button id="btn_deletePost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list btn_deletePost">
+	                            <button id="btn_deletePost${post.post_code }" onclick="delete(${post.post_code})" data-code="${post.post_code }" type="button" class="btn_controll-list btn_deletePost">
 	                              <i class="far fa-trash-alt"></i>&nbsp;<span>글 삭제</span>
 	                          </button>
 	                            <button id="btn_blockComment${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list btn_blockComment">
@@ -221,6 +221,13 @@ textarea {
 
 </div>
 
+	<form action="./fileUpload" id="fileUpload" name="fileUpload" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+        이름 : <input type="text" name="name" id="cmd" value="namevla"><br>
+        파일 : <input type="file" name="file"><br> <input
+            type="submit" name="업로드" value="제출"><br>
+    </form>
+
+
 
 
 
@@ -247,6 +254,7 @@ $(function () {
 				$("#frm_video").submit();
 		});
 });
+
 
 </script>
 

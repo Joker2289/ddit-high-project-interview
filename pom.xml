@@ -131,12 +131,27 @@
 		    <scope>compile</scope> 
 		</dependency>
 		
+		
+		<!-- 파일업로드 관련 : 이미지 썸네일 생성 라이브러리-->
+		<dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>4.2</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
 		<dependency>
 		    <groupId>commons-fileupload</groupId>
 		    <artifactId>commons-fileupload</artifactId>
 		    <version>1.4</version>
 		</dependency>
+		<dependency>
+	    	<groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>1.4</version>
+		</dependency>
+
+
+		
 		
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
 		<dependency>
@@ -150,7 +165,7 @@
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
 		    <version>2.9.8</version>
-		</dependency>
+		</dependency>																																																																					
 		
 		<!-- tiles -->
 		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-jsp -->

@@ -95,5 +95,6 @@
 	<bean id="mail" class="kr.or.ddit.mail.controller.MailWebsocket" />
 	
 
+
 	
 </beans>

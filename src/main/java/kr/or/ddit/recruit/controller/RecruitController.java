@@ -100,7 +100,7 @@ public class RecruitController {
 //		update_corp_location();
 		
 		// 업무분야 항목 등록.
-//		insert_job_type();
+//		insert_item();
 		
 		// daum IT news crawling - titleList, linkList 넘기기.
 		Document doc = Jsoup.connect("https://media.daum.net/digital/").get();
@@ -678,38 +678,72 @@ public class RecruitController {
 		}		
 	}
 	
-	// 업무분야 항목 insert.
-	private void insert_job_type(){
-		String[] arr_job = new String[]{"소프트웨어개발", "백엔드", "모바일앱개발", "웹마스터", 
-				"데이터베이스", "클라이언트개발", "네트워크구축", "DBMS", "솔루션", "DataMining", 
-				"네트워크보안", "유지보수", "공공기관", "전자상거래", "웹컨텐츠", "웹테스터", 
-				"소프트웨어QA", "리눅스", "안드로이드", "C++", "Java", "HTTP·TCP", "통신", "POS", 
-				"모바일기획", "서버관리", "시스템운영", "Framework", "springboot", "Nodejs", 
-				"알고리즘", ".NET", "웹프로그래밍", "Python", "빅데이터", "머신러닝", "asp", 
-				"Oracle", "MS-SQL", "SM", "SI", "WAS", "jsp", "DBA"};	
+	// 항목(item) insert.
+	private void insert_item(){
+//		String[] arr_job = new String[]{"소프트웨어개발", "백엔드", "모바일앱개발", "웹마스터", 
+//				"데이터베이스", "클라이언트개발", "네트워크구축", "DBMS", "솔루션", "DataMining", 
+//				"네트워크보안", "유지보수", "공공기관", "전자상거래", "웹컨텐츠", "웹테스터", 
+//				"소프트웨어QA", "리눅스", "안드로이드", "C++", "Java", "HTTP·TCP", "통신", "POS", 
+//				"모바일기획", "서버관리", "시스템운영", "Framework", "springboot", "Nodejs", 
+//				"알고리즘", ".NET", "웹프로그래밍", "Python", "빅데이터", "머신러닝", "asp", 
+//				"Oracle", "MS-SQL", "SM", "SI", "WAS", "jsp", "DBA"};	
+//		
+//		List<String> jobList = new ArrayList<>();
+//		for(String job : arr_job){
+//			jobList.add(job);
+//		}
+//		
+//		// jobList 정렬.
+//        Collections.sort(jobList, new Comparator() {
+//			@Override
+//			public int compare(Object o1, Object o2) {
+//				return ((String) o1).compareTo((String) o2);
+//			}
+//        });
+//        
+//        for(String job_type : jobList){
+//        	ItemVo iVo = new ItemVo();
+//        	iVo.setItem_code(String.valueOf(itemService.getItemCnt()+1));
+//        	iVo.setItem_div("job_type");
+//        	iVo.setItem_content(job_type);
+//        	
+//        	itemService.insertItem(iVo);
+//        }
 		
-		List<String> jobList = new ArrayList<>();
-		for(String job : arr_job){
-			jobList.add(job);
-		}
+		String[] arr_rank = new String[]{"사원", "주임", "대리", "계장", "과장", "차장", 
+				"부장", "이사", "상무이사", "전무이사", "부사장", "사장", "부회장", "회장"};
 		
-		// jobList 정렬.
-        Collections.sort(jobList, new Comparator() {
-			@Override
-			public int compare(Object o1, Object o2) {
-				return ((String) o1).compareTo((String) o2);
-			}
-        });
-        
-        for(String job_type : jobList){
-        	ItemVo iVo = new ItemVo();
-        	iVo.setItem_code(String.valueOf(itemService.getItemCnt()+1));
-        	iVo.setItem_div("job_type");
-        	iVo.setItem_content(job_type);
-        	
-        	itemService.insertItem(iVo);
-        }
+		List<String> rankList = new ArrayList<>();
+		for(String rank : arr_rank){
+			rankList.add(rank);
+		}		
+		
+		for(String job_rank : rankList){
+			ItemVo iVo = new ItemVo();
+			iVo.setItem_code(String.valueOf(itemService.getItemCnt()+1));
+			iVo.setItem_div("job_rank");
+			iVo.setItem_content(job_rank);
+
+			itemService.insertItem(iVo);
+		}	
+		
+		String[] arr_emp = new String[]{"정규직", "계약직", "인턴", "파견직", "도급", "프리랜서"};
+		
+		List<String> empList = new ArrayList<>();
+		for(String emp : arr_emp){
+			empList.add(emp);
+		}	
+		
+		for(String emp_type : empList){
+			ItemVo iVo = new ItemVo();
+			iVo.setItem_code(String.valueOf(itemService.getItemCnt()+1));
+			iVo.setItem_div("emp_type");
+			iVo.setItem_content(emp_type);
+			
+			itemService.insertItem(iVo);
+		}		
 	}
+
 	
 	// @검색결과 저장 후 채용공고 검색 페이지 요청. -> 검색내역 저장은 Search_logController로 이동.
 	@RequestMapping("/recrSearch")
@@ -887,9 +921,16 @@ public class RecruitController {
 	
 	// @채용공고 올리기 페이지 요청.
 	@RequestMapping("/writeRecr")
-	public String writeRecr() {
+	public String writeRecr(Model model) {
 		// jobList 넘기기.
 		List<String> jobList = itemService.getItemList("job_type");
+		model.addAttribute("jobList", jobList);
+		
+		List<String> rankList = itemService.getItemList("job_rank");
+		model.addAttribute("rankList", rankList);
+		
+		List<String> empList = itemService.getItemList("emp_type");
+		model.addAttribute("empList", empList);
 		
 		return "writeRecrTiles";
 	}
@@ -1049,13 +1090,23 @@ public class RecruitController {
 		return "recr_detailTiles";
 	}
 	
+	// @회사 드롭다운 출력.
+	@RequestMapping("/comDropdown")
+	public String comDropdown(String corp_name, Model model) {
+		// corp_name으로 회사 검색후 corpList 넘기기.
+		List<CorporationVo> corpList = corpService.searchCorp(corp_name);
+		
+		model.addAttribute("corpList", corpList);
+
+		return "/recruit/comDropdown";
+	}
+	
+	
+	
+
 	
 	
 }
-
-
-
-
 
 
 
