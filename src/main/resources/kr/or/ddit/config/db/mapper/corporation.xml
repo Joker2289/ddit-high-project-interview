@@ -88,7 +88,10 @@
 	
 	<!-- 회사 검색 -->
 	<select id="searchCorp" resultType="corporationVo" parameterType="String">
-		SELECT * FROM CORPORATION where corp_name like '%'|| #{ value }||'%' order by corp_name 
+		SELECT * 
+		  FROM CORPORATION 
+		 WHERE UPPER(CORP_NAME) LIKE UPPER('%' || #{corp_name} || '%') 
+		ORDER BY CORP_NAME 
 	</select>
 	
 	

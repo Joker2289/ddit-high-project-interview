@@ -55,5 +55,20 @@ public class AlarmServiceImpl implements IAlarmService {
 	public List<AlarmVo> select_nextPreviousAlarm(PaginationVo paginationVo) {
 		return alarmDao.select_nextPreviousAlarm(paginationVo);
 	}
+
+	@Override
+	public int select_recentCount(String mem_id) {
+		return alarmDao.select_recentCount(mem_id);
+	}
+
+	@Override
+	public int select_previousCount(String mem_id) {
+		return alarmDao.select_previousCount(mem_id);
+	}
+
+	@Override
+	public int delete_goodalarm(AlarmVo alarmVo) {
+		return alarmDao.delete_goodalarm(alarmVo);
+	}
 	
 }

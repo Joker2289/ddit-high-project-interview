@@ -157,5 +157,21 @@ public class GoodServiceTest extends LogicTestConfig {
 		/***Then***/
 		assertTrue(goodList.size() > 0);
 	}
+	
+	@Test
+	public void testSearch_goodcode(){
+		/***Given***/
+		GoodVo goodinfo = new GoodVo();
+		goodinfo.setMem_id("brown");
+		goodinfo.setRef_code("355");
+		goodinfo.setDivision("28");
+		
+		/***When***/
+		String good_code = goodService.search_goodcode(goodinfo);
+		logger.debug("good_code : {}", good_code);
+		
+		/***Then***/
+		assertNotNull(good_code);
+	}
 
 }

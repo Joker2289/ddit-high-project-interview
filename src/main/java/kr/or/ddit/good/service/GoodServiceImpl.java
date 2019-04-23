@@ -46,4 +46,9 @@ public class GoodServiceImpl implements IGoodService {
 		return goodDao.select_pushedGoodPost(mem_id);
 	}
 
+	@Override
+	public String search_goodcode(GoodVo goodVo) {
+		return goodDao.search_goodcode(goodVo);
+	}
+
 }

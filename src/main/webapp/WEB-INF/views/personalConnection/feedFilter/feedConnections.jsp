@@ -11,7 +11,7 @@
 			</div>
 		</div>
 		<div>
-			<button class="btn btn-default followingBtn follow" title="${conn.follow_code}">
+			<button class="btn btn-default followingBtn follow" onclick="location.href='/deleteFollow?follow_code=${conn.follow_code}'">
 				<i class="fas fa-check"></i> 팔로우 중
 			</button>
 		</div>
@@ -21,12 +21,11 @@
 $(".follow").on("click", function(){
 	var followStr = $(this).attr('title');
 	
-	if(!$(this).hasClass('Out')){
-		
+	if(!$(this).hasClass('Out')) {
 		$(this).html('<i class="fas fa-plus-circle"></i> 팔로우');
 		$(this).attr('class','btn btn-default followingBtn follow Out');
 		
-	}else{
+	}else {
 		$(this).html('<i class="fas fa-check"></i>팔로우 중');
 		$(this).attr('class','btn btn-default followingBtn follow');
 		

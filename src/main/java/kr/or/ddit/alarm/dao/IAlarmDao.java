@@ -86,4 +86,34 @@ public interface IAlarmDao {
 	 * Method 설명 : 새 알람 갯수
 	 */
 	int select_newAlarmCount(String mem_id);
+	
+	/**
+	 * Method : select_recentCount
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 최근 알림 갯수
+	 */
+	int select_recentCount(String mem_id);
+	
+	/**
+	 * Method : select_previousCount
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 이전 알림 갯수
+	 */
+	int select_previousCount(String mem_id);
+	
+	/**
+	 * Method : delete_goodalarm
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param alarmVo
+	 * @return
+	 * Method 설명 : 좋아요 알람 삭제
+	 */
+	int delete_goodalarm(AlarmVo alarmVo);
 }

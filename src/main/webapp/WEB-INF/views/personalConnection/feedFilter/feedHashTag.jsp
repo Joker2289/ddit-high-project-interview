@@ -11,7 +11,7 @@
 			</div>
 		</div>
 		<div>
-			<button class="btn btn-default followingBtn follow" title="${hashTag.follow_code}">
+			<button class="btn btn-default followingBtn follow" onclick="location.href='/deleteFollow?follow_code=${hashTag.follow_code}'">
 				<i class="fas fa-check"></i> 팔로우 중
 			</button>
 		</div>

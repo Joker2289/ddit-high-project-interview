@@ -89,6 +89,18 @@ public interface IPersonal_connectionService {
 	
 	
 	/**
+	* Method : select_followConnectionsOutside
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param memberVo
+	* @return
+	* Method 설명 : 팔로우한 인백 밖 리스트 조회
+	*/
+	List<UsersVo> select_followConnectionsEtc(MemberVo memberVo);
+	
+	
+	
+	/**
 	* Method : select_connectionReceive
 	* 작성자 : PC09
 	* 변경이력 :
@@ -209,6 +221,18 @@ public interface IPersonal_connectionService {
 	
 	
 	/**
+	* Method : recommendCorpor
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param paginationVo
+	* @return
+	* Method 설명 : 회원님을 위한 맞춤 추천 - 회사(corporation)
+	*/
+	List<CorporationVo> recommendCorpor(PaginationVo paginationVo);
+	
+	
+	
+	/**
 	* Method : filterSearchLocal
 	* 작성자 : PC09
 	* 변경이력 :
@@ -305,6 +329,18 @@ public interface IPersonal_connectionService {
 	 * Method 설명 : 일촌 삭제
 	 */
 	int delete_connections(Personal_connectionVo personalVo);
+	
+	
+	
+	/**
+	* Method : insert_followCorporation
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param followVo
+	* @return
+	* Method 설명 : 회사 팔로우
+	*/
+	int insert_followCorporation(FollowVo followVo);
 	
 	
 	

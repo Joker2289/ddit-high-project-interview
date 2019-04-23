@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chatroom">
+	
+	<!-- 유저 채팅방 전체 검색 -->
+	<select id="select_userChatrooms" parameterType="String" resultType="map">
+		 select a.chat_name, listagg(d.profile_path, ',') within group (order by d.user_id asc),listagg(b.mem_id, ',') within group (order by b.mem_id asc) , c.chat_code, c.content_code, c.mem_id, c.chat_content, c.read_status
+             from chatroom a, chat_member b, ( select chat_code,
+                                                      max(content_code) keep(dense_rank first order by write_date desc) as content_code,
+                                                      max(mem_id) keep(dense_rank first order by write_date desc) as mem_id,
+                                                      max(to_char(chat_content)) keep(dense_rank first order by write_date desc) as chat_content,
+                                                      max(read_status) keep(dense_rank first order by write_date desc) as read_status
+                                                 from chat_contents
+                                                 group by chat_code ) c, users d
+            where a.chat_code = b.chat_code
+              and c.chat_code = a.chat_code
+              and d.user_id = b.mem_id
+              and a.mem_id = #{mem_id}
+             group by  a.chat_name,c.chat_code, c.content_code, c.mem_id, c.chat_content, c.read_status
+	</select>
+	
+	<!-- 방만들기 -->
+	<insert id="insert_chatroom" parameterType="chatroomVo">
+		insert into chatroom
+			values (chat_code_seq.nextval, #{user_id},#{chat_name})
+	</insert>
+</mapper> 

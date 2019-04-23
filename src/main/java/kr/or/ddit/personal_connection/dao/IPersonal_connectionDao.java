@@ -89,6 +89,18 @@ public interface IPersonal_connectionDao {
 	
 	
 	/**
+	* Method : select_followConnectionsOutside
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param memberVo
+	* @return
+	* Method 설명 : 팔로우한 인백 밖 리스트 조회
+	*/
+	List<UsersVo> select_followConnectionsEtc(MemberVo memberVo);
+	
+	
+	
+	/**
 	* Method : select_connectionReceive
 	* 작성자 : PC09
 	* 변경이력 :
@@ -209,6 +221,18 @@ public interface IPersonal_connectionDao {
 	
 	
 	/**
+	* Method : recommendCorpor
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param paginationVo
+	* @return
+	* Method 설명 : 회원님을 위한 맞춤 추천 - 회사(corporation)
+	*/
+	List<CorporationVo> recommendCorpor(PaginationVo paginationVo);
+	
+	
+	
+	/**
 	* Method : filterSearchLocal
 	* 작성자 : PC09
 	* 변경이력 :
@@ -266,6 +290,8 @@ public interface IPersonal_connectionDao {
 	 */
 	List<Education_infoVo> filterSearchSchool(String user_id);
 	
+	
+	
 	/**
 	 * Method : select_oneConnections
 	 * 작성자 : jin
@@ -275,6 +301,8 @@ public interface IPersonal_connectionDao {
 	 * Method 설명 : 나와 상대방의 일촌 확인
 	 */
 	Personal_connectionVo select_oneConnections(Personal_connectionVo personalVo);
+	
+	
 	
 	/**
 	 * Method : select_oneConnectionsWait
@@ -296,6 +324,8 @@ public interface IPersonal_connectionDao {
 	 */
 	int insert_connections(Personal_connectionVo personalVo);
 	
+	
+	
 	/**
 	 * Method : delete_connections
 	 * 작성자 : jin
@@ -306,6 +336,18 @@ public interface IPersonal_connectionDao {
 	 */
 	int delete_connections(Personal_connectionVo personalVo);
 	
-
+	
+	
+	/**
+	* Method : insert_followCorporation
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param followVo
+	* @return
+	* Method 설명 : 회사 팔로우
+	*/
+	int insert_followCorporation(FollowVo followVo);
+	
+	
 	
 }

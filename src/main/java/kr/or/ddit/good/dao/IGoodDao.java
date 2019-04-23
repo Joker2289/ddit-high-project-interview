@@ -66,4 +66,14 @@ public interface IGoodDao {
 	 * Method 설명 : 회원이 좋아요 한 글 번호 목록 조회
 	 */
 	List<GoodVo> select_pushedGoodPost(String mem_id);
+	
+	/**
+	 * Method : search_goodcode
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param goodVo
+	 * @return
+	 * Method 설명 : 좋아요 코드 찾기
+	 */
+	String search_goodcode(GoodVo goodVo);
 }
