@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.or.ddit.alarm.model.AlarmVo;
+import kr.or.ddit.alarm.service.IAlarmService;
 import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
@@ -39,6 +41,8 @@ public class Personal_connectionController {
 	@Resource(name="followService")
 	private IFollowService followService;
 	
+	@Resource(name="alarmService")
+	private IAlarmService alarmService;
 	
 	@RequestMapping(path={"/personalConnection"})
 	public String personalConnectionView(Model model , HttpSession session, HttpServletRequest req) {
@@ -152,12 +156,22 @@ public class Personal_connectionController {
 	
 	
 	@RequestMapping(path={"/receiveApply"})
-		public String receiveApply(Personal_connectionVo personalVo) {
-		
+	public String receiveApply(Personal_connectionVo personalVo) {
+	
 		personalService.update_connectionReceiveApply(personalVo);
 		
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setMem_id(personalVo.getReceive_id());
+		alarmInfo.setAlarm_check("0");
+		alarmInfo.setDivision("25");
+		alarmInfo.setSend_id(personalVo.getUser_id());
+		alarmInfo.setAlarm_separate("05");
+		
+		alarmService.insert_alarmInfo(alarmInfo);
+		
 		return "redirect:/connectionReceiveApply";
-		}
+	
+	}
 	
 	
 	@RequestMapping(path={"/receiveCancel"})
@@ -348,6 +362,15 @@ public class Personal_connectionController {
 		
 		personalService.insert_connections(personalVo);
 		
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setMem_id(personalVo.getReceive_id());
+		alarmInfo.setAlarm_check("0");
+		alarmInfo.setDivision("25");
+		alarmInfo.setSend_id(personalVo.getUser_id());
+		alarmInfo.setAlarm_separate("04");
+		
+		alarmService.insert_alarmInfo(alarmInfo);
+		
 		return "redirect:/personalConnection";
 	}
 	
@@ -356,6 +379,15 @@ public class Personal_connectionController {
 	public String recommendUser(Personal_connectionVo personalVo) {
 		
 		personalService.insert_connections(personalVo);
+		
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setMem_id(personalVo.getReceive_id());
+		alarmInfo.setAlarm_check("0");
+		alarmInfo.setDivision("25");
+		alarmInfo.setSend_id(personalVo.getUser_id());
+		alarmInfo.setAlarm_separate("04");
+		
+		alarmService.insert_alarmInfo(alarmInfo);
 		
 		return "redirect:/personalConnection";
 	}
