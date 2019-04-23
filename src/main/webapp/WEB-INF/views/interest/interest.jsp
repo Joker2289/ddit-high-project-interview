@@ -95,9 +95,9 @@
 							 			<div class="div_job" data-idx="${i.index }" style="
 							 					width: auto; float: left; cursor: pointer;" 
 							 					data-check-flag="f" onmouseover=""
-							 					data-job="${jobList.get(i.index - 1) }">
+							 					data-job="${jobList.get(i.index - 1).item_content }">
 							 				<i class="far fa-circle"></i>
-							 				&nbsp;${jobList.get(i.index - 1) }
+							 				&nbsp;${jobList.get(i.index - 1).item_content }
 							 			</div>
 							 		</td>
 							 		<c:if test="${(i.index)%4 == 0 }">

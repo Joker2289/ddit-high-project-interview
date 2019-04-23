@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.ddit.interest.model.InterestVo;
 import kr.or.ddit.interest.service.IInterestService;
+import kr.or.ddit.item.service.IItemService;
 import kr.or.ddit.member.model.MemberVo;
 
 @Controller
@@ -26,29 +27,13 @@ public class InterestController {
 	@Resource(name="interestService")
 	private IInterestService inteService;
 	
+	@Resource(name="itemService")
+	private IItemService itemService;
+	
 	// 관심분야 페이지 요청.
 	@RequestMapping("/interest")
 	public String interest(Model model){
-		String[] arr_job = new String[]{"소프트웨어개발", "백엔드", "모바일앱개발", "웹마스터", 
-				"데이터베이스", "클라이언트개발", "네트워크구축", "DBMS", "솔루션", "DataMining", 
-				"네트워크보안", "유지보수", "공공기관", "전자상거래", "웹컨텐츠", "웹테스터", 
-				"소프트웨어QA", "리눅스", "안드로이드", "C++", "Java", "HTTP·TCP", "통신", "POS", 
-				"모바일기획", "서버관리", "시스템운영", "Framework", "springboot", "Nodejs", 
-				"알고리즘", ".NET", "웹프로그래밍", "Python", "빅데이터", "머신러닝", "asp", 
-				"Oracle", "MS-SQL", "SM", "SI", "WAS", "jsp", "DBA"};	
-		
-		List<String> jobList = new ArrayList<>();
-		for(String job : arr_job){
-			jobList.add(job);
-		}
-		
-		// jobList 정렬.
-        Collections.sort(jobList, new Comparator() {
-			@Override
-			public int compare(Object o1, Object o2) {
-				return ((String) o1).compareTo((String) o2);
-			}
-        });	
+		List<String> jobList = itemService.getItemList("job_type");
 		
 		model.addAttribute("jobList", jobList);
 		
