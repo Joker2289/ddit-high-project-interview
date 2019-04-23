@@ -222,7 +222,7 @@ public class profileController {
 	@RequestMapping("/otherDropdown")
 	public String otherDropdownView(String user_id, Model model, HttpSession session) {
 		MemberVo SESSION_MEMBERVO = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
-		if (user_id != null && user_id != SESSION_MEMBERVO.getMem_id()) {
+		if (user_id != null && !user_id.equals(SESSION_MEMBERVO.getMem_id()) ) {
 			
 			Personal_connectionVo  personalVo = new Personal_connectionVo();
 			personalVo.setUser_id(user_id);

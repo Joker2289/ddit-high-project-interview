@@ -219,7 +219,7 @@ $(document).ready(function() {
 </script>
 <div class="container">
 <div class="row">
-<div data-spy="scroll" data-target=".navbar-spy">
+<div data-spy="scroll" data-target=".navbar-spy"> 
 	<div class="row profileHomeBox">
 		<div class="col-md-9 mainAllBox">
 			<div class="whiteBox introduceBox" style="margin-bottom: 20px;">
@@ -247,7 +247,12 @@ $(document).ready(function() {
 						 </c:choose>
 						<div class="memberBox" style="display: flex;">
 							<div style="width: 500px;">
-								<label class="member" >${usersMap.usersVo.user_name }</label>
+								<div style="display:flex;"> 
+									<label class="member" style="width: auto;">${usersMap.usersVo.user_name }</label>
+									<button class="btn btn-default" style="border:0px; height: 32px; font-weight: bold; padding: 0 12px 6px 12px;">
+										<span style="color: #337ab7; font-size: 25px;">Blog</span>
+									</button>
+								</div>
 								<label class="member simpleInfo" style="font-size: 20px; font-weight: 100;">${usersMap.usersVo.introduce }</label>
 								<c:if test="${not empty usersMap.usersVo.persnal_url}">
 									<a href="http://${usersMap.usersVo.persnal_url}" style="font-size: 20px; font-weight: 100;">${usersMap.usersVo.persnal_url}</a>
