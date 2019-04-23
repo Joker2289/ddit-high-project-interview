@@ -105,7 +105,7 @@ function addImage(data) {
 	 console.log("Image_src : " + data);
 	
 	 var imageObj = new Image();
-	 imageObj.src = "/page/imageView?src=" + data;
+	 imageObj.src = "/page/onenoteImageView?src=" + data;
 	 
 	 // imageObj의 이미지 로딩이 제대로 되지 않았을시
 	// imageObj.onerror = function() {

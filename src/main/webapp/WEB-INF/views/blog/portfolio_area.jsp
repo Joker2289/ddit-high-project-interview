@@ -12,14 +12,14 @@
 			
 		<c:forEach items="${ portfolioList }" var="portfolio">
 
-			<button id="portfolio${ portfolio.portfolio_code }" type="button" class="btn btn-default portfolio" data-container="body" data-toggle="popover" data-placement="right" data-content=" " data-html="true" data-trigger="focus" onclick="portfolioClick(${ portfolio.portfolio_code });">
+			<button id="portfolio${ portfolio.portfolio_code }" type="button" class="btn btn-default portfolio" data-container="body" data-toggle="popover" data-placement="right" data-content=" " data-html="true" data-trigger="focus" onclick="portfolioClick('${ portfolio.portfolio_code }', '${ portfolio.index_color }');">
 		    	${ portfolio.portfolio_name }
 		  	</button>
 			
 			
 		</c:forEach>
 
- <!-- data-trigger="focus" -->
+ 
 	</div>
 </div>
 
@@ -34,17 +34,19 @@
 	var code = '${ portfolio.portfolio_code }';
 	$('#portfolio'+code).popover('enable');
 	
+	//포트폴리오 인덱스 컬러 셋팅
+	$('#portfolio'+code).css('background-color', '${ portfolio.index_color }');
+	
 </c:forEach>
 
-function portfolioClick(portfolio_code){
+function portfolioClick(portfolio_code, color){
 	
 	$.ajax({
 		url : "${cp}/blog/showSection",
-		data : {"portfolio_code" : portfolio_code },
+		data : {"portfolio_code" : portfolio_code, "color" : color },
 		success : function(data) {
 			
 			console.log(data);
-			
 			$('.popover-content').html(data);	
 			
 		}
