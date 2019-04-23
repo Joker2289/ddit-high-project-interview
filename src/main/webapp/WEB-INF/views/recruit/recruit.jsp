@@ -158,6 +158,7 @@
 
 	<form id="frm_detail" action="${pageContext.request.contextPath }/recr_detail" method="post">
 		<input type="hidden" id="recruit_code" name="recruit_code">	
+		<input type="hidden" id="req_page" name="req_page">	
 		
 		<div class="col-md-12" >
 			<!-- 260px, 525px, 790px -->
@@ -453,6 +454,9 @@
 // 				alert("${i.index }"); // 첫번째 채용공고 : i.index-1 -> '0'
 				$("#recruit_code").val(${rRList2.get(i.index).recruit_code});
 				
+				// 상세화면에서 뒤로가기 페이지 구분을 위한 req_page.
+				$("#req_page").val("recruit");
+				
 				$("#frm_detail").submit();
 			});
 			
@@ -692,6 +696,9 @@
 				// 클릭 이벤트.
 				$(".recr").on("click", function(){
 					$("#recruit_code").val($(this).data("code"));
+					
+					// 상세화면에서 뒤로가기 페이지 구분을 위한 req_page.
+					$("#req_page").val("recruit");					
 					
 					$("#frm_detail").submit();					
 				});

@@ -20,7 +20,7 @@
 		<input type="file" multiple="multiple" name="backgroundFile" id="backgroundFile" style="position:absolute;left:-2000px;top:-2000px;">
 	</div>
 	<div style="min-height: 328px;">
-		<div class="profileHomeProfilePicture modalprofile" style="background-image: url(/profile?mem_id=jin); margin-top: 80px;"></div>
+		<div class="profileHomeProfilePicture modalprofile" style="background-image: url(/profile?mem_id=${usersMap.usersVo.user_id}); margin-top: 80px;"></div>
 		<div class="pictureInsert" style="margin-left: 157px; margin-top: -30px;">
 			<label id="profileBtn">
 				<span><i class="fas fa-pencil-alt"></i></span>

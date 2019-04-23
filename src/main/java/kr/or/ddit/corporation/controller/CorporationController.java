@@ -34,6 +34,8 @@ import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.follow.service.IFollowService;
+import kr.or.ddit.good.model.GoodVo;
+import kr.or.ddit.good.service.IGoodService;
 import kr.or.ddit.hashtag.service.IHashtagService;
 import kr.or.ddit.hashtag_list.model.Hashtag_listVo;
 import kr.or.ddit.hashtag_list.service.IHashtag_listService;
@@ -97,6 +99,9 @@ public class CorporationController {
 	@Resource(name="recruitService")
 	private IRecruitService recrService;
 	
+	@Resource(name="goodService")
+	private IGoodService goodService;
+	
 	@Resource(name="save_recruitService")
 	private ISave_recruitService srecrService;
 	
@@ -116,13 +121,73 @@ public class CorporationController {
 		CorporationVo corporationInfo = new CorporationVo();
 		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
 		
-		List<PostVo> postList = postService.select_memberPost(memberInfo.getMem_id());
-		String mem_id = memberInfo.getMem_id();
-		logger.debug("mem_id : {}", mem_id);
+		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
+		tagCountPageVo.setMem_id(memberInfo.getMem_id());
+		tagCountPageVo.setDivision("16");
 		
+		//저장글 갯수 
+		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
+		model.addAttribute("savepostCnt", savepostCnt);
+
+		
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		
+		
+		if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
+			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+			
+			//인맥 수 출력을 위한 세팅
+			int connectionCnt = personal_connectionService.connections_count(memberInfo);
+			
+			//팔로우 한 해쉬태그 출력을 위한 세팅
+			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
+			
+			if(!followHashtag.isEmpty()){
+				model.addAttribute("followHashtag", followHashtag);
+			} else {
+				model.addAttribute("followHashtag","notfollow");
+			}
+			
+			
+			model.addAttribute("userInfo", userInfo);
+			model.addAttribute("connectionCnt", connectionCnt);
+			
+		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
+			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
+			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+			
+			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
+	         
+	         if(!followHashtag.isEmpty()){
+	            model.addAttribute("followHashtag", followHashtag);
+	         } else {
+	            model.addAttribute("followHashtag","notfollow");
+	         }
+			
+			model.addAttribute("corpInfo", corpInfo);
+			
+		} else { //관리자일 경우
+			//관리자 로그인 시 홈 화면 출력을 위한 세팅
+			
+		}
 		model.addAttribute("corporationInfo", corporationInfo);
-		model.addAttribute("postList", postList);
+		model.addAttribute("memberInfo", memberInfo);
 		
+		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
+		model.addAttribute("memberInfo", memberInfo);
+		model.addAttribute("timelinePost", timelinePost);
+
+		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+		model.addAttribute("goodList", goodList);
+		
+		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
+		model.addAttribute("saveList", saveList);
+		
+		logger.debug("goodList hahaha : {}", goodList);
+		logger.debug("saveList hahaha : {}", saveList);
+		
+		logger.debug("goodList hahaha : {}", goodList.size());
+		logger.debug("saveList hahaha : {}", saveList.size());
 		return "corporationTiles";
 	}
 	
@@ -172,7 +237,7 @@ public class CorporationController {
 		PostVo insertPost = new PostVo();
 		String mem_id = memberInfo.getMem_id();
 		String writer_name = "";	
-		String URLA = "<p><iframe width=\"560\" height=\"315\" src=\"";
+		String URLA = "<p><iframe width=\"530\" height=\"315\" src=\"";
 		String URLZ = "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><p>";
 		String video_path2 = video_path.replace("https://youtu.be/", "//www.youtube.com/embed/");
 		writer_name = corporationInfo.getCorp_name();
