@@ -85,6 +85,11 @@
 	</mvc:annotation-driven>
 
 
+<bean id = "uploadPath" class="java.lang.String">
+	<constructor-arg value="D:\A_TeachingMaterial\7.LastProject\workspace\interview\src\main\webapp\WEB-INF\views\corporation\img">
+	</constructor-arg>
+</bean>
+
 
 	
 </beans>
