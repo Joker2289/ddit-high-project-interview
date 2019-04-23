@@ -9,7 +9,8 @@
 		insert into alarm
 		values(
 			alarm_code_seq.nextval,
-			#{ref_code},
+			#{mem_id},
+			nvl(#{ref_code, jdbcType=VARCHAR}, null),
 			#{alarm_check},
 			#{division},
 			sysdate,
