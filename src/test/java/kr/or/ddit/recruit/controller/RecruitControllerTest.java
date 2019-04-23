@@ -546,6 +546,20 @@ public class RecruitControllerTest extends WebTestConfig{
 		//assert
 	}
 	
+	// string replace 테스트.
+	@Test
+	public void testReplace() {
+		/***Given***/
+		String str = "이마트";
+
+		/***When***/
+		String fmtStr = str.replace("이", "<strong>이</strong>");
+		logger.debug(fmtStr);
+
+		/***Then***/
+		assertNotNull(fmtStr);
+	}
+	
 	
 	
 	

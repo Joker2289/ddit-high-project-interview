@@ -1096,6 +1096,16 @@ public class RecruitController {
 		// corp_name으로 회사 검색후 corpList 넘기기.
 		List<CorporationVo> corpList = corpService.searchCorp(corp_name);
 		
+		List<String> fmtNmList = new ArrayList<>();
+		
+		for(CorporationVo cVo : corpList){
+			String name = cVo.getCorp_name();
+			String fmtNm = name.replace(corp_name, "<strong>"+corp_name+"</strong>");
+			
+			fmtNmList.add(fmtNm);
+		}
+		
+		model.addAttribute("fmtNmList", fmtNmList);
 		model.addAttribute("corpList", corpList);
 
 		return "/recruit/comDropdown";
