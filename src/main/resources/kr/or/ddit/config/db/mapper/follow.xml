@@ -153,4 +153,11 @@
 		   and division = 16
 	</select>
 	
+	<!-- 인맥 - 회사 - 언팔로우 -->
+	<delete id="delete_personalfollow" parameterType="String">
+		delete from follow
+		 where follow_code = #{follow_code}
+	</delete>
+	
+	
 </mapper> 

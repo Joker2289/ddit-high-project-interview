@@ -25,4 +25,3 @@
 		
 	</li>
 </c:forEach>
-

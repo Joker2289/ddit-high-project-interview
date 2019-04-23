@@ -79,4 +79,9 @@ public class FollowServiceImpl implements IFollowService {
 		return followDao.select_followHashtagInfo(followVo);
 	}
 
+	@Override
+	public int delete_personalfollow(String follow_code) {
+		return followDao.delete_personalfollow(follow_code);
+	}
+
 }

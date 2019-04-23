@@ -56,6 +56,11 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	public List<FollowVo> select_followHashTag(MemberVo memberVo) {
 		return personalDao.select_followHashTag(memberVo);
 	}
+	
+	@Override
+	public List<UsersVo> select_followConnectionsEtc(MemberVo memberVo) {
+		return personalDao.select_followConnectionsEtc(memberVo);
+	}
 
 	@Override
 	public List<UsersVo> select_connectionReceiveList(String receive_id) {
@@ -114,10 +119,15 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	public List<HashtagVo> feedFollowHashTag(String mem_id) {
 		return personalDao.feedFollowHashTag(mem_id);
 	}
-
+	
 	@Override
 	public List<UsersVo> recommendUsers(PaginationVo paginationVo) {
 		return personalDao.recommendUsers(paginationVo);
+	}
+	
+	@Override
+	public List<CorporationVo> recommendCorpor(PaginationVo paginationVo) {
+		return personalDao.recommendCorpor(paginationVo);
 	}
 
 	@Override
@@ -206,6 +216,12 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	public Personal_connectionVo select_oneConnectionsWait(Personal_connectionVo personalVo) {
 		return personalDao.select_oneConnectionsWait(personalVo);
 	}
+
+	@Override
+	public int insert_followCorporation(FollowVo followVo) {
+		return personalDao.insert_followCorporation(followVo);
+	}
+
 
 	
 }

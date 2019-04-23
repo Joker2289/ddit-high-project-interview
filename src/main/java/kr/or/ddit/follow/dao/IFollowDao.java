@@ -113,4 +113,14 @@ public interface IFollowDao {
 	 */
 	int select_followHashtagInfo(FollowVo followVo);
 	
+	/**
+	* Method : delete_follow
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param follow_code
+	* @return
+	* Method 설명 : 연팔로우 기능
+	*/
+	int delete_personalfollow(String follow_code);
+	
 }

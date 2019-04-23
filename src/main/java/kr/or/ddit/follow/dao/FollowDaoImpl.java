@@ -79,6 +79,11 @@ public class FollowDaoImpl implements IFollowDao {
 		return sqlSession.selectOne("follow.select_followHashtagInfo", followVo);
 	}
 
+	@Override
+	public int delete_personalfollow(String follow_code) {
+		return sqlSession.delete("follow.delete_personalfollow", follow_code);
+	}
+
 }
 
 

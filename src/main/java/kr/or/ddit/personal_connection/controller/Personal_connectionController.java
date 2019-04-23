@@ -20,6 +20,7 @@ import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.follow.model.FollowVo;
+import kr.or.ddit.follow.service.IFollowService;
 import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
@@ -34,6 +35,9 @@ public class Personal_connectionController {
 	
 	@Resource(name="personalService")
 	private IPersonal_connectionService personalService; 
+	
+	@Resource(name="followService")
+	private IFollowService followService;
 	
 	
 	@RequestMapping(path={"/personalConnection"})
@@ -82,7 +86,15 @@ public class Personal_connectionController {
 	
 	
 	@RequestMapping(path={"/recommendCorpor"})
-	public String recommendCorporView() {
+	public String recommendCorporView(HttpSession session , PaginationVo paginationVo , Model model) {
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		paginationVo.setUser_id(memberVo.getMem_id());
+		paginationVo.setPageSize(4);
+		
+		List<CorporationVo> corporList = personalService.recommendCorpor(paginationVo);
+		
+		model.addAttribute("corporList", corporList);
 		
 		return "/personalConnection/recommend/recommendCorpor";
 	}
@@ -214,7 +226,6 @@ public class Personal_connectionController {
 		
 		
 		if (str.equals("connections")) {
-			
 			List<UsersVo> followConnections =
 					personalService.select_followConnections(memberVo);
 			model.addAttribute("followConnections", followConnections);
@@ -222,13 +233,17 @@ public class Personal_connectionController {
 			return "/personalConnection/feedFilter/feedConnections";
 			
 		}else if(str.equals("connectionEtc")) {
+			List<UsersVo> connectionsEtcList =
+					personalService.select_followConnectionsEtc(memberVo);
+			model.addAttribute("connectionsEtcList", connectionsEtcList);
 			
 			return "/personalConnection/feedFilter/feedConnectionEtc";
 			
 		}else if(str.equals("company")) {
 			
 			followVo.setDivision("11");
-			List<CorporationVo> corporationList = personalService.select_followCoporation(followVo);
+			List<CorporationVo> corporationList =
+					personalService.select_followCoporation(followVo);
 			model.addAttribute("corporationList", corporationList);
 			
 			return "/personalConnection/feedFilter/feedCompany";
@@ -355,6 +370,22 @@ public class Personal_connectionController {
 	}
 	
 	
+	@RequestMapping(path={"/followCorpor"})
+	public String followCorpor(FollowVo followVo) {
+		
+		personalService.insert_followCorporation(followVo);
+		
+		return "redirect:/personalConnection";	
+	}
+	
+	@RequestMapping(path={"/deleteFollow"})
+	public String deleteFollow(String follow_code) {
+		
+		//followService.delete_follow(follow_code);
+		followService.delete_personalfollow(follow_code);
+		
+		return "redirect:/feedFollowing";	
+	}
 	
 	
 }
