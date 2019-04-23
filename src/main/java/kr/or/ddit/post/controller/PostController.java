@@ -1,5 +1,7 @@
 package kr.or.ddit.post.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,11 +16,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.ddit.alarm.model.AlarmVo;
+import kr.or.ddit.alarm.service.IAlarmService;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.follow.model.FollowVo;
@@ -89,6 +94,9 @@ public class PostController {
 	
 	@Resource(name="hide_postService")
 	private IHide_postService hide_postService;
+	
+	@Resource(name="alarmService")
+	private IAlarmService alarmService;
 	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
 	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request){
@@ -458,6 +466,18 @@ public class PostController {
 		model.addAttribute("commentCnt", commentCnt);
 		model.addAttribute("ref_code", ref_code);
 		
+		//글 작성 -> 알림 등록
+		PostVo postInfo = postService.select_postInfo(ref_code);
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setMem_id(postInfo.getMem_id());
+		alarmInfo.setRef_code(commentVo.getComment_code());
+		alarmInfo.setAlarm_check("00");
+		alarmInfo.setDivision("29");
+		alarmInfo.setSend_id(memberInfo.getMem_id());
+		alarmInfo.setAlarm_separate("02");
+		
+		alarmService.insert_alarmInfo(alarmInfo);
+		
 		return "timeline/postComment";
 	}
 	
@@ -486,6 +506,18 @@ public class PostController {
 		
 		goodService.insert_goodInfo(goodVo);
 		
+		//알림 등록
+		PostVo postInfo = postService.select_postInfo(ref_code);
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setMem_id(postInfo.getMem_id());
+		alarmInfo.setRef_code(goodVo.getGood_code());
+		alarmInfo.setDivision("15");
+		alarmInfo.setSend_id(memberInfo.getMem_id());
+		alarmInfo.setAlarm_separate("01");
+		alarmInfo.setAlarm_check("0");
+		
+		alarmService.insert_alarmInfo(alarmInfo);
+		
 		return "complate";
 	}
 	
@@ -510,6 +542,13 @@ public class PostController {
 		goodVo.setRef_code(ref_code);
 		goodVo.setDivision("28");
 		
+		String good_code = goodService.search_goodcode(goodVo);
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setRef_code(good_code);
+		alarmInfo.setSend_id(memberInfo.getMem_id());
+		
+		//좋아요 취소 -> 알림 정보 삭제
+		alarmService.delete_goodalarm(alarmInfo);
 		goodService.delete_goodInfo(goodVo);
 		
 		return "complate";
@@ -759,6 +798,50 @@ public class PostController {
 		report.setReport_contents(report_contents);
 		
 		reportService.insert_reportInfo(report);
+		
+		return "complate";
+	}
+	
+	@RequestMapping(path={"/push_commentgood"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String commentGood(String comment_code, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		GoodVo goodInfo = new GoodVo();
+		goodInfo.setDivision("29");
+		goodInfo.setMem_id(memberInfo.getMem_id());
+		goodInfo.setRef_code(comment_code);
+		
+		goodService.insert_goodInfo(goodInfo);
+		
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setRef_code(goodInfo.getGood_code());
+		alarmInfo.setSend_id(memberInfo.getMem_id());
+		alarmInfo.setDivision("15");
+		
+		return "complate";
+	}
+	
+	@RequestMapping(path={"/push_commentgoodcancel"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String commentGoodCancel(String ref_code, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		GoodVo goodInfo = new GoodVo();
+		goodInfo.setMem_id(memberInfo.getMem_id());
+		goodInfo.setRef_code(ref_code);
+		goodInfo.setDivision("29");
+		
+		String good_code = goodService.search_goodcode(goodInfo);
+		
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setRef_code(good_code);
+		alarmInfo.setSend_id(memberInfo.getMem_id());
+		
+		//좋아요 취소 -> 알림 정보 삭제
+		alarmService.delete_goodalarm(alarmInfo);
+		goodService.delete_goodInfo(goodInfo);
 		
 		return "complate";
 	}

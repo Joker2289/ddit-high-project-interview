@@ -30,34 +30,75 @@ public class AlaramController {
 	public String alarmHome(Model model, HttpServletRequest request){
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-		PaginationVo paginationVo = new PaginationVo(1, 10);
+		PaginationVo paginationVo = new PaginationVo(1, 5);
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
-		//최근 알림 조회
-		List<AlarmVo> recentList = alarmService.select_recentAlarmList(paginationVo);
-		model.addAttribute("recentList", recentList);
-		model.addAttribute("recentCount", recentList.size() + "");
-		
+		//새 알림 갯수 조회
 		int newAlarmCount = alarmService.select_newAlarmCount(memberInfo.getMem_id());
-		
 		if(newAlarmCount == 0){
 			model.addAttribute("newAlarmCount", "no");
 		} else {
 			model.addAttribute("newAlarmCount", newAlarmCount+"");
 		}
 		
+		
+		//최근 알림 조회
+		List<AlarmVo> recentList = alarmService.select_recentAlarmList(paginationVo);
+		model.addAttribute("recentList", recentList);
+		
+		//최근 알림 갯수 조회
+		int recentCount = alarmService.select_recentCount(memberInfo.getMem_id());
+		if(recentCount == 0){
+			model.addAttribute("recentCount", "0");
+		} else {
+			model.addAttribute("recentCount", recentCount);
+		}
+		
+
 		//이전 알림 조회
 		List<AlarmVo> previousList = alarmService.select_previousAlarmList(paginationVo);
 		model.addAttribute("previousList", previousList);
-		model.addAttribute("previousCount", previousList.size() + "");
 		
-		//알림 확인(읽음) -> 현재까지의 전체 알림을 읽음 표시(언제 처리할지 정해야함)
-//		AlarmVo alarmInfo = new AlarmVo();
-//		alarmInfo.setAlarm_check("01");
-//		alarmInfo.setMem_id(memberInfo.getMem_id());
-//		alarmService.update_alarmStatus(alarmInfo);
+		int previousCount = alarmService.select_previousCount(memberInfo.getMem_id());
+		if(previousCount == 0){
+			model.addAttribute("previousCount", "0");
+		} else {
+			model.addAttribute("previousCount", previousCount);
+		}
 		
 		return "alarmTiles";
+	}
+	
+	@RequestMapping(path={"/nextrecentalarm"}, method=RequestMethod.POST)
+	public String nextRecentAlarm(String pageNum, String alarm_code, HttpServletRequest request, Model model){
+		
+		PaginationVo paginationVo = new PaginationVo();
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		paginationVo.setPage(Integer.parseInt(pageNum));
+		paginationVo.setPageSize(5);
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		paginationVo.setCriteria_code(alarm_code);
+		
+		List<AlarmVo> nextRecentAlarm = alarmService.select_nextRecentAlarm(paginationVo);
+		model.addAttribute("nextRecentAlarm", nextRecentAlarm);
+		
+		return "alarm/moreRecentAlarm";
+	}
+	
+	@RequestMapping(path={"/nextpreviousalarm"}, method=RequestMethod.POST)
+	public String nextPreviousAlarm(String pageNum, String alarm_code, HttpServletRequest request, Model model){
+		
+		PaginationVo paginationVo = new PaginationVo();
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		paginationVo.setPage(Integer.parseInt(pageNum));
+		paginationVo.setPageSize(5);
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		paginationVo.setCriteria_code(alarm_code);
+		
+		List<AlarmVo> nextPreviousAlarm = alarmService.select_nextPreviousAlarm(paginationVo);
+		model.addAttribute("nextPreviousAlarm", nextPreviousAlarm);
+		
+		return "alarm/morePreviousAlarm";
 	}
 	
 	@RequestMapping(path={"/deletealarm"}, method=RequestMethod.POST)

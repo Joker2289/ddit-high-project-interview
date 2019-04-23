@@ -97,8 +97,9 @@
   	        <div class="comment-contents" id="comment-conetents${comment.comment_code}">${comment.comment_contents }</div>
           </div>
           <div class="comment-input-button">
-            <button class="btn-comment-social"><i class="far fa-thumbs-up"></i></button>
-            <button class="btn-comment-social"><i class="far fa-comments"></i></button>
+            <button class="btn-comment-social btn_commentGood" id="btn_commentGood${comment.comment_code }" data-code="${comment.comment_code }">
+              <i id="icon_commentgood${comment.comment_code }" class="far fa-thumbs-up"></i>
+            </button>
             <c:if test="${comment.mem_id != memberInfo.mem_id }">
               <button class="btn-comment-social"><i class="far fa-flag"></i></button>
             </c:if>

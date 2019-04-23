@@ -243,8 +243,30 @@
       }
    });
    
-   
-   
+    var goodcomment_code = "";
+	$(".btn_commentGood").on("click", function() {
+		goodcomment_code = $(this).attr('date-code');
+		
+		if($("#icon_commentgood"+goodcomment_code).attr('class') == "far fa-thumbs-up"){
+			$.ajax({
+	            type : 'POST',
+	            url : '/push_commentgood',
+	            data : {"ref_code" : goodcomment_code},
+	            success : function(data) {
+	               $('#icon_commentgood' + goodcomment_code).attr("class", "fas fa-thumbs-up");
+	            }
+	         });
+		} else {
+			$.ajax({
+	            type : 'POST',
+	            url : '/push_commentgoodcancel',
+	            data : {"ref_code" : goodcomment_code},
+	            success : function(data) {
+	               $('#icon_commentgood' + goodcomment_code).attr("class", "far fa-thumbs-up");
+	            }
+	        });
+		}
+	});   
    
    
    var contents = "";

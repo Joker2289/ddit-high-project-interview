@@ -15,7 +15,11 @@
 			sysdate,
 			#{send_id},
 			#{alarm_separate}
-		)	
+		)
+		<selectKey resultType="String" keyProperty="alarm_code" order="AFTER">
+			select alarm_code_seq.currval
+			  from dual
+		</selectKey>
 	</insert>
 	
 	<!-- 알림 확인(상태변경) -->
@@ -29,6 +33,13 @@
 	<delete id="delete_alarmInfo" parameterType="String">
 		delete alarm
 		 where alarm_code = #{alarm_code}
+	</delete>
+	
+	<!-- 좋아요 알림 삭제 -->
+	<delete id="delete_goodalarm" parameterType="alarmVo">
+		delete alarm
+		 where ref_code = #{ref_code}
+		   and send_id = #{send_id}
 	</delete>
 	
 	<!-- 최근 일주일 알림 조회 -->
@@ -51,7 +62,8 @@
 		                                  where corp_id = send_id) send_name
 		                  from alarm a
 		                 where mem_id = #{mem_id}
-		                   and alarm_date &gt;= to_char(sysdate - 7, 'YYYYMMDD')  ) b)
+		                   and alarm_date &gt;= to_char(sysdate - 7, 'YYYYMMDD')
+		                order by alarm_date desc  ) b)
 		 where rn between (#{page}-1) * #{pageSize} and #{page}* #{pageSize}
 	</select>
 	
@@ -74,9 +86,10 @@
 		                                  where corp_id = send_id) send_name
 		                  from alarm a
 		                 where mem_id = #{mem_id}
-		                   and alarm_date &gt;= to_char(sysdate - 7, 'YYYYMMDD')  ) b)
+		                   and alarm_date &gt;= to_char(sysdate - 7, 'YYYYMMDD')
+		                order by alarm_date desc  ) b)
 		 where rn between (#{page}-1) * #{pageSize} and #{page}* #{pageSize}
-		   and post_code &lt; #{criteria_code}
+		   and alarm_code &lt; #{criteria_code}
 	</select>
 	
 	<!-- 이전 알림 조회 -->
@@ -99,7 +112,8 @@
 		                                  where corp_id = send_id) send_name
 		                  from alarm a
 		                 where mem_id = #{mem_id}
-		                   and alarm_date &lt;= to_char(sysdate - 7, 'YYYYMMDD')  ) b)
+		                   and alarm_date &lt;= to_char(sysdate - 7, 'YYYYMMDD')
+		                order by alarm_date desc  ) b)
 		 where rn between (#{page}-1) * #{pageSize} and #{page}* #{pageSize}
 	</select>
 	
@@ -122,9 +136,10 @@
 		                                  where corp_id = send_id) send_name
 		                  from alarm a
 		                 where mem_id = #{mem_id}
-		                   and alarm_date &lt;= to_char(sysdate - 7, 'YYYYMMDD')  ) b)
+		                   and alarm_date &lt;= to_char(sysdate - 7, 'YYYYMMDD')
+		                order by alarm_date desc  ) b)
 		 where rn between (#{page}-1) * #{pageSize} and #{page}* #{pageSize}
-		   and post_code &lt; #{criteria_code}
+		   and alarm_code &lt; #{criteria_code}
 	</select>
 	
 	<select id="select_newAlarmCount" parameterType="String" resultType="int">
@@ -133,5 +148,23 @@
 		 where mem_id = #{mem_id}
 		   and alarm_check = '00'
 	</select>
+	
+	<!-- 최근 알림 갯수 -->
+	<select id="select_recentCount" parameterType="String" resultType="int">
+		select count(*)
+		  from alarm
+		 where mem_id = #{mem_id}
+		   and alarm_date &gt;= to_char(sysdate - 7, 'YYYYMMDD')
+	</select>
+	
+	<!-- 이전 알림 갯수 -->
+	<select id="select_previousCount" parameterType="String" resultType="int">
+		select count(*)
+		  from alarm
+		 where mem_id = #{mem_id}
+		   and alarm_date &lt;= to_char(sysdate - 7, 'YYYYMMDD')
+	</select>
+	
+	
 	
 </mapper>

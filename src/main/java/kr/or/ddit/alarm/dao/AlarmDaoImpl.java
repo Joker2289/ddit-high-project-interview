@@ -56,4 +56,19 @@ public class AlarmDaoImpl implements IAlarmDao {
 		return sqlSession.selectList("alarm.select_nextPreviousAlarm", paginationVo);
 	}
 
+	@Override
+	public int select_recentCount(String mem_id) {
+		return sqlSession.selectOne("alarm.select_recentCount", mem_id);
+	}
+
+	@Override
+	public int select_previousCount(String mem_id) {
+		return sqlSession.selectOne("alarm.select_previousCount", mem_id);
+	}
+
+	@Override
+	public int delete_goodalarm(AlarmVo alarmVo) {
+		return sqlSession.delete("alarm.delete_goodalarm", alarmVo);
+	}
+
 }
