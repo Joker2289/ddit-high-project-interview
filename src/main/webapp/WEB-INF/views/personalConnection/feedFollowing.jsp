@@ -80,9 +80,6 @@ $(document).ready(function() {
 		<div class="feedDiv">
 			<a href="/feedFollowing">(${allFollowCount})명 팔로우 중</a>
 		</div>
-		<div class="feedDiv">
-			<a href="/#">팔로워 ()명</a>
-		</div>
 	</div>
  </nav>
 
@@ -111,7 +108,7 @@ $(document).ready(function() {
 				<div style="width: 225px;">
 					<div class="corporation">
 						<div
-						style="width: 59px;height: 59px;background-image:url(${corp.logo_path});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;">
+						style="width: 120px;height: 59px;background-image:url(${corp.logo_path});background-repeat: no-repeat;background-size: 120px;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;">
 						</div>
 						<div>
 							<label style="font-size: 18px;"><strong>${corp.corp_name}</strong></label><br/>
@@ -119,7 +116,7 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<div>
-						<button class="btn btn-default followingBtn follow" onclick="location.href='/following?ref_keyword=${corp.corp_id}&division=11'">
+						<button class="btn btn-default followingBtn follow" onclick="location.href='/deleteFollow?follow_code=${corp.follow_code}'">
 							<i class="fas fa-check"></i> 팔로우 중
 						</button>
 					</div>

@@ -52,5 +52,6 @@ public interface IFollowService {
 	 * Method 설명 : 태그 팔로우 유무체크
 	 */
 	int select_followHashtagInfo(FollowVo followVo);
-
+	
+	int delete_personalfollow(String follow_code);
 }

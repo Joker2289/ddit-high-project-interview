@@ -70,7 +70,7 @@
 	</select>
 	
 	
-	<!-- 팔로우한 회사 리스트 조회 -->
+	<!-- 인맥 - 회사 - 팔로우한 회사 리스트 조회 -->
 	<select id="select_followCoporation" parameterType="followVo" resultType="corporationVo">
 		select
 			b.*,
@@ -85,7 +85,7 @@
    			a.ref_keyword = b.corp_id
 	</select>
 	
-	<!-- 팔로우한 일촌 리스트 조회 -->
+	<!-- 인맥 - 회사 - 팔로우한 일촌 리스트 조회 -->
 	<select id="select_followConnections" parameterType="memberVo" resultType="usersVo">
 		select a.user_id,
                users.profile_path,
@@ -126,7 +126,7 @@
 	</select>
 	
 	
-	<!-- 팔로우한 해시태그 리스트 조회 -->
+	<!-- 인맥 - 회사 - 팔로우한 해시태그 리스트 조회 -->
 	<select id="select_followHashTag" parameterType="memberVo" resultType="followVo">
 		select
 			FOLLOW_CODE,
@@ -139,6 +139,42 @@
 			division='16'
 		and
 			mem_id=#{mem_id}
+	</select>
+	
+	
+	<!-- 인맥 - 회사 - 팔로우한 인맥 밖 리스트 조회 -->
+	<select id="select_followConnectionsEtc" parameterType="memberVo" resultType="usersVo">
+		select a.user_id,
+		               users.profile_path,
+		               users.user_name,
+		               users.profile_img,
+		               b.introduce,
+		               a.follow_code
+		          from users ,( select REF_KEYWORD as user_id,follow_code
+		                          from follow
+		                         where division = 43
+		                           and mem_id = #{mem_id}
+		                           and ref_keyword not in (select  REPLACE(user_id || receive_id, #{mem_id}, '')
+		                                                    from personal_connection
+		                                                   where RECEIVE_ACCEPT = 'Y'
+		                                                     and (user_id = #{mem_id} or receive_id = #{mem_id}))) a , (select user_id,   
+		                                                                                                               substr(listagg(beintroduce, ' ') within group (order by graduation desc), 0, instr(listagg(beintroduce, ' ') within group (order by graduation desc), ' ', 1, 2)) as introduce
+		                                                                                                                   
+		                                                                                                          from (select a.user_id,
+		                                                                                                                  case when b.resign_date is null then b.corporate_name ||' ' ||job_position || ' '
+		                                                                                                                       when b.resign_date is not null then a.school_name ||' ' || a.degree_name || ' '
+		                                                                                                                   end as beintroduce,
+		                                                                                                                       a.graduation
+		                                                                                                                  from education_info a, career_info b
+		                                                                                                                 where a.user_id = b.user_id
+		                                                                                                                   and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select career_info.user_id,  max(nvl(career_info.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+		                                                                                                                                                                                                from career_info, education_info
+		                                                                                                                                                                                               where career_info.user_id = education_info.user_id
+		                                                                                                                                                                                               group by career_info.user_id)
+		                                                                                                                 order by a.graduation desc)
+		                                                                                                         group by user_id ) b
+		       where a.user_id = b.user_id(+)
+		         and a.user_id = users.user_id(+)
 	</select>
 	
 	
@@ -335,6 +371,7 @@
 	</select>
 	
 	
+	
 	<!-- 회원님을 위한 맞춤 추천 - 사람(users) -->
 	<select id="recommendUsers" parameterType="paginationVo" resultType="usersVo">
 		select *
@@ -373,8 +410,23 @@ from (select distinct(a.user_id) as user_id,
                                      from personal_connection
                                     where user_id = #{user_id}))a)a
                   
-                  
 where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
+	</select>
+	
+	
+	<!-- 회원님을 위한 맞춤 추천 - 회사(corporation) -->
+	<select id="recommendCorpor" parameterType="paginationVo" resultType="corporationVo">
+		select *
+		        from
+		              (select a.*, rownum rn
+		                from (select corp_id,corp_name,logo_path,industry_type
+		                        from corporation  
+		                       where not corp_id in ( select ref_keyword
+		                                                  from follow
+		                                                 where mem_id = #{user_id}
+		                                                   and division = '11'))a)
+		                                                   
+		where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 	</select>
 	
 	
@@ -540,6 +592,7 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 		   and receive_accept = 'Y'
 	</select>
 	
+	
 	<!-- 나와 상대방의 일촌 수락대기중 -->
 	<select id="select_oneConnectionsWait" parameterType="personalVo" resultType="personalVo">
 		select receive_accept
@@ -549,11 +602,13 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 		   and receive_accept = 'N'
 	</select>
 	
+	
 	<!-- 일촌 신청 -->
 	<insert id="insert_connections" parameterType="personalVo">
 		insert into personal_connection
 			values(#{user_id},#{receive_id},'N')
 	</insert>
+	
 	
 	<!-- 일촌 삭제 -->
 	<delete id="delete_connections" parameterType="personalVo">
@@ -562,5 +617,17 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 		   and (receive_id = #{receive_id} or user_id = #{receive_id})
 		   and receive_accept = 'Y'
 	</delete>
+	
+	
+	
+	<!-- 회사 필로우 -->
+	<insert id="insert_followCorporation" parameterType="followVo">
+		insert
+		  into
+			follow
+		values 
+			(follow_code_seq.nextval, #{mem_id}, #{ref_keyword}, '11')
+	</insert>
+	
 	
 </mapper>

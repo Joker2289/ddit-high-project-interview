@@ -59,6 +59,12 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 		List<FollowVo> select_followHashTag = sqlSessionTemplate.selectList("personal.select_followHashTag", memberVo);
 		return select_followHashTag;
 	}
+	
+	@Override
+	public List<UsersVo> select_followConnectionsEtc(MemberVo memberVo) {
+		List<UsersVo> select_followConnectionsEtc = sqlSessionTemplate.selectList("personal.select_followConnectionsEtc", memberVo);
+		return select_followConnectionsEtc;
+	}
 
 	@Override
 	public List<UsersVo> select_connectionReceiveList(String receive_id) {
@@ -118,6 +124,12 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 	public List<UsersVo> recommendUsers(PaginationVo paginationVo) {
 		List<UsersVo> UserList = sqlSessionTemplate.selectList("personal.recommendUsers", paginationVo);
 		return UserList;
+	}
+	
+	@Override
+	public List<CorporationVo> recommendCorpor(PaginationVo paginationVo) {
+		List<CorporationVo> corporList = sqlSessionTemplate.selectList("personal.recommendCorpor", paginationVo);
+		return corporList;
 	}
 
 	@Override
@@ -201,8 +213,12 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 	public Personal_connectionVo select_oneConnectionsWait(Personal_connectionVo personalVo) {
 		return sqlSessionTemplate.selectOne("personal.select_oneConnectionsWait", personalVo);
 	}
-	
-	
+
+	@Override
+	public int insert_followCorporation(FollowVo followVo) {
+		int insert_followCorpor = sqlSessionTemplate.insert("personal.insert_followCorporation", followVo);
+		return insert_followCorpor;
+	}
 
 
 

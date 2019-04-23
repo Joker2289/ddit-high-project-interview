@@ -9,9 +9,6 @@
 		<div class="feedDiv">
 			<a href="/feedFollowing">(${allFollowCount})명 팔로우 중</a>
 		</div>
-		<div class="feedDiv">
-			<a href="/#">팔로워 ()명</a>
-		</div>
 	</div>
 </nav>
 
@@ -27,14 +24,14 @@
 						<c:choose>
 							<c:when test="${not empty result.user_id}">
 								<a href="/profileHome?user_id=${result.user_id }">
-								<div style="width: 59px;height: 59px;background-image:url(${result.imgPath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;border-radius: 100px;">
+								<div style="width: 85px;height: 85px;background-image:url(${result.imgPath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 0px;margin-top: 15px; margin-bottom: 12px;border-radius: 100px;">
 								</div>
 								</a>
 							</c:when>
 							
 							<c:otherwise>
 								<a href="/corporation?corp_id=${result.corp_id }">
-								<div style="width: 59px;height: 59px;background-image:url(${result.imgPath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;">
+								<div style="width: 120px;height: 59px;background-image:url(${result.imgPath});background-repeat: no-repeat;background-size: 120px;background-position: center;margin-left: 0px;margin-top: 15px; margin-bottom: 12px;">
 								</div>
 								</a>
 							</c:otherwise>
@@ -79,11 +76,6 @@ if(!$(this).hasClass('Out')){
 	
 	
 });
-
-
-
-
-
 
 
 </script>
