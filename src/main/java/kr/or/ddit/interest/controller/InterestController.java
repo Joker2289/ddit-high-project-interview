@@ -45,7 +45,7 @@ public class InterestController {
 		for(String local : arr_local){
 			localList.add(local);
 		}
-		
+
 		model.addAttribute("localList", localList);	
 		
 		// empList
@@ -104,7 +104,6 @@ public class InterestController {
 	
 
 }
-
 
 
 
