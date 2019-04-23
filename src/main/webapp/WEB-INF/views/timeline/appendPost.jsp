@@ -7,9 +7,19 @@
   <div id="col-post${post.post_code }" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
 	  <div class="col-post ${post.post_code }">
 		<div class="col-post-body">
-		  <a href="#" >
+		  <a
+            <c:choose>
+              <c:when test="${post.mem_division eq 1 }">href="/profileHome?user_id=${post.mem_id }"</c:when>
+              <c:when test="${post.mem_division eq 2 }">href="/corporation?corp_id=${post.mem_id }"</c:when>
+            </c:choose>>
 			<div class="writer_info" style="float: left;">
-			  <a style="font-size: 20px;" href="#">${post.writer_name }</a>
+			  <a style="font-size: 20px;" 
+           	    <c:choose>
+           	      <c:when test="${post.mem_division eq 1 && !post.mem_id eq memberInfo.mem_id}">href="/profileHome?user_id=${post.mem_id }"</c:when>
+           	      <c:when test="${post.mem_division eq 1 && post.mem_id eq memberInfo.mem_id}">href="/profileHome"</c:when>
+           	      <c:when test="${post.mem_division eq 2}">href="/corporation?corp_id=${post.mem_id }"</c:when>
+           	      <c:otherwise>href="#"</c:otherwise>
+           	    </c:choose>>${post.writer_name }</a>
 			  <c:choose>
 			    <c:when test="${post.resultMinute <= 1 }">
 			      <span>방금 전</span>

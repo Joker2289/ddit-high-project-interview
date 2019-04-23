@@ -12,11 +12,29 @@ public class PostVo {
 	private String commentcount;	// 댓글 수
 	private String goodcount;		// 좋아요 수
 	private int resultMinute;		// 작성 경과시간
+	private String mem_division;    // 작성자 구분
+	private String profile_path;	// 작성자 프로필 사진
 	
 	public PostVo() {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public String getProfile_path() {
+		return profile_path;
+	}
+
+	public void setProfile_path(String profile_path) {
+		this.profile_path = profile_path;
+	}
+
+	public String getMem_division() {
+		return mem_division;
+	}
+
+	public void setMem_division(String mem_division) {
+		this.mem_division = mem_division;
+	}
+
 	public int getResultMinute() {
 		return resultMinute;
 	}
@@ -85,7 +103,7 @@ public class PostVo {
 	public String toString() {
 		return "PostVo [post_code=" + post_code + ", mem_id=" + mem_id + ", post_contents=" + post_contents
 				+ ", post_date=" + post_date + ", writer_name=" + writer_name + ", commentcount=" + commentcount
-				+ ", goodcount=" + goodcount + "]";
+				+ ", goodcount=" + goodcount + ", resultMinute=" + resultMinute + ", mem_division=" + mem_division
+				+ ", profile_path=" + profile_path + "]";
 	}
-
 }

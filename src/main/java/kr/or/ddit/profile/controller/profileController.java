@@ -22,6 +22,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.or.ddit.alarm.model.AlarmVo;
+import kr.or.ddit.alarm.service.IAlarmService;
 import kr.or.ddit.award_history.model.Award_historyVo;
 import kr.or.ddit.award_history.service.IAward_historyService;
 import kr.or.ddit.career_info.model.Career_infoVo;
@@ -93,6 +95,9 @@ public class profileController {
 	
 	@Resource(name="followService")
 	private IFollowService followService;
+	
+	@Resource(name="alarmService")
+	private IAlarmService alarmService;
 	
 	@RequestMapping("/menu")
 	public String menuDropdownView(String str) {
@@ -438,6 +443,16 @@ public class profileController {
 	@RequestMapping(path={"/profileInsertConnection"})
 	public String profileInsertConnection(Personal_connectionVo personalVo){
 		personalService.insert_connections(personalVo);
+		
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setMem_id(personalVo.getReceive_id());
+		alarmInfo.setAlarm_check("0");
+		alarmInfo.setDivision("25");
+		alarmInfo.setSend_id(personalVo.getUser_id());
+		alarmInfo.setAlarm_separate("04");
+		
+		alarmService.insert_alarmInfo(alarmInfo);
+		
 		return "redirect:/profileHome?user_id="+personalVo.getReceive_id();
 	}
 	

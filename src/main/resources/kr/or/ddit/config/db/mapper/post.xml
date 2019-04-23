@@ -54,7 +54,17 @@
 		                               (select count(ref_code)
 		                                  from good
 		                                 where ref_code = post_code
-		                                   and division = 28) goodcount
+		                                   and division = 28) goodcount,
+		                               (select mem_division
+                                  		  from member
+                                 		 where mem_id = post.mem_id) mem_division,
+		                               (select profile_path
+		                                  from users
+		                                 where users.user_id = post.mem_id
+		                                union all
+		                                select logo_path
+		                                  from corporation
+		                                 where corporation.corp_id = post.mem_id) profile_path
 		                  from post
 		         where (post.mem_id in (select ref_keyword
 		                                 from follow
@@ -82,7 +92,17 @@
 		                               (select count(ref_code)
 		                                  from good
 		                                 where ref_code = post_code
-		                                   and division = 28) goodcount
+		                                   and division = 28) goodcount,
+		                               (select mem_division
+                                  		  from member
+                                 		 where mem_id = post.mem_id) mem_division,
+		                               (select profile_path
+		                                  from users
+		                                 where users.user_id = post.mem_id
+		                                union all
+		                                select logo_path
+		                                  from corporation
+		                                 where corporation.corp_id = post.mem_id) profile_path
 		                  from post
 		         where (post.mem_id in (select ref_keyword
 		                                 from follow
@@ -131,7 +151,17 @@
 		                               (select count(ref_code)
 		                                  from good
 		                                 where ref_code = post_code
-		                                   and division = 28) goodcount
+		                                   and division = 28) goodcount,
+		                               (select mem_division
+                                  		  from member
+                                 		 where mem_id = post.mem_id) mem_division,
+		                               (select profile_path
+		                                  from users
+		                                 where users.user_id = post.mem_id
+		                                union all
+		                                select logo_path
+		                                  from corporation
+		                                 where corporation.corp_id = post.mem_id) profile_path
 		                  from post
 		         where (post.post_code in (select save_post_code
 		                                    from save_post
@@ -151,7 +181,17 @@
 		                               (select count(ref_code)
 		                                  from good
 		                                 where ref_code = post_code
-		                                   and division = 28) goodcount
+		                                   and division = 28) goodcount,
+		                               (select mem_division
+                                  		  from member
+                                 		 where mem_id = post.mem_id) mem_division,
+		                               (select profile_path
+		                                  from users
+		                                 where users.user_id = post.mem_id
+		                                union all
+		                                select logo_path
+		                                  from corporation
+		                                 where corporation.corp_id = post.mem_id) profile_path
 		                  from post
 		         where (post.post_code in (select save_post_code
 		                                    from save_post
@@ -172,7 +212,17 @@
 		                               (select count(ref_code)
 		                                  from good
 		                                 where ref_code = post_code
-		                                   and division = 28) goodcount
+		                                   and division = 28) goodcount,
+		                               (select mem_division
+                                  		  from member
+                                 		 where mem_id = post.mem_id) mem_division,
+		                               (select profile_path
+		                                  from users
+		                                 where users.user_id = post.mem_id
+		                                union all
+		                                select logo_path
+		                                  from corporation
+		                                 where corporation.corp_id = post.mem_id) profile_path
 		                  from post
 		         where (post.post_code in (select ref_code
 		                                    from hashtag_list
@@ -192,7 +242,17 @@
 		                               (select count(ref_code)
 		                                  from good
 		                                 where ref_code = post_code
-		                                   and division = 28) goodcount
+		                                   and division = 28) goodcount,
+		                               (select mem_division
+                                  		  from member
+                                 		 where mem_id = post.mem_id) mem_division,
+		                               (select profile_path
+		                                  from users
+		                                 where users.user_id = post.mem_id
+		                                union all
+		                                select logo_path
+		                                  from corporation
+		                                 where corporation.corp_id = post.mem_id) profile_path
 		                  from post
 		         where (post.post_code in (select ref_code
 		                                    from hashtag_list
