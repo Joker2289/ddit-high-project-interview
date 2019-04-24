@@ -53,5 +53,7 @@ public interface IFollowService {
 	 */
 	int select_followHashtagInfo(FollowVo followVo);
 	
-	int delete_personalfollow(String follow_code);
+	int delete_personalFollow(String follow_code);
+	
+	int insert_feedFollow(FollowVo followVo);
 }

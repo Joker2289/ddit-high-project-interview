@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script>
 </script>
 <div class="container">
@@ -25,11 +26,17 @@
   					<tbody class="col-md-12" style="top: 22px;">
   					
   					<c:forEach items="${personalList }" var="users">
+  					<c:set var="profile_addrpath" value="/profile?mem_id=${users.user_id }"/> 
+  					<c:choose>
+  						<c:when test="${fn:contains(users.profile_path, 'http')}">
+  							<c:set var="profile_path" value="${users.profile_path }"/> 
+  						</c:when>
+  					</c:choose>
   					
   						<!-- 일촌 리스트 조회 -->
   						<tr class=usersTr data-user_id=${users.user_id }>
 	  						<td>
-		               			<a href="/profileHome?user_id=${users.user_id }"><div style="width: 88px;height: 88px;background-image:url(/profile?mem_id=${users.user_id });background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 20px;border: 4px solid #E3EEF2;border-radius: 100px;"></div></a>
+		               			<a href="/profileHome?user_id=${users.user_id }"><div style="width: 88px;height: 88px;background-image:url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 20px;border: 4px solid #E3EEF2;border-radius: 100px;"></div></a>
 	  						</td>
 	  						<td style="vertical-align: middle;width: 446px;">
 	  							<a href="/profileHome?user_id=${users.user_id }"><div>${users.user_name }</div></a>

@@ -22,8 +22,14 @@
 					</c:when>
 					<c:otherwise>
 						<c:forEach items="${connectionReceiveList }" var="receive">
+						<c:set var="profile_addrpath" value="/profile?mem_id=${receive.user_id }"/>
+						<c:choose>
+							<c:when test="${fn:contains(receive.profile_path, 'http')}">
+								<c:set var="profile_path" value="${receive.profile_path }"/>
+							</c:when>
+						</c:choose>
 						<div style="display: flex;">
-						 	<div style="width: 59px;height: 59px;background-image:url(/profile?mem_id=${receive.user_id});background-repeat: no-repeat;background-size: cover;background-position: center; margin-right: 10px;">
+						 	<div style="width: 59px;height: 59px;background-image:url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center; margin-right: 10px;border-radius: 100px;border: 2px solid #E3EEF2;">
 						 	</div>
 						 	<div style="width: 580px;">
 						 		<div style="margin-bottom: 5px;margin-top: 5px;">
@@ -34,9 +40,9 @@
 						 		</div>
 						 	</div>
 						 	<div>
-						 		<button class="btn btn-default" style="border-style: hidden;margin-top: 20px;"
+						 		<button class="btn btn-default" style="border-style: hidden;margin-top: 0px;"
 						 		onclick="location.href='/receiveApply?user_id=${receive.user_id}&receive_id=${SESSION_MEMBERVO.mem_id}'">승낙</button>
-								<button class="btn btn-default" style="border-style: hidden;margin-top: 20px;"
+								<button class="btn btn-default" style="border-style: hidden;margin-top: 0px;"
 								onclick="location.href='/receiveCancel?user_id=${receive.user_id}&receive_id=${SESSION_MEMBERVO.mem_id}'">취소</button>
 						 	</div>
 						</div>

@@ -154,10 +154,20 @@
 	</select>
 	
 	<!-- 인맥 - 회사 - 언팔로우 -->
-	<delete id="delete_personalfollow" parameterType="String">
+	<delete id="delete_personalFollow" parameterType="String">
 		delete from follow
 		 where follow_code = #{follow_code}
 	</delete>
 	
+	<!-- 인맥 - 신선한 시각 팔로우 -->
+	<insert id="insert_feedFollow" parameterType="followVo">
+		insert into follow
+		values (
+			follow_code_seq.nextval,
+			#{mem_id},
+			#{ref_keyword},
+			#{division}
+		)
+	</insert>
 	
 </mapper> 

@@ -243,6 +243,7 @@ public class Personal_connectionController {
 			List<UsersVo> followConnections =
 					personalService.select_followConnections(memberVo);
 			model.addAttribute("followConnections", followConnections);
+			logger.debug("++++++ {}" , followConnections);
 			
 			return "/personalConnection/feedFilter/feedConnections";
 			
@@ -413,10 +414,20 @@ public class Personal_connectionController {
 	@RequestMapping(path={"/deleteFollow"})
 	public String deleteFollow(String follow_code) {
 		
-		//followService.delete_follow(follow_code);
-		followService.delete_personalfollow(follow_code);
+		followService.delete_personalFollow(follow_code);
 		
 		return "redirect:/feedFollowing";	
+	}
+	
+	@RequestMapping(path={"/insertFollow"})
+	public String insertFollow(FollowVo followVo) {
+		if(followVo.getDivision().equals("16")){
+			followVo.setRef_keyword("#"+followVo.getRef_keyword());
+		}
+		
+		followService.insert_feedFollow(followVo);
+		
+		return "redirect:/feedFollow";	
 	}
 	
 	
