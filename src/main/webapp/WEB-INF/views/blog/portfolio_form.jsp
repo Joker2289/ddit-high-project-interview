@@ -173,7 +173,7 @@ function showPortfolio(user_id){
 		success : function(data) {
 	
 			console.log(data);
-			$("#portfolioMenu").html(data);						
+			$("#portfolio_area").html(data);						
 		}
 	});	
 }

@@ -2,6 +2,7 @@ package kr.or.ddit.page.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.login.LoginController;
 
 @RequestMapping("/page")
@@ -32,7 +34,6 @@ public class PageController {
 	 */
 	@RequestMapping(path = { "/onenote" }, method = RequestMethod.GET)
 	public String onenoteView(HttpServletRequest req, Model model) {
-
 		return "onenote/onenote_write";
 	}
 
@@ -90,5 +91,19 @@ public class PageController {
 		model.addAttribute("src", src);
 		return "onenoteImageView";
 	}
+	
+	@RequestMapping("/code_modal_body")
+	public String code_modal_body(Model model) {
+		
+		return "onenote/code_modal_body";
+	}
+	
+	@RequestMapping("/color_menu")
+	public String color_menu(Model model) {
+		
+		return "onenote/color_menu";
+	}
+	
+	
 	
 }

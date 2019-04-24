@@ -254,8 +254,8 @@
         }
         
         #large-container {
-            width: 3000px;
-            height: 3000px;
+            /* width: 3000px; */
+            /* height: 3000px;  */
             overflow: hidden;
         }
         
@@ -273,41 +273,40 @@
         }
 
         #container {
-            background-color: lightpink;
-            width: 3000px;
-            height: 3000px;
-
+            background-color: #fff;
         }
-        
-        
-/*        
-        //monospace font 설정
-        @font-face {
-            font-family: monospace;
-            src: url(https://www.fontsquirrel.com/fonts/download/MonospaceTypewriter);
-        }
-*/
-        
     </style>
    
    
 </head>
 <body>
 	 <div role="tabpanel">
-
+	
+		<!-- 메뉴탭 페이지 네이션 -->
         <ul class="nav nav-tabs tab-menu" role="tablist">
             <li role="presentation" class="active"><a href="#textPage" aria-controls="textPage" role="tab" data-toggle="tab">TEXT</a></li>
             <li role="presentation"><a href="#drawingPage" aria-controls="drawingPage" role="tab" data-toggle="tab">그리기</a></li>
             <li role="presentation"><a href="#insertPage" aria-controls="insertPage" role="tab" data-toggle="tab">삽입</a></li>
-            <li role="presentation"><a href="#viewPage" aria-controls="viewPage" role="tab" data-toggle="tab">보기</a></li>
+            <li role="presentation"><a href="#savePage" aria-controls="savePage" role="tab" data-toggle="tab">저장</a></li>
         </ul>
 
-
+		<!-- 메뉴탭 div -->
         <div class="tab-content">
+        
+        	<!-- 텍스트 메뉴탭 -->
             <div id="textPage" role="tabpanel" class="tab-pane active">
-                <!-- 텍스트 추가-->
-                <button id="addText" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="텍스트 추가"><i class="fas fa-font"></i></button>
-                <!-- 폰트크기 변경-->
+            
+                <!-- 텍스트 추가 버튼-->
+                <button id="addText" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="텍스트 추가">
+               		<div class="btn_icon">
+               			<i class="fas fa-font"></i>
+               		</div>
+               		<div class="btn_name">
+               			<span>텍스트 추가</span>
+               		</div>
+               	</button>
+               	
+               	<!-- 폰트크기 변경-->
                 <select id="fontSize" disabled>
                     <option value="" hidden>폰트크기변경</option>
                     <option value="8">8</option>
@@ -329,7 +328,7 @@
                     <option value="48">48</option>
                     <option value="72">72</option>
                 </select>
-
+				
                 <!-- 폰트체 변경-->
                 <select id="font" disabled>
                     <option value="" hidden>폰트체변경</option>
@@ -340,114 +339,277 @@
                     <option value="Nanum Pen Script">나눔 펜 스크립트</option>
                     <option value="Do Hyeon">두 현</option>
                 </select>
+				
 
-                <div class="dropdown">
+                    
+                <!-- 텍스트 컬러픽커 드롭다운 -->
+               	<div class="btn-group">
+                  <!-- 글자 배경색 변경 --> 	
+                  <button id="bgColor" class="btn btn-default menu_btn" data-toggle="dropdown" title="텍스트 배경색" disabled>
+					  	<i class="material-icons" style="font-size:50px">font_download</i>
+					  	<div class="btn_name">
+	               			<span>배경색 변경</span>
+	               		</div>
+				  </button>
+				  
+				  <!-- 글자색 번경 -->
+				  <button id="fontColor" class="btn btn-default menu_btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-placement="bottom" title="글씨 색" disabled>
+	                    <i class="material-icons" style="font-size:50px">format_color_text</i>
+	                    <div class="btn_name">
+	               			<span>글자색 변경</span>
+	               		</div>
+                  </button>
+				  
+				  <!-- 드롭다운 메뉴 -->
+				  <ul class="dropdown-menu" role="menu">
+					    <div id="color-picker-container"></div>
+				  </ul>
+				</div>
 
-                    <button id="bgColor" class="btn btn-default" data-toggle="dropdown" title="텍스트 배경색" disabled><i class="material-icons" style="font-size:19px">font_download</i></button>
-
-
-                    <button id="fontColor" class="btn btn-default" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-placement="bottom" title="글씨 색" disabled>
-                        <i class="material-icons" style="font-size:15px">format_color_text</i>
-                    </button>
-
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="fontColor">
-                        <div id="color-picker-container"></div>
-                        <button id="pickerComplete"> 선택 완료 </button>
-                    </ul>
-
-                    <button id="fontBold" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="굵게" disabled><i class="fas fa-bold"></i></button>
-                    <button id="fontItalic" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="기울게" disabled><i class="fas fa-italic"></i></button>
-                    <button id="fontUnderLine" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="밑줄" disabled><i class="fas fa-underline"></i></button>
-                    <button id="fontDeleteLine" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="취소선" disabled><i class="fas fa-strikethrough"></i></button>
-
-                </div>
-
-
-                <button id="alignLeft" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="왼쪽 정렬" disabled><i class="fas fa-align-left"></i></button>
-                <button id="alignCenter" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="가운데 정렬" disabled><i class="fas fa-align-center"></i></button>
-                <button id="alignRight" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="오른쪽 정렬" disabled><i class="fas fa-align-right"></i></button>
+                    
+				<!-- Bold체 버튼-->
+                <button id="fontBold" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="굵게" disabled>
+                	<div class="btn_icon">
+                		<i class="fas fa-bold"></i>
+                	</div>
+                	<div class="btn_name">
+                		<span>굵게</span>
+                	</div>
+                </button>
+                
+                <!-- Itaric체 버튼 -->
+                <button id="fontItalic" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="기울게" disabled>
+                	<div class="btn_icon">
+                		<i class="fas fa-italic"></i>
+                	</div>
+                	<div class="btn_name">
+                		<span>기울게</span>
+                	</div>
+                </button>
+                
+                <!-- 밑줄 버튼 -->
+                <button id="fontUnderLine" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="밑줄" disabled>
+                	<div class="btn_icon">
+                		<i class="fas fa-underline"></i>
+                	</div>
+                	<div class="btn_name">
+                		<span>밑줄</span>
+                	</div>
+                </button>
+                
+                <!-- 취소선 버튼 -->
+                <button id="fontDeleteLine" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="취소선" disabled>
+                	<div class="btn_icon">
+                		<i class="fas fa-strikethrough"></i>
+                	</div>
+					<div class="btn_name">
+						<span>취소선</span>
+					</div>
+				</button>
+                
+                <!-- 왼쪽 정렬 -->
+				<button id="alignLeft" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="왼쪽 정렬" disabled>
+					<div class="btn_icon">
+						<i class="fas fa-align-left"></i>
+					</div>
+					<div class="btn_name">
+						<span>왼쪽 정렬</span>
+					</div>
+				</button>
+				
+				<!-- 가운데 정렬 -->
+                <button id="alignCenter" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="가운데 정렬" disabled>
+                	<div class="btn_icon">
+                		<i class="fas fa-align-center"></i>
+                	</div>
+                	<div class="btn_name">
+                		<span>가운데 정렬</span>
+                	</div>
+                </button>
+                
+               	<!-- 오른쪽 정렬 -->
+                <button id="alignRight" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="오른쪽 정렬" disabled>
+                	<div class="btn_icon">
+                		<i class="fas fa-align-right"></i>
+                	</div>
+                	<div class="btn_name">
+                		<span>오른쪽 정렬</span>
+                	</div>
+                </button>
 
             </div>
-            <!--textpage-->
+            <!-- textpage -->
 
 
             <!-- drawingPage -->
             <div id="drawingPage" role="tabpanel" class="tab-pane">
-                <button id="addSquare" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="사각형"><i class="far fa-square"></i></button>
+                
+                <!-- 사각형 그리기 -->
+                <button id="addSquare" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="사각형">
+                	<div class="btn_icon">
+                		<i class="far fa-square"></i>
+                	</div>
+                	<div class="btn_name">
+                		<span>사각형 그리기</span>
+                	</div>
+                </button>
 
-                <button id="addTriangle" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="삼각형" style="font-size:20px">△</button>
+				<!-- 삼각형 그리기 -->
+                <button id="addTriangle" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="삼각형">
+                	<span style="font-size: 40px; font-weight: bold">△</span>
+                	<div class="btn_name">
+                		<span>삼각형 그리기</span>
+                	</div>
+                </button>
 
-                <button id="addCircle" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="원"><i class="far fa-circle"></i></button>
+				<!-- 원 그리기 -->
+                <button id="addCircle" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="원">
+                	<div class="btn_icon">
+                		<i class="far fa-circle"></i>
+                	</div>
+                	<div class="btn_name">
+                		<span>원 그리기</span>
+                	</div>
+                </button>
 
-                <button id="addLine" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="선" style="font-size:15px">/</button>
+				<!-- 선 그리기 -->
+                <button id="addLine" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="선">
+                	<span style="font-size: 40px; font-weight: bold">/</span>
+                	<div class="btn_name">
+                		<span>선 그리기</span>
+                	</div>
+                </button>
+				
+				<!-- 한쪽 화살표 -->
+                <button id="addArrow" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="한쪽 화살표" style="font-size:15px">
+                	<span style="font-size: 40px; font-weight: bold">↗</span>
+	               	<div class="btn_name">
+	               		<span>한쪽 화살표</span>
+	               	</div>
+                </button>
 
-                <button id="addArrow" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="한쪽 화살표" style="font-size:15px">↗</button>
+				<!-- 양쪽 화살표 -->
+                <button id="addDArrow" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="양쪽 화살표">
+					<span style="font-size: 40px; font-weight: bold">⤢</span>
+                	<div class="btn_name">
+                		<span>양쪽 화살표</span>
+                	</div>
+                </button>
+                
+				<!-- 도형 색변경 -->
+                <div class="btn-group">
+                	<button id="strokeColor" class="btn btn-default menu_btn" data-toggle="dropdown" title="텍스트 배경색" disabled>
+						<div class="btn_icon">
+							<i class="fas fa-fill-drip"></i>
+						</div>
+						<div class="btn_name">
+							<span>도형색 변경</span>
+						</div>
+					</button>
 
-                <button id="addDArrow" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="양쪽 화살표">⤢</button>
-
-                <div class="dropdown">
-                    <select id="strokeWidth" disabled>
-                        <option value="" hidden>선굵기 변경</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-
-                    <button id="strokeColor" class="btn btn-default" data-toggle="dropdown" title="텍스트 배경색" disabled><i class="fas fa-palette"></i></button>
-
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="strokeColor">
+                    <ul class="dropdown-menu" role="menu">
                         <div id="color-picker-stroke"></div>
-                        <button id="pickerComplete"> 선택 완료 </button>
                     </ul>
-
-
-                </div>
-
-            </div>
-
+				</div>
+				
+				 <!-- 선굵기 변경 -->
+                <select id="strokeWidth" disabled>
+                    <option value="" hidden>선굵기 변경</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+			</div>
+			<!-- Draw Page -->
+			
+			<!-- Insert Page -->
             <div id="insertPage" role="tabpanel" class="tab-pane">
 
-                <button id="imageBtn" class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="bottom" title="이미지 삽입">
-                    <i class="far fa-images"></i>
+                <button id="imageBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="이미지 삽입">
+                   	<div class="btn_icon">
+                    	<i class="far fa-images"></i>
+                    </div>
+                    <div class="btn_name">
+                    	<span>이미지 첨부</span>
+                    </div>
                 </button>
-                <form id="imageForm">
-                	<input id="imageStorage" name="imageStorage" class="btn btn-primary" type="file" onchange="imageUpload(this);">
-                </form>
-
-
-                <button id="codeBtn" class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="bottom" title="코드 작성">
-                    <i class="fas fa-code"></i>
-                </button>
-
-                <button id="linkBtn" class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="bottom" title="링크 삽입">
-                    <i class="fas fa-link"></i>
-                </button>
-
-                <button id="videoBtn" class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="bottom" title="동영상 링크 삽입">
-                    <i class="fas fa-video"></i>
+                
+				<button id="codeBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="코드 작성">
+                    <div class="btn_icon">
+                    	<i class="fas fa-code"></i>
+                    </div>
+                    <div class="btn_name">
+                    	<span>코드 작성</span>
+                    </div>
                 </button>
 
-                <button id="emoticonBtn" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#emoticonList" aria-expanded="false" aria-controls="emoticonList">
-                    <i class="fab fa-etsy"></i>
+                <button id="linkBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="링크 삽입">
+                    <div class="btn_icon">
+                    	<i class="fas fa-link"></i>
+                    </div>
+                    <div class="btn_name">
+                    	<span>링크 삽입</span>
+                    </div>
                 </button>
 
+                <button id="videoBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="동영상 링크 삽입">
+                    <div class="btn_icon">
+                    	<i class="fas fa-video"></i>
+                    </div>
+                    <div class="btn_name">
+                    	<span>비디오 추가</span>
+                    </div>
+                </button>
 
-
-
-            </div>
-
-
-
-            <div id="viewPage" role="tabpanel" class="tab-pane">
-                <button id="imageSaveBtn" class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="bottom" title="이미지 저장">
-                    <i class="fas fa-link"></i>
+                <button id="emoticonBtn" class="btn btn-primary menu_btn" type="button" data-toggle="collapse" data-target="#emoticonList" aria-expanded="false" aria-controls="emoticonList">
+                    <div class="btn_icon">
+                    	<i class="far fa-meh"></i>
+                    </div>
+                    <div class="btn_name">
+                    	<span>이모티콘 추가</span>
+                    </div>
+                </button>
+			</div>
+            <!-- insert Page -->
+            
+            
+            <!-- save Page -->
+			<div id="savePage" role="tabpanel" class="tab-pane">
+			
+				<button id="imageSaveBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="이미지 저장" onclick="stage_save_img();">
+                    <div class="btn_icon">
+                    	<i class="fas fa-link"></i>
+                    </div>
+                    <div class="btn_name">
+                    	이미지 저장
+                    </div>
+                </button>
+                
+                
+                <button id="pageSaveBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="페이지 저장" onclick="stage_save_page();">
+                    <div class="btn_icon">
+                    	<i class="fas fa-link"></i>
+                    </div>
+                    <div class="btn_name">
+                    	페이지 저장
+                    </div>
+                </button>
+                
+                <button id="stageColorBtn" class="btn btn-primary menu_btn" type="button" data-toggle="popover" data-container="body"
+				data-toggle="popover" data-placement="bottom" data-content=" " data-trigger="focus" data-placement="bottom" onclick="updateStageColor();">
+                    <div class="btn_icon">
+                    	<i class="fas fa-link"></i>
+                    </div>
+                    <div class="btn_name">
+                    	배경색 변경
+                    </div>
                 </button>
             </div>
 
@@ -458,7 +620,11 @@
 
     </div>
     <!--tab-pannel-->
-
+	
+	<!-- 이미지 첨부 숨김 태그 -->
+	<form id="imageForm" hidden>
+    	<input id="imageStorage" name="imageStorage" class="btn btn-primary" type="file" onchange="imageUpload(this);" hide>
+    </form>
 
     <!-- emoticon 숨김 패널-->
     <!-- .collapse / 숨김 -->
@@ -476,8 +642,8 @@
     </div>
 
 
-    <div id="test">
-        <!-- canvas stage-->
+    <div id="view_div">
+        <!-- canvas stage -->
         <div id="scroll-container">
             <div id="large-container">
                 <div id="container">
@@ -487,263 +653,27 @@
                 </div>
             </div>
         </div>
+        
+        
+	</div>
 
-
-
-    </div>
-
-
-
-    <!-- code 작성 modal-->
-    <div class="jk-modalsasun">
-        <div class="jk-modal">
-            <div class="jk-row">
-                <div id="modal-head" class="jk-modal-head">
-                    <h1>코드 작성</h1>
-                </div>
-            </div>
-
-
-            <div class="jk-row">
-                <div id="modal-body" class="jk-modal-body">
-
-
-                    <select id='modeSelect'>
-                        <option value="" selected>언어 선택</option>
-                        <option value="apl">apl</option>
-                        <option value="asciiarmor">asciiarmor</option>
-                        <option value="asn.1">asn.1</option>
-                        <option value="asterisk">asterisk</option>
-                        <option value="brainfuck">brainfuck</option>
-                        <option value="clike">clike</option>
-                        <option value="clojure">clojure</option>
-                        <option value="cmake">cmake</option>
-                        <option value="cobol">cobol</option>
-                        <option value="coffeescript">coffeescript</option>
-                        <option value="commonlisp">commonlisp</option>
-                        <option value="crystal">crystal</option>
-                        <option value="css">css</option>
-                        <option value="cypher">cypher</option>
-                        <option value="d">d</option>
-                        <option value="dart">dart</option>
-                        <option value="diff">diff</option>
-                        <option value="django">django</option>
-                        <option value="dockerfile">dockerfile</option>
-                        <option value="dtd">dtd</option>
-                        <option value="dylan">dylan</option>
-                        <option value="ebnf">ebnf</option>
-                        <option value="ecl">ecl</option>
-                        <option value="eiffel">eiffel</option>
-                        <option value="elm">elm</option>
-                        <option value="erlang">erlang</option>
-                        <option value="factor">factor</option>
-                        <option value="fcl">fcl</option>
-                        <option value="forth">forth</option>
-                        <option value="fortran">fortran</option>
-                        <option value="gas">gas</option>
-                        <option value="gfm">gfm</option>
-                        <option value="gherkin">gherkin</option>
-                        <option value="go">go</option>
-                        <option value="groovy">groovy</option>
-                        <option value="haml">haml</option>
-                        <option value="handlebars">handlebars</option>
-                        <option value="haskell">haskell</option>
-                        <option value="haskell-literate">haskell-literate</option>
-                        <option value="haxe">haxe</option>
-                        <option value="htmlembedded">htmlembedded</option>
-                        <option value="htmlmixed">htmlmixed</option>
-                        <option value="http">http</option>
-                        <option value="idl">idl</option>
-                        <option value="javascript">javascript</option>
-                        <option value="jinja2">jinja2</option>
-                        <option value="jsx">jsx</option>
-                        <option value="lua">lua</option>
-                        <option value="markdown">markdown</option>
-                        <option value="mathematica">mathematica</option>
-                        <option value="mbox">mbox</option>
-                        <option value="mirc">mirc</option>
-                        <option value="mllike">mllike</option>
-                        <option value="modelica">modelica</option>
-                        <option value="mscgen">mscgen</option>
-                        <option value="mumps">mumps</option>
-                        <option value="nginx">nginx</option>
-                        <option value="nsis">nsis</option>
-                        <option value="ntriples">ntriples</option>
-                        <option value="octave">octave</option>
-                        <option value="oz">oz</option>
-                        <option value="pascal">pascal</option>
-                        <option value="pegjs">pegjs</option>
-                        <option value="perl">perl</option>
-                        <option value="php">php</option>
-                        <option value="pig">pig</option>
-                        <option value="powershell">powershell</option>
-                        <option value="properties">properties</option>
-                        <option value="protobuf">protobuf</option>
-                        <option value="pug">pug</option>
-                        <option value="pupuppetg">puppet</option>
-                        <option value="python">python</option>
-                        <option value="r">r</option>
-                        <option value="rpm">rpm</option>
-                        <option value="rst">rst</option>
-                        <option value="ruby">ruby</option>
-                        <option value="rust">rust</option>
-                        <option value="sas">sas</option>
-                        <option value="sass">sass</option>
-                        <option value="scheme">scheme</option>
-                        <option value="shell">shell</option>
-                        <option value="sieve">sieve</option>
-                        <option value="slim">slim</option>
-                        <option value="smalltalk">smalltalk</option>
-                        <option value="smarty">smarty</option>
-                        <option value="solr">solr</option>
-                        <option value="soy">soy</option>
-                        <option value="sparql">sparql</option>
-                        <option value="spreadsheet">spreadsheet</option>
-                        <option value="sql">sql</option>
-                        <option value="stex">stex</option>
-                        <option value="stylus">stylus</option>
-                        <option value="swift">swift</option>
-                        <option value="tcl">tcl</option>
-                        <option value="textile">textile</option>
-                        <option value="tiddlywiki">tiddlywiki</option>
-                        <option value="tiki">tiki</option>
-                        <option value="toml">toml</option>
-                        <option value="tornado">tornado</option>
-                        <option value="troff">troff</option>
-                        <option value="ttcn">ttcn</option>
-                        <option value="ttcn-cfg">ttcn-cfg</option>
-                        <option value="turtle">turtle</option>
-                        <option value="twig">twig</option>
-                        <option value="vb">vb</option>
-                        <option value="vbscript">vbscript</option>
-                        <option value="velocity">velocity</option>
-                        <option value="verilog">verilog</option>
-                        <option value="vhdl">vhdl</option>
-                        <option value="vue">vue</option>
-                        <option value="webidl">webidl</option>
-                        <option value="xml">xml</option>
-                        <option value="xquery">xquery</option>
-                        <option value="yacas">yacas</option>
-                        <option value="yaml-frontmatter">yaml-frontmatter</option>
-                        <option value="z80">z80</option>
-                    </select>
-
-
-                    <select id='themeSelect'>
-                        <option value="" selected>테마 선택</option>
-                        <option value="3024-day">3024-day</option>
-                        <option value="3024-night">3024-night</option>
-                        <option value="abcdef">abcdef</option>
-                        <option value="ambiance">ambiance</option>
-                        <option value="base16-dark">base16-dark</option>
-                        <option value="base16-light">base16-light</option>
-                        <option value="bespin">bespin</option>
-                        <option value="blackboard">blackboard</option>
-                        <option value="cobalt">cobalt</option>
-                        <option value="colorforth">colorforth</option>
-                        <option value="darcula">darcula</option>
-                        <option value="duotone-dark">duotone-dark</option>
-                        <option value="duotone-light">duotone-light</option>
-                        <option value="eclipse">eclipse</option>
-                        <option value="elegant">elegant</option>
-                        <option value="erlang-dark">erlang-dark</option>
-                        <option value="gruvbox-dark">gruvbox-dark</option>
-                        <option value="hopscotch">hopscotch</option>
-                        <option value="icecoder">icecoder</option>
-                        <option value="idea">idea</option>
-                        <option value="isotope">isotope</option>
-                        <option value="lesser-dark">lesser-dark</option>
-                        <option value="liquibyte">liquibyte</option>
-                        <option value="lucario">lucario</option>
-                        <option value="material">material</option>
-                        <option value="mbo">mbo</option>
-                        <option value="mdn-like">mdn-like</option>
-                        <option value="midnight">midnight</option>
-                        <option value="monokai">monokai</option>
-                        <option value="neat">neat</option>
-                        <option value="neo">neo</option>
-                        <option value="night">night</option>
-                        <option value="nord">nord</option>
-                        <option value="oceanic-next">oceanic-next</option>
-                        <option value="panda-syntax">panda-syntax</option>
-                        <option value="paraiso-dark">paraiso-dark</option>
-                        <option value="paraiso-light">paraiso-light</option>
-                        <option value="pastel-on-dark">pastel-on-dark</option>
-                        <option value="railscasts">railscasts</option>
-                        <option value="rubyblue">rubyblue</option>
-                        <option value="seti">seti</option>
-                        <option value="shadowfox">shadowfox</option>
-                        <option value="solarized">solarized</option>
-                        <option value="ssms">ssms</option>
-                        <option value="the-matrix">the-matrix</option>
-                        <option value="tomorrow-night-bright">tomorrow-night-bright</option>
-                        <option value="tomorrow-night-eighties">tomorrow-night-eighties</option>
-                        <option value="ttcn">ttcn</option>
-                        <option value="twilight">twilight</option>
-                        <option value="vibrant-ink">vibrant-ink</option>
-                        <option value="xq-dark">xq-dark</option>
-                        <option value="xq-light">xq-light</option>
-                        <option value="yeti">yeti</option>
-                        <option value="yonce">yonce</option>
-                        <option value="zenburn">zenburn</option>
-                    </select>
-
-                    <!--                    style="color:red; font-size:20px;-->
-                    <!-- code를 image로 변환할 영억-->
-                    <!--                    <div id="code_capture">-->
-                    <!-- code 입력-->
-                    <textarea id='code_editor'>
-//테마 선택
-$('#themeSelect').on('change', function () {
-    code_theme = $('#themeSelect').val();
-
-    editor.setOption('theme', code_theme);
-    editor.save();
-});
-editor.setSize(600, 800);
-                    </textarea>
-
-
-
-
-                </div>
-            </div>
-
-            <div class="jk-row">
-                <div id="modal-footer" class="jk-modal-footer">
-                    <button id="completeBtn" class="jk-join-btn" type="button">작성</button>
-                    <button id="closeBtn" class="jk-close-btn" type="button">닫기</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
+	<%@ include file="/WEB-INF/views/onenote/onenote_modal.jsp"%>
+<!-- code 작성 modal-->
     
-<%-- 	
-	<%@ include file="/WEB-INF/views/module/header_D.jsp" %>
-	
-	<%@ include file="/WEB-INF/views/module/side_D.jsp" %> --%>
-	
-	
+
 </body>
 
 <script>
-    
-
-    //이미지 첨부 - 미완
-    $('#imageStorage').hide();
-
-    $('#imageBtn').on('click', function() {
-        $('#imageStorage').click();
-    });
-
-    //tooltip
+	$('#stageColorBtn').popover('enable');
+	
+	// 버튼 툴팁
     $('[data-toggle="tooltip"]').on('mouseover', function() {
         $('[data-toggle="tooltip"]').tooltip();
     });
 
     var options = {};
     
+    /* 컬러 픽커 */
 	var colorPicker = new iro.ColorPicker("#color-picker-container", {
         width: 250,
         color: "#f00", //기본색
@@ -762,12 +692,7 @@ editor.setSize(600, 800);
         handleRadius: 10, //포인트 반지름
     });
 
-
-
-
-
-
-    //해결해야함
+	//해결해야함
 
     // 1. 한줄 띄우고 작성된 text가 있을시 data load error
     // 2. load 된 tf 안보임
@@ -775,14 +700,14 @@ editor.setSize(600, 800);
     // 4. 클릭했을때 zIndex 
 
 
-    var data = '{"attrs":{"width":3000,"height":3000,"name":"stage"},"className":"Stage","children":[{"attrs":{"name":"layer 15"},"className":"Layer","children":[{"attrs":{"name":"image group 1","draggable":true,"x":683,"y":69},"className":"Group","children":[{"attrs":{"x":300,"y":300,"name":"image 1","src":"http://localhost:8080/page/imageView?src=/Users/pjk/workspace_spring/.metadata/.plugins/org.eclipse.wst.server.core/tmp2/wtpwebapps/interview/images/onenote/7e162cf5-0ed8-4b51-a7de-a1bd6269493e","width":312,"height":288},"className":"Image"},{"attrs":{"x":300,"y":300,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor topLeft","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"},{"attrs":{"x":612,"y":300,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor topRight","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"},{"attrs":{"x":300,"y":588,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor bottomLeft","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"},{"attrs":{"x":612,"y":588,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor bottomRight","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"}]},{"attrs":{"name":"emoticon group 3","draggable":true,"x":-64,"y":-22},"className":"Group","children":[{"attrs":{"x":467.0104160308838,"y":453.80902099609375,"width":300,"height":300,"name":"emoticon 3","src":"/onenote/emoticon/holly.png"},"className":"Image"},{"attrs":{"x":467.0104160308838,"y":453.80902099609375,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor topLeft","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"},{"attrs":{"x":767.0104160308838,"y":453.80902099609375,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor topRight","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"},{"attrs":{"x":767.0104160308838,"y":753.8090209960938,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor bottomRight","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"},{"attrs":{"x":467.0104160308838,"y":753.8090209960938,"stroke":"#666","fill":"#ddd","radius":4,"name":"anchor bottomLeft","draggable":true,"dragOnTop":false,"visible":false},"className":"Circle"}]}]}]}';
+    var data = "";
 
     var node_num = 0;
     var state = '';
-    //var width = window.innerWidth;
-    var width = 3000;
-    //var height = window.innerWidth;
-    var height = 3000;
+    var width = window.innerWidth;
+    //var width = 3000;
+    var height = window.innerHeight;
+    //var height = 3000;
     var selectNode;
     var today = new Date();
 
@@ -813,20 +738,7 @@ editor.setSize(600, 800);
     }
     stage.add(layer);
 
-    //    var scrollContainer = document.getElementById('scroll-container');
-    //
-    //    console.log(scrollContainer);
-    //
-    //    scrollContainer.addEventListener('scroll', function() {
-    //        var dx = scrollContainer.scrollLeft;
-    //        var dy = scrollContainer.scrollTop;
-    //        stage.container().style.transform = 'translate(' + dx + 'px, ' + dy + 'px)';
-    //        stage.x(-dx);
-    //        stage.y(-dy);
-    //        stage.batchDraw();
-    //    })
-
-    var target;
+	var target;
 
     //text node그룹 변수
     var group, textNode, placeHolder, tf, rect; //그룹, 텍스트노드, 입력, 트랜스폼, 테두리
@@ -836,12 +748,7 @@ editor.setSize(600, 800);
     tf = new Konva.Transformer();
 
 
-    $('#videoBtn').on('click', function() {
-        addVideo();
-    });
-
-
-    //textPage js
+	//textPage js
     //font 효과
 
     //fontSize 변경
@@ -895,10 +802,6 @@ editor.setSize(600, 800);
     });
 
 
-    $('#pickerComplete').on('click', function() {
-        $('#fontColor').click();
-    });
-
 
     //font체 변경
     $("#font").on('change', function() {
@@ -914,8 +817,7 @@ editor.setSize(600, 800);
         var initialMeasure = ctx.measureText(TEXT_TEXT);
         var initialWidth = initialMeasure.width;
 
-
-        function whenFontIsLoaded(callback, attemptCount) {
+		function whenFontIsLoaded(callback, attemptCount) {
             if (attemptCount === undefined) {
                 attemptCount = 0;
             }
@@ -1131,9 +1033,7 @@ editor.setSize(600, 800);
         } else {
             selectNode.strokeWidth(strokeWidth);
         }
-
-
-        layer.draw();
+		layer.draw();
     });
 
     //도형 선색상 번경
@@ -1168,6 +1068,16 @@ editor.setSize(600, 800);
 
 
     //insertPage
+    
+    //이미지 첨부 - 미완
+    $('#imageBtn').on('click', function() {
+        $('#imageStorage').click();
+    });
+	
+	//비디오 삽입
+    $('#videoBtn').on('click', function() {
+        addVideo();
+    });
 
     //이모티콘 버튼 
     $('#emoticonBtn').on('click', function() {
@@ -1176,39 +1086,19 @@ editor.setSize(600, 800);
 
     //코드버튼
     $('#codeBtn').on('click', function() {
-        $('.jk-modalsasun').css('display', 'block');
-        addCode();
+    	
+    	$.ajax({
+			url : "${cp}/page/code_modal_body",
+			success : function(data) {
+				$('#modal_head').text("코드작성");
+				$('#modal-body').html(data);
+				$('.jk-modalsasun').css('display', 'block');			
+			}
+		});
+    	addCode();
     });
-
-
-    //viewPage
-    $('#imageSaveBtn').on('click', function() {
-        html2canvas($('#test'), {
-
-            onrendered: function(canvas) {
-
-                canvas.toBlob(function(blob) {
-                	
-                	drawImg(canvas.toDataURL('image/png'));
-					
-                	saveAs(canvas.toDataURL(), 'file-name.png');
-
-                });
-
-            }
-
-        });
-    });
-
-
-
-
-    //    stage.on('mousemove', (e) => {
-    //        var dd = stage.getPointerPosition();
-    //        console.log(dd);
-    //    });
-
-    //stage 클릭
+    
+	//stage 클릭
     stage.on('click', (e) => {
 
         target = e.target;
@@ -1369,6 +1259,8 @@ editor.setSize(600, 800);
         $("#fontDeleteLine").attr('disabled', true);
 
         //버튼 색
+        $('#fontColor').attr('background-color', 'white');
+        $('#bgColor').attr('background-color', 'white');
         $("#fontBold").css('background-color', 'white');
         $("#fontItalic").css('background-color', 'white');
         $("#fontUnderLine").css('background-color', 'white');
@@ -1463,10 +1355,13 @@ editor.setSize(600, 800);
 
         }
     }
+    
+    
 </script>
 <script src="/onenote/js/main_text_js.js"></script>
 <script src="/onenote/js/main_drawing_js.js"></script>
 <script src="/onenote/js/main_insert_js.js"></script>
+<script src="/onenote/js/main_save_js.js"></script>
 <script src="/onenote/js/main_util_js.js"></script>
 
 </html>

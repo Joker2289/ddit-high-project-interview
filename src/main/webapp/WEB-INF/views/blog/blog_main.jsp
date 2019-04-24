@@ -24,43 +24,17 @@
 			<div class="col-md-3">
 				<%@ include file="/WEB-INF/views/blog/profile_area.jsp"%><!-- /프로필영역 -->
 				
-				<div id=portfolioMenu>
+				<div id=portfolio_area>
 					<%@ include file="/WEB-INF/views/blog/portfolio_area.jsp"%><!-- /포트폴리오 영역 -->
 				</div>
 			</div>
 
 			<div id="content_area">
-				<div class="col-md-6">
-	
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<span class="span-text"><a>게시글 영역</a></span>
-						</div>
-	
-						<div class="panel-body">
-							<span class="span-text"><a>게시글 영역</a></span>
-						</div>
-	
-						<div class="panel-body">
-							<span class="span-text"><a>게시글 영역</a></span>
-						</div>
-	
-						<div class="panel-body">
-							<span class="span-text"><a>게시글 영역</a></span>
-						</div>
-	
-						<div class="panel-body">
-							<span class="span-text"><a>게시글 영역</a></span>
-						</div>
-	
-						<div class="panel-body">
-							<span class="span-text"><a>게시글 영역</a></span>
-						</div>
-					</div>
+				
+				<div id="page_area">
+					<%@ include file="/WEB-INF/views/blog/page_area.jsp"%><!-- 타임라인 영역 -->
 				</div>
-
-
-
+				
 				<%@ include file="/WEB-INF/views/blog/right_area.jsp"%><!-- 오른쪽 메뉴 영역 -->
 				
 			</div>
