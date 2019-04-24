@@ -45,80 +45,92 @@
 	
 	<!-- 타임라인 게시물 목록 출력(page적용) -->
 	<select id="select_timelinePost" parameterType="paginationVo" resultType="postVo">
-		select *
-		  from (select b.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
-		          from (select post.*, (select count(ref_code)
-		                                  from post_comment
-		                                 where ref_code = post_code
-		                                   and division = 28) commentcount,
-		                               (select count(ref_code)
-		                                  from good
-		                                 where ref_code = post_code
-		                                   and division = 28) goodcount,
-		                               (select mem_division
-                                  		  from member
-                                 		 where mem_id = post.mem_id) mem_division,
-		                               (select profile_path
-		                                  from users
-		                                 where users.user_id = post.mem_id
-		                                union all
-		                                select logo_path
-		                                  from corporation
-		                                 where corporation.corp_id = post.mem_id) profile_path
-		                  from post
-		         where (post.mem_id in (select ref_keyword
+		with t as (select a.*
+		             from post a               
+		            where a.post_code not in(select post_code
+		                                       from hide_post
+		                                      where mem_id = #{mem_id})
+		              and a.post_code not in (select ref_code
+		                                    from reportcontent
+		                                   where division = 28
+		                                     and mem_id = #{mem_id})
+		              and a.mem_id in (select ref_keyword
 		                                 from follow
 		                                where mem_id = #{mem_id}
 		                                  and (division = '43' or division = '11'))
-		           and post.post_code not in (select post_code
-		                                    	from hide_post
-		                                  	   where mem_id = #{mem_id})
-				   and post.post_code not in (select ref_code
-                                        		from reportcontent
-                                       		   where division = 28
-                                         	     and mem_id = #{mem_id}))		                                   
-		            or post.mem_id = #{mem_id}
-		        order by post_date desc) b ) 
-		where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
+		               or a.mem_id = #{mem_id})
+		select *
+		  from (select g.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
+		          from (select c.*, d.commentcount, e.goodcount, f.profile_path
+		                  from (select a.*, b.mem_division
+		                          from t a, member b
+		                         where a.mem_id = b.mem_id) c, 
+		                       (select ref_code, count(*) commentcount
+		                         from post_comment 
+		                        where ref_code in (select post_code from t)
+		                        group by ref_code)d,
+		                       (select ref_code, count(*) goodcount
+		                          from good 
+		                         where ref_code in (select post_code from t)
+		                        group by ref_code) e,
+		                       (select profile_path as profile_path, user_id as mem_id
+		                          from users
+		                         where user_id in (select mem_id from t)
+		                        union all
+		                        select logo_path as profile_path, corp_id as mem_id
+		                          from corporation
+		                         where corp_id in (select mem_id from t)
+		                         ) f
+		                 where c.post_code = d.ref_code(+)
+		                   and c.post_code = e.ref_code(+)
+		                   and c.mem_id = f.mem_id
+		                order by post_date desc) g)
+		 where rn between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
 	</select>
 	
 	<select id="select_nextPost" parameterType="paginationVo" resultType="postVo">
-		select *
-		  from (select b.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
-		          from (select post.*, (select count(ref_code)
-		                                  from post_comment
-		                                 where ref_code = post_code
-		                                   and division = 28) commentcount,
-		                               (select count(ref_code)
-		                                  from good
-		                                 where ref_code = post_code
-		                                   and division = 28) goodcount,
-		                               (select mem_division
-                                  		  from member
-                                 		 where mem_id = post.mem_id) mem_division,
-		                               (select profile_path
-		                                  from users
-		                                 where users.user_id = post.mem_id
-		                                union all
-		                                select logo_path
-		                                  from corporation
-		                                 where corporation.corp_id = post.mem_id) profile_path
-		                  from post
-		         where (post.mem_id in (select ref_keyword
+		with t as (select a.*
+		             from post a               
+		            where a.post_code not in(select post_code
+		                                       from hide_post
+		                                      where mem_id = #{mem_id})
+		              and a.post_code not in (select ref_code
+		                                    from reportcontent
+		                                   where division = 28
+		                                     and mem_id = #{mem_id})
+		              and a.mem_id in (select ref_keyword
 		                                 from follow
 		                                where mem_id = #{mem_id}
 		                                  and (division = '43' or division = '11'))
-		           and post.post_code not in (select post_code
-		                                    	from hide_post
-		                                   	   where mem_id = #{mem_id})
-				   and post.post_code not in (select ref_code
-                                        		from reportcontent
-                                       		   where division = 28
-                                         	     and mem_id = #{mem_id}))
-		            or post.mem_id = #{mem_id}
-		        order by post_date desc) b ) 
-		where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
-		  and post_code &lt; #{criteria_code}
+		               or a.mem_id = #{mem_id})
+		select *
+		  from (select g.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
+		          from (select c.*, d.commentcount, e.goodcount, f.profile_path
+		                  from (select a.*, b.mem_division
+		                          from t a, member b
+		                         where a.mem_id = b.mem_id) c, 
+		                       (select ref_code, count(*) commentcount
+		                         from post_comment 
+		                        where ref_code in (select post_code from t)
+		                        group by ref_code)d,
+		                       (select ref_code, count(*) goodcount
+		                          from good 
+		                         where ref_code in (select post_code from t)
+		                        group by ref_code) e,
+		                       (select profile_path as profile_path, user_id as mem_id
+		                          from users
+		                         where user_id in (select mem_id from t)
+		                        union all
+		                        select logo_path as profile_path, corp_id as mem_id
+		                          from corporation
+		                         where corp_id in (select mem_id from t)
+		                         ) f
+		                 where c.post_code = d.ref_code(+)
+		                   and c.post_code = e.ref_code(+)
+		                   and c.mem_id = f.mem_id
+		                order by post_date desc) g)
+		 where rn between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
+		   and post_code &lt; #{criteria_code}
 	</select>
 	
 	<!-- 특정 게시물 조회 -->	
@@ -142,123 +154,147 @@
 	
 	<!-- 저장한 글 조회 -->
 	<select id="select_savePost" parameterType="paginationVo" resultType="postVo">
+		with t as (select a.*
+		             from post a               
+		            where a.post_code in (select save_post_code
+		                                 from save_post
+		                                where mem_id = #{mem_id}))
 		select *
-		  from (select b.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
-		          from (select post.*, (select count(ref_code)
-		                                  from post_comment
-		                                 where ref_code = post_code
-		                                   and division = 28) commentcount,
-		                               (select count(ref_code)
-		                                  from good
-		                                 where ref_code = post_code
-		                                   and division = 28) goodcount,
-		                               (select mem_division
-                                  		  from member
-                                 		 where mem_id = post.mem_id) mem_division,
-		                               (select profile_path
-		                                  from users
-		                                 where users.user_id = post.mem_id
-		                                union all
-		                                select logo_path
-		                                  from corporation
-		                                 where corporation.corp_id = post.mem_id) profile_path
-		                  from post
-		         where (post.post_code in (select save_post_code
-		                                    from save_post
-		                                   where mem_id = #{mem_id}))
-		        order by post_date desc) b )
-		 where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
+		  from (select g.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
+		          from (select c.*, d.commentcount, e.goodcount, f.profile_path
+		                  from (select a.*, b.mem_division
+		                          from t a, member b
+		                         where a.mem_id = b.mem_id) c, 
+		                       (select ref_code, count(*) commentcount
+		                         from post_comment 
+		                        where ref_code in (select post_code from t)
+		                        group by ref_code)d,
+		                       (select ref_code, count(*) goodcount
+		                          from good 
+		                         where ref_code in (select post_code from t)
+		                        group by ref_code) e,
+		                       (select profile_path as profile_path, user_id as mem_id
+		                          from users
+		                         where user_id in (select mem_id from t)
+		                        union all
+		                        select logo_path as profile_path, corp_id as mem_id
+		                          from corporation
+		                         where corp_id in (select mem_id from t)
+		                         ) f
+		                 where c.post_code = d.ref_code(+)
+		                   and c.post_code = e.ref_code(+)
+		                   and c.mem_id = f.mem_id
+		                order by post_date desc) g)
+		 where rn between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
 	</select>
 	
 	<!-- 저장한글 조회(스크롤 이벤트용) -->
 	<select id="select_nextSavePost" parameterType="paginationVo" resultType="postVo">
+		with t as (select a.*
+				             from post a               
+				            where a.post_code in (select save_post_code
+				                                 from save_post
+				                                where mem_id = #{mem_id}))
 		select *
-		  from (select b.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
-		          from (select post.*, (select count(ref_code)
-		                                  from post_comment
-		                                 where ref_code = post_code
-		                                   and division = 28) commentcount,
-		                               (select count(ref_code)
-		                                  from good
-		                                 where ref_code = post_code
-		                                   and division = 28) goodcount,
-		                               (select mem_division
-                                  		  from member
-                                 		 where mem_id = post.mem_id) mem_division,
-		                               (select profile_path
-		                                  from users
-		                                 where users.user_id = post.mem_id
-		                                union all
-		                                select logo_path
-		                                  from corporation
-		                                 where corporation.corp_id = post.mem_id) profile_path
-		                  from post
-		         where (post.post_code in (select save_post_code
-		                                    from save_post
-		                                   where mem_id = #{mem_id}))
-		        order by post_date desc) b )
-		 where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
+		  from (select g.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
+		          from (select c.*, d.commentcount, e.goodcount, f.profile_path
+		                  from (select a.*, b.mem_division
+		                          from t a, member b
+		                         where a.mem_id = b.mem_id) c, 
+		                       (select ref_code, count(*) commentcount
+		                         from post_comment 
+		                        where ref_code in (select post_code from t)
+		                        group by ref_code)d,
+		                       (select ref_code, count(*) goodcount
+		                          from good 
+		                         where ref_code in (select post_code from t)
+		                        group by ref_code) e,
+		                       (select profile_path as profile_path, user_id as mem_id
+		                          from users
+		                         where user_id in (select mem_id from t)
+		                        union all
+		                        select logo_path as profile_path, corp_id as mem_id
+		                          from corporation
+		                         where corp_id in (select mem_id from t)
+		                         ) f
+		                 where c.post_code = d.ref_code(+)
+		                   and c.post_code = e.ref_code(+)
+		                   and c.mem_id = f.mem_id
+		                order by post_date desc) g)
+		 where rn between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
 		   and post_code &lt; #{criteria_code}
 	</select>
 	
 	<!-- 해시태그 별 글 조회 -->
 	<select id="select_hashtagPost" parameterType="paginationVo" resultType="postVo">
-		select *
-		  from (select b.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
-		          from (select post.*, (select count(ref_code)
-		                                  from post_comment
-		                                 where ref_code = post_code
-		                                   and division = 28) commentcount,
-		                               (select count(ref_code)
-		                                  from good
-		                                 where ref_code = post_code
-		                                   and division = 28) goodcount,
-		                               (select mem_division
-                                  		  from member
-                                 		 where mem_id = post.mem_id) mem_division,
-		                               (select profile_path
-		                                  from users
-		                                 where users.user_id = post.mem_id
-		                                union all
-		                                select logo_path
-		                                  from corporation
-		                                 where corporation.corp_id = post.mem_id) profile_path
-		                  from post
-		         where (post.post_code in (select ref_code
+		with t as (select a.*
+		             from post a               
+		            where a.post_code in (select ref_code
 		                                    from hashtag_list
 		                                   where hashtag_name = #{hashtag_name}))
-		        order by post_date desc) b )
-		 where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
+		select *
+		  from (select g.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
+		          from (select c.*, d.commentcount, e.goodcount, f.profile_path
+		                  from (select a.*, b.mem_division
+		                          from t a, member b
+		                         where a.mem_id = b.mem_id) c, 
+		                       (select ref_code, count(*) commentcount
+		                         from post_comment 
+		                        where ref_code in (select post_code from t)
+		                        group by ref_code)d,
+		                       (select ref_code, count(*) goodcount
+		                          from good 
+		                         where ref_code in (select post_code from t)
+		                        group by ref_code) e,
+		                       (select profile_path as profile_path, user_id as mem_id
+		                          from users
+		                         where user_id in (select mem_id from t)
+		                        union all
+		                        select logo_path as profile_path, corp_id as mem_id
+		                          from corporation
+		                         where corp_id in (select mem_id from t)
+		                         ) f
+		                 where c.post_code = d.ref_code(+)
+		                   and c.post_code = e.ref_code(+)
+		                   and c.mem_id = f.mem_id
+		                order by post_date desc) g)
+		 where rn between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
 	</select>
 	
 		<!-- 해시태그 별 글 조회(스크롤 페이징) -->
 	<select id="select_nextHashtagPost" parameterType="paginationVo" resultType="postVo">
-		select *
-		  from (select b.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
-		          from (select post.*, (select count(ref_code)
-		                                  from post_comment
-		                                 where ref_code = post_code
-		                                   and division = 28) commentcount,
-		                               (select count(ref_code)
-		                                  from good
-		                                 where ref_code = post_code
-		                                   and division = 28) goodcount,
-		                               (select mem_division
-                                  		  from member
-                                 		 where mem_id = post.mem_id) mem_division,
-		                               (select profile_path
-		                                  from users
-		                                 where users.user_id = post.mem_id
-		                                union all
-		                                select logo_path
-		                                  from corporation
-		                                 where corporation.corp_id = post.mem_id) profile_path
-		                  from post
-		         where (post.post_code in (select ref_code
+		with t as (select a.*
+		             from post a               
+		            where a.post_code in (select ref_code
 		                                    from hashtag_list
 		                                   where hashtag_name = #{hashtag_name}))
-		        order by post_date desc) b )
-		 where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
+		select *
+		  from (select g.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
+		          from (select c.*, d.commentcount, e.goodcount, f.profile_path
+		                  from (select a.*, b.mem_division
+		                          from t a, member b
+		                         where a.mem_id = b.mem_id) c, 
+		                       (select ref_code, count(*) commentcount
+		                         from post_comment 
+		                        where ref_code in (select post_code from t)
+		                        group by ref_code)d,
+		                       (select ref_code, count(*) goodcount
+		                          from good 
+		                         where ref_code in (select post_code from t)
+		                        group by ref_code) e,
+		                       (select profile_path as profile_path, user_id as mem_id
+		                          from users
+		                         where user_id in (select mem_id from t)
+		                        union all
+		                        select logo_path as profile_path, corp_id as mem_id
+		                          from corporation
+		                         where corp_id in (select mem_id from t)
+		                         ) f
+		                 where c.post_code = d.ref_code(+)
+		                   and c.post_code = e.ref_code(+)
+		                   and c.mem_id = f.mem_id
+		                order by post_date desc) g)
+		 where rn between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
 		   and post_code &lt; #{criteria_code}
 	</select>
 	
