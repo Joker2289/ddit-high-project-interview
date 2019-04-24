@@ -22,7 +22,7 @@
 			</div>
 			<ul class="dropdown-menu searchDropDown">
   				<c:forEach items="${corpVoList }" var="corpVo">
-  					<li><a class="corp_nameClick" title="${fn:split(corpVo.addr1,' ')[0]}">${career_infoMap.corpVo.corp_name }</a></li>
+  					<li><a class="corp_nameClick" role="${corpVo.corp_code }" title="${fn:split(corpVo.addr1,' ')[0]}">${corpVo.corp_name }</a></li>
   				</c:forEach>
 			</ul>
 			<div class="modalHalfRight">

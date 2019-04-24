@@ -172,7 +172,9 @@ public class profileController {
 				break;
 			case "career":
 				Map<String, Object> career_infoMap = carService.select_oneCareerInfo(code);
+				List<CorporationVo> corpVoList = corpService.select_allCorps();
 				model.addAttribute("career_infoMap", career_infoMap);
+				model.addAttribute("corpVoList", corpVoList);
 				result="/profile/modalUpdate/careerUpdate";
 				break;
 			case "education":
