@@ -35,4 +35,9 @@ public class SectionDaoImpl implements ISectionDao{
 		return sqlSession.selectList("section.select_sectionList", portfolio_code);
 	}
 
+	@Override
+	public SectionVo select_sectionInfo(String section_code) {
+		return sqlSession.selectOne("section.select_sectionInfo", section_code);
+	}
+
 }

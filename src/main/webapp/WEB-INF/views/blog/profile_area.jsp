@@ -13,7 +13,7 @@
 			<div class="caption">
 
 				<span class="span-name"><a
-					href="/profileHome?user_id=${uVo.user_id}">${ uVo.user_name }</a></span>
+					href="/blog/blogMainView?user_id=${uVo.user_id}">${ uVo.user_name }</a></span>
 
 
 				<table class="act_table">

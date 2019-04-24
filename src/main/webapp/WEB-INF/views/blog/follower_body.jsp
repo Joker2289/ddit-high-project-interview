@@ -12,7 +12,7 @@
 				<c:when test="${ List != null}">
 					<!-- 일반회원 -->
 					<c:if test="${ List.mem_division == '1'}">
-						<td>
+						<td class="img_td">
 							<c:choose>
 								<c:when test="${ fn:contains(List.image_path, 'http') }">
 									<a href="/profileHome?user_id=${ List.mem_id }"><img src="${ List.image_path }" class="img-circle modal-img"></a>
@@ -29,7 +29,7 @@
 					
 					<!-- 기업 -->
 					<c:if test="${List.mem_division == '2' }">
-						<td>
+						<td class="img_td">
 							<c:choose>
 								<c:when test="${ fn:contains(List.image_path, 'http') }">
 									<a href="/corporation?corp_id=${ List.mem_id }"><img src="${ List.image_path }" class="img-circle modal-img"></a>

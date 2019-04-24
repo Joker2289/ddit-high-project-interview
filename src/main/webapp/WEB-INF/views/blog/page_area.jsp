@@ -4,34 +4,20 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
+
+
+
+
 <div class="col-md-6">
 	<div class="panel panel-default">
-		<div class="panel-body">
-			<span class="span-text"><a>게시글 영역</a></span>
-		</div>
 
 		<div class="panel-body">
-			<span class="span-text"><a>게시글 영역</a></span>
+			<span class="span-text"><a>페이지 영역</a></span>
 		</div>
 
-		<div class="panel-body">
-			<span class="span-text"><a>게시글 영역</a></span>
-		</div>
 
-		<div class="panel-body">
-			<span class="span-text"><a>게시글 영역</a></span>
-		</div>
-
-		<div class="panel-body">
-			<span class="span-text"><a>게시글 영역</a></span>
-		</div>
-
-		<div class="panel-body">
-			<span class="span-text"><a>게시글 영역</a></span>
-		</div>
 	</div>
 </div>
-
 
 <%-- <div class="col-md-6">
 	<!-- feed -->
@@ -152,8 +138,5 @@
 
 
 
-<script>
-	
-</script>
 
 

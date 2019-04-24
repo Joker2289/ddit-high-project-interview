@@ -32,7 +32,6 @@
 <script>
 
 function stage_color_change(color){
-	
 	$('#container').css('background-color', color);
 }
 

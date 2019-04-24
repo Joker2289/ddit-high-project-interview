@@ -35,4 +35,9 @@ public class PortfolioServiceImpl implements IPortfolioService{
 		return pfDao.select_portfolioList(user_id);
 	}
 
+	@Override
+	public PortfolioVo select_portfolioInfo(String portfolio_code) {
+		return pfDao.select_portfolioInfo(portfolio_code);
+	}
+
 }
