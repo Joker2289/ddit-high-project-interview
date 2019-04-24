@@ -19,13 +19,17 @@
 			</div>
 			<c:choose>
 				<c:when test="${scrapList1.get(i.index) == 'f' }">
-					<div class="scrap" data-scrap="${scrapList1.get(i.index) }" data-code="${rRVo.recruit_code }">
+					${timeList1.get(i.index) } 전 · 
+					<div class="scrap" data-scrap="${scrapList1.get(i.index) }" data-code="${rRVo.recruit_code }"
+							style="display: inline;">
 						<i class="far fa-bookmark" onmouseover="" style="margin-top: 10px; 
 								font-size: large; cursor: pointer;"></i><br>
 					</div>
 				</c:when>
 				<c:otherwise>
-					<div class="scrap" data-scrap="${scrapList1.get(i.index) }" data-code="${rRVo.recruit_code }">
+					xx 전 · 
+					<div class="scrap" data-scrap="${scrapList1.get(i.index) }" data-code="${rRVo.recruit_code }"
+							style="display: inline;">
 						<i class="fas fa-bookmark" onmouseover="" style="margin-top: 10px; 
 								font-size: large; cursor: pointer;"></i><br>
 					</div>

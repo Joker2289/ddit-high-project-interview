@@ -85,7 +85,7 @@
 												<strong>업계</strong><br>
 												...<br>
 												<strong>고용형태</strong><br>
-												...<br>
+												...(등록:${recr.start_date })<br>
 											</td>
 										</tr>
 									</table>								
@@ -150,7 +150,7 @@
 				<c:when test="${req_page == null }">
 					window.location.href = '${pageContext.request.contextPath }/srecr';
 				</c:when>
-				<c:when test="${req_page == 'recruit' }"> // 이어서. 채용공고 페이지로 안가지네?
+				<c:when test="${req_page == 'recruit' }">
 					window.location.href = '${pageContext.request.contextPath }/recruit';
 				</c:when>
 				<c:otherwise>

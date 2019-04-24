@@ -6,7 +6,7 @@
 <html>
 <head>
 	<link href="/css/recruit/interest.css" type="text/css" rel="stylesheet">
-	<title>채용공고｜1111222</title>
+	<title></title>
 </head>
 
 <body>
@@ -192,7 +192,7 @@
 						<div style="margin-bottom: 10px;"> 
 							<strong>원하시는 회사 규모는?</strong><br>
 						</div>
-						<select id="sel_1st">
+						<select id="sel_1st" style="padding: 5px;">
 							<option value="1명">1명</option>
 							<option value="10명">10명</option>
 							<option value="50명">50명</option>
@@ -203,7 +203,7 @@
 							<option value="10,000명">10,000명</option>
 						</select>
 						&nbsp;~&nbsp;
-						<select id="sel_2nd">
+						<select id="sel_2nd" style="padding: 5px;">
 							<option value="10명">10명</option>
 							<option value="50명">50명</option>
 							<option value="200명">200명</option>
@@ -271,7 +271,6 @@
 <script>
 $(document).ready(function(){
 // 	console.log("%4 ? : " + test);
-	
 	// 업무분야 마우스오버.
 	$(".div_job").on("mouseover", function(){
 		$(this).css("background-color", "#f3f3f3");
@@ -607,7 +606,7 @@ $(document).ready(function(){
 		// 하고싶은말 유효성 체크. (이직의사 true인 경우)		
 		if($("input:checkbox[id='cb_move']").is(":checked") == true){
 			if($("#txt_move").val() == ""){
-				alert("리크루터에게 하고 싶은 말을 입력해주세요.")
+				alert("리크루터에게 하고 싶은 말을 입력해주세요.");
 				
 				// textarea로 focus 변경.
 				$("#txt_move").focus();
