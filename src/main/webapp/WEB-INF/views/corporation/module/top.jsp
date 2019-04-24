@@ -47,8 +47,8 @@
 				<div class="dropdown" style="margin-right: -120px;">
 				  <span>• • •</span>
   					<div style="margin-right: 40px;margin-left: -40px" class="dropdown-content">
-    					<p ><a>신고</a></p>
-    					<p ><a>+팔로워</a></p>
+    					<a>신고</a><br>
+    					<a href="/profileInsertFollow?mem_id=${SESSION_MEMBERVO.mem_id}&ref_keyword=${corporationInfo.corp_id }&division=43" style="padding: 0 15px 0 0; width: 140px;">+팔로워</a>
   					</div>
 				</div>
 				
