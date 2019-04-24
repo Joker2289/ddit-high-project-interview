@@ -560,6 +560,14 @@ public class BlogController {
 			@RequestParam("color")String color) {
 		
 		
+		SectionVo sVo = sectionService.select_sectionInfo(section_code);
+		
+		
+		PortfolioVo pVo = portfolioService.select_portfolioInfo(sVo.getPortfolio_code());
+		model.addAttribute("pVo", pVo);
+		model.addAttribute("sVo", sVo);
+		
+		
 		return "blog/page_area_select";
 	}
 	

@@ -11,11 +11,25 @@
 <div class="col-md-6">
 	<div class="panel panel-default">
 
-		<div class="panel-body">
-			<span class="span-text"><a>선택 페이지 영역</a></span>
+		<div id="page_area_select_head" class="panel-body page_area_select_head">
+			<div class="page_area_title"><a><i class="far fa-folder-open" style="font-size: 40px; margin-right:10px"></i>  <i class="fas fa-chevron-right"></i> ${ pVo.portfolio_name } <i class="fas fa-chevron-right"></i> ${ sVo.section_name }</a></div>
+		
+		
+			<c:if test='${ pVo.user_id == SESSION_MEMBERVO.mem_id }'>
+				<button id="addPageBtn" class="btn addPage">Page 작성</button>
+			</c:if>
 		</div>
+		
+		
+		
 	</div>
 </div>
+
+
+<script>
+$('#page_area_select_head').css('background-color', '${ pVo.index_color }');
+
+</script>
 
 
 
