@@ -17,7 +17,7 @@
 </div>
 
 
-<div class="container B_body">
+<div class="container B_body"> 
 	<div class="row">
 		<div>
 
@@ -31,11 +31,11 @@
 
 			<div id="content_area">
 				
-				<div id="page_area">
-					<%@ include file="/WEB-INF/views/blog/page_area.jsp"%><!-- 타임라인 영역 -->
-				</div>
 				
-				<%@ include file="/WEB-INF/views/blog/right_area.jsp"%><!-- 오른쪽 메뉴 영역 -->
+				<%@ include file="/WEB-INF/views/blog/content_area.jsp"%><!-- 타임라인 영역 -->
+				
+				
+				
 				
 			</div>
 

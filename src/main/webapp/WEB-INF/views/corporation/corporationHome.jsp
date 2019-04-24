@@ -40,11 +40,12 @@ textarea {
 				<br> <br>
 				<%@ include file="/WEB-INF/views/corporation/module/write.jsp"%>
 
-				
-				
-		
+				${memberInfo.mem_id}
+				${memberInfo}
+				${corporationInfo.corp_id}
+	<c:if test="${memberInfo.mem_id eq corp_id}">
 
-	<div class="input-group" style="margin-top: -178px; margin-left: 240px;border: 1px solid #AAAAAA;border-radius: 4px;background-color: #FFFFFF;box-shadow: 0px 2px 5px #aaa;">
+	<div class="input-group" style="margin-top: -178px; margin-left: 240px;border: 1px solid #AAAAAA;border-radius: 4px;background-color: #FFFFFF;box-shadow: 0px 2px 5px #aaa; visibility: hidden;">
 	
 	          <button id="btn-write_modal" class="btn-write_modal"  style="height: 72.6px; margin-top: -9px;">
 	          		<span class="span-text">
@@ -107,7 +108,7 @@ textarea {
   				</div>
 				 </form>
 	</div>
-			
+		</c:if>		
 
 
 <div style="height: 150px; width: 555px; margin-left: 242px;">

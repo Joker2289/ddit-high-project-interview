@@ -42,5 +42,12 @@
 		 where portfolio_code = #{portfolio_code}
 		 order by section_code
 	</select>
+	
+	<!-- 섹션 조회 -->
+	<select id="select_sectionInfo" parameterType="String" resultType="sectionVo">
+		select * 
+			from section
+		where section_code = #{section_code}
+	</select>
 
 </mapper> 

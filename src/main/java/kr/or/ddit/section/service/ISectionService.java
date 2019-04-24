@@ -50,4 +50,15 @@ public interface ISectionService {
 	 * Method 설명 : 포트폴리오의 섹션 리스트 조회
 	 */
 	List<SectionVo> select_sectionList(String portfolio_code);
+	
+	/**
+	 * 
+	 * Method : select_sectionInfo
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param section_code
+	 * @return
+	 * Method 설명 : 섹션 조회
+	 */
+	SectionVo select_sectionInfo(String section_code);
 }

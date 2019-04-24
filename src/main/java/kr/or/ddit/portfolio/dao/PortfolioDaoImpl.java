@@ -34,5 +34,10 @@ public class PortfolioDaoImpl implements IPortfolioDao{
 	public List<PortfolioVo> select_portfolioList(String user_id) {
 		return sqlSession.selectList("portfolio.select_portfolioList", user_id);
 	}
+
+	@Override
+	public PortfolioVo select_portfolioInfo(String portfolio_code) {
+		return sqlSession.selectOne("portfolio.select_portfolioInfo", portfolio_code);
+	}
 	
 }

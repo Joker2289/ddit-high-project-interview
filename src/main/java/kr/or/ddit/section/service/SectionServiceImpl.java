@@ -35,4 +35,9 @@ public class SectionServiceImpl implements ISectionService{
 		return sectionDao.select_sectionList(portfolio_code);
 	}
 
+	@Override
+	public SectionVo select_sectionInfo(String section_code) {
+		return sectionDao.select_sectionInfo(section_code);
+	}
+
 }

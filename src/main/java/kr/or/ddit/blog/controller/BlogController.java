@@ -69,15 +69,15 @@ public class BlogController {
 	 * Method 설명 : Blog 페이지 이동
 	 */
 	@RequestMapping(path={"blogMainView"}, method = RequestMethod.GET)
-	public String blogMainView(Model model, @RequestParam("userId")String userId) {
+	public String blogMainView(Model model, @RequestParam("user_id")String user_id) {
 		
 		//블로그 설정
-		BlogVo bVo = blogService.select_blogInfo(userId);
+		BlogVo bVo = blogService.select_blogInfo(user_id);
 		
 		if(bVo == null) {
 			BlogVo blogInfo = new BlogVo();
-			blogInfo.setUser_id(userId);
-			blogInfo.setBlog_name(userId + " 님의 블로그");
+			blogInfo.setUser_id(user_id);
+			blogInfo.setBlog_name(user_id + " 님의 블로그");
 			blogInfo.setCover_color("#99B4CF");
 			blogInfo.setQna_act("y");
 			blogInfo.setImg_act("n");
@@ -91,16 +91,16 @@ public class BlogController {
 		
 		
 		//활동 정보
-		UsersVo uVo = usersService.select_userInfo(userId);
+		UsersVo uVo = usersService.select_userInfo(user_id);
 		
-		int followerCnt = followService.getFollowerCnt(userId);
-		int followingCnt = followService.getFollowingCnt(userId);
+		int followerCnt = followService.getFollowerCnt(user_id);
+		int followingCnt = followService.getFollowingCnt(user_id);
 		model.addAttribute("uVo", uVo);
 		model.addAttribute("followerCnt", followerCnt);
 		model.addAttribute("followingCnt", followingCnt);
 		
 		//포트폴리오 리스트
-		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(userId);
+		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(user_id);
 		model.addAttribute("portfolioList", portfolioList);
 		
 		return "blogTiles";
@@ -526,6 +526,41 @@ public class BlogController {
 		model.addAttribute("color", color);
 		
 		return "blog/section_area";
+	}
+	
+	/**
+	 * 
+	 * Method : content_area
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param portfolio_code
+	 * @param color
+	 * @return
+	 * Method 설명 : main - content_area 출력
+	 */
+	@RequestMapping("/content_area")
+	public String content_area(Model model) {
+		return "blog/content_area";
+	}
+	
+	/**
+	 * 
+	 * Method : page_area_select
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param portfolio_code
+	 * @param color
+	 * @return
+	 * Method 설명 : 선택한 섹션의 페이지 리스트 출력
+	 */
+	@RequestMapping("/page_area_select")
+	public String page_area_select(Model model, @RequestParam("section_code")String section_code,
+			@RequestParam("color")String color) {
+		
+		
+		return "blog/page_area_select";
 	}
 	
 	
