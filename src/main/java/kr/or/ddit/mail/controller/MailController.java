@@ -30,7 +30,10 @@ public class MailController{
 	IChat_contentsService chat_contentsService;
 
 	@RequestMapping(path={"/mailHome"})
-	public String mailHomeView(){
+	public String mailHomeView(HttpSession session, Model model){
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		model.addAttribute("userChatroomsMap",chatroomService.select_userChatrooms(memberVo.getMem_id()));
+		
 		return "mailTiles";
 	}
 	

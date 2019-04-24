@@ -53,8 +53,10 @@
 	width: 100%;
 	display: block;
 	vertical-align: middle;
-	height: 500px;
+	height: auto;
 	overflow: auto;
+	min-height: 200px;
+	max-height: 500px;
 }
 
 .jk-modal-footer {
@@ -143,6 +145,10 @@
 	margin-top: 5px !important;
 	margin-bottom: 5px !important;
 	border: 1px solid #A2A9AC !important;
+}
+
+.img_td {
+	width: 230px !important;
 }
 
 

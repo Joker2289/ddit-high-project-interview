@@ -12,7 +12,7 @@
 				<c:when test="${ List != null}">
 					<!-- 일반회원 -->
 					<c:if test="${ List.division == '43'}">
-						<td>
+						<td class="img_td">
 							<c:choose>
 								<c:when test="${ fn:contains(List.image_path, 'http') }">
 									<a href="/profileHome?user_id=${ List.ref_keyword }"><img src="${ List.image_path }" class="img-circle modal-img"></a>
@@ -31,7 +31,7 @@
 					
 					<!-- 기업 -->
 					<c:if test="${List.division == '11' }">
-						<td>
+						<td class="img_td">
 							<c:choose>
 								<c:when test="${ fn:contains(List.image_path, 'http') }">
 									<a href="/profileHome?user_id=${ List.ref_keyword }"><img src="${ List.image_path }" class="img-circle modal-img"></a>
@@ -49,7 +49,7 @@
 					
 					<!-- 해시태그 -->
 					<c:if test="${ List.division == '16' }">
-						<td>
+						<td class="img_td">
 							<a href="/hashtagpost?hashtag_name=${ fn:split(List.ref_keyword, '#')[0]}"><img src="${ cp }/view/imageView?mem_id=해시태그&division=ht" class="img-circle modal-img"></a>
 						</td>
 						<td>${ List.ref_keyword }</td>

@@ -25,8 +25,10 @@
 							<tr>
 								<td style="background-image: url('${corp.bg_path }'); height: 100px; background-color: #24a4be;">
 									<div style="position: relative; top: 40px; left: 25px;">
-										<img src="${corp.logo_path }" width="155" style="border: 1px solid;
-												border-color: #a6a6a6; border-radius: 3px; border-bottom-width: 2px;">
+										<a href="/corporation?corp_id=${corp.corp_id }">
+											<img src="${corp.logo_path }" width="155" style="border: 1px solid;
+													border-color: #a6a6a6; border-radius: 3px; border-bottom-width: 2px;">
+										</a>			
 									</div>
 								</td>
 							</tr>

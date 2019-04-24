@@ -136,7 +136,7 @@
 	$(".corp_nameClick").on("click",function(){
 		 $("input[name=corporate_name]").val($(this).text());
 		 $("input[name=corp_local]").val($(this).attr('title'));
-		 $("input[name=corp_code]").attr('role','${this}.attr("role")');
+		 $("input[name=corp_code]").attr('role','$(this).attr("role")');
 		 $(".searchDropDown").hide();
 	});
 		

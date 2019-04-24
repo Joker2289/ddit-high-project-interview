@@ -115,10 +115,9 @@
 			processData : false,
 			contentType : false,
 			cache : false,
-			timeout : 600000,
+			timeout : 5000,
 			success : function(data) {
 				
-				console.log("dd");
 				console.log(data);
 				$("#head_area").html(data);
 				

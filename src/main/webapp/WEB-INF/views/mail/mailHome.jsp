@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="/css/mail/mailHome.css" rel="stylesheet"> 
 <div class="container">
 <div class="row">
@@ -28,20 +30,23 @@
 				<div class="recruitMailBox">
 					<a >채용공고 메일함 ></a>
 				</div>
-				<a class="chatRoomBox">
-					<div class="profileImageBox">
-						<div style="background-image: url('/images/profile/basicProfile.png');"></div>
-					</div>
-					<div class="chatRoomContentsBox">
-						<div style="display: flex; color:rgba(0,0,0,.6);">
-							<label class="chatRoomMemberBox">김현기 김현기김현기김현기김현기</label>
-							<label style="font-size: 14px;">오후 12:50</label>
+				<c:forEach items="${userChatroomsMap }" var="userChatroom">
+					<fmt:formatDate value="${userChatroom.WRITE_DATE}" pattern="MM월 dd일" var="write_date"/>
+					<a class="chatRoomBox">
+						<div class="profileImageBox">
+							<div style="background-image: url('/images/profile/basicProfile.png');"></div>
 						</div>
-						<div class="chatContentsBox">
-							내용ㅁㄴㅇㄻㄴㅇㄻ 내용ㅁㄴㅇㄻㄴㅇㄻ내용ㅁㄴㅇㄻㄴㅇㄻ내용ㅁㄴㅇㄻㄴㅇㄻ내용ㅁㄴㅇㄻㄴㅇㄻ
+						<div class="chatRoomContentsBox">
+							<div style="display: flex; color:rgba(0,0,0,.6);">
+								<label class="chatRoomMemberBox">${userChatroom.CHAT_NAME}</label>
+								<label style="font-size: 14px;">${write_date }</label>
+							</div>
+							<div class="chatContentsBox">
+							${userChatroom.MEM_ID eq SESSION_MEMBERVO.mem_id ? "나": userChatroom.MEM_ID } : ${userChatroom.CHAT_CONTENT }
+							</div>
 						</div>
-					</div>
-				</a>
+					</a>
+				</c:forEach>
 			</div>
 			
 			<div class="rightMenuBox">

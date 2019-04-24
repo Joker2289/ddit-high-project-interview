@@ -107,14 +107,6 @@ function addImage(data) {
 	 var imageObj = new Image();
 	 imageObj.src = "/page/onenoteImageView?src=" + data;
 	 
-	 // imageObj의 이미지 로딩이 제대로 되지 않았을시
-	// imageObj.onerror = function() {
-	// imageObj.src = "/page/imageView?src=" + data;
-	// };
-	 
-	 
-	 
-	 
 	 imageObj.onload = function () {
 		 square = new Konva.Image({
              x: 300,
@@ -202,16 +194,110 @@ function addVideo() {
     layer.draw();
 }
 
-var code_mode; // code 언어
-var code_theme; // code 테마
-var code_img;
+var code_mode = "javascript"; // code 언어
+var code_theme = "default"; // code 테마
+var code_data = ''; 
 
 function addCode() {
+	
+	node_num++;
+	
+	//textarea 생성 id 부여
+	var textarea = document.createElement('textarea');
+	textarea.id = 'textarea' + node_num;
+	
+	
+	
+	//div 생성
+	var code_div = document.createElement('div');
+    code_div.id = 'code_div' + node_num;
+    
+    //view_div에 생성한 div 넣기
+    $('#view_div').append(code_div);
+	
+    //div에 textarea 추가
+    $('#code_div'+node_num).append(textarea);
+	
+	
+	
+	
+	$('#completeBtn').off('click');
+    // 작성 버튼
+    $('#completeBtn').on('click', function () {
+    	
+    	var code_editor = null;
+    	
+    	//CodeMirror 생성
+        code_editor = CodeMirror.fromTextArea(document.getElementById('textarea'+node_num), {
+            mode: code_mode, // text/html 추가 java
+            lineNumbers: true,
+            tabMode: 'indent',
+            styleActiveLine: true,
+            lineWrapping: true,
+            autoCloseTags: true,
+            theme: code_theme,
+            // tabSize: 10, //tab 몇칸 띄우는지
+        });
+    	
+    	code_editor.setSize(600, 500);
+    	code_editor.save();
+    	
+    	
+    	// css 위치 값으로 컨트롤 draggable효과 추가
+        $("#code_div" + node_num).draggable({
+            containment: "#container",
+            scroll: true
+        });
 
-    var editor = null;
+        // div가 생성될 위치값 
+        $("#code_div" + node_num).css('left', '98px');
+        $("#code_div" + node_num).css('top', '200px');
+        
+        //매우중요 block 
+        //block = width값 사이즈에 맞게 고정
+        //absolute = 영역에 속해 있지 않은 단독 고정 위치
+        $("#code_div" + node_num).css('display', 'block');
+        $("#code_div" + node_num).css('position', 'absolute');
+        
+        //원래는 요것만 했었다
+        $("#code_div" + node_num).css('display', 'inline');
 
-    editor = CodeMirror.fromTextArea(document.getElementById('code_editor'), {
-        mode: "javascript", // text/html 추가 java
+        //전에 텍스트 area 비워주기
+        $('#code_editor').val('');
+
+        // modal 끄기
+        $('.jk-modalsasun').css('display', 'none');
+        
+
+    });
+    
+    
+    //임시 테스트 해봐야댐
+    //$('#closeBtn').on('click', code_closeBtn_click(node_num));
+    
+    $('#closeBtn').off('click');
+    // 닫기 버튼
+    $('#closeBtn').on('click', function () {
+    	$('#code_div'+node_num).remove();
+        $('.jk-modalsasun').css('display', 'none');
+    });
+
+}
+
+//임시 테스트 해봐야댐
+function code_closeBtn_click(node_num){
+	$('#code_div'+node_num).remove();
+    $('.jk-modalsasun').css('display', 'none');
+}
+
+
+var editor = null;
+
+//미리보기 클릭시 랜더링
+function code_view_rendering(){
+	
+	editor = CodeMirror.fromTextArea(document.getElementById('code_editor'), {
+        mode: code_mode, // text/html 추가 java
         lineNumbers: true,
         tabMode: 'indent',
         styleActiveLine: true,
@@ -220,159 +306,35 @@ function addCode() {
         // tabSize: 10, //tab 몇칸 띄우는지
     });
 
-    // 모드 선택
-    $('#modeSelect').on('change', function () {
-        code_mode = $('#modeSelect').val();
-
-        editor.setOption('mode', code_mode);
-        editor.save();
-    });
-
-    // 테마 선택
-    $('#themeSelect').on('change', function () {
-        code_theme = $('#themeSelect').val();
-
-        editor.setOption('theme', code_theme);
-        editor.save();
-    });
+    editor.setOption('mode', code_mode);
+    editor.setOption('theme', code_theme);
+    
     editor.setSize(600, 500);
-
+    editor.save();
     
-    
-    // 작성 버튼
-    $('#completeBtn').on('click', function () {
+    //모달창에 사용자가 입력한 값 이동
+	//$(textarea).val(code_data);
+    code_data = $('#code_editor').val();
+    $('#textarea'+node_num).val(code_data);
+};
 
-        var codemirror = $('.CodeMirror');
-
-        var code_div = document.createElement('div');
-        code_div.className = 'code_div' + node_num;
-     // code_div.style.display = 'none';
-        
-        document.body.appendChild(code_div);
-        
-
-
-        
-        // getElementById('test');
-        $('.code_div' + node_num).html(codemirror);
-
-
-
-       
-        
-        
-        
-        // fileSaver
-         html2canvas( $('.code_div' + node_num), {
-        	 useCORS: true,
-        	 foreignObjectRendering :  true,
-	         letterRendering: true,
-	         windowWidth:600,
-	         windowHeight:500,
-	         width: 600,
-	         height: 500,
-                    
-	         onrendered: function (canvas) {
-	        	 
-                        
-	        	 canvas.toBlob(function (blob) {
-
-        
-	        		 saveAs(blob, 'test.png');
-        
-	        	 });
-        
-	         }
-        
-         });
-         
-         
-        // 전체 스크린 샷하기 메서드로 실행
-// html2canvas(codemirror).then(
-// function (canvas) {
-// // canvas 결과값을 drawImg 함수를 통해서
-// // 결과를 canvas 넘어줌.
-// // png의 결과 값
-// drawImg(canvas.toDataURL('image/png'));
-//
-// // appendchild 부분을 주석을 풀게 되면 body
-// // document.body.appendChild(canvas);
-//
-// // 특별부록 파일 저장하기 위한 부분.
-// saveAs(canvas.toDataURL(), 'file-name.png');
-// }).catch(function (err) {
-// console.log(err);
-// });
-
-
-
-        options = {
-        		    useCORS: true,
-        		    foreignObjectRendering: true,
-        		    windowWidth:600,
-       	         	windowHeight:500,
-       	         	width: 600,
-       	         	height: 500,
-        };  
-
-
-
-
-        // 이미지로 렌더링
-		var cap = html2canvas(document.querySelector(".code_div" + node_num), options).then(capture => {
-			 
-			 
-			 code_img = new Konva.Image({
-				 image: capture,
-				 draggable: true,
-				 name: 'code_img ',
-			
-			 });
-		
-			 layer.add(code_img);
-			 layer.draw();
-	   });
-		
-	   
-		$('#code_editor').html('');
-
-
-        // css 위치 값으로 컨트롤
-        $(".code_div" + node_num).draggable({
-            containment: "#container",
-            scroll: true
-        });
-
-        // css 위치값 확인
-        $(".code_div" + node_num).css('left', '98px');
-        $(".code_div" + node_num).css('top', '-700px');
-        $(".code_div" + node_num).css('width', '600px !important');
-        $(".code_div" + node_num).css('height', '500px !important');
-        $(".CodeMirror").css('margin', '0px !important');
-
-        $(".code_div" + node_num).css('display', 'inline');
-
-
-
-
-
-        // modal 끄기
-        $('.jk-modalsasun').css('display', 'none');
-        
-        
-
-    });
-
-    // 닫기 버튼
-    $('#closeBtn').on('click', function () {
-        $('.jk-modalsasun').css('display', 'none');
-    });
-
+//코드 모드 셀렉트 박스 변경시
+function modeSelect(){
+	code_mode = $('#modeSelect').val();
+	editor.setOption('mode', code_mode);
+	editor.save();
 }
+
+//코드 테마 셀렉트 박스 변경시
+function themeSelect(){
+	code_theme = $('#themeSelect').val();
+	editor.setOption('theme', code_theme);
+	editor.save();
+}
+
 
 document.addEventListener('click', (e) => {
     console.log(e);
-
 
     // e.addEventListener('drag', (e2)=>{
     // console.log('left: ' + e2.css('left') +', top: ' + e2.css('top'));
@@ -380,37 +342,4 @@ document.addEventListener('click', (e) => {
 
 });
 
-// function drawImg(imgData) {
-// console.log(imgData);
-// // imgData의 결과값을 console 로그롤 보실 수 있습니다.
-// return new Promise(function reslove() {
-// // 내가 결과 값을 그릴 canvas 부분 설정
-// var canvas = document.getElementById('canvas');
-// var ctx = canvas.getContext('2d');
-// // canvas의 뿌려진 부분 초기화
-// ctx.clearRect(0, 0, canvas.width, canvas.height);
-//
-// var imageObj = new Image();
-// imageObj.onload = function () {
-// ctx.drawImage(imageObj, 10, 10);
-// // canvas img를 그리겠다.
-// };
-// imageObj.src = imgData;
-// // 그릴 image데이터를 넣어준다.
-//
-// }, function reject() {});
-//
-// }
-//
-// function saveAs(uri, filename) {
-// var link = document.createElement('a');
-// if (typeof link.download === 'string') {
-// link.href = uri;
-// link.download = filename;
-// document.body.appendChild(link);
-// link.click();
-// document.body.removeChild(link);
-// } else {
-// window.open(uri);
-// }
-// }
+
