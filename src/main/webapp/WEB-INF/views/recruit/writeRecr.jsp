@@ -250,7 +250,7 @@
 </tr>
 </table>
 	
-	<br><br>1122<i class="fas fa-user-tie"></i><i class="fas fa-map-marker-alt"></i>
+	<br><br>112233<i class="fas fa-user-tie"></i><i class="fas fa-map-marker-alt"></i>
 
 </div></div></div>		
 		
@@ -287,6 +287,16 @@ $(document).ready(function(){
 			dropdownOn();
 		}
 	});		
+	
+	// 방향키 위/아래
+	var list_idx = 0;
+	
+	$("#txt_com").keypress(function(e){
+		if(e.which == 40){
+			list_idx++;
+			alert($(".list_item:eq("+ list_idx +")").data("name"));
+		}
+	});
 	
 	// 업무분야 마우스오버.
 	$(".div_job").on("mouseover", function(){

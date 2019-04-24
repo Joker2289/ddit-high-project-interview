@@ -4,7 +4,7 @@
 	<div style="width: 225px;">
 		<div class="corporation">
 			<div
-				style="width: 59px;height: 59px;background-image:url(${corp.logo_path});background-repeat: no-repeat;background-size: 120px;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;"></div>
+				style="width: 120px;height: 59px;background-image:url(${corp.logo_path});background-repeat: no-repeat;background-size: 120px;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;"></div>
 			<div>
 				<label style="font-size: 18px;"><strong>${corp.corp_name}
 				</strong></label><br /> <label>${corp.industry_type }</label>

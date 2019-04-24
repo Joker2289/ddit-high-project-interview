@@ -23,7 +23,7 @@ $(document).ready(function() {
          }); 
 		
 		switch (str) {
-		  case "connections" : str = "필터 : 인맥";
+		  case "connections" : str = "필터 : 1촌";
 		               break;
 		  case "connectionEtc" : str = "필터 : 인맥 밖";
 		               break;
@@ -96,7 +96,7 @@ $(document).ready(function() {
 					<i class="fas fa-align-right"></i>
 				</button>
 			    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="top: 36px;left: 513px;width: 297px;height: 272px;margin-top: 0px;">
-			     <li role="presentation" style="padding-bottom: 10px;padding-top: 10px;"><a class="feedDropdown" role="menuitem" tabindex="-1" title="connections">일촌<br/>팔로우하시는 1촌</a></li>
+			     <li role="presentation" style="padding-bottom: 10px;padding-top: 10px;"><a class="feedDropdown" role="menuitem" tabindex="-1" title="connections">1촌<br/>팔로우하시는 1촌</a></li>
 			     <li role="presentation" style="padding-bottom: 10px;padding-top: 10px;"><a class="feedDropdown" role="menuitem" tabindex="-1" title="connectionEtc">인맥 밖<br/>1촌이 아니면서 회원님을 팔로우하는 사람</a></li>
 			     <li role="presentation" style="padding-bottom: 10px;padding-top: 10px;"><a class="feedDropdown" role="menuitem" tabindex="-1" title="company">회사<br/>팔로우하시는 회사</a></li>
 			     <li role="presentation" style="padding-bottom: 10px;padding-top: 10px;"><a class="feedDropdown" role="menuitem" tabindex="-1" title="hashTag">해시태그<br/>팔로우하시는 해시태그</a></li>

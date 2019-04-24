@@ -15,9 +15,9 @@
 </c:choose>
 	<li>
 		<div class="whiteBox"><!-- ;background-image:url("http://www.naver.com"); ;background-image:url("/profile?mem_id=jin"); -->
-			<div style="width: 108px; height: 108px;background-image:url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 30px;border: 4px solid #E3EEF2;border-radius: 100px;"></div>
-			<div><strong>${user.user_name}</strong></div>
-			<div style="height: 70px;">${user.introduce}</div>
+			<a href="/profileHome?user_id=${user.user_id }"><div style="width: 108px; height: 108px;background-image:url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 30px;border: 4px solid #E3EEF2;border-radius: 100px;"></div></a>
+			<a href="/profileHome?user_id=${user.user_id }"><div><strong>${user.user_name}</strong></div></a>
+			<a href="/profileHome?user_id=${user.user_id }"><div style="height: 70px;">${user.introduce}</div></a>
 		<div>
 			<div><button onclick="location.href='/recommendUser?user_id=${SESSION_MEMBERVO.mem_id}&receive_id=${user.user_id}'" style="border-color: #0073b1;border-style: solid;padding-left: 40px;padding-right: 40px;" class="btn btn-default" type="button">1촌 맺기</button> </div>
 		</div>

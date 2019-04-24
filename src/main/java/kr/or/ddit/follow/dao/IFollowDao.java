@@ -121,6 +121,16 @@ public interface IFollowDao {
 	* @return
 	* Method 설명 : 연팔로우 기능
 	*/
-	int delete_personalfollow(String follow_code);
+	int delete_personalFollow(String follow_code);
+	
+	/**
+	* Method : insert_feedFollow
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param followVo
+	* @return
+	* Method 설명 : 인맥 - 신선한 시각 팔로우
+	*/
+	int insert_feedFollow(FollowVo followVo);
 	
 }

@@ -235,7 +235,10 @@ public class CorporationController {
 	 * 이미지 업로드
 	 */
 	@RequestMapping(value = "/fileUpload") // method = RequestMethod.GET 
-	public Map fileUpload(HttpServletRequest req, HttpServletResponse rep) { 
+	public Map fileUpload(HttpServletRequest req, HttpServletResponse rep,HttpSession session) { 
+		MemberVo memberInfo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		CorporationVo corporationInfo = new CorporationVo();
+		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
 		//파일이 저장될 path 설정 
 		String path = "d://aaa";
 		Map returnObject = new HashMap(); 
@@ -244,7 +247,8 @@ public class CorporationController {
 			// MultipartHttpServletRequest 생성
 			MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) req; 
 			Iterator iter = mhsr.getFileNames(); 
-			MultipartFile mfile = null; String fieldName = "";
+			MultipartFile mfile = null; 
+			String fieldName = "";
 			List resultList = new ArrayList(); 
 			
 			// 디레토리가 없다면 생성 
@@ -255,19 +259,26 @@ public class CorporationController {
 			
 			// 값이 나올때까지 
 			while (iter.hasNext()) { 
-//				fieldName = iter.next(); // 내용을 가져와서 
+				fieldName = (String) iter.next(); // 내용을 가져와서 
 				mfile = mhsr.getFile(fieldName); 
 				String origName; 
-				origName = new String(mfile.getOriginalFilename().getBytes("8859_1"), "UTF-8"); //한글꺠짐 방지 
+				origName = new String(mfile.getOriginalFilename().getBytes(), "UTF-8"); //한글꺠짐 방지 
 				
 				// 파일명이 없다면 
 				if ("".equals(origName)) { 
 					continue; 
 				} 
 				
+
 				// 파일 명 변경(uuid로 암호화) 
-				String ext = origName.substring(origName.lastIndexOf('.')); // 확장자 
-				String saveFileName = getUuid() + ext; 
+//				String ext = origName.substring(origName.lastIndexOf('.')); // 확장자 
+//				String saveFileName = getUuid() + ext; 
+				String corpname = corporationInfo.getCorp_name();
+				String a = "";
+				a = corpname +".png";
+				System.out.println(a);
+				String saveFileName = a;
+
 				
 				// 설정한 path에 파일저장 
 				File serverFile = new File(path + File.separator + saveFileName);
@@ -277,10 +288,15 @@ public class CorporationController {
 				file.put("origName", origName); 
 				file.put("sfile", serverFile); 
 				resultList.add(file); 
+				System.out.println(origName);
+				System.out.println(saveFileName);
 			} 
-			
 			returnObject.put("files", resultList); 
 			returnObject.put("params", mhsr.getParameterMap()); 
+			
+
+			
+			
 			} catch (UnsupportedEncodingException e) { 
 				// TODO Auto-generated catch block 
 				e.printStackTrace(); 
