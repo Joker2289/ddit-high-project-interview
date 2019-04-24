@@ -24,6 +24,10 @@
 	<!-- 방만들기 -->
 	<insert id="insert_chatroom" parameterType="chatroomVo">
 		insert into chatroom
-			values (chat_code_seq.nextval, #{user_id},#{chat_name})
+			values (chat_code_seq.nextval, #{mem_id},#{chat_name})
+			
+		<selectKey resultType="string" keyProperty="currval" order="AFTER">
+	        select chat_code_seq.currval from dual        
+	    </selectKey>   
 	</insert>
 </mapper> 
