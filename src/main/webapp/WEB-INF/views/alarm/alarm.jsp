@@ -121,7 +121,7 @@
 			        <div class="profile_img" style="float: left;">
 			          <c:choose>
 			            <c:when test="${previousAlarm.profile_path != null }">
-			              <img class="user_profile_img" style="border: 1px solid #ddd;" src="${previousAlarm.profile_path }">
+			              <img class="user_profile_img" style="border: 1px solid #ddd;" src="${ cp }/view/imageView?mem_id=${previousAlarm.send_id }&division=pf">
 			            </c:when>
 			            <c:otherwise>
 			              <img class="user_profile_img" style="border: 1px solid #ddd;" src="/images/profile/basicProfile.png">
@@ -141,6 +141,9 @@
 			            </c:when>
 			            <c:when test="${previousAlarm.division == '25' && previousAlarm.alarm_separate == '04' }">
 			              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 회원님에게 일촌을 신청함</h4>
+			            </c:when>
+			            <c:when test="${previousAlarm.division == '25' && previousAlarm.alarm_separate == '04' }">
+			              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.mem_id } 님이 회원님과 일촌이 됨</h4>
 			            </c:when>
 			            <c:when test="${previousAlarm.division == '14' && previousAlarm.alarm_separate == '05' }">
 			              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 회원님을 팔로우함</h4>
