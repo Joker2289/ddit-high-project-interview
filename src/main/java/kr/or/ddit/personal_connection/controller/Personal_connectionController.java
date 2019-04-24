@@ -427,6 +427,19 @@ public class Personal_connectionController {
 		
 		followService.insert_feedFollow(followVo);
 		
+		if(followVo.getDivision().equals("11") || followVo.getDivision().equals("43")){
+			
+			AlarmVo alarmInfo = new AlarmVo();
+			
+			alarmInfo.setMem_id(followVo.getRef_keyword());
+			alarmInfo.setAlarm_check("0");
+			alarmInfo.setDivision("14");
+			alarmInfo.setSend_id(followVo.getMem_id());
+			alarmInfo.setAlarm_separate("06");
+			
+			alarmService.insert_alarmInfo(alarmInfo);
+		}
+		
 		return "redirect:/feedFollow";	
 	}
 	
