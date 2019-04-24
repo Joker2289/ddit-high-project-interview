@@ -42,7 +42,7 @@
 								<label style="font-size: 14px;">${write_date }</label>
 							</div>
 							<div class="chatContentsBox">
-								내용ㅁㄴㅇㄻㄴㅇㄻ 내용ㅁㄴㅇㄻㄴㅇㄻ내용ㅁㄴㅇㄻㄴㅇㄻ내용ㅁㄴㅇㄻㄴㅇㄻ내용ㅁㄴㅇㄻㄴㅇㄻ
+							${userChatroom.MEM_ID eq SESSION_MEMBERVO.mem_id ? "나": userChatroom.MEM_ID } : ${userChatroom.CHAT_CONTENT }
 							</div>
 						</div>
 					</a>
