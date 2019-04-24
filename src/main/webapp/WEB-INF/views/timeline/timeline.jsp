@@ -162,7 +162,6 @@
       $(window).scrollTop() = $(window).height();
    });
    
-   
    var pageNum = 2;
    var lastPost;
    

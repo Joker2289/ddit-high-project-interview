@@ -252,7 +252,12 @@
 		    <artifactId>spring-websocket</artifactId>
 		    <version>4.0.9.RELEASE</version>
 		</dependency>
-
+		
+		<dependency>
+		    <groupId>javax.websocket</groupId>
+		    <artifactId>javax.websocket-api</artifactId>
+		    <version>1.1</version>
+		</dependency>
         
   </dependencies>
   

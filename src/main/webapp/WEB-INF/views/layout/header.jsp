@@ -65,3 +65,31 @@
         </div><!--/.nav-collapse -->
       </div>
  </nav>
+
+<script>
+var socket = null;
+
+$(document).ready(function() {
+	connectWS();
+});
+
+function connectWS() {
+	
+	var ws = new WebSocket("ws://localhost/echo");
+	socket = ws;
+	
+	ws.onopen = function() {
+		console.log("connect");
+	};
+	
+	ws.onmessage = function(e) {
+		console.log("msg : ", e.data + '\n');
+	};
+	
+	ws.onclose = function() {
+		console.log("disconnect");
+	};
+	
+}
+
+ </script>
