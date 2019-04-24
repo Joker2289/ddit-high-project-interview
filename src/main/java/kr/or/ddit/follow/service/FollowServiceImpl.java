@@ -80,8 +80,13 @@ public class FollowServiceImpl implements IFollowService {
 	}
 
 	@Override
-	public int delete_personalfollow(String follow_code) {
-		return followDao.delete_personalfollow(follow_code);
+	public int delete_personalFollow(String follow_code) {
+		return followDao.delete_personalFollow(follow_code);
+	}
+
+	@Override
+	public int insert_feedFollow(FollowVo followVo) {
+		return followDao.insert_feedFollow(followVo);
 	}
 
 }

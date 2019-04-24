@@ -465,6 +465,17 @@ public class profileController {
 	@RequestMapping(path={"/profileInsertFollow"})
 	public String profileInsertFollow(FollowVo followVo){
 		followService.insert_follow(followVo);
+		
+		AlarmVo alarmInfo = new AlarmVo();
+		
+		alarmInfo.setMem_id(followVo.getRef_keyword());
+		alarmInfo.setAlarm_check("0");
+		alarmInfo.setDivision("14");
+		alarmInfo.setSend_id(followVo.getMem_id());
+		alarmInfo.setAlarm_separate("06");
+		
+		alarmService.insert_alarmInfo(alarmInfo);
+		
 		return "redirect:/profileHome?user_id="+followVo.getRef_keyword();
 	}
 	
