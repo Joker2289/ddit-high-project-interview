@@ -136,7 +136,6 @@ public class CorporationController {
 		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
 		tagCountPageVo.setMem_id(memberInfo.getMem_id());
 		tagCountPageVo.setDivision("16");
-		
 		//저장글 갯수 
 		int savepostCnt = savepostService.savepost_count(corp_id);
 		model.addAttribute("savepostCnt", savepostCnt);
@@ -288,7 +287,7 @@ public class CorporationController {
 				String corpname = corporationInfo.getCorp_name();
 				String a = "";
 				a = corpname +".png";
-				System.out.println(a);
+				
 				String saveFileName = a;
 
 				
@@ -300,8 +299,7 @@ public class CorporationController {
 				file.put("origName", origName); 
 				file.put("sfile", serverFile); 
 				resultList.add(file); 
-				System.out.println(origName);
-				System.out.println(saveFileName);
+				
 			} 
 			returnObject.put("files", resultList); 
 			returnObject.put("params", mhsr.getParameterMap()); 
@@ -524,7 +522,7 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("timelinePost", timelinePost);
 		
-		System.out.println(corporationInfo.getCorp_name());
+		
 		
 		int ecount = careerService.employee_count(corporationInfo.getCorp_name());
 		model.addAttribute("ecount", ecount);
@@ -571,7 +569,7 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		model.addAttribute("getCorpInfo", corporationService.select_corpInfo(memberInfo.getMem_id()));
 		String mem_id = memberInfo.getMem_id();
 
-		System.out.println("987654321987654321");
+		
 
 		logger.debug("asdasdasdasdmem_id : {}", mem_id);
 
