@@ -27,7 +27,7 @@
 		  	        <div class="profile_img" style="float: left;">
 		  	          <c:choose>
 		  	            <c:when test="${recentAlarm.profile_path != null }">
-		  	              <img class="user_profile_img" style="border: 1px solid #ddd;" src="${recentAlarm.profile_path }">
+		  	              <img class="user_profile_img" style="border: 1px solid #ddd;" src="${ cp }/view/imageView?mem_id=${recentAlarm.send_id }&division=pf">
 		  	            </c:when>
 		  	            <c:otherwise>
 		  	              <img class="user_profile_img" style="border: 1px solid #ddd;" src="/images/profile/basicProfile.png">

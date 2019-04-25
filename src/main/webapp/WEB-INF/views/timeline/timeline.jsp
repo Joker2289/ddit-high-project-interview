@@ -156,6 +156,28 @@
 
 <script src="/js/timeline.js"></script>
 <script type="text/javascript">
+
+// 	$(document).ready(function() {
+// // 		connectWS();
+// 		sendMessege();
+// 	});
+
+// 	let ws2 = new SockJS("<c:url value="/timeline"/>");
+// 	ws2.onmessage = onMessage;
+// 	ws2.onclose = onClose;
+	
+// 	function sendMessege() {
+// 		console.log("connect");
+// 	}
+	
+// 	function onMessage(msg) {
+// 		var data = msg.data;
+// 		console.log(data);
+// 	}
+	
+// 	function onClose(event) {
+// 		console.log("disconnect");
+// 	}
    
    //현재 스크롤 위치에서 화면 최상단으로 이동
    $("#scroll-top").on("click", function() {

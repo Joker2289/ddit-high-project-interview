@@ -22,7 +22,7 @@ import kr.or.ddit.member.model.MemberVo;
 public class AlarmEchoHandler extends TextWebSocketHandler {
 	
 	List<WebSocketSession> sessions = new ArrayList<>();
-	Map<String, WebSocketSession> memberSessions = new HashMap<>();
+//	Map<String, WebSocketSession> memberSessions = new HashMap<>();
 
 	private Logger logger = LoggerFactory.getLogger(AlarmEchoHandler.class);
 	
@@ -31,52 +31,54 @@ public class AlarmEchoHandler extends TextWebSocketHandler {
 		
 		logger.debug("afterConnectionEstablished : {}", session);
 		sessions.add(session);
-		String send_id = getId(session);
-		memberSessions.put(send_id, session);
+//		String send_id = getId(session);
+//		memberSessions.put(send_id, session);
 	}
 	
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
-		String send_id = getId(session);
-//		for(WebSocketSession s : sessions){
-//			s.sendMessage(new TextMessage(send_id + ": " + message.getPayload()));
-//		}
+		logger.debug("handleTextMessage : " + session + " : " + message);
+		String send_id = getId(session); 
 		
-		//cmd, 발신자, 수신자, 참조코드  (cmd : postgood, postcomment, commentgood, recomconnect, receiveconnect, follow, apply, recruit)
-		String msg = message.getPayload();
-		
-		if(StringUtils.isNotEmpty(msg)){
-			String[] strs = msg.split(",");
-			if(strs != null && strs.length == 4){
-				String cmd 		= strs[0];
-				String sender 	= strs[1];
-				String receiver = strs[2];
-				String ref_code = strs[3];
-				
-				WebSocketSession receiverSession = memberSessions.get(receiver);
-				if(receiverSession != null){
-					TextMessage tempMsg = new TextMessage(sender);
-					receiverSession.sendMessage(tempMsg);
-				}
-			}
+		for(WebSocketSession sess : sessions){
+			sess.sendMessage(new TextMessage(send_id + " : " + message.getPayload()));
 		}
+		
+		//발신자, 수신자
+//		String msg = message.getPayload();
+//		
+//		if(StringUtils.isNotEmpty(msg)){
+//			String[] strs = msg.split(",");
+//			if(strs != null && strs.length == 2){
+//				String sender 	= strs[0];
+//				String receiver = strs[1];
+//				
+//				WebSocketSession receiverSession = memberSessions.get(receiver);
+//				if(receiverSession != null){
+//					TextMessage tempMsg = new TextMessage(sender);
+//					receiverSession.sendMessage(tempMsg);
+//				}
+//			}
+//		}
 	}
 	
 	private String getId(WebSocketSession session) {
-		Map<String, Object> httpSession = session.getAttributes();
-		MemberVo loginMember = (MemberVo) httpSession.get("SESSION_MEMBERVO");
+//		Map<String, Object> httpSession = session.getAttributes();
+//		MemberVo loginMember = (MemberVo) httpSession.get("SESSION_MEMBERVO");
+//		
+//		if(loginMember == null){
+//			return session.getId(); 
+//		} else {
+//			return loginMember.getMem_id();
+//		}
 		
-		if(loginMember == null){
-			return session.getId(); 
-		} else {
-			return loginMember.getMem_id();
-		}
+		return "";
 	}
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		
+		logger.debug("afterConnectionClosed : {}", session + " : " + status);
 	}
 	
 }

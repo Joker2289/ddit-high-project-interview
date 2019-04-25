@@ -66,16 +66,36 @@
       </div>
  </nav>
 
+<script src="/js/sockjs.js"></script>
 <script>
 var socket = null;
 
-$(document).ready(function() {
-	connectWS();
-});
+// $(document).ready(function() {
+// 	connectWS();
+// 	sendMessege();
+// });
+
+// let ws2 = new SockJS("<c:url value="/timeline"/>");
+// ws2.onmessage = onMessage;
+// ws2.onclose = onClose;
+
+// function sendMessege() {
+// 	console.log("connect");
+// }
+
+// function onMessage(msg) {
+// 	var data = msg.data;
+// 	console.log(data);
+// }
+
+// function onClose(event) {
+// 	console.log("disconnect");
+// }
+
 
 function connectWS() {
-	
 	var ws = new WebSocket("ws://localhost/echo");
+	
 	socket = ws;
 	
 	ws.onopen = function() {
@@ -89,7 +109,6 @@ function connectWS() {
 	ws.onclose = function() {
 		console.log("disconnect");
 	};
-	
 }
 
  </script>
