@@ -14,7 +14,8 @@
 						<%-- style="width: 59px;height: 59px;background-image:url(/profile?mem_id=${});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;"--%>>
 					</div>
 					<div>
-						<label style="font-size: 23px;">${hashTag.ref_keyword}</label>
+						<%-- <a href="'hashtagpost?hashtag_name=#+'${hashTag.ref_keyword}"><label style="font-size: 23px;">${hashTag.ref_keyword}</label></a> --%>
+						<a href="/hashtagpost?hashtag_name=${fn:split(hashTag.ref_keyword,'#')[0] }"><label style="font-size: 23px;">${hashTag.ref_keyword}</label></a>
 					</div>
 				</div>
 				<div>
