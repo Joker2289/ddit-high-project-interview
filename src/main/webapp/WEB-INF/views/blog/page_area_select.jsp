@@ -16,7 +16,7 @@
 		
 		
 			<c:if test='${ pVo.user_id == SESSION_MEMBERVO.mem_id }'>
-				<button id="addPageBtn" class="btn addPage">Page 작성</button>
+				<button id="writePageBtn" class="btn writePageBtn" onclick="writePage('${ sVo.section_code }')">Page 작성</button>
 			</c:if>
 		</div>
 		
@@ -27,7 +27,13 @@
 
 
 <script>
+
 $('#page_area_select_head').css('background-color', '${ pVo.index_color }');
+
+
+function writePage(section_code){
+	document.location.href = "/page/onenote?section_code=" + section_code;
+}
 
 </script>
 

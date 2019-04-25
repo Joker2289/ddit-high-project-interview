@@ -11,7 +11,7 @@
 	margin-bottom: 10px;
 }
 
-.addPage {
+.writePageBtn {
 	margin: 0 auto;
 	width: 90%;
 	background-color: #fff;
@@ -20,7 +20,7 @@
 	font-weight: blod;
 }
 
-.addPage:hover{
+.writePageBtn:hover{
 	background-color: #000;
 	color: #fff;
 }
