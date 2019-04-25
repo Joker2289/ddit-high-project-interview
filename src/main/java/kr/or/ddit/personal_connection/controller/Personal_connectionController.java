@@ -2,6 +2,7 @@ package kr.or.ddit.personal_connection.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -105,14 +106,19 @@ public class Personal_connectionController {
 	
 	
 	@RequestMapping(path={"/connections"})
-	public String connectionsView(HttpSession session , Model model , HttpServletRequest req) {
+	public String connectionsView(HttpSession session , Model model , HttpServletRequest req, String sort) {
 		
 		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		List<UsersVo> personalList = null;
 		
 		memberVo.setMem_id(memberVo.getMem_id());
 		
-		List<UsersVo> personalList = 
-				personalService.select_connections(memberVo);
+		
+		if(sort.equals("new")) {
+			personalList = personalService.select_connections(memberVo);
+		}else{
+			personalList = personalService.select_connectionsName(memberVo);
+		}
 		int connections_count = personalService.connections_count(memberVo);
 		
 		model.addAttribute("personalList", personalList);
@@ -243,7 +249,6 @@ public class Personal_connectionController {
 			List<UsersVo> followConnections =
 					personalService.select_followConnections(memberVo);
 			model.addAttribute("followConnections", followConnections);
-			logger.debug("++++++ {}" , followConnections);
 			
 			return "/personalConnection/feedFilter/feedConnections";
 			
@@ -318,6 +323,8 @@ public class Personal_connectionController {
 			resultMap.put("title", list.getHashtag_name());
 			resultMapList.add(resultMap);
 		}
+		
+		Collections.shuffle(resultMapList);
 		
 		model.addAttribute("resultMapList",resultMapList);
 		model.addAttribute("allFollowCount", allFollowCount);
@@ -395,11 +402,11 @@ public class Personal_connectionController {
 	
 	
 	@RequestMapping(path={"/connectionOff"})
-	public String connectionOff(Personal_connectionVo personalVo) {
+	public String connectionOff(Personal_connectionVo personalVo,String sort) {
 		
 		personalService.delete_connections(personalVo);
 		
-		return "redirect:/connections";
+		return "redirect:/connections?sort="+sort;
 	}
 	
 	

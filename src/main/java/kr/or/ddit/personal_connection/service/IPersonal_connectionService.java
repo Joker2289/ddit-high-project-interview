@@ -22,9 +22,21 @@ public interface IPersonal_connectionService {
 	* 변경이력 :
 	* @param memberVo
 	* @return
-	* Method 설명 : 일촌 리스트 출력
+	* Method 설명 : 일촌 리스트 출력 - 최신순
 	*/
 	List<UsersVo> select_connections(MemberVo memberVo);
+	
+	
+	
+	/**
+	 * Method : select_connections
+	 * 작성자 : PC09
+	 * 변경이력 :
+	 * @param memberVo
+	 * @return
+	 * Method 설명 : 일촌 리스트 출력 - 이름순
+	 */
+	List<UsersVo> select_connectionsName(MemberVo memberVo);
 	
 	
 	
