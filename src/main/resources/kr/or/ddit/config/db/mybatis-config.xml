@@ -42,6 +42,7 @@
 		<typeAlias alias="chat_memberVo" type="kr.or.ddit.chat_member.model.Chat_memberVo"/>
 		<typeAlias alias="chat_contentsVo" type="kr.or.ddit.chat_contents.model.Chat_contentsVo"/>
 		<typeAlias alias="itemVo" type="kr.or.ddit.item.model.ItemVo"/>
+		<typeAlias alias="pageVo" type="kr.or.ddit.page.model.PageVo"/>
 	</typeAliases> 
   
 	<mappers>
@@ -80,6 +81,7 @@
 		<mapper resource="kr/or/ddit/config/db/mapper/chat_member.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/chatroom.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/item.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/page.xml"/>
 	</mappers>
 </configuration>
 

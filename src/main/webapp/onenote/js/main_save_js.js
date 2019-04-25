@@ -32,6 +32,22 @@ function stage_save_img() {
 	});
 }
 
+//page 제목 입력
+function input_page_title(){
+	
+	var result = prompt( '제목 작성', '' );
+	 
+	if(result != null){
+		
+		$('#page_title').val(result);
+		stage_save_page();
+	}
+}
+
+
+
+
+
 // 페이지 저장
 function stage_save_page() {
 	
@@ -46,19 +62,19 @@ function stage_save_page() {
 			$.ajax({
 				type : "post",
 				data : $("#thumnailForm").serialize(),
-				url : "/page/saveThumnail",
+				url : "/page/saveThumbnail",
 				success : function(data) {
-					$('#page_thumnail').val(data);
+					console.log(data);
+					$('#page_thumbnail').val(data);
+					
+					var stage_data = stage.toJSON();
+					$('#page_contents').val(stage_data);
+					$('#saveForm').submit();
 				}
 			});
 
 		}
 	});
 	
-	
-	var stage_data = stage.toJSON();
-	$('#page_contents').val(stage_data);
-	
-	$('#page_title').val('test');
 
 }

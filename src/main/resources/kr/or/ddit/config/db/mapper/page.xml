@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="page">
+
+	<!-- 섹션 추가 -->
+	<insert id="insert_page" parameterType="pageVo">
+	
+		<selectKey keyProperty="page_code" resultType="String" order="AFTER">
+		  	select 
+		  		page_code_seq.currval
+		  	from 
+		  		dual
+		</selectKey>
+		
+		insert into page
+		values (
+			page_code_seq.nextval,
+			#{section_code},
+			#{page_title},
+			#{page_contents},
+			sysdate,
+			0,
+			#{page_thumbnail}
+		)
+	</insert>
+	
+</mapper> 

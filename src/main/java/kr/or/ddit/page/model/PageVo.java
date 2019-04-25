@@ -1,20 +1,15 @@
 package kr.or.ddit.page.model;
 
 public class PageVo {
+	
 	private String page_code;		// 페이지코드
 	private String section_code;	// 섹션코드
 	private String page_title;		// 페이지제목
 	private String page_contents;	// 페이지내용
 	private String write_date;		// 작성일
 	private String view_count; 		// 조회수
-	private String page_thumnail;	// 페이지 썸네일 이미지
+	private String page_thumbnail;	// 페이지 썸네일 이미지
 	
-	@Override
-	public String toString() {
-		return "PageVo [page_code=" + page_code + ", section_code=" + section_code + ", page_title=" + page_title
-				+ ", page_contents=" + page_contents + ", write_date=" + write_date + ", view_count=" + view_count
-				+ ", page_thumnail=" + page_thumnail + "]";
-	}
 	public String getPage_code() {
 		return page_code;
 	}
@@ -51,13 +46,17 @@ public class PageVo {
 	public void setView_count(String view_count) {
 		this.view_count = view_count;
 	}
-	public String getPage_thumnail() {
-		return page_thumnail;
+	public String getPage_thumbnail() {
+		return page_thumbnail;
 	}
-	public void setPage_thumnail(String page_thumnail) {
-		this.page_thumnail = page_thumnail;
+	public void setPage_thumbnail(String page_thumbnail) {
+		this.page_thumbnail = page_thumbnail;
 	}
-	
-	
+	@Override
+	public String toString() {
+		return "PageVo [page_code=" + page_code + ", section_code=" + section_code + ", page_title=" + page_title
+				+ ", page_contents=" + page_contents + ", write_date=" + write_date + ", view_count=" + view_count
+				+ ", page_thumbnail=" + page_thumbnail + "]";
+	}
 	
 }

@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,24 +22,31 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.ddit.login.LoginController;
+import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.page.model.PageVo;
+import kr.or.ddit.page.service.IPageService;
 
 @RequestMapping("/page")
 @Controller
 public class PageController {
 
 	private Logger logger = LoggerFactory.getLogger(LoginController.class);
+	
+	@Resource(name="pageService")
+	private IPageService pageService;
 
 	/**
 	 * 
-	 * Method : onenoteView 작성자 : pjk 변경이력 : Method 설명 : 페이지 작성 화면 요청
-	 * 
+	 * Method : onenoteView 
+	 * 작성자 : pjk 
+	 * 변경이력 : Method 
+	 * 설명 : 페이지 작성 화면 요청
 	 * @return
-	 * 
 	 */
 	@RequestMapping(path = "/onenote", method = RequestMethod.GET)
 	public String onenoteView(HttpServletRequest req, Model model, @RequestParam("section_code") String section_code) {
 
-		logger.debug("section_code : {}", section_code);
+		model.addAttribute("section_code", section_code);
 
 		return "onenote/onenote_write";
 	}
@@ -124,21 +132,6 @@ public class PageController {
 
 	/**
 	 * 
-	 * Method : savePage 작성자 : pjk 변경이력 :
-	 * 
-	 * @param src
-	 * @param model
-	 * @return Method 설명 : 페이지 저장
-	 */
-	@RequestMapping("/savePage")
-	public String savePage(@RequestParam(name = "src") String src, Model model) {
-		model.addAttribute("src", src);
-		return "onenoteImageView";
-	}
-	
-	
-	/**
-	 * 
 	 * Method : saveThumnail
 	 * 작성자 : pjk
 	 * 변경이력 :
@@ -147,7 +140,7 @@ public class PageController {
 	 * @throws Exception
 	 * Method 설명 : 스테이지 썸네일 사버 저장
 	 */
-	@RequestMapping(value="/saveThumnail")
+	@RequestMapping(value="/saveThumbnail")
 	@ResponseBody
 	public String saveThumnail(HttpServletRequest req) throws Exception {
 		
@@ -160,8 +153,6 @@ public class PageController {
 		
 		ServletContext application = req.getServletContext();
 		
-		
-		
 		try {
 			if (binaryData == null || binaryData == "") {
 				throw new Exception();
@@ -170,9 +161,7 @@ public class PageController {
 			
 			byte[] file = Base64.decodeBase64(binaryData);
 			fileName = UUID.randomUUID().toString();
-			
-			
-			stream = new FileOutputStream(application.getRealPath("/images/onenote/thumnail/"+fileName));
+			stream = new FileOutputStream(application.getRealPath("/images/onenote/"+fileName));
 			stream.write(file);
 			stream.close();
 			
@@ -184,6 +173,13 @@ public class PageController {
 		}
 		
 		return fileName;
+	}
+	
+	@RequestMapping(path = "/savePage", method = RequestMethod.POST)
+	public String savePage(PageVo pVo, Model model, HttpServletRequest req) {
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		pageService.insert_page(pVo);
+		return "redirect:/blog/blogMainView?user_id=" + mVo.getMem_id();
 	}
 
 }
