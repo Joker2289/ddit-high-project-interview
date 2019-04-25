@@ -2,16 +2,22 @@ package kr.or.ddit.recruit.dao;
 
 import static org.junit.Assert.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.test.LogicTestConfig;
 
 public class RecruitDaoImplTest extends LogicTestConfig{
+	private Logger logger = LoggerFactory.getLogger(RecruitDaoImplTest.class);
 
 	@Resource(name="recruitDao")
 	private IRecruitDao recrDao;
@@ -126,14 +132,35 @@ public class RecruitDaoImplTest extends LogicTestConfig{
 		assertNotNull(recrList);
 	}
 	
-	
-	
+	// 날짜 변환 테스트.
+	@Test
+	public void testDate() throws ParseException {
+		/***Given***/
+		RecruitVo rVo = recrDao.getRecr("29");
+		String start_date = rVo.getStart_date();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+		Date start = sdf.parse(start_date);	
+		Date now = new Date();
+		
+		int temp_time = (int) (now.getTime() - start.getTime());		
+		int time_diff = temp_time / (60*1000);
 
+		/***When***/
+		logger.debug("now time? : {}", now.getTime());
+		logger.debug("start time? : {}", start.getTime());
+		logger.debug("time_diff? : {}", time_diff);
+
+		/***Then***/
+		//assert
+	}
+	
+	
+	
+	
+	
+	
 }
-
-
-
-
 
 
 

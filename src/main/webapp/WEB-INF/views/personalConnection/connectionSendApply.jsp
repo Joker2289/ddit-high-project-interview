@@ -28,7 +28,7 @@
 								<c:set var="profile_path" value="${send.profile_path }"/>
 							</c:when>
 						</c:choose>
-						<div style="display: flex;">
+						<div style="display: flex;padding-top: 7px;padding-bottom: 7px;" >
 							<a href="/profileHome?user_id=${send.user_id }"><div style="width: 59px;height: 59px;background-image:url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center; margin-right: 10px;border-radius: 100px;border: 2px solid #E3EEF2;">
 							</div></a>
 							<div style="width: 580px;">

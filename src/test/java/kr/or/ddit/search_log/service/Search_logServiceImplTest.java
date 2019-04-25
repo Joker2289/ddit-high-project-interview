@@ -8,11 +8,14 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.test.LogicTestConfig;
 
 public class Search_logServiceImplTest extends LogicTestConfig{
+	private Logger logger = LoggerFactory.getLogger(Search_logServiceImplTest.class);
 
 	@Resource(name="search_logService")
 	private ISearch_logService sLogService;
@@ -121,6 +124,59 @@ public class Search_logServiceImplTest extends LogicTestConfig{
 
 		/***Then***/
 		assertNotNull(compSVo);
+	}
+	
+	/**
+	 * 
+	 * Method : testGetWordList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 알람 설정된 검색어 목록 조회 테스트.
+	 */
+	@Test
+	public void testGetWordList() {
+		/***Given***/
+
+		/***When***/
+		List<String> wordList = sLogService.getWordList();
+		logger.debug("wordList? : {}", wordList.toString());
+
+		/***Then***/
+		assertNotNull(wordList);
+	}
+	
+	// 특정 문자열 포함 테스트
+	@Test
+	public void testContain() {
+		/***Given***/
+		String corp_name = "LG디스플레이";
+		String word = "lg";
+		
+		/***When***/
+		boolean contain_flag = corp_name.toUpperCase().contains(word.toUpperCase());
+		logger.debug("flag? : {}", contain_flag);
+
+		/***Then***/
+		assertNotNull(contain_flag);
+	}
+	
+	/**
+	 * 
+	 * Method : testGetAlarmUserList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 특정 검색어 알람을 설정한 유저 목록 조회 테스트.
+	 */
+	@Test
+	public void testGetAlarmUserList() {
+		/***Given***/
+
+		/***When***/
+		List<String> userList = sLogService.getAlarmUserList("lg");
+		logger.debug("userList? : {}", userList);
+
+		/***Then***/
+		assertNotNull(userList);
 	}
 	
 	
