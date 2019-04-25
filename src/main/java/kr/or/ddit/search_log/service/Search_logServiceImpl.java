@@ -175,6 +175,37 @@ public class Search_logServiceImpl implements ISearch_logService{
 		return compSVo;
 	}
 
+	/**
+	 * 
+	 * Method : getWordList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 알람 설정된 검색어 목록 조회.
+	 */
+	@Override
+	public List<String> getWordList() {
+		List<String> wordList = sLogDao.getWordList();
+		
+		return wordList;
+	}
+
+	/**
+	 * 
+	 * Method : getAlarmUserList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param alarmWord
+	 * @return
+	 * Method 설명 : 특정 검색어 알람을 설정한 유저 목록 조회.
+	 */
+	@Override
+	public List<String> getAlarmUserList(String alarmWord) {
+		List<String> userList = sLogDao.getAlarmUserList(alarmWord);
+		
+		return userList;
+	}
+
 	
 	
 	

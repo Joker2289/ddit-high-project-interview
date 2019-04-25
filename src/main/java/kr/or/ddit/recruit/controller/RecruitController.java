@@ -10,7 +10,9 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -271,7 +273,7 @@ public class RecruitController {
 	
 	// @rRList1 ajax 로직 처리 메서드.
 	@RequestMapping("/rRList1AjaxHtml")
-	public String rRList1AjaxHtml(HttpSession session, Model model) {
+	public String rRList1AjaxHtml(HttpSession session, Model model) throws ParseException {
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		// 조회한 항목(마지막으로 조회한 채용공고) model에 넣기.
@@ -395,6 +397,7 @@ public class RecruitController {
 			
 			List<String> corpImgList1 = new ArrayList<>();
 			List<String> corpNmList1 = new ArrayList<>();
+			List<String> timeList1 = new ArrayList<>();
 			
 			// 스크랩 데이터는 srecr에 있으니까 저장여부 리스트 scrapList 만들기. size는 rRList1에서 
 			// 가져오고 uSRList에서 save_flag가 't'인게 있으면 t. 없으면 f.
@@ -420,11 +423,42 @@ public class RecruitController {
 				if(scrapCheck_flag == false){
 					scrapList1.add("f");
 				}
+				
+				// start_date -> '19/04/24 16:20'.
+				// start_date와 new Date() - 차이 구함 (time_diff)
+				String start_date = rVo.getStart_date();
+				
+				// 문자열을 날짜로 바꾸려면 sdf.parse([문자열])
+				SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+				Date start = sdf.parse(start_date);
+				Date now = new Date();
+				
+				// getTime()으로 얻은 long값이 int의 범위를 넘어가므로 먼저 분으로 고친다음
+				// int로 변환을 하자.
+				long temp_time = now.getTime() - start.getTime();
+				
+				int time_diff = (int) (temp_time / (60*1000));
+				
+				// time_diff < 2 : 방금 / time_diff < 60 : x분 
+				// time_diff < 1440 : x시간 / time_diff < 43200 : x일 
+				// else : x달
+				if(time_diff < 2){
+					timeList1.add("방금");
+				}else if(time_diff < 60){
+					timeList1.add(time_diff + "분");
+				}else if(time_diff < 1440){
+					timeList1.add(time_diff/60 + "시간");
+				}else if(time_diff < 43200){
+					timeList1.add(time_diff/(60*24) + "일");
+				}else{
+					timeList1.add(time_diff/(60*24*30) + "달");
+				}
 			}
 			
 			model.addAttribute("corpImgList1", corpImgList1);		
 			model.addAttribute("corpNmList1", corpNmList1);			
 			model.addAttribute("scrapList1", scrapList1);			
+			model.addAttribute("timeList1", timeList1);			
 		}
 
 		model.addAttribute("rRList1", rRList1);		
@@ -749,10 +783,9 @@ public class RecruitController {
 		}		
 	}
 
-	
 	// @검색결과 저장 후 채용공고 검색 페이지 요청. -> 검색내역 저장은 Search_logController로 이동.
 	@RequestMapping("/recrSearch")
-	public String recrSearch(HttpSession session, Model model){
+	public String recrSearch(HttpSession session, Model model) throws ParseException{
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		// 회원이 검색한 값 가져오기. (getLSLog - get last search_log)
@@ -782,17 +815,42 @@ public class RecruitController {
 		
 		List<String> corpImgList = new ArrayList<>();
 		List<String> corpNmList = new ArrayList<>();
+		List<String> timeList = new ArrayList<>();
 		
 		for(int i=0; i < recrList.size(); i++){
 			RecruitVo rVo = recrList.get(i);
 			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
 			corpImgList.add(cVo.getLogo_path());
 			corpNmList.add(cVo.getCorp_name());
+			
+			String start_date = rVo.getStart_date();
+			
+			// 문자열을 날짜로 바꾸려면 sdf.parse([문자열])
+			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+			Date start = sdf.parse(start_date);
+			Date now = new Date();
+			
+			long temp_time = now.getTime() - start.getTime();
+			
+			int time_diff = (int) (temp_time / (60*1000));
+			
+			if(time_diff < 2){
+				timeList.add("방금");
+			}else if(time_diff < 60){
+				timeList.add(time_diff + "분");
+			}else if(time_diff < 1440){
+				timeList.add(time_diff/60 + "시간");
+			}else if(time_diff < 43200){
+				timeList.add(time_diff/(60*24) + "일");
+			}else{
+				timeList.add(time_diff/(60*24*30) + "달");
+			}
 		}
 		
 		model.addAttribute("recrList", recrList);
 		model.addAttribute("corpImgList", corpImgList);
 		model.addAttribute("corpNmList", corpNmList);
+		model.addAttribute("timeList", timeList);
 		
 		// 저장한 검색어 리스트 (saveList) 넘기기.
 		Search_logVo sVo = new Search_logVo();
@@ -1154,19 +1212,17 @@ public class RecruitController {
 	@RequestMapping("/insertRecr")
 	public String insertRecr(String corp_id, String emp_type, String recruit_period, String job_rank,
 			String job_type, String personnel, String recruit_contents, String recruit_title, 
-			HttpServletRequest req, Model model) {
+			String app_type, HttpServletRequest req, Model model) {
 		RecruitVo rVo = new RecruitVo();
 		rVo.setApp_count("0");
 		
-		// 임시
-		rVo.setApp_type("f");
+		// 임시 -> '간편지원' -> 프로필 pdf 전송
+		rVo.setApp_type(app_type);
 		rVo.setCorp_id(corp_id);
 		rVo.setEmp_type(emp_type);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
-		SimpleDateFormat sdf2 = new SimpleDateFormat("yy/MM/dd hh:mm");
 		Calendar cal = Calendar.getInstance();
-		rVo.setStart_date(sdf2.format(cal.getTime()));
 		
 		cal.add(Calendar.DAY_OF_MONTH, Integer.valueOf(recruit_period));
 		String end_date = sdf.format(cal.getTime());
@@ -1177,13 +1233,38 @@ public class RecruitController {
 		rVo.setJob_rank(job_rank);
 		rVo.setJob_type(job_type);
 		rVo.setPersonnel(personnel);
-		rVo.setRecruit_code(String.valueOf(recrService.getRecrCnt()+1));
+		
+		String recruit_code = String.valueOf(recrService.getRecrCnt()+1);
+		rVo.setRecruit_code(recruit_code);
 		rVo.setRecruit_contents(recruit_contents);
 		rVo.setRecruit_title(recruit_title);
 		
 		recrService.insertRecr(rVo);
 		
 		model.addAttribute("msg_flag", "t2");
+		
+		// 채용공고 insert -> 알림 insert
+		// recruit_code, search_word, userList
+		List<String> wordList = sLogService.getWordList();
+		
+		List<String> alarmWordList = new ArrayList<>();
+		String corp_name = cVo.getCorp_name();
+		
+		for(String word : wordList){
+			if(corp_name.toUpperCase().contains(word.toUpperCase())
+					|| recruit_title.toUpperCase().contains(word.toUpperCase())){
+				alarmWordList.add(word);
+			}
+		}
+		
+		Map<String, List<String>> resultMap = new HashMap<>();
+		
+		for(String alarmWord : alarmWordList){
+			List<String> userList = sLogService.getAlarmUserList(alarmWord);
+			resultMap.put(alarmWord, userList);
+		}
+		
+		logger.debug("map? : {}", resultMap.toString());
 		
 		// tiles로 바로 가면 안되고 /recruit로 redirect 해야지.
 		return "redirect:" + req.getContextPath() + "/recruit";

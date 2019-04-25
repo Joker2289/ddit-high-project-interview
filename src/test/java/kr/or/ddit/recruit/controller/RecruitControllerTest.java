@@ -4,8 +4,11 @@ import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -636,6 +639,32 @@ public class RecruitControllerTest extends WebTestConfig{
 		
 		// arr length가 1이 아니고 2네.
 		// "" 와 같음.
+	}
+	
+	// 날짜 계산 테스트.
+	@Test
+	public void testDate() {
+		/***Given***/
+		Calendar cal = Calendar.getInstance();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+		Date now = cal.getTime();
+		String str_now = sdf.format(now);
+		
+		cal.add(cal.DAY_OF_MONTH, 7);
+		
+		Date add = cal.getTime();
+		String str_add = sdf.format(add);
+
+		Calendar cal2 = Calendar.getInstance();
+		int temp_time = (int) (add.getTime() - now.getTime());
+		int time_diff = temp_time / (60*1000);
+		
+		/***When***/
+		logger.debug("time_diff? : {}", time_diff);
+
+		/***Then***/
+		assertNotNull(cal);
 	}
 	
 	

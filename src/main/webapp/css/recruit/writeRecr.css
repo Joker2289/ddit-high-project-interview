@@ -1,5 +1,3 @@
-/* css 주석 */
-
 /* 업무분야 항목 */
 .td_a, .td_local_data, .td_emp_data{
 	width: 187px;
@@ -12,7 +10,6 @@
 .td_local{
 	padding: 5px;
 }
-
 
 .can-toggle {
   position: relative;
