@@ -1,9 +1,12 @@
 package kr.or.ddit.recruit.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -81,7 +84,8 @@ public class RecruitController {
 
 	// @채용공고 페이지 요청.
 	@RequestMapping("/recruit")
-	public String recruit(HttpSession session, HttpServletRequest req, String msg_flag, Model model) throws IOException{
+	public String recruit(HttpSession session, HttpServletRequest req, String msg_flag, 
+			String msg, Model model) throws IOException{
 		// 유저정보 수정. 'SESSION_MEMBERVO'
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");		
 		
@@ -458,7 +462,7 @@ public class RecruitController {
 		}
 	}
 	
-	// 채용공고 등록
+	// 임시 채용공고 등록
 	private void insert_recr() {
 		for(int k=0; k<30; k++){
 			RecruitVo rVo = new RecruitVo();
@@ -508,7 +512,8 @@ public class RecruitController {
 			String rlocal = ran_arr(arr_local);
 			rVo.setJob_local(rlocal);
 			
-			recrService.insertRecr(rVo);
+			// 수정 필요.
+			//recrService.insertRecr(rVo);
 		}
 	}
 	
@@ -1098,17 +1103,90 @@ public class RecruitController {
 		
 		List<String> fmtNmList = new ArrayList<>();
 		
-		for(CorporationVo cVo : corpList){
-			String name = cVo.getCorp_name();
-			String fmtNm = name.replace(corp_name, "<strong>"+corp_name+"</strong>");
+		// corp_name이 영문인지 판별.
+		boolean alphabet_flag = true;
+		
+		char[] arr_char = corp_name.toUpperCase().toCharArray();
+
+		for(char letter : arr_char){
+			int int_letter = (int) letter;
 			
-			fmtNmList.add(fmtNm);
+			if(! (int_letter >= 65 && int_letter <= 90)){
+				alphabet_flag = false;
+				break;
+			}
+		}
+		
+		if(alphabet_flag == true){
+			for(CorporationVo cVo : corpList){
+				String name = cVo.getCorp_name();
+				String upperName = name.toUpperCase();
+				
+				String upper_corp_name = corp_name.toUpperCase();
+				
+				int start_idx = upperName.indexOf(upper_corp_name);
+				
+				String str_front = name.substring(0, start_idx);
+				String search_word = name.substring(start_idx, start_idx + corp_name.length());
+				String str_back = name.substring(start_idx + corp_name.length(), name.length());
+				
+				String fmtNm = str_front + "<strong>" + search_word + "</strong>" + str_back;
+				
+				fmtNmList.add(fmtNm);
+				// 극한의 로직충..ㅜㅜ
+			}
+		}else{
+			for(CorporationVo cVo : corpList){
+				String name = cVo.getCorp_name();
+				String fmtNm = name.replace(corp_name, "<strong>"+corp_name+"</strong>");
+				
+				fmtNmList.add(fmtNm);
+			}
 		}
 		
 		model.addAttribute("fmtNmList", fmtNmList);
 		model.addAttribute("corpList", corpList);
 
 		return "/recruit/comDropdown";
+	}
+	
+	// @채용공고 등록.
+	@RequestMapping("/insertRecr")
+	public String insertRecr(String corp_id, String emp_type, String recruit_period, String job_rank,
+			String job_type, String personnel, String recruit_contents, String recruit_title, 
+			HttpServletRequest req, Model model) {
+		RecruitVo rVo = new RecruitVo();
+		rVo.setApp_count("0");
+		
+		// 임시
+		rVo.setApp_type("f");
+		rVo.setCorp_id(corp_id);
+		rVo.setEmp_type(emp_type);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yy/MM/dd hh:mm");
+		Calendar cal = Calendar.getInstance();
+		rVo.setStart_date(sdf2.format(cal.getTime()));
+		
+		cal.add(Calendar.DAY_OF_MONTH, Integer.valueOf(recruit_period));
+		String end_date = sdf.format(cal.getTime());
+		rVo.setEnd_date(end_date);
+		
+		CorporationVo cVo = corpService.select_corpInfo(corp_id);
+		rVo.setJob_local(cVo.getAddr1().substring(0, 2));
+		rVo.setJob_rank(job_rank);
+		rVo.setJob_type(job_type);
+		rVo.setPersonnel(personnel);
+		rVo.setRecruit_code(String.valueOf(recrService.getRecrCnt()+1));
+		rVo.setRecruit_contents(recruit_contents);
+		rVo.setRecruit_title(recruit_title);
+		
+		recrService.insertRecr(rVo);
+		
+		model.addAttribute("msg_flag", "t2");
+		
+		// tiles로 바로 가면 안되고 /recruit로 redirect 해야지.
+		return "redirect:" + req.getContextPath() + "/recruit";
 	}
 	
 	

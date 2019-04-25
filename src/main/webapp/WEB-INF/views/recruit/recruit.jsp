@@ -268,7 +268,7 @@
 			</div>
 		</div>
 	</form>
-	
+	1122
 	<br><br><br><br>
 	<br><br><br><br>
 	
@@ -393,14 +393,15 @@
 				
 		// msg 출력.
 		var msg_flag = "${msg_flag }";
-		console.log("msg_flag? : " + msg_flag);
-		
-		var msg = "일반회원으로 로그인 후 이용해주세요.";
-
+// 		console.log("msg_flag? : " + msg_flag);
 		if(msg_flag == 't'){
-			alert(msg);
+			alert("일반회원으로 로그인 후 이용해주세요.");
 			
-			<c:set var="msg_flag" value="t"></c:set>
+			<c:set var="msg_flag" value="f"></c:set>
+		}else if(msg_flag == 't2'){
+			alert("채용공고가 정상적으로 등록되었습니다.");
+			
+			<c:set var="msg_flag" value="f"></c:set>
 		}
 			
 		// 채용공고 검색

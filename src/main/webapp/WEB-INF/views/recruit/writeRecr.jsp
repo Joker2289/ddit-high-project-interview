@@ -23,16 +23,16 @@
 	</div>
 	<div id="div_srList" class="whiteBox" style="width: 795px; border-top: 0px; margin-top: 0px;
 			font-size: 15px; padding: 20px; font-size: 18px;">
-		<form action="${pageContext.request.contextPath }/insertIntexxx" id="frm" method="post">	
-			<input type="hidden" id="job_type" name="job_type">
-			<input type="hidden" id="inte_local" name="inte_local">
-			<input type="hidden" id="inte_emptype" name="inte_emptype">
-			<input type="hidden" id="inte_size" name="inte_size">
-			<input type="hidden" id="change_flag" name="change_flag">
-			<input type="hidden" id="tell_content" name="tell_content">
-			<input type="hidden" id="job_condition" name="job_condition">
-			
+		<form action="${pageContext.request.contextPath }/insertRecr" id="frm" method="post">	
 			<input type="hidden" id="corp_id" name="corp_id">
+			<input type="hidden" id="recruit_title" name="recruit_title">
+			<input type="hidden" id="job_type" name="job_type">
+			<input type="hidden" id="recruit_contents" name="recruit_contents">
+			<input type="hidden" id="recruit_period" name="recruit_period">
+			<input type="hidden" id="personnel" name="personnel">
+			<input type="hidden" id="job_rank" name="job_rank">
+			<input type="hidden" id="emp_type" name="emp_type">
+<!-- 			<input type="hidden" id="app_type" name="app_type"> --> <!-- 간편지원 -->
 			
 			<table border="0" style="width: 750px;">
 				<tr>
@@ -79,7 +79,7 @@
 								</td>
 								<td style="padding-left: 10px;" id="td_com">
 									<input type="text" style="width: 400px; height: 50px; border: 0px;
-											border-radius: 3px; padding: 5px;" id="" class=""
+											border-radius: 3px; padding: 5px;" id="txt_title" class=""
 											placeholder="채용공고명"/>
 								</td>
 							</tr>
@@ -125,7 +125,8 @@
 						<div style="margin-bottom: 10px;"> 
 							<strong>업무내용</strong><br>
 						</div>
-						<textarea rows="4" cols="50" placeholder="업무 상세내용을 입력해주세요."></textarea>
+						<textarea rows="4" cols="50" placeholder="업무 상세내용을 입력해주세요."
+								id="txt_content"></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -134,29 +135,29 @@
 							<tr>
 								<td style="width: 187px;">
 									<div style="margin-bottom: 10px;"> 
-										<strong>모집기간1</strong><br>
+										<strong>모집기간</strong><br>
 									</div>
-									<select id="" style="padding: 5px;">
-										<option value="1">7일</option>
-										<option value="2">15일</option>
-										<option value="3">30일</option>
+									<select id="sel_period" style="padding: 5px;">
+										<option value="7" selected>7일</option>
+										<option value="15">15일</option>
+										<option value="30">30일</option>
 									</select>
 								</td>
 								<td style="width: 187px;">
 									<div style="margin-bottom: 10px;"> 
 										<strong>모집인원</strong><br>
 									</div>
-									<select id="" style="padding: 5px;">
-										<option value="1">O명</option>
-										<option value="2">OO명</option>
-										<option value="3">OOO명</option>
+									<select id="sel_personnel" style="padding: 5px;">
+										<option value="O명" selected>O명</option>
+										<option value="OO명">OO명</option>
+										<option value="OOO명">OOO명</option>
 									</select>
 								</td>
 								<td style="width: 187px;">
 									<div style="margin-bottom: 10px;"> 
 										<strong>직급</strong><br>
 									</div>
-									<select id="" style="padding: 5px;">
+									<select id="sel_rank" style="padding: 5px;">
 										<c:forEach begin="1" end="${rankList.size() }" varStatus="i">
 											<option value="${rankList.get(i.index - 1).item_content }">
 												${rankList.get(i.index - 1).item_content }
@@ -168,9 +169,9 @@
 									<div style="margin-bottom: 10px;"> 
 										<strong>고용형태</strong><br>
 									</div>
-									<select id="" style="padding: 5px;">
+									<select id="sel_emp" style="padding: 5px;">
 										<c:forEach begin="1" end="${empList.size() }" varStatus="i">
-											<option value="${empList.get(i.index - 1) }">
+											<option value="${empList.get(i.index - 1).item_content }">
 												${empList.get(i.index - 1).item_content }
 											</option>
 										</c:forEach>
@@ -187,27 +188,27 @@
 						</div>
 					</td>
 				</tr>
-				<tr>
-					<td style="padding-bottom: 30px;">
-						<div style="margin-bottom: 10px;"> 
-							<br><strong>현재 회원님의 상태는?</strong><br>
-						</div>
-						<select id="sel_cond" style="padding: 5px;">
-							<option value="0" style="padding: 5px;">상태</option>
-							<option value="1">적극적으로 지원하는 중</option>
-							<option value="2">가끔 지원함</option>
-							<option value="3" style="padding: 5px;">지원하고 있지 않지만 제안을 받는다면 고려할 것</option>
-							<option value="4">원하고 있지 않고 기회가 생겨도 거절할 것</option>
-						</select>
-					</td>
-				</tr>
+<!--  				<tr> -->
+<!-- 					<td style="padding-bottom: 30px;"> -->
+<!-- 						<div style="margin-bottom: 10px;">  -->
+<!-- 							<br><strong>현재 회원님의 상태는?</strong><br> -->
+<!-- 						</div> -->
+<!-- 						<select id="sel_cond" style="padding: 5px;"> -->
+<!-- 							<option value="0" style="padding: 5px;">상태</option> -->
+<!-- 							<option value="1">적극적으로 지원하는 중</option> -->
+<!-- 							<option value="2">가끔 지원함</option> -->
+<!-- 							<option value="3" style="padding: 5px;">지원하고 있지 않지만 제안을 받는다면 고려할 것</option> -->
+<!-- 							<option value="4">원하고 있지 않고 기회가 생겨도 거절할 것</option> -->
+<!-- 						</select> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
 			</table><br>
 			
 			<div style="text-align: right;">
 				<input id="btn_save" type="button" value="저장하기" style="color: white; background-color: #0174b0;
 						border: 1px solid; border-color: #0174b0; height: 40px; width: 90px; margin-right: 20px;">
 			</div>
-			<input id="btn_check" type="button" value="확인">
+			<input id="btn_check" type="hidden" value="확인">
 		</form>	
 	</div>
 <div class="col-md-12">
@@ -248,15 +249,15 @@
 </div>			
 </td>
 </tr>
-</table>
+</table><br><br>
 	
-	<br><br>112233<i class="fas fa-user-tie"></i><i class="fas fa-map-marker-alt"></i>
+	11223344556677889900<i class="fas fa-user-tie"></i><i class="fas fa-map-marker-alt"></i>
 
 </div></div></div>		
 		
 <script type="text/javascript">
 $(document).ready(function(){
-	console.log("corpList size? : ${corpList.size() }");
+// 	console.log("flag? : ${alphabet_flag }");
 	
 	$("#txt_com").on("click", function(){
 		$("#txt_com").css("border-color", "#0174b0");
@@ -264,7 +265,7 @@ $(document).ready(function(){
 	
 	// 임시 확인 버튼
 	$("#btn_check").on("click", function(){
-// 		alert($("#hidden_size").val());
+		alert($("#sel_rank").val());
 	});
 	
 	// 엔터키 누르면 드롭다운.
@@ -288,7 +289,7 @@ $(document).ready(function(){
 		}
 	});		
 	
-	// 방향키 위/아래
+	// 방향키 위/아래. 이상하게 'text'에서 방향키 아래 이벤트가 안되네.
 	var list_idx = 0;
 	
 	$("#txt_com").keypress(function(e){
@@ -401,6 +402,67 @@ $(document).on("click", function(e){
        		$(".txt_comOn").attr('class','txt_com');
        	}
 	}
+});
+
+
+// 저장 버튼 클릭
+$("#btn_save").on("click", function(){
+	// 회사 유효성 체크.	
+	if($("#corp_id").val() == ''){
+		alert("회사를 선택해주세요.");
+		
+		// 회사 text로 focus 변경.
+		$("#txt_com").focus();
+		return;				
+	}
+	
+	// 채용공고명 유효성 체크.
+	if($("#txt_title").val() == ''){
+		alert("채용공고명을 입력해주세요.");
+		
+		// txt_title로 focus 변경.
+		$("#txt_title").focus();
+		return;
+	}
+	
+	$("#recruit_title").val($("#txt_title").val());
+	
+	// 업무분야 유효성 체크.
+	if($("#job_type").val() == ""){
+		alert("업무분야를 3순위까지 선택해주세요.");
+		
+		// 해당 위치로 스크롤 이동.
+ 		$(window).scrollTop(($("#lb_type").offset().top) - 20);
+		return;
+	}
+	
+	// 업무내용 유효성 체크.
+	if($("#txt_content").val() == ''){
+		alert("업무내용을 입력해주세요.");
+		
+		// 해당 위치로 focus 이동.
+		$("#txt_content").focus();
+		return;
+	}
+	
+	$("#recruit_contents").val($("#txt_content").val());
+	
+	$("#recruit_period").val($("#sel_period option:selected").val());
+	$("#personnel").val($("#sel_personnel option:selected").val());
+	$("#job_rank").val($("#sel_rank option:selected").val());
+	$("#emp_type").val($("#sel_emp option:selected").val());
+	
+	// 값 확인 (회사, 채용공고명, 업무분야, 업무내용, 모집기간, 모집인원, 직급, 고용형태)
+// 	alert("회사 : " + $("#corp_id").val());
+// 	alert("채용공고명 : " + $("#recruit_title").val());
+// 	alert("업무분야 : " + $("#job_type").val());
+// 	alert("업무내용 : " + $("#recruit_contents").val());
+// 	alert("모집기간 : " + $("#recruit_period").val());
+// 	alert("모집인원 : " + $("#personnel").val());
+// 	alert("직급 : " + $("#job_rank").val());
+// 	alert("고용형태 : " + $("#emp_type").val());
+	
+	$("#frm").submit();
 });
 
 

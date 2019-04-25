@@ -9,8 +9,8 @@
 		INSERT INTO RECRUIT(RECRUIT_CODE, CORP_ID, RECRUIT_TITLE, JOB_TYPE, RECRUIT_CONTENTS, START_DATE,
 			END_DATE, PERSONNEL, JOB_RANK, EMP_TYPE, APP_TYPE, APP_COUNT, JOB_LOCAL) 
 		VALUES(#{recruit_code}, #{corp_id}, #{recruit_title}, #{job_type}, #{recruit_contents}, 
-			#{start_date}, #{end_date}, #{personnel}, #{job_rank}, #{emp_type}, #{app_type}, #{app_count},
-			#{job_local})	
+			SYSDATE, #{end_date}, #{personnel}, #{job_rank}, #{emp_type}, 
+			#{app_type}, #{app_count}, #{job_local})	
 	</insert>
 	
 	<!-- 테스트를 위한 채용공고 삭제. -->
@@ -27,20 +27,26 @@
 	
 	<!-- 전체 채용공고 조회. -->
 	<select id="getAllRecr" resultType="recruitVo">
-		SELECT *
+		SELECT RECRUIT_CODE, CORP_ID, RECRUIT_TITLE, JOB_TYPE, RECRUIT_CONTENTS, 
+			TO_CHAR(START_DATE, 'YY/MM/DD HH24:MI') START_DATE, END_DATE, PERSONNEL, JOB_RANK, 
+			EMP_TYPE, APP_TYPE, APP_COUNT, JOB_LOCAL
 		  FROM RECRUIT	
 	</select>
 	
 	<!-- 특정 채용공고 조회. -->
 	<select id="getRecr" parameterType="String" resultType="recruitVo">
-		SELECT *
+		SELECT RECRUIT_CODE, CORP_ID, RECRUIT_TITLE, JOB_TYPE, RECRUIT_CONTENTS, 
+			TO_CHAR(START_DATE, 'YY/MM/DD HH24:MI') START_DATE, END_DATE, PERSONNEL, JOB_RANK, 
+			EMP_TYPE, APP_TYPE, APP_COUNT, JOB_LOCAL
 		  FROM RECRUIT
 		 WHERE RECRUIT_CODE = #{recruit_code}	
 	</select>
 	
 	<!-- 특정 유저가 마지막으로 조회한 채용공고 조회. -->
 	<select id="getLastViewRecr" parameterType="String" resultType="recruitVo">
-		SELECT *
+		SELECT RECRUIT_CODE, CORP_ID, RECRUIT_TITLE, JOB_TYPE, RECRUIT_CONTENTS, 
+			TO_CHAR(START_DATE, 'YY/MM/DD HH24:MI') START_DATE, END_DATE, PERSONNEL, JOB_RANK, 
+			EMP_TYPE, APP_TYPE, APP_COUNT, JOB_LOCAL
 		  FROM RECRUIT
 		 WHERE RECRUIT_CODE = (SELECT RECRUIT_CODE
 		                         FROM SAVE_RECRUIT
@@ -51,14 +57,18 @@
 	
 	<!-- 특정 업무지역으로 채용공고 목록 조회. -->
 	<select id="getRecrByLocal" parameterType="String" resultType="recruitVo">
-		SELECT *
+		SELECT RECRUIT_CODE, CORP_ID, RECRUIT_TITLE, JOB_TYPE, RECRUIT_CONTENTS, 
+			TO_CHAR(START_DATE, 'YY/MM/DD HH24:MI') START_DATE, END_DATE, PERSONNEL, JOB_RANK, 
+			EMP_TYPE, APP_TYPE, APP_COUNT, JOB_LOCAL
 		  FROM RECRUIT
 		 WHERE JOB_LOCAL = #{job_local}	
 	</select>
 
 	<!-- 특정 업무분야로 채용공고 목록 조회. -->
 	<select id="getRecrByType" parameterType="String" resultType="recruitVo">
-		SELECT *
+		SELECT RECRUIT_CODE, CORP_ID, RECRUIT_TITLE, JOB_TYPE, RECRUIT_CONTENTS, 
+			TO_CHAR(START_DATE, 'YY/MM/DD HH24:MI') START_DATE, END_DATE, PERSONNEL, JOB_RANK, 
+			EMP_TYPE, APP_TYPE, APP_COUNT, JOB_LOCAL
 		  FROM RECRUIT
 		 WHERE JOB_TYPE LIKE #{job_type} || ' /%'
 		    OR JOB_TYPE LIKE '%/ ' || #{job_type} || ' /%'
@@ -67,7 +77,9 @@
 
 	<!-- 특정 회사의 전체 채용공고 조회. -->
 	<select id="getRecrListCorp_id" parameterType="String" resultType="recruitVo">
-		SELECT *
+		SELECT RECRUIT_CODE, CORP_ID, RECRUIT_TITLE, JOB_TYPE, RECRUIT_CONTENTS, 
+			TO_CHAR(START_DATE, 'YY/MM/DD HH24:MI') START_DATE, END_DATE, PERSONNEL, JOB_RANK, 
+			EMP_TYPE, APP_TYPE, APP_COUNT, JOB_LOCAL
 		  FROM RECRUIT
 		 WHERE CORP_ID = #{corp_id}	
 	</select>
@@ -81,7 +93,9 @@
 	
 	<!-- 특정 회사 이름으로 검색한 채용공고 목록 조회. -->
 	<select id="searchRecrListByCorp_name" parameterType="String" resultType="recruitVo">
-		SELECT A.*
+		SELECT A.RECRUIT_CODE, A.CORP_ID, A.RECRUIT_TITLE, A.JOB_TYPE, A.RECRUIT_CONTENTS, 
+			A.TO_CHAR(START_DATE, 'YY/MM/DD HH24:MI') START_DATE, A.END_DATE, A.PERSONNEL, 
+			A.JOB_RANK, A.EMP_TYPE, A.APP_TYPE, A.APP_COUNT, A.JOB_LOCAL
 		  FROM RECRUIT A, CORPORATION B
 		 WHERE A.CORP_ID = B.CORP_ID
 		   AND UPPER(CORP_NAME) LIKE UPPER('%' || #{corp_name} || '%')	

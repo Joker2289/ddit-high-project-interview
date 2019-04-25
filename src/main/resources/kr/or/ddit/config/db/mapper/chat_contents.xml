@@ -10,7 +10,7 @@
              values(content_code_seq.nextval,#{chat_code},#{mem_id},#{chat_content},'N',sysdate)
 	</insert>
 	
-	<!-- 선턱한 채팅방 조회  -->
+	<!-- 선택한 채팅방 조회  -->
 	<select id="select_chatContents" parameterType="String" resultType="chat_contentsVo">
 		select a.profile_path, b.content_code, b.chat_code, b.mem_id, b.chat_content, b.read_status, b.write_date
           from users a, chat_contents b

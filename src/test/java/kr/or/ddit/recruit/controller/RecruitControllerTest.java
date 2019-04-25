@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -558,6 +559,83 @@ public class RecruitControllerTest extends WebTestConfig{
 
 		/***Then***/
 		assertNotNull(fmtStr);
+	}
+
+	// 문자열 대문자로 변환 테스트
+	@Test
+	public void testToUpperCase() {
+		/***Given***/
+		String str = "lg디스플레이";
+
+		/***When***/
+		String fmtStr = str.toUpperCase();
+		logger.debug("fmtStr? : {}", fmtStr);
+
+		/***Then***/
+		assertNotNull(fmtStr);
+		
+		// 문자열에 한/영 섞여있어도 영문만 대문자로 바꿔줌.
+	}
+	
+	// 문자열 구성 테스트
+	@Test
+	public void testStrAlphabet() {
+		/***Given***/
+		String str = "lg디스플레이";
+		char[] arr_char = str.toCharArray();
+		
+		char str_a = 'a';
+		char str_A = 'A';
+		char str_z = 'z';
+		char str_Z = 'Z';
+		char str_91 = (char) 91;
+		
+		/***When***/
+		boolean alphabet_flag = false;
+		
+		int int_letter = (int) arr_char[0];
+		int int_a = (int) str_a;
+		int int_A = (int) str_A;
+		int int_z = (int) str_z;
+		int int_Z = (int) str_Z;
+		int int_91 = 91;
+		
+		logger.debug("char 91? : {}", str_91);
+		logger.debug("int_a, int_z, int_A, int_Z? : {}, {}, {}, {}", int_a, int_z, int_A, int_Z);
+//		logger.debug("alphabet_flag? : {}", alphabet_flag);
+		
+		/***Then***/
+//		assertNotNull(fmtStr);
+		
+		// 문자열에 한/영 섞여있어도 영문만 대문자로 바꿔줌.
+		// 'toCharArray()' -> 문자열을 캐릭터 배열로 변환해줌.
+		// 배열 출력은 toString()이 아니고 Arrays.toString([배열이름])
+		// 문자열이 영문인지 판별하려면 먼저 toUpperCase() 하고 toCharArray()를 한뒤, 각각 캐릭터가
+		// 65 ~ 90 사이에 있어야 한다.
+	}
+	
+	// 문자열 split() - 배열 크기 테스트.
+	@Test
+	public void testSplit() {
+		/***Given***/
+		String str1 = "lg디스플레이";
+
+		/***When***/
+		String[] arr_str = str1.split("lg");
+		logger.debug("arr? : {}", Arrays.toString(arr_str));
+		
+		boolean equal_flag = false;
+		
+		if(arr_str[0].equals("")){
+			equal_flag = true;
+		}
+		logger.debug("equal? : {}", equal_flag);
+
+		/***Then***/
+		assertNotNull(arr_str);
+		
+		// arr length가 1이 아니고 2네.
+		// "" 와 같음.
 	}
 	
 	

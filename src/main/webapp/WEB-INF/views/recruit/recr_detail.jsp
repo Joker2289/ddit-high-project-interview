@@ -25,8 +25,10 @@
 							<tr>
 								<td style="background-image: url('${corp.bg_path }'); height: 100px; background-color: #24a4be;">
 									<div style="position: relative; top: 40px; left: 25px;">
-										<img src="${corp.logo_path }" width="155" style="border: 1px solid;
-												border-color: #a6a6a6; border-radius: 3px; border-bottom-width: 2px;">
+										<a href="/corporation?corp_id=${corp.corp_id }">
+											<img src="${corp.logo_path }" width="155" style="border: 1px solid;
+													border-color: #a6a6a6; border-radius: 3px; border-bottom-width: 2px;">
+										</a>			
 									</div>
 								</td>
 							</tr>
@@ -85,7 +87,7 @@
 												<strong>업계</strong><br>
 												...<br>
 												<strong>고용형태</strong><br>
-												...<br>
+												...(등록:${recr.start_date })<br>
 											</td>
 										</tr>
 									</table>								
@@ -150,7 +152,7 @@
 				<c:when test="${req_page == null }">
 					window.location.href = '${pageContext.request.contextPath }/srecr';
 				</c:when>
-				<c:when test="${req_page == 'recruit' }"> // 이어서. 채용공고 페이지로 안가지네?
+				<c:when test="${req_page == 'recruit' }">
 					window.location.href = '${pageContext.request.contextPath }/recruit';
 				</c:when>
 				<c:otherwise>

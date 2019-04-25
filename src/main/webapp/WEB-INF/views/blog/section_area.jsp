@@ -6,7 +6,7 @@
 
 <c:forEach items="${ sectionList }" var="section">
 
-	<button id="section_${ section.section_code }" type="button" class="btn btn-default section" onclick="sectionClick(${ section.section_code });">
+	<button id="section_${ section.section_code }" type="button" class="btn btn-default section" onclick="sectionClick('${ section.section_code }', '${ color }');">
     	${ section.section_name }
   	</button>
 	
@@ -21,9 +21,29 @@
 	$('#section_${ section.section_code }').css('background-color', '${ color }');
 </c:forEach>
 
-function sectionClick(section_code){
+function sectionClick(section_code, color){
 	
-	console.log('제발...');
+	console.log(section_code);
+	console.log(color);
+	
+	$.ajax({
+		url : "${cp}/blog/content_area",
+		success : function(data) {
+			
+			$('#content_area').html(data);	
+			
+			$.ajax({
+				url : "${cp}/blog/page_area_select",
+				data : { "section_code" : section_code, "color" : color },
+				success : function(data) {
+					
+					$('#page_area').html(data);	
+					
+				}
+			});
+			
+		}
+	});
 	
 }
 

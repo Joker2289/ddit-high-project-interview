@@ -2,6 +2,7 @@ package kr.or.ddit.page.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.login.LoginController;
 
 @RequestMapping("/page")
@@ -26,13 +28,19 @@ public class PageController {
 
 	/**
 	 * 
-	 * Method : onenoteView 작성자 : pjk 변경이력 :
+	 * Method : onenoteView 
+	 * 작성자 : pjk 
+	 * 변경이력 :
+	 * Method 설명 : 페이지 작성 화면 요청
 	 * 
-	 * @return Method 설명 : 로그인 화면을 요청
+	 * @return 
+	 * 
 	 */
-	@RequestMapping(path = { "/onenote" }, method = RequestMethod.GET)
-	public String onenoteView(HttpServletRequest req, Model model) {
-
+	@RequestMapping(path="/onenote", method = RequestMethod.GET)
+	public String onenoteView(HttpServletRequest req, Model model, @RequestParam("section_code")String section_code) {
+		
+		logger.debug("section_code : {}", section_code);
+		
 		return "onenote/onenote_write";
 	}
 
@@ -90,5 +98,19 @@ public class PageController {
 		model.addAttribute("src", src);
 		return "onenoteImageView";
 	}
+	
+	@RequestMapping("/code_modal_body")
+	public String code_modal_body(Model model) {
+		
+		return "onenote/code_modal_body";
+	}
+	
+	@RequestMapping("/color_menu")
+	public String color_menu(Model model) {
+		
+		return "onenote/color_menu";
+	}
+	
+	
 	
 }

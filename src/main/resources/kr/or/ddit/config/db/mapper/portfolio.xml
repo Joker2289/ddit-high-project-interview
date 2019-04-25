@@ -44,5 +44,12 @@
 		 where user_id = #{user_id}
 		 order by portfolio_code
 	</select>
+	
+	<!-- 포트폴리오 조회 -->
+	<select id="select_portfolioInfo" parameterType="String" resultType="portfolioVo">
+		select * 
+			from portfolio
+		where portfolio_code = #{portfolio_code}
+	</select>
 
 </mapper> 

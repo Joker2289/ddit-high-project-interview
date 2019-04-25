@@ -7,6 +7,7 @@
 <link href="/css/blog/blog.css" rel="stylesheet">
 <link href="/css/blog/blog_activity_modal.css" rel="stylesheet">
 <link href="/css/blog/blog_setting_form.css" rel="stylesheet">
+<link href="/css/blog/blog_page_area.css" rel="stylesheet">
 
 
 <!DOCTYPE html>
@@ -17,51 +18,25 @@
 </div>
 
 
-<div class="container B_body">
+<div class="container B_body"> 
 	<div class="row">
 		<div>
 
 			<div class="col-md-3">
 				<%@ include file="/WEB-INF/views/blog/profile_area.jsp"%><!-- /프로필영역 -->
 				
-				<div id=portfolioMenu>
+				<div id=portfolio_area>
 					<%@ include file="/WEB-INF/views/blog/portfolio_area.jsp"%><!-- /포트폴리오 영역 -->
 				</div>
 			</div>
 
 			<div id="content_area">
-				<div class="col-md-6">
-	
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<span class="span-text"><a>게시글 영역</a></span>
-						</div>
-	
-						<div class="panel-body">
-							<span class="span-text"><a>게시글 영역</a></span>
-						</div>
-	
-						<div class="panel-body">
-							<span class="span-text"><a>게시글 영역</a></span>
-						</div>
-	
-						<div class="panel-body">
-							<span class="span-text"><a>게시글 영역</a></span>
-						</div>
-	
-						<div class="panel-body">
-							<span class="span-text"><a>게시글 영역</a></span>
-						</div>
-	
-						<div class="panel-body">
-							<span class="span-text"><a>게시글 영역</a></span>
-						</div>
-					</div>
-				</div>
-
-
-
-				<%@ include file="/WEB-INF/views/blog/right_area.jsp"%><!-- 오른쪽 메뉴 영역 -->
+				
+				
+				<%@ include file="/WEB-INF/views/blog/content_area.jsp"%><!-- 타임라인 영역 -->
+				
+				
+				
 				
 			</div>
 

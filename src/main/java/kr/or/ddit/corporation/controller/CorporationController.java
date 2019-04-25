@@ -124,25 +124,28 @@ public class CorporationController {
 	 * @return
 	 */
 	@RequestMapping(path = { "/corporation" })
-	public String postList(HttpServletRequest request,Model model, PaginationVo paginationVo, String post_contents, HttpSession session) {
+	public String postList(HttpServletRequest request,Model model, PaginationVo paginationVo, String post_contents,String corp_id, HttpSession session) {
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		CorporationVo corporationInfo = new CorporationVo();
-		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+		if(corp_id==null){
+			corp_id = memberInfo.getMem_id();
+		}else{
+		}
+		corporationInfo = corporationService.select_corpInfo(corp_id);
 		
 		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
 		tagCountPageVo.setMem_id(memberInfo.getMem_id());
 		tagCountPageVo.setDivision("16");
-		
 		//저장글 갯수 
-		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
+		int savepostCnt = savepostService.savepost_count(corp_id);
 		model.addAttribute("savepostCnt", savepostCnt);
 
 		
-		paginationVo.setMem_id(memberInfo.getMem_id());
+		paginationVo.setMem_id(corp_id);
 		
 		
 		if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+			UsersVo userInfo = usersService.select_userInfo(corp_id);
 			
 			//인맥 수 출력을 위한 세팅
 			int connectionCnt = personal_connectionService.connections_count(memberInfo);
@@ -162,7 +165,7 @@ public class CorporationController {
 			
 		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
 			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
-			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+			CorporationVo corpInfo = corporationService.select_corpInfo(corp_id);
 			
 			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
 	         
@@ -185,10 +188,10 @@ public class CorporationController {
 		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("timelinePost", timelinePost);
 
-		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+		List<GoodVo> goodList = goodService.select_pushedGoodPost(corp_id);
 		model.addAttribute("goodList", goodList);
 		
-		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
+		List<Save_postVo> saveList = savepostService.select_savepostData(corp_id);
 		model.addAttribute("saveList", saveList);
 		
 		logger.debug("goodList hahaha : {}", goodList);
@@ -209,12 +212,16 @@ public class CorporationController {
 	 * @return
 	 */
 	@RequestMapping(path={"/postInsert"})
-	public String postInsert(HttpServletRequest request,String post_contents2, HttpSession session){
+	public String postInsert(HttpServletRequest request,String post_contents2,String corp_id ,HttpSession session){
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		CorporationVo corporationInfo = new CorporationVo();
-		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+		if(corp_id==null){
+			corp_id = memberInfo.getMem_id();
+		}else{
+		}
+		corporationInfo = corporationService.select_corpInfo(corp_id);
 		PostVo insertPost = new PostVo();
-		String mem_id = memberInfo.getMem_id();
+		String mem_id = corporationInfo.getCorp_id();
 		String writer_name = "";	
 		
 		writer_name = corporationInfo.getCorp_name();
@@ -235,10 +242,14 @@ public class CorporationController {
 	 * 이미지 업로드
 	 */
 	@RequestMapping(value = "/fileUpload") // method = RequestMethod.GET 
-	public Map fileUpload(HttpServletRequest req, HttpServletResponse rep,HttpSession session) { 
+	public Map fileUpload(HttpServletRequest req, HttpServletResponse rep,String corp_id,HttpSession session) { 
 		MemberVo memberInfo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		CorporationVo corporationInfo = new CorporationVo();
-		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+		if(corp_id==null){
+			corp_id = memberInfo.getMem_id();
+		}else{
+		}
+		corporationInfo = corporationService.select_corpInfo(corp_id);
 		//파일이 저장될 path 설정 
 		String path = "d://aaa";
 		Map returnObject = new HashMap(); 
@@ -276,7 +287,7 @@ public class CorporationController {
 				String corpname = corporationInfo.getCorp_name();
 				String a = "";
 				a = corpname +".png";
-				System.out.println(a);
+				
 				String saveFileName = a;
 
 				
@@ -288,8 +299,7 @@ public class CorporationController {
 				file.put("origName", origName); 
 				file.put("sfile", serverFile); 
 				resultList.add(file); 
-				System.out.println(origName);
-				System.out.println(saveFileName);
+				
 			} 
 			returnObject.put("files", resultList); 
 			returnObject.put("params", mhsr.getParameterMap()); 
@@ -331,12 +341,16 @@ public class CorporationController {
 	 * @return
 	 */
 	@RequestMapping(path={"/videoInsert"})
-	public String videoInsert(HttpServletRequest request,String video_path, HttpSession session){
+	public String videoInsert(HttpServletRequest request,String video_path,String corp_id, HttpSession session){
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		CorporationVo corporationInfo = new CorporationVo();
-		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+		if(corp_id==null){
+			corp_id = memberInfo.getMem_id();
+		}else{
+		}
+		corporationInfo = corporationService.select_corpInfo(corp_id);
 		PostVo insertPost = new PostVo();
-		String mem_id = memberInfo.getMem_id();
+		String mem_id = corp_id;
 		String writer_name = "";	
 		String URLA = "<p><iframe width=\"530\" height=\"315\" src=\"";
 		String URLZ = "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><p>";
@@ -364,20 +378,24 @@ public class CorporationController {
 	 * @return
 	 */
 	@RequestMapping(path = { "/corporationIntroduction" })
-	public String corporationIntro(Model model, PaginationVo paginationVo, HttpServletRequest request, CorporationVo corporationVo) {
+	public String corporationIntro(Model model, PaginationVo paginationVo, HttpServletRequest request, CorporationVo corporationVo,String corp_id) {
 		
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		CorporationVo corporationInfo = new CorporationVo();
-		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
-		paginationVo.setMem_id(memberInfo.getMem_id());
+		if(corp_id==null){
+			corp_id = memberInfo.getMem_id();
+		}else{
+		}
+		corporationInfo = corporationService.select_corpInfo(corp_id);
+		paginationVo.setMem_id(corp_id);
 		
 		model.addAttribute("corporationInfo", corporationInfo);
 
 		
 
 		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+			UsersVo userInfo = usersService.select_userInfo(corp_id);
 
 			// 인맥 수 출력을 위한 세팅
 
@@ -385,7 +403,7 @@ public class CorporationController {
 
 			model.addAttribute("userInfo", userInfo);
 		} else if (memberInfo.getMem_division().equals("2")) { // 회사일 경우
-			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+			CorporationVo corpInfo = corporationService.select_corpInfo(corp_id);
 
 			// 회사 회원 로그인 시 홈 화면 출력을 위한 세팅
 
@@ -397,6 +415,7 @@ public class CorporationController {
 
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("timelinePost", timelinePost);
+		model.addAttribute("corporationInfo", corporationInfo);
 		return "corporationIntroTiles";
 	}
 	
@@ -417,18 +436,21 @@ public class CorporationController {
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		CorporationVo corporationInfo = new CorporationVo();
-		
-		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+		if(corp_id==null){
+			corp_id = memberInfo.getMem_id();
+		}else{
+		}
+		corporationInfo = corporationService.select_corpInfo(corp_id);
 		model.addAttribute("corporationInfo", corporationInfo);
 		
-		paginationVo.setMem_id(memberInfo.getMem_id());
+		paginationVo.setMem_id(corp_id);
 		
 		List<RecruitVo> getRecruitInfo = recrService.getRecrListCorp_id(corporationInfo.getCorp_id());
 		
 		model.addAttribute("getRecruitInfo", getRecruitInfo);
 		
 		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+			UsersVo userInfo = usersService.select_userInfo(corp_id);
 			
 			// 인맥 수 출력을 위한 세팅
 			
@@ -436,7 +458,7 @@ public class CorporationController {
 			
 			model.addAttribute("userInfo", userInfo);
 		} else if (memberInfo.getMem_division().equals("2")) { // 회사일 경우
-			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+			CorporationVo corpInfo = corporationService.select_corpInfo(corp_id);
 			
 			// 회사 회원 로그인 시 홈 화면 출력을 위한 세팅
 			
@@ -500,7 +522,7 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("timelinePost", timelinePost);
 		
-		System.out.println(corporationInfo.getCorp_name());
+		
 		
 		int ecount = careerService.employee_count(corporationInfo.getCorp_name());
 		model.addAttribute("ecount", ecount);
@@ -547,7 +569,7 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		model.addAttribute("getCorpInfo", corporationService.select_corpInfo(memberInfo.getMem_id()));
 		String mem_id = memberInfo.getMem_id();
 
-		System.out.println("987654321987654321");
+		
 
 		logger.debug("asdasdasdasdmem_id : {}", mem_id);
 

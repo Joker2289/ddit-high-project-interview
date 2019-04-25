@@ -5,6 +5,7 @@ public class ChatroomVo {
 	private String chat_code;	// 채팅방코드
 	private String mem_id;		// 회원아이디
 	private String chat_name;	// 채팅방이름
+	private String currval;		// 현재 시퀀스값
 	
 	public ChatroomVo() {
 		
@@ -32,6 +33,14 @@ public class ChatroomVo {
 
 	public void setChat_name(String chat_name) {
 		this.chat_name = chat_name;
+	}
+	
+	public String getCurrval() {
+		return currval;
+	}
+
+	public void setCurrval(String currval) {
+		this.currval = currval;
 	}
 
 	@Override

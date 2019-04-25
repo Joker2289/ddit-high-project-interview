@@ -367,7 +367,7 @@ public class SignupController {
 			
 			//유저 프로필 등록
 			if(division.equals("1")) {
-				realFileName =  req.getServletContext().getRealPath("/images/profile/" + tmpFileName);
+				realFileName =  req.getServletContext().getRealPath("/upload/" + tmpFileName);
 				profile.transferTo(new File(realFileName));
 				
 				UsersVo uVo = new UsersVo();
@@ -380,7 +380,7 @@ public class SignupController {
 			
 			//기업 프로필 등록
 			else {
-				realFileName =  req.getServletContext().getRealPath("/images/logo/" + tmpFileName);
+				realFileName =  req.getServletContext().getRealPath("/upload/" + tmpFileName);
 				profile.transferTo(new File(realFileName));
 				
 				CorporationVo cVo = new CorporationVo();

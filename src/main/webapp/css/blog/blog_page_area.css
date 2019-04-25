@@ -1,0 +1,26 @@
+.page_area_select_head{
+	
+}
+
+.page_area_title {
+	margin: 0 auto;
+	width: 90%;
+	text-align: left;
+	font-size: 30px;
+	font-weight: blod;
+	margin-bottom: 10px;
+}
+
+.writePageBtn {
+	margin: 0 auto;
+	width: 90%;
+	background-color: #fff;
+	color: #000;
+	font-size: 20px;
+	font-weight: blod;
+}
+
+.writePageBtn:hover{
+	background-color: #000;
+	color: #fff;
+}

@@ -1,17 +1,15 @@
+
+/* 메뉴탭 페이지 네이션 */
 .tab-menu {
      background-color: blueviolet;
-     
 }
 
 .tab-menu a {
     color: white;
-    
-    
     padding-top: 3px !important;
     padding-left: 30px !important;
     padding-right: 30px !important;
     padding-bottom: 3px !important;
-    
 }
 
 .tab-menu a:hover {
@@ -19,13 +17,33 @@
     color: blueviolet;
 }
 
+/* 매뉴텝 div */
 .tab-content {
     background-color: white !important;
 }
 
+/* 버튼 */ 
+.menu_btn{
+	width: 100px !important;
+	height: 100px !important;
+	margin: 10px 3px 10px 3px !important;
+}
 
+/* 버튼 아이콘 */
+.btn_icon{
+	font-size: 35px;
+	width: 100% !important;
+	margin-bottom: 5px;
+}
+
+/* 버튼 이름 */
+.btn_name{
+	width: 100% !important;
+}
+
+
+/* 소스코드 입력 폼 modal */
 /*modal Css*/
-
 .modal-dialog.modal-fullsize {
 	width: 100%;
 	height: 100%;
@@ -148,6 +166,41 @@
 .jk-modal-body button:hover {
 	background: #8546B3;
 	/* opacity:0.4; */
+}
+
+/* 소소코드 모달창 textarea */
+#code_editor {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+
+/* 팝오버 부모 */
+.popover{
+	width: 500px !important;
+	max-width:700px !important;
+	height: auto;
+}
+
+/* 팝오버 내용 */
+.popover-content{
+	width: 100% !important;
+	height: auto;
+	/* min-height: 150px; */
+	
+}
+
+/* 컬러 리스트 버튼 */
+.color{
+	width: 25px;
+    height: 25px;
+    border: 1px solid #fff;
+    border-width: 1px 0 0 1px;
+}
+
+.color:hover {
+	border: 4px solid red !important;
 }
 
 

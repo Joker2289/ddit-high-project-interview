@@ -1,3 +1,4 @@
+
 package kr.or.ddit.portfolio.service;
 
 import java.util.List;
@@ -48,4 +49,15 @@ public interface IPortfolioService {
 	 * Method 설명 : 회원 포트폴리오 리스트 조회
 	 */
 	List<PortfolioVo> select_portfolioList(String user_id);
+	
+	/**
+	 * 
+	 * Method : select_portfolioInfo
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param portfolio_code
+	 * @return
+	 * Method 설명 : 포트폴리오 조회
+	 */
+	PortfolioVo select_portfolioInfo(String portfolio_code);
 }

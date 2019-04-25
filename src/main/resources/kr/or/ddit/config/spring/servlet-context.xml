@@ -91,10 +91,17 @@
 		<websocket:mapping handler="mail" path="/mailHome"/>
 		<websocket:sockjs/>
 	</websocket:handlers>
-
+	
 	<bean id="mail" class="kr.or.ddit.mail.controller.MailWebsocket" />
 	
-
+	<bean id="alarmEcho" class="kr.or.ddit.util.alarm.AlarmEchoHandler" />
+	<websocket:handlers>
+		<websocket:mapping handler="alarmEcho" path="/timeline"/>
+		<websocket:handshake-interceptors>
+			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+		<websocket:sockjs/>
+	</websocket:handlers>
 
 	
 </beans>

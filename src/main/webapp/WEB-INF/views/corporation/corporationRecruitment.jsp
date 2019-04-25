@@ -46,12 +46,6 @@
 		
 
 
------------------------------------------
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ybhXVSAdIRE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
------------------------------------------
-
-
 
   
 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>

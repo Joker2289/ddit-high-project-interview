@@ -2,7 +2,10 @@ package kr.or.ddit.recruit.service;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -23,18 +26,23 @@ public class RecruitServiceImplTest extends LogicTestConfig{
 	@Test
 	public void testInsertRecruit() {
 		/***Given***/
-		recrService.deleteForTest("1");
-		
 		RecruitVo rVo = new RecruitVo();
-		rVo.setRecruit_code("1");
+		rVo.setRecruit_code(String.valueOf(recrService.getRecrCnt()+1));
 		rVo.setCorp_id("5");
 		rVo.setRecruit_title("2019년 상반기 신입/경력 채용");
-		rVo.setJob_type("소프트웨어개발/백엔드");
+		rVo.setJob_type("소프트웨어개발 / 백엔드 / SI");
 		rVo.setRecruit_contents("xxx일을 해주세용");
-		rVo.setStart_date("19/02/20");
-		rVo.setEnd_date("19/02/27");
+		//rVo.setStart_date("19/02/20"); // start_date는 SYSDATE.
+		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
+		Calendar cal = Calendar.getInstance();
+		
+		cal.add(Calendar.DAY_OF_MONTH, 7);
+		
+		String end_date = sdf.format(cal.getTime());
+		rVo.setEnd_date(end_date);
+		
 		rVo.setPersonnel("O명");
-		rVo.setJob_rank("사원/대리");
+		rVo.setJob_rank("사원");
 		rVo.setEmp_type("정규직");
 		rVo.setApp_type("t");
 		rVo.setApp_count("0");
@@ -45,6 +53,29 @@ public class RecruitServiceImplTest extends LogicTestConfig{
 
 		/***Then***/
 		assertNotNull(insertCnt);
+		
+//		recrService.deleteForTest(String.valueOf(recrService.getRecrCnt()));
+	}
+	
+	// 날짜 연산, 포맷 테스트.
+	@Test
+	public void testDate() {
+		/***Given***/
+		Date today = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
+		String fmt_today = sdf.format(today);
+
+		// 날짜 계산은 calander 객체 이용.
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, 30);
+		
+		String fmt_add_day = sdf.format(cal.getTime());
+
+		/***When***/
+		logger.debug("fmt_add_day? : {}", fmt_add_day);
+
+		/***Then***/
+		assertNotNull(today);
 	}
 
 	// math random 테스트.
@@ -76,7 +107,8 @@ public class RecruitServiceImplTest extends LogicTestConfig{
 		/***Given***/
 
 		/***When***/
-		RecruitVo rVo = recrService.getRecr("1");
+		RecruitVo rVo = recrService.getRecr("30");
+		logger.debug("rVo start_date? : {}", rVo.getStart_date());
 
 		/***Then***/
 		assertNotNull(rVo);
