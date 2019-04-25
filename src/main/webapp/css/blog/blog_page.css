@@ -1,0 +1,506 @@
+.panel{
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .15);
+}
+
+.span-text{
+	font-size: 20px;
+}
+
+.bg_img{
+	width: 261px;
+	max-width: 261px;
+	height: 71px;
+	max-height: 71px;
+	margin: -15px;
+}
+
+.profile_img{
+	width: 70px;
+	max-width: 70px;
+	height: 70px;
+	max-height: 70px;
+	border: 2px solid #fff;
+	margin-left: 88px;
+	margin-top: -20px;
+	border-radius: 100px;
+}
+
+.btn_moretag{
+	border: 0px solid #fff;
+	border-top: 1px solid #ddd;
+	background: #fff;
+	padding: 5px;
+	margin: 1px;
+	width: 260px;
+	font-size: 18px;
+}
+
+.input-group{
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .15);
+}
+
+
+
+.btn_count{
+	border: 0px solid #fff;
+	background: #fff;
+	outline: 0;
+}
+
+.btn_count:hover{
+	text-decoration: underline;
+}
+
+
+
+.writer-info{
+	border-style: 1px solid;
+	border-color: #ddd;
+/* 	margin: 200px; */
+}
+
+/* .writer-info a{ */
+/* 	float: left; */
+/* } */
+	
+/* .writer-info button{ */
+/* 	float: right; */
+/* }	 */
+.btn-write_modal{
+	background:#ffffff;
+	background-size: auto;
+	padding:18px;
+	vertical-align: middle;
+	text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    border-style: solid;
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    width: 326px;
+	outline: 0px;
+    
+}
+
+.btn-write_modal:hover{
+	text-decoration: underline;
+}
+.btn-write_modal:hover > a{
+	color: #3234c1;
+}
+
+
+
+.btn-social{
+	background: #f3f6f8;
+	background-size: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    border-style: solid;
+    border-color: #f3f6f8; 
+	margin-bottom: 10px;
+    width: 30px;
+    height: 20px;
+   	border : 0;
+	outline: 0;
+}
+
+.btn-social:hover{
+	background-color: #e8e8f7;
+}
+
+.btn-upload{
+	background:#ffffff;
+	background-size: auto;
+	font-size:17px;
+	padding:18px;
+	text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    border-style: solid;
+    border-top-width: 1px;
+    border-left-width: 0px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    width: 76px;
+    display: inline-block; 
+	outline: 0;
+}
+
+.btn-upload:hover{
+	background-color: #e8e8f7;
+}
+
+.modal-dialog{
+	width: 555px;
+}
+
+.modal-write-body{
+	background : #fff;
+	height: 520px;
+	width: 555px;
+}
+
+.btn-modal-upload{
+	background:#ffffff;
+	background-size: auto;
+	letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+	border-style: none;
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-radius: 20px;
+}
+
+.btn-modal-upload:hover{
+	background-color: #e8e8f7;
+}
+
+.btn-save{
+	background:#3c7ee8;
+	background-size: auto;
+	font-size:17px;
+	text-rendering: auto;
+	letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+	border-style: none;
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-radius: 8px;
+	margin-left: 350px;
+}
+
+.btn-save:hover{
+	background-color: #0073b1;
+}
+
+.modal-write-foot{
+	border-top: 1px solid #e5e5e5;
+	height: 60px;
+	padding: 15px;
+	background: #fff;
+	border-bottom-left-radius: 4px;  
+	border-bottom-right-radius: 4px; 
+}
+
+
+.modal-write-head{
+	background: #0073b1;
+	background-size: 655px; 
+	height: 45px;
+	padding: 15px;
+/* 	border-bottom: 1px solid #e5e5e5; */
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px; 
+}
+
+.write_area{
+	outline-color: white;
+	padding: 0px;
+}
+
+.write_area:FOCUS{
+	outline-color: white;
+}
+
+.modal-dialog.modal-fullsize {
+	width: 100%;
+  	height: 100%;
+}
+
+
+
+
+
+.col-md-3{
+  	position: relative;
+ 	width: 100%;
+  	min-height: 1px;
+  	padding-right: 15px;
+  	padding-left: 15px;
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+}
+
+.fixedmenu{
+   	position: fixed;
+	top: 0px;
+}
+
+.note-editable{
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;	
+	box-shadow: none;
+	padding: 0px;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+.post-info img, video{
+	height: 100%;
+	width: 532px;
+	border-radius: 0px;
+}
+
+.note-editor{
+	padding: 0;
+	border-radius: 0px;
+	border-color: #fff;
+	border: 0px solid;
+	outline-color: #fff;
+	box-shadow: none;
+	border-bottom-color: #fff;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+}
+
+.note-frame{
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+}
+
+.note-editor.note-frame{
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+}
+
+.note-status-output{
+	padding: 0px;
+	border: 0;
+}
+.note-statusbar{
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	border-top-width: 0px;
+}
+
+.note-placeholder{
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.note-editing-area{
+	border: 0px solid #fff;
+}
+
+.note-editor.note-frame .note-statusbar{
+	border-top-width: 0px;
+}
+
+.comment-profile-img{
+/* 	float: left; */
+	padding: 5px;
+}
+
+.input_comment_contents{
+	resize: none;
+	border: 0px solid;
+	width: 100%;
+	height: 0px;
+	outline: 0;
+}
+
+.comment-input-text{
+	border-top-left-radius: 0px;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius : 20px;
+	border-bottom-right-radius : 20px;
+	background: #f3f6f8;
+	padding: 5px;
+	margin: 2px;
+}
+
+.comment-input-text div, textarea{
+	background: #f3f6f8;
+}
+
+.contents_writer_image{
+	border: 0px solid #fff;
+	outline: 0;
+	border-radius: 100px;
+	background: #ddd;
+	width: 35px;
+	height: 35px;
+}
+
+.btn_commentWrite{
+	margin-left: 65px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+.btn_followTag{
+	background: #3c7ee8;
+	border: 0px solid #fff;
+	border-bottom: 0px;
+	border-top: 0px;
+	color: #fff;
+	border-radius: 6px;
+	width: 80px;
+	height: 25px;
+	outline: 0;
+}
+
+.btn_followTag:hover{
+	background-color: #0073b1;
+}
+
+
+
+/* ======================================= */
+
+.col-post{
+	background: #ffffff;
+	margin: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	border-spacing: normal;
+	margin-left: 0px;
+	margin-right: 0px;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .15);
+}
+
+.col-post-body{
+	border-bottom : 1px solid #ddd;
+	padding : 15px;
+	padding-bottom : 35px;
+	width: 100%;
+	height: 50px !important;
+	
+}
+ 
+.col-post-social{
+	background-color : #f3f6f8;
+	border-top: 1px solid #ddd;
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+	padding: 5px;
+	height: 45px;
+}
+
+
+
+/* 글 메뉴 드롭다운 */
+.writer_info{
+	float: left;
+}
+
+/* 페이지 제목 */
+.page_title{
+	font-size: 25px;
+	margin-right: 10px;
+	
+}
+
+/* 페이지 작성일 */
+.page_write_date {
+	display: inline-block;
+	font-size: 15px;
+}
+
+/* 드롭다운 버튼 */
+.btn_postControll{
+	background:#ffffff;
+	background-size: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    border-style: solid;
+    border-color: #ffffff; 
+    width: 30px;
+    height: 20px;
+   	border : 0;
+	outline: 0;
+	
+}
+
+/* 드롭다운 버튼 */
+.btn_controll-list{
+	background:#ffffff;
+	size : 140px;
+	border : 0px solid #ffffff;
+	padding: 10px;
+	border : 0;
+	outline: 0;
+}
+
+/* 드롭다운 판때기 */
+.dropdown{
+	width: 150px;
+}
+
+/* 드롭다운 누르고 판때기 */
+.dropdown:AFTER{
+	position: absolute;
+	width: 150px;
+	z-index: 1;
+	top: -10px;
+	left: 190px;
+	border-color: transparent;
+	position: absolute;
+	content: '';
+}
+
+/* 페이지 몸통 */
+.page_body{
+	width: 100%;
+	height: 100%;
+}
+
+/* 페이지 썸네일 이미지*/
+.page_thumbnail{
+	width: 97.5%;
+	height: 95%;
+	border: 1px solid #333333;
+	margin: 10px;
+}
+
+/* 드롭다운 메뉴 */
+.dropdown-menu {
+	font-size: 18px;
+}
+
+.dropdown-menu .icon {
+	margin-right: 10px;
+}
+
+/* 추천, 댓글수 출력 */
+.post_socialCount{
+	height: 30px;
+	padding:5px;
+}

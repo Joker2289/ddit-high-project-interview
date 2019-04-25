@@ -44,10 +44,6 @@ function input_page_title(){
 	}
 }
 
-
-
-
-
 // 페이지 저장
 function stage_save_page() {
 	

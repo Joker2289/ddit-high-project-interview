@@ -69,13 +69,13 @@ public class PageController {
 		logger.debug("imageStorage : {}", imageStorage);
 
 		String realFileName = "";
-		String returnFileName = "";
+		String tmpFileName = "";
 
 		// 이미지를 업로드 한경우 //spring 프로젝트에 ProfileImgView
 		if (imageStorage.getSize() > 0) {
 			String fileName = imageStorage.getOriginalFilename();
 
-			String tmpFileName = UUID.randomUUID().toString();
+			tmpFileName = UUID.randomUUID().toString();
 
 			realFileName = req.getServletContext().getRealPath("/images/onenote/" + tmpFileName);
 			imageStorage.transferTo(new File(realFileName));
@@ -86,7 +86,7 @@ public class PageController {
 			logger.debug("realFileName : {}", realFileName);
 		}
 
-		return realFileName;
+		return tmpFileName;
 	}
 
 	/**
@@ -175,11 +175,44 @@ public class PageController {
 		return fileName;
 	}
 	
+	/**
+	 * 
+	 * Method : savePage
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param pVo
+	 * @param model
+	 * @param req
+	 * @return
+	 * Method 설명 : 페이지 저장
+	 */
 	@RequestMapping(path = "/savePage", method = RequestMethod.POST)
 	public String savePage(PageVo pVo, Model model, HttpServletRequest req) {
 		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		pageService.insert_page(pVo);
 		return "redirect:/blog/blogMainView?user_id=" + mVo.getMem_id();
 	}
+	
+	/**
+	 * 
+	 * Method : onenoteView 
+	 * 작성자 : pjk 
+	 * 변경이력 : Method 
+	 * 설명 : 페이지 작성 화면 요청
+	 * @return
+	 */
+	@RequestMapping("/page_view")
+	public String page_view(HttpServletRequest req, Model model, @RequestParam("page_code") String page_code) {
+
+		
+		
+		model.addAttribute("page_code", page_code);
+		
+		
+
+		return "onenote/onenote_view";
+	}
+	
+	
 
 }

@@ -1,5 +1,7 @@
 package kr.or.ddit.page.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -16,6 +18,16 @@ public class PageServiceImpl implements IPageService{
 	@Override
 	public int insert_page(PageVo vo) {
 		return pageDao.insert_page(vo);
+	}
+
+	@Override
+	public List<PageVo> select_pageList(String section_code) {
+		return pageDao.select_pageList(section_code);
+	}
+
+	@Override
+	public PageVo select_pageInfo(String page_code) {
+		return pageDao.select_pageInfo(page_code);
 	}
 
 }

@@ -25,6 +25,8 @@ import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.follow.service.IFollowService;
 import kr.or.ddit.login.LoginController;
 import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.page.model.PageVo;
+import kr.or.ddit.page.service.IPageService;
 import kr.or.ddit.portfolio.model.PortfolioVo;
 import kr.or.ddit.portfolio.service.IPortfolioService;
 import kr.or.ddit.section.model.SectionVo;
@@ -56,6 +58,8 @@ public class BlogController {
 	@Resource(name="sectionService")
 	private ISectionService sectionService;
 	
+	@Resource(name="pageService")
+	private IPageService pageService;
 	
 	
 	/**
@@ -559,13 +563,14 @@ public class BlogController {
 	public String page_area_select(Model model, @RequestParam("section_code")String section_code,
 			@RequestParam("color")String color) {
 		
-		
 		SectionVo sVo = sectionService.select_sectionInfo(section_code);
-		
-		
 		PortfolioVo pVo = portfolioService.select_portfolioInfo(sVo.getPortfolio_code());
 		model.addAttribute("pVo", pVo);
 		model.addAttribute("sVo", sVo);
+		
+		List<PageVo> pageList = pageService.select_pageList(section_code);
+		model.addAttribute("pageList", pageList);
+		
 		
 		
 		return "blog/page_area_select";

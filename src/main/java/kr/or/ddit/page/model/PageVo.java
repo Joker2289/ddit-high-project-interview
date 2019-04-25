@@ -1,12 +1,14 @@
 package kr.or.ddit.page.model;
 
+import java.util.Date;
+
 public class PageVo {
 	
 	private String page_code;		// 페이지코드
 	private String section_code;	// 섹션코드
 	private String page_title;		// 페이지제목
 	private String page_contents;	// 페이지내용
-	private String write_date;		// 작성일
+	private Date write_date;		// 작성일
 	private String view_count; 		// 조회수
 	private String page_thumbnail;	// 페이지 썸네일 이미지
 	
@@ -34,10 +36,10 @@ public class PageVo {
 	public void setPage_contents(String page_contents) {
 		this.page_contents = page_contents;
 	}
-	public String getWrite_date() {
+	public Date getWrite_date() {
 		return write_date;
 	}
-	public void setWrite_date(String write_date) {
+	public void setWrite_date(Date write_date) {
 		this.write_date = write_date;
 	}
 	public String getView_count() {
@@ -58,5 +60,4 @@ public class PageVo {
 				+ ", page_contents=" + page_contents + ", write_date=" + write_date + ", view_count=" + view_count
 				+ ", page_thumbnail=" + page_thumbnail + "]";
 	}
-	
 }
