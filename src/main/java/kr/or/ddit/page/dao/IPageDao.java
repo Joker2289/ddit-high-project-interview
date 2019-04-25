@@ -38,4 +38,27 @@ public interface IPageDao {
 	 * Method 설명 : 페이지 정보 조회
 	 */
 	PageVo select_pageInfo(String page_code);
+	
+	/**
+	 * 
+	 * Method : update_page
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 페이지 수정
+	 */
+	int update_page(PageVo vo);
+	
+	/**
+	 * 
+	 * Method : delete_page
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param page_code
+	 * @return
+	 * Method 설명 : 페이지 삭제
+	 */
+	int delete_page(String page_code);
+	
 }

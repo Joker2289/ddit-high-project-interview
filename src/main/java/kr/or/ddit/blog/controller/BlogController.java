@@ -560,8 +560,7 @@ public class BlogController {
 	 * Method 설명 : 선택한 섹션의 페이지 리스트 출력
 	 */
 	@RequestMapping("/page_area_select")
-	public String page_area_select(Model model, @RequestParam("section_code")String section_code,
-			@RequestParam("color")String color) {
+	public String page_area_select(Model model, @RequestParam("section_code")String section_code) {
 		
 		SectionVo sVo = sectionService.select_sectionInfo(section_code);
 		PortfolioVo pVo = portfolioService.select_portfolioInfo(sVo.getPortfolio_code());

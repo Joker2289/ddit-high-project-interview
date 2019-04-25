@@ -26,12 +26,12 @@
 		)
 	</insert>
 	
-	<!-- 섹션의 전체 페이지 조뢰 조회 -->
+	<!-- 섹션의 전체 페이지 조회 -->
 	<select id="select_pageList" parameterType="String" resultType="pageVo">
 		select page_code, section_code, page_title, page_contents, write_date, view_count, page_thumbnail
 		  from page
 		 where section_code = #{ section_code }
-		 order by write_date
+		 order by write_date desc
 	</select>
 	
 	<!-- 섹션의 전체 페이지 조뢰 조회 -->
@@ -40,6 +40,28 @@
 		  from page
 		 where page_code = #{ page_code }
 	</select>
+	
+	<!-- 페이지 수정 -->
+	<update id="update_page" parameterType="pageVo">
+		update page
+		   set section_code   	= nvl(#{section_code, jdbcType=VARCHAR}, section_code),
+		   	   page_title   	= nvl(#{page_title, jdbcType=VARCHAR}, page_title),
+		   	   page_contents 	= nvl(#{page_contents, jdbcType=VARCHAR}, page_contents),
+		   	   write_date 		= sysdate,
+		   	   view_count 		= nvl(#{view_count, jdbcType=VARCHAR}, view_count),
+		   	   page_thumbnail 	= nvl(#{page_thumbnail, jdbcType=VARCHAR}, page_thumbnail)
+		 where page_code = #{ page_code }  
+	</update>
+	
+	<!-- 페이지 삭제 -->
+	<delete id="delete_page" parameterType="String">
+		delete page
+		 where page_code = #{ page_code }
+	</delete>
+	
+	
+	
+	
 	
 	
 </mapper> 
