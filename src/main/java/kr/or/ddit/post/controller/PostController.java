@@ -476,7 +476,9 @@ public class PostController {
 		alarmInfo.setSend_id(memberInfo.getMem_id());
 		alarmInfo.setAlarm_separate("02");
 		
-		alarmService.insert_alarmInfo(alarmInfo);
+		if(!memberInfo.getMem_id().equals(postInfo.getMem_id())){
+			alarmService.insert_alarmInfo(alarmInfo);
+		}
 		
 		return "timeline/postComment";
 	}
@@ -516,7 +518,9 @@ public class PostController {
 		alarmInfo.setAlarm_separate("01");
 		alarmInfo.setAlarm_check("0");
 		
-		alarmService.insert_alarmInfo(alarmInfo);
+		if(!memberInfo.getMem_id().equals(postInfo.getMem_id())){
+			alarmService.insert_alarmInfo(alarmInfo);
+		}
 		
 		return "complate";
 	}
@@ -548,6 +552,7 @@ public class PostController {
 		alarmInfo.setSend_id(memberInfo.getMem_id());
 		
 		//좋아요 취소 -> 알림 정보 삭제
+		
 		alarmService.delete_goodalarm(alarmInfo);
 		goodService.delete_goodInfo(goodVo);
 		
@@ -808,6 +813,8 @@ public class PostController {
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
+		Post_commentVo commentInfo = commentService.select_commentInfo(comment_code);
+		
 		GoodVo goodInfo = new GoodVo();
 		goodInfo.setDivision("29");
 		goodInfo.setMem_id(memberInfo.getMem_id());
@@ -821,6 +828,10 @@ public class PostController {
 		alarmInfo.setDivision("29");
 		alarmInfo.setAlarm_separate("03");
 		alarmInfo.setAlarm_check("0");
+		
+		if(!memberInfo.getMem_id().equals(commentInfo.getMem_id())){
+			alarmService.insert_alarmInfo(alarmInfo);
+		}
 		
 		
 		return "complate";

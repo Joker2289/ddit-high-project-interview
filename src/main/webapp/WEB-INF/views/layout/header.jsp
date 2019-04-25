@@ -83,7 +83,12 @@
 	}
 	function onMessage(evt) {
 		console.log("message >> " + evt.data);
-		$("#alarmcount").text(evt.data);
+		console.log(typeof evt.data);
+		
+		if(evt.data != "0"){
+			$("#alarmcount").text(evt.data);
+		}
+		
 	}
 	function onError(evt) {
 		console.log("websocket error!")
@@ -104,7 +109,7 @@
 	
 	$(document).ready(function() {
 		send_message();
-		setInterval("send_message()", 10000);
+		setInterval("send_message()", 60000);
 	});
 	
 </script>

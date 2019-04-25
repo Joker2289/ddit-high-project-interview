@@ -36,23 +36,29 @@
 		  	        </div>
 		  	        <div class="alarm_view" id="alarm_view${recentAlarm.alarm_code }" data-code="${recentAlarm.alarm_code }" style="float: left;">
 		  	          <c:choose>
-		  	            <c:when test="${recentAlarm.division == '15' && recentAlarm.alarm_separate == '01' }">
+		  	            <c:when test="${recentAlarm.division == '28' && recentAlarm.alarm_separate == '01' }">
 		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 회원님의 게시글을 추천함</h4>
 		  	            </c:when>
-		  	            <c:when test="${recentAlarm.division == '29' && recentAlarm.alarm_separate == '02' }">
+		  	            <c:when test="${recentAlarm.division == '28' && recentAlarm.alarm_separate == '02' }">
 		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 회원님의 게시글에 댓글을 남김</h4>
 		  	            </c:when>
-		  	            <c:when test="${recentAlarm.division == '15' && recentAlarm.alarm_separate == '03' }">
+		  	            <c:when test="${recentAlarm.division == '29' && recentAlarm.alarm_separate == '03' }">
 		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 회원님의 댓글을 추천함</h4>
 		  	            </c:when>
 		  	            <c:when test="${recentAlarm.division == '25' && recentAlarm.alarm_separate == '04' }">
 		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 회원님에게 일촌을 신청함</h4>
 		  	            </c:when>
-		  	            <c:when test="${recentAlarm.division == '14' && recentAlarm.alarm_separate == '05' }">
+		  	            <c:when test="${recentAlarm.division == '25' && recentAlarm.alarm_separate == '05' }">
+		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 회원님의 일촌신청을 수학함</h4>
+		  	            </c:when>
+		  	            <c:when test="${recentAlarm.division == '14' && recentAlarm.alarm_separate == '06' }">
 		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 회원님을 팔로우함</h4>
 		  	            </c:when>
-		  	            <c:when test="${recentAlarm.division == '02' && recentAlarm.alarm_separate == '06' }">
+		  	            <c:when test="${recentAlarm.division == '2' && recentAlarm.alarm_separate == '07' }">
 		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 채용공고에 지원함</h4>
+		  	            </c:when>
+		  	            <c:when test="${recentAlarm.division == '34' && recentAlarm.alarm_separate == '08' }">
+		  	              <h4 style="height: 30px; padding-top: 5px;">검색어 ㄷㄷ에 해당하는 새로운 채용공고가 검색됨</h4>
 		  	            </c:when>
 		  	          </c:choose>
 		  	        </div>
@@ -130,27 +136,30 @@
 			        </div>
 			        <div class="alarm_view" id="alarm_view${previousAlarm.alarm_code }" data-code="${previousAlarm.alarm_code }" style="float: left;">
 			          <c:choose>
-			            <c:when test="${previousAlarm.division == '15' && previousAlarm.alarm_separate == '01' }">
-			              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 회원님의 게시글을 추천함</h4>
-			            </c:when>
-			            <c:when test="${previousAlarm.division == '29' && previousAlarm.alarm_separate == '02' }">
-			              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 회원님의 게시글에 댓글을 남김</h4>
-			            </c:when>
-			            <c:when test="${previousAlarm.division == '15' && previousAlarm.alarm_separate == '03' }">
-			              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 회원님의 댓글을 추천함</h4>
-			            </c:when>
-			            <c:when test="${previousAlarm.division == '25' && previousAlarm.alarm_separate == '04' }">
-			              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 회원님에게 일촌을 신청함</h4>
-			            </c:when>
-			            <c:when test="${previousAlarm.division == '25' && previousAlarm.alarm_separate == '04' }">
-			              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.mem_id } 님이 회원님과 일촌이 됨</h4>
-			            </c:when>
-			            <c:when test="${previousAlarm.division == '14' && previousAlarm.alarm_separate == '05' }">
-			              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 회원님을 팔로우함</h4>
-			            </c:when>
-			            <c:when test="${previousAlarm.division == '02' && previousAlarm.alarm_separate == '06' }">
-			              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 채용공고에 지원함</h4>
-			            </c:when>
+			            <c:when test="${previousAlarm.division == '28' && previousAlarm.alarm_separate == '01' }">
+		  	              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 회원님의 게시글을 추천함</h4>
+		  	            </c:when>
+		  	            <c:when test="${previousAlarm.division == '28' && previousAlarm.alarm_separate == '02' }">
+		  	              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 회원님의 게시글에 댓글을 남김</h4>
+		  	            </c:when>
+		  	            <c:when test="${previousAlarm.division == '29' && previousAlarm.alarm_separate == '03' }">
+		  	              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 회원님의 댓글을 추천함</h4>
+		  	            </c:when>
+		  	            <c:when test="${previousAlarm.division == '25' && previousAlarm.alarm_separate == '04' }">
+		  	              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 회원님에게 일촌을 신청함</h4>
+		  	            </c:when>
+		  	            <c:when test="${previousAlarm.division == '25' && previousAlarm.alarm_separate == '05' }">
+		  	              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 회원님의 일촌신청을 수학함</h4>
+		  	            </c:when>
+		  	            <c:when test="${previousAlarm.division == '14' && previousAlarm.alarm_separate == '06' }">
+		  	              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 회원님을 팔로우함</h4>
+		  	            </c:when>
+		  	            <c:when test="${previousAlarm.division == '2' && previousAlarm.alarm_separate == '07' }">
+		  	              <h4 style="height: 30px; padding-top: 5px;">${previousAlarm.send_name } 님이 채용공고에 지원함</h4>
+		  	            </c:when>
+		  	            <c:when test="${previousAlarm.division == '34' && previousAlarm.alarm_separate == '08' }">
+		  	              <h4 style="height: 30px; padding-top: 5px;">검색어 ㄷㄷ에 해당하는 새로운 채용공고가 검색됨</h4>
+		  	            </c:when>
 			          </c:choose>
 			        </div>
 			      
