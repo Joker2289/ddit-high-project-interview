@@ -147,7 +147,7 @@
 		select count(*)
 		  from alarm
 		 where mem_id = #{mem_id}
-		   and alarm_check = '00'
+		   and alarm_check = 0
 	</select>
 	
 	<!-- 최근 알림 갯수 -->

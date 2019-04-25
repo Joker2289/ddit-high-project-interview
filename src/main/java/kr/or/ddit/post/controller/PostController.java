@@ -471,7 +471,7 @@ public class PostController {
 		AlarmVo alarmInfo = new AlarmVo();
 		alarmInfo.setMem_id(postInfo.getMem_id());
 		alarmInfo.setRef_code(commentVo.getComment_code());
-		alarmInfo.setAlarm_check("00");
+		alarmInfo.setAlarm_check("0");
 		alarmInfo.setDivision("29");
 		alarmInfo.setSend_id(memberInfo.getMem_id());
 		alarmInfo.setAlarm_separate("02");
