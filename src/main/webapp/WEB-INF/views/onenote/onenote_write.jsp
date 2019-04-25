@@ -658,7 +658,19 @@
 	</div>
 
 	<%@ include file="/WEB-INF/views/onenote/onenote_modal.jsp"%>
-<!-- code 작성 modal-->
+	
+	
+	<form id="saveForm" action="/page/savePage" method="post"> 
+		<input type="hidden" id="section_code" name="section_code" value="${ section_code }"/>
+		<input type="hidden" id="page_title" name="page_title"/>
+		<input type="hidden" id="page_contents" name="page_contents"/>
+		<input type="hidden" id="page_thumnail" name="page_thumnail"/>
+	</form>
+	
+	
+	<form id="thumnailForm">
+		<input type="hidden" id="thumnail_data" name="thumnail_data"/>
+	</form>
     
 
 </body>

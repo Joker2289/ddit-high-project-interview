@@ -6,15 +6,14 @@ public class PageVo {
 	private String page_title;		// 페이지제목
 	private String page_contents;	// 페이지내용
 	private String write_date;		// 작성일
-	private String scrap_count;		// 스크랩수
+	private String view_count; 		// 조회수
+	private String page_thumnail;	// 페이지 썸네일 이미지
+	
 	@Override
 	public String toString() {
 		return "PageVo [page_code=" + page_code + ", section_code=" + section_code + ", page_title=" + page_title
-				+ ", page_contents=" + page_contents + ", write_date=" + write_date + ", scrap_count=" + scrap_count
-				+ "]";
-	}
-	public PageVo() {
-		// TODO Auto-generated constructor stub
+				+ ", page_contents=" + page_contents + ", write_date=" + write_date + ", view_count=" + view_count
+				+ ", page_thumnail=" + page_thumnail + "]";
 	}
 	public String getPage_code() {
 		return page_code;
@@ -46,11 +45,19 @@ public class PageVo {
 	public void setWrite_date(String write_date) {
 		this.write_date = write_date;
 	}
-	public String getScrap_count() {
-		return scrap_count;
+	public String getView_count() {
+		return view_count;
 	}
-	public void setScrap_count(String scrap_count) {
-		this.scrap_count = scrap_count;
+	public void setView_count(String view_count) {
+		this.view_count = view_count;
 	}
+	public String getPage_thumnail() {
+		return page_thumnail;
+	}
+	public void setPage_thumnail(String page_thumnail) {
+		this.page_thumnail = page_thumnail;
+	}
+	
+	
 	
 }
