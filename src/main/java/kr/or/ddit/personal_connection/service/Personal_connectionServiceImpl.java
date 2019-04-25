@@ -31,6 +31,11 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	public List<UsersVo> select_connections(MemberVo memberVo) {
 		return personalDao.select_connections(memberVo);
 	}
+	
+	@Override
+	public List<UsersVo> select_connectionsName(MemberVo memberVo) {
+		return personalDao.select_connectionsName(memberVo);
+	}
 
 	@Override
 	public int connections_count(MemberVo memberVo) {
@@ -221,6 +226,8 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	public int insert_followCorporation(FollowVo followVo) {
 		return personalDao.insert_followCorporation(followVo);
 	}
+
+	
 
 
 	

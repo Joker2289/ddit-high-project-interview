@@ -29,6 +29,12 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 				sqlSessionTemplate.selectList("personal.select_connections",memberVo);
 		return personalList;
 	}
+	
+	@Override
+	public List<UsersVo> select_connectionsName(MemberVo memberVo) {
+		List<UsersVo> personalList = sqlSessionTemplate.selectList("personal.select_connectionsName", memberVo);
+		return personalList;
+	}
 
 	@Override
 	public int connections_count(MemberVo memberVo) {
@@ -219,7 +225,6 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 		int insert_followCorpor = sqlSessionTemplate.insert("personal.insert_followCorporation", followVo);
 		return insert_followCorpor;
 	}
-
 
 
 }
