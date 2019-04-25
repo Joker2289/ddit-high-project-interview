@@ -29,18 +29,13 @@ public class AlarmEchoHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		logger.debug("afterConnectionEstablished asdasdasdasd : {}", session);
 	}
 	
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
-		logger.debug("handleTextMessage asdasdasdasd : " + session + " : " + message);
-		
 		Map<String, Object> httpSession = session.getAttributes();
 		MemberVo loginMember = (MemberVo) httpSession.get("SESSION_MEMBERVO");
-		
-		logger.debug("mem_id : {}", loginMember.getMem_id());
 		
 		String mem_id = loginMember.getMem_id();
 		
@@ -50,7 +45,6 @@ public class AlarmEchoHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		logger.debug("afterConnectionClosed asdasdasdasd : {}", session + " : " + status);
 	}
 	
 }

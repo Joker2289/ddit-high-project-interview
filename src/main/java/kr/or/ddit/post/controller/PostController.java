@@ -466,13 +466,13 @@ public class PostController {
 		model.addAttribute("commentCnt", commentCnt);
 		model.addAttribute("ref_code", ref_code);
 		
-		//글 작성 -> 알림 등록
+		//댓글 작성 -> 알림 등록
 		PostVo postInfo = postService.select_postInfo(ref_code);
 		AlarmVo alarmInfo = new AlarmVo();
 		alarmInfo.setMem_id(postInfo.getMem_id());
-		alarmInfo.setRef_code(commentVo.getComment_code());
+		alarmInfo.setRef_code(ref_code);
 		alarmInfo.setAlarm_check("0");
-		alarmInfo.setDivision("29");
+		alarmInfo.setDivision("28");
 		alarmInfo.setSend_id(memberInfo.getMem_id());
 		alarmInfo.setAlarm_separate("02");
 		
@@ -506,12 +506,12 @@ public class PostController {
 		
 		goodService.insert_goodInfo(goodVo);
 		
-		//알림 등록
+		//글 추천 -> 알림 등록
 		PostVo postInfo = postService.select_postInfo(ref_code);
 		AlarmVo alarmInfo = new AlarmVo();
 		alarmInfo.setMem_id(postInfo.getMem_id());
-		alarmInfo.setRef_code(goodVo.getGood_code());
-		alarmInfo.setDivision("15");
+		alarmInfo.setRef_code(ref_code);
+		alarmInfo.setDivision("28");
 		alarmInfo.setSend_id(memberInfo.getMem_id());
 		alarmInfo.setAlarm_separate("01");
 		alarmInfo.setAlarm_check("0");
@@ -816,9 +816,12 @@ public class PostController {
 		goodService.insert_goodInfo(goodInfo);
 		
 		AlarmVo alarmInfo = new AlarmVo();
-		alarmInfo.setRef_code(goodInfo.getGood_code());
+		alarmInfo.setRef_code(comment_code);
 		alarmInfo.setSend_id(memberInfo.getMem_id());
-		alarmInfo.setDivision("15");
+		alarmInfo.setDivision("29");
+		alarmInfo.setAlarm_separate("03");
+		alarmInfo.setAlarm_check("0");
+		
 		
 		return "complate";
 	}
