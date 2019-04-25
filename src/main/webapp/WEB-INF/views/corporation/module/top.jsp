@@ -26,15 +26,18 @@
 }
 </style>
 </head>
-
 <body>
+
+${corporationInfo.logo_path}
 <div class="container">
 <div class="row">
 
 <div class="whiteBox"  style=" width:1140px; height: 170px; border-radius: 4px;" >
 	<img src="${corporationInfo.bg_path}" alt="이미지를 찾을 수 없습니다." width="1138px" height="170px" style="border-radius: 4px;"></img><br>
 		<div style="position: relative; top: -50px; left: 30px; height: 105px; width: 172px;border-radius: 4px; border: 1px solid #AAAAAA;">
+			
 	        <img src="${corporationInfo.logo_path}"  height="103" width="170" style="border-radius: 4px; alt="이미지를 찾을 수 없습니다."/><br> 
+	       
 	    </div>	
     </div>
 </div>  
@@ -47,13 +50,22 @@
 				<div class="dropdown" style="margin-right: -120px;">
 				  <span>• • •</span>
   					<div style="margin-right: 40px;margin-left: -40px" class="dropdown-content">
-    					<a>신고</a><br>
-    					<a href="/profileInsertFollow?mem_id=${SESSION_MEMBERVO.mem_id}&ref_keyword=${corporationInfo.corp_id }&division=43" style="padding: 0 15px 0 0; width: 140px;">+팔로워</a>
+    					<c:if test="${SESSION_MEMBERVO.mem_id ne corporationInfo.corp_id }">
+    							<a>신고</a><br>
+    						<li class="dropdownAccordion otherDropdown" style="width: 155px;">
+    							<a href="/profileInsertFollow?mem_id=${SESSION_MEMBERVO.mem_id}&ref_keyword=${corporationInfo.corp_id }&division=43" style="padding: 0 15px 0 0; width: 140px;">+팔로워</a>
+    						</li>
+    					</c:if>
+    					<c:if test="${SESSION_MEMBERVO.mem_id eq corporationInfo.corp_id }">
+		  					<a>배경 변경</a><br>
+		  					<a style="margin-top: 10px;">로고 변경</a>
+	  					</c:if>
   					</div>
 				</div>
-				
-				
-  				
+				${SESSION_MEMBERVO.mem_id ne corporationInfo.corp_id }
+				${SESSION_MEMBERVO.mem_id}
+				${corporationInfo.corp_id }
+    </form>
 			</div>
 			<br>
 		<label for="addr1">${corporationInfo.addr1 }</label> 
@@ -66,6 +78,10 @@
 </div>
 
 
+  		<form action="./logo_change_btn" id="fileUpload" name="fileUpload" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+        이름 : <input type="text" name="name" id="cmd" value="namevla"><br>
+        파일 : <input type="file" name="file"><br> <input
+         type="submit" name="업로드" value="제출"><br>
 
 
 </body>

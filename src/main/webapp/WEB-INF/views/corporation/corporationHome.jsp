@@ -40,7 +40,7 @@ textarea {
 				<br> <br>
 				<%@ include file="/WEB-INF/views/corporation/module/write.jsp"%>
 
-
+	
 
 
 
@@ -107,7 +107,7 @@ textarea {
 				  </div><hr>
   				</div>
 				 </form>
-</c:if>
+				 </c:if>
 	</div>
 
 
@@ -223,11 +223,7 @@ textarea {
 
 </div>
 
-	<form action="./fileUpload" id="fileUpload" name="fileUpload" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-        이름 : <input type="text" name="name" id="cmd" value="namevla"><br>
-        파일 : <input type="file" name="file"><br> <input
-            type="submit" name="업로드" value="제출"><br>
-    </form>
+
 
 
 
