@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
  <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -48,7 +50,8 @@
             </li>
             <li class="menu">
             	<a href="/alarm" class="menugroup" style="padding-top: 7px;">
-            		<div><span style="font-size: 20px;"><i class="fas fa-bell"></i></span></div>
+            		<div><span style="font-size: 20px;"><i class="fas fa-bell"></i><span id="alarmcount" class="badge" style="background-color: #d87070; padding: 3px 4px;"></span></span></div>
+            		<%@ include file="/WEB-INF/views/alarm/alarmCount.jsp" %>
             		<div>알람</div>
             	</a>
             </li>
@@ -65,9 +68,43 @@
         </div><!--/.nav-collapse -->
       </div>
  </nav>
+ 
 
 <script src="/js/sockjs.js"></script>
 <script>
+	
+	var path = window.location.pathname;
+	console.log(path);
+	var wsPath = "<c:url value='" + "alarm/alarmCount" + "'/>";
 
-
- </script>
+	function onOpen(evt) {
+		console.log("connect");
+		websocket.send();
+	}
+	function onMessage(evt) {
+		console.log("message >> " + evt.data);
+		$("#alarmcount").text(evt.data);
+	}
+	function onError(evt) {
+		console.log("websocket error!")
+	}
+	function send_message() {
+		websocket = new SockJS(wsPath);
+		
+		websocket.onopen = function(evt) {
+			onOpen(evt);
+		};
+		websocket.onmessage = function(evt) {
+			onMessage(evt);
+		};
+		websocket.onerror = function(evt) {
+			onError(evt);
+		};
+	}
+	
+	$(document).ready(function() {
+		send_message();
+		setInterval("send_message()", 10000);
+	});
+	
+</script>
