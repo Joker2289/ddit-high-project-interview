@@ -96,7 +96,7 @@
 	
 	<bean id="alarmEcho" class="kr.or.ddit.util.alarm.AlarmEchoHandler" />
 	<websocket:handlers>
-		<websocket:mapping handler="alarmEcho" path="/**"/>
+		<websocket:mapping handler="alarmEcho" path="/timeline"/>
 		<websocket:handshake-interceptors>
 			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 		</websocket:handshake-interceptors>
