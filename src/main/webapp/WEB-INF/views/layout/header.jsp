@@ -51,7 +51,7 @@
             <li class="menu">
             	<a href="/alarm" class="menugroup" style="padding-top: 7px;">
             		<div><span style="font-size: 20px;"><i class="fas fa-bell"></i><span id="alarmcount" class="badge" style="background-color: #d87070; padding: 3px 4px;"></span></span></div>
-            		<%@ include file="/WEB-INF/views/alarm/alarmCount.jsp" %>
+            			<%@ include file="/WEB-INF/views/alarm/alarmCount.jsp" %>
             		<div>알람</div>
             	</a>
             </li>
@@ -69,13 +69,13 @@
       </div>
  </nav>
  
-<script src="/dist/sockjs.js"></script>
-<!-- <script src="/js/sockjs.js"></script> -->
+<!-- <script src="/dist/sockjs.js"></script> -->
+<script src="/js/sockjs.js"></script>
 <script>
 	
 	var path = window.location.pathname;
 	console.log(path);
-	var wsPath = "<c:url value='" + "/alarmCount" + "'/>";
+	var wsPath = "<c:url value='" + "alarm/alarmCount" + "'/>";
 
 	function onOpen(evt) {
 		console.log("connect");
