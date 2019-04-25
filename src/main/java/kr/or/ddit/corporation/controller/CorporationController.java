@@ -35,6 +35,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.ddit.alarm.model.AlarmVo;
+import kr.or.ddit.alarm.service.IAlarmService;
+import kr.or.ddit.award_history.service.IAward_historyService;
 import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.career_info.service.ICareer_infoService;
 import kr.or.ddit.corporation.model.CorporationVo;
@@ -70,6 +73,9 @@ import kr.or.ddit.util.pagination.PaginationVo;
 public class CorporationController {
 
 	private Logger logger = LoggerFactory.getLogger(PostController.class);
+	
+	@Resource(name="alarmService")
+	private IAlarmService alarmService;
 	
 	@Resource(name = "postService")
 	private IPostService postService;
@@ -241,7 +247,7 @@ public class CorporationController {
 	/**
 	 * 이미지 업로드
 	 */
-	@RequestMapping(value = "/fileUpload") // method = RequestMethod.GET 
+	@RequestMapping(value = "/logo_change_btn") // method = RequestMethod.GET 
 	public Map fileUpload(HttpServletRequest req, HttpServletResponse rep,String corp_id,HttpSession session) { 
 		MemberVo memberInfo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		CorporationVo corporationInfo = new CorporationVo();
@@ -286,7 +292,7 @@ public class CorporationController {
 //				String saveFileName = getUuid() + ext; 
 				String corpname = corporationInfo.getCorp_name();
 				String a = "";
-				a = corpname +".png";
+				a = corpname +"_logo"+".png";
 				
 				String saveFileName = a;
 
@@ -347,6 +353,9 @@ public class CorporationController {
 		if(corp_id==null){
 			corp_id = memberInfo.getMem_id();
 		}else{
+		}
+		if(video_path == ""){
+			return "redirect:/corporation";
 		}
 		corporationInfo = corporationService.select_corpInfo(corp_id);
 		PostVo insertPost = new PostVo();
@@ -588,6 +597,10 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		return "corporationTiles";
 
 	}
+	
+
+	
+
 	
 
 }
