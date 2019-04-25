@@ -11,10 +11,10 @@
          <c:choose>
            <c:when test="${memberInfo.mem_division == '1' }"><!-- 일반회원일 경우 -->
              <c:if test="${sessionScope.SESSION_DETAILVO.bg_path == null }">
-               <span><a href="/profileHome"><img class="bg_img" src="/images/profile/basicBackground.png"></a></span>
+               <span><a href="/profileHome"><img class="bg_img" src="/images/blog/cover_img/basicBackground.png"></a></span>
              </c:if>
              <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }">
-               <span><a href="/profileHome"><img src="${sessionScope.SESSION_DETAILVO.bg_path }"></a></span>
+               <span><a href="/profileHome"><img class="bg_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=bg"></a></span>
              </c:if>
            </c:when>
            <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
@@ -22,7 +22,7 @@
                 <span><a href="/profileHome"><img class="bg_img" src="/images/profile/basicBackground.png"></a></span>
              </c:if>
              <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }">
-                <span><a href="/profileHome"><img class="bg_img" src="${sessionScope.SESSION_DETAILVO.bg_path }"></a></span>
+                <span><a href="/profileHome"><img class="bg_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=bg"></a></span>
              </c:if>
            </c:when>
            <c:otherwise>
@@ -37,7 +37,7 @@
                 <span><a href="/profileHome"><img class="profile_img"  src="/images/profile/profile_noimage.jpg" ></a></span>
              </c:if>
              <c:if test="${sessionScope.SESSION_DETAILVO.profile_path != null }">
-               <span><a href="/profileHome"><img src="${sessionScope.SESSION_DETAILVO.profile_path }"></a></span>
+               <span><a href="/profileHome"><img class="profile_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=pf"></a></span>
              </c:if>
            </c:when>
            <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
@@ -45,7 +45,7 @@
                <span><a href="/profileHome"><img class="profile_img" src="/images/profile/profile_noimage.jpg" ></a></span>
              </c:if>
              <c:if test="${sessionScope.SESSION_DETAILVO.logo_path != null }">
-               <span><a href="/profileHome"><img class="profile_img" src="${sessionScope.SESSION_DETAILVO.logo_path }"></a></span>
+               <span><a href="/profileHome"><img class="profile_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=pf"></a></span>
              </c:if>
            </c:when>
            <c:otherwise>

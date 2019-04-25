@@ -7,14 +7,18 @@
 }
 
 .bg_img{
- width: 261px;
- height: 71px;
- margin: -15px;
+	width: 261px;
+	max-width: 261px;
+	height: 71px;
+	max-height: 71px;
+	margin: -15px;
 }
 
 .profile_img{
 	width: 70px;
+	max-width: 70px;
 	height: 70px;
+	max-height: 70px;
 	border: 2px solid #fff;
 	margin-left: 88px;
 	margin-top: -20px;
