@@ -69,13 +69,13 @@
       </div>
  </nav>
  
-
-<script src="/js/sockjs.js"></script>
+<script src="/dist/sockjs.js"></script>
+<!-- <script src="/js/sockjs.js"></script> -->
 <script>
 	
 	var path = window.location.pathname;
 	console.log(path);
-	var wsPath = "<c:url value='" + "alarm/alarmCount" + "'/>";
+	var wsPath = "<c:url value='" + "/alarmCount" + "'/>";
 
 	function onOpen(evt) {
 		console.log("connect");

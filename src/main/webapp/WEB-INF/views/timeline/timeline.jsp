@@ -106,12 +106,22 @@
                  <ul style="padding-left: 10px;">
                     <li style="list-style: none; float: left;">
                        <button class="btn_count btn_goodcount" title="goodCount ${post.post_code }" style="font-size: 12px;">추천 
-                         <span id="txt_good_count${post.post_code }">${post.goodcount }</span>
+                         <span id="txt_good_count${post.post_code }">
+                           <c:choose>
+                             <c:when test="${post.goodcount eq '' }">0</c:when>
+                             <c:otherwise>${post.goodcount }</c:otherwise>
+                           </c:choose>
+                         </span>
                        </button>
                     </li>
                     <li style="list-style: none; float: left;">
                        <button class="btn_count btn_commentcount" id="btn_commentcount${post.post_code }" title="commentCount ${post.post_code }" style="font-size: 12px;">댓글 
-                         <span id="txt_comment_count${post.post_code }">${post.commentcount }</span>
+                         <span id="txt_comment_count${post.post_code }">
+                           <c:choose>
+                         	 <c:when test="${post.commentcount eq '' }">0</c:when>
+                         	 <c:otherwise>${post.commentcount }</c:otherwise>
+                           </c:choose>
+                         </span>
                        </button>
                     </li>
                  </ul>

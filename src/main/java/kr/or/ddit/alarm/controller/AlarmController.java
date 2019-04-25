@@ -112,9 +112,9 @@ public class AlarmController {
 	
 	//언팔로우는 postController의 unfollow 요청을 활용 (parameter : target_id)
 	
-	@RequestMapping()
-	public String postDetailFromAlarm(){
-		
-		return "timeline/postDetail";
-	}
+//	@RequestMapping()
+//	public String postDetailFromAlarm(){
+//		
+//		return "timeline/postDetail";
+//	}
 }
