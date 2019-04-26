@@ -1,8 +1,5 @@
 var emoticon_src;
 
-
-
-
 // 이모티콘 효과
 function addEmoticon() {
     var con = stage.container();
@@ -98,6 +95,7 @@ function imageUpload() {
 		});
 }
 
+//이미지 첨부
 function addImage(data) {
 	
 	 node_num++;
@@ -139,6 +137,7 @@ function addImage(data) {
      
 }
 
+//비디오 링크 첨부
 function addVideo() {
 
     // 미완
@@ -198,6 +197,15 @@ var code_mode = "javascript"; // code 언어
 var code_theme = "default"; // code 테마
 var code_data = ''; 
 
+//코드 id 배열
+var code_id_array = new Array;
+var code_mode_array = new Array();
+var code_theme_array = new Array();
+
+
+
+
+//소스코드 추가
 function addCode() {
 	
 	node_num++;
@@ -205,12 +213,14 @@ function addCode() {
 	//textarea 생성 id 부여
 	var textarea = document.createElement('textarea');
 	textarea.id = 'textarea' + node_num;
-	
+	$(textarea).addClass('textarea');
 	
 	
 	//div 생성
 	var code_div = document.createElement('div');
     code_div.id = 'code_div' + node_num;
+    $(code_div).addClass('code_div');
+    
     
     //view_div에 생성한 div 넣기
     $('#view_div').append(code_div);
@@ -224,6 +234,11 @@ function addCode() {
 	$('#completeBtn').off('click');
     // 작성 버튼
     $('#completeBtn').on('click', function () {
+    	
+    	//코드 ID 배열에 넣기
+    	code_id_array.push(node_num);
+    	code_mode_array.push(code_mode);
+    	code_theme_array.push(code_theme);
     	
     	var code_editor = null;
     	
@@ -268,6 +283,9 @@ function addCode() {
         // modal 끄기
         $('.jk-modalsasun').css('display', 'none');
         
+        //모드 테마 초기화
+        code_mode = "javascript";
+        code_theme = "default";
 
     });
     
@@ -280,16 +298,13 @@ function addCode() {
     $('#closeBtn').on('click', function () {
     	$('#code_div'+node_num).remove();
         $('.jk-modalsasun').css('display', 'none');
+        
+        //모드 테마 초기화
+        code_mode = "javascript";
+        code_theme = "default";
     });
 
 }
-
-//임시 테스트 해봐야댐
-function code_closeBtn_click(node_num){
-	$('#code_div'+node_num).remove();
-    $('.jk-modalsasun').css('display', 'none');
-}
-
 
 var editor = null;
 
@@ -316,6 +331,8 @@ function code_view_rendering(){
 	//$(textarea).val(code_data);
     code_data = $('#code_editor').val();
     $('#textarea'+node_num).val(code_data);
+    
+    
 };
 
 //코드 모드 셀렉트 박스 변경시
@@ -331,6 +348,9 @@ function themeSelect(){
 	editor.setOption('theme', code_theme);
 	editor.save();
 }
+
+
+
 
 
 document.addEventListener('click', (e) => {

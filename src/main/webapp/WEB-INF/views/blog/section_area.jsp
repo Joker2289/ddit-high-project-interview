@@ -6,7 +6,7 @@
 
 <c:forEach items="${ sectionList }" var="section">
 
-	<button id="section_${ section.section_code }" type="button" class="btn btn-default section" onclick="sectionClick('${ section.section_code }', '${ color }');">
+	<button id="section_${ section.section_code }" type="button" class="btn btn-default section section_${ section.section_code }" onclick="sectionClick('${ section.section_code }', '${ color }');">
     	${ section.section_name }
   	</button>
 	
@@ -15,11 +15,14 @@
 
 <script>
 
-<c:forEach items="${ sectionList }" var="section">
+$(document).ready(function(){
+	<c:forEach items="${ sectionList }" var="section">
+	
+		//포트폴리오 인덱스 컬러와 같이 셋팅
+		$('.section_${ section.section_code }').css('background-color', '${ color }');
 
-	//포트폴리오 인덱스 컬러와 같이 셋팅
-	$('#section_${ section.section_code }').css('background-color', '${ color }');
-</c:forEach>
+	</c:forEach>
+});
 
 function sectionClick(section_code, color){
 	
