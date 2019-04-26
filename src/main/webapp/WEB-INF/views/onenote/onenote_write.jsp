@@ -593,7 +593,7 @@
                 </button>
                 
                 
-                <button id="pageSaveBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="페이지 저장" onclick="stage_save_page();">
+                <button id="pageSaveBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="페이지 저장" onclick="input_page_title();">
                     <div class="btn_icon">
                     	<i class="fas fa-link"></i>
                     </div>
@@ -658,7 +658,20 @@
 	</div>
 
 	<%@ include file="/WEB-INF/views/onenote/onenote_modal.jsp"%>
-<!-- code 작성 modal-->
+	
+	
+	<form id="saveForm" action="/page/savePage" method="post"> 
+		<input type="hidden" id="section_code" name="section_code" value="${ section_code }"/>
+		<input type="hidden" id="page_title" name="page_title"/>
+		<input type="hidden" id="page_contents" name="page_contents"/>
+		<input type="hidden" id="page_thumbnail" name="page_thumbnail"/>
+		<input type="hidden" id="user_id" name="user_id"/>
+	</form>
+	
+	
+	<form id="thumnailForm">
+		<input type="hidden" id="thumnail_data" name="thumnail_data"/>
+	</form>
     
 
 </body>
@@ -700,7 +713,7 @@
     // 4. 클릭했을때 zIndex 
 
 
-    var data = "";
+    var data = '';
 
     var node_num = 0;
     var state = '';

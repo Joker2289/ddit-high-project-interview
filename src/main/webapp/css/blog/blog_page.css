@@ -39,32 +39,7 @@
 	box-shadow: 0 6px 12px rgba(0, 0, 0, .15);
 }
 
-.col-post{
-	background: #ffffff;
-	margin: 10px;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	border-spacing: normal;
-	margin-left: 0px;
-	margin-right: 0px;
-	box-shadow: 0 6px 12px rgba(0, 0, 0, .15);
-}
 
-.col-post-body{
-	border-bottom : 1px solid #ddd;
-	padding : 15px;
-	padding-bottom : 35px;
-	width: 553.02
-}
-
-.col-post-social{
-	background-color : #f3f6f8;
-	border-top: 1px solid #ddd;
-	border-bottom-right-radius: 4px;
-	border-bottom-left-radius: 4px;
-	padding: 5px;
-	height: 45px;
-}
 
 .btn_count{
 	border: 0px solid #fff;
@@ -76,10 +51,7 @@
 	text-decoration: underline;
 }
 
-.post_socialCount{
-	height: 30px;
-	padding:5px;
-}
+
 
 .writer-info{
 	border-style: 1px solid;
@@ -122,21 +94,7 @@
 	color: #3234c1;
 }
 
-.btn_postControll{
-	background:#ffffff;
-	background-size: auto;
-    letter-spacing: normal;
-    word-spacing: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    border-style: solid;
-    border-color: #ffffff; 
-    width: 30px;
-    height: 20px;
-   	border : 0;
-	outline: 0;
-}
+
 
 .btn-social{
 	background: #f3f6f8;
@@ -271,29 +229,9 @@
   	height: 100%;
 }
 
-.dropdown{
-	width: 150px;
-}
 
-.dropdown:AFTER{
-	position: absolute;
-	width: 150px;
-	z-index: 1;
-	top: -10px;
-	left: 190px;
-	border-color: transparent;
-	position: absolute;
-	content: '';
-}
 
-.btn_controll-list{
-	background:#ffffff;
-	size : 140px;
-	border : 0px solid #ffffff;
-	padding: 10px;
-	border : 0;
-	outline: 0;
-}
+
 
 .col-md-3{
   	position: relative;
@@ -438,4 +376,131 @@
 
 .btn_followTag:hover{
 	background-color: #0073b1;
+}
+
+
+
+/* ======================================= */
+
+.col-post{
+	background: #ffffff;
+	margin: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	border-spacing: normal;
+	margin-left: 0px;
+	margin-right: 0px;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .15);
+}
+
+.col-post-body{
+	border-bottom : 1px solid #ddd;
+	padding : 15px;
+	padding-bottom : 35px;
+	width: 100%;
+	height: 50px !important;
+	
+}
+ 
+.col-post-social{
+	background-color : #f3f6f8;
+	border-top: 1px solid #ddd;
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+	padding: 5px;
+	height: 45px;
+}
+
+
+
+/* 글 메뉴 드롭다운 */
+.writer_info{
+	float: left;
+}
+
+/* 페이지 제목 */
+.page_title{
+	font-size: 25px;
+	margin-right: 10px;
+	
+}
+
+/* 페이지 작성일 */
+.page_write_date {
+	display: inline-block;
+	font-size: 15px;
+}
+
+/* 드롭다운 버튼 */
+.btn_postControll{
+	background:#ffffff;
+	background-size: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    border-style: solid;
+    border-color: #ffffff; 
+    width: 30px;
+    height: 20px;
+   	border : 0;
+	outline: 0;
+	
+}
+
+/* 드롭다운 버튼 */
+.btn_controll-list{
+	background:#ffffff;
+	size : 140px;
+	border : 0px solid #ffffff;
+	padding: 10px;
+	border : 0;
+	outline: 0;
+}
+
+/* 드롭다운 판때기 */
+.dropdown{
+	width: 150px;
+}
+
+/* 드롭다운 누르고 판때기 */
+.dropdown:AFTER{
+	position: absolute;
+	width: 150px;
+	z-index: 1;
+	top: -10px;
+	left: 190px;
+	border-color: transparent;
+	position: absolute;
+	content: '';
+}
+
+/* 페이지 몸통 */
+.page_body{
+	width: 100%;
+	height: 100%;
+}
+
+/* 페이지 썸네일 이미지*/
+.page_thumbnail{
+	width: 97.5%;
+	height: 95%;
+	border: 1px solid #333333;
+	margin: 10px;
+}
+
+/* 드롭다운 메뉴 */
+.dropdown-menu {
+	font-size: 18px;
+}
+
+.dropdown-menu .icon {
+	margin-right: 10px;
+}
+
+/* 추천, 댓글수 출력 */
+.post_socialCount{
+	height: 30px;
+	padding:5px;
 }

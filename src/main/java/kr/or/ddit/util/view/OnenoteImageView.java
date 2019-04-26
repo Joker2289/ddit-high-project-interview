@@ -35,17 +35,17 @@ public class OnenoteImageView implements View{
 		//OS나 브라우저에 따라 화면이 이상하게 출력 될수 있으므로 
 		resp.setContentType("image");
 		
+		ServletContext application = req.getServletContext();
+		
 		String realFileName = (String) model.get("src");
 		
 		
 		FileInputStream fis;
 		if(realFileName != null ) {
-			fis = new FileInputStream(new File(realFileName));
+			fis = new FileInputStream(new File(application.getRealPath("/images/onenote/"+realFileName)));
 		}
 		
 		else {
-			//application
-			ServletContext application = req.getServletContext();
 			String noimgPath = application.getRealPath("/upload/noimg2.png");
 			fis = new FileInputStream(new File(noimgPath));
 		}

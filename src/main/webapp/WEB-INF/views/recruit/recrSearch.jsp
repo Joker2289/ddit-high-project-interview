@@ -174,7 +174,7 @@
 								</tr>
 								<tr style="border-bottom: 1px solid; border-color: #d9d9d9;">
 									<td style="padding-left: 10px; padding-bottom: 7px; padding-top: 2px;">
-										<span style="color: #2f7b15;">${recrList.get(i.index - 1).start_date }..전</span>
+										<span style="color: #2f7b15;">${timeList.get(i.index - 1) } 전</span>
 										<c:if test="${recrList.get(i.index - 1).app_type == 't'}">
 											 · <img src="/images/logo/linkedin.png" width="17">
 											 간편 지원

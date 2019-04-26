@@ -19,9 +19,9 @@ import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.util.pagination.PaginationVo;
 
 @Controller
-public class AlaramController {
+public class AlarmController {
 	
-	private Logger logger = LoggerFactory.getLogger(AlaramController.class);
+	private Logger logger = LoggerFactory.getLogger(AlarmController.class);
 	
 	@Resource(name="alarmService")
 	private IAlarmService alarmService;
@@ -111,4 +111,10 @@ public class AlaramController {
 	}
 	
 	//언팔로우는 postController의 unfollow 요청을 활용 (parameter : target_id)
+	
+//	@RequestMapping()
+//	public String postDetailFromAlarm(){
+//		
+//		return "timeline/postDetail";
+//	}
 }

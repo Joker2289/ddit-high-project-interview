@@ -1,9 +1,12 @@
 package kr.or.ddit.personal_connection.model;
 
+import java.util.Date;
+
 public class Personal_connectionVo {
 	private String user_id;			// 신청회원아이디
 	private String receive_id;		// 수신회원아이디
 	private String receive_accept;	// 수락여부
+	private Date connect_date;		// 수락날짜
 	
 	
 	public Personal_connectionVo() {
@@ -32,6 +35,15 @@ public class Personal_connectionVo {
 
 	public void setReceive_accept(String receive_accept) {
 		this.receive_accept = receive_accept;
+	}
+	
+
+	public Date getConnect_date() {
+		return connect_date;
+	}
+
+	public void setConnect_date(Date connect_date) {
+		this.connect_date = connect_date;
 	}
 
 	@Override

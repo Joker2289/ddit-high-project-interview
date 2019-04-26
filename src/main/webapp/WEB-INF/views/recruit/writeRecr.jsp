@@ -32,7 +32,7 @@
 			<input type="hidden" id="personnel" name="personnel">
 			<input type="hidden" id="job_rank" name="job_rank">
 			<input type="hidden" id="emp_type" name="emp_type">
-<!-- 			<input type="hidden" id="app_type" name="app_type"> --> <!-- 간편지원 -->
+			<input type="hidden" id="app_type" name="app_type">
 			
 			<table border="0" style="width: 750px;">
 				<tr>
@@ -182,9 +182,21 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="padding-bottom: 30px;">
+					<td style="padding-bottom: 50px; padding-top: 20px;">
 						<div style="margin-bottom: 10px;"> 
-							<strong>간편지원?</strong><br>
+							<div style="color: #0174b0; float: left;">
+								<div style="margin-bottom: 10px;">
+									<strong style="color: black;">간편지원 설정여부</strong><br>
+								</div>					<!-- 이어서. app_type val() 설정 -->
+								<img src="/images/logo/linkedin.png" width="22">
+								<strong>간편지원 기능을 이용해보세요. ( 99,000원/월 )</strong>
+							</div>
+							<div class="can-toggle demo-rebrand-2" style="float: right; margin-right: 190px;">
+								<input id="cb_move" type="checkbox">
+								<label for="cb_move">
+									<div class="can-toggle__switch" data-checked="2" data-unchecked="2"></div>
+								</label>
+							</div>							
 						</div>
 					</td>
 				</tr>
@@ -251,7 +263,7 @@
 </tr>
 </table><br><br>
 	
-	11223344556677889900<i class="fas fa-user-tie"></i><i class="fas fa-map-marker-alt"></i>
+	1122<i class="fas fa-user-tie"></i><i class="fas fa-map-marker-alt"></i>
 
 </div></div></div>		
 		
@@ -452,6 +464,13 @@ $("#btn_save").on("click", function(){
 	$("#job_rank").val($("#sel_rank option:selected").val());
 	$("#emp_type").val($("#sel_emp option:selected").val());
 	
+	// 간편지원
+	if($("input:checkbox[id='cb_move']").is(":checked") == true){
+		$("#app_type").val("t");
+	}else{
+		$("#app_type").val("f");
+	}	
+	
 	// 값 확인 (회사, 채용공고명, 업무분야, 업무내용, 모집기간, 모집인원, 직급, 고용형태)
 // 	alert("회사 : " + $("#corp_id").val());
 // 	alert("채용공고명 : " + $("#recruit_title").val());
@@ -461,6 +480,7 @@ $("#btn_save").on("click", function(){
 // 	alert("모집인원 : " + $("#personnel").val());
 // 	alert("직급 : " + $("#job_rank").val());
 // 	alert("고용형태 : " + $("#emp_type").val());
+// 	alert("간편지원 : " + $("#app_type").val());
 	
 	$("#frm").submit();
 });

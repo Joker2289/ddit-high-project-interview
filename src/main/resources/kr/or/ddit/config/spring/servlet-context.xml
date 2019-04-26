@@ -96,7 +96,16 @@
 		  </websocket:handshake-interceptors>
 		<websocket:sockjs/>
 	</websocket:handlers>
-   
+	
+	<bean id="alarmEcho" class="kr.or.ddit.util.alarm.AlarmEchoHandler" />
+	
+	<websocket:handlers>
+		<websocket:mapping handler="alarmEcho" path="alarm/alarmCount"/>
+		<websocket:handshake-interceptors>
+			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+		<websocket:sockjs/>
+	</websocket:handlers>
 
-   
+	
 </beans>

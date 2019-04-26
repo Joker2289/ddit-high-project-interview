@@ -2,6 +2,7 @@
 <link href="/css/personalConnection/personalConnection.css" rel="stylesheet">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <script type="text/javascript">
 	var userPage =  1;
 	var corpPage = 1;
@@ -136,7 +137,7 @@
 <div class="row">
 			  <div id="pc_leftmenu" class="col-md-3">
 			        <div id="pc_leftmenuBox" class="whiteBox">
-			         	<a href="/connections">
+			         	<a href="/connections?sort=new">
 			         		<span style="padding-right: 5px;"><i class="fas fa-user-friends"></i></span>1촌 ${connections_count }명
 			         	</a>
 			           <a id="pc_leftmenuBorder" href="/feedFollowing">
@@ -157,30 +158,37 @@
 								<button id="btnslidelt" class="btn btn-default" style="border: 0px;margin-left: 28px;">&lt;</button>
 								<button id="btnSlidegt" class="btn btn-default" style="border: 0px;">&gt;</button><br/>
 								<ul  id="content" style="list-style:none;width:3000px; padding-left: 5px;">
-									<c:forEach items="${schoolFriends }" var="friend">
-									<c:set var="bg_addrpath" value="/background?mem_id=${friend.user_id }"/>
-						            <c:set var="profile_addrpath" value="/profile?mem_id=${friend.user_id }"/> 
-						            <c:choose>
-						               <c:when test="${fn:contains(friend.bg_path, 'http')}">
-						                  <c:set var="bg_path" value="${friend.usersVo.bg_path }"/> 
-						               </c:when>
-						               <c:when test="${fn:contains(friend.profile_path, 'http')}">
-						                  <c:set var="profile_path" value="${friend.profile_path }"/> 
-						               </c:when>
-						            </c:choose>
-										<li>
-											<div class="whiteBox">
-												<div style="background-image: url(${not empty bg_path ? bg_path : bg_addrpath});height: 70px; margin-top: -15px;"></div>
-												<div style=" margin-top: -50px;">
-													<a href="/profileHome?user_id=${friend.user_id }"><div style="width: 108px;height: 108px;background-image: url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 30px;border: 4px solid #E3EEF2;border-radius: 100px;"></div></a>
-													<a href="/profileHome?user_id=${friend.user_id }"><div style="margin-top: 5px;"><strong>${friend.user_name}</strong></div></a>
-													<a href="/profileHome?user_id=${friend.user_id }"><div style="font-size: 16px;padding-left: 5px;padding-right: 5px; text-overflow: ellipsis; display: inline-block; width: 146.97px; white-space: nowrap; overflow: hidden;margin-bottom: 50px;">${friend.introduce}</div></a>
-													<button class="btn btn-default" style="border-color: #0073b1;border-style: solid;padding-left: 40px;padding-right: 40px;"
-													onclick="location.href='/connectionSend?user_id=${SESSION_MEMBERVO.mem_id}&receive_id=${friend.user_id }'">1촌 맺기</button>
-												</div>
-											</div>
-										</li>
-									</c:forEach>
+								<c:choose>
+									<c:when test="${fn:length(schoolFriends) eq 0 }">
+										<label style="font-size: 18px;padding-left: 200px;padding-top: 50px;">아는 동문 없음</label>
+									</c:when>
+									<c:otherwise>
+											<c:forEach items="${schoolFriends }" var="friend">
+											<c:set var="bg_addrpath" value="/background?mem_id=${friend.user_id }"/>
+								            <c:set var="profile_addrpath" value="/profile?mem_id=${friend.user_id }"/> 
+								            <c:choose>
+								               <c:when test="${fn:contains(friend.bg_path, 'http')}">
+								                  <c:set var="bg_path" value="${friend.usersVo.bg_path }"/> 
+								               </c:when>
+								               <c:when test="${fn:contains(friend.profile_path, 'http')}">
+								                  <c:set var="profile_path" value="${friend.profile_path }"/> 
+								               </c:when>
+								            </c:choose>
+												<li>
+													<div class="whiteBox">
+														<div style="background-image: url(${not empty bg_path ? bg_path : bg_addrpath});height: 70px; margin-top: -15px;"></div>
+														<div style=" margin-top: -50px;">
+															<a href="/profileHome?user_id=${friend.user_id }"><div style="width: 108px;height: 108px;background-image: url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 30px;border: 4px solid #E3EEF2;border-radius: 100px;"></div></a>
+															<a href="/profileHome?user_id=${friend.user_id }"><div style="margin-top: 5px;"><strong>${friend.user_name}</strong></div></a>
+															<a href="/profileHome?user_id=${friend.user_id }"><div style="font-size: 16px;padding-left: 5px;padding-right: 5px; text-overflow: ellipsis; display: inline-block; width: 146.97px; white-space: nowrap; overflow: hidden;margin-bottom: 50px;">${friend.introduce}</div></a>
+															<button class="btn btn-default" style="border-color: #0073b1;border-style: solid;padding-left: 40px;padding-right: 40px;"
+															onclick="location.href='/connectionSend?user_id=${SESSION_MEMBERVO.mem_id}&receive_id=${friend.user_id }'">1촌 맺기</button>
+														</div>
+													</div>
+												</li>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
 								</ul>
 							</div>
 						</div>

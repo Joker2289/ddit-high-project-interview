@@ -1,21 +1,17 @@
 package kr.or.ddit.page.model;
 
+import java.util.Date;
+
 public class PageVo {
+	
 	private String page_code;		// 페이지코드
 	private String section_code;	// 섹션코드
 	private String page_title;		// 페이지제목
 	private String page_contents;	// 페이지내용
-	private String write_date;		// 작성일
-	private String scrap_count;		// 스크랩수
-	@Override
-	public String toString() {
-		return "PageVo [page_code=" + page_code + ", section_code=" + section_code + ", page_title=" + page_title
-				+ ", page_contents=" + page_contents + ", write_date=" + write_date + ", scrap_count=" + scrap_count
-				+ "]";
-	}
-	public PageVo() {
-		// TODO Auto-generated constructor stub
-	}
+	private Date write_date;		// 작성일
+	private String view_count; 		// 조회수
+	private String page_thumbnail;	// 페이지 썸네일 이미지
+	private String bg_color;		// 페이지 배경색
 	public String getPage_code() {
 		return page_code;
 	}
@@ -40,17 +36,36 @@ public class PageVo {
 	public void setPage_contents(String page_contents) {
 		this.page_contents = page_contents;
 	}
-	public String getWrite_date() {
+	public Date getWrite_date() {
 		return write_date;
 	}
-	public void setWrite_date(String write_date) {
+	public void setWrite_date(Date write_date) {
 		this.write_date = write_date;
 	}
-	public String getScrap_count() {
-		return scrap_count;
+	public String getView_count() {
+		return view_count;
 	}
-	public void setScrap_count(String scrap_count) {
-		this.scrap_count = scrap_count;
+	public void setView_count(String view_count) {
+		this.view_count = view_count;
 	}
+	public String getPage_thumbnail() {
+		return page_thumbnail;
+	}
+	public void setPage_thumbnail(String page_thumbnail) {
+		this.page_thumbnail = page_thumbnail;
+	}
+	public String getBg_color() {
+		return bg_color;
+	}
+	public void setBg_color(String bg_color) {
+		this.bg_color = bg_color;
+	}
+	@Override
+	public String toString() {
+		return "PageVo [page_code=" + page_code + ", section_code=" + section_code + ", page_title=" + page_title
+				+ ", page_contents=" + page_contents + ", write_date=" + write_date + ", view_count=" + view_count
+				+ ", page_thumbnail=" + page_thumbnail + ", bg_color=" + bg_color + "]";
+	}
+	
 	
 }

@@ -28,16 +28,16 @@
 								<c:set var="profile_path" value="${receive.profile_path }"/>
 							</c:when>
 						</c:choose>
-						<div style="display: flex;">
-						 	<div style="width: 59px;height: 59px;background-image:url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center; margin-right: 10px;border-radius: 100px;border: 2px solid #E3EEF2;">
-						 	</div>
+						<div style="display: flex;padding-top: 7px;padding-bottom: 7px;">
+						 	<a href="/profileHome?user_id=${receive.user_id }"><div style="width: 59px;height: 59px;background-image:url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center; margin-right: 10px;">
+						 	</div></a>
 						 	<div style="width: 580px;">
-						 		<div style="margin-bottom: 5px;margin-top: 5px;">
+						 		<a href="/profileHome?user_id=${receive.user_id }"><div style="margin-bottom: 5px;margin-top: 5px;">
 						 			${receive.user_name}
-						 		</div>
-						 		<div>
+						 		</div></a>
+						 		<a href="/profileHome?user_id=${receive.user_id }"><div>
 						 			${receive.introduce}
-						 		</div>
+						 		</div></a>
 						 	</div>
 						 	<div>
 						 		<button class="btn btn-default" style="border-style: hidden;margin-top: 0px;"

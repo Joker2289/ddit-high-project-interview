@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link href="/css/personalConnection/feedFollowing.css" rel="stylesheet">
 <script >
 
@@ -104,24 +105,31 @@ $(document).ready(function() {
 			</div>
 		</div>
 		<div class="row corporationList">
-			<c:forEach items="${corporationList}" var="corp">
-				<div style="width: 225px;">
-					<div class="corporation">
-						<div
-						style="width: 120px;height: 59px;background-image:url(${corp.logo_path});background-repeat: no-repeat;background-size: 120px;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;">
+			<c:choose>
+				<c:when test="${fn:length(corporationList) eq 0 }">
+					<label style="font-size: 18px;padding-left: 350px;padding-top: 50px;">팔로우한 회사 없음</label>
+				</c:when>
+				<c:otherwise>
+					<c:forEach items="${corporationList}" var="corp">
+						<div style="width: 225px;">
+							<div class="corporation">
+								<a href="/corporation?corp_id=${corp.corp_id }"><div
+								style="width: 120px;height: 59px;background-image:url(${corp.logo_path});background-repeat: no-repeat;background-size: 120px;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;">
+								</div></a>
+								<div>
+									<a href="/corporation?corp_id=${corp.corp_id }"><label style="font-size: 18px;"><strong>${corp.corp_name}</strong></label><br/></a>
+									<a href="/corporation?corp_id=${corp.corp_id }"><label>${corp.industry_type }</label></a>
+								</div>
+							</div>
+							<div>
+								<button class="btn btn-default followingBtn follow" onclick="location.href='/deleteFollow?follow_code=${corp.follow_code}'">
+									<i class="fas fa-check"></i> 팔로우 중
+								</button>
+							</div>
 						</div>
-						<div>
-							<label style="font-size: 18px;"><strong>${corp.corp_name}</strong></label><br/>
-							<label>${corp.industry_type }</label>
-						</div>
-					</div>
-					<div>
-						<button class="btn btn-default followingBtn follow" onclick="location.href='/deleteFollow?follow_code=${corp.follow_code}'">
-							<i class="fas fa-check"></i> 팔로우 중
-						</button>
-					</div>
-				</div>
-			</c:forEach>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 	

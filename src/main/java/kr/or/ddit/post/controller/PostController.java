@@ -466,17 +466,19 @@ public class PostController {
 		model.addAttribute("commentCnt", commentCnt);
 		model.addAttribute("ref_code", ref_code);
 		
-		//글 작성 -> 알림 등록
+		//댓글 작성 -> 알림 등록
 		PostVo postInfo = postService.select_postInfo(ref_code);
 		AlarmVo alarmInfo = new AlarmVo();
 		alarmInfo.setMem_id(postInfo.getMem_id());
-		alarmInfo.setRef_code(commentVo.getComment_code());
-		alarmInfo.setAlarm_check("00");
-		alarmInfo.setDivision("29");
+		alarmInfo.setRef_code(ref_code);
+		alarmInfo.setAlarm_check("0");
+		alarmInfo.setDivision("28");
 		alarmInfo.setSend_id(memberInfo.getMem_id());
 		alarmInfo.setAlarm_separate("02");
 		
-		alarmService.insert_alarmInfo(alarmInfo);
+		if(!memberInfo.getMem_id().equals(postInfo.getMem_id())){
+			alarmService.insert_alarmInfo(alarmInfo);
+		}
 		
 		return "timeline/postComment";
 	}
@@ -506,17 +508,19 @@ public class PostController {
 		
 		goodService.insert_goodInfo(goodVo);
 		
-		//알림 등록
+		//글 추천 -> 알림 등록
 		PostVo postInfo = postService.select_postInfo(ref_code);
 		AlarmVo alarmInfo = new AlarmVo();
 		alarmInfo.setMem_id(postInfo.getMem_id());
-		alarmInfo.setRef_code(goodVo.getGood_code());
-		alarmInfo.setDivision("15");
+		alarmInfo.setRef_code(ref_code);
+		alarmInfo.setDivision("28");
 		alarmInfo.setSend_id(memberInfo.getMem_id());
 		alarmInfo.setAlarm_separate("01");
 		alarmInfo.setAlarm_check("0");
 		
-		alarmService.insert_alarmInfo(alarmInfo);
+		if(!memberInfo.getMem_id().equals(postInfo.getMem_id())){
+			alarmService.insert_alarmInfo(alarmInfo);
+		}
 		
 		return "complate";
 	}
@@ -548,6 +552,7 @@ public class PostController {
 		alarmInfo.setSend_id(memberInfo.getMem_id());
 		
 		//좋아요 취소 -> 알림 정보 삭제
+		
 		alarmService.delete_goodalarm(alarmInfo);
 		goodService.delete_goodInfo(goodVo);
 		
@@ -808,6 +813,8 @@ public class PostController {
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
+		Post_commentVo commentInfo = commentService.select_commentInfo(comment_code);
+		
 		GoodVo goodInfo = new GoodVo();
 		goodInfo.setDivision("29");
 		goodInfo.setMem_id(memberInfo.getMem_id());
@@ -816,9 +823,16 @@ public class PostController {
 		goodService.insert_goodInfo(goodInfo);
 		
 		AlarmVo alarmInfo = new AlarmVo();
-		alarmInfo.setRef_code(goodInfo.getGood_code());
+		alarmInfo.setRef_code(comment_code);
 		alarmInfo.setSend_id(memberInfo.getMem_id());
-		alarmInfo.setDivision("15");
+		alarmInfo.setDivision("29");
+		alarmInfo.setAlarm_separate("03");
+		alarmInfo.setAlarm_check("0");
+		
+		if(!memberInfo.getMem_id().equals(commentInfo.getMem_id())){
+			alarmService.insert_alarmInfo(alarmInfo);
+		}
+		
 		
 		return "complate";
 	}

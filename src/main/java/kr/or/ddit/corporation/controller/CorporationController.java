@@ -35,6 +35,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.ddit.alarm.model.AlarmVo;
+import kr.or.ddit.alarm.service.IAlarmService;
+import kr.or.ddit.award_history.service.IAward_historyService;
 import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.career_info.service.ICareer_infoService;
 import kr.or.ddit.corporation.model.CorporationVo;
@@ -70,6 +73,9 @@ import kr.or.ddit.util.pagination.PaginationVo;
 public class CorporationController {
 
 	private Logger logger = LoggerFactory.getLogger(PostController.class);
+	
+	@Resource(name="alarmService")
+	private IAlarmService alarmService;
 	
 	@Resource(name = "postService")
 	private IPostService postService;
@@ -136,7 +142,6 @@ public class CorporationController {
 		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
 		tagCountPageVo.setMem_id(memberInfo.getMem_id());
 		tagCountPageVo.setDivision("16");
-		
 		//저장글 갯수 
 		int savepostCnt = savepostService.savepost_count(corp_id);
 		model.addAttribute("savepostCnt", savepostCnt);
@@ -242,7 +247,7 @@ public class CorporationController {
 	/**
 	 * 이미지 업로드
 	 */
-	@RequestMapping(value = "/fileUpload") // method = RequestMethod.GET 
+	@RequestMapping(value = "/logo_change_btn") // method = RequestMethod.GET 
 	public Map fileUpload(HttpServletRequest req, HttpServletResponse rep,String corp_id,HttpSession session) { 
 		MemberVo memberInfo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		CorporationVo corporationInfo = new CorporationVo();
@@ -287,8 +292,8 @@ public class CorporationController {
 //				String saveFileName = getUuid() + ext; 
 				String corpname = corporationInfo.getCorp_name();
 				String a = "";
-				a = corpname +".png";
-				System.out.println(a);
+				a = corpname +"_logo"+".png";
+				
 				String saveFileName = a;
 
 				
@@ -300,8 +305,7 @@ public class CorporationController {
 				file.put("origName", origName); 
 				file.put("sfile", serverFile); 
 				resultList.add(file); 
-				System.out.println(origName);
-				System.out.println(saveFileName);
+				
 			} 
 			returnObject.put("files", resultList); 
 			returnObject.put("params", mhsr.getParameterMap()); 
@@ -349,6 +353,9 @@ public class CorporationController {
 		if(corp_id==null){
 			corp_id = memberInfo.getMem_id();
 		}else{
+		}
+		if(video_path == ""){
+			return "redirect:/corporation";
 		}
 		corporationInfo = corporationService.select_corpInfo(corp_id);
 		PostVo insertPost = new PostVo();
@@ -524,7 +531,7 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("timelinePost", timelinePost);
 		
-		System.out.println(corporationInfo.getCorp_name());
+		
 		
 		int ecount = careerService.employee_count(corporationInfo.getCorp_name());
 		model.addAttribute("ecount", ecount);
@@ -571,7 +578,7 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		model.addAttribute("getCorpInfo", corporationService.select_corpInfo(memberInfo.getMem_id()));
 		String mem_id = memberInfo.getMem_id();
 
-		System.out.println("987654321987654321");
+		
 
 		logger.debug("asdasdasdasdmem_id : {}", mem_id);
 
@@ -590,6 +597,10 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		return "corporationTiles";
 
 	}
+	
+
+	
+
 	
 
 }

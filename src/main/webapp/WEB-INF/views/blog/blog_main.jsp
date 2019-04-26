@@ -7,6 +7,9 @@
 <link href="/css/blog/blog.css" rel="stylesheet">
 <link href="/css/blog/blog_activity_modal.css" rel="stylesheet">
 <link href="/css/blog/blog_setting_form.css" rel="stylesheet">
+<link href="/css/blog/blog_page_area.css" rel="stylesheet">
+
+<link href="/css/blog/blog_page.css" rel="stylesheet">
 
 
 <!DOCTYPE html>
