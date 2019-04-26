@@ -23,4 +23,13 @@
          <bean class="kr.or.ddit.interceptor.RequestInterceptor" />
       </mvc:interceptor>
    </mvc:interceptors>
+   
+   <mvc:interceptors>
+      <mvc:interceptor>
+         <!-- 어떤 url 요청에 대해 해당 interceptor를 실행할지 url mapping 설정 -->
+         <mvc:mapping path="/alarm"/>
+         
+         <bean class="kr.or.ddit.interceptor.AlarmInterceptor" />
+      </mvc:interceptor>
+   </mvc:interceptors>
 </beans>
