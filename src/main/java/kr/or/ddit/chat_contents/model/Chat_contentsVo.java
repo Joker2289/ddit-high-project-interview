@@ -1,5 +1,7 @@
 package kr.or.ddit.chat_contents.model;
 
+import java.util.Date;
+
 public class Chat_contentsVo {
 	
 	private String content_code;	// 내용번호
@@ -7,7 +9,11 @@ public class Chat_contentsVo {
 	private String mem_id;			// 회원아이디
 	private String chat_content;	// 채팅내용
 	private String read_status;		// 수신여부
-	private String write_date;		// 작성시간
+	private Date write_date;		// 작성시간
+	private String profile_path;	// 프로필 사진
+	private String chat_name;		// 채팅 방 제목
+	private String memCount;		// 채팅 방 사람수
+	private String name;		// 채팅보낸 유저 이름
 	
 	public Chat_contentsVo() {
 		
@@ -53,12 +59,44 @@ public class Chat_contentsVo {
 		this.read_status = read_status;
 	}
 
-	public String getWrite_date() {
+	public Date getWrite_date() {
 		return write_date;
 	}
 
-	public void setWrite_date(String write_date) {
+	public void setWrite_date(Date write_date) {
 		this.write_date = write_date;
+	}
+	
+	public String getProfile_path() {
+		return profile_path;
+	}
+
+	public void setProfile_path(String profile_path) {
+		this.profile_path = profile_path;
+	}
+
+	public String getChat_name() {
+		return chat_name;
+	}
+
+	public void setChat_name(String chat_name) {
+		this.chat_name = chat_name;
+	}
+
+	public String getMemCount() {
+		return memCount;
+	}
+
+	public void setMemCount(String memCount) {
+		this.memCount = memCount;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override

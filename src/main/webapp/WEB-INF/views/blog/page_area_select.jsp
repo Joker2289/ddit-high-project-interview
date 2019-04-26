@@ -23,8 +23,7 @@
 
 
 			<c:if test='${ pVo.user_id == SESSION_MEMBERVO.mem_id }'>
-				<button id="writePageBtn" class="btn writePageBtn"
-					onclick="writePage('${ sVo.section_code }')">Page 작성</button>
+				<button id="writePageBtn" class="btn writePageBtn" onclick="writePage('${ sVo.section_code }')">Page 작성</button>
 			</c:if>
 		</div>
 	</div>
@@ -57,19 +56,20 @@
 							<c:choose>
 								<c:when test="${ post.mem_id eq memberInfo.mem_id }">
 									<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-										<button id="btn_modifyPost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list">
+									
+										<button type="button" class="btn_controll-list">
 											<i class="fas fa-edit icon"></i>글 수정
 										</button>
-										<button id="btn_deletePost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list">
-											<i class="far fa-trash-alt icon"></i>&nbsp;<span>글 삭제</span>
+										
+										<button type="button" class="btn_controll-list" onclick='delete_page(${ page.page_code })'>
+											<i class="fas fa-ban icon"></i>글 삭제
 										</button>
 									</ul>
 								</c:when>
 								<c:otherwise>
 									<ul class="dropdown-menu" role="menu"
 										aria-labelledby="dLabel">
-										<button id="btn_reportPost${ ost.post_code }"
-											data-code="${post.post_code }" type="button" class="btn_controll-list" style="padding-right: 84.22px;">
+										<button id="btn_reportPost${ page.page_code }" data-code="${ page.page_code }" type="button" class="btn_controll-list" style="padding-right: 84.22px;">
 											<i class="far fa-flag icon"></i>글 신고
 										</button>
 									</ul>
@@ -84,7 +84,7 @@
 					
 					<!-- 몸통 -->
 					<div class="page_body">
-						<a><img class="page_thumbnail" src="/page/onenoteImageView?src=${ page.page_thumbnail }"></a>
+						<a href="/page/page_view?page_code=${ page.page_code }"><img class="page_thumbnail" src="/page/onenoteImageView?src=${ page.page_thumbnail }"></a>
 					</div>
 					<!-- 몸통 -->
 					
@@ -155,6 +155,24 @@
 
 	function writePage(section_code) {
 		document.location.href = "/page/onenote?section_code=" + section_code;
+	}
+	
+	function delete_page(page_code){
+		
+		console.log('씨발');
+		
+		$.ajax({
+			url : "${cp}/page/delete_page",
+			data : {"page_code" : page_code },
+			success : function(data) {
+				
+				alert('페이지 삭제');
+				
+				$('#page_area').html(data);
+							
+			}
+		});
+		
 	}
 </script>
 

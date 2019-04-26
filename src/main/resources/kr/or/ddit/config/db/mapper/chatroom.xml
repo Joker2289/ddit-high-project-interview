@@ -28,8 +28,9 @@
               and d.user_id(+) = b.mem_id
               and f.corp_id(+) = b.mem_id
               and g.mem_id = b.mem_id
-              and a.mem_id = #{mem_id}
+              and b.mem_id = #{mem_id}
              group by  a.chat_name,c.chat_code, c.content_code, c.mem_id, c.chat_content, c.read_status, c.write_date
+             order by c.write_date desc
 	</select>
 	
 	<!-- 방만들기 -->

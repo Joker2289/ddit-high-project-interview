@@ -42,6 +42,11 @@ public class ChatroomServiceImpl implements IChatroomService{
 			chat_memberDao.insert_chatMember(chat_memberVo);
 		}
 		
+		Chat_memberVo chat_memberVo = new Chat_memberVo();
+		chat_memberVo.setChat_code(chatroomVo.getCurrval());
+		chat_memberVo.setMem_id(chatroomVo.getMem_id());
+		chat_memberDao.insert_chatMember(chat_memberVo);
+		
 		Chat_contentsVo chat_contentsVo = new Chat_contentsVo();
 		chat_contentsVo.setChat_code(chatroomVo.getCurrval());
 		chat_contentsVo.setMem_id(chatroomVo.getMem_id());

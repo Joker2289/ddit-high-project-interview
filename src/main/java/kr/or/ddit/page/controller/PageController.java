@@ -3,6 +3,7 @@ package kr.or.ddit.page.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -25,12 +26,22 @@ import kr.or.ddit.login.LoginController;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.page.model.PageVo;
 import kr.or.ddit.page.service.IPageService;
+import kr.or.ddit.portfolio.model.PortfolioVo;
+import kr.or.ddit.portfolio.service.IPortfolioService;
+import kr.or.ddit.section.model.SectionVo;
+import kr.or.ddit.section.service.ISectionService;
 
 @RequestMapping("/page")
 @Controller
 public class PageController {
 
 	private Logger logger = LoggerFactory.getLogger(LoginController.class);
+	
+	@Resource(name="portfolioService")
+	private IPortfolioService portfolioService;
+	
+	@Resource(name="sectionService")
+	private ISectionService sectionService;
 	
 	@Resource(name="pageService")
 	private IPageService pageService;
@@ -201,16 +212,39 @@ public class PageController {
 	 * 설명 : 페이지 작성 화면 요청
 	 * @return
 	 */
-	@RequestMapping("/page_view")
+	@RequestMapping(path = "/page_view", method = RequestMethod.GET)
 	public String page_view(HttpServletRequest req, Model model, @RequestParam("page_code") String page_code) {
 
+		PageVo pageVo = pageService.select_pageInfo(page_code);
+		model.addAttribute("pageVo", pageVo);
 		
-		
-		model.addAttribute("page_code", page_code);
-		
-		
-
 		return "onenote/onenote_view";
+	}
+	
+	/**
+	 * 
+	 * Method : color_menu 작성자 : pjk 변경이력 :
+	 * 
+	 * @param model
+	 * @return Method 설명 : 컬러 메뉴 페이지 body 출력
+	 */
+	@RequestMapping("/delete_page")
+	public String delete_page(Model model, @RequestParam("page_code") String page_code) {
+		
+		PageVo pageVo = pageService.select_pageInfo(page_code);
+		pageService.delete_page(page_code);
+		
+		String section_code = pageVo.getSection_code();
+		
+		SectionVo sVo = sectionService.select_sectionInfo(section_code);
+		PortfolioVo pVo = portfolioService.select_portfolioInfo(sVo.getPortfolio_code());
+		model.addAttribute("pVo", pVo);
+		model.addAttribute("sVo", sVo);
+		
+		List<PageVo> pageList = pageService.select_pageList(section_code);
+		model.addAttribute("pageList", pageList);
+		
+		return "blog/page_area_select";
 	}
 	
 	

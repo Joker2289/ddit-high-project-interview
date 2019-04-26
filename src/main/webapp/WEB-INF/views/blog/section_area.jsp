@@ -34,7 +34,7 @@ function sectionClick(section_code, color){
 			
 			$.ajax({
 				url : "${cp}/blog/page_area_select",
-				data : { "section_code" : section_code, "color" : color },
+				data : { "section_code" : section_code },
 				success : function(data) {
 					
 					$('#page_area').html(data);	

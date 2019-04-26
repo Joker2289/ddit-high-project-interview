@@ -30,4 +30,14 @@ public class PageServiceImpl implements IPageService{
 		return pageDao.select_pageInfo(page_code);
 	}
 
+	@Override
+	public int update_page(PageVo vo) {
+		return pageDao.update_page(vo);
+	}
+
+	@Override
+	public int delete_page(String page_code) {
+		return pageDao.delete_page(page_code);
+	}
+
 }

@@ -29,5 +29,15 @@ public class PageDaoImpl implements IPageDao{
 	public PageVo select_pageInfo(String page_code) {
 		return sqlSession.selectOne("page.select_pageInfo", page_code);
 	}
+
+	@Override
+	public int update_page(PageVo vo) {
+		return sqlSession.update("page.update_page", vo);
+	}
+
+	@Override
+	public int delete_page(String page_code) {
+		return sqlSession.delete("page.delete_page", page_code);
+	}
 	
 }

@@ -713,7 +713,7 @@
     // 4. 클릭했을때 zIndex 
 
 
-    var data = "";
+    var data = '';
 
     var node_num = 0;
     var state = '';
