@@ -223,7 +223,9 @@ public class PageController {
 	
 	/**
 	 * 
-	 * Method : color_menu 작성자 : pjk 변경이력 :
+	 * Method : color_menu 
+	 * 작성자 : pjk 
+	 * 변경이력 :
 	 * 
 	 * @param model
 	 * @return Method 설명 : 컬러 메뉴 페이지 body 출력
@@ -245,6 +247,45 @@ public class PageController {
 		model.addAttribute("pageList", pageList);
 		
 		return "blog/page_area_select";
+	}
+	
+	/**
+	 * 
+	 * Method : update_onenote_write
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param page_code
+	 * @return
+	 * Method 설명 :
+	 */
+	@RequestMapping(path = "/update_onenote_write", method = RequestMethod.GET)
+	public String update_onenote_write(Model model, @RequestParam("page_code") String page_code) {
+		
+		PageVo pVo = pageService.select_pageInfo(page_code);
+		model.addAttribute("pVo", pVo);
+		return "onenote/onenote_write";
+	}
+	
+	/**
+	 * 
+	 * Method : update_page
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param pVo
+	 * @param model
+	 * @param req
+	 * @return
+	 * Method 설명 : 페이지 저장
+	 */
+	@RequestMapping(path = "/update_page", method = RequestMethod.POST)
+	public String update_page(PageVo pVo, Model model, HttpServletRequest req) {
+		
+		logger.debug("update pVo : {}", pVo);
+		
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		pageService.update_page(pVo);
+		return "redirect:/blog/blogMainView?user_id=" + mVo.getMem_id();
 	}
 	
 	
