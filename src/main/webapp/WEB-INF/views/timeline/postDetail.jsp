@@ -11,19 +11,13 @@
          <%@ include file="/WEB-INF/views/timeline/timeline_left.jsp" %>
          
          <div class="col-md-6">
-           <div class="input-group" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
-             <button id="btn-write_modal" class="btn-write_modal"  style="height: 73.6px; margin-top: -7px;"><span class="span-text"><a><i class="far fa-edit"></i> 타임라인에 소식을 전하세요!</a></span></button>
-             <button id="btn-upload-img" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-images"></i></a></span></button>
-             <button id="btn-upload-video" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-play-circle"></i></a></span></button>
-             <button id="btn-upload-document" class="btn-upload"><span style="font-size: 25px;"><a><i class="far fa-file-alt"></i></a></span></button>
-           </div><hr>
            
            <!-- feed -->
            <div class="post-group">
              <!-- post -->
                 
               <div id="col-post${post.post_code }" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
-              <div class="col-post" id="post${post.post_code }">
+              <div class="col-post" id="post${post.post_code }" style="margin-top: 0px;">
                <div class="col-post-body">
                  <a
                    <c:choose>
@@ -259,4 +253,17 @@
 </div>
 
 <script src="/js/timeline.js"></script>
+<script src="/js/comment.js"></script>
+<script>
 
+	$(document).ready(function() {
+	  <c:forEach items="${ saveList }" var="savepost"> 
+	     $('#icon_save${savepost.save_post_code}').attr('class', 'fas fa-bookmark');
+	  </c:forEach> 
+	  
+	  <c:forEach items="${ goodList }" var="goodpost"> 
+	     $('#icon_good${ goodpost.ref_code}').attr('class', 'fas fa-thumbs-up');   
+	  </c:forEach> 
+	});
+
+</script>
