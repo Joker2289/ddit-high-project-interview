@@ -102,7 +102,6 @@ public class PostController {
 	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request){
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-		logger.debug("asdasdasd {}", memberInfo);
 		
 		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
 		tagCountPageVo.setMem_id(memberInfo.getMem_id());
@@ -428,7 +427,8 @@ public class PostController {
 		logger.debug("contents : {}", contents);
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-
+		PostVo postInfo = postService.select_postInfo(ref_code);
+		
 		if(memberInfo.getMem_division() == "1"){
 			UsersVo user = (UsersVo) request.getSession().getAttribute("SESSION_DETAILVO");
 			model.addAttribute("commentwriter", user);
@@ -448,10 +448,13 @@ public class PostController {
 		commentVo.setDivision("28");
 		commentService.insert_comment(commentVo);
 		
+		paginationVo.setMem_id(postInfo.getMem_id());
 		paginationVo.setRef_code(ref_code);
 		paginationVo.setDivision("28");
+		
 		Map<String, Object> resultMap = commentService.select_commentList(paginationVo);
 		List<Post_commentVo> commentList = (List<Post_commentVo>) resultMap.get("commentList");
+		
 		int commentCnt = (int) resultMap.get("commentCnt");
 		
 		model.addAttribute("memberInfo", memberInfo);
@@ -460,7 +463,6 @@ public class PostController {
 		model.addAttribute("ref_code", ref_code);
 		
 		//댓글 작성 -> 알림 등록
-		PostVo postInfo = postService.select_postInfo(ref_code);
 		AlarmVo alarmInfo = new AlarmVo();
 		alarmInfo.setMem_id(postInfo.getMem_id());
 		alarmInfo.setRef_code(ref_code);
@@ -1169,25 +1171,86 @@ public class PostController {
 		return followerCnt + "";
 	}
 	
-	@RequestMapping(path={"/postdetail"}, method=RequestMethod.POST)
-	public String postDetailFromAlarm(String post_code, String ref_code, String mem_id, Model model){
+	@RequestMapping(path="/postdetail")
+	public String postDetailFromAlarm(String post_code, String ref_code, String mem_id, Model model, HttpServletRequest request){
 		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
+		tagCountPageVo.setMem_id(memberInfo.getMem_id());
+		tagCountPageVo.setDivision("16");
+		
+		//저장글 갯수 
+		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
+		model.addAttribute("savepostCnt", savepostCnt);
+		
+		PaginationVo paginationVo = new PaginationVo(1, 999999);
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		
+		
+		if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
+			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
+			
+			//인맥 수 출력을 위한 세팅
+			int connectionCnt = personal_connectionService.connections_count(memberInfo);
+			
+			//팔로우 한 해쉬태그 출력을 위한 세팅
+			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
+			
+			if(!followHashtag.isEmpty()){
+				model.addAttribute("followHashtag", followHashtag);
+			} else {
+				model.addAttribute("followHashtag","notfollow");
+			}
+			
+			
+			model.addAttribute("userInfo", userInfo);
+			model.addAttribute("connectionCnt", connectionCnt);
+			
+		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
+			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
+			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+			
+			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
+	         
+	         if(!followHashtag.isEmpty()){
+	            model.addAttribute("followHashtag", followHashtag);
+	         } else {
+	            model.addAttribute("followHashtag","notfollow");
+	         }
+			
+			model.addAttribute("corpInfo", corpInfo);
+			
+		} else { //관리자일 경우
+			//관리자 로그인 시 홈 화면 출력을 위한 세팅
+			
+		}
+
+		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		PostVo postInfo = postService.select_postInfo(post_code);
-		logger.debug("postInfo : {}", postInfo.toString());
 		model.addAttribute("post", postInfo);
 		
-		PaginationVo paginationInfo = new PaginationVo();
-		paginationInfo.setMem_id(mem_id);
-		paginationInfo.setPageSize(999999); //모든 댓글 한번에 조회
+		paginationVo.setDivision("28");
+		paginationVo.setRef_code(ref_code);
+		paginationVo.setMem_id(postInfo.getMem_id());
 		
-		Map<String, Object> resultMap = commentService.select_commentList(paginationInfo);
+		Map<String, Object> resultMap = commentService.select_commentList(paginationVo);
+		
 		List<Post_commentVo> commentList = (List<Post_commentVo>) resultMap.get("commentList");
 		int commentCnt = (int) resultMap.get("commentCnt");
 		
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("commentCnt", commentCnt);
 		
-		return "timeline/postDetail";
+		model.addAttribute("memberInfo", memberInfo);
+
+		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+		model.addAttribute("goodList", goodList);
+		
+		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
+		model.addAttribute("saveList", saveList);
+		
+		return "postDetailTiles";
 	}
 	
 }

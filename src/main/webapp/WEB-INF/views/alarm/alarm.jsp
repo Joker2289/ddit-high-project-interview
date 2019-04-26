@@ -37,19 +37,29 @@
 		  	        <div class="alarm_view" id="alarm_view${recentAlarm.alarm_code }" data-code="${recentAlarm.alarm_code }" style="float: left;">
 		  	          <c:choose>
 		  	            <c:when test="${recentAlarm.division == '28' && recentAlarm.alarm_separate == '01' }">
-		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 회원님의 게시글을 추천함</h4>
+		  	              <h4 style="height: 30px; padding-top: 5px;">
+		  	                <a href="/postdetail?post_code=${recentAlarm.ref_code }&mem_id=${recentAlarm.mem_id }&ref_code=${recentAlarm.ref_code }">${recentAlarm.send_name } 님이 회원님의 게시글을 추천함</a>
+		  	              </h4>
 		  	            </c:when>
 		  	            <c:when test="${recentAlarm.division == '28' && recentAlarm.alarm_separate == '02' }">
-		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 회원님의 게시글에 댓글을 남김</h4>
+		  	              <h4 style="height: 30px; padding-top: 5px;">
+		  	                <a href="/postdetail?post_code=${recentAlarm.ref_code }&mem_id=${recentAlarm.mem_id }&ref_code=${recentAlarm.ref_code }">${recentAlarm.send_name } 님이 회원님의 게시글에 댓글을 남김</a>
+		  	              </h4>
 		  	            </c:when>
 		  	            <c:when test="${recentAlarm.division == '29' && recentAlarm.alarm_separate == '03' }">
-		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 회원님의 댓글을 추천함</h4>
+		  	              <h4 style="height: 30px; padding-top: 5px;">
+		  	                <a href="/postdetail?post_code=${recentAlarm.ref_code }&mem_id=${recentAlarm.mem_id }&ref_code=${recentAlarm.ref_code }">${recentAlarm.send_name } 님이 회원님의 댓글을 추천함</a>
+		  	              </h4>
 		  	            </c:when>
 		  	            <c:when test="${recentAlarm.division == '25' && recentAlarm.alarm_separate == '04' }">
-		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 회원님에게 일촌을 신청함</h4>
+		  	              <h4 style="height: 30px; padding-top: 5px;">
+		  	                <a href="/profileHome?user_id=${recentAlarm.send_id }">${recentAlarm.send_name } 님이 회원님에게 일촌을 신청함</a>
+		  	              </h4>
 		  	            </c:when>
 		  	            <c:when test="${recentAlarm.division == '25' && recentAlarm.alarm_separate == '05' }">
-		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 회원님의 일촌신청을 수학함</h4>
+		  	              <h4 style="height: 30px; padding-top: 5px;">
+		  	                <a href="/profileHome?user_id=${recentAlarm.send_id }">${recentAlarm.send_name } 님이 회원님의 일촌신청을 수락함</a>
+		  	              </h4>
 		  	            </c:when>
 		  	            <c:when test="${recentAlarm.division == '14' && recentAlarm.alarm_separate == '06' }">
 		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 회원님을 팔로우함</h4>
