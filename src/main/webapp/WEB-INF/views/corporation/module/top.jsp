@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src="js/jquery.form.js"></script>
 	<link href="/css/recruit/recruit.css" type="text/css" rel="stylesheet">
 	<title>채용공고｜11</title>
 <style>
@@ -53,7 +54,12 @@ ${corporationInfo.logo_path}
     					<c:if test="${SESSION_MEMBERVO.mem_id ne corporationInfo.corp_id }">
     							<a>신고</a><br>
     						<li class="dropdownAccordion otherDropdown" style="width: 155px;">
-    							<a href="/profileInsertFollow?mem_id=${SESSION_MEMBERVO.mem_id}&ref_keyword=${corporationInfo.corp_id }&division=43" style="padding: 0 15px 0 0; width: 140px;">+팔로워</a>
+    							<a href="javascript:corporation_follow('${ SESSION_MEMBERVO.mem_id }', '${ corporationInfo.corp_id }');" style="padding: 0 15px 0 0; width: 140px;"> 
+    								
+    								+ 팔로우
+    							
+    							
+    							</a>
     						</li>
     					</c:if>
     					<c:if test="${SESSION_MEMBERVO.mem_id eq corporationInfo.corp_id }">
@@ -77,13 +83,47 @@ ${corporationInfo.logo_path}
 	</div>
 </div>
 
+<!-- ------------------------------------		이미지 업로드--------------------------------------------	 -->
+<!--   		<form action="./logo_change_btn" id="fileUpload" name="fileUpload" method="post" enctype="multipart/form-data" accept-charset="UTF-8"> -->
+<!--         이름 : <input type="text" name="name" id="cmd" value="namevla"><br> -->
+<!--         파일 : <input type="file" name="file"><br> <input -->
+<!--          type="submit" name="업로드" value="제출"><br> -->
 
-  		<form action="./logo_change_btn" id="fileUpload" name="fileUpload" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-        이름 : <input type="text" name="name" id="cmd" value="namevla"><br>
-        파일 : <input type="file" name="file"><br> <input
-         type="submit" name="업로드" value="제출"><br>
+
+<!------------------------------------------- 비동기식 업로드 ---------------------------------------------------------->
+<form name="serverInfoForm" id="serverInfoForm" method="post" action="/serverInfoUpload.do" enctype = "multipart/form-data">
+
+        <input type="file" name="agentInstallFile" id="agentInstallFile" style="background-color: black;" value="asdf">
+
+        <input type="submit"  class="btn" value="전송">
+</form>
+
+
 
 
 </body>
+<script>
+
+		
+function corporation_follow(mem_id, ref_keyword) {
+	
+	$.ajax({
+		url : "/corporation_follow",
+		data : {"mem_id" : mem_id, "ref_keyword" : ref_keyword, "division" : "11" },
+		success : function(data) {
+			
+			$('#top_area').html(data);
+			console.log(data);
+		}
+	});
+	
+}		
+		
+
+
+</script>
+
+
+
 </html>
 
