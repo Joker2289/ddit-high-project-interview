@@ -11,7 +11,7 @@ public class PageVo {
 	private Date write_date;		// 작성일
 	private String view_count; 		// 조회수
 	private String page_thumbnail;	// 페이지 썸네일 이미지
-	
+	private String bg_color;		// 페이지 배경색
 	public String getPage_code() {
 		return page_code;
 	}
@@ -54,10 +54,18 @@ public class PageVo {
 	public void setPage_thumbnail(String page_thumbnail) {
 		this.page_thumbnail = page_thumbnail;
 	}
+	public String getBg_color() {
+		return bg_color;
+	}
+	public void setBg_color(String bg_color) {
+		this.bg_color = bg_color;
+	}
 	@Override
 	public String toString() {
 		return "PageVo [page_code=" + page_code + ", section_code=" + section_code + ", page_title=" + page_title
 				+ ", page_contents=" + page_contents + ", write_date=" + write_date + ", view_count=" + view_count
-				+ ", page_thumbnail=" + page_thumbnail + "]";
+				+ ", page_thumbnail=" + page_thumbnail + ", bg_color=" + bg_color + "]";
 	}
+	
+	
 }
