@@ -593,7 +593,7 @@
                 </button>
                 
                 
-                <button id="pageSaveBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="페이지 저장" onclick="input_page_title();">
+                <button id="pageSaveBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="페이지 저장" onclick="input_page_title('${ pVo.page_title }');">
                     <div class="btn_icon">
                     	<i class="fas fa-link"></i>
                     </div>
@@ -659,12 +659,14 @@
 
 	<%@ include file="/WEB-INF/views/onenote/onenote_modal.jsp"%>
 	
-	
-	<form id="saveForm" action="/page/savePage" method="post"> 
+	<!-- 페이지 저장 form -->
+	<form id="saveForm" action="/page/savePage" method="post">
+		<input type="hidden" id="page_code" name="page_code"/> 
 		<input type="hidden" id="section_code" name="section_code" value="${ section_code }"/>
 		<input type="hidden" id="page_title" name="page_title"/>
 		<input type="hidden" id="page_contents" name="page_contents"/>
 		<input type="hidden" id="page_thumbnail" name="page_thumbnail"/>
+		<input type="hidden" id="bg_color" name="bg_color"/>
 		<input type="hidden" id="user_id" name="user_id"/>
 	</form>
 	
@@ -714,6 +716,26 @@
 
 
     var data = '';
+	
+	/* 페이지 수정 시 data에 이전 페이지 stage 정보 setting */
+	if(${ pVo != null}){
+		data = '${ pVo.page_contents }';
+		
+		/* 페이지 수정시 saveForm 의 요청경로를 수정요청 경로로 변경 */
+		$('#saveForm').attr('action', '/page/update_page');
+		
+		//섹션코드 setting
+		$('#section_code').val('${ pVo.section_code }');
+		//페이지코드 setting
+		$('#page_code').val('${ pVo.page_code }');
+		
+		
+		/* 배경색 setting */
+		if(${ pVo.bg_color != null}){
+			$('#container').css('background-color', '${ pVo.bg_color }');
+		}
+		
+	}
 
     var node_num = 0;
     var state = '';

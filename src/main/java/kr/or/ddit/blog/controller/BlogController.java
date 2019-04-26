@@ -570,8 +570,6 @@ public class BlogController {
 		List<PageVo> pageList = pageService.select_pageList(section_code);
 		model.addAttribute("pageList", pageList);
 		
-		
-		
 		return "blog/page_area_select";
 	}
 	
