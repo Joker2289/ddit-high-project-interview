@@ -86,7 +86,7 @@
 }
 
 .chatRoomContentsBox{
-	width: 227px; 
+	width: 223px; 
 	height:92px; 
 	padding: 12px 8px 0px 8px; 
 	border-bottom: 1px solid #e6e9ec;
@@ -145,6 +145,9 @@
 	width: 491px; 
 	height: 598px;
 	border: 1px solid #cdcfd2;
+	padding: 20px 20px 20px 20px;
+	overflow:auto;
+	overflow-x:hidden;
 }
 
 .chatContentWriteBox{
@@ -176,4 +179,11 @@
 	width: 60px; 
 	height: 30px; 
 	padding: 0 0 0 0;
+}
+
+.chatrooms{
+	overflow:scroll;
+	overflow-x:hidden;
+	width:297px; 
+	height:691px;
 }

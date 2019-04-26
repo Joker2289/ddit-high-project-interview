@@ -6,30 +6,30 @@
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-	<!-- @Controller 어노테이션을 처리 -->
-	<mvc:annotation-driven />
-	
-	<!-- spring에서 처리하지 못하는 요청은 was(servlet-container)에게 위임 -->
-	<mvc:default-servlet-handler/>
-	
-	<!-- view resolver 설정 -->
-	<!-- html 응답을 생성하는 jsp를 처리해주는 viewResolver와 별개로 
-		 json 응답을 생성하는 viewResolver를 등록
-		 
-		 viewResolver의 order : 우선순위 (낮을수록 우선순위가 높다 -> 먼저 적용)
-	-->
-	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
-		<property name="order" value="0" />
-	</bean>
-	
-	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
-	
-	<!-- ImageView 등록 -->
-	<bean id="onenoteImageView" class="kr.or.ddit.util.view.OnenoteImageView"></bean>
-	
-	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+   <!-- @Controller 어노테이션을 처리 -->
+   <mvc:annotation-driven />
+   
+   <!-- spring에서 처리하지 못하는 요청은 was(servlet-container)에게 위임 -->
+   <mvc:default-servlet-handler/>
+   
+   <!-- view resolver 설정 -->
+   <!-- html 응답을 생성하는 jsp를 처리해주는 viewResolver와 별개로 
+       json 응답을 생성하는 viewResolver를 등록
+       
+       viewResolver의 order : 우선순위 (낮을수록 우선순위가 높다 -> 먼저 적용)
+   -->
+   <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+      <property name="order" value="0" />
+   </bean>
+   
+   <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+   
+   <!-- ImageView 등록 -->
+   <bean id="onenoteImageView" class="kr.or.ddit.util.view.OnenoteImageView"></bean>
+   
+   <bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
       <property name="order" value="1"/>
       <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
    </bean>
@@ -41,60 +41,62 @@
          </list>
       </property>
    </bean>
-	
-	<!-- jsp를 처리해줄 view resolver : 후순위 -->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="order" value="2" />
-		<property name="prefix" value="/WEB-INF/views/"/>
-		<property name="suffix" value=".jsp"/>
-	</bean>
+   
+   <!-- jsp를 처리해줄 view resolver : 후순위 -->
+   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+      <property name="order" value="2" />
+      <property name="prefix" value="/WEB-INF/views/"/>
+      <property name="suffix" value=".jsp"/>
+   </bean>
 
-	<!-- @Controller 스캔 -->
-	<context:annotation-config />
-	<context:component-scan base-package="kr.or.ddit" use-default-filters="false">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
-	</context:component-scan>
-	
-	<!-- 
-		spring 파일 업로드를 위한 설정
-		1.multipartResolver 등록 (id,name은 multipartResolver로 정의되어있음)
-		2.commons-fileupload 디펜던시 추가(pom.xml)
-	 -->
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSizePerFile" value="20971520"/> <!-- 파일당 사이즈  20MB-->
-		<property name="maxUploadSize" value="104870600"/>		<!-- 전체 파일 사이즈 100MB-->
-	</bean>
+   <!-- @Controller 스캔 -->
+   <context:annotation-config />
+   <context:component-scan base-package="kr.or.ddit" use-default-filters="false">
+      <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+      <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+   </context:component-scan>
+   
+   <!-- 
+      spring 파일 업로드를 위한 설정
+      1.multipartResolver 등록 (id,name은 multipartResolver로 정의되어있음)
+      2.commons-fileupload 디펜던시 추가(pom.xml)
+    -->
+   <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+      <property name="maxUploadSizePerFile" value="20971520"/> <!-- 파일당 사이즈  20MB-->
+      <property name="maxUploadSize" value="104870600"/>      <!-- 전체 파일 사이즈 100MB-->
+   </bean>
 
-	<mvc:annotation-driven>
-		<!-- messageConvertert -->
-		<mvc:message-converters>
-			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
-				<property name="supportedMediaTypes">
-					<list>
-						<value>text/html; charset=UTF-8</value>
-					</list>
-				</property>
-			</bean>
-			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-				<property name="supportedMediaTypes">
-					<list>
-						<value>application/json; charset=UTF-8</value>
-					</list>
-				</property>
-			</bean>
-		</mvc:message-converters>
-	</mvc:annotation-driven>
-	
+   <mvc:annotation-driven>
+      <!-- messageConvertert -->
+      <mvc:message-converters>
+         <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+            <property name="supportedMediaTypes">
+               <list>
+                  <value>text/html; charset=UTF-8</value>
+               </list>
+            </property>
+         </bean>
+         <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+            <property name="supportedMediaTypes">
+               <list>
+                  <value>application/json; charset=UTF-8</value>
+               </list>
+            </property>
+         </bean>
+      </mvc:message-converters>
+   </mvc:annotation-driven>
+   
+   
+   <bean id="mail" class="kr.or.ddit.mail.controller.MailWebsocket" />
 	
 	<websocket:handlers>
 		<websocket:mapping handler="mail" path="/mailHome"/>
+		 <websocket:handshake-interceptors>
+		   <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		  </websocket:handshake-interceptors>
 		<websocket:sockjs/>
 	</websocket:handlers>
+   
 
-	<bean id="mail" class="kr.or.ddit.mail.controller.MailWebsocket" />
-	
-
-
-	
+   
 </beans>
