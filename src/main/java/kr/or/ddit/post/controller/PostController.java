@@ -154,7 +154,6 @@ public class PostController {
 			
 		}
 		
-		
 		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("timelinePost", timelinePost);
@@ -164,12 +163,6 @@ public class PostController {
 		
 		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
 		model.addAttribute("saveList", saveList);
-		
-		logger.debug("goodList hahaha : {}", goodList);
-		logger.debug("saveList hahaha : {}", saveList);
-		
-		logger.debug("goodList hahaha : {}", goodList.size());
-		logger.debug("saveList hahaha : {}", saveList.size());
 		
 		return "timeLineTiles";
 	}
@@ -1174,6 +1167,27 @@ public class PostController {
 		
 		
 		return followerCnt + "";
+	}
+	
+	@RequestMapping(path={"/postdetail"}, method=RequestMethod.POST)
+	public String postDetailFromAlarm(String post_code, String ref_code, String mem_id, Model model){
+		
+		PostVo postInfo = postService.select_postInfo(post_code);
+		logger.debug("postInfo : {}", postInfo.toString());
+		model.addAttribute("post", postInfo);
+		
+		PaginationVo paginationInfo = new PaginationVo();
+		paginationInfo.setMem_id(mem_id);
+		paginationInfo.setPageSize(999999); //모든 댓글 한번에 조회
+		
+		Map<String, Object> resultMap = commentService.select_commentList(paginationInfo);
+		List<Post_commentVo> commentList = (List<Post_commentVo>) resultMap.get("commentList");
+		int commentCnt = (int) resultMap.get("commentCnt");
+		
+		model.addAttribute("commentList", commentList);
+		model.addAttribute("commentCnt", commentCnt);
+		
+		return "timeline/postDetail";
 	}
 	
 }
