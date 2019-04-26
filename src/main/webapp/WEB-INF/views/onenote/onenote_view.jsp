@@ -336,6 +336,9 @@
     }
     stage.add(layer);
 	
+    if(${ pageVo.bg_color != null }) {
+    	$('#container').css('background-color', '${ pageVo.bg_color }');
+    }
 </script>
 
 

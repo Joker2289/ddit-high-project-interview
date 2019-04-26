@@ -1,10 +1,9 @@
-//배경색 변경
+//배경색 변경 페이지 소환
 function updateStageColor() {
 
 	$.ajax({
 		url : "/page/color_menu",
 		success : function(data) {
-
 			$('.popover-content').html(data);
 		}
 	});
@@ -33,12 +32,11 @@ function stage_save_img() {
 }
 
 //page 제목 입력
-function input_page_title(){
+function input_page_title(title){
 	
-	var result = prompt( '제목 작성', '' );
+	var result = prompt( '제목 작성', title );
 	 
 	if(result != null){
-		
 		$('#page_title').val(result);
 		stage_save_page();
 	}
@@ -47,6 +45,7 @@ function input_page_title(){
 // 페이지 저장
 function stage_save_page() {
 	
+
 	//스테이지 썸네일 저장
 	html2canvas($('#view_div'), {
 		width : window.innerWidth,
@@ -65,6 +64,7 @@ function stage_save_page() {
 					
 					var stage_data = stage.toJSON();
 					$('#page_contents').val(stage_data);
+					
 					$('#saveForm').submit();
 				}
 			});

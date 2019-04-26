@@ -57,7 +57,7 @@
 								<c:when test="${ post.mem_id eq memberInfo.mem_id }">
 									<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 									
-										<button type="button" class="btn_controll-list">
+										<button type="button" class="btn_controll-list" onclick='update_onenote_write(${ page.page_code })'>
 											<i class="fas fa-edit icon"></i>글 수정
 										</button>
 										
@@ -157,13 +157,12 @@
 		document.location.href = "/page/onenote?section_code=" + section_code;
 	}
 	
+	/* 페이지 삭제 */
 	function delete_page(page_code){
-		
-		console.log('씨발');
 		
 		$.ajax({
 			url : "${cp}/page/delete_page",
-			data : {"page_code" : page_code },
+			data : { "page_code" : page_code },
 			success : function(data) {
 				
 				alert('페이지 삭제');
@@ -172,8 +171,13 @@
 							
 			}
 		});
-		
 	}
+	
+	/* page 수정 페이지로 이동 */
+	function update_onenote_write(page_code){
+		document.location.href = "/page/update_onenote_write?page_code=" + page_code;
+	}
+	
 </script>
 
 
