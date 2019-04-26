@@ -471,7 +471,7 @@ public class PostController {
 		alarmInfo.setSend_id(memberInfo.getMem_id());
 		alarmInfo.setAlarm_separate("02");
 		
-		if(memberInfo.getMem_id().equals(postInfo.getMem_id())){
+		if(!memberInfo.getMem_id().equals(postInfo.getMem_id())){
 			alarmService.insert_alarmInfo(alarmInfo);
 		}
 		
