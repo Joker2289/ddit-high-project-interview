@@ -157,12 +157,6 @@ function input_youtube_link(){
 	
 	node_num++;
 	
-	//전체 div
-//	var frameOverlay = document.createElement('div');
-//	$(frameOverlay).addClass('frameOverlay');
-//	$('#view_div').append(frameOverlay);
-//	
-	
 	//video div 생성
 	var video_div = document.createElement('div');
 	video_div.id = 'video_div' + node_num;
@@ -180,6 +174,7 @@ function input_youtube_link(){
 	$(handle).addClass('handle');
     
     $('#video_div' + node_num).append(handle);
+	
     
     //비디오 링크 입력
     var Youtube_link = prompt( 'Youtube 주소 입력', '' );
@@ -194,7 +189,12 @@ function input_youtube_link(){
 		video_link_array.push(Embed_link);
 		
 		addVideo(Embed_link);
+		
+		return;
 	}
+	
+	//취소시 div 삭제
+	$('#video_div' + node_num).remove();
 }
 
 // https://www.youtube.com/watch?v=5u2T_f8TqGY - 원래 링크
@@ -230,6 +230,7 @@ function addVideo(Embed_link) {
 //	    },
 	});
     
+    //위치조정 handle - show, hide 이벤트 속성 추가
     $("#video_div" + node_num).attr('onmouseenter', "showHandle("+node_num+");");
     $("#video_div" + node_num).attr('onmouseleave', "hideHandle("+node_num+");");
     
@@ -245,10 +246,12 @@ function addVideo(Embed_link) {
     
 }
 
+//비디오 위치조정 핸들 보이기  
 function showHandle(node_num){
 	$('#handle'+node_num).show();
 }
 
+//비디오 위치조정 핸들 숨기기
 function hideHandle(node_num){
 	$('#handle'+node_num).hide();
 }

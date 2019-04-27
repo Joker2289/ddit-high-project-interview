@@ -324,8 +324,13 @@ public class PageController {
 		PageVo pVo = pageService.select_pageInfo(page_code);
 		model.addAttribute("pVo", pVo);
 		
+		//소스코드 리스트 
 		List<Page_sourceVo> page_sourceList = sourceService.select_page_source(page_code);
 		model.addAttribute("page_sourceList", page_sourceList);
+		
+		//비디오 리스트 
+		List<Page_videoVo> page_videoList = videoService.select_page_video(page_code);
+		model.addAttribute("page_videoList", page_videoList);
 		
 		return "onenote/onenote_write";
 	}
@@ -344,17 +349,24 @@ public class PageController {
 	@RequestMapping(path = "/update_page", method = RequestMethod.POST)
 	public String update_page(PageVo pVo, Model model, HttpServletRequest req) {
 		
+		//소스코드 속성
 		String[] source_contents = req.getParameterValues("source_contents");
 		String[] source_mode = req.getParameterValues("source_mode");
 		String[] source_theme = req.getParameterValues("source_theme");
 		String[] css_top = req.getParameterValues("css_top");
 		String[] css_left = req.getParameterValues("css_left");
 		
+		//비디오 속성
+		String[] video_link = req.getParameterValues("video_link");
+		String[] video_css_top = req.getParameterValues("video_css_top");
+		String[] video_css_left = req.getParameterValues("video_css_left");
+		
 		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		pageService.update_page(pVo);
 		
 		Page_sourceVo psVo = new Page_sourceVo();
 		
+		//소스코드 속성 저장
 		if(source_contents != null) {
 			for(int i=0; i<source_contents.length; i++) {
 				psVo.setPage_code(pVo.getPage_code());
@@ -365,6 +377,20 @@ public class PageController {
 				psVo.setCss_top(css_top[i]);
 				
 				sourceService.insert_page_source(psVo);
+			}
+		}
+		
+		//비디오 속성 저장
+		if(video_link != null) {
+			Page_videoVo pvVo = new Page_videoVo();
+			for(int i=0; i<video_link.length; i++) {
+				
+				pvVo.setPage_code(pVo.getPage_code());
+				pvVo.setVideo_link(video_link[i]);
+				pvVo.setVideo_css_left(video_css_left[i]);
+				pvVo.setVideo_css_top(video_css_top[i]);
+				
+				videoService.insert_page_video(pvVo);
 			}
 		}
 		

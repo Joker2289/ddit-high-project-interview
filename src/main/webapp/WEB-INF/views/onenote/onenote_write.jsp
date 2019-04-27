@@ -670,17 +670,7 @@
 		<input type="hidden" id="user_id" name="user_id"/>
 	</form>
 	
-	<!-- 소스코드 저장 폼 -->
-	<!-- <form id=""  action="" method="post">
-		<input type="hidden" id="page_code" name="page_code"/> 
-		<input type="hidden" id="source_contents" name="source_contents"/> 
-		<input type="hidden" id="source_mode" name="source_mode"/> 
-		<input type="hidden" id="source_theme" name="source_theme"/> 
-		<input type="hidden" id="css_top" name="css_top"/>
-		<input type="hidden" id="css_left" name="css_left"/>  
-	</form> -->
-	
-	
+	<!-- 썸네일 이미지 data form -->
 	<form id="thumnailForm">
 		<input type="hidden" id="thumnail_data" name="thumnail_data"/>
 	</form>
@@ -749,6 +739,12 @@
 	    if(${ page_sourceList != null }){
 	    	drawCodeTemplate();	//div, textarea 미리 생성
 	    	drawCodeMirror();	//textarea CodeMirror 로 변환
+	    }
+		
+	  	//DB에 저장한 Video 그려주기
+	    if(${ page_videoList != null }){
+	    	drawVideoTemplate();	//div, handle 미리 생성
+	    	drawVideo();			//iframe 그려주기
 	    }
 		
 	}
@@ -1408,7 +1404,7 @@
     }
     
     
-  //코드작성 textarea, div 생성
+    //코드작성 textarea, div 생성
     function drawCodeTemplate(){
     	
     	var code_num = 1000;
@@ -1496,13 +1492,84 @@
 		</c:forEach>
     }
     
-    /* $(".video_div").mouseenter(function(){
-    	console.log("dd");
-    });
-    
-    $(".video_div").mouseleave(function(){
-    	console.log("ff");
-    }); */
+ 	//비디오 div, handle 생성
+    function drawVideoTemplate(){
+    	
+    	var video_num = 1000;
+    	
+    	<c:forEach items='${ page_videoList }' var="video">
+    	
+    	video_num++;
+    	
+    	//video div 생성
+    	var video_div = document.createElement('div');
+    	video_div.id = 'video_div' + video_num;
+    	
+    	$(video_div).addClass('video_div');
+        
+        //view_div에 생성한 div 넣기
+        $('#view_div').append(video_div);
+        
+        //drag 핸들
+        var handle = document.createElement('div');
+        handle.id = 'handle' + video_num;
+    	$(handle).addClass('handle');
+        
+        $('#video_div' + video_num).append(handle);
+    	
+        </c:forEach>
+    }
+ 	
+  	//Youdute iframe 생성
+    function drawVideo(){
+    	
+    	var video_num2 = 1000;
+    	
+    	<c:forEach items='${ page_videoList }' var="video">
+    		
+    		video_num2++;
+    		
+    		var video_link = '${ video.video_link }';
+    		var video_css_top = '${ video.video_css_top }';
+    		var video_css_left = '${ video.video_css_left }';
+        	
+    		var iframe = document.createElement('iframe');
+    	    iframe.id = "iframe" + video_num2;
+    	    iframe.width = 560;
+    	    iframe.height = 315;
+    	    iframe.src = video_link;
+    	    iframe.frameborder = 0;
+    	    iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+    	    iframe.allowfullscreen = true;
+    	    iframe.draggable = true;
+
+    	    $('#video_div'+video_num2).append(iframe);
+    	    
+    	    //css 위치 값으로 컨트롤 draggable효과 추가
+    	    $("#video_div" + video_num2).draggable({
+    	    	handle: '#handle'+video_num2,
+    	        containment: "#container",
+    	        scroll: true,
+    	        iframeFix: true, //필수
+    		});
+    	    
+    	    //위치조정 handle - show, hide 이벤트 속성 추가
+    	    $("#video_div" + video_num2).attr('onmouseenter', "showHandle("+video_num2+");");
+    	    $("#video_div" + video_num2).attr('onmouseleave', "hideHandle("+video_num2+");");
+    	    
+    	    // div가 생성될 위치값 
+    	    $("#video_div" + video_num2).css('left', video_css_left);
+    	    $("#video_div" + video_num2).css('top', video_css_top);
+    	    
+    	    //매우중요 block 
+    	    //block = width값 사이즈에 맞게 고정
+    	    //absolute = 영역에 속해 있지 않은 단독 고정 위치
+    	    $("#video_div" + video_num2).css('display', 'block');
+    	    $("#video_div" + video_num2).css('position', 'absolute');
+            
+           
+		</c:forEach>
+    }
     
     
 </script>
