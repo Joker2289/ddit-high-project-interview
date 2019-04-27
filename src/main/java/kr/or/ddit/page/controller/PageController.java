@@ -25,9 +25,11 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.ddit.login.LoginController;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.page.model.PageVo;
+import kr.or.ddit.page.model.Page_linkVo;
 import kr.or.ddit.page.model.Page_sourceVo;
 import kr.or.ddit.page.model.Page_videoVo;
 import kr.or.ddit.page.service.IPageService;
+import kr.or.ddit.page.service.IPage_linkService;
 import kr.or.ddit.page.service.IPage_sourceService;
 import kr.or.ddit.page.service.IPage_videoService;
 import kr.or.ddit.portfolio.model.PortfolioVo;
@@ -55,6 +57,9 @@ public class PageController {
 	
 	@Resource(name="page_videoService")
 	private IPage_videoService videoService;
+	
+	@Resource(name="page_linkService")
+	private IPage_linkService linkService;
 	
 	/**
 	 * 
@@ -222,12 +227,22 @@ public class PageController {
 		String[] video_css_top = req.getParameterValues("video_css_top");
 		String[] video_css_left = req.getParameterValues("video_css_left");
 		
+		//링크 저장
+		String[] link_address = req.getParameterValues("link_address");
+		String[] link_css_top = req.getParameterValues("link_css_top");
+		String[] link_css_left = req.getParameterValues("link_css_left");
+		
 		
 		
 		//page 저장
 		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		pageService.insert_page(pVo);
 		
+		logger.debug("link_address : {}", link_address);
+		logger.debug("link_css_top : {}", link_css_top);
+		logger.debug("link_css_left : {}", link_css_left);
+		
+		//소스코드 저장
 		if(source_contents != null) {
 			Page_sourceVo psVo = new Page_sourceVo();
 			for(int i=0; i<source_contents.length; i++) {
@@ -242,6 +257,7 @@ public class PageController {
 			}
 		}
 		
+		//비디오 저장
 		if(video_link != null) {
 			Page_videoVo pvVo = new Page_videoVo();
 			for(int i=0; i<video_link.length; i++) {
@@ -252,6 +268,20 @@ public class PageController {
 				pvVo.setVideo_css_top(video_css_top[i]);
 				
 				videoService.insert_page_video(pvVo);
+			}
+		}
+		
+		//링크 저장
+		if(link_address != null) {
+			Page_linkVo plVo = new Page_linkVo();
+			for(int i=0; i<link_address.length; i++) {
+				
+				plVo.setPage_code(pVo.getPage_code());
+				plVo.setLink_address(link_address[i]);
+				plVo.setLink_css_left(link_css_left[i]);
+				plVo.setLink_css_top(link_css_top[i]);
+				
+				linkService.insert_page_link(plVo);
 			}
 		}
 		

@@ -85,6 +85,23 @@ function stage_save_page() {
 		$('#video_css_left'+i).val(video_css_left);
 	}
 	
+	//링크 저장
+	for(var i=0; i<link_id_array.length; i++){
+		
+		var link_address = link_address_array[i];
+		var link_css_top = $('#link_div'+link_id_array[i]).css('top');
+		var link_css_left = $('#link_div'+link_id_array[i]).css('left');
+		
+		$('#saveForm').append('<input type="hidden" id="link_address'+i+'" name="link_address"/>');
+		$('#saveForm').append('<input type="hidden" id="link_css_top'+i+'" name="link_css_top"/>');
+		$('#saveForm').append('<input type="hidden" id="link_css_left'+i+'" name="link_css_left"/>');
+		
+		$('#link_address'+i).val(link_address);
+		$('#link_css_top'+i).val(link_css_top);
+		$('#link_css_left'+i).val(link_css_left);
+	}
+	
+	
 	
 	
 	

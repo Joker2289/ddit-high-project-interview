@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.or.ddit.page.dao.IPage_linkDao;
 import kr.or.ddit.page.model.Page_linkVo;
 
-@Service("page_linkSerivce")
+@Service("page_linkService")
 public class Page_linkServiceImpl implements IPage_linkService{
 
 	@Resource(name="page_linkDao")

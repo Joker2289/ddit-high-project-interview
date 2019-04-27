@@ -416,7 +416,7 @@ function themeSelect(){
 
 //                  링크 삽입
 //link id 배열
-var link_id_array = new Array;			//링크 ID
+var link_id_array = new Array;				//링크 ID
 var link_address_array = new Array();		//링크 주소
 
 
@@ -425,7 +425,7 @@ function input_link_address(){
 	
 	node_num++;
 	
-	//video div 생성
+	//link div 생성
 	var link_div = document.createElement('div');
 	link_div.id = 'link_div' + node_num;
 	$(link_div).addClass('link_div');
