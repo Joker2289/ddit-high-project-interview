@@ -437,8 +437,8 @@
 	        $("#code_div" + code_num2).css('display', 'block');
 	        $("#code_div" + code_num2).css('position', 'absolute');
 	        
-	        //원래는 요것만 했었다
-	        $("#code_div" + code_num2).css('display', 'inline');
+	        
+	        
 	
 	     </c:forEach>
     }

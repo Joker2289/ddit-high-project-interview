@@ -1120,14 +1120,14 @@
 
     //insertPage
     
-    //이미지 첨부 - 미완
+    //이미지 첨부
     $('#imageBtn').on('click', function() {
         $('#imageStorage').click();
     });
 	
 	//비디오 삽입
     $('#videoBtn').on('click', function() {
-        addVideo();
+    	input_youtube_link();
     });
 
     //이모티콘 버튼 
@@ -1492,10 +1492,8 @@
             $("#code_div" + code_num2).css('display', 'block');
             $("#code_div" + code_num2).css('position', 'absolute');
             
-            //원래는 요것만 했었다
-            $("#code_div" + code_num2).css('display', 'inline');
-
-         </c:forEach>
+           
+		</c:forEach>
     }
     
     
