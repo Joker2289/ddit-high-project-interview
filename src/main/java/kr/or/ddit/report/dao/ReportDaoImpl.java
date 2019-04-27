@@ -30,4 +30,20 @@ public class ReportDaoImpl implements IReportDao {
 		return sqlSession.selectList("report.select_reportInto", division);
 	}
 
+	/**
+	 * 
+	 * Method : deleteForTest
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param report_contents
+	 * @return
+	 * Method 설명 : 테스트를 위한 신고 삭제.
+	 */
+	@Override
+	public int deleteForTest(String report_contents) {
+		int deleteCnt = sqlSession.delete("report.deleteForTest", report_contents);
+		
+		return deleteCnt;
+	}
+
 }

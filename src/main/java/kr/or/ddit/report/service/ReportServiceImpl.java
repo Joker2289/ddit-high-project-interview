@@ -30,4 +30,20 @@ public class ReportServiceImpl implements IReportService {
 		return reportDao.select_reportInfo(division);
 	}
 
+	/**
+	 * 
+	 * Method : deleteForTest
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param report_contents
+	 * @return
+	 * Method 설명 : 테스트를 위한 신고 삭제.
+	 */
+	@Override
+	public int deleteForTest(String report_contents) {
+		int deleteCnt = reportDao.deleteForTest(report_contents);
+		
+		return deleteCnt;
+	}
+
 }
