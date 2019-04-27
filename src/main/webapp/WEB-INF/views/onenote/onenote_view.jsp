@@ -357,6 +357,12 @@
     	drawVideoTemplate();	//div, handle 생성
     	drawVideo();			//Youtube iframe 그리기
     }
+  	
+ 	//DB에 저장한 Link 그려주기
+ 	if(${ page_linkList != null }){
+    	drawLinkTemplate();	//div 생성
+    	drawLink();			//link 그리기
+    }
     
     
     //코드작성 textarea, div 생성
@@ -511,6 +517,62 @@
     	    $("#video_div" + video_num2).css('display', 'block');
     	    $("#video_div" + video_num2).css('position', 'absolute');
             
+           
+		</c:forEach>
+    }
+  	
+  //링크 div 생성
+    function drawLinkTemplate(){
+    	
+    	var link_num = 1000;
+    	
+    	<c:forEach items='${ page_linkList }' var="link">
+    	
+    		link_num++;
+    	
+	    	//video div 생성
+	    	var link_div = document.createElement('div');
+	    	link_div.id = 'link_div' + link_num;
+	    	$(link_div).addClass('link_div');
+			
+	    	
+	        //view_div에 생성한 div 넣기
+	        $('#view_div').append(link_div);
+	        
+	    
+        </c:forEach>
+    }
+ 	
+  	//링크 생성
+    function drawLink(){
+    	
+    	var link_num2 = 1000;
+    	
+    	<c:forEach items='${ page_linkList }' var="link">
+    		
+    		link_num2++;
+    		
+    		var link_address = '${ link.link_address }';
+    		var link_css_top = '${ link.link_css_top }';
+    		var link_css_left = '${ link.link_css_left }';
+        	
+    		var a = document.createElement('a');
+    	    a.id = "link" + link_num2;
+    	    a.href = link_address;
+    	    a.style = "font-size: 30px; color: #489BF0;";
+    	    a.text = link_address;
+    	    
+    	    $('#link_div'+link_num2).append(a);
+    	    
+    	    // div가 생성될 위치값 
+    	    $("#link_div" + link_num2).css('left', link_css_left);
+    	    $("#link_div" + link_num2).css('top', link_css_top);
+    	    
+    	    //매우중요 block 
+    	    //block = width값 사이즈에 맞게 고정
+    	    //absolute = 영역에 속해 있지 않은 단독 고정 위치
+    	    $("#link_div" + link_num2).css('display', 'block');
+    	    $("#link_div" + link_num2).css('position', 'absolute');
            
 		</c:forEach>
     }

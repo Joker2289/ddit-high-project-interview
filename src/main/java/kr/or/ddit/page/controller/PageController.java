@@ -312,6 +312,10 @@ public class PageController {
 		List<Page_videoVo> page_videoList = videoService.select_page_video(page_code);
 		model.addAttribute("page_videoList", page_videoList);
 		
+		//링크 리스트
+		List<Page_linkVo> page_linkList = linkService.select_page_link(page_code);
+		model.addAttribute("page_linkList", page_linkList);
+		
 		return "onenote/onenote_view";
 	}
 	
@@ -366,6 +370,10 @@ public class PageController {
 		//비디오 리스트 
 		List<Page_videoVo> page_videoList = videoService.select_page_video(page_code);
 		model.addAttribute("page_videoList", page_videoList);
+		
+		//링크 리스트
+		List<Page_linkVo> page_linkList = linkService.select_page_link(page_code);
+		model.addAttribute("page_linkList", page_linkList);
 		
 		return "onenote/onenote_write";
 	}

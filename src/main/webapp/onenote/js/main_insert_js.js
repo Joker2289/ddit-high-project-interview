@@ -436,15 +436,15 @@ function input_link_address(){
 	
     
     //비디오 링크 입력
-    var link_adress = prompt( '링크 주소 입력', '' );
+    var link_address = prompt( '링크 주소 입력', '' );
     
-    if(link_adress != null){
+    if(link_address != null){
 		
 		//DB로 보낼 정보 저장
 		link_id_array.push(node_num);
-		link_address_array.push(link_adress);
+		link_address_array.push(link_address);
 		
-		addLink(link_adress);
+		addLink(link_address);
 		
 		return;
 	}
@@ -454,13 +454,13 @@ function input_link_address(){
 }
 
 //링크 첨부
-function addLink(link_adress) {
+function addLink(link_address) {
 	
 	var a = document.createElement('a');
     a.id = "link" + node_num;
-    a.href = link_adress;
+    a.href = link_address;
     a.style = "font-size: 30px; color: #489BF0;";
-    a.text = link_adress;
+    a.text = link_address;
     
     $('#link_div'+node_num).append(a);
     
