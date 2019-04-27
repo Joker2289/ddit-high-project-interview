@@ -28,4 +28,15 @@ public interface IPage_linkDao {
 	 */
 	List<Page_linkVo> select_page_link(String page_code);
 	
+	/**
+	 * 
+	 * Method : delete_page_link
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param page_code
+	 * @return
+	 * Method 설명 : 페이지의 모든 소스코드 삭제
+	 */
+	int delete_page_link(String page_code);
+	
 }

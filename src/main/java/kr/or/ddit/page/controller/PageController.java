@@ -238,13 +238,9 @@ public class PageController {
 		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		pageService.insert_page(pVo);
 		
-		logger.debug("link_address : {}", link_address);
-		logger.debug("link_css_top : {}", link_css_top);
-		logger.debug("link_css_left : {}", link_css_left);
-		
 		//소스코드 저장
+		Page_sourceVo psVo = new Page_sourceVo();
 		if(source_contents != null) {
-			Page_sourceVo psVo = new Page_sourceVo();
 			for(int i=0; i<source_contents.length; i++) {
 				psVo.setPage_code(pVo.getPage_code());
 				psVo.setSource_contents(source_contents[i]);
@@ -258,8 +254,8 @@ public class PageController {
 		}
 		
 		//비디오 저장
+		Page_videoVo pvVo = new Page_videoVo();
 		if(video_link != null) {
-			Page_videoVo pvVo = new Page_videoVo();
 			for(int i=0; i<video_link.length; i++) {
 				
 				pvVo.setPage_code(pVo.getPage_code());
@@ -272,8 +268,8 @@ public class PageController {
 		}
 		
 		//링크 저장
+		Page_linkVo plVo = new Page_linkVo();
 		if(link_address != null) {
-			Page_linkVo plVo = new Page_linkVo();
 			for(int i=0; i<link_address.length; i++) {
 				
 				plVo.setPage_code(pVo.getPage_code());
@@ -404,13 +400,20 @@ public class PageController {
 		String[] video_css_top = req.getParameterValues("video_css_top");
 		String[] video_css_left = req.getParameterValues("video_css_left");
 		
+		//링크 저장
+		String[] link_address = req.getParameterValues("link_address");
+		String[] link_css_top = req.getParameterValues("link_css_top");
+		String[] link_css_left = req.getParameterValues("link_css_left");
+		
 		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		pageService.update_page(pVo);
 		
-		Page_sourceVo psVo = new Page_sourceVo();
+		
 		
 		//소스코드 속성 저장
+		Page_sourceVo psVo = new Page_sourceVo();
 		if(source_contents != null) {
+			sourceService.delete_page_source(pVo.getPage_code());
 			for(int i=0; i<source_contents.length; i++) {
 				psVo.setPage_code(pVo.getPage_code());
 				psVo.setSource_contents(source_contents[i]);
@@ -424,8 +427,9 @@ public class PageController {
 		}
 		
 		//비디오 속성 저장
+		Page_videoVo pvVo = new Page_videoVo();
 		if(video_link != null) {
-			Page_videoVo pvVo = new Page_videoVo();
+			videoService.delete_page_video(pVo.getPage_code());
 			for(int i=0; i<video_link.length; i++) {
 				
 				pvVo.setPage_code(pVo.getPage_code());
@@ -436,6 +440,24 @@ public class PageController {
 				videoService.insert_page_video(pvVo);
 			}
 		}
+		
+		//링크 저장
+		Page_linkVo plVo = new Page_linkVo();
+		if(link_address != null) {
+			linkService.delete_page_link(pVo.getPage_code());
+			
+			for(int i=0; i<link_address.length; i++) {
+				
+				plVo.setPage_code(pVo.getPage_code());
+				plVo.setLink_address(link_address[i]);
+				plVo.setLink_css_left(link_css_left[i]);
+				plVo.setLink_css_top(link_css_top[i]);
+				
+				linkService.insert_page_link(plVo);
+			}
+		}
+		
+		
 		
 		return "redirect:/blog/blogMainView?user_id=" + mVo.getMem_id();
 	}

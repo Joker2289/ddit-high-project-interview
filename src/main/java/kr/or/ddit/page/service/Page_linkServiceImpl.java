@@ -24,6 +24,11 @@ public class Page_linkServiceImpl implements IPage_linkService{
 	public List<Page_linkVo> select_page_link(String page_code) {
 		return page_linkDao.select_page_link(page_code);
 	}
+
+	@Override
+	public int delete_page_link(String page_code) {
+		return page_linkDao.delete_page_link(page_code);
+	}
 	
 	
 }

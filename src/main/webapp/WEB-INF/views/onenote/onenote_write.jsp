@@ -680,6 +680,23 @@
 </body>
 
 <script>
+
+	/* 저장 배열 */
+	//소스코드 데이터 저장 배열 
+	var code_id_array = new Array;				//소스코드 ID
+	var code_mode_array = new Array();			//소스코드 언어
+	var code_theme_array = new Array();			//소스코드 테마
+	
+	//비디오 데이터 저장 배열 
+	var video_id_array = new Array;				//비디오 ID
+	var video_link_array = new Array();			//비디오 링크
+
+	//link 데이터 저장 배열
+	var link_id_array = new Array;				//링크 ID
+	var link_address_array = new Array();		//링크 주소
+
+
+
 	$('#stageColorBtn').popover('enable');
 	
 	// 버튼 툴팁
@@ -1468,6 +1485,10 @@
         	
         	var code_editor = null;
         	
+        	code_id_array.push(code_num2);
+        	code_theme_array.push(code_theme);
+        	code_mode_array.push(code_mode);
+        	
         	//CodeMirror 생성
             code_editor = CodeMirror.fromTextArea(document.getElementById('textarea' + code_num2), {
                 mode: code_mode, // text/html 추가 java
@@ -1544,6 +1565,9 @@
     		var video_link = '${ video.video_link }';
     		var video_css_top = '${ video.video_css_top }';
     		var video_css_left = '${ video.video_css_left }';
+    		
+    		video_id_array.push(video_num2);
+    		video_link_array.push(video_link);
         	
     		var iframe = document.createElement('iframe');
     	    iframe.id = "iframe" + video_num2;
@@ -1583,7 +1607,7 @@
 		</c:forEach>
     }
   	
-    //링크 div 생성
+  	//링크 div 생성
     function drawLinkTemplate(){
     	
     	var link_num = 1000;
@@ -1617,7 +1641,10 @@
     		var link_address = '${ link.link_address }';
     		var link_css_top = '${ link.link_css_top }';
     		var link_css_left = '${ link.link_css_left }';
-        	
+    		
+    		link_id_array.push(link_num2);
+    		link_address_array.push(link_address);
+    		
     		var a = document.createElement('a');
     	    a.id = "link" + link_num2;
     	    a.href = link_address;

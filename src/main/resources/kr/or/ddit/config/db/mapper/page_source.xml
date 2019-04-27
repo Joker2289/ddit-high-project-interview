@@ -25,5 +25,11 @@
 		 where page_code = #{ page_code }
 	</select>
 	
+	<!-- page의 모든 소스 코드 삭제 -->
+	<delete id="delete_page_source" parameterType="String">
+		delete page_source
+		 where page_code = #{ page_code }
+	</delete>
+	
 	
 </mapper> 

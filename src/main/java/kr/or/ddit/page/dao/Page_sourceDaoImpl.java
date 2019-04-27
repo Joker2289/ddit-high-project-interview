@@ -25,4 +25,9 @@ public class Page_sourceDaoImpl implements IPage_sourceDao{
 		return sqlSession.selectList("page_source.select_page_source", page_code);
 	}
 
+	@Override
+	public int delete_page_source(String page_code) {
+		return sqlSession.delete("page_source.delete_page_source", page_code);
+	}
+
 }

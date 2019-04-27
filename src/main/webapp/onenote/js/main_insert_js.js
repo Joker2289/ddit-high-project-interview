@@ -148,8 +148,8 @@ function addImage(data) {
 
 
 //Video id 배열
-var video_id_array = new Array;			//비디오 ID
-var video_link_array = new Array();		//비디오 링크
+//var video_id_array = new Array;			//비디오 ID
+//var video_link_array = new Array();		//비디오 링크
 
 
 //video 링크 입력 받기 & div 클래스 입력
@@ -264,9 +264,9 @@ var code_theme = "default"; // code 테마
 var code_data = ''; 
 
 //코드 id 배열
-var code_id_array = new Array;
-var code_mode_array = new Array();
-var code_theme_array = new Array();
+//var code_id_array = new Array;
+//var code_mode_array = new Array();
+//var code_theme_array = new Array();
 
 
 //소스코드 추가
@@ -415,9 +415,9 @@ function themeSelect(){
 
 
 //                  링크 삽입
-//link id 배열
-var link_id_array = new Array;				//링크 ID
-var link_address_array = new Array();		//링크 주소
+////link id 배열
+//var link_id_array = new Array;				//링크 ID
+//var link_address_array = new Array();		//링크 주소
 
 
 //링크 주소 입력 받기 & div 클래스 입력

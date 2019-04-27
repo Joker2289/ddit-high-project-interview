@@ -25,4 +25,9 @@ public class Page_videoServiceImpl implements IPage_videoService{
 		return videoDao.select_page_video(page_code);
 	}
 
+	@Override
+	public int delete_page_video(String page_code) {
+		return videoDao.delete_page_video(page_code);
+	}
+
 }

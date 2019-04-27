@@ -25,6 +25,11 @@ public class Page_sourceServiceImpl implements IPage_sourceService{
 		return page_sourceDao.select_page_source(page_code);
 	}
 
+	@Override
+	public int delete_page_source(String page_code) {
+		return page_sourceDao.delete_page_source(page_code);
+	}
+
 	
 
 }

@@ -25,4 +25,9 @@ public class Page_videoDaoImpl implements IPage_videoDao{
 		return sqlSession.selectList("page_video.select_page_video", page_code);
 	}
 
+	@Override
+	public int delete_page_video(String page_code) {
+		return sqlSession.delete("page_video.delete_page_video", page_code);
+	}
+
 }

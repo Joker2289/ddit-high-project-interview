@@ -25,4 +25,9 @@ public class Page_linkDaoImpl implements IPage_linkDao{
 		return sqlSession.selectList("page_link.select_page_link", page_code);
 	}
 
+	@Override
+	public int delete_page_link(String page_code) {
+		return sqlSession.delete("page_link.delete_page_link", page_code);
+	}
+
 }
