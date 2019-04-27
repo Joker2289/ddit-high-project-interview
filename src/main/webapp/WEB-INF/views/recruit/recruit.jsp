@@ -58,6 +58,7 @@
 		</div>
 	</div>
 	
+	<!-- newList -->
 	<div class="col-md-12" >
 		<div id="div_newList" class="whiteBox" style="width: 296px; margin-left: 10px; height: 370px; margin-bottom: 20px;
 				text-align: center; padding-top: 10px; font-size: 22px;">
@@ -103,6 +104,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- newList -->
 	
 	<div class="col-md-12" >
 		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: -1px;

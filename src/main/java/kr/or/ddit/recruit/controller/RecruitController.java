@@ -307,6 +307,8 @@ public class RecruitController {
 		List<Search_logVo> sList = sLogService.getSList(mVo.getMem_id());
 		model.addAttribute("sList", sList);
 		
+		/////////////////////////////// newList
+		
 		// 광고 부분 -> 신규 채용공고 (newList)
 		List<RecruitVo> newList = recrService.getNewList();
 		
@@ -350,6 +352,8 @@ public class RecruitController {
 		model.addAttribute("newImgList", newImgList);
 		model.addAttribute("newNmList", newNmList);
 		model.addAttribute("newTimeList", newTimeList);
+		
+		/////////////////////////////// newList
 		
 //		logger.debug("flag?? : {}", scrap_flag); // 설마 로그 너무 많아서..
 		// logback.xml logger level error 추가함.
