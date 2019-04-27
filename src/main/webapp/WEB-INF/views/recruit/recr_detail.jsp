@@ -230,6 +230,9 @@ $(document).ready(function(){
 			<c:when test="${req_page == 'personal' }">
 				window.location.href = '${pageContext.request.contextPath }/personalConnection';
 			</c:when>
+			<c:when test="${req_page == 'alarm' }">
+				window.location.href = '${pageContext.request.contextPath }/alarm';
+			</c:when>
 			<c:otherwise>
 				window.location.href = '${pageContext.request.contextPath }/recrSearch';
 			</c:otherwise>

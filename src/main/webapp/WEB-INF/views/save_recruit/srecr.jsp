@@ -97,7 +97,7 @@
 									</td>
 									<td id="srecr${i.index }" onmouseover="" style="cursor: pointer; width: 513px;
 											border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-left: 15px;">
-										${srList.get(i.index - 1).recruit_title }<br>
+										<strong>${srList.get(i.index - 1).recruit_title }</strong><br>
 										${corpNmList.get(i.index - 1) }<br>
 										${srList.get(i.index - 1).job_local }<br>
 <!-- 										<span style="color: #d11124;">(xx일 전에 마감되었습니다.)</span> -->
@@ -141,7 +141,7 @@
 											padding-top: 10px; padding-left: 4px;">
 										<img src="${corpImgList_app.get(i.index - 1) }" width="150"
 												style="margin-bottom: 10px;"><br><br>
-										${appList.get(i.index - 1).recruit_title }<br>
+										<strong>${appList.get(i.index - 1).recruit_title }</strong><br>
 										${corpNmList_app.get(i.index - 1) }<br>
 										${appList.get(i.index - 1).job_local }<br>
 										지원일: xx일 전
