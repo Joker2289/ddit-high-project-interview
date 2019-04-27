@@ -221,6 +221,15 @@ $(document).ready(function(){
 			<c:when test="${req_page == 'recruit' }">
 				window.location.href = '${pageContext.request.contextPath }/recruit';
 			</c:when>
+			<c:when test="${req_page == 'timeline' }">
+				window.location.href = '${pageContext.request.contextPath }/timeline';
+			</c:when>
+			<c:when test="${req_page == 'mail' }">
+				window.location.href = '${pageContext.request.contextPath }/mailHome';
+			</c:when>
+			<c:when test="${req_page == 'personal' }">
+				window.location.href = '${pageContext.request.contextPath }/personalConnection';
+			</c:when>
 			<c:otherwise>
 				window.location.href = '${pageContext.request.contextPath }/recrSearch';
 			</c:otherwise>

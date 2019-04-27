@@ -14,8 +14,9 @@
 				<c:forEach items="${newList }" varStatus="i" var="rRVo">
 					<li style="float: left; text-align: left;"><div class="whiteBox" style="width: 280px; box-shadow: 0 3px 3px rgba(0, 0, 0, .175);
 							margin-right: 10px; padding: 13px; font-size: 16px; height: 270px;">
-						<div id="recr2${i.index }" onmouseover="" style="cursor: pointer; height: 215px;
-								border-bottom: 1px solid; border-bottom-color: #d9d9d9;">
+						<div class="recr" onmouseover="" style="cursor: pointer; height: 215px;
+								border-bottom: 1px solid; border-bottom-color: #d9d9d9;"
+								data-code="${rRVo.recruit_code }">
 							<div class="table_div" style="margin-left: 24px;">
 								<img src="${newImgList.get(i.index) }" width="200"> 
 							</div> <br>

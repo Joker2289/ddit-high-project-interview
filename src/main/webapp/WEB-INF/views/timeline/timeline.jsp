@@ -254,6 +254,12 @@
 			}
 		});
 		
+		// 채용공고 클릭.
+		$(".recr").on("click", function(){
+// 			alert($(this).data("code"));
+			window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code='+ $(this).data("code") +'&req_page=timeline';
+		});
+		
 		//////////////////////////// newList	  
 	});
 
