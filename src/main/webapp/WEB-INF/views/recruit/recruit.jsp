@@ -9,14 +9,6 @@
 	<title>채용공고｜22222</title>
 	
 	<style type="text/css">
-		/* newList */
-		
-		.fa-circle{
-			margin-right: 4px;
-			cursor: pointer;
-		}
-		
-		/* newList */
 	</style>
 </head>
 
@@ -57,54 +49,6 @@
 			</a>
 		</div>
 	</div>
-	
-	<!-- newList -->
-	<div class="col-md-12" >
-		<div id="div_newList" class="whiteBox" style="width: 296px; margin-left: 10px; height: 370px; margin-bottom: 20px;
-				text-align: center; padding-top: 10px; font-size: 22px;">
-			<div style="text-align: left; padding-left: 15px; padding-bottom: 7px;">
-				신규 채용공고
-			</div>
-			<div style="border: 0px solid; height: 270px; overflow: hidden; padding-left: 2px;">
-		   		<c:if test="${newList.size() >= 1 }">
-		   			<ul id="content_newList" style="list-style: none; width: 3000px; padding-left: 5px;
-		   					margin-left: -290px;">
-					<c:forEach items="${newList }" varStatus="i" var="rRVo">
-						<li style="float: left; text-align: left;"><div class="whiteBox" style="width: 280px; box-shadow: 0 3px 3px rgba(0, 0, 0, .175);
-								margin-right: 10px; padding: 13px; font-size: 16px; height: 270px;">
-							<div id="recr2${i.index }" onmouseover="" style="cursor: pointer; height: 215px;
-									border-bottom: 1px solid; border-bottom-color: #d9d9d9;">
-								<div class="table_div" style="margin-left: 24px;">
-									<img src="${newImgList.get(i.index) }" width="200"> 
-								</div> <br><br>
-								<strong>
-									<c:choose>
-										<c:when test="${rRVo.recruit_title.length() > 18 }">
-											${rRVo.recruit_title.substring(0, 18) }...
-										</c:when>
-										<c:otherwise>
-											${rRVo.recruit_title }
-										</c:otherwise>
-									</c:choose>
-								</strong> <br>
-								${newNmList.get(i.index) } <br>
-								${rRVo.job_local } <br>
-								${rRVo.job_type }
-							</div>
-							<div style="padding-top: 10px;">
-								${newTimeList.get(i.index) } 전
-							</div>
-						</div></li>
-					</c:forEach>
-					</ul>
-				</c:if>
-			</div>
-			<div style="text-align: center; font-size: 13px; padding-top: 15px;">
-				<i onmouseover="" class="fas fa-circle"></i><i onmouseover="" class="far fa-circle"></i><i onmouseover="" class="far fa-circle"></i><i onmouseover="" class="far fa-circle"></i><i onmouseover="" class="far fa-circle"></i><i onmouseover="" class="far fa-circle"></i><i onmouseover="" class="far fa-circle"></i>				
-			</div>
-		</div>
-	</div>
-	<!-- newList -->
 	
 	<div class="col-md-12" >
 		<div id="div_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 62px; margin-bottom: -1px;
@@ -362,90 +306,10 @@
 	var slide_flag = true;
 	
 	var list1_size = '';
-
-	
-	////////////////////////////newList
-	
-	// div_newList 마우스오버 시 false - 슬라이드 멈춤.
-	var newSlide_flag = true;	
-	
-	// 자동 슬라이드
-	var newSlide_width = 290;
-	var newList_num = 1;
-	
-	function fn_newSlide(){
-		if(newSlide_flag == false){
-			return;
-		}
-		
-		if(newList_num > 6){
-// 			clearInterval(slide_switch);
-			$("#content_newList").css("margin-left", "0px");
-			newList_num = 0;
-		}
-		
-		newList_num++;
-		
-		$("#content_newList").stop(true, true);
-		var moveX = parseInt($("#content_newList").css("margin-left"));
-		
-		if( moveX > -2000 ){
-			// 버튼 class 바꾸기.
-			if(newList_num == 1){
-				$(".fa-circle:eq(6)").attr("class", "far fa-circle");
-				$(".fa-circle:eq("+ (newList_num-1) +")").attr("class", "fas fa-circle");
-			}else{
-				$(".fa-circle:eq("+ (newList_num-2) +")").attr("class", "far fa-circle");
-				$(".fa-circle:eq("+ (newList_num-1) +")").attr("class", "fas fa-circle");
-			}
-			
-			$("#content_newList").animate({"margin-left":"-=" + newSlide_width + "px"}, 500);
-		}
-	}	
-	
-	//////////////////////////// newList
-	
 	
 	$(document).ready(function(){
 // 		console.log('lVRVo? : ${lVRVo.recruit_title }');
-		
-		
-		//////////////////////////// newList
-		// newList 슬라이드
-		newList_slide = setInterval("fn_newSlide()", 4000);
-		
-		// newList 마우스오버 - 슬라이드 멈춤.
-		$("#div_newList").on("mouseover", function(){
-			newSlide_flag = false;
-		});
-		$("#div_newList").on("mouseout", function(){
-			newSlide_flag = true;
-		});		
-		
-		// newList 슬라이드 버튼 클릭.
-		$(".fa-circle").on("click", function(){
-// 			alert($(this).index());
-			$(".fa-circle:eq("+ (newList_num-1) +")").attr("class", "far fa-circle");
-			$(this).attr("class", "fas fa-circle");	
-			
-			// 이동할 칸 수. (move_page)
-			var move_page = ($(this).index()) - (newList_num-1);
-			
-			// newList_num 변경.
-			newList_num = ($(this).index())+1;
-			
-			// 슬라이드 이동.
-			$("#content_newList").stop(true, true);
-			var moveX = parseInt($("#content_newList").css("margin-left"));
-			
-			if( moveX > -3000 ){
-				$("#content_newList").animate({"margin-left":"-=" + newSlide_width*move_page + "px"}, 500);
-			}
-		});
-		
-		//////////////////////////// newList
-		
-		
+
 		// news 슬라이드 실행.
 		slide_switch = setInterval("fn_slide()", 4000);
 		
