@@ -44,6 +44,7 @@
 		<typeAlias alias="itemVo" type="kr.or.ddit.item.model.ItemVo"/>
 		<typeAlias alias="pageVo" type="kr.or.ddit.page.model.PageVo"/>
 		<typeAlias alias="page_sourceVo" type="kr.or.ddit.page.model.Page_sourceVo"/>
+		<typeAlias alias="page_sourceVo" type="kr.or.ddit.page.model.Page_videoVo"/>
 	</typeAliases> 
   
 	<mappers>
@@ -84,6 +85,7 @@
 		<mapper resource="kr/or/ddit/config/db/mapper/item.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/page.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/page_source.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/page_video.xml"/>
 	</mappers>
 </configuration>
 
