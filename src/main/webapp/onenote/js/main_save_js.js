@@ -45,7 +45,37 @@ function input_page_title(title){
 // 페이지 저장
 function stage_save_page() {
 	
-
+	for(var i=0; i<code_id_array.length; i++){
+		
+		//textarea 입력값 줄바꿈 -> <br> 로 치환
+		var tmp_content = $('#textarea'+code_id_array[i]).val(); 
+		var tmp_content2 = tmp_content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+		var source_contents = tmp_content2.replace(/'/gi, '"');
+		
+		
+		var css_top = $('#code_div'+code_id_array[i]).css('top');
+		var css_left = $('#code_div'+code_id_array[i]).css('left');
+		
+		console.log(source_contents);
+		console.log(css_top);
+		console.log(css_top);
+		
+		$('#saveForm').append('<input type="hidden" id="source_contents'+i+'" name="source_contents"/>');
+		$('#saveForm').append('<input type="hidden" id="source_mode'+i+'" name="source_mode"/>');
+		$('#saveForm').append('<input type="hidden" id="source_theme'+i+'" name="source_theme"/>');
+		$('#saveForm').append('<input type="hidden" id="css_top'+i+'" name="css_top"/>');
+		$('#saveForm').append('<input type="hidden" id="css_left'+i+'" name="css_left"/>');
+		
+		$('#source_contents'+i).val(source_contents);
+		$('#source_mode'+i).val(code_mode_array[i]);
+		$('#source_theme'+i).val(code_theme_array[i]);
+		$('#css_top'+i).val(css_top);
+		$('#css_left'+i).val(css_left);
+		
+		
+	}
+	
+	
 	//스테이지 썸네일 저장
 	html2canvas($('#view_div'), {
 		width : window.innerWidth,
@@ -71,6 +101,8 @@ function stage_save_page() {
 
 		}
 	});
-	
 
 }
+
+
+

@@ -25,7 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.ddit.login.LoginController;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.page.model.PageVo;
+import kr.or.ddit.page.model.Page_sourceVo;
 import kr.or.ddit.page.service.IPageService;
+import kr.or.ddit.page.service.IPage_sourceService;
 import kr.or.ddit.portfolio.model.PortfolioVo;
 import kr.or.ddit.portfolio.service.IPortfolioService;
 import kr.or.ddit.section.model.SectionVo;
@@ -45,7 +47,10 @@ public class PageController {
 	
 	@Resource(name="pageService")
 	private IPageService pageService;
-
+	
+	@Resource(name="page_sourceService")
+	private IPage_sourceService sourceService;
+	
 	/**
 	 * 
 	 * Method : onenoteView 
@@ -199,8 +204,30 @@ public class PageController {
 	 */
 	@RequestMapping(path = "/savePage", method = RequestMethod.POST)
 	public String savePage(PageVo pVo, Model model, HttpServletRequest req) {
+		
+		String[] source_contents = req.getParameterValues("source_contents");
+		String[] source_mode = req.getParameterValues("source_mode");
+		String[] source_theme = req.getParameterValues("source_theme");
+		String[] css_top = req.getParameterValues("css_top");
+		String[] css_left = req.getParameterValues("css_left");
+		
+		
 		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		pageService.insert_page(pVo);
+		
+		if(source_contents != null) {
+			Page_sourceVo psVo = new Page_sourceVo();
+			for(int i=0; i<source_contents.length; i++) {
+				psVo.setPage_code(pVo.getPage_code());
+				psVo.setSource_contents(source_contents[i]);
+				psVo.setSource_mode(source_mode[i]);
+				psVo.setSource_theme(source_theme[i]);
+				psVo.setCss_left(css_left[i]);
+				psVo.setCss_top(css_top[i]);
+				
+				sourceService.insert_page_source(psVo);
+			}
+		}
 		return "redirect:/blog/blogMainView?user_id=" + mVo.getMem_id();
 	}
 	
@@ -217,6 +244,9 @@ public class PageController {
 
 		PageVo pageVo = pageService.select_pageInfo(page_code);
 		model.addAttribute("pageVo", pageVo);
+		
+		List<Page_sourceVo> page_sourceList = sourceService.select_page_source(page_code);
+		model.addAttribute("page_sourceList", page_sourceList);
 		
 		return "onenote/onenote_view";
 	}
@@ -257,13 +287,17 @@ public class PageController {
 	 * @param model
 	 * @param page_code
 	 * @return
-	 * Method 설명 :
+	 * Method 설명 : 수정 페이지로 이동
 	 */
 	@RequestMapping(path = "/update_onenote_write", method = RequestMethod.GET)
 	public String update_onenote_write(Model model, @RequestParam("page_code") String page_code) {
 		
 		PageVo pVo = pageService.select_pageInfo(page_code);
 		model.addAttribute("pVo", pVo);
+		
+		List<Page_sourceVo> page_sourceList = sourceService.select_page_source(page_code);
+		model.addAttribute("page_sourceList", page_sourceList);
+		
 		return "onenote/onenote_write";
 	}
 	
@@ -276,18 +310,37 @@ public class PageController {
 	 * @param model
 	 * @param req
 	 * @return
-	 * Method 설명 : 페이지 저장
+	 * Method 설명 : 페이지 수정
 	 */
 	@RequestMapping(path = "/update_page", method = RequestMethod.POST)
 	public String update_page(PageVo pVo, Model model, HttpServletRequest req) {
 		
-		logger.debug("update pVo : {}", pVo);
+		String[] source_contents = req.getParameterValues("source_contents");
+		String[] source_mode = req.getParameterValues("source_mode");
+		String[] source_theme = req.getParameterValues("source_theme");
+		String[] css_top = req.getParameterValues("css_top");
+		String[] css_left = req.getParameterValues("css_left");
 		
 		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		pageService.update_page(pVo);
+		
+		Page_sourceVo psVo = new Page_sourceVo();
+		
+		if(source_contents != null) {
+			for(int i=0; i<source_contents.length; i++) {
+				psVo.setPage_code(pVo.getPage_code());
+				psVo.setSource_contents(source_contents[i]);
+				psVo.setSource_mode(source_mode[i]);
+				psVo.setSource_theme(source_theme[i]);
+				psVo.setCss_left(css_left[i]);
+				psVo.setCss_top(css_top[i]);
+				
+				sourceService.insert_page_source(psVo);
+			}
+		}
+		
 		return "redirect:/blog/blogMainView?user_id=" + mVo.getMem_id();
 	}
 	
 	
-
 }

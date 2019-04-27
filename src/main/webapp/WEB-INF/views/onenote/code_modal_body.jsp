@@ -188,19 +188,18 @@
 	<option value="zenburn">zenburn</option>
 </select>
 
-<button id="code_view_btn" onclick="code_view_rendering();">미리보기</button>
+<button id="code_view_btn" onclick="code_view_rendering();">랜더링</button>
 
 <!-- 소스코드 area -->
 <textarea id='code_editor'>
-               		
-//테마 선택
-$('#themeSelect').on('change', function () {
-    code_theme = $('#themeSelect').val();
+//코드 모드 셀렉트 박스 변경시
+function modeSelect(){
+	code_mode = $('#modeSelect').val();
+	editor.setOption('mode', code_mode);
+	editor.save();
+}               		
 
-    editor.setOption('theme', code_theme);
-    editor.save();
-});
-editor.setSize(600, 800);                    
+                  
 
 
 

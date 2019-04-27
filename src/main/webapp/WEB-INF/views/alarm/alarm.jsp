@@ -62,7 +62,18 @@
 		  	              </h4>
 		  	            </c:when>
 		  	            <c:when test="${recentAlarm.division == '14' && recentAlarm.alarm_separate == '06' }">
-		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 회원님을 팔로우함</h4>
+		  	              <!-- 회원일 경우 회원 프로필로 링크 연결 -->
+		  	              <c:if test="${recentAlarm.mem_division == 1 }">
+		  	                <h4 style="height: 30px; padding-top: 5px;">
+		  	                  <a href="/profileHome?user_id=${recentAlarm.send_id }">${recentAlarm.send_name } 님이 회원님을 팔로우함</a>
+		  	                </h4>
+		  	              </c:if>
+		  	              <!-- 회사일 경우 회사 페이지로 링크 연결 -->
+		  	              <c:if test="${recentAlarm.mem_division == 2 }">
+		  	                <h4 style="height: 30px; padding-top: 5px;">
+		  	                  <a href="/corporation?corp_id=${recentAlarm.send_id }">${recentAlarm.send_name } 님이 회원님을 팔로우함</a>
+		  	                </h4>
+		  	              </c:if>
 		  	            </c:when>
 		  	            <c:when test="${recentAlarm.division == '2' && recentAlarm.alarm_separate == '07' }">
 		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 채용공고에 지원함</h4>

@@ -151,7 +151,13 @@
 
 
 <script>
+
+	//bg index 컬러
 	$('#page_area_select_head').css('background-color', '${ pVo.index_color }');
+	
+	//테두리 index 컬러
+	/* $('#page_area_select_head').css('border', '5px solid ${ pVo.index_color }');
+	$('#writePageBtn').css('background-color', '${ pVo.index_color }'); */
 
 	function writePage(section_code) {
 		document.location.href = "/page/onenote?section_code=" + section_code;
