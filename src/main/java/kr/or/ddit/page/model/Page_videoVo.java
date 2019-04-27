@@ -3,9 +3,9 @@ package kr.or.ddit.page.model;
 
 public class Page_videoVo {
 	
-	private String video_code;		// 소스 코드
-	private String page_code;		// 페이지 코드
-	private String video_link;		// 소스 내용
+	private String video_code;			// 소스 코드
+	private String page_code;			// 페이지 코드
+	private String video_link;			// 소스 내용
 	private String video_css_top; 		// css top 좌표
 	private String video_css_left;		// css left 좌표
 	
