@@ -274,8 +274,13 @@ public class PageController {
 		PageVo pageVo = pageService.select_pageInfo(page_code);
 		model.addAttribute("pageVo", pageVo);
 		
+		//소스코드 리스트
 		List<Page_sourceVo> page_sourceList = sourceService.select_page_source(page_code);
 		model.addAttribute("page_sourceList", page_sourceList);
+		
+		//비디오 리스트 
+		List<Page_videoVo> page_videoList = videoService.select_page_video(page_code);
+		model.addAttribute("page_videoList", page_videoList);
 		
 		return "onenote/onenote_view";
 	}

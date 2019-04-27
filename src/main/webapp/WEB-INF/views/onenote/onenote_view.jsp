@@ -347,9 +347,15 @@
   	//DB에 저장한 Code Data 그려주기
     if(${ page_sourceList != null }){
     	
-    	drawCodeTemplate();	//div, textarea 미리 생성
+    	drawCodeTemplate();	//div, textarea  생성
     	drawCodeMirror();	//textarea CodeMirror 로 변환
     	
+    }
+  	
+  	//DB에 저장한 Video 그려주기
+ 	if(${ page_videoList != null }){
+    	drawVideoTemplate();	//div, handle 생성
+    	drawVideo();			//Youtube iframe 그리기
     }
     
     
@@ -441,6 +447,72 @@
 	        
 	
 	     </c:forEach>
+    }
+    
+  	//비디오 div 생성 - handle 생성 x
+    function drawVideoTemplate(){
+    	
+    	var video_num = 1000;
+    	
+    	<c:forEach items='${ page_videoList }' var="video">
+    	
+    	video_num++;
+    	
+    	//video div 생성
+    	var video_div = document.createElement('div');
+    	video_div.id = 'video_div' + video_num;
+    	
+    	$(video_div).addClass('video_div');
+        
+        //view_div에 생성한 div 넣기
+        $('#view_div').append(video_div);
+        
+        </c:forEach>
+    }
+ 	
+  	//Youdute iframe 생성
+    function drawVideo(){
+    	
+    	var video_num2 = 1000;
+    	
+    	<c:forEach items='${ page_videoList }' var="video">
+    		
+    		video_num2++;
+    		
+    		var video_link = '${ video.video_link }';
+    		var video_css_top = '${ video.video_css_top }';
+    		var video_css_left = '${ video.video_css_left }';
+        	
+    		var iframe = document.createElement('iframe');
+    	    iframe.id = "iframe" + video_num2;
+    	    iframe.width = 560;
+    	    iframe.height = 315;
+    	    iframe.src = video_link;
+    	    iframe.frameborder = 0;
+    	    iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+    	    iframe.allowfullscreen = true;
+    	    iframe.draggable = true;
+
+    	    $('#video_div'+video_num2).append(iframe);
+    	    
+    	   
+    	    
+    	    //위치조정 handle - show, hide 이벤트 속성 추가
+    	    $("#video_div" + video_num2).attr('onmouseenter', "showHandle("+video_num2+");");
+    	    $("#video_div" + video_num2).attr('onmouseleave', "hideHandle("+video_num2+");");
+    	    
+    	    // div가 생성될 위치값 
+    	    $("#video_div" + video_num2).css('left', video_css_left);
+    	    $("#video_div" + video_num2).css('top', video_css_top);
+    	    
+    	    //매우중요 block 
+    	    //block = width값 사이즈에 맞게 고정
+    	    //absolute = 영역에 속해 있지 않은 단독 고정 위치
+    	    $("#video_div" + video_num2).css('display', 'block');
+    	    $("#video_div" + video_num2).css('position', 'absolute');
+            
+           
+		</c:forEach>
     }
     
     

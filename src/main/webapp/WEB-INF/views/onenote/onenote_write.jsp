@@ -561,7 +561,8 @@
 
                 <button id="videoBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="동영상 링크 삽입">
                     <div class="btn_icon">
-                    	<i class="fas fa-video"></i>
+                    	<!-- <i class="fas fa-video"></i> -->
+                    	<i class="fab fa-youtube"></i>
                     </div>
                     <div class="btn_name">
                     	<span>비디오 추가</span>
