@@ -44,7 +44,7 @@
 		<typeAlias alias="itemVo" type="kr.or.ddit.item.model.ItemVo"/>
 		<typeAlias alias="pageVo" type="kr.or.ddit.page.model.PageVo"/>
 		<typeAlias alias="page_sourceVo" type="kr.or.ddit.page.model.Page_sourceVo"/>
-		<typeAlias alias="page_sourceVo" type="kr.or.ddit.page.model.Page_videoVo"/>
+		<typeAlias alias="page_videoVo" type="kr.or.ddit.page.model.Page_videoVo"/>
 	</typeAliases> 
   
 	<mappers>
