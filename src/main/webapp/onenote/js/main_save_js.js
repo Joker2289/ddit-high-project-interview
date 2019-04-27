@@ -47,7 +47,12 @@ function stage_save_page() {
 	
 	for(var i=0; i<code_id_array.length; i++){
 		
-		var source_contents = $('#textarea'+code_id_array[i]).val();      
+		//textarea 입력값 줄바꿈 -> <br> 로 치환
+		var tmp_content = $('#textarea'+code_id_array[i]).val(); 
+		var tmp_content2 = tmp_content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+		var source_contents = tmp_content2.replace(/'/gi, '"');
+		
+		
 		var css_top = $('#code_div'+code_id_array[i]).css('top');
 		var css_left = $('#code_div'+code_id_array[i]).css('left');
 		
@@ -96,14 +101,8 @@ function stage_save_page() {
 
 		}
 	});
-	
-	
 
-	
-	
-	
 }
 
-function insert_page_source(){
-	
-}
+
+

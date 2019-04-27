@@ -203,8 +203,6 @@ var code_mode_array = new Array();
 var code_theme_array = new Array();
 
 
-
-
 //소스코드 추가
 function addCode() {
 	
@@ -235,7 +233,7 @@ function addCode() {
     // 작성 버튼
     $('#completeBtn').on('click', function () {
     	
-    	//코드 ID 배열에 넣기
+    	//코드 정보 배열에 넣기(DB 저장 작업)
     	code_id_array.push(node_num);
     	code_mode_array.push(code_mode);
     	code_theme_array.push(code_theme);

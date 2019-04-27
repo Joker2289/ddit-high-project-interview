@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -300,6 +300,9 @@
 </body>
 
 <script>
+
+
+		
 	
 	var data = '${ pageVo.page_contents }';
 
@@ -339,6 +342,109 @@
     if(${ pageVo.bg_color != null }) {
     	$('#container').css('background-color', '${ pageVo.bg_color }');
     }
+    
+    
+  	//DB에 저장한 Code Data 그려주기
+    if(${ page_sourceList != null }){
+    	
+    	drawCodeTemplate();	//div, textarea 미리 생성
+    	drawCodeMirror();	//textarea CodeMirror 로 변환
+    	
+    }
+    
+    
+    //코드작성 textarea, div 생성
+    function drawCodeTemplate(){
+    	
+    	var code_num = 1000;
+    	
+    	<c:forEach items='${ page_sourceList }' var="source">
+    	
+    		var code_contents = '${ source.source_contents }';
+    	
+    		code_num++;
+    		
+    		//textarea 생성 id 부여
+	    	var textarea = document.createElement('textarea');
+	    	textarea.id = 'textarea' + code_num;
+	    	$(textarea).addClass('textarea');
+	    	
+	    	//줄바꿈 <br>태그로 치환된 데이터값 다시 줄바꿈으로 치환
+	    	var render_contents = code_contents.split('<br/>').join("\r\n");
+	    	$(textarea).val(render_contents);
+	    	
+	    	//div 생성
+	    	var code_div = document.createElement('div');
+	        code_div.id = 'code_div' + code_num;
+	        $(code_div).addClass('code_div');
+	        
+	        
+	        //view_div에 생성한 div 넣기
+	        $('#view_div').append(code_div);
+	    	
+	        //div에 textarea 추가
+	        $('#code_div'+code_num).append(textarea);
+	        
+	  	</c:forEach>
+    }
+    
+    //drawCodeTemplate CodeMirror 변환
+    function drawCodeMirror(){
+    	
+    	var code_num2 = 1000;
+    	
+		<c:forEach items='${ page_sourceList }' var="source">
+    		
+			code_num2++;
+	    	
+	    	var code_mode = '${ source.source_mode }';
+	    	var code_theme = '${ source.source_theme }';
+	    	
+	    	var css_top = '${ source.css_top }';
+	    	var css_left = '${ source.css_left }';
+	    	
+	    	var code_editor = null;
+	    	
+	    	//CodeMirror 생성
+	        code_editor = CodeMirror.fromTextArea(document.getElementById('textarea' + code_num2), {
+	            mode: code_mode, // text/html 추가 java
+	            lineNumbers: true,
+	            tabMode: 'indent',
+	            styleActiveLine: true,
+	            lineWrapping: true,
+	            autoCloseTags: true,
+	            theme: code_theme,
+	            // tabSize: 10, //tab 몇칸 띄우는지
+	        });
+	    	
+	    	code_editor.setSize(600, 500);
+	    	code_editor.save();
+	    	
+	    	
+	    	// css 위치 값으로 컨트롤 draggable효과 추가
+	        $("#code_div" + code_num2).draggable({
+	            containment: "#container",
+	            scroll: true
+	        });
+	
+	        // div가 생성될 위치값 
+	        $("#code_div" + code_num2).css('left', css_left);
+	        $("#code_div" + code_num2).css('top', css_top);
+	        
+	        //매우중요 block 
+	        //block = width값 사이즈에 맞게 고정
+	        //absolute = 영역에 속해 있지 않은 단독 고정 위치
+	        $("#code_div" + code_num2).css('display', 'block');
+	        $("#code_div" + code_num2).css('position', 'absolute');
+	        
+	        //원래는 요것만 했었다
+	        $("#code_div" + code_num2).css('display', 'inline');
+	
+	     </c:forEach>
+    }
+    
+    
+    
 </script>
 
 
