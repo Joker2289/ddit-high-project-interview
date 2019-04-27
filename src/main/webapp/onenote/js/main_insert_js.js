@@ -1,5 +1,8 @@
 var emoticon_src;
 
+
+//      				이모티콘 삽입
+
 // 이모티콘 효과
 function addEmoticon() {
     var con = stage.container();
@@ -68,6 +71,8 @@ function addEmoticon() {
 
     });
 }
+
+//									이미지 삽입
 
 //이미지 서버 저장
 function imageUpload() {
@@ -138,19 +143,32 @@ function addImage(data) {
      
 }
 
+
+//                                유튜브 삽입
+
+
+//코드 id 배열
+var video_id_array = new Array;			//비디오 ID
+var video_link_array = new Array();		//비디오 링크
+
+
 //video 링크 입력 받기 & div 클래스 입력
 function input_youtube_link(){
+	
 	node_num++;
 	
 	//전체 div
-	var frameOverlay = document.createElement('div');
-	$(frameOverlay).addClass('frameOverlay');
-	$('#view_div').append(frameOverlay);
-	
+//	var frameOverlay = document.createElement('div');
+//	$(frameOverlay).addClass('frameOverlay');
+//	$('#view_div').append(frameOverlay);
+//	
 	
 	//video div 생성
 	var video_div = document.createElement('div');
 	video_div.id = 'video_div' + node_num;
+	video_div.onmouseenter = showHandle(node_num);
+	video_div.onmouseleave = hideHandle(node_num);
+	
     $(video_div).addClass('video_div');
     
     //view_div에 생성한 div 넣기
@@ -163,13 +181,18 @@ function input_youtube_link(){
     
     $('#video_div' + node_num).append(handle);
     
-    
+    //비디오 링크 입력
     var Youtube_link = prompt( 'Youtube 주소 입력', '' );
     
     //link 변환
     var Embed_link = Youtube_link.replace('watch?v=', 'embed/');
 	 
 	if(Embed_link != null){
+		
+		//DB로 보낼 정보 저장
+		video_id_array.push(node_num);
+		video_link_array.push(Embed_link);
+		
 		addVideo(Embed_link);
 	}
 }
@@ -195,10 +218,10 @@ function addVideo(Embed_link) {
     
     //css 위치 값으로 컨트롤 draggable효과 추가
     $("#video_div" + node_num).draggable({
-    	handle: '#handle' + node_num,
+    	handle: '#handle'+node_num,
         containment: "#container",
         scroll: true,
-        iframeFix: true,
+        iframeFix: true, //필수
 //        start: function(event, ui) {
 //            $('.handle').show();
 //        },
@@ -207,18 +230,9 @@ function addVideo(Embed_link) {
 //	    },
 	});
     
-    $("#video_div" + node_num).mouseenter(function(){
-    	$('#handle'+node_num).show();
-    });
+    $("#video_div" + node_num).attr('onmouseenter', "showHandle("+node_num+");");
+    $("#video_div" + node_num).attr('onmouseleave', "hideHandle("+node_num+");");
     
-    $("#video_div" + node_num).mouseleave(function(){
-    	$('#handle'+node_num).hide();
-    });
-    
-    
-    
-    
-
     // div가 생성될 위치값 
     $("#video_div" + node_num).css('left', '98px');
     $("#video_div" + node_num).css('top', '200px');
@@ -230,6 +244,18 @@ function addVideo(Embed_link) {
     $("#video_div" + node_num).css('position', 'absolute');
     
 }
+
+function showHandle(node_num){
+	$('#handle'+node_num).show();
+}
+
+function hideHandle(node_num){
+	$('#handle'+node_num).hide();
+}
+
+
+
+//                              소스코드 삽입
 
 //코드 변수
 var code_mode = "javascript"; // code 언어

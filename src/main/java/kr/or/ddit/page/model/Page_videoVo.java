@@ -8,6 +8,8 @@ public class Page_videoVo {
 	private String video_link;		// 소스 내용
 	private String video_css_top; 		// css top 좌표
 	private String video_css_left;		// css left 좌표
+	
+	
 	public String getVideo_code() {
 		return video_code;
 	}

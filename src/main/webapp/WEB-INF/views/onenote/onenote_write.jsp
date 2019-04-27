@@ -1496,6 +1496,14 @@
 		</c:forEach>
     }
     
+    /* $(".video_div").mouseenter(function(){
+    	console.log("dd");
+    });
+    
+    $(".video_div").mouseleave(function(){
+    	console.log("ff");
+    }); */
+    
     
 </script>
 <script src="/onenote/js/main_text_js.js"></script>

@@ -26,8 +26,10 @@ import kr.or.ddit.login.LoginController;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.page.model.PageVo;
 import kr.or.ddit.page.model.Page_sourceVo;
+import kr.or.ddit.page.model.Page_videoVo;
 import kr.or.ddit.page.service.IPageService;
 import kr.or.ddit.page.service.IPage_sourceService;
+import kr.or.ddit.page.service.IPage_videoService;
 import kr.or.ddit.portfolio.model.PortfolioVo;
 import kr.or.ddit.portfolio.service.IPortfolioService;
 import kr.or.ddit.section.model.SectionVo;
@@ -50,6 +52,9 @@ public class PageController {
 	
 	@Resource(name="page_sourceService")
 	private IPage_sourceService sourceService;
+	
+	@Resource(name="page_videoService")
+	private IPage_videoService videoService;
 	
 	/**
 	 * 
@@ -205,13 +210,21 @@ public class PageController {
 	@RequestMapping(path = "/savePage", method = RequestMethod.POST)
 	public String savePage(PageVo pVo, Model model, HttpServletRequest req) {
 		
+		//소스코드 저장
 		String[] source_contents = req.getParameterValues("source_contents");
 		String[] source_mode = req.getParameterValues("source_mode");
 		String[] source_theme = req.getParameterValues("source_theme");
 		String[] css_top = req.getParameterValues("css_top");
 		String[] css_left = req.getParameterValues("css_left");
 		
+		//비디오 저장
+		String[] video_link = req.getParameterValues("video_link");
+		String[] video_css_top = req.getParameterValues("video_css_top");
+		String[] video_css_left = req.getParameterValues("video_css_left");
 		
+		
+		
+		//page 저장
 		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		pageService.insert_page(pVo);
 		
@@ -228,6 +241,22 @@ public class PageController {
 				sourceService.insert_page_source(psVo);
 			}
 		}
+		
+		if(video_link != null) {
+			Page_videoVo pvVo = new Page_videoVo();
+			for(int i=0; i<video_link.length; i++) {
+				
+				pvVo.setPage_code(pVo.getPage_code());
+				pvVo.setVideo_link(video_link[i]);
+				pvVo.setVideo_css_left(video_css_left[i]);
+				pvVo.setVideo_css_top(video_css_top[i]);
+				
+				videoService.insert_page_video(pvVo);
+			}
+		}
+		
+		
+		
 		return "redirect:/blog/blogMainView?user_id=" + mVo.getMem_id();
 	}
 	
