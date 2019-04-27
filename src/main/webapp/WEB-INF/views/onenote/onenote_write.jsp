@@ -297,7 +297,7 @@
             <div id="textPage" role="tabpanel" class="tab-pane active">
             
                 <!-- 텍스트 추가 버튼-->
-                <button id="addText" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="텍스트 추가">
+                <button id="addText" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="텍스트 추가">
                		<div class="btn_icon">
                			<i class="fas fa-font"></i>
                		</div>
@@ -345,7 +345,7 @@
                 <!-- 텍스트 컬러픽커 드롭다운 -->
                	<div class="btn-group">
                   <!-- 글자 배경색 변경 --> 	
-                  <button id="bgColor" class="btn btn-default menu_btn" data-toggle="dropdown" title="텍스트 배경색" disabled>
+                  <button id="bgColor" class="btn btn-primary menu_btn" data-toggle="dropdown" title="텍스트 배경색" disabled>
 					  	<i class="material-icons" style="font-size:50px">font_download</i>
 					  	<div class="btn_name">
 	               			<span>배경색 변경</span>
@@ -353,7 +353,7 @@
 				  </button>
 				  
 				  <!-- 글자색 번경 -->
-				  <button id="fontColor" class="btn btn-default menu_btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-placement="bottom" title="글씨 색" disabled>
+				  <button id="fontColor" class="btn btn-primary menu_btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-placement="bottom" title="글씨 색" disabled>
 	                    <i class="material-icons" style="font-size:50px">format_color_text</i>
 	                    <div class="btn_name">
 	               			<span>글자색 변경</span>
@@ -368,7 +368,7 @@
 
                     
 				<!-- Bold체 버튼-->
-                <button id="fontBold" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="굵게" disabled>
+                <button id="fontBold" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="굵게" disabled>
                 	<div class="btn_icon">
                 		<i class="fas fa-bold"></i>
                 	</div>
@@ -378,7 +378,7 @@
                 </button>
                 
                 <!-- Itaric체 버튼 -->
-                <button id="fontItalic" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="기울게" disabled>
+                <button id="fontItalic" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="기울게" disabled>
                 	<div class="btn_icon">
                 		<i class="fas fa-italic"></i>
                 	</div>
@@ -388,7 +388,7 @@
                 </button>
                 
                 <!-- 밑줄 버튼 -->
-                <button id="fontUnderLine" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="밑줄" disabled>
+                <button id="fontUnderLine" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="밑줄" disabled>
                 	<div class="btn_icon">
                 		<i class="fas fa-underline"></i>
                 	</div>
@@ -398,7 +398,7 @@
                 </button>
                 
                 <!-- 취소선 버튼 -->
-                <button id="fontDeleteLine" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="취소선" disabled>
+                <button id="fontDeleteLine" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="취소선" disabled>
                 	<div class="btn_icon">
                 		<i class="fas fa-strikethrough"></i>
                 	</div>
@@ -408,7 +408,7 @@
 				</button>
                 
                 <!-- 왼쪽 정렬 -->
-				<button id="alignLeft" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="왼쪽 정렬" disabled>
+				<button id="alignLeft" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="왼쪽 정렬" disabled>
 					<div class="btn_icon">
 						<i class="fas fa-align-left"></i>
 					</div>
@@ -418,7 +418,7 @@
 				</button>
 				
 				<!-- 가운데 정렬 -->
-                <button id="alignCenter" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="가운데 정렬" disabled>
+                <button id="alignCenter" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="가운데 정렬" disabled>
                 	<div class="btn_icon">
                 		<i class="fas fa-align-center"></i>
                 	</div>
@@ -428,7 +428,7 @@
                 </button>
                 
                	<!-- 오른쪽 정렬 -->
-                <button id="alignRight" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="오른쪽 정렬" disabled>
+                <button id="alignRight" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="오른쪽 정렬" disabled>
                 	<div class="btn_icon">
                 		<i class="fas fa-align-right"></i>
                 	</div>
@@ -445,7 +445,7 @@
             <div id="drawingPage" role="tabpanel" class="tab-pane">
                 
                 <!-- 사각형 그리기 -->
-                <button id="addSquare" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="사각형">
+                <button id="addSquare" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="사각형">
                 	<div class="btn_icon">
                 		<i class="far fa-square"></i>
                 	</div>
@@ -455,7 +455,7 @@
                 </button>
 
 				<!-- 삼각형 그리기 -->
-                <button id="addTriangle" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="삼각형">
+                <button id="addTriangle" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="삼각형">
                 	<span style="font-size: 40px; font-weight: bold">△</span>
                 	<div class="btn_name">
                 		<span>삼각형 그리기</span>
@@ -463,7 +463,7 @@
                 </button>
 
 				<!-- 원 그리기 -->
-                <button id="addCircle" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="원">
+                <button id="addCircle" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="원">
                 	<div class="btn_icon">
                 		<i class="far fa-circle"></i>
                 	</div>
@@ -473,7 +473,7 @@
                 </button>
 
 				<!-- 선 그리기 -->
-                <button id="addLine" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="선">
+                <button id="addLine" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="선">
                 	<span style="font-size: 40px; font-weight: bold">/</span>
                 	<div class="btn_name">
                 		<span>선 그리기</span>
@@ -481,7 +481,7 @@
                 </button>
 				
 				<!-- 한쪽 화살표 -->
-                <button id="addArrow" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="한쪽 화살표" style="font-size:15px">
+                <button id="addArrow" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="한쪽 화살표" style="font-size:15px">
                 	<span style="font-size: 40px; font-weight: bold">↗</span>
 	               	<div class="btn_name">
 	               		<span>한쪽 화살표</span>
@@ -489,7 +489,7 @@
                 </button>
 
 				<!-- 양쪽 화살표 -->
-                <button id="addDArrow" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="양쪽 화살표">
+                <button id="addDArrow" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="양쪽 화살표">
 					<span style="font-size: 40px; font-weight: bold">⤢</span>
                 	<div class="btn_name">
                 		<span>양쪽 화살표</span>
@@ -498,7 +498,7 @@
                 
 				<!-- 도형 색변경 -->
                 <div class="btn-group">
-                	<button id="strokeColor" class="btn btn-default menu_btn" data-toggle="dropdown" title="텍스트 배경색" disabled>
+                	<button id="strokeColor" class="btn btn-primary menu_btn" data-toggle="dropdown" title="텍스트 배경색" disabled>
 						<div class="btn_icon">
 							<i class="fas fa-fill-drip"></i>
 						</div>
@@ -565,7 +565,7 @@
                     	<i class="fab fa-youtube"></i>
                     </div>
                     <div class="btn_name">
-                    	<span>비디오 추가</span>
+                    	<span>Youtube</span>
                     </div>
                 </button>
 
@@ -586,7 +586,7 @@
 			
 				<button id="imageSaveBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="이미지 저장" onclick="stage_save_img();">
                     <div class="btn_icon">
-                    	<i class="fas fa-link"></i>
+                    	<i class="fas fa-file-download"></i>
                     </div>
                     <div class="btn_name">
                     	이미지 저장
@@ -596,7 +596,7 @@
                 
                 <button id="pageSaveBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="페이지 저장" onclick="input_page_title('${ pVo.page_title }');">
                     <div class="btn_icon">
-                    	<i class="fas fa-link"></i>
+                    	<i class="far fa-save"></i>
                     </div>
                     <div class="btn_name">
                     	페이지 저장
@@ -606,7 +606,7 @@
                 <button id="stageColorBtn" class="btn btn-primary menu_btn" type="button" data-toggle="popover" data-container="body"
 				data-toggle="popover" data-placement="bottom" data-content=" " data-trigger="focus" data-placement="bottom" onclick="updateStageColor();">
                     <div class="btn_icon">
-                    	<i class="fas fa-link"></i>
+                    	<i class="fas fa-fill-drip"></i>
                     </div>
                     <div class="btn_name">
                     	배경색 변경
@@ -990,9 +990,9 @@
 
         if (fontAlign != 'left') {
             selectNode.align('left');
-            $("#alignLeft").css('background-color', 'gray');
+           /*  $("#alignLeft").css('background-color', 'gray');
             $("#alignCenter").css('background-color', 'white');
-            $("#alignRight").css('background-color', 'white');
+            $("#alignRight").css('background-color', 'white'); */
         }
 
         layer.draw();
@@ -1005,9 +1005,9 @@
 
         if (fontAlign != 'center') {
             selectNode.align('center');
-            $("#alignLeft").css('background-color', 'white');
+            /* $("#alignLeft").css('background-color', 'white');
             $("#alignCenter").css('background-color', 'gray');
-            $("#alignRight").css('background-color', 'white');
+            $("#alignRight").css('background-color', 'white'); */
         }
 
         layer.draw();
@@ -1020,9 +1020,9 @@
 
         if (fontAlign != 'right') {
             selectNode.align('right');
-            $("#alignLeft").css('background-color', 'white');
+           /*  $("#alignLeft").css('background-color', 'white');
             $("#alignCenter").css('background-color', 'white');
-            $("#alignRight").css('background-color', 'gray');
+            $("#alignRight").css('background-color', 'gray'); */
         }
 
         layer.draw();
@@ -1125,6 +1125,11 @@
 	//비디오 삽입
     $('#videoBtn').on('click', function() {
     	input_youtube_link();
+    });
+	
+	//링크 삽입
+    $('#linkBtn').on('click', function() {
+    	input_link_address();
     });
 
     //이모티콘 버튼 
@@ -1307,12 +1312,12 @@
         $("#fontDeleteLine").attr('disabled', true);
 
         //버튼 색
-        $('#fontColor').attr('background-color', 'white');
+/*         $('#fontColor').attr('background-color', 'white');
         $('#bgColor').attr('background-color', 'white');
         $("#fontBold").css('background-color', 'white');
         $("#fontItalic").css('background-color', 'white');
         $("#fontUnderLine").css('background-color', 'white');
-        $("#fontDeleteLine").css('background-color', 'white');
+        $("#fontDeleteLine").css('background-color', 'white'); */
 
         //fontAlign
         //버튼 비활성화
@@ -1321,9 +1326,9 @@
         $("#alignRight").attr('disabled', true);
 
         //버튼 색
-        $("#alignLeft").css('background-color', 'white');
+/*         $("#alignLeft").css('background-color', 'white');
         $("#alignCenter").css('background-color', 'white');
-        $("#alignRight").css('background-color', 'white');
+        $("#alignRight").css('background-color', 'white'); */
 
         if (selectNode.hasName('text')) {
             //console.log(selectNode);
@@ -1352,7 +1357,7 @@
             var fontDecoration = selectNode.textDecoration();
             var fontAlign = selectNode.align();
 
-            if (fontStyle.search('bold') > -1) {
+            /* if (fontStyle.search('bold') > -1) {
                 $("#fontBold").css('background-color', 'gray');
             } else if (fontStyle.search('bold') == -1) {
                 $("#fontBold").css('background-color', 'white');
@@ -1382,7 +1387,7 @@
                 $("#alignCenter").css('background-color', 'gray');
             } else if (fontAlign == 'right') {
                 $("#alignRight").css('background-color', 'gray');
-            }
+            } */
 
         }
     }
@@ -1505,8 +1510,8 @@
     	//video div 생성
     	var video_div = document.createElement('div');
     	video_div.id = 'video_div' + video_num;
-    	
     	$(video_div).addClass('video_div');
+    	video_div.style = 'background-image: url(/page/onenoteImageView?src=video_img.png);';
         
         //view_div에 생성한 div 넣기
         $('#view_div').append(video_div);

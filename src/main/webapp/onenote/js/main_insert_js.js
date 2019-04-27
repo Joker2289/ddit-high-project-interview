@@ -147,7 +147,7 @@ function addImage(data) {
 //                                유튜브 삽입
 
 
-//코드 id 배열
+//Video id 배열
 var video_id_array = new Array;			//비디오 ID
 var video_link_array = new Array();		//비디오 링크
 
@@ -160,10 +160,8 @@ function input_youtube_link(){
 	//video div 생성
 	var video_div = document.createElement('div');
 	video_div.id = 'video_div' + node_num;
-	video_div.onmouseenter = showHandle(node_num);
-	video_div.onmouseleave = hideHandle(node_num);
-	
-    $(video_div).addClass('video_div');
+	$(video_div).addClass('video_div');
+	video_div.style = 'background-image: url(/page/onenoteImageView?src=video_img.png);';
     
     //view_div에 생성한 div 넣기
     $('#view_div').append(video_div);
@@ -414,6 +412,75 @@ function themeSelect(){
 	editor.setOption('theme', code_theme);
 	editor.save();
 }
+
+
+//                  링크 삽입
+//link id 배열
+var link_id_array = new Array;			//링크 ID
+var link_address_array = new Array();		//링크 주소
+
+
+//링크 주소 입력 받기 & div 클래스 입력
+function input_link_address(){
+	
+	node_num++;
+	
+	//video div 생성
+	var link_div = document.createElement('div');
+	link_div.id = 'link_div' + node_num;
+	$(link_div).addClass('link_div');
+    
+    //view_div에 생성한 div 넣기
+    $('#view_div').append(link_div);
+    
+	
+    
+    //비디오 링크 입력
+    var link_adress = prompt( '링크 주소 입력', '' );
+    
+    if(link_adress != null){
+		
+		//DB로 보낼 정보 저장
+		link_id_array.push(node_num);
+		link_address_array.push(link_adress);
+		
+		addLink(link_adress);
+		
+		return;
+	}
+	
+	//취소시 div 삭제
+	$('#link_div' + node_num).remove();
+}
+
+//링크 첨부
+function addLink(link_adress) {
+	
+	var a = document.createElement('a');
+    a.id = "link" + node_num;
+    a.href = link_adress;
+    a.style = "font-size: 30px; color: #489BF0;";
+    a.text = link_adress;
+    
+    $('#link_div'+node_num).append(a);
+    
+    //css 위치 값으로 컨트롤 draggable효과 추가
+    $("#link_div" + node_num).draggable({
+        containment: "#container",
+    });
+    
+    // div가 생성될 위치값 
+    $("#link_div" + node_num).css('left', '98px');
+    $("#link_div" + node_num).css('top', '200px');
+    
+    //매우중요 block 
+    //block = width값 사이즈에 맞게 고정
+    //absolute = 영역에 속해 있지 않은 단독 고정 위치
+    $("#link_div" + node_num).css('display', 'block');
+    $("#link_div" + node_num).css('position', 'absolute');
+    
+}
+
 
 
 
