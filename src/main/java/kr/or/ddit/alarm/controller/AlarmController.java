@@ -1,5 +1,9 @@
 package kr.or.ddit.alarm.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,7 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.alarm.model.AlarmVo;
 import kr.or.ddit.alarm.service.IAlarmService;
+import kr.or.ddit.corporation.model.CorporationVo;
+import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.recruit.model.RecruitVo;
+import kr.or.ddit.recruit.service.IRecruitService;
 import kr.or.ddit.util.pagination.PaginationVo;
 
 @Controller
@@ -26,8 +34,14 @@ public class AlarmController {
 	@Resource(name="alarmService")
 	private IAlarmService alarmService;
 	
+	@Resource(name="recruitService")
+	private IRecruitService recrService;
+	
+	@Resource(name="corporationService")
+	private ICorporationService corpService;
+	
 	@RequestMapping(path={"/alarm"}, method=RequestMethod.GET)
-	public String alarmHome(Model model, HttpServletRequest request){
+	public String alarmHome(Model model, HttpServletRequest request) throws ParseException{
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		PaginationVo paginationVo = new PaginationVo(1, 5);
@@ -65,6 +79,54 @@ public class AlarmController {
 		} else {
 			model.addAttribute("previousCount", previousCount);
 		}
+		
+		/////////////////////////////// newList
+		
+		// 광고 부분 -> 신규 채용공고 (newList)
+		List<RecruitVo> newList = recrService.getNewList();
+		
+		// newList size : 7. index 6 -> index 0에 add.
+		newList.add(0, newList.get(6));
+		
+		List<String> newImgList = new ArrayList<>();
+		List<String> newNmList = new ArrayList<>();
+		List<String> newTimeList = new ArrayList<>();
+		
+		for(int i=0; i < newList.size(); i++){
+			RecruitVo rVo = newList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			newImgList.add(cVo.getLogo_path());
+			newNmList.add(cVo.getCorp_name());
+			
+			String start_date = rVo.getStart_date();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+			Date start = sdf.parse(start_date);
+			Date now = new Date();
+			
+			long temp_time = now.getTime() - start.getTime();
+			
+			int time_diff = (int) (temp_time / (60*1000));
+			
+			if(time_diff < 2){
+				newTimeList.add("방금");
+			}else if(time_diff < 60){
+				newTimeList.add(time_diff + "분");
+			}else if(time_diff < 1440){
+				newTimeList.add(time_diff/60 + "시간");
+			}else if(time_diff < 43200){
+				newTimeList.add(time_diff/(60*24) + "일");
+			}else{
+				newTimeList.add(time_diff/(60*24*30) + "달");
+			}				
+		}		
+		
+		model.addAttribute("newList", newList);
+		model.addAttribute("newImgList", newImgList);
+		model.addAttribute("newNmList", newNmList);
+		model.addAttribute("newTimeList", newTimeList);
+		
+		/////////////////////////////// newList		
 		
 		return "alarmTiles";
 	}
