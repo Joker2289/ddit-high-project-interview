@@ -15,11 +15,21 @@ public class AlarmVo {
 	private String send_name;
 	private int resultMinute;
 	private String alarm_separate; //알림 구분
-	
+	private String mem_division; // 회원 구분
+//	private String alarm_contents;
+
 	public AlarmVo() {
 		
 	}
+	
+	public String getMem_division() {
+		return mem_division;
+	}
 
+	public void setMem_division(String mem_division) {
+		this.mem_division = mem_division;
+	}
+	
 	public String getAlarm_separate() {
 		return alarm_separate;
 	}
@@ -113,7 +123,6 @@ public class AlarmVo {
 		return "AlarmVo [alarm_code=" + alarm_code + ", mem_id=" + mem_id + ", ref_code=" + ref_code + ", alarm_check="
 				+ alarm_check + ", division=" + division + ", alarm_date=" + alarm_date + ", send_id=" + send_id
 				+ ", profile_path=" + profile_path + ", send_name=" + send_name + ", resultMinute=" + resultMinute
-				+ ", alarm_separate=" + alarm_separate + "]";
+				+ ", alarm_separate=" + alarm_separate + ", mem_division=" + mem_division + "]";
 	}
-
 }

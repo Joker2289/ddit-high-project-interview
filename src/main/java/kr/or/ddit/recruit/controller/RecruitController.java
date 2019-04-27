@@ -30,6 +30,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.or.ddit.alarm.model.AlarmVo;
+import kr.or.ddit.alarm.service.AlarmServiceImpl;
+import kr.or.ddit.alarm.service.IAlarmService;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.interest.model.InterestVo;
@@ -74,6 +77,9 @@ public class RecruitController {
 	
 	@Resource(name="itemService")
 	private IItemService itemService;
+	
+	@Resource(name="alarmService")
+	private IAlarmService alarmService;
 
 	private List<String> img_list;
 	private List<String> str_list;
@@ -1262,6 +1268,17 @@ public class RecruitController {
 		for(String alarmWord : alarmWordList){
 			List<String> userList = sLogService.getAlarmUserList(alarmWord);
 			resultMap.put(alarmWord, userList);
+		}
+		
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setAlarm_check("0");
+		alarmInfo.setAlarm_separate("08");
+		alarmInfo.setDivision("34");
+		alarmInfo.setRef_code(recruit_code);
+		
+		for(int i=0; i< alarmWordList.size(); i++){
+//			alarmInfo.set
+//			alarmService.insert_alarmInfo(alarmInfo);
 		}
 		
 		logger.debug("map? : {}", resultMap.toString());
