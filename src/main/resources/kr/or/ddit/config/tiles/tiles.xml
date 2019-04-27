@@ -135,6 +135,10 @@
 		<put-attribute name="content" value="/WEB-INF/views/alarm/alarm.jsp" />
 	</definition>
 	
+	<definition name="companyReviewTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/company/companyReview.jsp" />
+	</definition>
+
 	<definition name="postDetailTiles" extends="layout">
 		<put-attribute name="content" value="/WEB-INF/views/timeline/postDetail.jsp" />
 	</definition>

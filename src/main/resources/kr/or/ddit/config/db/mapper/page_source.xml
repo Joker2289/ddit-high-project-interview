@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="page_source">
+
+	<!-- 섹션 추가 -->
+	<insert id="insert_page_source" parameterType="page_sourceVo">
+		insert into page_source
+		values (
+			source_code_seq.nextval,
+			#{ page_code },
+			#{ source_contents },
+			#{ source_mode },
+			#{ source_theme },
+			#{ css_top },
+			#{ css_left }
+		)
+	</insert>
+	
+	
+</mapper> 

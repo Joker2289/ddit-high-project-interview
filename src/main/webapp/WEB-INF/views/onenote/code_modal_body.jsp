@@ -188,7 +188,7 @@
 	<option value="zenburn">zenburn</option>
 </select>
 
-<button id="code_view_btn" onclick="code_view_rendering();">미리보기</button>
+<button id="code_view_btn" onclick="code_view_rendering();">랜더링</button>
 
 <!-- 소스코드 area -->
 <textarea id='code_editor'>

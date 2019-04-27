@@ -670,6 +670,16 @@
 		<input type="hidden" id="user_id" name="user_id"/>
 	</form>
 	
+	<!-- 소스코드 저장 폼 -->
+	<!-- <form id=""  action="" method="post">
+		<input type="hidden" id="page_code" name="page_code"/> 
+		<input type="hidden" id="source_contents" name="source_contents"/> 
+		<input type="hidden" id="source_mode" name="source_mode"/> 
+		<input type="hidden" id="source_theme" name="source_theme"/> 
+		<input type="hidden" id="css_top" name="css_top"/>
+		<input type="hidden" id="css_left" name="css_left"/>  
+	</form> -->
+	
 	
 	<form id="thumnailForm">
 		<input type="hidden" id="thumnail_data" name="thumnail_data"/>
