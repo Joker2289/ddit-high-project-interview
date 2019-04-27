@@ -11,8 +11,8 @@
 			video_code_seq.nextval,
 			#{ page_code },
 			#{ video_link },
-			#{ css_top },
-			#{ css_left }
+			#{ video_css_top },
+			#{ video_css_left }
 		)
 	</insert>
 	
