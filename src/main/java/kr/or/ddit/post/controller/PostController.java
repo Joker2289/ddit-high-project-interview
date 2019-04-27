@@ -2,7 +2,10 @@ package kr.or.ddit.post.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -42,6 +45,8 @@ import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
 import kr.or.ddit.post_comment.model.Post_commentVo;
 import kr.or.ddit.post_comment.service.ICommentService;
+import kr.or.ddit.recruit.model.RecruitVo;
+import kr.or.ddit.recruit.service.IRecruitService;
 import kr.or.ddit.report.model.ReportVo;
 import kr.or.ddit.report.service.IReportService;
 import kr.or.ddit.save_post.model.Save_postVo;
@@ -50,6 +55,7 @@ import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.hashtagUtil.ReplaceContents;
 import kr.or.ddit.util.pagination.PaginationVo;
+import oracle.net.aso.i;
 
 @Controller
 public class PostController {
@@ -98,8 +104,14 @@ public class PostController {
 	@Resource(name="alarmService")
 	private IAlarmService alarmService;
 	
+	@Resource(name="recruitService")
+	private IRecruitService recrService;
+	
+	@Resource(name="corporationService")
+	private ICorporationService corpService;
+	
 	@RequestMapping(path={"/timeline"}, method={RequestMethod.GET})
-	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request){
+	public String timelineView(Model model, PaginationVo paginationVo, HttpServletRequest request) throws ParseException{
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
@@ -162,6 +174,55 @@ public class PostController {
 		
 		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
 		model.addAttribute("saveList", saveList);
+		
+		
+		/////////////////////////////// newList
+		
+		// 광고 부분 -> 신규 채용공고 (newList)
+		List<RecruitVo> newList = recrService.getNewList();
+		
+		// newList size : 7. index 6 -> index 0에 add.
+		newList.add(0, newList.get(6));
+		
+		List<String> newImgList = new ArrayList<>();
+		List<String> newNmList = new ArrayList<>();
+		List<String> newTimeList = new ArrayList<>();
+		
+		for(int i=0; i < newList.size(); i++){
+			RecruitVo rVo = newList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			newImgList.add(cVo.getLogo_path());
+			newNmList.add(cVo.getCorp_name());
+			
+			String start_date = rVo.getStart_date();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+			Date start = sdf.parse(start_date);
+			Date now = new Date();
+			
+			long temp_time = now.getTime() - start.getTime();
+			
+			int time_diff = (int) (temp_time / (60*1000));
+			
+			if(time_diff < 2){
+				newTimeList.add("방금");
+			}else if(time_diff < 60){
+				newTimeList.add(time_diff + "분");
+			}else if(time_diff < 1440){
+				newTimeList.add(time_diff/60 + "시간");
+			}else if(time_diff < 43200){
+				newTimeList.add(time_diff/(60*24) + "일");
+			}else{
+				newTimeList.add(time_diff/(60*24*30) + "달");
+			}				
+		}		
+		
+		model.addAttribute("newList", newList);
+		model.addAttribute("newImgList", newImgList);
+		model.addAttribute("newNmList", newNmList);
+		model.addAttribute("newTimeList", newTimeList);
+		
+		/////////////////////////////// newList		
 		
 		return "timeLineTiles";
 	}

@@ -43,6 +43,8 @@ import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
+import kr.or.ddit.report.model.ReportVo;
+import kr.or.ddit.report.service.IReportService;
 import kr.or.ddit.save_recruit.model.Save_recruitVo;
 import kr.or.ddit.save_recruit.service.ISave_recruitService;
 import kr.or.ddit.search_log.model.Search_logVo;
@@ -81,6 +83,9 @@ public class RecruitController {
 	@Resource(name="alarmService")
 	private IAlarmService alarmService;
 
+	@Resource(name="reportService")
+	private IReportService reportService;
+	
 	private List<String> img_list;
 	private List<String> str_list;
 	private List<String> one_list;
@@ -93,7 +98,7 @@ public class RecruitController {
 	// @채용공고 페이지 요청.
 	@RequestMapping("/recruit")
 	public String recruit(HttpSession session, HttpServletRequest req, String msg_flag, 
-			String msg, Model model) throws IOException{
+			String msg, Model model) throws IOException, ParseException{
 		// 유저정보 수정. 'SESSION_MEMBERVO'
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");		
 		
@@ -215,6 +220,7 @@ public class RecruitController {
 			
 			List<String> corpImgList2 = new ArrayList<>();
 			List<String> corpNmList2 = new ArrayList<>();
+			List<String> timeList2 = new ArrayList<>();
 			
 			// 스크랩 데이터는 srecr에 있으니까 저장여부 리스트 scrapList 만들기. size는 rRList2에서 
 			// 가져오고 uSRList에서 save_flag가 't'인게 있으면 t. 없으면 f.
@@ -240,11 +246,34 @@ public class RecruitController {
 				if(scrapCheck_flag == false){
 					scrapList2.add("f");
 				}
+				
+				String start_date = rVo.getStart_date();
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+				Date start = sdf.parse(start_date);
+				Date now = new Date();
+				
+				long temp_time = now.getTime() - start.getTime();
+				
+				int time_diff = (int) (temp_time / (60*1000));
+				
+				if(time_diff < 2){
+					timeList2.add("방금");
+				}else if(time_diff < 60){
+					timeList2.add(time_diff + "분");
+				}else if(time_diff < 1440){
+					timeList2.add(time_diff/60 + "시간");
+				}else if(time_diff < 43200){
+					timeList2.add(time_diff/(60*24) + "일");
+				}else{
+					timeList2.add(time_diff/(60*24*30) + "달");
+				}				
 			}
 			
 			model.addAttribute("corpImgList2", corpImgList2);		
 			model.addAttribute("corpNmList2", corpNmList2);			
 			model.addAttribute("scrapList2", scrapList2);		
+			model.addAttribute("timeList2", timeList2);		
 			
 			// rRList2.size()가 rRList2Size가 될때까지 마지막 항목 지움.
 			while(rRList2.size() > rRList2Size){
@@ -256,6 +285,13 @@ public class RecruitController {
 
 		// 조회한 항목(마지막으로 조회한 채용공고) model에 넣기.
 		RecruitVo lVRVo = recrService.getLastViewRecr(mVo.getMem_id());
+		
+		if(lVRVo == null){
+			lVRVo = new RecruitVo();
+			lVRVo.setRecruit_title("원하는 채용공고를 찾아보세요!");
+			lVRVo.setJob_local("회원님에게 맞는 채용공고를 추천해드립니다.");
+		}
+		
 		model.addAttribute("lVRVo", lVRVo);
 		
 		// 저장한 검색어 리스트 (saveList) 넘기기.
@@ -270,6 +306,54 @@ public class RecruitController {
 		// 최근 검색어 리스트 (sList) 넘기기.
 		List<Search_logVo> sList = sLogService.getSList(mVo.getMem_id());
 		model.addAttribute("sList", sList);
+		
+		/////////////////////////////// newList
+		
+		// 광고 부분 -> 신규 채용공고 (newList)
+		List<RecruitVo> newList = recrService.getNewList();
+		
+		// newList size : 7. index 6 -> index 0에 add.
+		newList.add(0, newList.get(6));
+		
+		List<String> newImgList = new ArrayList<>();
+		List<String> newNmList = new ArrayList<>();
+		List<String> newTimeList = new ArrayList<>();
+		
+		for(int i=0; i < newList.size(); i++){
+			RecruitVo rVo = newList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			newImgList.add(cVo.getLogo_path());
+			newNmList.add(cVo.getCorp_name());
+			
+			String start_date = rVo.getStart_date();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+			Date start = sdf.parse(start_date);
+			Date now = new Date();
+			
+			long temp_time = now.getTime() - start.getTime();
+			
+			int time_diff = (int) (temp_time / (60*1000));
+			
+			if(time_diff < 2){
+				newTimeList.add("방금");
+			}else if(time_diff < 60){
+				newTimeList.add(time_diff + "분");
+			}else if(time_diff < 1440){
+				newTimeList.add(time_diff/60 + "시간");
+			}else if(time_diff < 43200){
+				newTimeList.add(time_diff/(60*24) + "일");
+			}else{
+				newTimeList.add(time_diff/(60*24*30) + "달");
+			}				
+		}		
+		
+		model.addAttribute("newList", newList);
+		model.addAttribute("newImgList", newImgList);
+		model.addAttribute("newNmList", newNmList);
+		model.addAttribute("newTimeList", newTimeList);
+		
+		/////////////////////////////// newList
 		
 //		logger.debug("flag?? : {}", scrap_flag); // 설마 로그 너무 많아서..
 		// logback.xml logger level error 추가함.
@@ -287,7 +371,7 @@ public class RecruitController {
 		// 조회한 채용공고가 없는 경우도 처리해줘야 함.
 		// 변수 첫 자는 소문자로.
 		RecruitVo lVRVo = recrService.getLastViewRecr(mVo.getMem_id());
-		model.addAttribute("lVRVo", lVRVo);
+//		model.addAttribute("lVRVo", lVRVo);
 		
 		List<RecruitVo> rRList1 = new ArrayList<>();
 		if(lVRVo == null){
@@ -466,7 +550,7 @@ public class RecruitController {
 			model.addAttribute("scrapList1", scrapList1);			
 			model.addAttribute("timeList1", timeList1);			
 		}
-
+		
 		model.addAttribute("rRList1", rRList1);		
 
 		return "recruit/rRList1AjaxHtml";
@@ -876,7 +960,8 @@ public class RecruitController {
 	
 	// @채용공고 상세화면.
 	@RequestMapping(path="/recr_detail", method=RequestMethod.POST)
-	public String recr_detail(String recruit_code, HttpSession session, String req_page, Model model){
+	public String recr_detail(String recruit_code, HttpSession session, String req_page, 
+			String msg_flag, Model model){
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		// 회원 정보를 가져와서 채용공고저장에 마지막으로 조회한 채용공고 저장. 마지막 채용공고를 따로 
@@ -936,6 +1021,8 @@ public class RecruitController {
 		
 		// recruit에서 넘어온 req_page 넣기.
 		model.addAttribute("req_page", req_page);
+		
+		model.addAttribute("msg_flag", msg_flag);
 		
 		return "recr_detailTiles";
 	}
@@ -1285,6 +1372,27 @@ public class RecruitController {
 		
 		// tiles로 바로 가면 안되고 /recruit로 redirect 해야지.
 		return "redirect:" + req.getContextPath() + "/recruit";
+	}
+	
+	// @채용공고 신고.
+	@RequestMapping("/reportRecr")
+	public String reportRecr(HttpServletRequest req, HttpSession session, String report_contents,
+			String recruit_code, Model model) {
+		ReportVo rVo = new ReportVo();
+		rVo.setDivision("34"); // recruit
+		
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		rVo.setMem_id(mVo.getMem_id());
+		rVo.setRef_code(recruit_code);
+		rVo.setReport_contents(report_contents);
+		logger.debug("recruit_code? : {}", recruit_code);
+		
+		reportService.insert_reportInfo(rVo);
+		
+		// t - "정상적으로 신고접수 되었습니다."
+		model.addAttribute("msg_flag", "t");
+		
+		return "redirect:" + req.getContextPath() + "/recr_detail";
 	}
 	
 	
