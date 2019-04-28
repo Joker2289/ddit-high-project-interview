@@ -1263,22 +1263,21 @@ public class RecruitController {
 			}
 		}
 		
-		Map<String, List<String>> resultMap = new HashMap<>();
-		
-		for(String alarmWord : alarmWordList){
-			List<String> userList = sLogService.getAlarmUserList(alarmWord);
-			resultMap.put(alarmWord, userList);
-		}
-		
 		AlarmVo alarmInfo = new AlarmVo();
 		alarmInfo.setAlarm_check("0");
 		alarmInfo.setAlarm_separate("08");
 		alarmInfo.setDivision("34");
 		alarmInfo.setRef_code(recruit_code);
+
+		Map<String, List<String>> resultMap = new HashMap<>();
 		
-		for(int i=0; i< alarmWordList.size(); i++){
-//			alarmInfo.set
-//			alarmService.insert_alarmInfo(alarmInfo);
+		for(String alarmWord : alarmWordList){
+			List<String> userList = sLogService.getAlarmUserList(alarmWord);
+			
+			for(int i=0; i<userList.size(); i++){
+				alarmInfo.setMem_id(userList.get(i));
+				alarmService.insert_alarmInfo(alarmInfo);
+			}
 		}
 		
 		logger.debug("map? : {}", resultMap.toString());
