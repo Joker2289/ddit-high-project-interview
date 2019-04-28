@@ -56,7 +56,7 @@
 								<i class="fas fa-ellipsis-h"></i>
 							</button>
 							<c:choose>
-								<c:when test="${ post.mem_id eq memberInfo.mem_id }">
+								<c:when test="${ pVo.user_id eq SESSION_MEMBERVO.mem_id }">
 									<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 									
 										<button type="button" class="btn_controll-list" onclick='update_onenote_write(${ page.page_code })'>
@@ -116,8 +116,8 @@
 					<!-- 댓글, 좋아요버튼 구간 -->
 					<div class="col-post-social">
 						<!-- 좋아요 버튼 -->
-						<button class="btn-social good_btn" onclick="good_page_select('${ page.page_code }', '${ SESSION_MEMBERVO.mem_id }');">
-							<i class="far fa-thumbs-up"></i>
+						<button id="good_btn${ page.page_code }" class="btn-social good_btn" onclick="good_page_select('${ page.page_code }');">
+							<i id="good_icon${ page.page_code }" class="far fa-thumbs-up"></i>
 						</button>
 						<!-- 댓글 출력 버튼 -->
 						<button class="btn-social">
@@ -150,7 +150,18 @@
 	//테두리 index 컬러
 	/* $('#page_area_select_head').css('border', '5px solid ${ pVo.index_color }');
 	$('#writePageBtn').css('background-color', '${ pVo.index_color }'); */
-
+	
+	
+	/* 좋아요 효과 세팅 */
+	<c:forEach items="${ goodList }" var="good">
+		$('#good_btn' + ${ good.ref_code }).css('color', '#5386C5');
+		$('#good_btn' + ${ good.ref_code }).css('font-weight', 'bold');
+		$('#good_icon' + ${ good.ref_code }).attr('class', 'fas fa-thumbs-up');
+		$('#good_btn' + ${ good.ref_code }).attr('onclick', 'cancelGood_page_select("${ good.good_code }", "${ good.ref_code }");');
+	</c:forEach>
+	
+	
+	//페이지 작성 페이지로 이동
 	function writePage(section_code) {
 		document.location.href = "/page/onenote?section_code=" + section_code;
 	}
@@ -177,13 +188,11 @@
 	}
 	
 	//페이지 좋아요 - select 페이지 
-	function good_page_select(page_code, mem_id){
+	function good_page_select(page_code){
 			
-		var user_id = '${ pVo.user_id }';
-		
 		$.ajax({
 			url : "${cp}/blog/good_page_select",
-			data : {"user_id" : userId, "page_code" : page_code, "mem_id" : mem_id },
+			data : {"page_code" : page_code},
 			success : function(data) {
 				
 				$('#page_area').html(data);
@@ -191,6 +200,19 @@
 			}
 		});
 
+	}
+	
+	//페이지 좋아요 취소
+	function cancelGood_page_select(good_code, ref_code){
+		$.ajax({
+			url : "${cp}/blog/cancelGood_page_select",
+			data : { "good_code" : good_code, "page_code" : ref_code},
+			success : function(data) {
+				
+				$('#page_area').html(data);
+				
+			}
+		});
 	}
 	
 </script>

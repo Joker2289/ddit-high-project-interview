@@ -50,7 +50,7 @@
 							<i class="fas fa-ellipsis-h"></i>
 						</button>
 						<c:choose>
-							<c:when test="${ post.mem_id eq memberInfo.mem_id }">
+							<c:when test="${ user_id eq SESSION_MEMBERVO.mem_id }">
 								<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 								
 									<button type="button" class="btn_controll-list" onclick='update_onenote_write(${ page.page_code })'>
@@ -107,23 +107,19 @@
 				<!-- 댓글수, 좋아요 수 출력 -->
 				
 				
-				
+				<!-- 댓글, 좋아요버튼 구간 -->
 				<div class="col-post-social">
 					<!-- 좋아요 버튼 -->
-					<button class="btn-social btn_good"
-						style="margin-left: 10px; margin-top: 2px;"
-						title="${post.post_code }">
-						<span style="font-size: 18px;"> <i
-							id="icon_good${post.post_code }" class="far fa-thumbs-up"></i>
-						</span>
+					<button id="good_btn${ page.page_code }" class="btn-social good_btn" onclick="good_page('${ page.page_code }', '${ user_id }');">
+						<i id="good_icon${ page.page_code }" class="far fa-thumbs-up"></i>
 					</button>
 					<!-- 댓글 출력 버튼 -->
-					<button class="btn-social btn_comment"
-						id="btn_comment${post.post_code }" data-code="${post.post_code }"
-						title="${post.post_code }">
-						<span style="font-size: 18px;"><i class="far fa-comments"></i></span>
+					<button class="btn-social">
+						<i class="far fa-comments"></i>
 					</button>
 				</div>
+				<!-- 댓글, 좋아요버튼 구간 -->
+				
 
 				<!-- comment -->
 				<div class="col-comment-area ${ post.post_code }" id="post_comment${ post.post_code }">
@@ -141,6 +137,47 @@
 	
 </div>
 
+<script>
+
+	/* 좋아요 효과 세팅 */
+	<c:forEach items="${ goodList }" var="good">
+		$('#good_btn' + ${ good.ref_code }).css('color', '#5386C5');
+		$('#good_btn' + ${ good.ref_code }).css('font-weight', 'bold');
+		$('#good_icon' + ${ good.ref_code }).attr('class', 'fas fa-thumbs-up');
+		$('#good_btn' + ${ good.ref_code }).attr('onclick', 'cancelGood_page("${ good.good_code }", "${ good.ref_code }", "${ user_id }");');
+	</c:forEach>
+
+	//페이지 좋아요 - select 페이지 
+	function good_page(page_code, user_id){
+			
+		$.ajax({
+			url : "${cp}/blog/good_page",
+			data : {"page_code" : page_code, "user_id" : user_id },
+			success : function(data) {
+				
+				$('#page_area').html(data);
+				
+			}
+		});
+	
+	}
+	
+	//페이지 좋아요 취소
+	function cancelGood_page(good_code, ref_code, user_id){
+		$.ajax({
+			url : "${cp}/blog/cancelGood_page",
+			data : { "good_code" : good_code, "page_code" : ref_code, "user_id" : user_id },
+			success : function(data) {
+				
+				$('#page_area').html(data);
+				
+			}
+		});
+	}
+
+	
+
+</script>
 
 
 
