@@ -23,6 +23,8 @@ import kr.or.ddit.blog.service.IBlogService;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.follow.service.IFollowService;
+import kr.or.ddit.good.model.GoodVo;
+import kr.or.ddit.good.service.IGoodService;
 import kr.or.ddit.login.LoginController;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.page.model.PageVo;
@@ -60,6 +62,9 @@ public class BlogController {
 	
 	@Resource(name="pageService")
 	private IPageService pageService;
+	
+	@Resource(name="goodService")
+	private IGoodService goodService;
 	
 	
 	/**
@@ -106,6 +111,10 @@ public class BlogController {
 		//포트폴리오 리스트
 		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(user_id);
 		model.addAttribute("portfolioList", portfolioList);
+		
+		List<PageVo> pageList = pageService.select_pageAllList(user_id);
+		model.addAttribute("pageList", pageList);
+		
 		
 		return "blogTiles";
 	}
@@ -569,6 +578,44 @@ public class BlogController {
 		
 		List<PageVo> pageList = pageService.select_pageList(section_code);
 		model.addAttribute("pageList", pageList);
+		
+		return "blog/page_area_select";
+	}
+	
+	/**
+	 * 
+	 * Method : good_page_select
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param user_id
+	 * @param page_code
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : select page 페이지 에서 좋아요 등록 
+	 */
+	@RequestMapping("/good_page_select")
+	public String good_page_select(Model model, @RequestParam("user_id")String user_id,
+			@RequestParam("page_code")String page_code,
+			@RequestParam("mem_id")String mem_id) {
+		
+		//좋아요 등록
+		GoodVo gVo = new GoodVo();
+		gVo.setMem_id(mem_id);
+		gVo.setRef_code(page_code);
+		gVo.setDivision("22");
+		goodService.insert_goodInfo(gVo);
+		
+		//pageList 뿌리기
+		PageVo pageInfo = pageService.select_pageInfo(page_code);
+		List<PageVo> pageList = pageService.select_pageList(pageInfo.getSection_code());
+		model.addAttribute("pageList", pageList);
+		
+		SectionVo sVo = sectionService.select_sectionInfo(pageInfo.getSection_code());
+		model.addAttribute("sVo", sVo);
+		
+		PortfolioVo pVo = portfolioService.select_portfolioInfo(sVo.getPortfolio_code());
+		model.addAttribute("pVo", pVo);
 		
 		return "blog/page_area_select";
 	}

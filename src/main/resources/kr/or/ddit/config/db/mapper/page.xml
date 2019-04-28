@@ -35,7 +35,7 @@
 		 order by write_date desc
 	</select>
 	
-	<!-- 섹션의 전체 페이지 조뢰 조회 -->
+	<!-- 페이지 정보 조회 -->
 	<select id="select_pageInfo" parameterType="String" resultType="pageVo">
 		select page_code, section_code, page_title, page_contents, write_date, view_count, page_thumbnail, bg_color
 		  from page
@@ -60,6 +60,23 @@
 		delete page
 		 where page_code = #{ page_code }
 	</delete>
+	
+	<!-- 회원이 작성한 모든 page 리스트 조회 -->
+	<select id="select_pageAllList" parameterType="String" resultType="pageVo">
+		select  
+		
+        c.user_id, c.portfolio_code, c.section_code,
+        d.page_code, d.page_title, d.page_contents, d.write_date, d.view_count, d.page_thumbnail, d.bg_color
+        
+
+		from    (select a.user_id, a.portfolio_code, b.section_code
+		            from portfolio a, section b
+		            where user_id = #{user_id}
+		            and a.portfolio_code = b.portfolio_code) c, page d
+		
+		where d.section_code = c.section_code
+		order by d.write_date desc
+	</select>
 	
 	
 	

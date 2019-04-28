@@ -10,6 +10,8 @@
 
 
 <div class="col-md-6">
+
+	<!-- 헤드 -->
 	<div class="panel panel-default">
 
 		<div id="page_area_select_head"
@@ -27,7 +29,7 @@
 			</c:if>
 		</div>
 	</div>
-	
+	<!-- 헤드 -->
 	
 		<!-- page -->
 		<c:forEach items="${ pageList }" var="page">
@@ -111,23 +113,19 @@
 					<!-- 댓글수, 좋아요 수 출력 -->
 					
 					
-					
+					<!-- 댓글, 좋아요버튼 구간 -->
 					<div class="col-post-social">
 						<!-- 좋아요 버튼 -->
-						<button class="btn-social btn_good"
-							style="margin-left: 10px; margin-top: 2px;"
-							title="${post.post_code }">
-							<span style="font-size: 18px;"> <i
-								id="icon_good${post.post_code }" class="far fa-thumbs-up"></i>
-							</span>
+						<button class="btn-social good_btn" onclick="good_page_select('${ page.page_code }', '${ SESSION_MEMBERVO.mem_id }');">
+							<i class="far fa-thumbs-up"></i>
 						</button>
 						<!-- 댓글 출력 버튼 -->
-						<button class="btn-social btn_comment"
-							id="btn_comment${post.post_code }" data-code="${post.post_code }"
-							title="${post.post_code }">
-							<span style="font-size: 18px;"><i class="far fa-comments"></i></span>
+						<button class="btn-social">
+							<i class="far fa-comments"></i>
 						</button>
 					</div>
+					<!-- 댓글, 좋아요버튼 구간 -->
+					
 
 					<!-- comment -->
 					<div class="col-comment-area ${ post.post_code }" id="post_comment${ post.post_code }">
@@ -141,12 +139,6 @@
 
 
 		</c:forEach>
-
-
-
-
-
-	
 </div>
 
 
@@ -182,6 +174,23 @@
 	/* page 수정 페이지로 이동 */
 	function update_onenote_write(page_code){
 		document.location.href = "/page/update_onenote_write?page_code=" + page_code;
+	}
+	
+	//페이지 좋아요 - select 페이지 
+	function good_page_select(page_code, mem_id){
+			
+		var user_id = '${ pVo.user_id }';
+		
+		$.ajax({
+			url : "${cp}/blog/good_page_select",
+			data : {"user_id" : userId, "page_code" : page_code, "mem_id" : mem_id },
+			success : function(data) {
+				
+				$('#page_area').html(data);
+				
+			}
+		});
+
 	}
 	
 </script>

@@ -94,29 +94,6 @@
 	color: #3234c1;
 }
 
-
-
-.btn-social{
-	background: #f3f6f8;
-	background-size: auto;
-    letter-spacing: normal;
-    word-spacing: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    border-style: solid;
-    border-color: #f3f6f8; 
-	margin-bottom: 10px;
-    width: 30px;
-    height: 20px;
-   	border : 0;
-	outline: 0;
-}
-
-.btn-social:hover{
-	background-color: #e8e8f7;
-}
-
 .btn-upload{
 	background:#ffffff;
 	background-size: auto;
@@ -504,3 +481,32 @@
 	height: 30px;
 	padding:5px;
 }
+
+/* 좋아요 댓글 버튼 */
+.btn-social{
+	background: #f3f6f8;
+	background-size: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    border-style: solid;
+    border-color: #f3f6f8; 
+	margin-bottom: 10px;
+    width: 30px;
+    height: 20px;
+   	border : 0;
+	outline: 0;
+	font-size: 20px
+}
+
+.btn-social:hover{
+	color: #4FAFD9;
+}
+
+.good_btn{
+	margin-left: 10px; 
+	margin-top: 2px;
+}
+
