@@ -51,4 +51,9 @@ public class GoodDaoImpl implements IGoodDao {
 		return sqlSession.selectOne("good.search_goodcode", goodVo);
 	}
 
+	@Override
+	public List<GoodVo> select_goodList(GoodVo goodVo) {
+		return sqlSession.selectList("good.select_goodList", goodVo);
+	}
+
 }

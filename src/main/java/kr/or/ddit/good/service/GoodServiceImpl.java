@@ -51,4 +51,9 @@ public class GoodServiceImpl implements IGoodService {
 		return goodDao.search_goodcode(goodVo);
 	}
 
+	@Override
+	public List<GoodVo> select_goodList(GoodVo goodVo) {
+		return goodDao.select_goodList(goodVo);
+	}
+
 }
