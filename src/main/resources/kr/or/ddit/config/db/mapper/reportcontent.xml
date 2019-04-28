@@ -30,6 +30,12 @@
 		 where division = #{division}
 	</select>
 	
+	<!-- 테스트를 위한 신고 삭제. -->
+	<delete id="deleteForTest" parameterType="String">
+		DELETE REPORTCONTENT
+		 WHERE REPORT_CONTENTS = #{report_contents}
+	</delete>
+	
 	
 	
 </mapper>

@@ -22,12 +22,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.ddit.good.model.GoodVo;
+import kr.or.ddit.good.service.IGoodService;
 import kr.or.ddit.login.LoginController;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.page.model.PageVo;
+import kr.or.ddit.page.model.Page_linkVo;
 import kr.or.ddit.page.model.Page_sourceVo;
+import kr.or.ddit.page.model.Page_videoVo;
 import kr.or.ddit.page.service.IPageService;
+import kr.or.ddit.page.service.IPage_linkService;
 import kr.or.ddit.page.service.IPage_sourceService;
+import kr.or.ddit.page.service.IPage_videoService;
 import kr.or.ddit.portfolio.model.PortfolioVo;
 import kr.or.ddit.portfolio.service.IPortfolioService;
 import kr.or.ddit.section.model.SectionVo;
@@ -50,6 +56,15 @@ public class PageController {
 	
 	@Resource(name="page_sourceService")
 	private IPage_sourceService sourceService;
+	
+	@Resource(name="page_videoService")
+	private IPage_videoService videoService;
+	
+	@Resource(name="page_linkService")
+	private IPage_linkService linkService;
+	
+	@Resource(name="goodService")
+	private IGoodService goodService;
 	
 	/**
 	 * 
@@ -205,27 +220,73 @@ public class PageController {
 	@RequestMapping(path = "/savePage", method = RequestMethod.POST)
 	public String savePage(PageVo pVo, Model model, HttpServletRequest req) {
 		
+		//소스코드 저장
 		String[] source_contents = req.getParameterValues("source_contents");
 		String[] source_mode = req.getParameterValues("source_mode");
 		String[] source_theme = req.getParameterValues("source_theme");
 		String[] css_top = req.getParameterValues("css_top");
 		String[] css_left = req.getParameterValues("css_left");
 		
+		//비디오 저장
+		String[] video_link = req.getParameterValues("video_link");
+		String[] video_css_top = req.getParameterValues("video_css_top");
+		String[] video_css_left = req.getParameterValues("video_css_left");
 		
+		//링크 저장
+		String[] link_address = req.getParameterValues("link_address");
+		String[] link_css_top = req.getParameterValues("link_css_top");
+		String[] link_css_left = req.getParameterValues("link_css_left");
+		
+		
+		
+		//page 저장
 		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		pageService.insert_page(pVo);
 		
+		//소스코드 저장
 		Page_sourceVo psVo = new Page_sourceVo();
-		for(int i=0; i<source_contents.length; i++) {
-			psVo.setPage_code(pVo.getPage_code());
-			psVo.setSource_contents(source_contents[i]);
-			psVo.setSource_mode(source_mode[i]);
-			psVo.setSource_theme(source_theme[i]);
-			psVo.setCss_left(css_left[i]);
-			psVo.setCss_top(css_top[i]);
-			
-			sourceService.insert_page_source(psVo);
+		if(source_contents != null) {
+			for(int i=0; i<source_contents.length; i++) {
+				psVo.setPage_code(pVo.getPage_code());
+				psVo.setSource_contents(source_contents[i]);
+				psVo.setSource_mode(source_mode[i]);
+				psVo.setSource_theme(source_theme[i]);
+				psVo.setCss_left(css_left[i]);
+				psVo.setCss_top(css_top[i]);
+				
+				sourceService.insert_page_source(psVo);
+			}
 		}
+		
+		//비디오 저장
+		Page_videoVo pvVo = new Page_videoVo();
+		if(video_link != null) {
+			for(int i=0; i<video_link.length; i++) {
+				
+				pvVo.setPage_code(pVo.getPage_code());
+				pvVo.setVideo_link(video_link[i]);
+				pvVo.setVideo_css_left(video_css_left[i]);
+				pvVo.setVideo_css_top(video_css_top[i]);
+				
+				videoService.insert_page_video(pvVo);
+			}
+		}
+		
+		//링크 저장
+		Page_linkVo plVo = new Page_linkVo();
+		if(link_address != null) {
+			for(int i=0; i<link_address.length; i++) {
+				
+				plVo.setPage_code(pVo.getPage_code());
+				plVo.setLink_address(link_address[i]);
+				plVo.setLink_css_left(link_css_left[i]);
+				plVo.setLink_css_top(link_css_top[i]);
+				
+				linkService.insert_page_link(plVo);
+			}
+		}
+		
+		
 		
 		return "redirect:/blog/blogMainView?user_id=" + mVo.getMem_id();
 	}
@@ -244,6 +305,18 @@ public class PageController {
 		PageVo pageVo = pageService.select_pageInfo(page_code);
 		model.addAttribute("pageVo", pageVo);
 		
+		//소스코드 리스트
+		List<Page_sourceVo> page_sourceList = sourceService.select_page_source(page_code);
+		model.addAttribute("page_sourceList", page_sourceList);
+		
+		//비디오 리스트 
+		List<Page_videoVo> page_videoList = videoService.select_page_video(page_code);
+		model.addAttribute("page_videoList", page_videoList);
+		
+		//링크 리스트
+		List<Page_linkVo> page_linkList = linkService.select_page_link(page_code);
+		model.addAttribute("page_linkList", page_linkList);
+		
 		return "onenote/onenote_view";
 	}
 	
@@ -257,13 +330,33 @@ public class PageController {
 	 * @return Method 설명 : 컬러 메뉴 페이지 body 출력
 	 */
 	@RequestMapping("/delete_page")
-	public String delete_page(Model model, @RequestParam("page_code") String page_code) {
+	public String delete_page(HttpServletRequest req, Model model, @RequestParam("page_code") String page_code,
+			@RequestParam("user_id") String user_id) {
 		
 		PageVo pageVo = pageService.select_pageInfo(page_code);
 		pageService.delete_page(page_code);
 		
-		String section_code = pageVo.getSection_code();
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		//goodList 담기
+		GoodVo gVo = new GoodVo();
+		gVo.setMem_id(mVo.getMem_id());
+		gVo.setDivision("22");
+		List<GoodVo> goodList = goodService.select_goodList(gVo);
+		model.addAttribute("goodList", goodList);
 		
+		
+		
+		//전체 페이지 조회 화면에서 요청일 경우
+		if(!user_id.equals("#")) {
+			
+			List<PageVo> pageList = pageService.select_pageAllList(user_id);
+			model.addAttribute("pageList", pageList);
+			model.addAttribute("user_id", user_id);
+			
+			return "blog/page_area";
+		}
+		
+		String section_code = pageVo.getSection_code();
 		SectionVo sVo = sectionService.select_sectionInfo(section_code);
 		PortfolioVo pVo = portfolioService.select_portfolioInfo(sVo.getPortfolio_code());
 		model.addAttribute("pVo", pVo);
@@ -271,6 +364,8 @@ public class PageController {
 		
 		List<PageVo> pageList = pageService.select_pageList(section_code);
 		model.addAttribute("pageList", pageList);
+		
+		
 		
 		return "blog/page_area_select";
 	}
@@ -290,6 +385,19 @@ public class PageController {
 		
 		PageVo pVo = pageService.select_pageInfo(page_code);
 		model.addAttribute("pVo", pVo);
+		
+		//소스코드 리스트 
+		List<Page_sourceVo> page_sourceList = sourceService.select_page_source(page_code);
+		model.addAttribute("page_sourceList", page_sourceList);
+		
+		//비디오 리스트 
+		List<Page_videoVo> page_videoList = videoService.select_page_video(page_code);
+		model.addAttribute("page_videoList", page_videoList);
+		
+		//링크 리스트
+		List<Page_linkVo> page_linkList = linkService.select_page_link(page_code);
+		model.addAttribute("page_linkList", page_linkList);
+		
 		return "onenote/onenote_write";
 	}
 	
@@ -307,10 +415,75 @@ public class PageController {
 	@RequestMapping(path = "/update_page", method = RequestMethod.POST)
 	public String update_page(PageVo pVo, Model model, HttpServletRequest req) {
 		
-		logger.debug("update pVo : {}", pVo);
+		//소스코드 속성
+		String[] source_contents = req.getParameterValues("source_contents");
+		String[] source_mode = req.getParameterValues("source_mode");
+		String[] source_theme = req.getParameterValues("source_theme");
+		String[] css_top = req.getParameterValues("css_top");
+		String[] css_left = req.getParameterValues("css_left");
+		
+		//비디오 속성
+		String[] video_link = req.getParameterValues("video_link");
+		String[] video_css_top = req.getParameterValues("video_css_top");
+		String[] video_css_left = req.getParameterValues("video_css_left");
+		
+		//링크 저장
+		String[] link_address = req.getParameterValues("link_address");
+		String[] link_css_top = req.getParameterValues("link_css_top");
+		String[] link_css_left = req.getParameterValues("link_css_left");
 		
 		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		pageService.update_page(pVo);
+		
+		//소스코드 속성 저장
+		Page_sourceVo psVo = new Page_sourceVo();
+		if(source_contents != null) {
+			sourceService.delete_page_source(pVo.getPage_code());
+			for(int i=0; i<source_contents.length; i++) {
+				psVo.setPage_code(pVo.getPage_code());
+				psVo.setSource_contents(source_contents[i]);
+				psVo.setSource_mode(source_mode[i]);
+				psVo.setSource_theme(source_theme[i]);
+				psVo.setCss_left(css_left[i]);
+				psVo.setCss_top(css_top[i]);
+				
+				sourceService.insert_page_source(psVo);
+			}
+		}
+		
+		//비디오 속성 저장
+		Page_videoVo pvVo = new Page_videoVo();
+		if(video_link != null) {
+			videoService.delete_page_video(pVo.getPage_code());
+			for(int i=0; i<video_link.length; i++) {
+				
+				pvVo.setPage_code(pVo.getPage_code());
+				pvVo.setVideo_link(video_link[i]);
+				pvVo.setVideo_css_left(video_css_left[i]);
+				pvVo.setVideo_css_top(video_css_top[i]);
+				
+				videoService.insert_page_video(pvVo);
+			}
+		}
+		
+		//링크 저장
+		Page_linkVo plVo = new Page_linkVo();
+		if(link_address != null) {
+			linkService.delete_page_link(pVo.getPage_code());
+			
+			for(int i=0; i<link_address.length; i++) {
+				
+				plVo.setPage_code(pVo.getPage_code());
+				plVo.setLink_address(link_address[i]);
+				plVo.setLink_css_left(link_css_left[i]);
+				plVo.setLink_css_top(link_css_top[i]);
+				
+				linkService.insert_page_link(plVo);
+			}
+		}
+		
+		
+		
 		return "redirect:/blog/blogMainView?user_id=" + mVo.getMem_id();
 	}
 	

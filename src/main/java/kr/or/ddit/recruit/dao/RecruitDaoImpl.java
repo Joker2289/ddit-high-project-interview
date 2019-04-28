@@ -188,6 +188,21 @@ public class RecruitDaoImpl implements IRecruitDao{
 		
 		return recrList;
 	}
+
+	/**
+	 * 
+	 * Method : getNewList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 신규 채용공고 목록 조회.
+	 */
+	@Override
+	public List<RecruitVo> getNewList() {
+		List<RecruitVo> newList = sqlSessionTemplate.selectList("recr.getNewList");
+		
+		return newList;
+	}
 	
 	
 	

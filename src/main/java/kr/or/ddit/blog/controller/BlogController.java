@@ -23,7 +23,10 @@ import kr.or.ddit.blog.service.IBlogService;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.follow.service.IFollowService;
+import kr.or.ddit.good.model.GoodVo;
+import kr.or.ddit.good.service.IGoodService;
 import kr.or.ddit.login.LoginController;
+import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.page.model.PageVo;
 import kr.or.ddit.page.service.IPageService;
@@ -61,6 +64,9 @@ public class BlogController {
 	@Resource(name="pageService")
 	private IPageService pageService;
 	
+	@Resource(name="goodService")
+	private IGoodService goodService;
+	
 	
 	/**
 	 * 
@@ -73,7 +79,7 @@ public class BlogController {
 	 * Method 설명 : Blog 페이지 이동
 	 */
 	@RequestMapping(path={"blogMainView"}, method = RequestMethod.GET)
-	public String blogMainView(Model model, @RequestParam("user_id")String user_id) {
+	public String blogMainView(HttpServletRequest req, Model model, @RequestParam("user_id")String user_id) {
 		
 		//블로그 설정
 		BlogVo bVo = blogService.select_blogInfo(user_id);
@@ -92,6 +98,7 @@ public class BlogController {
 			bVo = blogInfo;
 		}
 		model.addAttribute("bVo", bVo);
+		model.addAttribute("user_id", user_id);
 		
 		
 		//활동 정보
@@ -106,6 +113,19 @@ public class BlogController {
 		//포트폴리오 리스트
 		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(user_id);
 		model.addAttribute("portfolioList", portfolioList);
+		
+		//페이지 리스트
+		List<PageVo> pageList = pageService.select_pageAllList(user_id);
+		model.addAttribute("pageList", pageList);
+		
+		
+		//goodList 담기
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		GoodVo gVo = new GoodVo();
+		gVo.setMem_id(mVo.getMem_id());
+		gVo.setDivision("22");
+		List<GoodVo> goodList = goodService.select_goodList(gVo);
+		model.addAttribute("goodList", goodList);
 		
 		return "blogTiles";
 	}
@@ -560,20 +580,144 @@ public class BlogController {
 	 * Method 설명 : 선택한 섹션의 페이지 리스트 출력
 	 */
 	@RequestMapping("/page_area_select")
-	public String page_area_select(Model model, @RequestParam("section_code")String section_code) {
+	public String page_area_select(HttpServletRequest req, Model model, @RequestParam("section_code")String section_code) {
 		
+		//포트폴리오, 섹션 VO 담기
 		SectionVo sVo = sectionService.select_sectionInfo(section_code);
 		PortfolioVo pVo = portfolioService.select_portfolioInfo(sVo.getPortfolio_code());
 		model.addAttribute("pVo", pVo);
 		model.addAttribute("sVo", sVo);
 		
+		//pageList 담기
 		List<PageVo> pageList = pageService.select_pageList(section_code);
 		model.addAttribute("pageList", pageList);
+		
+		//goodList 담기
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		GoodVo gVo = new GoodVo();
+		gVo.setMem_id(mVo.getMem_id());
+		gVo.setDivision("22");
+		List<GoodVo> goodList = goodService.select_goodList(gVo);
+		model.addAttribute("goodList", goodList);
 		
 		return "blog/page_area_select";
 	}
 	
 	
+	/**
+	 * 
+	 * Method : good_page
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param req
+	 * @param model
+	 * @param page_code
+	 * @return
+	 * Method 설명 : 전체 페이지 조회 화면에서 좋아요
+	 */
+	@RequestMapping("/good_page")
+	public String good_page(HttpServletRequest req, Model model, 
+			@RequestParam("page_code")String page_code,
+			@RequestParam("user_id")String user_id) {
+		
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		//좋아요 등록
+		GoodVo gVo = new GoodVo();
+		gVo.setMem_id(mVo.getMem_id());
+		gVo.setRef_code(page_code);
+		gVo.setDivision("22");
+		goodService.insert_goodInfo(gVo);
+		
+		
+		//goodList 담기
+		List<GoodVo> goodList = goodService.select_goodList(gVo);
+		model.addAttribute("goodList", goodList);
+		
+		if(!user_id.equals("#")) {
+			model.addAttribute("user_id", user_id);
+			
+			//전체 pageList 담기
+			List<PageVo> pageList = pageService.select_pageAllList(user_id);
+			model.addAttribute("pageList", pageList);
+			
+			return "blog/page_area";
+		}
+		
+		
+		
+		//섹션 선택 페이지 일경우
+		//pageList 담기
+		PageVo pageInfo = pageService.select_pageInfo(page_code);
+		List<PageVo> pageList = pageService.select_pageList(pageInfo.getSection_code());
+		model.addAttribute("pageList", pageList);
+		
+		//포트폴리오, 섹션 VO 담기
+		SectionVo sVo = sectionService.select_sectionInfo(pageInfo.getSection_code());
+		PortfolioVo pVo = portfolioService.select_portfolioInfo(sVo.getPortfolio_code());
+		model.addAttribute("sVo", sVo);
+		model.addAttribute("pVo", pVo);
+		
+		return "blog/page_area_select";
+	}
 	
+	/**
+	 * 
+	 * Method : cancelGood_page
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param req
+	 * @param model
+	 * @param good_code
+	 * @param page_code
+	 * @return
+	 * Method 설명 : 전체 페이지 조회 화면 에서 좋아요 취소
+	 */
+	@RequestMapping("/cancelGood_page")
+	public String cancelGood_page(HttpServletRequest req, Model model, 
+			@RequestParam("good_code")String good_code,
+			@RequestParam("page_code")String page_code,
+			@RequestParam("user_id")String user_id) {
+		
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		//좋아요 취소
+		goodService.delete_good(good_code);
+		
+		//goodList 담기
+		GoodVo gVo = new GoodVo();
+		gVo.setMem_id(mVo.getMem_id());
+		gVo.setDivision("22");
+		List<GoodVo> goodList = goodService.select_goodList(gVo);
+		model.addAttribute("goodList", goodList);
+		
+		
+		//전체 조회 페이지 일 경우
+		if(!user_id.equals("#")) {
+			model.addAttribute("user_id", user_id);
+			
+			//전체 pageList 담기
+			List<PageVo> pageList = pageService.select_pageAllList(user_id);
+			model.addAttribute("pageList", pageList);
+			
+			return "blog/page_area";
+		}
+		
+		//섹션 선택 페이지 일경우
+		//pageList 담기
+		PageVo pageInfo = pageService.select_pageInfo(page_code);
+		List<PageVo> pageList = pageService.select_pageList(pageInfo.getSection_code());
+		model.addAttribute("pageList", pageList);
+		
+		//포트폴리오, 섹션 VO 담기
+		SectionVo sVo = sectionService.select_sectionInfo(pageInfo.getSection_code());
+		PortfolioVo pVo = portfolioService.select_portfolioInfo(sVo.getPortfolio_code());
+		model.addAttribute("sVo", sVo);
+		model.addAttribute("pVo", pVo);
+		
+		
+		
+		return "blog/page_area_select";
+	}
 	
 }

@@ -31,6 +31,7 @@ import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
+import kr.or.ddit.report.service.IReportService;
 import kr.or.ddit.save_recruit.model.Save_recruitVo;
 import kr.or.ddit.save_recruit.service.ISave_recruitService;
 import kr.or.ddit.search_log.model.Search_logVo;
@@ -55,6 +56,9 @@ public class RecruitControllerTest extends WebTestConfig{
 	
 	@Resource(name="memberService")
 	private IMemberService memService;	
+	
+	@Resource(name="reportService")
+	private IReportService reportService;
 	
 	/**
 	 * 
@@ -665,6 +669,34 @@ public class RecruitControllerTest extends WebTestConfig{
 
 		/***Then***/
 		assertNotNull(cal);
+	}
+	
+	/**
+	 * 
+	 * Method : testReportRecr
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 채용공고 신고 테스트.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testReportRecr() throws Exception {
+		/***Given***/
+		MockHttpServletRequest req = new MockHttpServletRequest();
+		MemberVo mVo = memService.select_memberInfo("brown");
+		String report_contents = "신고함니다.";
+		String recruit_code = "1";
+
+		/***When***/
+		MvcResult mvcResult = mockMvc.perform(get("/reportRecr").sessionAttr("SESSION_MEMBERVO", mVo)
+				.param("report_contents", report_contents).param("recruit_code", recruit_code)).andReturn();
+		ModelAndView mav = mvcResult.getModelAndView();
+		String viewName = mav.getViewName();
+
+		/***Then***/
+		assertEquals("redirect:" + req.getContextPath() + "/recr_detail", viewName);
+		
+		reportService.deleteForTest("신고함니다.");
 	}
 	
 	

@@ -12,6 +12,10 @@ public class PageVo {
 	private String view_count; 		// 조회수
 	private String page_thumbnail;	// 페이지 썸네일 이미지
 	private String bg_color;		// 페이지 배경색
+	
+	
+	private String user_id; 		// 작성자 ID
+	private String portfolio_code;	// 포트폴리오 코드
 	public String getPage_code() {
 		return page_code;
 	}
@@ -60,12 +64,24 @@ public class PageVo {
 	public void setBg_color(String bg_color) {
 		this.bg_color = bg_color;
 	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	public String getPortfolio_code() {
+		return portfolio_code;
+	}
+	public void setPortfolio_code(String portfolio_code) {
+		this.portfolio_code = portfolio_code;
+	}
 	@Override
 	public String toString() {
 		return "PageVo [page_code=" + page_code + ", section_code=" + section_code + ", page_title=" + page_title
 				+ ", page_contents=" + page_contents + ", write_date=" + write_date + ", view_count=" + view_count
-				+ ", page_thumbnail=" + page_thumbnail + ", bg_color=" + bg_color + "]";
+				+ ", page_thumbnail=" + page_thumbnail + ", bg_color=" + bg_color + ", user_id=" + user_id
+				+ ", portfolio_code=" + portfolio_code + "]";
 	}
-	
 	
 }
