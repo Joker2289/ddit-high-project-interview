@@ -87,4 +87,15 @@ public interface IGoodDao {
 	 * Method 설명 : 좋아요 리스트 조회
 	 */
 	List<GoodVo> select_goodList(GoodVo goodVo);
+	
+	/**
+	 * 
+	 * Method : delete_good
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param good_code
+	 * @return
+	 * Method 설명 : 좋아요 취소
+	 */
+	int delete_good(String good_code);
 }

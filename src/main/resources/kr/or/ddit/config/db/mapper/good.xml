@@ -99,4 +99,11 @@
 	   and division = #{division}
 	</select>
 	
+	<!-- 좋아요 취소 - 정거니 -->
+	<delete id="delete_good" parameterType="String">
+		delete good
+		 where good_code = #{ good_code }
+	</delete>
+	
+	
 </mapper>
