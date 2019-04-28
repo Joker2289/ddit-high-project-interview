@@ -57,7 +57,7 @@
 										<i class="fas fa-edit icon"></i>글 수정
 									</button>
 									
-									<button type="button" class="btn_controll-list" onclick='delete_page(${ page.page_code })'>
+									<button type="button" class="btn_controll-list" onclick='delete_page("${ page.page_code }", "${ user_id }")'>
 										<i class="fas fa-ban icon"></i>글 삭제
 									</button>
 								</ul>
@@ -147,33 +147,7 @@
 		$('#good_btn' + ${ good.ref_code }).attr('onclick', 'cancelGood_page("${ good.good_code }", "${ good.ref_code }", "${ user_id }");');
 	</c:forEach>
 
-	//페이지 좋아요 - select 페이지 
-	function good_page(page_code, user_id){
-			
-		$.ajax({
-			url : "${cp}/blog/good_page",
-			data : {"page_code" : page_code, "user_id" : user_id },
-			success : function(data) {
-				
-				$('#page_area').html(data);
-				
-			}
-		});
 	
-	}
-	
-	//페이지 좋아요 취소
-	function cancelGood_page(good_code, ref_code, user_id){
-		$.ajax({
-			url : "${cp}/blog/cancelGood_page",
-			data : { "good_code" : good_code, "page_code" : ref_code, "user_id" : user_id },
-			success : function(data) {
-				
-				$('#page_area').html(data);
-				
-			}
-		});
-	}
 
 	
 

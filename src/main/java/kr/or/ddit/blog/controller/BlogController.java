@@ -629,17 +629,36 @@ public class BlogController {
 		gVo.setDivision("22");
 		goodService.insert_goodInfo(gVo);
 		
-		model.addAttribute("user_id", user_id);
 		
 		//goodList 담기
 		List<GoodVo> goodList = goodService.select_goodList(gVo);
 		model.addAttribute("goodList", goodList);
 		
-		//전체 pageList 담기
-		List<PageVo> pageList = pageService.select_pageAllList(user_id);
+		if(!user_id.equals("#")) {
+			model.addAttribute("user_id", user_id);
+			
+			//전체 pageList 담기
+			List<PageVo> pageList = pageService.select_pageAllList(user_id);
+			model.addAttribute("pageList", pageList);
+			
+			return "blog/page_area";
+		}
+		
+		
+		
+		//섹션 선택 페이지 일경우
+		//pageList 담기
+		PageVo pageInfo = pageService.select_pageInfo(page_code);
+		List<PageVo> pageList = pageService.select_pageList(pageInfo.getSection_code());
 		model.addAttribute("pageList", pageList);
 		
-		return "blog/page_area";
+		//포트폴리오, 섹션 VO 담기
+		SectionVo sVo = sectionService.select_sectionInfo(pageInfo.getSection_code());
+		PortfolioVo pVo = portfolioService.select_portfolioInfo(sVo.getPortfolio_code());
+		model.addAttribute("sVo", sVo);
+		model.addAttribute("pVo", pVo);
+		
+		return "blog/page_area_select";
 	}
 	
 	/**
@@ -665,8 +684,6 @@ public class BlogController {
 		//좋아요 취소
 		goodService.delete_good(good_code);
 		
-		model.addAttribute("user_id", user_id);
-		
 		//goodList 담기
 		GoodVo gVo = new GoodVo();
 		gVo.setMem_id(mVo.getMem_id());
@@ -674,85 +691,19 @@ public class BlogController {
 		List<GoodVo> goodList = goodService.select_goodList(gVo);
 		model.addAttribute("goodList", goodList);
 		
-		//전체 pageList 담기
-		List<PageVo> pageList = pageService.select_pageAllList(user_id);
-		model.addAttribute("pageList", pageList);
 		
-		return "blog/page_area";
-	}
-	
-	
-	/**
-	 * 
-	 * Method : good_page_select
-	 * 작성자 : pjk
-	 * 변경이력 :
-	 * @param model
-	 * @param user_id
-	 * @param page_code
-	 * @param mem_id
-	 * @return
-	 * Method 설명 : select page 페이지 에서 좋아요 등록 
-	 */
-	@RequestMapping("/good_page_select")
-	public String good_page_select(HttpServletRequest req, Model model, @RequestParam("page_code")String page_code) {
+		//전체 조회 페이지 일 경우
+		if(!user_id.equals("#")) {
+			model.addAttribute("user_id", user_id);
+			
+			//전체 pageList 담기
+			List<PageVo> pageList = pageService.select_pageAllList(user_id);
+			model.addAttribute("pageList", pageList);
+			
+			return "blog/page_area";
+		}
 		
-		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
-		
-		//좋아요 등록
-		GoodVo gVo = new GoodVo();
-		gVo.setMem_id(mVo.getMem_id());
-		gVo.setRef_code(page_code);
-		gVo.setDivision("22");
-		goodService.insert_goodInfo(gVo);
-		
-		//goodList 담기
-		List<GoodVo> goodList = goodService.select_goodList(gVo);
-		model.addAttribute("goodList", goodList);
-		
-		//pageList 담기
-		PageVo pageInfo = pageService.select_pageInfo(page_code);
-		List<PageVo> pageList = pageService.select_pageList(pageInfo.getSection_code());
-		model.addAttribute("pageList", pageList);
-		
-		
-		//포트폴리오, 섹션 VO 담기
-		SectionVo sVo = sectionService.select_sectionInfo(pageInfo.getSection_code());
-		PortfolioVo pVo = portfolioService.select_portfolioInfo(sVo.getPortfolio_code());
-		model.addAttribute("sVo", sVo);
-		model.addAttribute("pVo", pVo);
-		
-		return "blog/page_area_select";
-	}
-	
-	/**
-	 * 
-	 * Method : cancelGood_page_select
-	 * 작성자 : pjk
-	 * 변경이력 :
-	 * @param req
-	 * @param model
-	 * @param page_code
-	 * @return
-	 * Method 설명 : select page 페이지 에서 좋아요 취소
-	 */
-	@RequestMapping("/cancelGood_page_select")
-	public String cancelGood_page_select(HttpServletRequest req, Model model, 
-			@RequestParam("good_code")String good_code,
-			@RequestParam("page_code")String page_code) {
-		
-		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
-		
-		//좋아요 취소
-		goodService.delete_good(good_code);
-		
-		//goodList 담기
-		GoodVo gVo = new GoodVo();
-		gVo.setMem_id(mVo.getMem_id());
-		gVo.setDivision("22");
-		List<GoodVo> goodList = goodService.select_goodList(gVo);
-		model.addAttribute("goodList", goodList);
-		
+		//섹션 선택 페이지 일경우
 		//pageList 담기
 		PageVo pageInfo = pageService.select_pageInfo(page_code);
 		List<PageVo> pageList = pageService.select_pageList(pageInfo.getSection_code());
@@ -764,10 +715,9 @@ public class BlogController {
 		model.addAttribute("sVo", sVo);
 		model.addAttribute("pVo", pVo);
 		
+		
+		
 		return "blog/page_area_select";
 	}
-	
-	
-	
 	
 }

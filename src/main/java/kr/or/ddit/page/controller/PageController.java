@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.ddit.good.model.GoodVo;
+import kr.or.ddit.good.service.IGoodService;
 import kr.or.ddit.login.LoginController;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.page.model.PageVo;
@@ -60,6 +62,9 @@ public class PageController {
 	
 	@Resource(name="page_linkService")
 	private IPage_linkService linkService;
+	
+	@Resource(name="goodService")
+	private IGoodService goodService;
 	
 	/**
 	 * 
@@ -325,13 +330,33 @@ public class PageController {
 	 * @return Method 설명 : 컬러 메뉴 페이지 body 출력
 	 */
 	@RequestMapping("/delete_page")
-	public String delete_page(Model model, @RequestParam("page_code") String page_code) {
+	public String delete_page(HttpServletRequest req, Model model, @RequestParam("page_code") String page_code,
+			@RequestParam("user_id") String user_id) {
 		
 		PageVo pageVo = pageService.select_pageInfo(page_code);
 		pageService.delete_page(page_code);
 		
-		String section_code = pageVo.getSection_code();
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		//goodList 담기
+		GoodVo gVo = new GoodVo();
+		gVo.setMem_id(mVo.getMem_id());
+		gVo.setDivision("22");
+		List<GoodVo> goodList = goodService.select_goodList(gVo);
+		model.addAttribute("goodList", goodList);
 		
+		
+		
+		//전체 페이지 조회 화면에서 요청일 경우
+		if(!user_id.equals("#")) {
+			
+			List<PageVo> pageList = pageService.select_pageAllList(user_id);
+			model.addAttribute("pageList", pageList);
+			model.addAttribute("user_id", user_id);
+			
+			return "blog/page_area";
+		}
+		
+		String section_code = pageVo.getSection_code();
 		SectionVo sVo = sectionService.select_sectionInfo(section_code);
 		PortfolioVo pVo = portfolioService.select_portfolioInfo(sVo.getPortfolio_code());
 		model.addAttribute("pVo", pVo);
@@ -339,6 +364,8 @@ public class PageController {
 		
 		List<PageVo> pageList = pageService.select_pageList(section_code);
 		model.addAttribute("pageList", pageList);
+		
+		
 		
 		return "blog/page_area_select";
 	}
@@ -407,8 +434,6 @@ public class PageController {
 		
 		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		pageService.update_page(pVo);
-		
-		
 		
 		//소스코드 속성 저장
 		Page_sourceVo psVo = new Page_sourceVo();
