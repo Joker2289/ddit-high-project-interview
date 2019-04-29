@@ -39,7 +39,6 @@ public class OnenoteImageView implements View{
 		
 		String realFileName = (String) model.get("src");
 		
-		
 		FileInputStream fis;
 		if(realFileName != null ) {
 			fis = new FileInputStream(new File(application.getRealPath("/images/onenote/"+realFileName)));

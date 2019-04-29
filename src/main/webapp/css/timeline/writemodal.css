@@ -383,8 +383,9 @@
 }
 
 .comment-profile-img{
-/* 	float: left; */
-	padding: 5px;
+	display: inline-block;
+	width: 10%;
+	padding: 10px;
 }
 
 .input_comment_contents{
@@ -438,4 +439,14 @@
 
 .btn_followTag:hover{
 	background-color: #0073b1;
+}
+
+.comment-text{
+	border-top-left-radius: 0px;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius : 20px;
+	border-bottom-right-radius : 20px;
+	background: #f3f6f8;
+	padding: 5px;
+	margin: 2px;
 }

@@ -60,11 +60,14 @@
 		                                 union all
 		                                 select corp_name
 		                                   from corporation
-		                                  where corp_id = send_id) send_name
+		                                  where corp_id = send_id) send_name,
+	                                    (select mem_division
+		                                   from member
+		                                  where mem_id = send_id) mem_division
 		                  from alarm a
 		                 where mem_id = #{mem_id}
 		                   and alarm_date &gt;= to_char(sysdate - 7, 'YYYYMMDD')
-		                order by alarm_date desc  ) b)
+		                order by alarm_date desc) b)
 		 where rn between (#{page}-1) * #{pageSize} and #{page}* #{pageSize}
 	</select>
 	
@@ -84,11 +87,14 @@
 		                                 union all
 		                                 select corp_name
 		                                   from corporation
-		                                  where corp_id = send_id) send_name
+		                                  where corp_id = send_id) send_name,
+	                                    (select mem_division
+		                                   from member
+		                                  where mem_id = send_id) mem_division
 		                  from alarm a
 		                 where mem_id = #{mem_id}
 		                   and alarm_date &gt;= to_char(sysdate - 7, 'YYYYMMDD')
-		                order by alarm_date desc  ) b)
+		                order by alarm_date desc) b)
 		 where rn between (#{page}-1) * #{pageSize} and #{page}* #{pageSize}
 		   and alarm_code &lt; #{criteria_code}
 	</select>
@@ -110,12 +116,16 @@
 		                                 union all
 		                                 select corp_name
 		                                   from corporation
-		                                  where corp_id = send_id) send_name
+		                                  where corp_id = send_id) send_name,
+	                                    (select mem_division
+		                                   from member
+		                                  where mem_id = send_id) mem_division
 		                  from alarm a
 		                 where mem_id = #{mem_id}
 		                   and alarm_date &lt;= to_char(sysdate - 7, 'YYYYMMDD')
-		                order by alarm_date desc  ) b)
+		                order by alarm_date desc) b)
 		 where rn between (#{page}-1) * #{pageSize} and #{page}* #{pageSize}
+		 
 	</select>
 	
 	<select id="select_nextPreviousAlarm" parameterType="paginationVo" resultType="alarmVo">
@@ -134,11 +144,14 @@
 		                                 union all
 		                                 select corp_name
 		                                   from corporation
-		                                  where corp_id = send_id) send_name
+		                                  where corp_id = send_id) send_name,
+	                                    (select mem_division
+		                                   from member
+		                                  where mem_id = send_id) mem_division
 		                  from alarm a
 		                 where mem_id = #{mem_id}
 		                   and alarm_date &lt;= to_char(sysdate - 7, 'YYYYMMDD')
-		                order by alarm_date desc  ) b)
+		                order by alarm_date desc) b)
 		 where rn between (#{page}-1) * #{pageSize} and #{page}* #{pageSize}
 		   and alarm_code &lt; #{criteria_code}
 	</select>

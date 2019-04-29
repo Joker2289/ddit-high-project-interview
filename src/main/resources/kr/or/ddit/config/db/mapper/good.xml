@@ -91,4 +91,19 @@
 	   and division = #{division}
 	</select>
 	
+	<!-- 좋아요 리스트 조회 - 정거니 -->
+	<select id="select_goodList" parameterType="goodVo" resultType="goodVo">
+	select *
+	  from good
+	 where mem_id = #{mem_id}
+	   and division = #{division}
+	</select>
+	
+	<!-- 좋아요 취소 - 정거니 -->
+	<delete id="delete_good" parameterType="String">
+		delete good
+		 where good_code = #{ good_code }
+	</delete>
+	
+	
 </mapper>

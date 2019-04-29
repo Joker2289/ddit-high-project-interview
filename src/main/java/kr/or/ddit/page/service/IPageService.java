@@ -60,4 +60,15 @@ public interface IPageService {
 	 * Method 설명 : 페이지 삭제
 	 */
 	int delete_page(String page_code);
+	
+	/**
+	 * 
+	 * Method : select_pageAllList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 회원이 작성한 전체 page 조회
+	 */
+	List<PageVo> select_pageAllList(String user_id);
 }

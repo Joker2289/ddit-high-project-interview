@@ -31,8 +31,12 @@
 
 <script>
 
+/* 스테이지 배경색 변경 */
 function stage_color_change(color){
 	$('#container').css('background-color', color);
+	
+	/* 저장Form의 태그에 값입력 */ 
+	$('#bg_color').val(color);
 }
 
 

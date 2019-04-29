@@ -12,9 +12,23 @@ public class Post_commentVo {
 	private String profile_path;
 	private String logo_path;
 	private int resultMinute;			// (현재시간 - 작성일) 분단위
-
+	private String writer_name;			// 작성자 이름
+	private String mem_division;		// 회원구분
+	
 	public Post_commentVo() {
 		// TODO Auto-generated constructor stub
+	}
+	public String getMem_division() {
+		return mem_division;
+	}
+	public void setMem_division(String mem_division) {
+		this.mem_division = mem_division;
+	}
+	public String getWriter_name() {
+		return writer_name;
+	}
+	public void setWriter_name(String writer_name) {
+		this.writer_name = writer_name;
 	}
 	public int getResultMinute() {
 		return resultMinute;
@@ -74,6 +88,7 @@ public class Post_commentVo {
 	public String toString() {
 		return "Post_commentVo [comment_code=" + comment_code + ", mem_id=" + mem_id + ", comment_contents="
 				+ comment_contents + ", ref_code=" + ref_code + ", division=" + division + ", comment_date="
-				+ comment_date + ", profile_path=" + profile_path + ", logo_path=" + logo_path + "]";
+				+ comment_date + ", profile_path=" + profile_path + ", logo_path=" + logo_path + ", resultMinute="
+				+ resultMinute + ", writer_name=" + writer_name + ", mem_division=" + mem_division + "]";
 	}
 }

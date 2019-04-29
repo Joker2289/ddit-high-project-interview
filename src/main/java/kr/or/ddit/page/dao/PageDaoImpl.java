@@ -39,5 +39,10 @@ public class PageDaoImpl implements IPageDao{
 	public int delete_page(String page_code) {
 		return sqlSession.delete("page.delete_page", page_code);
 	}
+
+	@Override
+	public List<PageVo> select_pageAllList(String user_id) {
+		return sqlSession.selectList("page.select_pageAllList", user_id);
+	}
 	
 }

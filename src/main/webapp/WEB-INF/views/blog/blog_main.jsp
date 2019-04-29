@@ -10,9 +10,22 @@
 <link href="/css/blog/blog_page_area.css" rel="stylesheet">
 
 <link href="/css/blog/blog_page.css" rel="stylesheet">
-
-
 <!DOCTYPE html>
+
+<style>
+@CHARSET "UTF-8";
+
+@font-face { 
+   font-family: '한돈삼겹살체300g'; 
+   src: url(/font/한돈삼겹살체300g.ttf) format('truetype');
+}
+
+
+*{
+   font-family: 한돈삼겹살체300g;
+}
+</style>
+
 <div class="container B_head">
 	<div id="head_area">
 		<%@ include file="/WEB-INF/views/blog/head_area.jsp"%><!-- /포트폴리오 영역 -->
@@ -95,5 +108,6 @@
 			}
 		});
 	});
+	
 	
 </script>

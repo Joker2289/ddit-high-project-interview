@@ -21,6 +21,36 @@
 }
 
 .writePageBtn:hover{
-	background-color: #000;
-	color: #fff;
+	background-color: #000 !important;
+	color: #fff !important;
+}
+
+/* 검색창 div */
+.search_div{
+	width: 100%;
+	margin: 0 auto;
+	font-size: 26px;
+}
+
+/* 검색창 text */
+.search_TXT{
+	display: inline-block;
+	width: 80%;
+	height: 40px;
+	margin: 0 auto;
+	font-size: 20px;
+	text-align: center;
+}
+
+/* 검색창 text */
+.search_btn_div{
+	padding: 2px;
+	display: inline-block;
+	width: 10%;
+	height: 40px;
+}
+
+.search_btn{
+	vertical-align: middle;
+	font-size: 30px;
 }

@@ -127,13 +127,13 @@
 	color: white;
 }
 
-.portfolio:hover {p
+.portfolio:hover {
 	background-color: #000 !important;
 	color: white !important;
 }
 
 
-/* 섹션 영역 */
+/* 섹션 영역 버튼 */
 .section{
 	width: 100%;
 	font-size: 20px;
@@ -142,6 +142,11 @@
 	margin-bottom: 3px;
 	background-color: pink;
 	color: white;
+}
+
+.section:hover{
+	background-color: #000 !important;
+	color: #fff !important;
 }
 
 /* 팝오버 부모 */
