@@ -16,7 +16,6 @@ public class AlarmVo {
 	private int resultMinute;
 	private String alarm_separate; //알림 구분
 	private String mem_division; // 회원 구분
-//	private String alarm_contents;
 
 	public AlarmVo() {
 		

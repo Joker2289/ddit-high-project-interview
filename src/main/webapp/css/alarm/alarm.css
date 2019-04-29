@@ -133,3 +133,7 @@
 	background: #fff;
 	outline: 0;
 }
+
+.col-time{
+	min-width: 45px;
+}

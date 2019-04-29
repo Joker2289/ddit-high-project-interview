@@ -33,8 +33,14 @@ textarea {
 	<div class="container">
 		<div class="row">
 			<div style="margin-left: 15px;">
+			
+			
+			
+				<div id="top_area">
 				<!-- 			<section style="text-align: center;"> -->
 				<%@ include file="/WEB-INF/views/corporation/module/top.jsp"%>
+				</div>
+				
 				<br>
 				<%@ include file="/WEB-INF/views/corporation/module/left.jsp"%>
 				<br> <br>

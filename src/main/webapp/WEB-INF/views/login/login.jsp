@@ -304,6 +304,36 @@
            $("#login").submit();
         });
         
+		// 엔터키 눌렀을 때 로그인
+		$("#mem_id").keypress(function(e){
+			if(e.which == 13){
+	           if($("#md_3").prop("checked")){
+	               Cookies.set("mem_id", $("#mem_id").val(), {expires : 30});
+	               Cookies.set("md_3", "y", {expires : 30});         
+	            } 
+	            else {
+	               Cookies.remove("mem_id");
+	               Cookies.remove("md_3");
+	            }
+	         
+	            $("#login").submit();
+			}
+		});		
+		$("#pass").keypress(function(e){
+			if(e.which == 13){
+	           if($("#md_3").prop("checked")){
+	               Cookies.set("mem_id", $("#mem_id").val(), {expires : 30});
+	               Cookies.set("md_3", "y", {expires : 30});         
+	            } 
+	            else {
+	               Cookies.remove("mem_id");
+	               Cookies.remove("md_3");
+	            }
+	         
+	            $("#login").submit();
+			}
+		});		        
+        
      });
      
   </script>

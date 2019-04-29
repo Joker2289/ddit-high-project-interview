@@ -1,7 +1,10 @@
 package kr.or.ddit.corporation.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -257,7 +261,7 @@ public class CorporationController {
 		}
 		corporationInfo = corporationService.select_corpInfo(corp_id);
 		//파일이 저장될 path 설정 
-		String path = "d://aaa";
+		String path = "D://A_TeachingMaterial/7.LastProject/workspace/interview/src/main/webapp/WEB-INF/views/corporation/img";
 		Map returnObject = new HashMap(); 
 		
 		try { 
@@ -287,9 +291,6 @@ public class CorporationController {
 				} 
 				
 
-				// 파일 명 변경(uuid로 암호화) 
-//				String ext = origName.substring(origName.lastIndexOf('.')); // 확장자 
-//				String saveFileName = getUuid() + ext; 
 				String corpname = corporationInfo.getCorp_name();
 				String a = "";
 				a = corpname +"_logo"+".png";
@@ -338,7 +339,86 @@ public class CorporationController {
 	
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////
-
+	//비동기식 업로드
+	
+	@RequestMapping("/serverInfoUpload.do")
+    public ModelAndView mybatistest(HttpServletRequest request,String corp_id,HttpSession session) throws IOException{
+	
+        ModelAndView mav = new ModelAndView();
+        
+        MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
+        MultipartFile file = multi.getFile("agentInstallFile");//jsp 페이지에서 input type="file"의 파라미터명
+                
+         String path="";
+//         UUID randomeUUID = UUID.randomUUID();//중복 파일명 방지
+                  
+         if(file!=null){
+        
+          System.out.println("파라미터명" + file.getName());
+          System.out.println("파일크기" + file.getSize());
+          System.out.println("파일 존재" + file.isEmpty());
+          System.out.println("오리지날 파일 이름" + file.getOriginalFilename());
+        
+          
+          path = "D://A_TeachingMaterial/7.LastProject/workspace/interview/src/main/webapp/WEB-INF/views/corporation/img/";
+          InputStream inputStream = null;
+          OutputStream outputStream = null;
+          
+          String organizedfilePath="";
+          
+          try {
+              
+ 
+              if (file.getSize() > 0) {
+                  inputStream = file.getInputStream();
+                  File realUploadDir = new File(path);
+                  
+                  if (!realUploadDir.exists()) {//업로드하려는 path에 폴더가 없을경우
+                      realUploadDir.mkdirs();//폴더생성.
+                  }
+                  
+ 
+                  
+//                  organizedfilePath = path + randomeUUID + "_" + file.getOriginalFilename();
+                  organizedfilePath = path + file.getOriginalFilename();
+                  System.out.println(organizedfilePath);//파일이 저장된경로 + 파일 명
+                  
+                  outputStream = new FileOutputStream(organizedfilePath);
+ 
+                  int readByte = 0;
+                  byte[] buffer = new byte[8192];
+ 
+                  while ((readByte = inputStream.read(buffer, 0, 8120)) != -1) {
+                      outputStream.write(buffer, 0, readByte); //파일 생성 ! 
+                      
+                  }
+            
+                  
+              }
+              
+          } catch (Exception e) {
+              // TODO: handle exception
+              e.printStackTrace();
+ 
+          } finally {
+        	  
+              outputStream.close();
+              inputStream.close();
+          }
+          
+      
+                 
+         }    
+          mav.setViewName("redirect:" + request.getContextPath() + "/corporation");
+        return mav;
+                
+    }
+	
+	
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////
 	/**
 	 * 타임라인 동영상 url입력
 	 * @param request
@@ -596,6 +676,24 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 
 		return "corporationTiles";
 
+	}
+	
+	@RequestMapping("/corporation_follow")
+	public String corporation_follow(FollowVo followVo){
+		logger.debug("followVo : {}", followVo);
+		followService.insert_follow(followVo);
+		
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setMem_id(followVo.getRef_keyword());
+		alarmInfo.setAlarm_check("0");
+		alarmInfo.setDivision("14");
+		alarmInfo.setSend_id(followVo.getMem_id());
+		alarmInfo.setAlarm_separate("06");
+		alarmInfo.setRef_code(followVo.getFollow_code());
+		
+		alarmService.insert_alarmInfo(alarmInfo);
+		
+		return "corporation/module/top";
 	}
 	
 

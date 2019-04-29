@@ -170,4 +170,12 @@
 		)
 	</insert>
 	
+	<!-- 회사페이지에서 팔로우 언팔로우 확인 -->
+	<select id="follow_unfollow" parameterType="followVo">
+	select *
+	from follow
+	where FOLLOW.MEM_ID = #{session.mem_id}
+	and follow.ref_keyWord=#{corporInfo.corp_id}
+	</select>
+	
 </mapper> 

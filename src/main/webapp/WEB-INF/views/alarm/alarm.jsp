@@ -26,8 +26,11 @@
 		          <div id="alarm${recentAlarm.alarm_code }">
 		  	        <div class="profile_img" style="float: left;">
 		  	          <c:choose>
-		  	            <c:when test="${recentAlarm.profile_path != null }">
+		  	            <c:when test="${recentAlarm.profile_path != null && recentAlarm.mem_division == '1' }">
 		  	              <img class="user_profile_img" style="border: 1px solid #ddd;" src="${ cp }/view/imageView?mem_id=${recentAlarm.send_id }&division=pf">
+		  	            </c:when>
+		  	            <c:when test="${recentAlarm.profile_path != null && recentAlarm.mem_division == '2' }">
+		  	              <img class="user_profile_img" style="border: 1px solid #ddd;" src="${recentAlarm.profile_path }">
 		  	            </c:when>
 		  	            <c:otherwise>
 		  	              <img class="user_profile_img" style="border: 1px solid #ddd;" src="/images/profile/basicProfile.png">
@@ -38,17 +41,38 @@
 		  	          <c:choose>
 		  	            <c:when test="${recentAlarm.division == '28' && recentAlarm.alarm_separate == '01' }">
 		  	              <h4 style="height: 30px; padding-top: 5px;">
-		  	                <a href="/postdetail?post_code=${recentAlarm.ref_code }&mem_id=${recentAlarm.mem_id }&ref_code=${recentAlarm.ref_code }">${recentAlarm.send_name } 님이 회원님의 게시글을 추천함</a>
+		  	                <a href="/postdetail?post_code=${recentAlarm.ref_code }&mem_id=${recentAlarm.mem_id }&ref_code=${recentAlarm.ref_code }">
+		  	                  <c:if test="${fn:length(recentAlarm.send_name) >= 8 }">
+		  	                    ${fn:substring(recentAlarm.send_name,0, 8) }... 님이 회원님의 게시글을 추천함
+		  	                  </c:if> 
+		  	                  <c:if test="${fn:length(recentAlarm.send_name) < 8 }">
+		  	                  	${recentAlarm.send_name }님이 회원님의 게시글을 추천함
+		  	                  </c:if>
+		  	                </a>
 		  	              </h4>
 		  	            </c:when>
 		  	            <c:when test="${recentAlarm.division == '28' && recentAlarm.alarm_separate == '02' }">
 		  	              <h4 style="height: 30px; padding-top: 5px;">
-		  	                <a href="/postdetail?post_code=${recentAlarm.ref_code }&mem_id=${recentAlarm.mem_id }&ref_code=${recentAlarm.ref_code }">${recentAlarm.send_name } 님이 회원님의 게시글에 댓글을 남김</a>
+		  	                <a href="/postdetail?post_code=${recentAlarm.ref_code }&mem_id=${recentAlarm.mem_id }&ref_code=${recentAlarm.ref_code }">
+		  	                  <c:if test="${fn:length(recentAlarm.send_name) >= 8 }">
+		  	                    ${fn:substring(recentAlarm.send_name,0, 8) }... 님이 회원님의 게시글에 댓글을 남김
+		  	                  </c:if> 
+		  	                  <c:if test="${fn:length(recentAlarm.send_name) < 8 }">
+		  	                  	${recentAlarm.send_name } 님이 회원님의 게시글에 댓글을 남김
+		  	                  </c:if>
+		  	                </a>
 		  	              </h4>
 		  	            </c:when>
 		  	            <c:when test="${recentAlarm.division == '29' && recentAlarm.alarm_separate == '03' }">
 		  	              <h4 style="height: 30px; padding-top: 5px;">
-		  	                <a href="/postdetail?post_code=${recentAlarm.ref_code }&mem_id=${recentAlarm.mem_id }&ref_code=${recentAlarm.ref_code }">${recentAlarm.send_name } 님이 회원님의 댓글을 추천함</a>
+		  	                <a href="/postdetail?post_code=${recentAlarm.ref_code }&mem_id=${recentAlarm.mem_id }&ref_code=${recentAlarm.ref_code }">
+		  	                  <c:if test="${fn:length(recentAlarm.send_name) >= 8 }">
+		  	                    ${fn:substring(recentAlarm.send_name,0, 8) }... 님이 회원님의 댓글을 추천함
+		  	                  </c:if> 
+		  	                  <c:if test="${fn:length(recentAlarm.send_name) < 8 }">
+		  	                  	${recentAlarm.send_name } 님이 회원님의 댓글을 추천함
+		  	                  </c:if>
+		  	                </a>
 		  	              </h4>
 		  	            </c:when>
 		  	            <c:when test="${recentAlarm.division == '25' && recentAlarm.alarm_separate == '04' }">
@@ -71,7 +95,14 @@
 		  	              <!-- 회사일 경우 회사 페이지로 링크 연결 -->
 		  	              <c:if test="${recentAlarm.mem_division == 2 }">
 		  	                <h4 style="height: 30px; padding-top: 5px;">
-		  	                  <a href="/corporation?corp_id=${recentAlarm.send_id }">${recentAlarm.send_name } 님이 회원님을 팔로우함</a>
+		  	                  <a href="/corporation?corp_id=${recentAlarm.send_id }">
+		  	                    <c:if test="${fn:length(recentAlarm.send_name) >= 8 }">
+		  	                      ${fn:substring(recentAlarm.send_name, 0, 8) }... 님이 회원님을 팔로우함
+		  	                  	</c:if> 
+		  	                    <c:if test="${fn:length(recentAlarm.send_name) < 8 }">
+		  	                  	  ${recentAlarm.send_name } 님이 회원님을 팔로우함
+		  	                    </c:if>
+		  	                  </a>
 		  	                </h4>
 		  	              </c:if>
 		  	            </c:when>
@@ -79,13 +110,22 @@
 		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 채용공고에 지원함</h4>
 		  	            </c:when>
 		  	            <c:when test="${recentAlarm.division == '34' && recentAlarm.alarm_separate == '08' }">
-		  	              <h4 style="height: 30px; padding-top: 5px;">검색어 ㄷㄷ에 해당하는 새로운 채용공고가 검색됨</h4>
+		  	              <a href="/recr_detail?recruit_code=${recentAlarm.ref_code }">
+		  	                <h4 style="height: 30px; padding-top: 5px;">
+							  <c:if test="${fn:length(recentAlarm.send_name) >= 8 }">
+							    ${fn:substring(recentAlarm.send_name, 0, 8) }...님으로부터 새로운 채용공고가 검색됨
+							  </c:if> 
+							  <c:if test="${fn:length(recentAlarm.send_name) < 8}">
+							    ${recentAlarm.send_name }님으로부터 새로운 채용공고가 검색됨
+							  </c:if> 
+							</h4>
+		  	              </a>
 		  	            </c:when>
 		  	          </c:choose>
 		  	        </div>
 		  	        
 		  	        <!-- 알림 관리버튼 드롭다운 -->
-		  	        <div class="dropdown" style="float: right;">
+		  	        <div class="dropdown col-time" style="float: right;">
 		  	          <div>
 		  	            <button class="btn_alarmControll" style="width: 30px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		  	              <i class="fas fa-ellipsis-h" style="font-size: 18px;"></i>
@@ -108,7 +148,7 @@
                             <span style="color: #8D9191;">방금 전</span>
                           </c:when>
                           <c:when test="${recentAlarm.resultMinute < 60 }">
-                              <span style="color: #8D9191;">${recentAlarm.resultMinute }분</span>
+                            <span style="color: #8D9191;">${recentAlarm.resultMinute }분</span>
                           </c:when>
                           <c:when test="${recentAlarm.resultMinute < 1440 }">
                             <span style="color: #8D9191;">${fn:split((recentAlarm.resultMinute/60), '.')[0] }시간</span>
@@ -247,8 +287,8 @@
 
 	$("#btn_moreRecent").hide();
 	$("#btn_morePrevious").hide();
-	var recentCount = parseInt(${recentCount});
-	var previousCount = parseInt(${recentCount});
+	var recentCount = parseInt("${recentCount}");
+	var previousCount = parseInt("${recentCount}");
 	
 	if($(".recentAlarm_contents").length < recentCount){
 		$("#btn_moreRecent").show();
