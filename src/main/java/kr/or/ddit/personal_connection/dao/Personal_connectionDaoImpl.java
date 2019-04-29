@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.career_info.model.Career_infoVo;
+import kr.or.ddit.corporate_review.model.Corporate_reviewVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.follow.model.FollowVo;
@@ -224,6 +225,12 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 	public int insert_followCorporation(FollowVo followVo) {
 		int insert_followCorpor = sqlSessionTemplate.insert("personal.insert_followCorporation", followVo);
 		return insert_followCorpor;
+	}
+
+	@Override
+	public int insert_companyReview(Corporate_reviewVo reviewVo) {
+		int insert_companyReview = sqlSessionTemplate.insert("personal.insert_companyReview", reviewVo);
+		return insert_companyReview;
 	}
 
 

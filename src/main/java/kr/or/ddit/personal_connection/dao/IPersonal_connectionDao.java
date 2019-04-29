@@ -3,6 +3,7 @@ package kr.or.ddit.personal_connection.dao;
 import java.util.List;
 
 import kr.or.ddit.career_info.model.Career_infoVo;
+import kr.or.ddit.corporate_review.model.Corporate_reviewVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.follow.model.FollowVo;
@@ -359,6 +360,18 @@ public interface IPersonal_connectionDao {
 	* Method 설명 : 회사 팔로우
 	*/
 	int insert_followCorporation(FollowVo followVo);
+	
+	
+	
+	/**
+	* Method : insert_companyReview
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param reviewVo
+	* @return
+	* Method 설명 : companyReview - 기업 리뷰 작성
+	*/
+	int insert_companyReview(Corporate_reviewVo reviewVo);
 	
 	
 	
