@@ -18,13 +18,10 @@
 					</button>
 				</div>	
 				<div class="searchRoomBox">
-					<span>
-						<i class="fas fa-search"></i>
-					</span>
-					<input type="text" class="form-control" aria-label="..." placeholder="메일 검색">
-					<button class="btn btn-link">
+					<input type="text" class="form-control chatroomSeach" aria-label="..." placeholder="메일 검색">
+					<button class="btn btn-link chatroomSeachBtn">
 						<span style="font-size: 17px; padding-top: 12px; width: 20px;">
-							<i class="fas fa-sort-amount-down"></i>
+							<i class="fas fa-search"></i>
 						</span>
 					</button>
 				</div>
@@ -38,7 +35,7 @@
 							<c:set var="profile_path" value="${userChatroom.profile_path }"/> 
 						</c:if>
 					<fmt:formatDate value="${userChatroom.write_date}" pattern="MM월 dd일" var="write_date"/>
-					<a class="chatRoomBox" href="/chatRoomMove?chat_code=${userChatroom.CHAT_CODE}">
+					<a class="chatRooms chatRoomBox" role="${userChatroom.CHAT_CODE }">
 						<div class="profileImageBox">
 							<div style="background-image: url(${not empty profile_path ? profile_path : profile_addrpath});"></div>
 						</div>
@@ -54,7 +51,6 @@
 					</c:forEach>
 				</div>
 			</div>
-			
 			<div class="rightMenuBox">
 				<div class="chatAjax">
 					<div id="chatcontentsAjax">
@@ -63,8 +59,8 @@
 							<label>${chatContentsVoList[0].chat_name }</label>
 							<label style="color:rgba(0,0,0,.6);"><c:if test="${not empty chatContentsVoList[0].memCount}">메일 상대 ${chatContentsVoList[0].memCount }명 </c:if></label>
 						</div>
-					<button class="btn btn-link">
-						<i class="fas fa-ellipsis-h"></i>
+					<button class="btn btn-link exit">
+						<i class="fas fa-door-open"></i>
 					</button>
 				</div>
 				<div class="chatContentBox">
@@ -129,11 +125,73 @@
 </div>
 </div>
 <script src="/js/sockjs.js"></script>
+<script src="/js/js.cookie.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		var chat_code = "${chat_code}";
-		$(".chatContentBox").scrollTop(99999999);
 		
+		// 기존에 접속한 방이 있는지 확인
+		var chat_code = Cookies.get('chat_code');
+		// 접속
+ 		sock = new SockJS("http://192.168.206.19:80/mailHome");
+ 		
+		// 접속할 방 클릭시 방 접속 및 내용 출력
+		$(document).on("click",".chatRooms",function(){
+			Cookies.set('chat_code', $(this).attr('role'));
+			$('.chatRooms').attr('class', 'chatRooms chatRoomBox');
+			$(this).attr('class', 'chatRooms chatRoomBoxOn');
+			chat_code = $(this).attr('role');
+			
+			$.ajax({
+   				type : "POST",
+   		    		url : "/serverRecive",
+   		    		dataType : "HTML",
+   		    		data : {"chat_code" : $(this).attr('role')},
+   				success : function(result) {
+   					$("#chatcontentsAjax").empty();
+   					$("#chatcontentsAjax").html(result);
+   					 $(".chatContentBox").scrollTop(99999999);
+   				}
+				});
+		});
+		
+		// 기존에 접속한 방이 없고 현재 개설된 방이 하나라도 있을 시에 최근 메세지가 있는 방으로 선택
+		if(chat_code == undefined && ${fn:length(userChatroomsMap)} > 0){
+			$(".chatRooms").get(0).click();
+		}else{
+			$('.chatRooms').attr('class', 'chatRooms chatRoomBox');
+			$(".chatRooms").each(function(index, item){
+				 if($(item).attr('role') == chat_code){
+					 $(item).attr('class', 'chatRooms chatRoomBoxOn');
+				 }
+				 
+			 });
+		}
+		
+		// 방나가기 버튼 클릭시 방에서 나가기
+		$(document).on("click",".exit",function(){
+			Cookies.remove('chat_code');
+			location.href="/deleteChatMember?chat_code="+chat_code+"&mem_id=${SESSION_MEMBERVO.mem_id}";
+			
+		});
+		
+		// 검색클릭시 검색된 방만 보여주기
+		$(".chatroomSeachBtn").on("click",function() {
+			$.ajax({
+				type : "POST",
+		    		url : "/chatContentSearch",
+		    		dataType : "JSON",
+		    		data : {"mem_id" : "${SESSION_MEMBERVO.mem_id}", "chat_content" : $(".chatroomSeach").val()},
+				success : function(result) {
+					for(var i in result) {
+						console.log(result[i]);
+					}
+				
+				}
+			}); 
+	    });
+		
+		
+		// 
 		$(".produceRoomBtn").on("click",function(){
 			if($("#produceRoomBtn").hasClass('produceRoomBtn')){
 				$.ajax({
@@ -151,6 +209,7 @@
 				}); 
 			}
 		});
+		
 		$(document).on("click",".submitBtn",function(){ 
 				if($("#produceRoomBtn").hasClass('produceRoomBtnOn')){
 					if($("input[name='chat_name']").val().trim()=="") {
@@ -162,45 +221,39 @@
 						console.log(chat_nameValue);
 						$("input[name='chat_name']").val(chat_nameValue);
 					}
-					$("#insertChatRoom").submit();
+					console.log($("textarea[name='chat_content']").val());
+					
+					 $.ajax({
+			   				type : "POST",
+			   		    		url : "/insertChatRoom", 
+			   		    		dataType : "JSON",
+			   		    		data : {"chat_code" : chat_code, "chat_member" : $("input[name='chat_member']").val(), "chat_name" : $("input[name='chat_name']").val(), "chat_content" : $("textarea[name='chat_content']").val()},
+			   				success : function(result) {
+			   					var str = result;
+			   					var contents = str.split("=")[1];
+			   					chat_code = str.split("=")[0];
+			   					sock.send(chat_code+"="+contents);
+			   					Cookies.remove('chat_code');
+			   				}
+		   				}); 
 					$("#produceRoomBtn").attr('class','btn btn-link produceRoomBtn');
 				}else{
 					 sendMessage();
-		             $('#sendMeseage').val('')
+		             $('#sendMeseage').val('');
 				}
 		}); 
-		 
-	/* 	$(document).on("click",".chatRoomBox",function(){ 
-			 chat_code = $(this).attr('role');
-			 console.log(chat_code);
-		 	$.ajax({
-				type : "POST",
-		    		url : "/chatRoomMove",
-		    		dataType : "HTML",
-		    		data : {"chat_code" : chat_code},
-				success : function(result) {
-					$(".submitBtn").prop("disabled", false);
-					$("#produceRoomBtn").attr('class','btn btn-link produceRoomBtn');
-					$("#chatcontentsAjax").empty();
-					$("#chatcontentsAjax").html(result);
-					$(".chatContentBox").scrollTop(99999999);
-				}
-			});
-		 });
-		  */
-
 		
+	 
 		// 웹소켓을 지정한 url로 연결한다.
-        let sock = new SockJS("<c:url value="/mailHome"/>");
         sock.onmessage = onMessage;
         sock.onclose = onClose;
 
         // 메시지 전송
         function sendMessage() {
-        	
         	if(chat_code != null) {
-        		console.log($("#sendMeseage").val());
-                sock.send($("#sendMeseage").val());
+        		
+        		console.log(chat_code+"="+$("#sendMeseage").val());
+                sock.send(chat_code+"="+$("#sendMeseage").val());
         	}
         }
 
@@ -208,19 +261,31 @@
         function onMessage(msg) {
            var data = msg.data;
            console.log(data);
+          		
+        	   $.ajax({
+	   				type : "POST",
+	   		    		url : "/serverRecive",
+	   		    		dataType : "HTML",
+	   		    		data : {"chat_code" : chat_code},
+	   				success : function(result) {
+	   					$("#chatcontentsAjax").empty();
+	   					$("#chatcontentsAjax").html(result);
+	   					 $(".chatContentBox").scrollTop(99999999);
+	   				}
+   				});
            
-           $.ajax({
-				type : "POST",
-		    		url : "/serverRecive",
-		    		dataType : "HTML",
-		    		data : {"chat_code" : chat_code},
-				success : function(result) {
-					$("#chatcontentsAjax").empty();
-					$("#chatcontentsAjax").html(result);
-					$(".chatContentBox").scrollTop(99999999);
-				}
-			});
-           
+        	   $.ajax({
+	   				type : "POST",
+	   		    		url : "/reflashChatRooms",
+	   		    		dataType : "HTML",
+	   		    		data : {"chat_code" : chat_code},
+	   				success : function(result) {
+	   					$(".chatrooms").empty();
+	   					$(".chatrooms").html(result);
+	   					location.href="/mailHome";
+	   					
+	   				}
+   				}); 
            
         }
 
@@ -228,6 +293,7 @@
         function onClose(evt) {
            $(".chatContentBox").append("연결 끊김");
         }
-		
+        
+        
 	});
 </script>

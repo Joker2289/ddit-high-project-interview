@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.velocity.runtime.directive.Parse;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.chat_contents.dao.IChat_contentsDao;
@@ -32,8 +33,8 @@ public class ChatroomServiceImpl implements IChatroomService{
 	}
 
 	@Override
-	public int insert_chatroom(ChatroomVo chatroomVo, String[] chat_member, String chat_content) {
-		int chatroomCount = chatroomDao.insert_chatroom(chatroomVo);
+	public String insert_chatroom(ChatroomVo chatroomVo, String[] chat_member, String chat_content) {
+		chatroomDao.insert_chatroom(chatroomVo);
 		
 		for (String mem_id :chat_member){
 			Chat_memberVo chat_memberVo = new Chat_memberVo();
@@ -47,13 +48,33 @@ public class ChatroomServiceImpl implements IChatroomService{
 		chat_memberVo.setMem_id(chatroomVo.getMem_id());
 		chat_memberDao.insert_chatMember(chat_memberVo);
 		
-		Chat_contentsVo chat_contentsVo = new Chat_contentsVo();
-		chat_contentsVo.setChat_code(chatroomVo.getCurrval());
-		chat_contentsVo.setMem_id(chatroomVo.getMem_id());
-		chat_contentsVo.setChat_content(chat_content);
-		chat_contentsDao.insert_chatcontets(chat_contentsVo);
-		
-		return chatroomCount;
+		return chatroomVo.getCurrval();
+	}
+	
+	/**
+	 * Method : select_userChatroomsSearch
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param chat_contentsVo
+	 * @return
+	 * Method 설명 : 사용자가 입력한 내용으로 채팅방 검색
+	 */
+	@Override
+	public List<String> select_userChatroomsSearch(Chat_contentsVo chat_contentsVo) {
+		return chatroomDao.select_userChatroomsSearch(chat_contentsVo);
+	}
+
+	/**
+	 * Method : delete_chatroom
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param chat_code
+	 * @return
+	 * Method 설명 : 채팅방 삭제 
+	 */
+	@Override
+	public int delete_chatroom(String chat_code) {
+		return chatroomDao.delete_chatroom(chat_code);
 	}
 
 }

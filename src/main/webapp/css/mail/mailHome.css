@@ -187,3 +187,16 @@
 	width:297px; 
 	height:691px;
 }
+.searchConnectionDropDown{
+	top:auto;
+	left:auto;
+}
+
+.chatRoomBoxOn{
+	display: flex; 
+	width: 297px; 
+	height: 92px; 
+	padding-left: 12px;
+	border-left:4px solid #006097;
+	
+}
