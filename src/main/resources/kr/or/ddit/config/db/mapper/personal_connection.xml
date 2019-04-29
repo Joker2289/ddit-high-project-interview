@@ -694,4 +694,36 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 	</insert>
 	
 	
+	
+	<!-- companyReview - 기업 리뷰 작성 -->
+	<insert id="insert_companyReview" parameterType="reviewVo">
+		insert into
+			corporate_review
+		values(
+				cr_code_seq.nextval,
+				#{user_id},
+				#{corp_id},
+				#{job_rank},
+				#{cr_contents},
+				sysdate
+				)
+	</insert>
+	
+	
+	<!-- companyReview - 기업 리뷰 리스트 출력 -->
+	<select id="select_companyReview" parameterType="String" resultType="reviewVo">
+		select
+			cr_code,
+			user_id,
+			corp_id,
+			job_rank,
+			cr_contents,
+			write_date
+		from
+			corporate_review
+		where
+			corp_id=#{corp_id}
+	</select>
+	
+	
 </mapper>
