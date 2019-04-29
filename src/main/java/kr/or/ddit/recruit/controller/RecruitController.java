@@ -1091,7 +1091,7 @@ public class RecruitController {
 	
 	// @ajax로 지도 검색 페이지의 회사와의 거리 그리기.
 	@RequestMapping("/mapAjaxHtml")
-	public String mapAjaxHtml(String result, String width_value, HttpSession session, Model model) {
+	public String mapAjaxHtml(String result, String width_value, HttpSession session, Model model) throws ParseException {
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		List<CorporationVo> corpList = corpService.select_allCorps();
@@ -1107,6 +1107,7 @@ public class RecruitController {
 		List<String> corpNmList = new ArrayList<>();
 		List<String> corpImgList = new ArrayList<>();
 		List<String> corpDList = new ArrayList<>();	
+		List<String> timeList = new ArrayList<>();	
 		
 		// 스크랩 여부 리스트.
 		List<String> scrapList = new ArrayList<>();
@@ -1137,12 +1138,35 @@ public class RecruitController {
 			if(scrapCheck_flag == false){
 				scrapList.add("f");
 			}			
+			
+			String start_date = rVo.getStart_date();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+			Date start = sdf.parse(start_date);
+			Date now = new Date();
+			
+			long temp_time = now.getTime() - start.getTime();
+			
+			int time_diff = (int) (temp_time / (60*1000));
+			
+			if(time_diff < 2){
+				timeList.add("방금");
+			}else if(time_diff < 60){
+				timeList.add(time_diff + "분");
+			}else if(time_diff < 1440){
+				timeList.add(time_diff/60 + "시간");
+			}else if(time_diff < 43200){
+				timeList.add(time_diff/(60*24) + "일");
+			}else{
+				timeList.add(time_diff/(60*24*30) + "달");
+			}			
 		}
 		
 		model.addAttribute("recrList2", recrList2);
 		model.addAttribute("corpImgList", corpImgList);
 		model.addAttribute("corpNmList", corpNmList);
 		model.addAttribute("scrapList", scrapList);
+		model.addAttribute("timeList", timeList);
 
 		// 슬라이드 출력할 박스 width 넘기기.
 		model.addAttribute("width_value", width_value);
@@ -1328,7 +1352,7 @@ public class RecruitController {
 	// @채용공고 신고.
 	@RequestMapping("/reportRecr")
 	public String reportRecr(HttpServletRequest req, HttpSession session, String report_contents,
-			String recruit_code, Model model) {
+			String recruit_code, String req_page, Model model) {
 		ReportVo rVo = new ReportVo();
 		rVo.setDivision("34"); // recruit
 		
@@ -1342,6 +1366,9 @@ public class RecruitController {
 		
 		// t - "정상적으로 신고접수 되었습니다."
 		model.addAttribute("msg_flag", "t");
+		
+		model.addAttribute("recruit_code", recruit_code);
+		model.addAttribute("req_page", req_page);
 		
 		return "redirect:" + req.getContextPath() + "/recr_detail";
 	}

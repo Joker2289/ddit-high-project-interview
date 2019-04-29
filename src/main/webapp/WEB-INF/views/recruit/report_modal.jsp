@@ -29,6 +29,7 @@
 	<form id="frm" action="${pageContext.request.contextPath }/reportRecr" method="post">
 		<input type="hidden" id="report_contents" name="report_contents">
 		<input type="hidden" id="recruit_code" name="recruit_code">
+		<input type="hidden" id="req_page" name="req_page">
 	
 		<div class="modal-foot" style="padding: 10px; text-align: right; padding-bottom: 5px; padding-top: 20px;">
 			<input type="button" id="btn_save" value="전송" style="border: 0px; width: 65px; height: 40px; font-size: 19px;

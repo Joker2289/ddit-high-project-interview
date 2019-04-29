@@ -183,6 +183,7 @@ $(document).ready(function(){
 		alert("${recr.recruit_code }");
 		$("#report_contents").val($("#txt_report").val());
 		$("#recruit_code").val("${recr.recruit_code }");
+		$("#req_page").val("${req_page }");
 		$("#frm").submit();
 	});
 	
