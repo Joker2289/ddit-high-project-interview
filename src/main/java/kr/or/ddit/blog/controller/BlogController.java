@@ -720,4 +720,23 @@ public class BlogController {
 		return "blog/page_area_select";
 	}
 	
+	/**
+	 * 
+	 * Method : page_commentList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param req
+	 * @param model
+	 * @param good_code
+	 * @param page_code
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 댓글 리스트 출력
+	 */
+	@RequestMapping("/page_commentList")
+	public String page_commentList(HttpServletRequest req, Model model, @RequestParam("page_code")String page_code) {
+		
+		return "blog/comment_area";
+	}
+	
 }

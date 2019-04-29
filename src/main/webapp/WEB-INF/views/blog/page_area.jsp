@@ -86,20 +86,28 @@
 				
 				
 				<!-- 댓글수, 좋아요 수 출력 -->
-				<div class="post_socialCount">
+				<div class="post_socialCount" style="margin-bottom: 5px;">
 					<ul style="padding-left: 10px;">
 						<li style="list-style: none; float: left;">
-							<button class="btn_count btn_goodcount"
-								title="goodCount ${post.post_code }" style="font-size: 12px;">
-								추천 <span id="txt_good_count${post.post_code }">${post.goodcount }</span>
+							<button class="btn_count btn_goodcount" style="font-size: 15px;">
+								추천
+								<c:if test="${ page.good_cnt != null }">
+									${ page.good_cnt }
+								</c:if>
+								<c:if test="${ page.good_cnt == null }">
+									0
+								</c:if>
 							</button>
 						</li>
 						<li style="list-style: none; float: left;">
-							<button class="btn_count btn_commentcount"
-								id="btn_commentcount${post.post_code }"
-								title="commentCount ${post.post_code }"
-								style="font-size: 12px;">
-								댓글 <span id="txt_comment_count${post.post_code }">${post.commentcount }</span>
+							<button class="btn_count btn_commentcount" style="font-size: 15px;">
+								댓글 
+								<c:if test="${ page.comment_cnt != null }">
+									${ page.comment_cnt }
+								</c:if>
+								<c:if test="${ page.comment_cnt == null }">
+									0
+								</c:if>
 							</button>
 						</li>
 					</ul>
@@ -114,18 +122,21 @@
 						<i id="good_icon${ page.page_code }" class="far fa-thumbs-up"></i>
 					</button>
 					<!-- 댓글 출력 버튼 -->
-					<button class="btn-social">
-						<i class="far fa-comments"></i>
+					<button class="btn-social" data-toggle="collapse" data-target="#comment_area${ page.page_code }" aria-expanded="false" aria-controls="collapseExample" onclick="page_commentList('${ page.page_code }');">
+							<i class="far fa-comments"></i>
 					</button>
 				</div>
 				<!-- 댓글, 좋아요버튼 구간 -->
 				
 
-				<!-- comment -->
-				<div class="col-comment-area ${ post.post_code }" id="post_comment${ post.post_code }">
-				
+				<!-- 댓글 출력 구간 -->
+				<div class="collapse" id="comment_area${ page.page_code }">
+				  <div class="well" id="comment_content${ page.page_code }">
+				    
+				  </div>
 				</div>
-				<!-- /comment --> 
+				<!-- 댓글 출력 구간 -->
+					 
 
 			</div>
 		</div>

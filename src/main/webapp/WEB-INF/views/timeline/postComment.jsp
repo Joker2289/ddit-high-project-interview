@@ -43,6 +43,7 @@
       </form>
     </div>
   </div>
+  
 <!-- /comment input area -->  
 <!-- comment print area -->
   <div class="comment-printarea">

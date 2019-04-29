@@ -16,6 +16,10 @@ public class PageVo {
 	
 	private String user_id; 		// 작성자 ID
 	private String portfolio_code;	// 포트폴리오 코드
+	
+	private String good_cnt;		// 좋아요 수
+	private String comment_cnt;		// 댓글 수
+	
 	public String getPage_code() {
 		return page_code;
 	}
@@ -76,12 +80,25 @@ public class PageVo {
 	public void setPortfolio_code(String portfolio_code) {
 		this.portfolio_code = portfolio_code;
 	}
+	public String getGood_cnt() {
+		return good_cnt;
+	}
+	public void setGood_cnt(String good_cnt) {
+		this.good_cnt = good_cnt;
+	}
+	public String getComment_cnt() {
+		return comment_cnt;
+	}
+	public void setComment_cnt(String comment_cnt) {
+		this.comment_cnt = comment_cnt;
+	}
 	@Override
 	public String toString() {
 		return "PageVo [page_code=" + page_code + ", section_code=" + section_code + ", page_title=" + page_title
 				+ ", page_contents=" + page_contents + ", write_date=" + write_date + ", view_count=" + view_count
 				+ ", page_thumbnail=" + page_thumbnail + ", bg_color=" + bg_color + ", user_id=" + user_id
-				+ ", portfolio_code=" + portfolio_code + "]";
+				+ ", portfolio_code=" + portfolio_code + ", good_cnt=" + good_cnt + ", comment_cnt=" + comment_cnt
+				+ "]";
 	}
 	
 }
