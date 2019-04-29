@@ -20,8 +20,8 @@
 			<div>
 				<label style="font-size: 26px;margin-top: 51px;margin-left: 10px;"><strong>${corporationInfo.corp_name }</strong></label>
 				<div style="margin-left: 10px;margin-top: 6px;">
-					<button class="btn btn-primary"><strong>기업리뷰</strong></button>
-					<button class="btn btn-primary" style="margin-left: 10px;"><strong>연봉정보</strong></button>
+					<button onclick="location.href='/'" class="btn btn-primary"><strong>기업리뷰</strong></button>
+					<button onclick="location.href='/'" class="btn btn-primary" style="margin-left: 10px;"><strong>연봉정보</strong></button>
 					<button class="btn btn-default" data-toggle="modal" data-target="#myModal" style="margin-left: 10px;border: hidden;">기업리뷰 작성</button>
 				</div>
 			</div>
@@ -36,16 +36,18 @@
 		
 		<div class="whiteBox" style="width: 920px;margin-top: 20px;height: 302px;">
 			<div style="font-size: 20px;"><i class="fas fa-comment-dots" style="color:#337ab7;margin-top: 25px;margin-left: 25px;margin-bottom: 20px;margin-right: 5px;"></i>기업 리뷰</div>
-			<div style="margin-left: 60px;">
-				<div>
-					<label>아이디 | </label>
-					<label>직급 | </label>
-					<label>등록일</label>
-					<div style="margin-left: 10px;margin-right: 50px;margin-top: 7px;">
-						<label>ddd</label>
-					</div>
-				</div>
-			</div>
+				<c:forEach items="${crVo }" var="crVo">
+					<div style="margin-left: 60px;margin-bottom: 7px;">
+						<div>
+							<label>${crVo.user_id } | </label>
+							<label style="margin-left: 5px;">${crVo.job_rank } | </label>
+							<label>${crVo.write_date }</label>
+							<div style="margin-left: 10px;margin-right: 50px;margin-top: 2px;">
+								<label>${crVo.cr_contents }</label>
+							</div>
+						</div>
+					</div>	
+				</c:forEach>
 		</div>
 	</div>	
 	

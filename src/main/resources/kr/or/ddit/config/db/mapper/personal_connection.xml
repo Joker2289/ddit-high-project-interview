@@ -710,7 +710,7 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 	</insert>
 	
 	
-	<!--  -->
+	<!-- companyReview - 기업 리뷰 리스트 출력 -->
 	<select id="select_companyReview" parameterType="String" resultType="reviewVo">
 		select
 			cr_code,

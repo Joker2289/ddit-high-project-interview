@@ -233,5 +233,11 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 		return insert_companyReview;
 	}
 
+	@Override
+	public List<Corporate_reviewVo> select_companyReview(String corp_id) {
+		List<Corporate_reviewVo> reviewList = sqlSessionTemplate.selectList("personal.select_companyReview", corp_id);
+		return reviewList;
+	}
+
 
 }

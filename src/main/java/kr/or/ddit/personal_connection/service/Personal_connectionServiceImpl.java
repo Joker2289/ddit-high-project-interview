@@ -233,6 +233,11 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 		return personalDao.insert_companyReview(reviewVo);
 	}
 
+	@Override
+	public List<Corporate_reviewVo> select_companyReview(String corp_id) {
+		return personalDao.select_companyReview(corp_id);
+	}
+
 	
 
 

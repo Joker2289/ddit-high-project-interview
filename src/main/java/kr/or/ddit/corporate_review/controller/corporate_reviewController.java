@@ -1,5 +1,7 @@
 package kr.or.ddit.corporate_review.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -31,7 +33,9 @@ public class corporate_reviewController {
 	public String companyReviewView(String corp_id, Model model) {
 		
 		CorporationVo corporationInfo = corporationService.select_corpInfo(corp_id);
+		List<Corporate_reviewVo> crVo = personalService.select_companyReview(corp_id);
 		
+		model.addAttribute("crVo", crVo);
 		model.addAttribute("corporationInfo", corporationInfo);
 		return "companyReviewTiles";
 	}

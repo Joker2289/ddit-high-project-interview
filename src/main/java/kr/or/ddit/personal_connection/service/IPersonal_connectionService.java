@@ -369,5 +369,17 @@ public interface IPersonal_connectionService {
 	
 	
 	
+	/**
+	* Method : select_companyReview
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param corp_id
+	* @return
+	* Method 설명 : companyReview - 기업 리뷰 리스트 출력
+	*/
+	List<Corporate_reviewVo> select_companyReview(String corp_id);
+	
+	
+	
 
 }
