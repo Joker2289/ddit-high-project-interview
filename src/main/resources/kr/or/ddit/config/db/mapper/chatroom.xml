@@ -42,4 +42,16 @@
 	        select chat_code_seq.currval from dual        
 	    </selectKey>   
 	</insert>
+	
+	<select id="select_userChatroomsSearch" parameterType="chat_contentsVo" resultType="String">
+		  select chat_code
+		     from chat_contents
+		    where mem_id = #{mem_id}
+		      and chat_content like '%' || #{chat_content} || '%'
+	</select>
+	
+	<delete id="delete_chatroom" parameterType="String">
+		delete from chatroom
+			where chat_code = #{chat_code}
+	</delete>
 </mapper> 

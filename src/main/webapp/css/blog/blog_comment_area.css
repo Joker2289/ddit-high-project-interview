@@ -1,0 +1,41 @@
+/* 댓글 collepse div */
+.comment_area {
+	background-color: #F3F6F8;
+	border-top: 1px solid #DDDDDD !important;
+}
+
+.comment_head_div{
+	width: 95%;
+	height: 70px;
+	margin: 0 auto;
+	
+}
+.comment_profile_img {
+	width: 50px;
+	height: 50px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-right: 15px;
+	border: 1px solid #fff !important;
+}
+
+.textarea_div {
+	display: inline-block;
+	width: 90%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.comment_TXT {
+	display: inline-block;
+	width: 85%;
+	height: 35px;
+	font-size: 15px;
+	margin-right: 10px;
+}
+
+.comment_btn {
+	display: inline-block;
+	width: 10%;
+}
+

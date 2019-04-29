@@ -41,4 +41,17 @@ public class Chat_contentsServiceImpl implements IChat_contentsService{
 		return chat_contentsDao.select_chatContents(chat_code);
 	}
 
+	/**
+	 * Method : select_chatContentsSearch
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param chat_contentsVo
+	 * @return
+	 * Method 설명 : 내용 조회
+	 */
+	@Override
+	public List<String> select_chatContentsSearch(Chat_contentsVo chat_contentsVo) {
+		return chat_contentsDao.select_chatContentsSearch(chat_contentsVo);
+	}
+
 }

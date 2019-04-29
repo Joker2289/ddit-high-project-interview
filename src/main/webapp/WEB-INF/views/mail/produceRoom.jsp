@@ -13,7 +13,7 @@
 		<input class="form-control" type="text" id="searchMember" style="width: 100px;border: 0px;" placeholder="이름 입력...">
 	</div>
 	
-	<ul class="dropdown-menu searchConnectionDropDown" style="position:relative;">
+	<ul class="dropdown-menu searchConnectionDropDown">
 		<c:forEach items="${usersVoList }" var="usersVo"> 
 		<c:set var="profile_addrpath" value="/profile?mem_id=${usersVo.user_id }"/>
 		<c:if test="${fn:contains(usersVo.profile_path, 'http')}">

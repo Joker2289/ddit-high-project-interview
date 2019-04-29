@@ -34,7 +34,7 @@
 				text-align: center; padding: 15px; font-size: auto;">
 			<table border="0">
 				<tr>
-					<td><div id="map" style="width:950px; height:600px;"></div></td>
+					<td><div id="map" style="width:950px; height:540px;"></div></td>
 					<td style="width: 200px;">
 						<input id="btn_circle" type="button" value="범위 설정" style="margin-top: -15px; 
 								margin-left: 10px; height: 38px; width: 122px; background-color: #0174b0; 
@@ -47,10 +47,8 @@
 			</table>
 		</div>
 	</div>
-
-	<!-- 레이아웃 잡는건 나중에.. -->
 	<div class="col-md-12" >
-		<div id="div_result" class="whiteBox" style="width: 1150px; margin-left: 0px; height: auto; margin-bottom: 20px;
+		<div id="div_result" class="whiteBox" style="width: 1150px; margin-left: 0px; height: auto; margin-bottom: -1px;
 				text-align: center; padding: 15px; font-size: auto; overflow:hidden;">
 	   		<table style="margin-bottom: 20px;">
 	   			<tr>
@@ -77,19 +75,19 @@
 				</tr>
 			</table>
 		</div>
+	</div>	
+
+	<div class="col-md-12" >
+		<div id="div_box" class="whiteBox" style="width: 1150px; margin-left: 0px; height: auto; margin-bottom: 20px;
+				padding: 15px; font-size: 20px; overflow:hidden;">
+			<a href="${pageContext.request.contextPath }/recruit">
+				<i class="fas fa-chevron-left" style="font-size: 19px;"></i>
+				<strong>&nbsp; &nbsp;채용공고 페이지로</strong>
+			</a>			
+		</div>
 	</div>
 	
-	
-	<br><br>
-	<br><br><br><br><br><br>	
-	<br><br><br><br><br><br>	
-	<a href="${pageContext.request.contextPath }/recruit">채용공고 페이지로 이동 -></a>
-	<br><br><br><br><br><br>	
-	<br><br><br><br><br><br>	
-	<br><br><br><br><br><br>	
-	<br><br><br><br><br><br>	
-		
-	<table border="1" style="margin-top: 15px;">
+	<table border="1" style="padding-top: 415px;">
 		<tr>
 			<td>
 				원 그리기 on/off <input id="cb_circle" type="checkbox"><br><br>
@@ -167,6 +165,13 @@
 		}
 	}	
 	
+	// 범위 선택시 스크롤 이동
+	var scroll_value = 0;
+	
+	$(window).scroll(function(){
+		scroll_value = $(document).scrollTop();
+	});		
+	
 	var width_value = 1000;
 	
 	function getMapHtml(result){
@@ -191,6 +196,9 @@
 				// 리스트 출력할 whitebox width 조정. 'content1'의 width를 조정해야되네.
 				width_value = (result_num * 280) + 50;
 				$("#content1").css("width", width_value + "px");
+				
+				// 리스트가 보이도록 스크롤 이동.
+		 		$(window).scrollTop(($("#td_info").offset().top) - 576);
 				
 				// 검색 결과 표시
 				$("#td_info").html(str_info);

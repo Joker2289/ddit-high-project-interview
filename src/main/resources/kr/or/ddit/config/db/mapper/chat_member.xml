@@ -9,4 +9,16 @@
 	 insert into chat_member
         values (#{mem_id},#{chat_code})
 	</insert>
+	
+	<select id="select_chatMember" parameterType="String" resultType="chat_memberVo">
+		select mem_id
+	      from chat_member
+	     where chat_code = #{chat_code} 
+	</select>
+	
+	<delete id="delete_chatmember" parameterType="chat_memberVo">
+		delete from chat_member
+		 where chat_code = #{chat_code}
+		   and mem_id = #{mem_id}
+	</delete>
 </mapper> 

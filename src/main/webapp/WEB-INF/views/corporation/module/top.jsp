@@ -77,7 +77,10 @@ ${corporationInfo.logo_path}
 	<div style="margin-top: 10px; margin-left: 30px;">
 		<label> ${corporationInfo.corp_profile } </label>
 		<br>  
-		<button value="웹사이트 가기 ↗" name="corp_url" onclick="window.open('http://www.naver.com')" style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;">웹사이트 가기↗</button> <br>
+		<div style="display: flex;">
+		<button value="웹사이트 가기 ↗" name="corp_url" onclick="window.open('http://www.naver.com')" style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;">웹사이트 가기↗</button>
+		<button style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;margin-left: 905px;" onclick="location.href='/companyReview?corp_id=${corporationInfo.corp_id}'">회사 정보</button>
+		</div>
 	</div>
 </div>
 

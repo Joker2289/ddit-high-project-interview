@@ -28,13 +28,29 @@
                      <c:when test="${post.mem_division eq 1 }">href="/profileHome?user_id=${post.mem_id }"</c:when>
                      <c:when test="${post.mem_division eq 2 }">href="/corporation?corp_id=${post.mem_id }"</c:when>
                    </c:choose>>
-                  <div class="writer_info" style="float: left;">
-                    <a style="font-size: 20px;" 
-               	      <c:choose>
-               	        <c:when test="${post.mem_division eq 1 && post.mem_id != memberInfo.mem_id}">href='/profileHome?user_id=${post.mem_id }'</c:when>
-               	        <c:when test="${post.mem_division eq 1 && post.mem_id eq memberInfo.mem_id}">href='/profileHome'</c:when>
-               	        <c:when test="${post.mem_division eq 2 }">href='/corporation?corp_id=${post.mem_id }'</c:when>
-               	      </c:choose>>${post.writer_name }</a>
+                   <div class="writer_info" style="display: inline-block;">
+                      <a 
+                        <c:choose>
+                          <c:when test="${post.mem_division eq '1' && post.mem_id eq SESSION_MEMBERVO.mem_id}">href='/profileHome'</c:when>
+                          <c:when test="${post.mem_division eq '1' && post.mem_id != SESSION_MEMBERVO.mem_id}">href='/profileHome?user_id=${post.mem_id }'</c:when>
+                          <c:when test="${post.mem_division eq '2'}">href='/corporation?corp_id=${post.mem_id }'</c:when>
+                        </c:choose>
+                      >
+                        <c:choose>
+                          <c:when test="${post.mem_division eq '1'}">
+	                        <img src="${ cp }/view/imageView?mem_id=${post.mem_id }&division=pf" class="writer_profile">
+                          </c:when>
+                          <c:when test="${post.mem_division eq '2'}">
+	                        <img src="${post.profile_path }" class="writer_profile">
+                          </c:when>
+                        </c:choose>
+                      </a>
+                  	  <a style="font-size: 20px;" 
+                  	    <c:choose>
+                  	      <c:when test="${post.mem_division eq 1 && !post.mem_id eq memberInfo.mem_id}">href="/profileHome?user_id=${post.mem_id }"</c:when>
+                  	      <c:when test="${post.mem_division eq 1 && post.mem_id eq memberInfo.mem_id}">href="/profileHome"</c:when>
+                  	      <c:when test="${post.mem_division eq 2 }">href="/corporation?corp_id=${post.mem_id }"</c:when>
+                  	    </c:choose>>${post.writer_name }</a>
                     <c:choose>
                       <c:when test="${post.resultMinute <= 1 }">
                         <span>방금 전</span>
@@ -103,12 +119,22 @@
                  <ul style="padding-left: 10px;">
                     <li style="list-style: none; float: left;">
                        <button class="btn_count btn_goodcount" title="goodCount ${post.post_code }" style="font-size: 12px;">추천 
-                         <span id="txt_good_count${post.post_code }">${post.goodcount }</span>
+                         <span id="txt_good_count${post.post_code }">
+		                   <c:choose>
+		                     <c:when test="${post.goodcount eq null }">0</c:when>
+		                     <c:otherwise>${post.goodcount }</c:otherwise>
+		                   </c:choose>
+		                 </span>
                        </button>
                     </li>
                     <li style="list-style: none; float: left;">
                        <button class="btn_count btn_commentcount" id="btn_commentcount${post.post_code }" title="commentCount ${post.post_code }" style="font-size: 12px;">댓글 
-                         <span id="txt_comment_count${post.post_code }">${post.commentcount }</span>
+                         <span id="txt_comment_count${post.post_code }">
+		                   <c:choose>
+		                 	 <c:when test="${post.commentcount eq null }">0</c:when>
+		                 	 <c:otherwise>${post.commentcount }</c:otherwise>
+		                   </c:choose>
+		                 </span>
                        </button>
                     </li>
                  </ul>

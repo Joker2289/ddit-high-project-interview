@@ -96,6 +96,19 @@
 			}
 		});
 	}
+	
+	//페이지 댓글 버튼 클릭
+	function page_commentList(page_code){
+		$.ajax({
+			url : "${cp}/blog/page_commentList",
+			data : { "page_code" : page_code },
+			success : function(data) {
+				
+				$('#comment_content'+page_code).html(data);
+				
+			}
+		});
+	}
 
 </script>
 

@@ -7,9 +7,15 @@
 <link href="/css/blog/blog.css" rel="stylesheet">
 <link href="/css/blog/blog_activity_modal.css" rel="stylesheet">
 <link href="/css/blog/blog_setting_form.css" rel="stylesheet">
+<link href="/css/blog/blog_comment_area.css" rel="stylesheet">
 <link href="/css/blog/blog_page_area.css" rel="stylesheet">
-
 <link href="/css/blog/blog_page.css" rel="stylesheet">
+
+<!-- include summernote css/js -->
+<link href="/dist/summernote.css" rel="stylesheet">
+<script src="/dist/summernote.js"></script>
+
+
 <!DOCTYPE html>
 
 <style>

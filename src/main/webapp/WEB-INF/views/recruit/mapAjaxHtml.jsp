@@ -9,27 +9,29 @@
 	<ul id="content1" style="list-style: none; width: ${width_value }px; padding-left: 5px;">
 	<c:forEach items="${recrList2 }" varStatus="i" var="rRVo">
 		<li style="float: left; text-align: left;"><div class="whiteBox" style="width: 280px; box-shadow: 0 3px 3px rgba(0, 0, 0, .175);
-				margin-right: 10px; padding: 8px; font-size: 16px; height: 270px;">
-			<div class="recr" onmouseover="" style="cursor: pointer;" data-recruit_code="${rRVo.recruit_code }">
-				<div class="table_div">
+				margin-right: 10px; padding: 13px; font-size: 16px; height: 270px;">
+			<div class="recr" onmouseover="" style="cursor: pointer; height: 215px; border-bottom: 1px solid;
+					border-bottom-color: #d9d9d9;" data-recruit_code="${rRVo.recruit_code }">
+				<div class="table_div" style="height: 80px; border: 0px solid; margin-left: 24px;">
 					<img src="${corpImgList.get(i.index) }" width="200">
 				</div> <br>
-				<strong>${rRVo.recruit_title }</strong> <br>
+				<strong style="padding-top: 50px;">
+					<c:choose>
+						<c:when test="${rRVo.recruit_title.length() > 18 }">
+							${rRVo.recruit_title.substring(0, 18) }...
+						</c:when>
+						<c:otherwise>
+							${rRVo.recruit_title }
+						</c:otherwise>
+					</c:choose>
+				</strong> <br>
 				${corpNmList.get(i.index) } <br>
 				${rRVo.job_local } <br>
 				${rRVo.job_type }
 			</div>
-			<c:choose>
-				<c:when test="${scrapList.get(i.index) == 'f' }">
-					<!-- scrap_flag에 recruit_code를 붙여주자. (예: t12) -->
-					<i id="scrap${i.index }" class="far fa-bookmark" data-recruit_code="${rRVo.recruit_code }"
-							style="margin-top: 10px; font-size: 22px; color: #0174b0;"></i><br>
-				</c:when>
-				<c:otherwise>
-					<i id="scrap${i.index }" class="fas fa-bookmark" data-recruit_code="${rRVo.recruit_code }"
-							style="margin-top: 10px; font-size: 22px; color: #0174b0;"></i><br>
-				</c:otherwise>
-			</c:choose>
+			<div style="padding-top: 10px;">
+				${timeList.get(i.index) } 전
+			</div>
 		</div></li>
 	</c:forEach>
 	</ul>

@@ -32,47 +32,63 @@
 	
 	<!-- 댓글목록 조회 -->
 	<select id="select_commentList" parameterType="paginationVo" resultType="post_commentVo">
-		select *
-		  from (select b.*, round((sysdate - comment_date) * 24 * 60) resultminute, rownum rn
-		          from (select post_comment.*, (select count(*)
-		                                   		  from good
-		                                  		 where division = 15) goodCount, (select profile_path
-		                                                                     		from users
-		                                                                    	   where user_id = post_comment.mem_id) profile_path,
-		                                                                  		 (select logo_path
-		                                                                     		from corporation
-		                                                                    	   where corp_id = post_comment.mem_id) logo_path
-		                  from post_comment
-		                 where (ref_code = #{ref_code} and division = #{division})
-		                   and comment_code not in (select ref_code
-		                   							  from reportcontent
-		                   							 where division = 29
-		                   							   and mem_id = #{mem_id})
-		                order by comment_date desc) b)
-		 where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
+		select * 
+		  from (select d.*, round((sysdate - comment_date) * 24 * 60) resultminute, rownum rn
+		          from (select a.*, b.goodcount, c.writer_name, c.profile_path, e.mem_division
+		                  from (select * 
+		                          from post_comment
+		                         where (ref_code = #{ref_code} and division = 28)
+		                           and comment_code not in (select ref_code
+		                                                      from reportcontent
+		                                                     where division = 29
+		                                                       and mem_id = #{mem_id}) ) a,
+		                       (select count(*) as goodcount, ref_code
+		                          from good
+		                         where division = 29
+		                        group by ref_code) b,
+		                       (select user_name as writer_name, user_id as mem_id, profile_path
+		                          from users
+		                        union all
+		                        select corp_name as writer_name, corp_id as mem_id, logo_path as profile_path
+		                          from corporation) c,
+		                       (select mem_division, mem_id
+		                          from member) e
+		                 where a.comment_code = b.ref_code(+)
+		                   and a.mem_id = c.mem_id
+		                   and a.mem_id = e.mem_id
+		                order by comment_date desc) d)
+		 where rn between ((#{page}-1) * #{pageSize}) + 1 and #{page}*#{pageSize}
 	</select>
 	
 	<!-- 댓글목록 조회 -->
 	<select id="select_nextComment" parameterType="paginationVo" resultType="post_commentVo">
-		select *
-		  from (select b.*, round((sysdate - comment_date) * 24 * 60) resultminute, rownum rn
-		          from (select post_comment.*, (select count(*)
-		                                   		  from good
-		                                  		 where division = 15) goodCount, (select profile_path
-		                                                                     		from users
-		                                                                    	   where user_id = post_comment.mem_id) profile_path,
-		                                                                  		 (select logo_path
-		                                                                     		from corporation
-		                                                                    	   where corp_id = post_comment.mem_id) logo_path
-		                  from post_comment
-		                 where (ref_code = #{ref_code} and division = #{division})
-		                   and comment_code not in (select ref_code
-		                   							  from reportcontent
-		                   							 where division = 29
-		                   							   and mem_id = #{mem_id})
-		                order by comment_date desc) b)
-		 where rn between (#{page}-1) * #{pageSize} and #{page}*#{pageSize}
-		   and comment_code &lt; #{criteria_code}
+		select * 
+		  from (select d.*, round((sysdate - comment_date) * 24 * 60) resultminute, rownum rn
+		          from (select a.*, b.goodcount, c.writer_name, c.profile_path, e.mem_division
+		                  from (select * 
+		                          from post_comment
+		                         where (ref_code = #{ref_code} and division = 28)
+		                           and comment_code not in (select ref_code
+		                                                      from reportcontent
+		                                                     where division = 29
+		                                                       and mem_id = #{mem_id}) ) a,
+		                       (select count(*) as goodcount, ref_code
+		                          from good
+		                         where division = 29
+		                        group by ref_code) b,
+		                       (select user_name as writer_name, user_id as mem_id, profile_path
+		                          from users
+		                        union all
+		                        select corp_name as writer_name, corp_id as mem_id, logo_path as profile_path
+		                          from corporation) c,
+		                       (select mem_division, mem_id
+		                          from member) e
+		                 where a.comment_code = b.ref_code(+)
+		                   and a.mem_id = c.mem_id
+		                   and a.mem_id = e.mem_id
+		                order by comment_date desc) d)
+		 where rn between ((#{page}-1) * #{pageSize}) + 1 and #{page}*#{pageSize}
+		  and comment_code &lt; #{criteria_code}
 	</select>
 	
 	<!-- 게시글의 댓글 갯수 -->
