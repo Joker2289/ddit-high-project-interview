@@ -52,8 +52,10 @@
 
 .col-post-body{
 	border-bottom : 1px solid #ddd;
-	padding : 15px;
-	padding-bottom : 35px;
+	padding-left : 10px;
+	padding-right : 10px;
+	padding-top : 10px;
+	padding-bottom : 10px;
 	width: 553.02
 }
 
@@ -79,6 +81,17 @@
 .post_socialCount{
 	height: 30px;
 	padding:5px;
+}
+
+.writer_profile{
+/* 	style="width: 40px; max-width: 40px; height: 40px; max-height: 40px; border: 0px solid #fff; border-radius: 100px; margin-right: 5px;" */
+	width: 40px;
+	max-width: 40px;
+	height: 40px;
+	max-height: 40px;
+	border: 0px solid #fff;
+	border-radius: 100px;
+	margin-right: 5px;
 }
 
 .writer-info{
@@ -383,9 +396,9 @@
 }
 
 .comment-profile-img{
-	display: inline-block;
-	width: 10%;
-	padding: 10px;
+/* 	display: inline-block; */
+/* 	width: 10%; */
+/* 	padding: 10px; */
 }
 
 .input_comment_contents{
