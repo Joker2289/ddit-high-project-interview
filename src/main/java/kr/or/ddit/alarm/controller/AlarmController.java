@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.alarm.model.AlarmVo;
@@ -62,6 +63,7 @@ public class AlarmController {
 		
 		//최근 알림 갯수 조회
 		int recentCount = alarmService.select_recentCount(memberInfo.getMem_id());
+		
 		if(recentCount == 0){
 			model.addAttribute("recentCount", "0");
 		} else {
@@ -132,9 +134,11 @@ public class AlarmController {
 	}
 	
 	@RequestMapping(path={"/nextrecentalarm"}, method=RequestMethod.POST)
-	public String nextRecentAlarm(String pageNum, String alarm_code, HttpServletRequest request, Model model){
+	public String nextRecentAlarm(@RequestParam String pageNum, @RequestParam String alarm_code, HttpServletRequest request, Model model){
 		
-		PaginationVo paginationVo = new PaginationVo();
+		logger.debug("pageNum : {}, alarm_code : {}", pageNum, alarm_code);
+		
+		PaginationVo paginationVo = new PaginationVo(); 
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		paginationVo.setPage(Integer.parseInt(pageNum));
 		paginationVo.setPageSize(5);
@@ -142,13 +146,16 @@ public class AlarmController {
 		paginationVo.setCriteria_code(alarm_code);
 		
 		List<AlarmVo> nextRecentAlarm = alarmService.select_nextRecentAlarm(paginationVo);
+		int recentCount = alarmService.select_recentCount(memberInfo.getMem_id());		
+		
+		model.addAttribute("recentCount", recentCount);
 		model.addAttribute("nextRecentAlarm", nextRecentAlarm);
 		
 		return "alarm/moreRecentAlarm";
 	}
 	
 	@RequestMapping(path={"/nextpreviousalarm"}, method=RequestMethod.POST)
-	public String nextPreviousAlarm(String pageNum, String alarm_code, HttpServletRequest request, Model model){
+	public String nextPreviousAlarm(@RequestParam String pageNum, @RequestParam String alarm_code, HttpServletRequest request, Model model){
 		
 		PaginationVo paginationVo = new PaginationVo();
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
@@ -158,6 +165,9 @@ public class AlarmController {
 		paginationVo.setCriteria_code(alarm_code);
 		
 		List<AlarmVo> nextPreviousAlarm = alarmService.select_nextPreviousAlarm(paginationVo);
+		int previousCount = alarmService.select_previousCount(memberInfo.getMem_id());
+		
+		model.addAttribute("previousCount", previousCount);
 		model.addAttribute("nextPreviousAlarm", nextPreviousAlarm);
 		
 		return "alarm/morePreviousAlarm";
