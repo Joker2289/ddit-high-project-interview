@@ -8,8 +8,8 @@
 		<label>${chatContentsVoList[0].chat_name }</label>
 		<label style="color:rgba(0,0,0,.6);"><c:if test="${not empty chatContentsVoList[0].memCount}">메일 상대 ${chatContentsVoList[0].memCount }명 </c:if></label>
 	</div>
-	<button class="btn btn-link">
-		<i class="fas fa-ellipsis-h"></i>
+	<button class="btn btn-link exit" onclick="location.href='/deleteChatMember?chat_code=${param.chat_code}&mem_id=${SESSION_MEMBERVO.mem_id}'">
+		<i class="fas fa-door-open"></i>
 	</button>
 </div>
 <div class="chatContentBox">

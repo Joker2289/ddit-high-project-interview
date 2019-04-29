@@ -16,8 +16,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.ddit.chat_contents.model.Chat_contentsVo;
 import kr.or.ddit.chat_contents.service.IChat_contentsService;
+import kr.or.ddit.chat_member.model.Chat_memberVo;
 import kr.or.ddit.chat_member.service.IChat_memberService;
 import kr.or.ddit.chatroom.model.ChatroomVo;
 import kr.or.ddit.chatroom.service.IChatroomService;
@@ -52,19 +55,20 @@ public class MailController{
 	private ICorporationService corpService;	
 
 	@RequestMapping(path={"/mailHome"})
-	public String mailHomeView(Model model, HttpServletRequest req) throws ParseException{
+	public String mailHomeView(Model model, HttpServletRequest req, Chat_contentsVo chat_contentsVo) throws ParseException{
 		MemberVo memberVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
-		List<Map<String, String>> userChatroomsMap = chatroomService.select_userChatrooms(memberVo.getMem_id());
+		List<Map<String, String>> userChatroomsMap = null;
+		String chat_code = null;
 		
-		String chat_code = (String) req.getSession().getAttribute("chat_code");
-		if (chat_code == null) {
-			
+		userChatroomsMap = chatroomService.select_userChatrooms(memberVo.getMem_id());
+		
+		if(chat_contentsVo.getChat_code() == null){
 			if(userChatroomsMap.size() > 0) {
 				chat_code = String.valueOf(userChatroomsMap.get(0).get("CHAT_CODE"));
 				model.addAttribute("chatContentsVoList",chat_contentsService.select_chatContents(chat_code));
 			}
 		}else{
-			model.addAttribute("chatContentsVoList",chat_contentsService.select_chatContents(chat_code));
+			model.addAttribute("chatContentsVoList",chat_contentsService.select_chatContents(chat_contentsVo.getChat_code()));
 		}
 		
 		model.addAttribute("userChatroomsMap",userChatroomsMap);
@@ -138,10 +142,21 @@ public class MailController{
 	
 	@RequestMapping(path={"/serverRecive"})
 	public String serverRecive(Model model, String chat_code){
+		
 		model.addAttribute("chatContentsVoList",chat_contentsService.select_chatContents(chat_code));
 		return "/mail/chatContents";
 	}
 	
+	@RequestMapping(path={"/reflashChatRooms"})
+	public String reflashChatRooms(Model model,HttpServletRequest req, String chat_code){
+		MemberVo memberVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		List<Map<String, String>> userChatroomsMap = chatroomService.select_userChatrooms(memberVo.getMem_id());
+		model.addAttribute("userChatroomsMap",userChatroomsMap);
+		model.addAttribute("chat_code",chat_code);
+		return "/mail/chatRoom";
+	}
+	
+	@ResponseBody
 	@RequestMapping(path={"/insertChatRoom"})
 	public String insertChatRoom(HttpSession session, String[] chat_member, String chat_name, String chat_content){
 		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
@@ -150,10 +165,35 @@ public class MailController{
 		chatroomVo.setChat_name(chat_name);
 		chatroomVo.setMem_id(memberVo.getMem_id());
 		
-		chatroomService.insert_chatroom(chatroomVo, chat_member,chat_content);
+		String chat_code = chatroomService.insert_chatroom(chatroomVo, chat_member,chat_content);
+		                          
+		return chat_code+"="+chat_content;
+	}
+	
+	@RequestMapping(path={"/deleteChatMember"})
+	public String deleteChatMember(Chat_memberVo chat_memberVo){
+		
+		List<Chat_memberVo> chat_memberVoList = chat_memberService.select_chatMember(chat_memberVo.getChat_code());
+		
+		if(chat_memberVoList.size() == 1) {
+			chatroomService.delete_chatroom(chat_memberVo.getChat_code());
+		}else{
+			chat_memberService.delete_chatmember(chat_memberVo);
+		}
 		
 		return "redirect:/mailHome";
 	}
+	
+	@ResponseBody
+	@RequestMapping(path={"/chatContentSearch"})
+	public List<String> chatContentSearch(Chat_contentsVo chat_contentsVo){
+		
+		List<String> chat_codeVoList = chat_contentsService.select_chatContentsSearch(chat_contentsVo);
+		
+		return chat_codeVoList;
+	}
+	
+	
 	
 	
 }

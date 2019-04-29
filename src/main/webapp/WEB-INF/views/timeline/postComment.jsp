@@ -50,51 +50,55 @@
     <c:forEach items="${commentList }" var="comment">
       <div id="comment-info${comment.comment_code }">
         <div class="comment-area ${ref_code }" id="comment-area${comment.comment_code }" data-comment="${comment.comment_code }">
-          <div class="comment-date-info">
-            <c:choose>
-              <c:when test="${comment.resultMinute <= 1 }">
-                <span>방금 전</span>
-              </c:when>
-              <c:when test="${comment.resultMinute < 60 }">
-                <span>${comment.resultMinute }분 전</span>
-              </c:when>
-              <c:when test="${comment.resultMinute < 1440 }">
-                <span>${fn:split((comment.resultMinute/60), '.')[0] }시간 전</span>
-              </c:when>
-              <c:when test="${comment.resultMinute < 43200 }">
-                <span>${fn:split((comment.resultMinute/1440),'.')[0] }일 전</span>
-              </c:when>
-              <c:when test="${comment.resultMinute < 518400 }">
-                <span>${fn:split((comment.resultMinute/43200),'.')[0] }달 전</span>
-              </c:when>
-            </c:choose>
-	  	  <c:if test="${comment.mem_id eq memberInfo.mem_id }">
-              <div class="dropdown" >
-                <button class="btn_commentControll" type="button" data-code="${comment.comment_code }" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	  	        <i class="fas fa-ellipsis-h"></i>
-	  	      </button>
-	  		  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-       			<button class="btn_controll-list btn_updateComment" data-code="${comment.comment_code }"><i class="fas fa-edit"></i>&nbsp;<span>댓글 수정</span></button>
-        	    <button class="btn_controll-list btn_deleteComment" data-code="${comment.comment_code }"><i class="far fa-trash-alt"></i>&nbsp;<span>삭제</span></button>
-	  	      </ul>
-              </div>
-	  	  </c:if>
+          <div>
+            <div class="comment-profile-img">
+              <c:choose>
+                <c:when test="${comment.mem_division == 1 && comment.profile_path != null }">
+                  <a class="contents_writer_image"><img class="contents_writer_image" src="${ cp }/view/imageView?mem_id=${comment.mem_id }&division=pf"></a>
+                </c:when>
+                <c:when test="${comment.mem_division == 2 && comment.profile_path != null }">
+                  <a class="contents_writer_image"><img class="contents_writer_image" src="${comment.profile_path }"></a>
+                </c:when>
+	  	        <c:otherwise>
+	  	  	    <a class="contents_writer_image"><button class="contents_writer_image"><i class="far fa-user"></i></button></a>
+	  	        </c:otherwise>
+	          </c:choose>
+            </div>
+            <div class="comment-writer">
+              <span style="font-weight: bold;">${comment.writer_name }</span>
+            </div>
+            <div class="comment-date-info">
+              <c:choose>
+                <c:when test="${comment.resultMinute <= 1 }">
+                  <span>방금 전</span>
+                </c:when>
+                <c:when test="${comment.resultMinute < 60 }">
+                  <span>${comment.resultMinute }분 전</span>
+                </c:when>
+                <c:when test="${comment.resultMinute < 1440 }">
+                  <span>${fn:split((comment.resultMinute/60), '.')[0] }시간 전</span>
+                </c:when>
+                <c:when test="${comment.resultMinute < 43200 }">
+                  <span>${fn:split((comment.resultMinute/1440),'.')[0] }일 전</span>
+                </c:when>
+                <c:when test="${comment.resultMinute < 518400 }">
+                  <span>${fn:split((comment.resultMinute/43200),'.')[0] }달 전</span>
+                </c:when>
+              </c:choose>
+	  	      <c:if test="${comment.mem_id eq memberInfo.mem_id }">
+                <div class="dropdown comment_controll">
+                  <button class="btn_commentControll" type="button" data-code="${comment.comment_code }" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  	            <i class="fas fa-ellipsis-h"></i>
+	  	          </button>
+	  	    	  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+       	    		<button class="btn_controll-list btn_updateComment" data-code="${comment.comment_code }"><i class="fas fa-edit"></i>&nbsp;<span>댓글 수정</span></button>
+            	    <button class="btn_controll-list btn_deleteComment" data-code="${comment.comment_code }"><i class="far fa-trash-alt"></i>&nbsp;<span>삭제</span></button>
+	  	          </ul>
+                </div>
+	  	      </c:if>
+            </div>
           </div>
-          <div class="comment-profile-img" style="float: left; padding: 5px; width: 10%;">
-            <c:choose>
-              <c:when test="${comment.profile_path != null && comment.logo_path == null }">
-                <a class="contents_writer_image"><img class="contents_writer_image" src=""></a>
-              </c:when>
-              <c:when test="${comment.profile_path == null && comment.logo_path != null }">
-                <a class="contents_writer_image"><img class="contents_writer_image" src=""></a>
-              </c:when>
-	  	    <c:otherwise>
-	  		  <a class="contents_writer_image"><button class="contents_writer_image"><i class="far fa-user"></i></button></a>
-	  	    </c:otherwise>
-	        </c:choose>
-	        <a></a>
-          </div>
-          <div class="comment-text" id="comment-text${comment.comment_code }">
+          <div class="comment-text" id="comment-text${comment.comment_code }" style="display: inline-block; width:80%;">
   	        <div class="comment-contents" id="comment-conetents${comment.comment_code}">${comment.comment_contents }</div>
           </div>
           <div class="comment-input-button">
