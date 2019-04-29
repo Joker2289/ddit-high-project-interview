@@ -56,4 +56,13 @@ public interface IFollowService {
 	int delete_personalFollow(String follow_code);
 	
 	int insert_feedFollow(FollowVo followVo);
+	
+	/**
+	 * 회사 팔로우 언팔로우 유무체크
+	 * @param followVo
+	 * @return
+	 */
+	int follow_unfollow(FollowVo followVo);
+	
+	
 }

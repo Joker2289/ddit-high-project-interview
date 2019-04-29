@@ -696,6 +696,13 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		return "corporation/module/top";
 	}
 	
+	@RequestMapping("/follow_unfollow")
+	public String follow_unfollow(Model model,FollowVo followVo){
+		
+		int followUnfollow = followService.follow_unfollow(followVo);
+		model.addAttribute("followUnfollow", followUnfollow);
+		return "corporation/module/top";
+	}
 
 	
 

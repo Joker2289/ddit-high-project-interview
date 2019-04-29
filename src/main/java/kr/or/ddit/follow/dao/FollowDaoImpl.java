@@ -89,6 +89,11 @@ public class FollowDaoImpl implements IFollowDao {
 		return sqlSession.insert("follow.insert_feedFollow", followVo);
 	}
 
+	@Override
+	public int follow_unfollow(FollowVo followVo) {
+		return sqlSession.selectOne("follow.follow_unfollow", followVo);
+	}
+
 }
 
 

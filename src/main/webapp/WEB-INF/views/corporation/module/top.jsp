@@ -55,9 +55,7 @@ ${corporationInfo.logo_path}
     							<a>신고</a><br>
     						<li class="dropdownAccordion otherDropdown" style="width: 155px;">
     							<a href="javascript:corporation_follow('${ SESSION_MEMBERVO.mem_id }', '${ corporationInfo.corp_id }');" style="padding: 0 15px 0 0; width: 140px;"> 
-    								
     								+ 팔로우
-    							
     							</a>
     						</li>
     					</c:if>
@@ -70,6 +68,7 @@ ${corporationInfo.logo_path}
 				${SESSION_MEMBERVO.mem_id ne corporationInfo.corp_id }
 				${SESSION_MEMBERVO.mem_id}
 				${corporationInfo.corp_id }
+				${followUnfollow}
     </form>
 			</div>
 			<br>
@@ -117,7 +116,19 @@ function corporation_follow(mem_id, ref_keyword) {
 	});
 	
 }		
-		
+
+function follow_unfollow(mem_id, ref_keyword){
+	
+	$.ajax({
+		url : "/follow_unfollow",
+		data : {"mem_id" : mem_id, "ref_keyword" : ref_keyword, "division" : "11"},
+		success : fuction(data) {
+			
+			$('#top_area').html(data);
+			console.log(data);
+		}
+	});
+}
 
 
 </script>
