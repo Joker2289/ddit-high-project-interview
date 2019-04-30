@@ -98,4 +98,15 @@ public interface IGoodDao {
 	 * Method 설명 : 좋아요 취소
 	 */
 	int delete_good(String good_code);
+	
+	/**
+	 * 
+	 * Method : select_goodCnt
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 회원이 작성한 페이지의 모든 추천수
+	 */
+	int select_goodCnt(String user_id);
 }

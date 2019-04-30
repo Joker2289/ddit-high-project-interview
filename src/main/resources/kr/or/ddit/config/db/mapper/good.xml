@@ -105,5 +105,20 @@
 		 where good_code = #{ good_code }
 	</delete>
 	
+	<!-- 회원이 작성한 page의 좋아요 수 조회 -->
+	<select id="select_goodCnt" parameterType="String" resultType="int">
+		select count(*)
+  			from (select a.user_id, a.portfolio_code, b.section_code
+          			from portfolio a, section b
+         			where user_id = 'joker'
+           			and a.portfolio_code = b.portfolio_code) c, page d,
+       
+       				(select *
+          				from good
+         				where division = 22) e
+			where d.section_code = c.section_code
+  			and d.page_code = e.ref_code
+	</select>
+	
 	
 </mapper>
