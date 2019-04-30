@@ -17,8 +17,10 @@
           	<li style=" width: 410px; height: 34px; padding-top: 8px;">
 	          	<div class="searchbox">
 				  <div class="searchgroup">
-				      <input type="search" id="search" placeholder="검색"/>
-				      <button class="icon"><i class="fa fa-search"></i></button>
+				  	  <form id="frm_searchword" action="/searchResult">
+				          <input type="search" name="search_word" id="search" placeholder="검색"/>
+				          <button id="btn_searchword" class="icon" type="submit"><i class="fa fa-search"></i></button>
+				      </form>
 				  </div>
 				  	<div id="dropdownSearch">
 					</div>
@@ -51,7 +53,7 @@
             <li class="menu">
             	<a href="/alarm" class="menugroup" style="padding-top: 7px;">
             		<div><span style="font-size: 20px;"><i class="fas fa-bell"></i><span id="alarmcount" class="badge" style="background-color: #d87070; padding: 3px 4px;"></span></span></div>
-            			<%@ include file="/WEB-INF/views/alarm/alarmCount.jsp" %>
+<%--             			<%@ include file="/WEB-INF/views/alarm/alarmCount.jsp" %> --%>
             		<div>알람</div>
             	</a>
             </li>
@@ -73,43 +75,54 @@
 <script src="/js/sockjs.js"></script>
 <script>
 	
-	var path = window.location.pathname;
-	console.log(path);
-	var wsPath = "<c:url value='" + "alarm/alarmCount" + "'/>";
-
-	function onOpen(evt) {
-		console.log("connect");
-		websocket.send();
-	}
-	function onMessage(evt) {
-		console.log("message >> " + evt.data);
-		console.log(typeof evt.data);
-		
-		if(evt.data != "0"){
-			$("#alarmcount").text(evt.data);
-		}
-		
-	}
-	function onError(evt) {
-		console.log("websocket error!")
-	}
-	function send_message() {
-		websocket = new SockJS(wsPath);
-		
-		websocket.onopen = function(evt) {
-			onOpen(evt);
-		};
-		websocket.onmessage = function(evt) {
-			onMessage(evt);
-		};
-		websocket.onerror = function(evt) {
-			onError(evt);
-		};
-	}
+// 	var search_word = "";
 	
-	$(document).ready(function() {
-		send_message();
-		setInterval("send_message()", 60000);
-	});
+// 	if(key.keyCode == 13 && $("#search").val() != null){
+// 		$("#search").keydown(function(key){});
+// 	}
+	
+// 	$("#btn_searchword").on("click", function () {
+// 		$("#frm_searchword").submit();
+// 	});
+	
+	
+// 	var path = window.location.pathname;
+// 	console.log(path);
+// 	var wsPath = "<c:url value='" + "alarm/alarmCount" + "'/>";
+
+// 	function onOpen(evt) {
+// 		console.log("connect");
+// 		websocket.send();
+// 	}
+// 	function onMessage(evt) {
+// 		console.log("message >> " + evt.data);
+// 		console.log(typeof evt.data);
+		
+// 		if(evt.data != "0"){
+// 			$("#alarmcount").text(evt.data);
+// 		}
+		
+// 	}
+// 	function onError(evt) {
+// 		console.log("websocket error!")
+// 	}
+// 	function send_message() {
+// 		websocket = new SockJS(wsPath);
+		
+// 		websocket.onopen = function(evt) {
+// 			onOpen(evt);
+// 		};
+// 		websocket.onmessage = function(evt) {
+// 			onMessage(evt);
+// 		};
+// 		websocket.onerror = function(evt) {
+// 			onError(evt);
+// 		};
+// 	}
+	
+// 	$(document).ready(function() {
+// 		send_message();
+// 		setInterval("send_message()", 60000);
+// 	});
 	
 </script>

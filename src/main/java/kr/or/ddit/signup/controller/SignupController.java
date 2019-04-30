@@ -343,6 +343,8 @@ public class SignupController {
 		cVo.setZipcode(vo.getZipcode());
 		cVo.setAddr1(vo.getAddr1());
 		cVo.setAddr2(vo.getAddr2());
+		logger.debug("location? : {}", vo.getLocation_data());
+		cVo.setCorp_location(vo.getLocation_data());
 		
 		corpService.update_corpInfo(cVo);
 		

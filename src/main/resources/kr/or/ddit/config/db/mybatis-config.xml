@@ -47,6 +47,7 @@
 		<typeAlias alias="page_videoVo" 	  type="kr.or.ddit.page.model.Page_videoVo"/>
 		<typeAlias alias="page_linkVo" 		  type="kr.or.ddit.page.model.Page_linkVo"/>
 		<typeAlias alias="reviewVo" 		  type="kr.or.ddit.corporate_review.model.Corporate_reviewVo"/>
+		<typeAlias alias="search_resultVo" 	  type="kr.or.ddit.search.model.SearchResultVo"/>
 		
 	</typeAliases> 
   
@@ -90,6 +91,7 @@
 		<mapper resource="kr/or/ddit/config/db/mapper/page_source.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/page_video.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/page_link.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/search_result.xml"/>
 	</mappers>
 </configuration>
 
