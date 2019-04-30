@@ -24,8 +24,8 @@
 			<div>
 				<label style="text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white; font-size: 27px;margin-top: 51px;margin-left: 10px;"><strong>${corporationInfo.corp_name }</strong></label>
 				<div style="margin-left: 10px;margin-top: 6px;">
-					<button onclick="location.href='/'" class="btn btn-primary"><strong>기업리뷰</strong></button>
-					<button onclick="location.href='/'" class="btn btn-primary" style="margin-left: 10px;"><strong>연봉정보</strong></button>
+					<button onclick="location.href='companyReview?corp_id=${corporationInfo.corp_id }'" class="btn btn-primary"><strong>기업리뷰</strong></button>
+					<button onclick="location.href='companySalary?corp_id=${corporationInfo.corp_id }'" class="btn btn-primary" style="margin-left: 10px;"><strong>연봉정보</strong></button>
 					<button class="btn btn-default" data-toggle="modal" data-target="#myModal" style="margin-left: 10px;border: hidden;">기업리뷰 작성</button>
 				</div>
 			</div>
@@ -71,7 +71,6 @@
 											<label style="margin-left: 15px;margin-top: 3px;">${fn:split(crVo.cr_contents,'☆')[2]}</label>
 										</div>
 										<hr style="width: 100%;border-color: #a7abb2;margin-top: 15px;margin-bottom: 15px;">
-										<!-- <hr style="border: none;border-top: 3px dotted #a7abb2;color: #fff;background-color: #fff;height: 1px;width: 100%;"> -->
 									</div>
 								</div>
 							</div>	
