@@ -19,7 +19,7 @@
 				</div>	
 				<div class="searchRoomBox">
 					<input type="text" class="form-control chatroomSeach" aria-label="..." placeholder="메일 검색">
-					<button class="btn btn-link chatroomSeachBtn">
+					<button class="btn btn-link chatroomSeachBtn" style="margin-left: 29px;">
 						<span style="font-size: 17px; padding-top: 12px; width: 20px;">
 							<i class="fas fa-search"></i>
 						</span>
@@ -45,7 +45,7 @@
 								<label style="font-size: 14px;">${write_date }</label>
 							</div>
 							<div class="chatContentsBox">${userChatroom.MEM_ID eq SESSION_MEMBERVO.mem_id ? "나": userChatroom.MEM_ID }
-								: ${userChatroom.CHAT_CONTENT }</div>
+								: ${not empty fn:split(userChatroom.CHAT_CONTENT,'▣')[1] ? '이미지를 보냈습니다.' : userChatroom.CHAT_CONTENT}</div>
 						</div>
 					</a>
 					</c:forEach>
@@ -64,49 +64,69 @@
 					</button>
 				</div>
 				<div class="chatContentBox">
+					<div style="width: 474px; margin-bottom: 10px; text-align: center;">${oldDate}</div> 
 					<c:forEach items="${chatContentsVoList }" var="chatContentsVo">
-					<fmt:formatDate value="${chatContentsVo.write_date}" pattern="a KK:mm" var="write_date"/>
+						<fmt:formatDate value="${chatContentsVo.write_date}" pattern="MM월 dd일 a KK:mm" var="write_date"/>
 						<c:set var="profile_addrpath" value="/profile?mem_id=${chatContentsVo.mem_id }"/>
 						<c:if test="${fn:contains(chatContentsVo.profile_path, 'http')}">
 							<c:set var="profile_path" value="${chatContentsVo.profile_path }"/> 
 						</c:if>
-						<a href="/profileHome<c:if test="${chatContentsVo.mem_id != SESSION_MEMBERVO.mem_id}">?user_id=${chatContentsVo.mem_id }</c:if>" style="width: 474px; min-height: 66px; display: flex; margin-bottom: 10px;">
-							<div style="margin-right: 20px; background-image: url(${not empty profile_path ? profile_path : profile_addrpath}); width: 40px; height: 40px; border-radius: 40px; background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
-							<div>
-								<div>
-									<label style="font-size: 15px; font-weight: bold;">${chatContentsVo.name}</label>
-									<label style="color: rgba(0,0,0,.6); font-size: 13px;">${write_date}</label>
+						<c:choose>
+							<c:when test="${fn:split(chatContentsVo.chat_content,'▣')[1] eq 'exit'}">
+								<div style="width: 474px; margin-bottom: 10px; text-align: center;">${fn:split(chatContentsVo.chat_content,'▣')[0] } 님이 나가셨습니다.</div>
+							</c:when>
+							<c:otherwise>
+								<div style="width: 474px; min-height: 66px; display: flex; margin-bottom: 10px;">
+									<a href="/profileHome<c:if test="${chatContentsVo.mem_id != SESSION_MEMBERVO.mem_id}">?user_id=${chatContentsVo.mem_id }</c:if>" ><div style="margin-right: 20px; background-image: url(${not empty profile_path ? profile_path : profile_addrpath}); width: 40px; height: 40px; border-radius: 40px; background-size: cover; background-position: center; background-repeat: no-repeat;"></div></a>
+									<div>
+										<div>
+											<label style="font-size: 15px; font-weight: bold;">${chatContentsVo.name}</label>
+											<label style="color: rgba(0,0,0,.6); font-size: 13px;">${write_date}</label>
+										</div>
+										
+										<c:choose>
+											<c:when test="${not empty fn:split(chatContentsVo.chat_content,'▣')[1]}">
+												<c:choose>
+													<c:when test="${fn:split(chatContentsVo.chat_content,'▣')[1] eq 'image' }">
+														<a href="/chatContentsFileDownload?content_code=${chatContentsVo.content_code }">									
+															<div style="width: 250px; height: 300px; background-image:url('/chat_contentsImage?uuid=${fn:split(chatContentsVo.chat_content,'▣')[0]}'); background-repeat: no-repeat; background-size: contain; background-position: center;">
+															</div>
+														</a>
+													</c:when>
+													<c:otherwise>
+														<a href="/chatContentsFileDownload?content_code=${chatContentsVo.content_code }">									
+															<div style="width: 400px;">
+																${fn:split(chatContentsVo.chat_content,'▣')[2]}
+															</div>
+														</a>
+													</c:otherwise>
+												</c:choose>
+											</c:when>
+											<c:otherwise>
+												<div style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;width: 400px;">
+													${chatContentsVo.chat_content}
+												</div>
+											</c:otherwise>
+										</c:choose>
+									</div>
 								</div>
-								<div style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;width: 400px;">
-									${chatContentsVo.chat_content}
-								</div>
-							</div>
-						</a>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 				</div>
 					</div>
 				<div class="chatContentWriteBox">
-					<textarea class="form-control" id="sendMeseage" rows="5" placeholder="메일 쓰기 또는 파일 첨부"></textarea>
+					<div class="form-control" id="sendMeseage" rows="5" contenteditable="true"></div>
 				</div>
 				<div class="chatContentBtnBox">
-					<button class="btn btn-link smallChatBtn">
+					<button class="btn btn-link smallChatBtn imageBtn">
 						<span style="font-size:24px;">
 							<i class="far fa-image"></i>
 						</span>
 					</button>
-					<button class="btn btn-link smallChatBtn">
+					<button class="btn btn-link smallChatBtn fileBtn">
 						<span style="font-size:24px;">
 							<i class="fas fa-paperclip"></i>
-						</span>
-					</button>
-					<button class="btn btn-link smallChatBtn">
-						<span style="font-size:24px;">
-							<i class="fab fa-qq"></i> 
-						</span>
-					</button>
-					<button class="btn btn-link smallChatBtn">
-						<span style="font-size:24px;">
-							<i class="far fa-smile"></i>
 						</span>
 					</button>
 					<button class="btn btn-primary submitBtn">보내기</button>
@@ -121,7 +141,7 @@
 			<div style="text-align: left; padding-left: 15px; padding-bottom: 7px;">
 				신규 채용공고
 			</div>
-			<div style="border: 0px solid; height: 270px; overflow: hidden; padding-left: 2px;">
+			<div style="border: 0px solid; height: 270px; overflow: hidden; padding-left: 2px;" >
 		   		<c:if test="${newList.size() >= 1 }">
 		   			<ul id="content_newList" style="list-style: none; width: 3000px; padding-left: 5px;
 		   					margin-left: -290px;">
@@ -161,7 +181,12 @@
 			</div>
 		</div>
 		<!-- newList -->
-	
+		<form id="images" method="post" enctype="multipart/form-data" action="">
+			<input type="file" name="imageFile" id="imageFile" style="display: none;">
+		</form>
+		<form id="files" method="post" enctype="multipart/form-data" action="">
+			<input type="file" name="imageFile" id="userfile" style="display: none;">
+		</form>
 	</div>
 </div>
 </div>
@@ -170,6 +195,7 @@
 <script src="/js/js.cookie.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		
 		
 		// 기존에 접속한 방이 있는지 확인
 		var chat_code = Cookies.get('chat_code');
@@ -183,17 +209,17 @@
 			$(this).attr('class', 'chatRooms chatRoomBoxOn');
 			chat_code = $(this).attr('role');
 			
-			$.ajax({
+			 $.ajax({
    				type : "POST",
-   		    		url : "/serverRecive",
-   		    		dataType : "HTML",
-   		    		data : {"chat_code" : $(this).attr('role')},
+   		    	url : "/serverRecive",
+   		    	dataType : "HTML",
+   		    	data : {"chat_code" : chat_code},
    				success : function(result) {
    					$("#chatcontentsAjax").empty();
    					$("#chatcontentsAjax").html(result);
-   					 $(".chatContentBox").scrollTop(99999999);
+   					$(".chatContentBox").scrollTop(99999999);
    				}
-				});
+			});
 		});
 		
 		// 기존에 접속한 방이 없고 현재 개설된 방이 하나라도 있을 시에 최근 메세지가 있는 방으로 선택
@@ -211,7 +237,11 @@
 		
 		// 방나가기 버튼 클릭시 방에서 나가기
 		$(document).on("click",".exit",function(){
+			if(Cookies.get('chat_code') == undefined){
+				return;
+			}
 			Cookies.remove('chat_code');
+			sock.send(chat_code+"▣"+"나감"+"▣exit");
 			location.href="/deleteChatMember?chat_code="+chat_code+"&mem_id=${SESSION_MEMBERVO.mem_id}";
 			
 		});
@@ -224,16 +254,73 @@
 		    		dataType : "JSON",
 		    		data : {"mem_id" : "${SESSION_MEMBERVO.mem_id}", "chat_content" : $(".chatroomSeach").val()},
 				success : function(result) {
+					$(".chatRooms").hide();
+					
 					for(var i in result) {
-						console.log(result[i]);
+						$(".chatRooms").each(function(index, item){
+							 if($(item).attr('role') == result[i]){
+								 $(item).show();
+							 }
+							 
+						 });
 					}
-				
+					$(".chatRooms").get(0).click();
 				}
 			}); 
 	    });
 		
+		// 이미지 버튼 클릭시 
+		$(document).on("click",".imageBtn",function(){
+			$("#imageFile").click();
+		});
 		
-		// 
+		$(document).on("click",".fileBtn",function(){
+			$("#userfile").click();
+		});
+		
+		$("#imageFile").on('change',function(){
+            
+			var form = $('#images')[0];
+            var formData = new FormData(form);
+            formData.append("chat_code", chat_code);
+            formData.append("mem_id", "${SESSION_MEMBERVO.mem_id}");
+            formData.append("type", "image");
+            
+            $.ajax({
+                url: '/insertChatcontents',
+                enctype : 'multipart/form-data',
+    			method : "POST",
+    			data : formData,
+    			processData : false,
+    			contentType : false,
+                success: function(result){
+                	sock.send(chat_code+"▣"+result+"▣image");
+                }
+            });
+		});
+		
+		$("#userfile").on('change',function(){
+            
+			var form = $('#files')[0];
+            var formData = new FormData(form);
+            formData.append("chat_code", chat_code);
+            formData.append("mem_id", "${SESSION_MEMBERVO.mem_id}");
+            formData.append("type", "file");
+            
+            $.ajax({
+                url: '/insertChatcontents',
+                enctype : 'multipart/form-data',
+    			method : "POST",
+    			data : formData,
+    			processData : false,
+    			contentType : false,
+                success: function(result){
+                	sock.send(chat_code+"▣"+result+"▣file");
+                }
+            });
+		});
+		
+		// 방 html 불러오기
 		$(".produceRoomBtn").on("click",function(){
 			if($("#produceRoomBtn").hasClass('produceRoomBtn')){
 				$.ajax({
@@ -252,6 +339,7 @@
 			}
 		});
 		
+		// 보내기 버튼 클릭시 방만들기 및 서버에 메세지 보내기
 		$(document).on("click",".submitBtn",function(){ 
 				if($("#produceRoomBtn").hasClass('produceRoomBtnOn')){
 					if($("input[name='chat_name']").val().trim()=="") {
@@ -263,28 +351,28 @@
 						console.log(chat_nameValue);
 						$("input[name='chat_name']").val(chat_nameValue);
 					}
-					console.log($("textarea[name='chat_content']").val());
 					
 					 $.ajax({
 			   				type : "POST",
 			   		    		url : "/insertChatRoom", 
 			   		    		dataType : "JSON",
-			   		    		data : {"chat_code" : chat_code, "chat_member" : $("input[name='chat_member']").val(), "chat_name" : $("input[name='chat_name']").val(), "chat_content" : $("textarea[name='chat_content']").val()},
+			   		    		data : {"chat_code" : chat_code, "chat_member" : $("input[name='chat_member']").val(), "chat_name" : $("input[name='chat_name']").val(), "chat_content" : $("div[name='chat_content']").html()},
 			   				success : function(result) {
 			   					var str = result;
 			   					var contents = str.split("=")[1];
 			   					chat_code = str.split("=")[0];
-			   					sock.send(chat_code+"="+contents);
+			   					sock.send(chat_code+"▣"+contents+"▣room");
 			   					Cookies.remove('chat_code');
+			   					$('#sendMeseage').html('');
 			   				}
 		   				}); 
 					$("#produceRoomBtn").attr('class','btn btn-link produceRoomBtn');
 				}else{
 					 sendMessage();
-		             $('#sendMeseage').val('');
+		             $('#sendMeseage').html('');
 				}
 		}); 
-		
+		$(".chatContentBox").scrollTop(99999999);
 	 
 		// 웹소켓을 지정한 url로 연결한다.
         sock.onmessage = onMessage;
@@ -292,11 +380,7 @@
 
         // 메시지 전송
         function sendMessage() {
-        	if(chat_code != null) {
-        		
-        		console.log(chat_code+"="+$("#sendMeseage").val());
-                sock.send(chat_code+"="+$("#sendMeseage").val());
-        	}
+            sock.send(chat_code+"▣"+$("#sendMeseage").html()+"▣chat");
         }
 
         // 서버로부터 메시지를 받았을 때
@@ -324,8 +408,9 @@
 	   				success : function(result) {
 	   					$(".chatrooms").empty();
 	   					$(".chatrooms").html(result);
-	   					location.href="/mailHome";
-	   					
+						if(data == "room"){
+							location.href="/mailHome";
+						}
 	   				}
    				}); 
            
@@ -379,7 +464,6 @@
 		});		
 		
 		//////////////////////////// newList        
-	});
 	
        	////////////////////////////newList
        	

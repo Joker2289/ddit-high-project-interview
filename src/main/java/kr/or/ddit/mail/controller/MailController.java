@@ -1,14 +1,22 @@
 package kr.or.ddit.mail.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -16,7 +24,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.chat_contents.model.Chat_contentsVo;
 import kr.or.ddit.chat_contents.service.IChat_contentsService;
@@ -26,10 +36,13 @@ import kr.or.ddit.chatroom.model.ChatroomVo;
 import kr.or.ddit.chatroom.service.IChatroomService;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
+import kr.or.ddit.files.model.FilesVo;
+import kr.or.ddit.files.service.IFilesService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
+import kr.or.ddit.users.model.UsersVo;
 
 @Controller
 public class MailController{
@@ -52,7 +65,10 @@ public class MailController{
 	private IRecruitService recrService;
 	
 	@Resource(name="corporationService")
-	private ICorporationService corpService;	
+	private ICorporationService corpService;
+	
+	@Resource(name="filesService")
+	private IFilesService filesService;
 
 	@RequestMapping(path={"/mailHome"})
 	public String mailHomeView(Model model, HttpServletRequest req, Chat_contentsVo chat_contentsVo) throws ParseException{
@@ -193,7 +209,95 @@ public class MailController{
 		return chat_codeVoList;
 	}
 	
+	@ResponseBody
+	@RequestMapping(path={"/insertChatcontents"}, consumes = { "multipart/form-data" })
+	public String insertChatcontents(@RequestParam(value = "imageFile") MultipartFile imageFile, String type,Chat_contentsVo chat_contentsVo ,HttpServletRequest req){
+		String file_path  = UUID.randomUUID().toString(); 
+		
+		if(type.equals("image")){
+			chat_contentsVo.setChat_content(file_path+"▣"+type);
+		}else{
+			chat_contentsVo.setChat_content(file_path+"▣"+type+"▣"+imageFile.getOriginalFilename());
+		}
+		chat_contentsService.insert_chatcontets(chat_contentsVo);
+
+		if(imageFile.getSize() > 0) {
+			String file_name = imageFile.getOriginalFilename();
+			String realFileName =  req.getServletContext().getRealPath("/upload/" + file_path);
+			try {
+				imageFile.transferTo(new File(realFileName));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			FilesVo filesVo = new FilesVo(); 
+			filesVo.setRef_code(chat_contentsVo.getCurrval());
+			filesVo.setDivision("06");
+			filesVo.setFile_name(file_name);
+			filesVo.setFile_path(file_path);
+			
+			filesService.insert_usersFile(filesVo);
+		}
+		return file_path;
+	}
 	
+	@RequestMapping(path= {"/chat_contentsImage"})
+	public void chat_contentsImage(HttpServletRequest req, HttpServletResponse resp, String uuid) throws IOException {
+		resp.setHeader("content-Disposition", "attachment;"); 
+		resp.setContentType("image");
+		
+		ServletContext application = req.getServletContext();
+		String path = application.getRealPath("/upload");
+		
+		InputStream fis = null;
+		String filePath = "";
+				
+		filePath = path + File.separator + uuid;
+		fis = new FileInputStream(new File(filePath));
+		
+		ServletOutputStream sos = resp.getOutputStream();
+		byte[] buff = new byte[512];
+		int len = 0;
+		while ((len = fis.read(buff)) > -1) {
+			sos.write(buff);
+		}
+		sos.close();
+		fis.close();
+	}
+	
+	@RequestMapping(path={"/chatContentsFileDownload"})
+	public void chatContentsFileDownload(String content_code, Model model, HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		
+		resp.setCharacterEncoding("UTF-8");
+		resp.setContentType("application/octet-stream");
+		
+		ServletContext application = req.getServletContext();
+		String path = application.getRealPath("/upload");
+		
+		FilesVo filesVo = new FilesVo();
+		filesVo.setDivision("06");
+		filesVo.setRef_code(content_code);
+		
+		List<FilesVo> filesVoList = filesService.select_file(filesVo);
+		
+		String realFilename = path + File.separator + filesVoList.get(0).getFile_path();
+		
+		String docName = new String(filesVoList.get(0).getFile_name().getBytes("UTF-8"), "ISO-8859-1");
+		
+		FileInputStream fis = new FileInputStream(new File(realFilename));
+		resp.setHeader("Content-Disposition", "attachment; filename=\"" + docName + "\"");
+
+		//4.FileInputStream을 response객체의 outputStream 객체에 write
+		ServletOutputStream sos = resp.getOutputStream();
+		byte[] buff = new byte[512];
+		int len = 0;
+		while ((len = fis.read(buff)) > -1) {
+			sos.write(buff);
+		}
+		
+		sos.close();
+		fis.close();
+		
+	}
 	
 	
 }
