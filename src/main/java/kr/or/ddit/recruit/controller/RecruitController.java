@@ -102,6 +102,9 @@ public class RecruitController {
 		// 유저정보 수정. 'SESSION_MEMBERVO'
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");		
 		
+		// 채용공고 지역 - 회사의 주소 지역으로 바꾸기
+//		editRecrLocal();
+		
 		// 사용자 정보 없으면 로그인창으로 이동. -> 수정. 필터?
 		
 		// 크롤링해서 값 넣기 어떻게 했더라. 삼성전자 데이터 있으면 리턴. 일단 비활성화.
@@ -313,6 +316,21 @@ public class RecruitController {
 		return "recruitTiles";
 	}	
 	
+	// 채용공고 지역 - 회사의 주소 지역으로 수정하는 메서드.
+	private void editRecrLocal() {
+		List<RecruitVo> recrList = recrService.getAllRecr();
+		for(int i=0; i < recrList.size(); i++){
+			RecruitVo rVo = recrList.get(i);
+			
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			rVo.setJob_local(cVo.getAddr1().substring(0, 2));
+			
+			recrService.updateRecr(rVo);
+		}
+		
+		logger.debug("전체 채용공고 local 수정.");
+	}
+
 	// @rRList1 ajax 로직 처리 메서드.
 	@RequestMapping("/rRList1AjaxHtml")
 	public String rRList1AjaxHtml(HttpSession session, Model model) throws ParseException {
@@ -849,10 +867,23 @@ public class RecruitController {
 		// 검색어를 통한 결과 리스트를 넘기기. search_word가 '전체'이면 전체 채용공고 리스트 넘기기.
 		List<RecruitVo> recrList = new ArrayList<>();
 		
-		if(lSLog.getSearch_word().equals("전체")){
+		// 이어서. 수정
+		if(lSLog.getSearch_word().equals("전체") && lSLog.getSearch_local().equals("전국")){
 			recrList = recrService.getAllRecr();
-		}else{
+		}else if(lSLog.getSearch_local().equals("전국")){
 			recrList = recrService.searchRecrListByCorp_name(lSLog.getSearch_word());
+		}else if(lSLog.getSearch_word().equals("전체")){
+			recrList = recrService.searchRecrListByJob_local(lSLog.getSearch_local());
+		}else{
+			List<RecruitVo> tempList = recrService.searchRecrListByCorp_name(lSLog.getSearch_word());			
+			
+			for(int i=0; i < tempList.size(); i++){
+				RecruitVo rVo = tempList.get(i);
+				
+				if(rVo.getJob_local().equals(lSLog.getSearch_local())){
+					recrList.add(rVo);
+				}
+			}
 		}
 		
 		List<String> corpImgList = new ArrayList<>();

@@ -40,6 +40,7 @@ public class SignupVo {
 	private String addr2;			// 상세주소
 	private String zipcode;			// 우편번호
 	private String telno;			// 전화번호
+	private String location_data;	// 회사좌표
 	
 	//kakaoLogin
 	private String kakaoId;
@@ -214,6 +215,12 @@ public class SignupVo {
 	public void setKakaoName(String kakaoName) {
 		this.kakaoName = kakaoName;
 	}
+	public String getLocation_data() {
+		return location_data;
+	}
+	public void setLocation_data(String location_data) {
+		this.location_data = location_data;
+	}
 	@Override
 	public String toString() {
 		return "SignupVo [id=" + id + ", pass=" + pass + ", email=" + email + ", name=" + name + ", division="
@@ -223,6 +230,8 @@ public class SignupVo {
 				+ ", admission=" + admission + ", graduation=" + graduation + ", grade=" + grade + ", corp_birth="
 				+ corp_birth + ", corp_type=" + corp_type + ", industry_type=" + industry_type + ", corp_size="
 				+ corp_size + ", addr1=" + addr1 + ", addr2=" + addr2 + ", zipcode=" + zipcode + ", telno=" + telno
-				+ ", kakaoId=" + kakaoId + ", kakaoProfile=" + kakaoProfile + ", kakaoName=" + kakaoName + "]";
+				+ ", location_data=" + location_data + ", kakaoId=" + kakaoId + ", kakaoProfile=" + kakaoProfile
+				+ ", kakaoName=" + kakaoName + "]";
 	}
+
 }

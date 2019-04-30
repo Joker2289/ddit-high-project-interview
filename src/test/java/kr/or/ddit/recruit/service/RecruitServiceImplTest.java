@@ -182,11 +182,13 @@ public class RecruitServiceImplTest extends LogicTestConfig{
 		/***Then***/
 		assertNotNull(aaa);
 	}
+
+	
+	
+
 	
 	
 }
-
-
 
 
 

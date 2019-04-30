@@ -5,14 +5,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>채용공고｜22222</title>
 	<!-- 우편번호 script. -->
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<!-- 지도 script. -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=21c4ce15b016e2f4c34196b944d9852b&libraries=services,clusterer,drawing"></script>	
-	<style type="text/css">
-		
-	</style>
 </head>
 
 <body>
@@ -112,7 +108,7 @@
 	var divWidth  = "900"; 
 	
 	$(document).ready(function(){
-// 		console.log($("#hidden_size").val());	
+// 		console.log("${locationList }");	
 		
 		// 추천리스트1 슬라이드.
 		$("#btn_slt1").on("click",function(){
