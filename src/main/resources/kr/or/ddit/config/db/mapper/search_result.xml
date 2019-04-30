@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="search_resultVo">
+	
+	<!-- 검색어에 대한 모든 정보 -->
+	<select id="search_allInfo" parameterType="String" resultType="search_resultVo">
+		select a.mem_id, a.mem_name, a.profile_path, b.job_position, b.corporate_name
+		  from (select user_id as mem_id, user_name as mem_name, profile_path
+		          from users
+		        union all
+		        select corp_id as mem_id, corp_name as mem_name, logo_path as profile_path
+		          from corporation) a, career_info b
+		 where a.mem_id = b.user_id(+)
+		   and (a.mem_name like '%'|| #{search_word} ||'%' 
+		    or b.corporate_name like '%'|| #{search_word} ||'%')
+	</select>
+	
+</mapper>

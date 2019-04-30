@@ -17,8 +17,10 @@
           	<li style=" width: 410px; height: 34px; padding-top: 8px;">
 	          	<div class="searchbox">
 				  <div class="searchgroup">
-				      <input type="search" id="search" placeholder="검색"/>
-				      <button class="icon"><i class="fa fa-search"></i></button>
+				  	  <form id="frm_search" action="/searchResult">
+				          <input type="search" name="search_word" id="search" placeholder="검색"/>
+				          <button id="btn_search" class="icon" type="submit"><i class="fa fa-search"></i></button>
+				      </form>
 				  </div>
 				  	<div id="dropdownSearch">
 					</div>
@@ -72,6 +74,17 @@
 <!-- <script src="/dist/sockjs.js"></script> -->
 <script src="/js/sockjs.js"></script>
 <script>
+	
+// 	var search_word = "";
+	
+// 	if(key.keyCode == 13 && $("#search").val() != null){
+// 		$("#search").keydown(function(key){});
+// 	}
+	
+// 	$("#btn_search").on("click", function () {
+// 		$("#frm_search").submit();
+// 	});
+	
 	
 	var path = window.location.pathname;
 	console.log(path);
