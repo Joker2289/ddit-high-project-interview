@@ -14,6 +14,7 @@ public class Chat_contentsVo {
 	private String chat_name;		// 채팅 방 제목
 	private String memCount;		// 채팅 방 사람수
 	private String name;		// 채팅보낸 유저 이름
+	private String currval;	
 	
 	public Chat_contentsVo() {
 		
@@ -97,6 +98,15 @@ public class Chat_contentsVo {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	
+	public String getCurrval() {
+		return currval;
+	}
+
+	public void setCurrval(String currval) {
+		this.currval = currval;
 	}
 
 	@Override

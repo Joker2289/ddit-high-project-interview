@@ -54,4 +54,17 @@ public class Chat_contentsDaoImpl implements IChat_contentsDao{
 		return sqlSessionTemplate.selectList("chat_contents.select_chatContentsSearch", chat_contentsVo);
 	}
 
+	/**
+	 * Method : select_findName
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 이름 찾기
+	 */
+	@Override
+	public String select_findName(String mem_id) {
+		return sqlSessionTemplate.selectOne("chat_contents.select_findName", mem_id);
+	}
+
 }

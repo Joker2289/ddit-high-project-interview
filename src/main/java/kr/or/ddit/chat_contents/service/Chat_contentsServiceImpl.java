@@ -54,4 +54,17 @@ public class Chat_contentsServiceImpl implements IChat_contentsService{
 		return chat_contentsDao.select_chatContentsSearch(chat_contentsVo);
 	}
 
+	/**
+	 * Method : select_findName
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 이름찾기
+	 */
+	@Override
+	public String select_findName(String mem_id) {
+		return chat_contentsDao.select_findName(mem_id);
+	}
+
 }

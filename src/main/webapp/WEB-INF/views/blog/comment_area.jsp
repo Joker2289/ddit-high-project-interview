@@ -64,17 +64,10 @@
 				    	
 				    	<div class="write_date"><fmt:formatDate value="${ comment.comment_date }" pattern="yyyy-MM-dd" /></div>
 				    	
-				    
-				    	<!-- 메뉴 -->
-				    	<div class="dropdown user_menu">
-		                    <a class="btn_commentControll" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			  	              <i class="fas fa-ellipsis-h"></i>
-			  	            </a>
-			  	      	    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-		       	      		  <button class="btn_controll-list"><i class="fas fa-edit"></i>댓글 수정</button>
-		              	      <button class="btn_controll-list"><i class="far fa-trash-alt"></i>삭제</button>
-			  	            </ul>
-		                </div>
+						<!-- 삭제버튼 -->
+				    	<div class="delete_btn">
+		                    <a class="commnet_delete_btn"><i class="fas fa-times"></i></a>
+			  	        </div>
 		                
 				    </div>
 				    
@@ -102,6 +95,7 @@ $(".comment_TXT").summernote({
 	height: '30px',
 	border: '1px solid #3d3d3d',
 	disableResizeEditor: true,
+	maximumImageFileSize : 524288,
 });
 
 $(".note-toolbar").hide();
@@ -121,7 +115,7 @@ function add_img(){
 }
 
 
-//댓글 추가
+/* 댓글 추가 */
 function insert_comment(page_code){
 	 
 	 var comment_contents = $("#comment_TXT" + page_code).val();

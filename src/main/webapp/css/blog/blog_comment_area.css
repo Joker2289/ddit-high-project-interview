@@ -9,6 +9,8 @@
 	width: 95%;
 	height: 70px;
 	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
 	
 }
 
@@ -102,8 +104,12 @@
 	height: 50px;
 	display: inline-block;
 	background-color: #C0D1DB;
+	padding-top: 5px;
 	padding-right: 25px;
 	padding-left: 20px;
+	
+	border-top-left-radius:20px;
+	border-top-right-radius:20px;
 }
 
 
@@ -116,8 +122,8 @@
 /* 유저 이름 */
 .user_name {
 	vertical-align: middle;
-	font-size: 24px;
-	margin-right: 10px
+	font-size: 20px;
+	margin-right: 10px;
 }
 
 /* 작성일 */
@@ -126,8 +132,9 @@
 	font-size: 15px;
 }
 
-/* 메뉴버튼 */
-.user_menu{
+/* 삭제 버튼 */
+.delete_btn{
+	background-color: #C0D1DB;
 	float: right;
 	text-align: right !important;
 	vertical-align: middle !important;
@@ -144,5 +151,11 @@
 	padding-right: 25px;
 	padding-top: 10px;
 	padding-bottom: 10px;
+	border-bottom-left-radius:20px;
+	border-bottom-right-radius:20px;
 }
+
+
+
+
 
