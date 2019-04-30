@@ -103,7 +103,7 @@
 												</c:choose>
 											</c:when>
 											<c:otherwise>
-												<div style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;width: 400px;">
+												<div style="word-break: break-all; word-wrap: break-word; width: 390px;">
 													${chatContentsVo.chat_content}
 												</div>
 											</c:otherwise>

@@ -14,8 +14,7 @@
 </div>
 <div class="chatContentBox">
 	<c:forEach items="${chatContentsVoList }" var="chatContentsVo">
-	<fmt:formatDate value="${chatContentsVo.write_date}" pattern="a KK:mm" var="write_date"/>
-	<fmt:formatDate value="${chatContentsVo.write_date}" pattern="a KK:mm" var="write_date"/>
+	<fmt:formatDate value="${chatContentsVo.write_date}" pattern="MM월 dd일 a KK:mm" var="write_date"/>
 		<c:set var="profile_addrpath" value="/profile?mem_id=${chatContentsVo.mem_id }"/>
 		<c:if test="${fn:contains(chatContentsVo.profile_path, 'http')}">
 			<c:set var="profile_path" value="${chatContentsVo.profile_path }"/> 
@@ -52,7 +51,7 @@
 								</c:choose>
 							</c:when>
 							<c:otherwise>
-								<div style="display: flex; flex: auto; flex-direction: row; flex-wrap: wrap;width: 400px;">
+								<div style="width: 390px;  word-break: break-all; word-wrap: break-word;">
 									${chatContentsVo.chat_content}
 								</div>
 							</c:otherwise>
