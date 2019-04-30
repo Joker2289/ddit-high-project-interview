@@ -78,6 +78,8 @@ public class PageController {
 	public String onenoteView(HttpServletRequest req, Model model, @RequestParam("section_code") String section_code) {
 
 		model.addAttribute("section_code", section_code);
+		
+		
 
 		return "onenote/onenote_write";
 	}

@@ -100,6 +100,18 @@
 		order by d.write_date desc
 	</select>
 	
+	<!-- 회원이 작성한 전체 게시글 수 조회 -->
+	<select id="select_pageCnt" parameterType="String" resultType="int">
+		select  count(d.page_code)
+		
+			from    (select a.user_id, a.portfolio_code, b.section_code
+            		from portfolio a, section b
+            		where user_id = #{ user_id }
+            		and a.portfolio_code = b.portfolio_code) c, page d
+            		
+		where d.section_code = c.section_code
+	</select>
+	
 	
 	
 	

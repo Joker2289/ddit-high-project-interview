@@ -3,6 +3,7 @@ package kr.or.ddit.blog.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,10 +34,13 @@ import kr.or.ddit.page.model.PageVo;
 import kr.or.ddit.page.service.IPageService;
 import kr.or.ddit.portfolio.model.PortfolioVo;
 import kr.or.ddit.portfolio.service.IPortfolioService;
+import kr.or.ddit.post_comment.model.Post_commentVo;
+import kr.or.ddit.post_comment.service.ICommentService;
 import kr.or.ddit.section.model.SectionVo;
 import kr.or.ddit.section.service.ISectionService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 @RequestMapping("/blog")
 @Controller
@@ -66,6 +71,9 @@ public class BlogController {
 	
 	@Resource(name="goodService")
 	private IGoodService goodService;
+	
+	@Resource(name="commentService")
+	private ICommentService commentService;
 	
 	
 	/**
@@ -106,9 +114,14 @@ public class BlogController {
 		
 		int followerCnt = followService.getFollowerCnt(user_id);
 		int followingCnt = followService.getFollowingCnt(user_id);
+		int pageCnt = pageService.select_pageCnt(user_id);
+		int goodCnt = goodService.select_goodCnt(user_id);
+		
 		model.addAttribute("uVo", uVo);
 		model.addAttribute("followerCnt", followerCnt);
 		model.addAttribute("followingCnt", followingCnt);
+		model.addAttribute("pageCnt", pageCnt);
+		model.addAttribute("goodCnt", goodCnt);
 		
 		//포트폴리오 리스트
 		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(user_id);
@@ -736,7 +749,68 @@ public class BlogController {
 	@RequestMapping("/page_commentList")
 	public String page_commentList(HttpServletRequest req, Model model, @RequestParam("page_code")String page_code) {
 		
+		//댓글리스트 뿌려주기
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		PaginationVo pnVo = new PaginationVo(1, 10);
+		pnVo.setDivision("22");
+		pnVo.setRef_code(page_code);
+		pnVo.setMem_id(mVo.getMem_id());
+		
+		Map<String, Object> commentMap = commentService.select_commentList(pnVo);
+		
+		
+		List<Post_commentVo> commentList= (List<Post_commentVo>) commentMap.get("commentList");
+		model.addAttribute("page_code", page_code);
+		model.addAttribute("commentList", commentList);
+		
 		return "blog/comment_area";
 	}
+	
+	/**
+	 * 
+	 * Method : insert_comment
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param req
+	 * @param model
+	 * @param page_code
+	 * @param comment_contents
+	 * @return
+	 * Method 설명 : 페이지에 댓글 추가
+	 */
+	@RequestMapping("/insert_comment")
+	public String insert_comment(HttpServletRequest req, Model model, 
+			@RequestParam("page_code")String page_code,
+			@RequestParam("comment_contents")String comment_contents) {
+		
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		Post_commentVo cVo = new Post_commentVo();
+		cVo.setMem_id(mVo.getMem_id());
+		cVo.setRef_code(page_code);
+		cVo.setDivision("22");
+		cVo.setComment_contents(comment_contents);
+		commentService.insert_comment(cVo);
+		
+		model.addAttribute("page_code", page_code);
+		
+		//댓글리스트 뿌려주기
+		PaginationVo pnVo = new PaginationVo(1, 10);
+		pnVo.setDivision("22");
+		pnVo.setRef_code(page_code);
+		pnVo.setMem_id(mVo.getMem_id());
+		
+		Map<String, Object> commentMap = commentService.select_commentList(pnVo);
+		
+		
+		List<Post_commentVo> commentList= (List<Post_commentVo>) commentMap.get("commentList");
+		model.addAttribute("page_code", page_code);
+		model.addAttribute("commentList", commentList);
+		
+		return "blog/comment_area";
+	}
+	
+	
 	
 }

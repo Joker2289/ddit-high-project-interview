@@ -61,4 +61,9 @@ public class GoodDaoImpl implements IGoodDao {
 		return sqlSession.delete("good.delete_good", good_code);
 	}
 
+	@Override
+	public int select_goodCnt(String user_id) {
+		return sqlSession.selectOne("good.select_goodCnt", user_id);
+	}
+
 }

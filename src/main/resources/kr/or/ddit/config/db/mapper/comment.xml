@@ -37,7 +37,7 @@
 		          from (select a.*, b.goodcount, c.writer_name, c.profile_path, e.mem_division
 		                  from (select * 
 		                          from post_comment
-		                         where (ref_code = #{ref_code} and division = 28)
+		                         where (ref_code = #{ref_code} and division = #{ division })
 		                           and comment_code not in (select ref_code
 		                                                      from reportcontent
 		                                                     where division = 29

@@ -71,4 +71,15 @@ public interface IPageService {
 	 * Method 설명 : 회원이 작성한 전체 page 조회
 	 */
 	List<PageVo> select_pageAllList(String user_id);
+	
+	/**
+	 * 
+	 * Method : select_pageCnt
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 회원이 작성한 게시글 수 조회
+	 */
+	int select_pageCnt(String user_id);
 }

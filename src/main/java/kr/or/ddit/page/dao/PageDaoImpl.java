@@ -44,5 +44,10 @@ public class PageDaoImpl implements IPageDao{
 	public List<PageVo> select_pageAllList(String user_id) {
 		return sqlSession.selectList("page.select_pageAllList", user_id);
 	}
+
+	@Override
+	public int select_pageCnt(String user_id) {
+		return sqlSession.selectOne("page.select_pageCnt", user_id);
+	}
 	
 }
