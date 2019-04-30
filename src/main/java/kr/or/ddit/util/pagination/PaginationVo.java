@@ -10,6 +10,7 @@ public class PaginationVo {
 	private String user_id;
 	private String corp_id;
 	private String hashtag_name;
+	private String search_word; // 검색어
 	
 	public PaginationVo() {
 		
@@ -19,6 +20,12 @@ public class PaginationVo {
 		this.pageSize = pageSize;
 	}
 	
+	public String getSearch_word() {
+		return search_word;
+	}
+	public void setSearch_word(String search_word) {
+		this.search_word = search_word;
+	}
 	public String getHashtag_name() {
 		return hashtag_name;
 	}
@@ -78,7 +85,6 @@ public class PaginationVo {
 	public String toString() {
 		return "PaginationVo [page=" + page + ", pageSize=" + pageSize + ", mem_id=" + mem_id + ", criteria_code="
 				+ criteria_code + ", ref_code=" + ref_code + ", division=" + division + ", user_id=" + user_id
-				+ ", corp_id=" + corp_id + ", hashtag_name=" + hashtag_name + "]";
+				+ ", corp_id=" + corp_id + ", hashtag_name=" + hashtag_name + ", search_word=" + search_word + "]";
 	}
-	
 }

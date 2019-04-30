@@ -8,11 +8,18 @@ public class SearchResultVo {
 	private String corporate_name;  // 검색된 회원의 경력정보
 	private String industry_type;   // 검색된 회사의 사업유형
 	private String search_word;		// 검색어
+	private String col_no;			// 검색 정렬번호
 	
 	public SearchResultVo() {
 		
 	}
 	
+	public String getCol_no() {
+		return col_no;
+	}
+	public void setCol_no(String col_no) {
+		this.col_no = col_no;
+	}
 	public String getSearch_word() {
 		return search_word;
 	}

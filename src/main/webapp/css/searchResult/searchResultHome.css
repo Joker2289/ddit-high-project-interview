@@ -1,0 +1,33 @@
+#div_box{
+	margin-bottom: 200px;
+	width: 1100px;
+	display: inline-block;
+}
+
+#div_list_box{
+	margin-bottom: 200px;
+	width: 1100px;
+	display: inline-block;
+}
+
+table.tb_recruit{
+	border-spacing: 15px;
+}
+
+tr.tb_recruit, td.tb_recruit{
+	border: 1px solid;			
+}
+
+div.table_div, .div_alarm, .tb_alarm{
+	display: inline;
+}	
+
+
+.div_list{
+	width: 1000px;
+	height: 670px;
+	display: inline-block;
+}
+
+
+

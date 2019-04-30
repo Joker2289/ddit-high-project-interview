@@ -1,7 +1,5 @@
 package kr.or.ddit.post.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,7 +52,6 @@ import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.hashtagUtil.ReplaceContents;
 import kr.or.ddit.util.pagination.PaginationVo;
-import oracle.net.aso.i;
 
 @Controller
 public class PostController {
@@ -64,7 +60,7 @@ public class PostController {
 	
 	@Resource(name="postService")
 	private IPostService postService;
-	
+		
 	@Resource(name="memberService")
 	private IMemberService memberService;
 	
