@@ -88,7 +88,7 @@
   <!-- friend requests -->
   <div class="panel panel-default" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
     <div class="panel-body">
-      <a href="#"><h4>팔로우한 해시태그</h4></a>
+      <a href="#"><h4 style="color: #0073b1; font-weight: bold;">팔로우한 해시태그</h4></a>
       <ul>
         <c:choose>
           <c:when test="${followHashtag eq 'notfollow'}">

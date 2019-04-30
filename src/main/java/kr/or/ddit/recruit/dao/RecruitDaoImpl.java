@@ -203,6 +203,22 @@ public class RecruitDaoImpl implements IRecruitDao{
 		
 		return newList;
 	}
+
+	/**
+	 * 
+	 * Method : searchRecrListByJob_local
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param search_local
+	 * @return
+	 * Method 설명 : 특정 지역으로 검색한 채용공고 목록 조회.
+	 */
+	@Override
+	public List<RecruitVo> searchRecrListByJob_local(String search_local) {
+		List<RecruitVo> recrList = sqlSessionTemplate.selectList("recr.searchRecrListByJob_local", search_local);
+		
+		return recrList;
+	}
 	
 	
 	

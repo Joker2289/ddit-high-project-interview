@@ -143,4 +143,13 @@
 		<put-attribute name="content" value="/WEB-INF/views/timeline/postDetail.jsp" />
 	</definition>
 
+	<definition name="searchResultTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/search/searchResultHome.jsp" />
+	</definition>
+	
+	<definition name="companySalaryTiles" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/company/companySalary.jsp" />
+		
+	</definition>
+
 </tiles-definitions>

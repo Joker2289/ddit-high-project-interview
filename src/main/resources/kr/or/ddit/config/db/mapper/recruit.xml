@@ -87,7 +87,8 @@
 	<!-- 채용공고 수정. -->
 	<update id="updateRecr" parameterType="recruitVo">
 		UPDATE RECRUIT
-		   SET APP_COUNT = #{app_count}
+		   SET APP_COUNT = #{app_count},
+		   	   JOB_LOCAL = #{job_local}
 		 WHERE RECRUIT_CODE = #{recruit_code}
 	</update>
 	
@@ -109,6 +110,15 @@
 		  FROM RECRUIT
 		 WHERE ROWNUM &lt; 8
 		ORDER BY RECRUIT_CODE DESC
+	</select>
+
+	<!-- 특정 지역으로 검색한 채용공고 목록 조회. -->
+	<select id="searchRecrListByJob_local" parameterType="String" resultType="recruitVo">
+		SELECT RECRUIT_CODE, CORP_ID, RECRUIT_TITLE, JOB_TYPE, RECRUIT_CONTENTS, 
+			TO_CHAR(START_DATE, 'YY/MM/DD HH24:MI') START_DATE, END_DATE, PERSONNEL, JOB_RANK, 
+			EMP_TYPE, APP_TYPE, APP_COUNT, JOB_LOCAL
+		  FROM RECRUIT
+		 WHERE JOB_LOCAL = #{job_local}
 	</select>
 
 

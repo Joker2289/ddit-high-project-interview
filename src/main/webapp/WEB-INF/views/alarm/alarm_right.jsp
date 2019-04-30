@@ -5,7 +5,7 @@
 	<!-- newList -->
 	<div id="div_newList" class="panel panel-default whiteBox" style="width: 296px; margin-left: 0px; height: 370px; margin-bottom: 20px;
 			text-align: center; padding-top: 10px; font-size: 22px; box-shadow: 0 6px 12px rgba(0, 0, 0, .15);">
-		<div style="text-align: left; padding-left: 15px; padding-bottom: 7px;">
+		<div style="text-align: left; padding-left: 15px; padding-bottom: 7px; font-weight: bold;">
 			신규 채용공고
 		</div>
 		<div style="border: 0px solid; height: 270px; overflow: hidden; padding-left: 2px;">

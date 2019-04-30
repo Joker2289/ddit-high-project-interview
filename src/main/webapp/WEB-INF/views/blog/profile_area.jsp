@@ -30,11 +30,11 @@
 					</tr>
 					<tr>
 						<td class="subject">총 게시글 수</td>
-						<td>100개</td>
+						<td>${ pageCnt }개</td>
 					</tr>
 					<tr>
 						<td class="subject">좋아요 수</td>
-						<td>100개</td>
+						<td>${ goodCnt }개</td>
 					</tr>
 					<tr>
 						<td class="subject">질문 수</td>

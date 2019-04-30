@@ -37,7 +37,7 @@
 	</div>
 	</div>
 	<div class="chatContentWriteBox">
-		<textarea class="form-control" id="sendMeseage" name="chat_content" rows="5" placeholder="메일 쓰기 또는 파일 첨부"></textarea>
+		<div class="form-control" id="sendMeseage" name="chat_content" rows="5" contenteditable="true"></div>
 	</div>
 </form>
 <div class="chatContentBtnBox">
@@ -49,16 +49,6 @@
 	<button class="btn btn-link smallChatBtn">
 		<span style="font-size:24px;">
 			<i class="fas fa-paperclip"></i>
-		</span>
-	</button>
-	<button class="btn btn-link smallChatBtn">
-		<span style="font-size:24px;">
-			<i class="fab fa-qq"></i> 
-		</span>
-	</button>
-	<button class="btn btn-link smallChatBtn">
-		<span style="font-size:24px;">
-			<i class="far fa-smile"></i>
 		</span>
 	</button>
 	<button class="btn btn-primary submitBtn">보내기</button>
@@ -116,7 +106,7 @@
 	
 	
 	$("#sendMeseage").keyup(function() {
-		if($("#sendMeseage").val().trim() != "" && $("input[name='chat_member']").eq(0).val() != null){
+		if($("#sendMeseage").html().trim() != "" && $("input[name='chat_member']").eq(0).val() != null){
 			$(".submitBtn").prop("disabled", false);
 		}else if($("#sendMeseage").val().trim() == ""){
 			$(".submitBtn").prop("disabled", true);

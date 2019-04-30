@@ -36,7 +36,8 @@ public class UserController {
 	private IFilesService filesService;
 	
 	@RequestMapping("/usersProfileUpdate")
-	public String usersProfileUpdate(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req) {
+	public String usersProfileUpdate(UsersVo usersVo, MultipartHttpServletRequest file, HttpServletRequest req, String[] contents) {
+		
 		String[] file_name = req.getParameterValues("file_name");
 		String[] file_path = req.getParameterValues("file_path");
 		MultipartFile backgroundFile = file.getFile("backgroundFile");

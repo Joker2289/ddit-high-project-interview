@@ -61,4 +61,9 @@ public class GoodServiceImpl implements IGoodService {
 		return goodDao.delete_good(good_code);
 	}
 
+	@Override
+	public int select_goodCnt(String user_id) {
+		return goodDao.select_goodCnt(user_id);
+	}
+
 }

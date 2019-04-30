@@ -19,7 +19,7 @@
 			<label style="font-size: 14px;">${write_date }</label>
 		</div>
 		<div class="chatContentsBox">${userChatroom.MEM_ID eq SESSION_MEMBERVO.mem_id ? "나": userChatroom.MEM_ID }
-			: ${userChatroom.CHAT_CONTENT }</div>
+			: ${not empty fn:split(userChatroom.CHAT_CONTENT,'-')[4] ? '이미지를 보냈습니다.' : userChatroom.CHAT_CONTENT}</div>
 	</div>
 </a>
 </c:forEach>

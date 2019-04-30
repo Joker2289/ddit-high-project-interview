@@ -711,18 +711,18 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 	
 	
 	<!-- companyReview - 기업 리뷰 리스트 출력 -->
-	<select id="select_companyReview" parameterType="String" resultType="reviewVo">
-		select
-			cr_code,
-			user_id,
-			corp_id,
-			job_rank,
-			cr_contents,
-			write_date
-		from
-			corporate_review
-		where
-			corp_id=#{corp_id}
+	<select id="select_companyReview" parameterType="paginationVo" resultType="reviewVo">
+		select *
+		  from
+		    (select a.*, rownum rn
+		       from (  select a.cr_code, a.user_id, a.corp_id, a.job_rank, a.cr_contents, a.write_date, b.reviewCnt
+		               from corporate_review a,(select count(corp_id) as reviewCnt, corp_id
+                                                  from corporate_review
+                                                  group by corp_id) b
+		              where a.corp_id = b.corp_id
+                      and a.corp_id=#{corp_id}
+                      order by a.write_date desc)a)
+		where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 	</select>
 	
 	

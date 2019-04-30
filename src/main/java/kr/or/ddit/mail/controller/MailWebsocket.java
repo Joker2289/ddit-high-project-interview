@@ -58,20 +58,35 @@ public class MailWebsocket extends TextWebSocketHandler{
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		Map<String,Object> map = session.getAttributes();
 		MemberVo memberVo = (MemberVo) map.get("SESSION_MEMBERVO");
-		String mychat_code = message.getPayload().toString().split("=")[0];
-		
-		List<Chat_memberVo> roomMemberList = chat_memberService.select_chatMember(mychat_code);
+		String mychat_code = message.getPayload().toString().split("▣")[0];
 		
 		Chat_contentsVo chat_contentsVo = new Chat_contentsVo();
 		chat_contentsVo.setChat_code(mychat_code);
 		chat_contentsVo.setMem_id(memberVo.getMem_id());
-		chat_contentsVo.setChat_content(message.getPayload().toString().split("=")[1]); 
 		
-		chat_contentsService.insert_chatcontets(chat_contentsVo);
+		List<Chat_memberVo> roomMemberList = chat_memberService.select_chatMember(mychat_code);
+		if (message.getPayload().toString().split("▣")[2].equals("exit")){
+			
+			String name = chat_contentsService.select_findName(memberVo.getMem_id());
+			chat_contentsVo.setMem_id(memberVo.getMem_id());
+			chat_contentsVo.setChat_content(name +"▣"+"exit"); 
+			chat_contentsService.insert_chatcontets(chat_contentsVo);
+		}else if(!(message.getPayload().toString().split("▣")[2].equals("image") || 
+					message.getPayload().toString().split("▣")[2].equals("file"))){
+			
+			chat_contentsVo.setChat_content(message.getPayload().toString().split("▣")[1]); 
+			chat_contentsService.insert_chatcontets(chat_contentsVo);
+			
+		}
+		
 		
 		for (Chat_memberVo chat_memberVo : roomMemberList) {
 			if(idList.get(chat_memberVo.getMem_id()) != null) {
-				idList.get(chat_memberVo.getMem_id()).sendMessage(new TextMessage("chat"));
+				if(message.getPayload().toString().split("▣")[2].equals("room")) {
+					idList.get(chat_memberVo.getMem_id()).sendMessage(new TextMessage("room"));	
+				}else {
+					idList.get(chat_memberVo.getMem_id()).sendMessage(new TextMessage("chat"));
+				}
 			}
 		}
 		

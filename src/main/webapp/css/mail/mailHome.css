@@ -175,7 +175,7 @@
 }
 
 .submitBtn{
-	margin-left:230px; 
+	margin-left:317px; 
 	width: 60px; 
 	height: 30px; 
 	padding: 0 0 0 0;
@@ -198,5 +198,13 @@
 	height: 92px; 
 	padding-left: 12px;
 	border-left:4px solid #006097;
+	
+}
+
+#sendMeseage{
+	width: 491px;
+	height: 100px;
+	overflow:scroll;
+	overflow-x:hidden;
 	
 }

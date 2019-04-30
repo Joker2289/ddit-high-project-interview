@@ -310,6 +310,18 @@
 	$(document).ready(function(){
 // 		console.log('lVRVo? : ${lVRVo.recruit_title }');
 
+		// 엔터키 눌렀을 때 검색되도록.
+		$("#txt_name").keypress(function(e){
+			if(e.which == 13){
+				$("#btn_search").trigger("click");
+			}
+		});		
+		$("#txt_location").keypress(function(e){
+			if(e.which == 13){
+				$("#btn_search").trigger("click");
+			}
+		});	
+
 		// news 슬라이드 실행.
 		slide_switch = setInterval("fn_slide()", 4000);
 		
