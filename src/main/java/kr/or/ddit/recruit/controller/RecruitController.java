@@ -1362,6 +1362,7 @@ public class RecruitController {
 		alarmInfo.setAlarm_separate("08");
 		alarmInfo.setDivision("34");
 		alarmInfo.setRef_code(recruit_code);
+		alarmInfo.setSend_id(corp_id);
 
 		Map<String, List<String>> resultMap = new HashMap<>();
 		
