@@ -8,26 +8,48 @@
 	<select id="search_allInfo_user" parameterType="paginationVo" resultType="search_resultVo">
 		select * 
 		  from (select c.*, rownum col_no
-		          from (select a.mem_id, a.mem_name, a.profile_path, b.job_position, b.corporate_name
+		          from (select a.mem_id, a.mem_name, a.profile_path, b.corporate_name
 		                  from (select user_id as mem_id, user_name as mem_name, profile_path
 		                          from users) a, career_info b
 		                 where a.mem_id = b.user_id(+)
-		                   and (a.mem_name like '%'|| #{search_word} ||'%' 
-		                    or b.corporate_name like '%'|| #{search_word} ||'%') ) c)
+		                   and (upper(a.mem_name) like '%'|| upper('삼성') ||'%' 
+		                    or upper(b.corporate_name) like '%'|| upper('삼성') ||'%') ) c)
 		 where col_no between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
 	</select>
 
 	<!-- 검색어에 대한 모든 정보(회사) -->
 	<select id="search_allInfo_corp" parameterType="paginationVo" resultType="search_resultVo">
-		select * 
+		select *
 		  from (select c.*, rownum col_no
-		          from (select a.mem_id, a.mem_name, a.profile_path
-		                  from (select corp_id as mem_id, corp_name as mem_name, logo_path as profile_path
-		                          from corporation) a, career_info b
-		                 where a.mem_id = b.user_id(+)
-		                   and (a.mem_name like '%'|| #{search_word} ||'%' 
-		                    or b.corporate_name like '%'|| #{search_word} ||'%') ) c)
+		          from (select a.mem_id, a.mem_name, a.profile_path, a.industry_type
+		                  from (select corp_id as mem_id, corp_name as mem_name, logo_path as profile_path, industry_type
+		                          from corporation) a
+		                 where (upper(a.mem_name) like '%'|| upper(#{search_word}) ||'%'
+		                    or  upper(a.industry_type) like '%'|| upper(#{search_word}) ||'%') ) c)
 		 where col_no between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
+	</select>
+	
+	<!-- 검색 유저수 -->
+	<select id="search_userCount" parameterType="String" resultType="int">
+		select count(*) 
+		  from (select c.*, rownum col_no
+		          from (select a.mem_id, a.mem_name, a.profile_path, b.corporate_name
+		                  from (select user_id as mem_id, user_name as mem_name, profile_path
+		                          from users) a, career_info b
+		                 where a.mem_id = b.user_id(+)
+		                   and (upper(a.mem_name) like '%'|| upper('삼성') ||'%' 
+		                    or upper(b.corporate_name) like '%'|| upper('삼성') ||'%') ) c)
+	</select>
+	
+	<!-- 검색 회사수 -->
+	<select id="search_corpCount" parameterType="String" resultType="int">
+		select count(*)
+		  from (select c.*, rownum col_no
+		          from (select a.mem_id, a.mem_name, a.profile_path, a.industry_type
+		                  from (select corp_id as mem_id, corp_name as mem_name, logo_path as profile_path, industry_type
+		                          from corporation) a
+		                 where (upper(a.mem_name) like '%'|| upper('삼성') ||'%'
+		                    or  upper(a.industry_type) like '%'|| upper('삼성') ||'%') ) c)
 	</select>
 	
 </mapper>

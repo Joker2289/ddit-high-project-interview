@@ -17,7 +17,7 @@
           	<li style=" width: 410px; height: 34px; padding-top: 8px;">
 	          	<div class="searchbox">
 				  <div class="searchgroup">
-				  	  <form id="frm_searchword" action="/searchResult">
+				  	  <form id="frm_searchword" action="/searchResult" method="get">
 				          <input type="search" name="search_word" id="search" placeholder="검색"/>
 				          <button id="btn_searchword" class="icon" type="submit"><i class="fa fa-search"></i></button>
 				      </form>
@@ -75,15 +75,17 @@
 <script src="/js/sockjs.js"></script>
 <script>
 	
-// 	var search_word = "";
+	var search_word = "";
 	
-// 	if(key.keyCode == 13 && $("#search").val() != null){
-// 		$("#search").keydown(function(key){});
-// 	}
+	$("#search").keydown(function(key){
+		if(key.keyCode == 13 && $("#search").val() != null){
+			$("#frm_searchword").submit();
+		}
+	});
 	
-// 	$("#btn_searchword").on("click", function () {
-// 		$("#frm_searchword").submit();
-// 	});
+	$("#btn_searchword").on("click", function () {
+		$("#frm_searchword").submit();
+	});
 	
 	
 // 	var path = window.location.pathname;

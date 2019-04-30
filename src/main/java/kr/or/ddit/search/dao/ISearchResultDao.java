@@ -27,4 +27,24 @@ public interface ISearchResultDao {
 	 */
 	List<SearchResultVo> search_allInfo_corp(PaginationVo paginationVo);
 	
+	/**
+	 * Method : corpCount
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param search_word
+	 * @return
+	 * Method 설명 : 검색결과 총 갯수(회사)
+	 */
+	int corpCount(String search_word);
+	
+	/**
+	 * Method : userCount
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param search_word
+	 * @return
+	 * Method 설명 : 검색결과 총 갯수(회원)
+	 */
+	int userCount(String search_word);
+	
 }
