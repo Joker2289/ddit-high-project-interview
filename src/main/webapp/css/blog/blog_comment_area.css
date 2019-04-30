@@ -98,9 +98,12 @@
 
 /* 회원 정보 출력 div */
 .info_div{
-	width: 90%;
+	width: 90.5%;
 	height: 50px;
 	display: inline-block;
+	background-color: #C0D1DB;
+	padding-right: 25px;
+	padding-left: 20px;
 }
 
 
@@ -131,7 +134,15 @@
 	font-size: 25px;
 }
 
+/* 댓글 내용 */
 .comment_contents{
-	background-color: #F3F6F8;
+	background-color: #C0D1DB;
+	width: 90.5%;
+	margin-left: 69px;
+	margin-bottom: 15px;
+	padding-left: 20px;
+	padding-right: 25px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
