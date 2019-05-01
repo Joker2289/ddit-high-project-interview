@@ -103,10 +103,10 @@
 							<button class="btn_count btn_commentcount" style="font-size: 15px;">
 								댓글 
 								<c:if test="${ page.comment_cnt != null }">
-									${ page.comment_cnt }
+									<span id="comment_cnt${ page.page_code }">${ page.comment_cnt }</span>
 								</c:if>
 								<c:if test="${ page.comment_cnt == null }">
-									0
+									<span id="comment_cnt${ page.page_code }">0</span>
 								</c:if>
 							</button>
 						</li>

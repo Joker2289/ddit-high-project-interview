@@ -1,11 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>	
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="js/jquery.form.js"></script>
-	<link href="/css/recruit/recruit.css" type="text/css" rel="stylesheet">
+	
+	<!-- <link href="/css/recruit/recruit.css" type="text/css" rel="stylesheet"> -->
 	<title>채용공고｜11</title>
+
+<style type="text/css">
+#agentInstallFile { display:none; } 
+</style>
+
+
 <style>
 .dropdown {
   position: relative;
@@ -29,7 +38,6 @@
 </head>
 <body>
 
-${corporationInfo.logo_path}
 <div class="container">
 <div class="row">
 
@@ -58,6 +66,7 @@ ${corporationInfo.logo_path}
     								
     								+ 팔로우
     							
+    							
     							</a>
     						</li>
     					</c:if>
@@ -79,25 +88,17 @@ ${corporationInfo.logo_path}
 		<label> ${corporationInfo.corp_profile } </label>
 		<br>  
 		<div style="display: flex;">
-		<button value="웹사이트 가기 ↗" name="corp_url" onclick="window.open('http://www.naver.com')" style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;">웹사이트 가기↗</button>
-		<button style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;margin-left: 905px;" onclick="location.href='/companyReview?corp_id=${corporationInfo.corp_id}'">회사 정보</button>
+			<button value="웹사이트 가기 ↗" name="corp_url" onclick="window.open('http://www.naver.com')" style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;">웹사이트 가기↗</button>
+		<button class="btn btn-primary" style="margin-left: 905px;margin-top: 10px;" onclick="location.href='/companyReview?corp_id=${corporationInfo.corp_id}'"><strong>회사 정보</strong></button>
 		</div>
 	</div>
 </div>
-
-<!-- ------------------------------------		이미지 업로드--------------------------------------------	 -->
-<!--   		<form action="./logo_change_btn" id="fileUpload" name="fileUpload" method="post" enctype="multipart/form-data" accept-charset="UTF-8"> -->
-<!--         이름 : <input type="text" name="name" id="cmd" value="namevla"><br> -->
-<!--         파일 : <input type="file" name="file"><br> <input -->
-<!--          type="submit" name="업로드" value="제출"><br> -->
-
 
 <!------------------------------------------- 비동기식 업로드 ---------------------------------------------------------->
 <form name="serverInfoForm" id="serverInfoForm" method="post" action="/serverInfoUpload.do" enctype = "multipart/form-data">
 
         <input type="file" name="agentInstallFile" id="agentInstallFile" style="background-color: black;" value="asdf">
 
-        <input type="submit"  class="btn" value="전송">
 </form>
 
 
@@ -124,6 +125,28 @@ function corporation_follow(mem_id, ref_keyword) {
 
 
 </script>
+<script type="text/javascript">
+
+
+ 	$(function() {
+
+ 		$('#btn-upload').click(function(e) {
+
+ 			e.preventDefault();
+
+ 			$('#agentInstallFile').click();
+ 		});
+
+ 	});
+
+ 	function changeValue(obj) {
+
+ 		alert(obj.value);
+
+ 	}
+</script>
+
+
 
 
 

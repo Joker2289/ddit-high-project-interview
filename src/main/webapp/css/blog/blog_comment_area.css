@@ -2,6 +2,7 @@
 .comment_area {
 	background-color: #fff;
 	border-top: 1px solid #DDDDDD !important;
+	margin-bottom: 30px;
 }
 
 /* 댓글 헤드 div : 이미지 + TEXT + 버튼 */
@@ -18,6 +19,7 @@
 .image_div{
 	display: inline-block;
 	vertical-align: top;
+	
 }
 
 /* 댓글창 헤드 프로필 이미지 */
@@ -124,6 +126,7 @@
 	vertical-align: middle;
 	font-size: 20px;
 	margin-right: 10px;
+	font-weight: bold !important;
 }
 
 /* 작성일 */
@@ -153,6 +156,21 @@
 	padding-bottom: 10px;
 	border-bottom-left-radius:20px;
 	border-bottom-right-radius:20px;
+	font-size: 17px !important;
+}
+
+/* 댓글 바닥 */
+.comment_footer{
+	width: 95%;
+	margin: 0 auto;
+	margin-top: 20px;
+	/* margin-bottom: 20px; */
+}
+
+.add_comment_btn {
+	color: #3072AC;
+	font-size: 20px !important;
+	font-weight: bold;
 }
 
 

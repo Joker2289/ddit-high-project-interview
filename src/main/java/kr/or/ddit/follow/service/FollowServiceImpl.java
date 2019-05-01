@@ -89,6 +89,11 @@ public class FollowServiceImpl implements IFollowService {
 	public int insert_feedFollow(FollowVo followVo) {
 		return followDao.insert_feedFollow(followVo);
 	}
+	
+	@Override
+	public int follow_unfollow(FollowVo followVo) {
+		return followDao.follow_unfollow(followVo);
+	}
 
 	/**
 	 * Method : select_followChatList

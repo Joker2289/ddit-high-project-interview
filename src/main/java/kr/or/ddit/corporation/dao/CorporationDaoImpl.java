@@ -10,8 +10,10 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
+import kr.or.ddit.users.model.UsersVo;
 
 @Repository("corporationDao")
 public class CorporationDaoImpl implements ICorporationDao{
@@ -149,6 +151,30 @@ public class CorporationDaoImpl implements ICorporationDao{
 		List<Integer> emc = new ArrayList<Integer>();
 		emc = sqlSessionTemplate.selectList("corp.employee_major_count", corp_name);
 		return emc;
+	}
+
+	/**s
+	 * 회사직원의 user_id
+	 */
+	@Override
+	public List<Career_infoVo> employee_all(String corp_name) {
+		List<Career_infoVo> ea = new ArrayList<Career_infoVo>();
+		ea = sqlSessionTemplate.selectList("corp.employee_all", corp_name);
+		return ea;
+	}
+
+	@Override
+	public UsersVo select_userInfo(String user_id) {
+		UsersVo select_userInfo = new UsersVo();
+		select_userInfo = sqlSessionTemplate.selectOne("corp.select_userInfo",user_id);
+		return select_userInfo;
+	}
+
+	@Override
+	public Education_infoVo employee_education(String user_id) {
+		Education_infoVo employee_education = new Education_infoVo();
+		employee_education = sqlSessionTemplate.selectOne("corp.employee_education", user_id);
+		return employee_education;
 	}
 
 }
