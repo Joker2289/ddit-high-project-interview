@@ -383,7 +383,7 @@ public interface IPersonal_connectionDao {
 	* @return
 	* Method 설명 : companyReview - 기업 리뷰 리스트 출력
 	*/
-	List<Corporate_reviewVo> select_companyReview(String corp_id);
+	List<Corporate_reviewVo> select_companyReview(PaginationVo paginationVo);
 	
 	
 	

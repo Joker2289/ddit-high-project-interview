@@ -8,6 +8,7 @@ public class Corporate_reviewVo {
 	private String job_rank;	// 직급
 	private String cr_contents;	// 리뷰내용
 	private String write_date;  // 작성일
+	private String reviewCnt; // 리뷰 총 갯수
 	
 	public Corporate_reviewVo() {
 		
@@ -59,6 +60,14 @@ public class Corporate_reviewVo {
 
 	public void setWrite_date(String write_date) {
 		this.write_date = write_date;
+	}
+
+	public String getReviewCnt() {
+		return reviewCnt;
+	}
+
+	public void setReviewCnt(String reviewCnt) {
+		this.reviewCnt = reviewCnt;
 	}
 
 	@Override

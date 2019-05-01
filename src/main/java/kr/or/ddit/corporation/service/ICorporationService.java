@@ -3,8 +3,10 @@ package kr.or.ddit.corporation.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
+import kr.or.ddit.users.model.UsersVo;
 
 public interface ICorporationService {
 	
@@ -108,6 +110,27 @@ public interface ICorporationService {
 	 */
 	List<Integer> employee_major_count(String corp_name);
 
+	/**
+	 * 회사 전체직원의 user_id
+	 * @param corp_name
+	 * @return
+	 */
+	List<Career_infoVo> employee_all(String corp_name);
+
+	
+	/**
+	 * 회사전체직원의 user_id로 usersVo가져오기
+	 * @param user_id
+	 * @return
+	 */
+	UsersVo select_userInfo(String user_id);
+
+	/**
+	 * 회사전체직원의 user_id로 education_infoVo 가져오기
+	 * @param user_id
+	 * @return
+	 */
+	Education_infoVo employee_education(String user_id);
 }
 
 

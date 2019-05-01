@@ -8,12 +8,20 @@ public class SearchResultVo {
 	private String corporate_name;  // 검색된 회원의 경력정보
 	private String industry_type;   // 검색된 회사의 사업유형
 	private String search_word;		// 검색어
+	private String addr1;
 	private String col_no;			// 검색 정렬번호
 	
 	public SearchResultVo() {
 		
 	}
 	
+	
+	public String getAddr1() {
+		return addr1;
+	}
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
+	}
 	public String getCol_no() {
 		return col_no;
 	}
@@ -59,6 +67,7 @@ public class SearchResultVo {
 	@Override
 	public String toString() {
 		return "SearchResultVo [mem_id=" + mem_id + ", mem_name=" + mem_name + ", profile_path=" + profile_path
-				+ ", corporate_name=" + corporate_name + ", industry_type=" + industry_type + "]";
+				+ ", corporate_name=" + corporate_name + ", industry_type=" + industry_type + ", search_word="
+				+ search_word + ", addr1=" + addr1 + ", col_no=" + col_no + "]";
 	}
 }

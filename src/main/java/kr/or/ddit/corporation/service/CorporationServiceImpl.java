@@ -9,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.dao.ICorporationDao;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
+import kr.or.ddit.users.model.UsersVo;
 
 @Service("corporationService")
 public class CorporationServiceImpl implements ICorporationService{
@@ -147,6 +149,28 @@ public class CorporationServiceImpl implements ICorporationService{
 	public List<Integer> employee_major_count(String corp_name) {
 		List<Integer> emc = corporationDao.employee_major_count(corp_name);
 		return emc;
+	}
+
+	/** 회사 직원의 user_id
+	 * 
+	 */
+	@Override
+	public List<Career_infoVo> employee_all(String corp_name) {
+		List<Career_infoVo> ea  = corporationDao.employee_all(corp_name);
+		return ea;
+	}
+
+	@Override
+	public UsersVo select_userInfo(String user_id) {
+		UsersVo select_userInfo = corporationDao.select_userInfo(user_id);
+		return select_userInfo;
+		
+	}
+
+	@Override
+	public Education_infoVo employee_education(String user_id) {
+		Education_infoVo employee_education = corporationDao.employee_education(user_id);
+		return employee_education;
 	}
 
 

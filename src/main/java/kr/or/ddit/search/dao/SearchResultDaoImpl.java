@@ -26,4 +26,14 @@ public class SearchResultDaoImpl implements ISearchResultDao {
 		return sqlSession.selectList("search_result.search_allInfo_corp", paginationVo);
 	}
 
+	@Override
+	public int corpCount(String search_word) {
+		return sqlSession.selectOne("search_result.corpCount", search_word);
+	}
+
+	@Override
+	public int userCount(String search_word) {
+		return sqlSession.selectOne("search_result.userCount", search_word);
+	}
+
 }

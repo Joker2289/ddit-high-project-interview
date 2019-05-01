@@ -35,4 +35,14 @@ public interface IChat_contentsDao {
 	 * Method 설명 : 내용 조회
 	 */
 	List<String> select_chatContentsSearch (Chat_contentsVo chat_contentsVo);
+	
+	/**
+	 * Method : select_findName
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 이름 찾기
+	 */
+	String select_findName (String mem_id);
 }

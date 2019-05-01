@@ -48,7 +48,7 @@
 		<typeAlias alias="page_linkVo" 		  type="kr.or.ddit.page.model.Page_linkVo"/>
 		<typeAlias alias="reviewVo" 		  type="kr.or.ddit.corporate_review.model.Corporate_reviewVo"/>
 		<typeAlias alias="search_resultVo" 	  type="kr.or.ddit.search.model.SearchResultVo"/>
-		
+		<typeAlias alias="salaryVo" 		  type="kr.or.ddit.salary_info.model.Salary_infoVo"/>
 	</typeAliases> 
   
 	<mappers>

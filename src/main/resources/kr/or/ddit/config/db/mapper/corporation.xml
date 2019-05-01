@@ -121,7 +121,41 @@
     order by count(*) desc
 	</select>
 	
+		<!-- 회사 전직원의 id -->
+	<select id="employee_all" parameterType="String" resultType="Career_infoVo">
+		 SELECT USER_ID
+			FROM CAREER_INFO
+			WHERE CORPORATE_NAME = #{corporate_name }
+	</select>
 	
 	
+	<!-- 회사 전직원 usersVo -->
+	<select id="select_userInfo" parameterType="String" resultType="usersVo">
+		SELECT
+		    USER_ID,
+		    USER_NAME,
+		    BG_IMG,
+		    BG_PATH,
+		    PROFILE_IMG,
+		    PROFILE_PATH,
+		    ADDR1,
+		    ADDR2,
+		    ZIPCODE,
+		    EMAIL,
+		    TELNO,
+		    USER_BIRTH,
+		    PERSNAL_URL,
+		    PROFILE_CONTENTS
+		FROM USERS
+		WHERE USER_ID = #{user_id}
+	</select>
+	
+	<!-- 회사 직원의 education_infoVo -->
+	<select id="employee_education" parameterType="String" resultType="education_infoVo">
+		select education_code, user_id, school_name, degree_name, major, admission, graduation, grade, contents
+		  from education_info
+		 where user_id = #{user_id}
+		 order by graduation desc
+	</select>
 	
 </mapper>

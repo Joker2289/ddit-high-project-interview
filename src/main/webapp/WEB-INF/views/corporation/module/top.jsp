@@ -6,6 +6,12 @@
 	<script src="js/jquery.form.js"></script>
 	<link href="/css/recruit/recruit.css" type="text/css" rel="stylesheet">
 	<title>채용공고｜11</title>
+
+<style type="text/css">
+#agentInstallFile { display:none; } 
+</style>
+
+
 <style>
 .dropdown {
   position: relative;
@@ -58,6 +64,7 @@ ${corporationInfo.logo_path}
     								
     								+ 팔로우
     							
+    							
     							</a>
     						</li>
     					</c:if>
@@ -78,10 +85,14 @@ ${corporationInfo.logo_path}
 	<div style="margin-top: 10px; margin-left: 30px;">
 		<label> ${corporationInfo.corp_profile } </label>
 		<br>  
+<<<<<<< HEAD
+		<button value="웹사이트 가기 ↗" name="corp_url" onclick="window.open('http://www.naver.com')" style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;">웹사이트 가기↗</button> <br>
+=======
 		<div style="display: flex;">
 		<button value="웹사이트 가기 ↗" name="corp_url" onclick="window.open('http://www.naver.com')" style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;">웹사이트 가기↗</button>
-		<button style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;margin-left: 905px;" onclick="location.href='/companyReview?corp_id=${corporationInfo.corp_id}'">회사 정보</button>
+		<button class="btn btn-primary" style="margin-left: 905px;margin-top: 10px;" onclick="location.href='/companyReview?corp_id=${corporationInfo.corp_id}'"><strong>회사 정보</strong></button>
 		</div>
+>>>>>>> branch 'master' of https://gitlab.com/500dditError/interview.git
 	</div>
 </div>
 
@@ -97,8 +108,20 @@ ${corporationInfo.logo_path}
 
         <input type="file" name="agentInstallFile" id="agentInstallFile" style="background-color: black;" value="asdf">
 
-        <input type="submit"  class="btn" value="전송">
+        <input type="submit" id="btn-upload" class="btn" value="전송">
 </form>
+
+
+
+
+<!-- <div> -->
+
+<!-- <input type="file" id="file" name="file" onchange="changeValue(this)"/> -->
+
+<!-- <button type="button" id="btn-upload">Image</button> -->
+
+<!-- </div> -->
+
 
 
 
@@ -124,6 +147,28 @@ function corporation_follow(mem_id, ref_keyword) {
 
 
 </script>
+<script type="text/javascript">
+
+
+ 	$(function() {
+
+ 		$('#btn-upload').click(function(e) {
+
+ 			e.preventDefault();
+
+ 			$('#agentInstallFile').click();
+ 		});
+
+ 	});
+
+ 	function changeValue(obj) {
+
+ 		alert(obj.value);
+
+ 	}
+</script>
+
+
 
 
 

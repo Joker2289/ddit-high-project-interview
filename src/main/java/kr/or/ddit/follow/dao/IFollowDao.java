@@ -132,5 +132,12 @@ public interface IFollowDao {
 	* Method 설명 : 인맥 - 신선한 시각 팔로우
 	*/
 	int insert_feedFollow(FollowVo followVo);
+
+	/**
+	 * 회사 팔로우 언팔로우 유무확인
+	 * @param followVo
+	 * @return
+	 */
+	int follow_unfollow(FollowVo followVo);
 	
 }
