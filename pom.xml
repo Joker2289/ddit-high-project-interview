@@ -257,6 +257,15 @@
 		    <artifactId>javax.websocket-api</artifactId>
 		    <version>1.1</version>
 		</dependency>
+		
+		
+		<!-- commons-fileuploads-->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version> <!--   makesure correct version here -->
+		</dependency>
+
         
   </dependencies>
   

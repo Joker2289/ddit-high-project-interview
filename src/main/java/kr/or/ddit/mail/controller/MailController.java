@@ -1,5 +1,7 @@
 package kr.or.ddit.mail.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -38,6 +40,7 @@ import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.files.model.FilesVo;
 import kr.or.ddit.files.service.IFilesService;
+import kr.or.ddit.follow.service.IFollowService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.recruit.model.RecruitVo;
@@ -69,6 +72,9 @@ public class MailController{
 	
 	@Resource(name="filesService")
 	private IFilesService filesService;
+	
+	@Resource(name="followService")
+	private IFollowService followService;
 
 	@RequestMapping(path={"/mailHome"})
 	public String mailHomeView(Model model, HttpServletRequest req, Chat_contentsVo chat_contentsVo) throws ParseException{
@@ -144,7 +150,7 @@ public class MailController{
 	public String produceRoomView(HttpSession session, Model model){
 		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
-		model.addAttribute("usersVoList",personalService.select_connections(memberVo));
+		model.addAttribute("memberList",followService.select_followChatList(memberVo.getMem_id()));
 		
 		return "/mail/produceRoom";
 	}
@@ -174,8 +180,9 @@ public class MailController{
 	
 	@ResponseBody
 	@RequestMapping(path={"/insertChatRoom"})
-	public String insertChatRoom(HttpSession session, String[] chat_member, String chat_name, String chat_content){
+	public String insertChatRoom(HttpSession session, String chat_name, String chat_content, HttpServletRequest req){
 		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		String[] chat_member = req.getParameterValues("chat_member");
 		
 		ChatroomVo chatroomVo = new ChatroomVo(); 
 		chatroomVo.setChat_name(chat_name);

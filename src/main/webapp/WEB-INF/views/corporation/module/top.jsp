@@ -151,4 +151,3 @@ function corporation_follow(mem_id, ref_keyword) {
 
 
 </html>
-
