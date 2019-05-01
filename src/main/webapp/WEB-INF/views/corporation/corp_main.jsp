@@ -13,6 +13,9 @@
 <html>
 <head>
 
+<!-- Kakao map API -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=21c4ce15b016e2f4c34196b944d9852b&libraries=services,clusterer,drawing"></script>
+
 <!-- 외부 css -->
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
@@ -20,6 +23,7 @@
 
 <!-- css -->
 <link href="/css/corporation/corp_main.css" rel="stylesheet">
+<link href="/css/corporation/corp_intro.css" rel="stylesheet">
 
 <style>
 textarea {
@@ -59,7 +63,7 @@ textarea {
 		</div>
 		
 		<div class="col-md-9 content">
-			<div class="left_area">
+			<div id="content_area" class="content_area">
 				<%@ include file="/WEB-INF/views/corporation/module/left.jsp"%>
 			</div>
 		</div>
