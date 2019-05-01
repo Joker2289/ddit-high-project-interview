@@ -85,14 +85,10 @@ ${corporationInfo.logo_path}
 	<div style="margin-top: 10px; margin-left: 30px;">
 		<label> ${corporationInfo.corp_profile } </label>
 		<br>  
-<<<<<<< HEAD
-		<button value="웹사이트 가기 ↗" name="corp_url" onclick="window.open('http://www.naver.com')" style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;">웹사이트 가기↗</button> <br>
-=======
 		<div style="display: flex;">
 		<button value="웹사이트 가기 ↗" name="corp_url" onclick="window.open('http://www.naver.com')" style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;">웹사이트 가기↗</button>
 		<button class="btn btn-primary" style="margin-left: 905px;margin-top: 10px;" onclick="location.href='/companyReview?corp_id=${corporationInfo.corp_id}'"><strong>회사 정보</strong></button>
 		</div>
->>>>>>> branch 'master' of https://gitlab.com/500dditError/interview.git
 	</div>
 </div>
 
