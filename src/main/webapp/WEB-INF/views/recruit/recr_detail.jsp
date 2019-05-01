@@ -43,11 +43,22 @@
 							</tr>
 							<tr style="height: 40px;">
 								<td style="text-align: right; padding-top: 20px;">
-									<div class="div_btn" style="padding-top: 11px; margin-right: 46px;
-											margin-left: 2px; padding-right: 15px;" id="div_scrap">
-										<i class="fas fa-bookmark" style="color: #0174b0; font-size: 24px;
-												cursor: pointer;" onmouseover="" id="btn_scrap"></i> 
-									</div>
+									<c:choose>
+										<c:when test="${scrap_flag == 't' }">
+											<div class="div_btn" style="padding-top: 11px; margin-right: 46px;
+													margin-left: 2px; padding-right: 15px;" id="div_scrap">
+												<i class="fas fa-bookmark" style="color: #0174b0; font-size: 24px;
+														cursor: pointer;" onmouseover="" id="btn_scrap"></i> 
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="div_btn" style="padding-top: 11px; margin-right: 46px;
+													margin-left: 2px; padding-right: 15px;" id="div_scrap">
+												<i class="far fa-bookmark" style="color: #0174b0; font-size: 24px;
+														cursor: pointer;" onmouseover="" id="btn_scrap"></i> 
+											</div>
+										</c:otherwise>
+									</c:choose>
 									<div class="div_btn" style="padding-right: 24px;" id="div_report">
 										<i class="far fa-flag" style="color: #0174b0; font-size: 24px;
 												margin-left: 14px; margin-right: 10px; cursor: pointer;"
@@ -62,7 +73,7 @@
 											<td style="width: 600px; padding-left: 20px;">
 												<strong style="font-size: 22px;">${recr.recruit_title }</strong><br>
 												<span style="font-size: 17px;">${corp.corp_name } ｜ ${recr.job_local }</span><br>
-												<span style="font-size: 17px;">게시일11: xx일 전 ｜ 지원자 수: xx명 미만</span><br>
+												<span style="font-size: 17px;">게시일: xx일 전 ｜ 지원자 수: xx명 미만</span><br>
 											</td>
 											<td>
 												<c:choose>
@@ -101,7 +112,7 @@
 												<strong>업계</strong><br>
 												...<br>
 												<strong>고용형태</strong><br>
-												...(등록:${recr.start_date })<br>
+												...<br>
 											</td>
 										</tr>
 									</table>								
@@ -202,8 +213,14 @@ $(document).ready(function(){
 	
 	// 스크랩 버튼
 	$("#btn_scrap").on("click", function(){
-		if(confirm("이 채용공고를 스크랩하시겠습니까?")){
-			
+		if('${scrap_flag }' == 'f'){
+			if(confirm("채용공고를 스크랩하시겠습니까?")){
+				window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=t${recr.recruit_code }&req_page=recr_detail';
+			}
+		}else{
+			if(confirm("채용공고 스크랩을 취소하시겠습니까?")){
+				window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=f${recr.recruit_code }&req_page=recr_detail';
+			}
 		}
 	});
 	$("#btn_scrap").on("mouseover", function(){

@@ -1039,9 +1039,25 @@ public class RecruitController {
 		// 지원여부 넘기기.
 		model.addAttribute("recr_app", recr_app);
 		
-		// 스크랩여부. get방식은 저장한 채용공고 페이지에서 요청하므로 모두 스크랩 't'이다.
-		// recr_detail, post에는 스크랩여부를 파악해서 넘겨줘야됨.
-		String scrap_flag = "t";
+		// 스크랩여부.
+		tempSVo = new Save_recruitVo();
+		
+		tempSVo.setUser_id(mVo.getMem_id());
+		tempSVo.setSave_flag("t");		
+		
+		List<Save_recruitVo> sSrecrlist = srecrService.getSSrecrList(tempSVo);
+		String scrap_flag = "f";
+		
+		// 특정 유저가 스크랩한 채용공고 리스트에서 recruit_code와 일치하는 게 있으면 t.
+		for(int i=0; i < sSrecrlist.size(); i++){
+			tempSVo = sSrecrlist.get(i);
+			
+			if(tempSVo.getRecruit_code().equals(recruit_code)){
+				scrap_flag = "t";
+				break;
+			}
+		}
+		
 		model.addAttribute("scrap_flag", scrap_flag);
 		
 		sVo.setUser_id(mVo.getMem_id());

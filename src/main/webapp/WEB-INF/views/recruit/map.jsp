@@ -20,7 +20,7 @@
 				font-size: 22px;">
 			<span>
 				<img width="37" src="http://mblogthumb4.phinf.naver.net/20160920_175/kokoa2100_1474368430239vv9yY_PNG/mzl.xnmoezsr.png?type=w800">   	
-				 원하는 범위를 설정해서 채용공고를 검색해보세요.
+				 원하는 범위를 설정해서 채용공고를 검색해보세요.11
 			</span>
 		</div>
 	</div>
@@ -38,6 +38,12 @@
 						<input id="btn_userAddr" type="button" value="내 주소로 이동" style="margin-top: -15px; 
 								margin-left: 10px; height: 38px; width: 122px; background-color: #0174b0; 
 								border: 0px; font-size: 18px; color: white;"> <br><br>
+<!-- 						원 그리기 on/off <input id="cb_circle" type="checkbox"><br> -->
+<!-- 						<input id="btn_removeCircles" type="button" value="원 제거하기"><br>		 -->
+<!-- 						<input id="btn_changeAddr" type="button" value="주소 - 좌표 변환"> <br> -->
+<!-- 						<input id="btn_check" type="button" value="확인"> <br> -->
+<!-- 						<input id="btn_all" type="button" value="좌표 확인"><br> -->
+<!-- 						<input id="btn_marker" type="button" value="마커 하나 찍기"><br>									 -->
 					</td>
 				</tr>
 			</table>
@@ -82,20 +88,9 @@
 			</a>			
 		</div>
 	</div>
-	
-	<table border="1" style="padding-top: 415px;">
-		<tr>
-			<td>
-				원 그리기 on/off <input id="cb_circle" type="checkbox"><br><br>
-				<input id="btn_removeCircles" type="button" value="원 제거하기"> <br><br>			
-				<input id="btn_changeAddr" type="button" value="주소 - 좌표 변환"> <br><br>
-				<input id="btn_check" type="button" value="확인"> <br><br>
-				<input id="btn_all" type="button" value="좌표 확인"> <br><br>
-				<input id="btn_marker" type="button" value="마커 하나 찍기"> <br><br>			
-			</td>
-		</tr>		
-	</table>		
-		
+	<br><br> <br>&nbsp;<br> &nbsp;<br><br>
+	<br><br> <br>&nbsp;<br> &nbsp;<br><br>
+	<br><br> <br>&nbsp;<br> &nbsp;<br><br>
 </div></div></div>		
 		
 <script>
@@ -116,7 +111,7 @@
 			   var moveX   = parseInt($("#content1").css("margin-left"));
 		
 			   if( moveX < 0 ){
-					$("#content1").animate({"margin-left":"+=" + divWidth + "px"},290);
+					$("#content1").animate({"margin-left":"+=" + divWidth + "px"}, 340);
 			   }
 		});
 		$("#btn_sgt1").on("click",function(){
@@ -124,7 +119,7 @@
 			   var moveX   = parseInt($("#content1").css("margin-left"));
 		
 			   if( ((width_value - 200) * -1) < moveX ){
-			   		 $("#content1").animate({"margin-left":"-=" + divWidth + "px"},290);
+			   		 $("#content1").animate({"margin-left":"-=" + divWidth + "px"}, 340);
 			   }
 		});		
 		
@@ -194,7 +189,9 @@
 				$("#content1").css("width", width_value + "px");
 				
 				// 리스트가 보이도록 스크롤 이동.
-		 		$(window).scrollTop(($("#td_info").offset().top) - 576);
+				if(result_num > 0){
+			 		$(window).scrollTop(($("#td_info").offset().top) - 576);
+				}
 				
 				// 검색 결과 표시
 				$("#td_info").html(str_info);
@@ -218,21 +215,32 @@
 					window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code=' + recruit_code;
 				});
 				
-				// 스크랩(을 하고나면 범위가 사라지니까.. 스크랩을 없애는게 좋겠네. 어차피 상세화면에서
-				// 스크랩 이용할수 있으니..)
-// 				$(".far").on("click", function(){
-// 					alert(1);
-// 					if(confirm("채용공고를 스크랩하시겠습니까?")){
-// 						var recruit_code = $(this).data("recruit_code");
-// 						window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=t' + recruit_code;
-// 					}
-// 				});
-				
+				// recrBox 마우스오버. -> ajax로 생성한 html에 이벤트 핸들러 등록하기 - ajax callback 함수 
+				// 안에 이벤트 핸들러를 작성한다.
+				$(".recrBox").on("mouseover", function(){
+// 					alert($(".recrBox").length);
+					panTo($(this).data("idx"));
+					newinfos[$(this).data("idx")].open(map, markers[($(this).data("recruit_code"))-1]);
+					$(this).css("border-color", "#666666");
+				});
+				$(".recrBox").on("mouseout", function(){
+					newinfos[$(this).data("idx")].close();
+					$(this).css("border-color", "#d9d9d9");
+				});		
+								
 			}
 		});
 	}
 	
-		
+	function panTo(idx) {
+	    // 이동할 위도 경도 위치를 생성합니다 
+	    var moveLatLon = markerPositions[($(".recrBox:eq("+ idx +")").data("recruit_code"))-1];
+	    
+	    // 지도 중심을 부드럽게 이동시킵니다
+	    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+	    map.panTo(moveLatLon);            
+	}      		
+	
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 	mapOption = { 
 	    center: new daum.maps.LatLng(36.32485, 127.42009), // 지도의 중심좌표
@@ -269,7 +277,7 @@
 	    // 생성된 마커를 배열에 추가합니다
 	    markers.push(marker);		
 		
-		var iwContent = '<div style="padding:5px;">${recrList.get(i.index - 1).recruit_title } </div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		var iwContent = '<div style="padding: 5px; width: 200px;">${recrList.get(i.index - 1).recruit_title } </div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 	    iwPosition = new daum.maps.LatLng(data1, data2); //인포윈도우 표시 위치입니다
 
 	    iwPositions.push(iwPosition);
@@ -315,9 +323,8 @@
 	
 	// 지도에 클릭 이벤트를 등록합니다
 	daum.maps.event.addListener(map, 'click', function(mouseEvent) {
-		
-		// 체크박스 값 false이면 return.
-		if($('input:checkbox[id="cb_circle"]').is(":checked") == false){
+		// circle_flag가 false면 return.
+		if(circle_flag == false){
 			return;
 		}
 		
@@ -562,6 +569,7 @@
 
 	// 반경 안의 회사의 마커, 인포윈도우 표시하는 함수.
 	function setCorps(map) {
+		newinfos = null;
 		newinfos = [];
 		
 	    for (var i = 0; i < markers.length; i++) {
@@ -573,14 +581,35 @@
 				    position : iwPositions[i], 
 				    content : iwContents[i] 
 				});
-				  
+				
+			    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+			    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+			    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+			    daum.maps.event.addListener(markers[i], 'mouseover', makeOverListener(map, markers[i], newinfo, i));
+			    daum.maps.event.addListener(markers[i], 'mouseout', makeOutListener(newinfo));
+			    
 				// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-				newinfo.open(map, markers[i]);
+// 				newinfo.open(map, markers[i]);
 				newinfos.push(newinfo);
 	    	}
-	    }            
+	    }          
+// 	    alert(newinfos.length);
 	}
-	    
+	
+	// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+	function makeOverListener(map, marker, infowindow, i) {
+	    return function() {
+// 	    	alert(i);
+	        infowindow.open(map, marker);
+	    };
+	}
+	// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+	function makeOutListener(infowindow) {
+	    return function() {
+	        infowindow.close();
+	    };
+	}
+	
 	// 지도에 표시되어 있는 모든 원과 반경정보를 표시하는 선, 커스텀 오버레이를 지도에서 제거합니다
 	function removeCircles() {         
 	    for (var i = 0; i < circles.length; i++) {
@@ -610,18 +639,19 @@
 	}
 	
 	// 범위 설정 버튼
+	var circle_flag = false;
+	
 	$("#btn_circle").on("click", function(){
-		if($('input:checkbox[id="cb_circle"]').is(":checked") == false){
-			$('input:checkbox[id="cb_circle"]').attr("checked", true);
-// 			alert("원 그리기 : " + $('input:checkbox[id="cb_circle"]').is(":checked"));
+		if(circle_flag == false){
+			circle_flag = true;
+			
 			alert("지도에 원하는 범위를 설정하세요. (시작: 마우스 왼쪽 버튼, 종료: 마우스 오른쪽 버튼)");
 		}else{
 			if(confirm("범위를 재설정하시겠습니까?")){
 				removeCircles();
 				
-// 				alert("원 그리기 : " + $('input:checkbox[id="cb_circle"]').is(":checked"));
 				alert("지도에 원하는 범위를 설정하세요. (시작: 마우스 왼쪽 버튼, 종료: 마우스 오른쪽 버튼)");
-			}
+			}			
 		}
 	});
 	
@@ -648,7 +678,6 @@
 	$("#btn_changeAddr").on("click", function(){
 		changeAddr($("#sample6_address").val());
 	});	
-	
 	
 	// 주소 - 좌표 변환 메서드.
 	var marker = null;	

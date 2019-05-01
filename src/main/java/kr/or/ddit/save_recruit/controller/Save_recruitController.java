@@ -1,5 +1,7 @@
 package kr.or.ddit.save_recruit.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,14 +88,16 @@ public class Save_recruitController {
 	
 	// @채용공고 스크랩
 	@RequestMapping("/scrap")
-	public String scrap(String scrap_flag, HttpSession session, HttpServletRequest req, String req_page) {
+	public String scrap(String scrap_flag, HttpSession session, HttpServletRequest req, String req_page,
+			Model model) {
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		String scrap_code = null;
 		
 		// 채용공고 스크랩을 한 경우. scrap_flag.substring(0, 1) -> 't'
 		if( scrap_flag != null && 
 				(scrap_flag.substring(0, 1).equals("t") || scrap_flag.substring(0, 1).equals("f")) ){
 			// recruit_code는 scrap_flag - substring - 앞의 한글자만 빼면 됨.
-			String scrap_code = scrap_flag.substring(1, scrap_flag.length());
+			scrap_code = scrap_flag.substring(1, scrap_flag.length());
 			
 			List<Save_recruitVo> uSRList = new ArrayList<>();
 			uSRList = srecrService.getUserSrecrList(mVo.getMem_id());
@@ -165,6 +169,9 @@ public class Save_recruitController {
 			return "redirect:" + req.getContextPath() + "/srListAjaxHtml";
 		}else if(req_page != null && req_page.equals("rRList1Ajax")){
 			return "redirect:" + req.getContextPath() + "/rRList1AjaxHtml";
+		}else if(req_page != null && req_page.equals("recr_detail")){
+			model.addAttribute("recruit_code", scrap_code);
+			return "redirect:" + req.getContextPath() + "/recr_detail";
 		}
 		
 		return "redirect:" + req.getContextPath() + "/recruit";
