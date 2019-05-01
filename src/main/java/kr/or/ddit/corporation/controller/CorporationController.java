@@ -128,13 +128,23 @@ public class CorporationController {
 	
 
 	/**
-	 * 회사 홈(회사타임라인)
 	 * 
+	 * Method : postList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param request
 	 * @param model
+	 * @param paginationVo
+	 * @param post_contents
+	 * @param corp_id
+	 * @param session
 	 * @return
+	 * Method 설명 : 
 	 */
 	@RequestMapping(path = { "/corporation" })
 	public String postList(HttpServletRequest request,Model model, PaginationVo paginationVo, String post_contents,String corp_id, HttpSession session) {
+		
+		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		CorporationVo corporationInfo = new CorporationVo();
 		if(corp_id==null){
@@ -209,6 +219,8 @@ public class CorporationController {
 		
 		logger.debug("goodList hahaha : {}", goodList.size());
 		logger.debug("saveList hahaha : {}", saveList.size());
+		
+		
 		return "corporationTiles";
 	}
 	
