@@ -6,6 +6,12 @@
 	<script src="js/jquery.form.js"></script>
 	<link href="/css/recruit/recruit.css" type="text/css" rel="stylesheet">
 	<title>채용공고｜11</title>
+
+<style type="text/css">
+#agentInstallFile { display:none; } 
+</style>
+
+
 <style>
 .dropdown {
   position: relative;
@@ -55,7 +61,10 @@ ${corporationInfo.logo_path}
     							<a>신고</a><br>
     						<li class="dropdownAccordion otherDropdown" style="width: 155px;">
     							<a href="javascript:corporation_follow('${ SESSION_MEMBERVO.mem_id }', '${ corporationInfo.corp_id }');" style="padding: 0 15px 0 0; width: 140px;"> 
+    								
     								+ 팔로우
+    							
+    							
     							</a>
     						</li>
     					</c:if>
@@ -68,7 +77,6 @@ ${corporationInfo.logo_path}
 				${SESSION_MEMBERVO.mem_id ne corporationInfo.corp_id }
 				${SESSION_MEMBERVO.mem_id}
 				${corporationInfo.corp_id }
-				${followUnfollow}
     </form>
 			</div>
 			<br>
@@ -77,10 +85,7 @@ ${corporationInfo.logo_path}
 	<div style="margin-top: 10px; margin-left: 30px;">
 		<label> ${corporationInfo.corp_profile } </label>
 		<br>  
-		<div style="display: flex;">
-		<button value="웹사이트 가기 ↗" name="corp_url" onclick="window.open('http://www.naver.com')" style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;">웹사이트 가기↗</button>
-		<button style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;margin-left: 905px;" onclick="location.href='/companyReview?corp_id=${corporationInfo.corp_id}'">회사 정보</button>
-		</div>
+		<button value="웹사이트 가기 ↗" name="corp_url" onclick="window.open('http://www.naver.com')" style="border: 1px solid #3CA0FF; background-color: #FFFFFF;font-weight: bolder;color:#8282EB;margin-top: 10px;">웹사이트 가기↗</button> <br>
 	</div>
 </div>
 
@@ -96,8 +101,20 @@ ${corporationInfo.logo_path}
 
         <input type="file" name="agentInstallFile" id="agentInstallFile" style="background-color: black;" value="asdf">
 
-        <input type="submit"  class="btn" value="전송">
+        <input type="submit" id="btn-upload" class="btn" value="전송">
 </form>
+
+
+
+
+<!-- <div> -->
+
+<!-- <input type="file" id="file" name="file" onchange="changeValue(this)"/> -->
+
+<!-- <button type="button" id="btn-upload">Image</button> -->
+
+<!-- </div> -->
+
 
 
 
@@ -119,22 +136,32 @@ function corporation_follow(mem_id, ref_keyword) {
 	});
 	
 }		
-
-function follow_unfollow(mem_id, ref_keyword){
-	
-	$.ajax({
-		url : "/follow_unfollow",
-		data : {"mem_id" : mem_id, "ref_keyword" : ref_keyword, "division" : "11"},
-		success : fuction(data) {
-			
-			$('#top_area').html(data);
-			console.log(data);
-		}
-	});
-}
+		
 
 
 </script>
+<script type="text/javascript">
+
+
+ 	$(function() {
+
+ 		$('#btn-upload').click(function(e) {
+
+ 			e.preventDefault();
+
+ 			$('#agentInstallFile').click();
+ 		});
+
+ 	});
+
+ 	function changeValue(obj) {
+
+ 		alert(obj.value);
+
+ 	}
+</script>
+
+
 
 
 

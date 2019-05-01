@@ -360,7 +360,7 @@ public class CorporationController {
           System.out.println("오리지날 파일 이름" + file.getOriginalFilename());
         
           
-          path = "D://A_TeachingMaterial/7.LastProject/workspace/interview/src/main/webapp/WEB-INF/views/corporation/img/";
+          path = "C://imgs/";
           InputStream inputStream = null;
           OutputStream outputStream = null;
           
@@ -616,28 +616,48 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		int ecount = careerService.employee_count(corporationInfo.getCorp_name());
 		model.addAttribute("ecount", ecount);
 
-		//출신 학교 그래프
-		List<Education_infoVo> eec = careerService.employee_education_count(corporationInfo.getCorp_name());		
-		List<Integer> eec2 = careerService.employee_education_count2(corporationInfo.getCorp_name());		
-		List<Integer> a = new ArrayList<>();
-		a.add(100*eec2.get(0)/ecount);
-		a.add(100*eec2.get(1)/ecount);
-		a.add(100*eec2.get(2)/ecount);
-		model.addAttribute("eec", eec);
-		model.addAttribute("eec2", eec2);
-		model.addAttribute("a",a);
+//		출신 학교 그래프
+//		List<Education_infoVo> eec = careerService.employee_education_count(corporationInfo.getCorp_name());		
+//		List<Integer> eec2 = careerService.employee_education_count2(corporationInfo.getCorp_name());		
+//		List<Integer> a = new ArrayList<>();
+//		a.add(100*eec2.get(0)/ecount);
+//		a.add(100*eec2.get(1)/ecount);
+//		a.add(100*eec2.get(2)/ecount);
+//		model.addAttribute("eec", eec);
+//		model.addAttribute("eec2", eec2);
+//		model.addAttribute("a",a);
 		
 		//전공 그래프
 		List<Education_infoVo> em = corporationService.employee_major(corporationInfo.getCorp_name());
 		List<Integer> emc = corporationService.employee_major_count(corporationInfo.getCorp_name());
 		List<Integer> b = new ArrayList<>();
+		int size = em.size();
 		b.add(100*emc.get(0)/ecount);
 		b.add(100*emc.get(1)/ecount);
 		b.add(100*emc.get(2)/ecount);
-		b.add(100*emc.get(3)/ecount);
 		model.addAttribute("em", em);
 		model.addAttribute("emc", emc);
 		model.addAttribute("b",b);
+		model.addAttribute("size", size);
+		
+		
+		
+		
+		//직원 목록
+		List<Career_infoVo> ea =  corporationService.employee_all(corporationInfo.getCorp_name());
+		List<UsersVo> uvos = new ArrayList<UsersVo>();
+		for(int i = 0; i < ea.size(); i++) {
+			UsersVo uvo = corporationService.select_userInfo(ea.get(i).getUser_id());
+			System.out.println("유저 아이디 : " + uvo.getUser_id());
+			uvos.add(i, uvo);
+		}
+		model.addAttribute("uvos", uvos);
+		List<Education_infoVo> evos = new ArrayList<Education_infoVo>();
+		for(int i = 0; i < ea.size(); i++) {
+			Education_infoVo evo = corporationService.employee_education(ea.get(i).getUser_id());
+			evos.add(i, evo);
+		}
+		model.addAttribute("evos", evos);
 		
 		return "corporationEmployeeTiles";
 	}
@@ -696,13 +716,6 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		return "corporation/module/top";
 	}
 	
-	@RequestMapping("/follow_unfollow")
-	public String follow_unfollow(Model model,FollowVo followVo){
-		
-		int followUnfollow = followService.follow_unfollow(followVo);
-		model.addAttribute("followUnfollow", followUnfollow);
-		return "corporation/module/top";
-	}
 
 	
 
