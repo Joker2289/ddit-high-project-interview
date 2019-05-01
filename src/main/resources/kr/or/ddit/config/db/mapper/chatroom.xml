@@ -6,7 +6,44 @@
 	
 	<!-- 유저 채팅방 전체 검색 -->
 	<select id="select_userChatrooms" parameterType="String" resultType="map">
-		 select a.chat_name, 
+		  select listagg(decode(a.mem_id,#{mem_id},'',a.mem_id), ',') within group (order by b.mem_division asc, b.mem_id asc) as member,
+                    listagg(decode(a.mem_id,#{mem_id},'',d.profile_path), ',') within group (order by d.user_id asc)||decode(listagg(decode(a.mem_id,#{mem_id},'',d.profile_path), ',') within group (order by d.user_id asc),'','',',') ||listagg(decode(a.mem_id,#{mem_id},'',e.logo_path), ',') within group (order by e.corp_id asc) as path,
+                    g.chat_name,
+                    f.chat_code, 
+                    f.content_code, 
+                    f.mem_id, 
+                    h.name,
+                    f.chat_content, 
+                    f.read_status,
+                    f.write_date
+             from chat_member a ,member b, ( select chat_code
+                                               from chat_member
+                                               where mem_id = #{mem_id}) c, users d, corporation e, (select a.chat_code,
+                                                                                                          max(a.content_code) keep(dense_rank first order by a.write_date desc) as content_code,
+                                                                                                          max(a.mem_id) keep(dense_rank first order by a.write_date desc) as mem_id,
+                                                                                                          max(to_char(a.chat_content)) keep(dense_rank first order by a.write_date desc) as chat_content,
+                                                                                                          max(a.read_status) keep(dense_rank first order by a.write_date desc) as read_status,
+                                                                                                          max(a.write_date)keep(dense_rank first order by a.write_date desc) as write_date
+                                                                                                        
+                                                                                                     from chat_contents a
+                                                                                                     group by a.chat_code ) f, chatroom g, (select a.mem_id,
+                                                                                                                                                    case when a.mem_id = b.user_id then b.user_name
+                                                                                                                                                         else c.corp_name end as name
+                                                                                                                                               from member a, users b, CORPORATION c
+                                                                                                                                              where a.mem_id = b.user_id(+)
+                                                                                                                                                and c.corp_id(+) = a.mem_id) h
+            where a.chat_code = c.chat_code
+              and g.chat_code = c.chat_code
+              and c.chat_code = f.chat_code
+              and b.mem_id = a.mem_id
+              and f.mem_id = h.mem_id
+              and d.user_id(+) = b.mem_id
+              and e.corp_id(+) = b.mem_id
+              group by g.chat_name,f.chat_code, f.content_code, f.mem_id, f.chat_content, f.read_status,f.write_date,h.name
+              order by f.write_date desc
+		
+		
+		<!--  select a.chat_name, 
                   listagg(d.profile_path, ',') within group (order by d.user_id asc)|| decode(listagg(f.logo_path, ',') within group (order by f.corp_id asc),null,'',',') ||listagg(f.logo_path, ',') within group (order by f.corp_id asc) as path,
                   listagg((b.mem_id), ',') within group (order by g.mem_division asc, b.mem_id asc) as member, 
                   c.chat_code, 
@@ -30,7 +67,7 @@
               and g.mem_id = b.mem_id
               and b.mem_id = #{mem_id}
              group by  a.chat_name,c.chat_code, c.content_code, c.mem_id, c.chat_content, c.read_status, c.write_date
-             order by c.write_date desc
+             order by c.write_date desc -->
 	</select>
 	
 	<!-- 방만들기 -->
@@ -42,4 +79,16 @@
 	        select chat_code_seq.currval from dual        
 	    </selectKey>   
 	</insert>
+	
+	<select id="select_userChatroomsSearch" parameterType="chat_contentsVo" resultType="String">
+		  select chat_code
+		     from chat_contents
+		    where mem_id = #{mem_id}
+		      and chat_content like '%' || #{chat_content} || '%'
+	</select>
+	
+	<delete id="delete_chatroom" parameterType="String">
+		delete from chatroom
+			where chat_code = #{chat_code}
+	</delete>
 </mapper> 

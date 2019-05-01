@@ -1,6 +1,7 @@
 package kr.or.ddit.follow.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.util.pagination.PaginationVo;
@@ -56,4 +57,26 @@ public interface IFollowService {
 	int delete_personalFollow(String follow_code);
 	
 	int insert_feedFollow(FollowVo followVo);
+	
+	/**
+	 * Method : select_followChatList
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 채팅 초대할 유저의 팔로우들(회사,회원)
+	 */
+	List<Map<String, String>> select_followChatList(String mem_id);
+	 
+	/**
+	 * Method : follow_unfollow
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param followVo
+	 * @return
+	 * Method 설명 :회사 팔로우 언팔로우 유무체크
+	 */
+	int follow_unfollow(FollowVo followVo);
+	
+	
 }

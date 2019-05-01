@@ -1,0 +1,143 @@
+#div_box{
+	margin-bottom: 200px;
+	width: 1100px;
+	display: inline-block;
+}
+
+#div_list_box{
+	margin-bottom: 200px;
+	width: 1100px;
+	display: inline-block;
+}
+
+table.tb_recruit{
+	border-spacing: 15px;
+}
+
+tr.tb_recruit, td.tb_recruit{
+	border: 1px solid;			
+}
+
+div.table_div, .div_alarm, .tb_alarm{
+	display: inline;
+}	
+
+
+.div_list{
+	width: 1000px;
+	height: 670px;
+	display: inline-block;
+}
+
+/* 공통 */
+.btn_more_result{
+	border: 0px solid #fff; 
+	background: #fff; 
+	font-size: 19px; 
+	font-weight: bold; 
+	color: #0073B1; 
+	display: inline-block; 
+	width: 9%;
+	outline: 0;
+}
+
+/* 회사 영역   */
+.corp_info{
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	width: 100%;
+	border-bottom: 1px solid #ddd; 
+	min-height: 80;
+}
+
+.corp_img{
+	display: inline-block;
+	width: 150px;
+	margin-right: 10px;
+}
+
+.col-corpInfomation{
+	display: inline-block;
+	width: 70%;
+}
+
+.txt-corp_name{
+	color: #0073B1;
+	font-weight: bold;
+	font-size: 18px;
+	margin-right: 10px;
+}
+
+.txt-industry{
+	font-size: 16px;
+	color: #8D9191;
+}
+
+.col-corpbuttom{
+	display: inline-block;
+	width: 10%;
+}
+
+.btn_follow{
+	border: 1px solid #0073B1; 
+	background: #fff; 
+	width: 85px; 
+	height: 35px; 
+	color: #0073B; 
+	border-radius: 10px;
+	font-weight: bold;
+}
+
+.btn_unfollow{
+	border: 0px solid #fff; 
+	background: #0073B1; 
+	width: 85px; 
+	height: 35px; 
+	color: #fff; 
+	border-radius: 10px;
+}
+
+
+
+/* 회원영역  */
+
+.user_info{
+/* 	display: table; */
+	margin: 18px;
+	float: left;
+}
+
+.user_container{
+	border: 1px solid #ddd; 
+	border-radius: 8px; 
+	padding: 5px; 
+	padding-top: 20px;
+/* 	display: table-cell;  */
+	width: 330px;
+	text-align: center;
+/* 	vertical-align: middle; */
+}
+
+.user_img{
+	border-radius: 100px;
+	border: 0px solid #ddd;
+	width: 110px;
+	height: 110px;
+	max-width: 110px;
+	max-height: 110px;
+}
+
+.btn_connect_controll{
+	border: 0px solid #fff;
+	border-top: 1px solid #ddd;
+	background: #fff; 
+	color: #0073B1;
+	font-size: 20px;
+	font-weight: bold;
+	width: 100%;
+	height: 50px;
+	outline: 0;
+}
+

@@ -30,24 +30,16 @@
 					</tr>
 					<tr>
 						<td class="subject">총 게시글 수</td>
-						<td>100개</td>
+						<td>${ pageCnt }개</td>
 					</tr>
 					<tr>
-						<td class="subject">좋아요 수</td>
-						<td>100개</td>
-					</tr>
-					<tr>
-						<td class="subject">질문 수</td>
-						<td>100개</td>
-					</tr>
-					<tr>
-						<td class="subject">답변 수</td>
-						<td>100개</td>
+						<td class="subject">받은 추천 수</td>
+						<td>${ goodCnt }개</td>
 					</tr>
 				</table>
 
 				<c:if test='${ uVo.user_id == SESSION_MEMBERVO.mem_id }'>
-					<button id="settingBtn" class="btn settingBtn">Blog 설정</button>
+					<button id="settingBtn" class="btn settingBtn" onclick="setting_page();">Blog 설정</button>
 				</c:if>
 				
 			</div>
@@ -55,19 +47,20 @@
 	</div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
 <script>
 
+/* 블로그 세팅 페이지 출력 */
+function setting_page(){
+	
+	$.ajax({
+		url : "${cp}/blog/blogSettingForm",
+		data : {"user_id" : userId },
+		success : function(data) {
+			$('#content_area').html(data);			
+		}
+	});
+	
+}
 
 	
 </script>

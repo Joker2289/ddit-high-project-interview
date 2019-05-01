@@ -9,13 +9,14 @@
 		<tr>
 			<td class="img" rowspan="6" onmouseover="" style="cursor: pointer; 
 					border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 7px; 
-					padding-top: 7px; padding-left: 4px;" data-code="${srList.get(i.index - 1).recruit_code }">
+					padding-top: 7px; width: 244px; text-align: center;" 
+					data-code="${srList.get(i.index - 1).recruit_code }">
 				<img src="${corpImgList.get(i.index - 1) }" width="200"> 
 			</td>
-			<td class="srecr" onmouseover="" style="cursor: pointer; width: 513px;
-					border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-left: 15px;"
-					data-code="${srList.get(i.index - 1).recruit_code }">
-				${srList.get(i.index - 1).recruit_title }<br>
+			<td class="srecr" onmouseover="" style="cursor: pointer; width: 473px;
+					border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-left: 15px;
+					font-size: 15px;" data-code="${srList.get(i.index - 1).recruit_code }">
+				<strong style="font-size: 17px;">${srList.get(i.index - 1).recruit_title }</strong><br>
 				${corpNmList.get(i.index - 1) }<br>
 				${srList.get(i.index - 1).job_local }<br>
 <!-- 				<span style="color: #d11124;">(xx일 전에 마감되었습니다.)</span> -->

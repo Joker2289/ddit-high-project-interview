@@ -40,4 +40,14 @@ public class PageServiceImpl implements IPageService{
 		return pageDao.delete_page(page_code);
 	}
 
+	@Override
+	public List<PageVo> select_pageAllList(String user_id) {
+		return pageDao.select_pageAllList(user_id);
+	}
+
+	@Override
+	public int select_pageCnt(String user_id) {
+		return pageDao.select_pageCnt(user_id);
+	}
+
 }

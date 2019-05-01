@@ -35,7 +35,9 @@
    <!-- jQuery 기본 js파일 -->
    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
    <!-- jQuery UI 라이브러리 js파일 --> 
-   <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>    
+   <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> 
+	<!-- 지도 script. (회사주소 - 좌표 변환) -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=21c4ce15b016e2f4c34196b944d9852b&libraries=services,clusterer,drawing"></script>      
    
    
    <!-- AutoComplete(자동완성)    css, script -->
@@ -304,8 +306,40 @@
            $("#login").submit();
         });
         
+		// 엔터키 눌렀을 때 로그인
+		$("#mem_id").keypress(function(e){
+			if(e.which == 13){
+	           if($("#md_3").prop("checked")){
+	               Cookies.set("mem_id", $("#mem_id").val(), {expires : 30});
+	               Cookies.set("md_3", "y", {expires : 30});         
+	            } 
+	            else {
+	               Cookies.remove("mem_id");
+	               Cookies.remove("md_3");
+	            }
+	         
+	            $("#login").submit();
+			}
+		});		
+		$("#pass").keypress(function(e){
+			if(e.which == 13){
+	           if($("#md_3").prop("checked")){
+	               Cookies.set("mem_id", $("#mem_id").val(), {expires : 30});
+	               Cookies.set("md_3", "y", {expires : 30});         
+	            } 
+	            else {
+	               Cookies.remove("mem_id");
+	               Cookies.remove("md_3");
+	            }
+	         
+	            $("#login").submit();
+			}
+		});		        
+        
      });
      
+     
+
   </script>
 
 

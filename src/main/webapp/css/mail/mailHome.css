@@ -1,189 +1,222 @@
-
-.mailBox{
-	width: 791px; 
-	height: 836px; 
-	border: 1px solid #cdcfd2; 
-	margin-right: 30px; 
+.mailBox {
+	width: 791px;
+	height: 836px;
+	border: 1px solid #cdcfd2;
+	margin-right: 30px;
 	display: flex;
 }
 
-.leftMenuBox{
-	border: 1px solid #cdcfd2; 
-	width: 297px; 
+.leftMenuBox {
+	border: 1px solid #cdcfd2;
+	width: 297px;
 	height: 835px;
 }
-.produceRoomBox{
-	border: 1px solid #cdcfd2; 
-	width: 297px; 
+
+.produceRoomBox {
+	border: 1px solid #cdcfd2;
+	width: 297px;
 	height: 44px;
-	display: table-cell; 
-	vertical-align: middle; 
+	display: table-cell;
+	vertical-align: middle;
 	padding: 0 10px 0 10px;
 }
 
-.produceRoomBox>label{
-	font-size: 17px; 
-	font-weight: bold; 
+.produceRoomBox>label {
+	font-size: 17px;
+	font-weight: bold;
 	width: 247px;
 }
 
-.searchRoomBox{
-	border: 1px solid #cdcfd2; 
-	width: 297px; 
-	height: 43px; 
+.searchRoomBox {
+	border: 1px solid #cdcfd2;
+	width: 297px;
+	height: 43px;
 	display: flex;
 	padding: 0 10px 0 10px;
 }
 
-.searchRoomBox>span{
-	font-size: 17px; 
-	padding-top: 12px; 
-	width: 20px; 
+.searchRoomBox>span {
+	font-size: 17px;
+	padding-top: 12px;
+	width: 20px;
 	margin-right: 10px;
 }
 
-.searchRoomBox>input{
-	width: 213px; 
-	height: 40px; 
-	border: 0px; 
+.searchRoomBox>input {
+	width: 213px;
+	height: 40px;
+	border: 0px;
 	margin-right: 10px;
 }
 
-.recruitMailBox{
-	border: 1px solid #cdcfd2; 
-	width: 297px; 
+.recruitMailBox {
+	border: 1px solid #cdcfd2;
+	width: 297px;
 	height: 55px;
 	padding: 13px 10px 0 10px;
 }
 
-.recruitMailBox>a{
-	font-size: 17px; 
-	font-weight: bold; 
+.recruitMailBox>a {
+	font-size: 17px;
+	font-weight: bold;
 	width: 253px;
 }
 
-.chatRoomBox{
-	display: flex; 
-	width: 297px; 
-	height: 92px; 
+.chatRoomBox {
+	display: flex;
+	width: 297px;
+	height: 92px;
 	padding-left: 12px;
 }
 
-.profileImageBox{
-	width: 58px; 
-	height: 92px; 
+.profileImageBox {
+	width: 58px;
+	height: 92px;
 	padding-top: 12px;
 }
 
-.profileImageBox>div{
-	border:1px solid black; 
-	width:56px; 
+.profileImageBox>div {
+	border: 1px solid black;
+	width: 56px;
 	height: 56px;
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
-	border-radius: 56px; 
+	border-radius: 56px;
 }
 
-.chatRoomContentsBox{
-	width: 223px; 
-	height:92px; 
-	padding: 12px 8px 0px 8px; 
+.chatRoomContentsBox {
+	width: 223px;
+	height: 92px;
+	padding: 12px 8px 0px 8px;
 	border-bottom: 1px solid #e6e9ec;
 }
 
-.chatRoomMemberBox{
-	font-size: 17px; 
-	width: 131px; 
-	height:23px; 
-	padding-right: 4px; 
-	overflow: hidden; 
-	text-overflow: ellipsis; 
-	display: -webkit-box; 
-	-webkit-line-clamp: 1; 
+.chatRoomMemberBox {
+	font-size: 17px;
+	width: 131px;
+	height: 23px;
+	padding-right: 4px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 }
 
-.chatContentsBox{
-	font-size: 15px; 
-	color:rgba(0,0,0,.6); 
-	overflow: hidden; 
-	text-overflow: ellipsis; 
-	width: 203px; height:38px; 
-	font-size: 15px; 
-	display: -webkit-box; 
-	-webkit-line-clamp: 2; 
+.chatContentsBox {
+	font-size: 15px;
+	color: rgba(0, 0, 0, .6);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 203px;
+	height: 38px;
+	font-size: 15px;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
+	word-break: break-all;
+	word-wrap: break-word;
 }
 
-.rightMenuBox{
-	border: 1px solid #cdcfd2; 
-	width: 492px; 
+.rightMenuBox {
+	border: 1px solid #cdcfd2;
+	width: 492px;
 	max-height: 835px;
 }
 
-.chatRoomTitleBox{
-	width: 491px; 
-	height: 44px; 
-	border: 1px solid #cdcfd2; 
-	padding-left: 10px; 
+.chatRoomTitleBox {
+	width: 491px;
+	height: 44px;
+	border: 1px solid #cdcfd2;
+	padding-left: 10px;
 	display: flex;
 }
 
-.chatRoomTitleBox>div{
-	width:423px;
+.chatRoomTitleBox>div {
+	width: 423px;
 }
 
-.chatRoomTitleBox>div>label{
-	width: 403px; 
-	height: 21px; 
+.chatRoomTitleBox>div>label {
+	width: 403px;
+	height: 21px;
 	font-size: 15px;
 	font-weight: bold;
 }
 
-.chatContentBox{
-	width: 491px; 
+.chatContentBox {
+	width: 491px;
 	height: 598px;
 	border: 1px solid #cdcfd2;
 	padding: 20px 20px 20px 20px;
-	overflow:auto;
-	overflow-x:hidden;
+	overflow: auto;
+	overflow-x: hidden;
 }
 
-.chatContentWriteBox{
-	width: 491px; 
-	height: 100px; 
+.chatContentWriteBox {
+	width: 491px;
+	height: 100px;
 	border: 1px solid #cdcfd2;
 }
 
-.chatContentWriteBox>textarea{
-	width: 491px; 
+.chatContentWriteBox>textarea {
+	width: 491px;
 	height: 100px;
 }
 
-.chatContentBtnBox{
-	width: 491px; 
-	height: 93px; 
-	border: 1px solid #cdcfd2; 
+.chatContentBtnBox {
+	width: 491px;
+	height: 93px;
+	border: 1px solid #cdcfd2;
 	padding: 4px 8px 48px;
 }
 
-.smallChatBtn{
+.smallChatBtn {
+	width: 40px;
+	height: 40px;
+	padding: 0 0 0 0;
+}
+
+.submitBtn {
+	margin-left: 317px;
+	width: 60px;
+	height: 30px;
+	padding: 0 0 0 0;
+}
+
+.chatrooms {
+	overflow: scroll;
+	overflow-x: hidden;
+	width: 297px;
+	height: 691px;
+}
+
+.searchConnectionDropDown {
+	top: auto;
+	left: auto;
+}
+
+.chatRoomBoxOn {
+	display: flex;
+	width: 297px;
+	height: 92px;
+	padding-left: 12px;
+	border-left: 4px solid #006097;
+}
+
+#sendMeseage {
+	width: 491px;
+	height: 100px;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+.profileImg{
+	margin-right: 20px; 
 	width: 40px; 
 	height: 40px; 
-	padding: 0 0 0 0;
-}
-
-.submitBtn{
-	margin-left:230px; 
-	width: 60px; 
-	height: 30px; 
-	padding: 0 0 0 0;
-}
-
-.chatrooms{
-	overflow:scroll;
-	overflow-x:hidden;
-	width:297px; 
-	height:691px;
+	border-radius: 40px; 
+	background-size: cover; 
+	background-position: center; 
+	background-repeat: no-repeat;
 }

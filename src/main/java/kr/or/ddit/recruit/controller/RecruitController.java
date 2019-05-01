@@ -30,6 +30,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.or.ddit.alarm.model.AlarmVo;
+import kr.or.ddit.alarm.service.AlarmServiceImpl;
+import kr.or.ddit.alarm.service.IAlarmService;
+import kr.or.ddit.apply_recruit.model.Apply_recruitVo;
+import kr.or.ddit.apply_recruit.service.IApply_recruitService;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.interest.model.InterestVo;
@@ -40,6 +45,8 @@ import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.recruit.service.IRecruitService;
+import kr.or.ddit.report.model.ReportVo;
+import kr.or.ddit.report.service.IReportService;
 import kr.or.ddit.save_recruit.model.Save_recruitVo;
 import kr.or.ddit.save_recruit.service.ISave_recruitService;
 import kr.or.ddit.search_log.model.Search_logVo;
@@ -74,7 +81,16 @@ public class RecruitController {
 	
 	@Resource(name="itemService")
 	private IItemService itemService;
+	
+	@Resource(name="alarmService")
+	private IAlarmService alarmService;
 
+	@Resource(name="reportService")
+	private IReportService reportService;
+	
+	@Resource(name="apply_recruitService")
+	private IApply_recruitService appService;
+	
 	private List<String> img_list;
 	private List<String> str_list;
 	private List<String> one_list;
@@ -87,9 +103,12 @@ public class RecruitController {
 	// @채용공고 페이지 요청.
 	@RequestMapping("/recruit")
 	public String recruit(HttpSession session, HttpServletRequest req, String msg_flag, 
-			String msg, Model model) throws IOException{
+			String msg, Model model) throws IOException, ParseException{
 		// 유저정보 수정. 'SESSION_MEMBERVO'
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");		
+		
+		// 채용공고 지역 - 회사의 주소 지역으로 바꾸기
+//		editRecrLocal();
 		
 		// 사용자 정보 없으면 로그인창으로 이동. -> 수정. 필터?
 		
@@ -209,6 +228,7 @@ public class RecruitController {
 			
 			List<String> corpImgList2 = new ArrayList<>();
 			List<String> corpNmList2 = new ArrayList<>();
+			List<String> timeList2 = new ArrayList<>();
 			
 			// 스크랩 데이터는 srecr에 있으니까 저장여부 리스트 scrapList 만들기. size는 rRList2에서 
 			// 가져오고 uSRList에서 save_flag가 't'인게 있으면 t. 없으면 f.
@@ -234,11 +254,34 @@ public class RecruitController {
 				if(scrapCheck_flag == false){
 					scrapList2.add("f");
 				}
+				
+				String start_date = rVo.getStart_date();
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+				Date start = sdf.parse(start_date);
+				Date now = new Date();
+				
+				long temp_time = now.getTime() - start.getTime();
+				
+				int time_diff = (int) (temp_time / (60*1000));
+				
+				if(time_diff < 2){
+					timeList2.add("방금");
+				}else if(time_diff < 60){
+					timeList2.add(time_diff + "분");
+				}else if(time_diff < 1440){
+					timeList2.add(time_diff/60 + "시간");
+				}else if(time_diff < 43200){
+					timeList2.add(time_diff/(60*24) + "일");
+				}else{
+					timeList2.add(time_diff/(60*24*30) + "달");
+				}				
 			}
 			
 			model.addAttribute("corpImgList2", corpImgList2);		
 			model.addAttribute("corpNmList2", corpNmList2);			
 			model.addAttribute("scrapList2", scrapList2);		
+			model.addAttribute("timeList2", timeList2);		
 			
 			// rRList2.size()가 rRList2Size가 될때까지 마지막 항목 지움.
 			while(rRList2.size() > rRList2Size){
@@ -250,6 +293,13 @@ public class RecruitController {
 
 		// 조회한 항목(마지막으로 조회한 채용공고) model에 넣기.
 		RecruitVo lVRVo = recrService.getLastViewRecr(mVo.getMem_id());
+		
+		if(lVRVo == null){
+			lVRVo = new RecruitVo();
+			lVRVo.setRecruit_title("원하는 채용공고를 찾아보세요!");
+			lVRVo.setJob_local("회원님에게 맞는 채용공고를 추천해드립니다.");
+		}
+		
 		model.addAttribute("lVRVo", lVRVo);
 		
 		// 저장한 검색어 리스트 (saveList) 넘기기.
@@ -271,6 +321,21 @@ public class RecruitController {
 		return "recruitTiles";
 	}	
 	
+	// 채용공고 지역 - 회사의 주소 지역으로 수정하는 메서드.
+	private void editRecrLocal() {
+		List<RecruitVo> recrList = recrService.getAllRecr();
+		for(int i=0; i < recrList.size(); i++){
+			RecruitVo rVo = recrList.get(i);
+			
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			rVo.setJob_local(cVo.getAddr1().substring(0, 2));
+			
+			recrService.updateRecr(rVo);
+		}
+		
+		logger.debug("전체 채용공고 local 수정.");
+	}
+
 	// @rRList1 ajax 로직 처리 메서드.
 	@RequestMapping("/rRList1AjaxHtml")
 	public String rRList1AjaxHtml(HttpSession session, Model model) throws ParseException {
@@ -281,7 +346,7 @@ public class RecruitController {
 		// 조회한 채용공고가 없는 경우도 처리해줘야 함.
 		// 변수 첫 자는 소문자로.
 		RecruitVo lVRVo = recrService.getLastViewRecr(mVo.getMem_id());
-		model.addAttribute("lVRVo", lVRVo);
+//		model.addAttribute("lVRVo", lVRVo);
 		
 		List<RecruitVo> rRList1 = new ArrayList<>();
 		if(lVRVo == null){
@@ -460,7 +525,7 @@ public class RecruitController {
 			model.addAttribute("scrapList1", scrapList1);			
 			model.addAttribute("timeList1", timeList1);			
 		}
-
+		
 		model.addAttribute("rRList1", rRList1);		
 
 		return "recruit/rRList1AjaxHtml";
@@ -807,10 +872,23 @@ public class RecruitController {
 		// 검색어를 통한 결과 리스트를 넘기기. search_word가 '전체'이면 전체 채용공고 리스트 넘기기.
 		List<RecruitVo> recrList = new ArrayList<>();
 		
-		if(lSLog.getSearch_word().equals("전체")){
+		// 이어서. 수정
+		if(lSLog.getSearch_word().equals("전체") && lSLog.getSearch_local().equals("전국")){
 			recrList = recrService.getAllRecr();
-		}else{
+		}else if(lSLog.getSearch_local().equals("전국")){
 			recrList = recrService.searchRecrListByCorp_name(lSLog.getSearch_word());
+		}else if(lSLog.getSearch_word().equals("전체")){
+			recrList = recrService.searchRecrListByJob_local(lSLog.getSearch_local());
+		}else{
+			List<RecruitVo> tempList = recrService.searchRecrListByCorp_name(lSLog.getSearch_word());			
+			
+			for(int i=0; i < tempList.size(); i++){
+				RecruitVo rVo = tempList.get(i);
+				
+				if(rVo.getJob_local().equals(lSLog.getSearch_local())){
+					recrList.add(rVo);
+				}
+			}
 		}
 		
 		List<String> corpImgList = new ArrayList<>();
@@ -870,7 +948,8 @@ public class RecruitController {
 	
 	// @채용공고 상세화면.
 	@RequestMapping(path="/recr_detail", method=RequestMethod.POST)
-	public String recr_detail(String recruit_code, HttpSession session, String req_page, Model model){
+	public String recr_detail(String recruit_code, HttpSession session, String req_page, 
+			String msg_flag, Model model){
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		// 회원 정보를 가져와서 채용공고저장에 마지막으로 조회한 채용공고 저장. 마지막 채용공고를 따로 
@@ -931,6 +1010,8 @@ public class RecruitController {
 		// recruit에서 넘어온 req_page 넣기.
 		model.addAttribute("req_page", req_page);
 		
+		model.addAttribute("msg_flag", msg_flag);
+		
 		return "recr_detailTiles";
 	}
 	
@@ -963,9 +1044,25 @@ public class RecruitController {
 		// 지원여부 넘기기.
 		model.addAttribute("recr_app", recr_app);
 		
-		// 스크랩여부. get방식은 저장한 채용공고 페이지에서 요청하므로 모두 스크랩 't'이다.
-		// recr_detail, post에는 스크랩여부를 파악해서 넘겨줘야됨.
-		String scrap_flag = "t";
+		// 스크랩여부.
+		tempSVo = new Save_recruitVo();
+		
+		tempSVo.setUser_id(mVo.getMem_id());
+		tempSVo.setSave_flag("t");		
+		
+		List<Save_recruitVo> sSrecrlist = srecrService.getSSrecrList(tempSVo);
+		String scrap_flag = "f";
+		
+		// 특정 유저가 스크랩한 채용공고 리스트에서 recruit_code와 일치하는 게 있으면 t.
+		for(int i=0; i < sSrecrlist.size(); i++){
+			tempSVo = sSrecrlist.get(i);
+			
+			if(tempSVo.getRecruit_code().equals(recruit_code)){
+				scrap_flag = "t";
+				break;
+			}
+		}
+		
 		model.addAttribute("scrap_flag", scrap_flag);
 		
 		sVo.setUser_id(mVo.getMem_id());
@@ -978,6 +1075,24 @@ public class RecruitController {
 		
 		// 뒤로가기를 할 때 req_page 확인을 위해 model에 넣기.
 		model.addAttribute("req_page", req_page);
+		
+		// 신고여부 넘기기.
+		ReportVo tempRVo = new ReportVo();
+		tempRVo.setRef_code(recruit_code);
+		tempRVo.setMem_id(mVo.getMem_id());
+		tempRVo.setDivision("34");
+		
+		// 신고내역이 없으면 rVo는 null.
+		ReportVo rVo = reportService.getReport(tempRVo);
+		String report_flag = "";
+		
+		if(rVo != null){
+			report_flag = "t";
+		}else{
+			report_flag = "f";
+		}
+		
+		model.addAttribute("report_flag", report_flag);
 		
 		return "recr_detailTiles";
 	}
@@ -1046,7 +1161,7 @@ public class RecruitController {
 	
 	// @ajax로 지도 검색 페이지의 회사와의 거리 그리기.
 	@RequestMapping("/mapAjaxHtml")
-	public String mapAjaxHtml(String result, String width_value, HttpSession session, Model model) {
+	public String mapAjaxHtml(String result, String width_value, HttpSession session, Model model) throws ParseException {
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		List<CorporationVo> corpList = corpService.select_allCorps();
@@ -1062,6 +1177,7 @@ public class RecruitController {
 		List<String> corpNmList = new ArrayList<>();
 		List<String> corpImgList = new ArrayList<>();
 		List<String> corpDList = new ArrayList<>();	
+		List<String> timeList = new ArrayList<>();	
 		
 		// 스크랩 여부 리스트.
 		List<String> scrapList = new ArrayList<>();
@@ -1092,12 +1208,35 @@ public class RecruitController {
 			if(scrapCheck_flag == false){
 				scrapList.add("f");
 			}			
+			
+			String start_date = rVo.getStart_date();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+			Date start = sdf.parse(start_date);
+			Date now = new Date();
+			
+			long temp_time = now.getTime() - start.getTime();
+			
+			int time_diff = (int) (temp_time / (60*1000));
+			
+			if(time_diff < 2){
+				timeList.add("방금");
+			}else if(time_diff < 60){
+				timeList.add(time_diff + "분");
+			}else if(time_diff < 1440){
+				timeList.add(time_diff/60 + "시간");
+			}else if(time_diff < 43200){
+				timeList.add(time_diff/(60*24) + "일");
+			}else{
+				timeList.add(time_diff/(60*24*30) + "달");
+			}			
 		}
 		
 		model.addAttribute("recrList2", recrList2);
 		model.addAttribute("corpImgList", corpImgList);
 		model.addAttribute("corpNmList", corpNmList);
 		model.addAttribute("scrapList", scrapList);
+		model.addAttribute("timeList", timeList);
 
 		// 슬라이드 출력할 박스 width 넘기기.
 		model.addAttribute("width_value", width_value);
@@ -1121,13 +1260,23 @@ public class RecruitController {
 		RecruitVo rVo = recrService.getRecr(recruit_code);
 		String app_count = rVo.getApp_count();
 		
+		// apply_recruit - 지원하면 insert, 취소하면 delete
+		Apply_recruitVo aVo = new Apply_recruitVo();
+		aVo.setRecruit_code(recruit_code);
+		aVo.setUser_id(mVo.getMem_id());
+		
+		
 		// recr_app값이 t면 f로, f면 t로 수정.
 		if(sVo.getRecr_app().equals("t")){
 			recr_app = "f";
 			
+			appService.deleteApp(aVo);		
+			
 			app_count = String.valueOf(Integer.valueOf(app_count) - 1);
 		}else{
 			recr_app = "t";
+			
+			appService.insertApp(aVo);		
 			
 			app_count = String.valueOf(Integer.valueOf(app_count) + 1);
 		}
@@ -1257,17 +1406,52 @@ public class RecruitController {
 			}
 		}
 		
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setAlarm_check("0");
+		alarmInfo.setAlarm_separate("08");
+		alarmInfo.setDivision("34");
+		alarmInfo.setRef_code(recruit_code);
+		alarmInfo.setSend_id(corp_id);
+
 		Map<String, List<String>> resultMap = new HashMap<>();
 		
 		for(String alarmWord : alarmWordList){
 			List<String> userList = sLogService.getAlarmUserList(alarmWord);
-			resultMap.put(alarmWord, userList);
+			
+			for(int i=0; i<userList.size(); i++){
+				alarmInfo.setMem_id(userList.get(i));
+				alarmService.insert_alarmInfo(alarmInfo);
+			}
 		}
 		
 		logger.debug("map? : {}", resultMap.toString());
 		
 		// tiles로 바로 가면 안되고 /recruit로 redirect 해야지.
 		return "redirect:" + req.getContextPath() + "/recruit";
+	}
+	
+	// @채용공고 신고.
+	@RequestMapping("/reportRecr")
+	public String reportRecr(HttpServletRequest req, HttpSession session, String report_contents,
+			String recruit_code, String req_page, Model model) {
+		ReportVo rVo = new ReportVo();
+		rVo.setDivision("34"); // recruit
+		
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		rVo.setMem_id(mVo.getMem_id());
+		rVo.setRef_code(recruit_code);
+		rVo.setReport_contents(report_contents);
+		logger.debug("recruit_code? : {}", recruit_code);
+		
+		reportService.insert_reportInfo(rVo);
+		
+		// t - "정상적으로 신고접수 되었습니다."
+		model.addAttribute("msg_flag", "t");
+		
+		model.addAttribute("recruit_code", recruit_code);
+		model.addAttribute("req_page", req_page);
+		
+		return "redirect:" + req.getContextPath() + "/recr_detail";
 	}
 	
 	

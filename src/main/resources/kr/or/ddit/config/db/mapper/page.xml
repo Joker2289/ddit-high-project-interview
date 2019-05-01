@@ -29,13 +29,27 @@
 	
 	<!-- 섹션의 전체 페이지 조회 -->
 	<select id="select_pageList" parameterType="String" resultType="pageVo">
-		select page_code, section_code, page_title, page_contents, write_date, view_count, page_thumbnail, bg_color
-		  from page
-		 where section_code = #{ section_code }
-		 order by write_date desc
+		select a.page_code, a.section_code, a.page_title, a.page_contents, a.write_date, a.view_count, a.page_thumbnail, a.bg_color, b.good_cnt, c.comment_cnt
+
+			from   page a,
+			
+			        (select count(*) as good_cnt, ref_code
+			          from good
+			         where division = 22
+			        group by ref_code) b,
+			        
+			       (select count(*) comment_cnt, ref_code
+			          from post_comment
+			         where division = 22
+			        group by ref_code) c
+			        
+			where a.section_code = #{section_code}
+			and   a.page_code = b.ref_code(+)
+			and   a.page_code = c.ref_code(+)
+			order by write_date desc
 	</select>
 	
-	<!-- 섹션의 전체 페이지 조뢰 조회 -->
+	<!-- 페이지 정보 조회 -->
 	<select id="select_pageInfo" parameterType="String" resultType="pageVo">
 		select page_code, section_code, page_title, page_contents, write_date, view_count, page_thumbnail, bg_color
 		  from page
@@ -60,6 +74,43 @@
 		delete page
 		 where page_code = #{ page_code }
 	</delete>
+	
+	<!-- 회원이 작성한 모든 page 리스트 조회 -->
+	<select id="select_pageAllList" parameterType="String" resultType="pageVo">
+		select  c.*, d.*, e.good_cnt, f.comment_cnt
+  			from  (select a.user_id, a.portfolio_code, b.section_code
+        				from portfolio a, section b
+        			where user_id = #{ user_id }
+           			and a.portfolio_code = b.portfolio_code) c, page d,
+       
+			       (select count(*) as good_cnt, ref_code
+			          	from good
+			        where division = 22
+			        group by ref_code) e,
+        
+			       (select count(*) comment_cnt, ref_code
+			          	from post_comment
+			        where division = 22
+			        group by ref_code) f
+        
+		 where d.section_code = c.section_code
+		   and d.page_code = e.ref_code(+)
+		   and d.page_code = f.ref_code(+)
+		   
+		order by d.write_date desc
+	</select>
+	
+	<!-- 회원이 작성한 전체 게시글 수 조회 -->
+	<select id="select_pageCnt" parameterType="String" resultType="int">
+		select  count(d.page_code)
+		
+			from    (select a.user_id, a.portfolio_code, b.section_code
+            		from portfolio a, section b
+            		where user_id = #{ user_id }
+            		and a.portfolio_code = b.portfolio_code) c, page d
+            		
+		where d.section_code = c.section_code
+	</select>
 	
 	
 	

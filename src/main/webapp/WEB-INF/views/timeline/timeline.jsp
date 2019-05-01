@@ -31,7 +31,23 @@
                      <c:when test="${post.mem_division eq 1 }">href="/profileHome?user_id=${post.mem_id }"</c:when>
                      <c:when test="${post.mem_division eq 2 }">href="/corporation?corp_id=${post.mem_id }"</c:when>
                    </c:choose>>
-                   <div class="writer_info" style="float: left;">
+                   <div class="writer_info" style="display: inline-block;">
+                     <a 
+                       <c:choose>
+                         <c:when test="${post.mem_division eq '1' && post.mem_id eq SESSION_MEMBERVO.mem_id}">href='/profileHome'</c:when>
+                         <c:when test="${post.mem_division eq '1' && post.mem_id != SESSION_MEMBERVO.mem_id}">href='/profileHome?user_id=${post.mem_id }'</c:when>
+                         <c:when test="${post.mem_division eq '2'}">href='/corporation?corp_id=${post.mem_id }'</c:when>
+                       </c:choose>
+                     >
+                       <c:choose>
+                         <c:when test="${post.mem_division eq '1'}">
+	                       <img src="${ cp }/view/imageView?mem_id=${post.mem_id }&division=pf" class="writer_profile">
+                         </c:when>
+                         <c:when test="${post.mem_division eq '2'}">
+	                       <img src="${post.profile_path }" class="writer_profile">
+                         </c:when>
+                       </c:choose>
+                     </a>
                   	 <a style="font-size: 20px;" 
                   	   <c:choose>
                   	     <c:when test="${post.mem_division eq 1 && !post.mem_id eq memberInfo.mem_id}">href="/profileHome?user_id=${post.mem_id }"</c:when>
@@ -108,7 +124,7 @@
                        <button class="btn_count btn_goodcount" title="goodCount ${post.post_code }" style="font-size: 12px;">추천 
                          <span id="txt_good_count${post.post_code }">
                            <c:choose>
-                             <c:when test="${post.goodcount eq '' }">0</c:when>
+                             <c:when test="${post.goodcount eq null }">0</c:when>
                              <c:otherwise>${post.goodcount }</c:otherwise>
                            </c:choose>
                          </span>
@@ -118,7 +134,7 @@
                        <button class="btn_count btn_commentcount" id="btn_commentcount${post.post_code }" title="commentCount ${post.post_code }" style="font-size: 12px;">댓글 
                          <span id="txt_comment_count${post.post_code }">
                            <c:choose>
-                         	 <c:when test="${post.commentcount eq '' }">0</c:when>
+                         	 <c:when test="${post.commentcount eq null }">0</c:when>
                          	 <c:otherwise>${post.commentcount }</c:otherwise>
                            </c:choose>
                          </span>
@@ -219,5 +235,90 @@
 	  <c:forEach items="${ goodList }" var="goodpost"> 
 	     $('#icon_good${ goodpost.ref_code}').attr('class', 'fas fa-thumbs-up');   
 	  </c:forEach> 
+	  
+	  
+		//////////////////////////// newList
+		// newList 슬라이드
+		newList_slide = setInterval("fn_newSlide()", 4000);
+		
+		// newList 마우스오버 - 슬라이드 멈춤.
+		$("#div_newList").on("mouseover", function(){
+			newSlide_flag = false;
+		});
+		$("#div_newList").on("mouseout", function(){
+			newSlide_flag = true;
+		});		
+		
+		// newList 슬라이드 버튼 클릭.
+		$(".fa-circle").on("click", function(){
+//			alert($(this).index());
+			$(".fa-circle:eq("+ (newList_num-1) +")").attr("class", "far fa-circle");
+			$(this).attr("class", "fas fa-circle");	
+			
+			// 이동할 칸 수. (move_page)
+			var move_page = ($(this).index()) - (newList_num-1);
+			
+			// newList_num 변경.
+			newList_num = ($(this).index())+1;
+			
+			// 슬라이드 이동.
+			$("#content_newList").stop(true, true);
+			var moveX = parseInt($("#content_newList").css("margin-left"));
+			
+			if( moveX > -3000 ){
+				$("#content_newList").animate({"margin-left":"-=" + newSlide_width*move_page + "px"}, 500);
+			}
+		});
+		
+		// 채용공고 클릭.
+		$(".recr").on("click", function(){
+// 			alert($(this).data("code"));
+			window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code='+ $(this).data("code") +'&req_page=timeline';
+		});
+		
+		//////////////////////////// newList	  
 	});
+
+	
+	////////////////////////////newList
+	
+	// div_newList 마우스오버 시 false - 슬라이드 멈춤.
+	var newSlide_flag = true;	
+	
+	// 자동 슬라이드
+	var newSlide_width = 290;
+	var newList_num = 1;
+	
+	function fn_newSlide(){
+		if(newSlide_flag == false){
+			return;
+		}
+		
+		if(newList_num > 6){
+// 			clearInterval(slide_switch);
+			$("#content_newList").css("margin-left", "0px");
+			newList_num = 0;
+		}
+		
+		newList_num++;
+		
+		$("#content_newList").stop(true, true);
+		var moveX = parseInt($("#content_newList").css("margin-left"));
+		
+		if( moveX > -2000 ){
+			// 버튼 class 바꾸기.
+			if(newList_num == 1){
+				$(".fa-circle:eq(6)").attr("class", "far fa-circle");
+				$(".fa-circle:eq("+ (newList_num-1) +")").attr("class", "fas fa-circle");
+			}else{
+				$(".fa-circle:eq("+ (newList_num-2) +")").attr("class", "far fa-circle");
+				$(".fa-circle:eq("+ (newList_num-1) +")").attr("class", "fas fa-circle");
+			}
+			
+			$("#content_newList").animate({"margin-left":"-=" + newSlide_width + "px"}, 500);
+		}
+	}	
+	
+	//////////////////////////// newList	
+	
 </script>

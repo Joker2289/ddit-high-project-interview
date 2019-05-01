@@ -3,6 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style type="text/css">
+	/* newList */
+	.fa-circle{
+		margin-right: 4px;
+		cursor: pointer;
+	}
+	/* newList */
+</style>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>InterView</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>채용공고｜33313</title>
 </head>
 
 <body>

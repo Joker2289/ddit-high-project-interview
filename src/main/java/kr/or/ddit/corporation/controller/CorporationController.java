@@ -73,6 +73,7 @@ import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.pagination.PaginationVo;
 
+@RequestMapping("/corp")
 @Controller
 public class CorporationController {
 
@@ -128,13 +129,23 @@ public class CorporationController {
 	
 
 	/**
-	 * 회사 홈(회사타임라인)
 	 * 
+	 * Method : postList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param request
 	 * @param model
+	 * @param paginationVo
+	 * @param post_contents
+	 * @param corp_id
+	 * @param session
 	 * @return
+	 * Method 설명 : 
 	 */
 	@RequestMapping(path = { "/corporation" })
-	public String postList(HttpServletRequest request,Model model, PaginationVo paginationVo, String post_contents,String corp_id, HttpSession session) {
+	public String corporation(HttpServletRequest request,Model model, PaginationVo paginationVo, String post_contents, String corp_id, HttpSession session) {
+		
+		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		CorporationVo corporationInfo = new CorporationVo();
 		if(corp_id==null){
@@ -209,6 +220,8 @@ public class CorporationController {
 		
 		logger.debug("goodList hahaha : {}", goodList.size());
 		logger.debug("saveList hahaha : {}", saveList.size());
+		
+		
 		return "corporationTiles";
 	}
 	
@@ -360,7 +373,7 @@ public class CorporationController {
           System.out.println("오리지날 파일 이름" + file.getOriginalFilename());
         
           
-          path = "D://A_TeachingMaterial/7.LastProject/workspace/interview/src/main/webapp/WEB-INF/views/corporation/img/";
+          path = "C://imgs/";
           InputStream inputStream = null;
           OutputStream outputStream = null;
           
@@ -460,52 +473,25 @@ public class CorporationController {
 
 	
 	/**
-	 * 회사 소개
+	 * 
+	 * Method : insert_intro_page
+	 * 작성자 : pjk
+	 * 변경이력 :
 	 * @param model
-	 * @param paginationVo
 	 * @param request
+	 * @param corp_id
 	 * @return
+	 * Method 설명 : 회사 소개 페이지 출력
 	 */
-	@RequestMapping(path = { "/corporationIntroduction" })
-	public String corporationIntro(Model model, PaginationVo paginationVo, HttpServletRequest request, CorporationVo corporationVo,String corp_id) {
+	@RequestMapping("/insert_intro_page")
+	public String insert_intro_page(Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
 		
+		logger.debug("corp_id ddd :{}", corp_id);
 		
-		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-		CorporationVo corporationInfo = new CorporationVo();
-		if(corp_id==null){
-			corp_id = memberInfo.getMem_id();
-		}else{
-		}
-		corporationInfo = corporationService.select_corpInfo(corp_id);
-		paginationVo.setMem_id(corp_id);
-		
+		CorporationVo corporationInfo = corporationService.select_corpInfo(corp_id);
 		model.addAttribute("corporationInfo", corporationInfo);
-
 		
-
-		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(corp_id);
-
-			// 인맥 수 출력을 위한 세팅
-
-			// 팔로우 한 해쉬태그 출력을 위한 세팅
-
-			model.addAttribute("userInfo", userInfo);
-		} else if (memberInfo.getMem_division().equals("2")) { // 회사일 경우
-			CorporationVo corpInfo = corporationService.select_corpInfo(corp_id);
-
-			// 회사 회원 로그인 시 홈 화면 출력을 위한 세팅
-
-			model.addAttribute("corpInfo", corpInfo);
-		} else { // 관리자일 경우
-			// 관리자 로그인 시 홈 화면 출력을 위한 세팅
-
-		}
-
-		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
-		model.addAttribute("timelinePost", timelinePost);
-		model.addAttribute("corporationInfo", corporationInfo);
-		return "corporationIntroTiles";
+		return "corporation/corp_intro";
 	}
 	
 	
@@ -616,28 +602,48 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		int ecount = careerService.employee_count(corporationInfo.getCorp_name());
 		model.addAttribute("ecount", ecount);
 
-		//출신 학교 그래프
-		List<Education_infoVo> eec = careerService.employee_education_count(corporationInfo.getCorp_name());		
-		List<Integer> eec2 = careerService.employee_education_count2(corporationInfo.getCorp_name());		
-		List<Integer> a = new ArrayList<>();
-		a.add(100*eec2.get(0)/ecount);
-		a.add(100*eec2.get(1)/ecount);
-		a.add(100*eec2.get(2)/ecount);
-		model.addAttribute("eec", eec);
-		model.addAttribute("eec2", eec2);
-		model.addAttribute("a",a);
+//		출신 학교 그래프
+//		List<Education_infoVo> eec = careerService.employee_education_count(corporationInfo.getCorp_name());		
+//		List<Integer> eec2 = careerService.employee_education_count2(corporationInfo.getCorp_name());		
+//		List<Integer> a = new ArrayList<>();
+//		a.add(100*eec2.get(0)/ecount);
+//		a.add(100*eec2.get(1)/ecount);
+//		a.add(100*eec2.get(2)/ecount);
+//		model.addAttribute("eec", eec);
+//		model.addAttribute("eec2", eec2);
+//		model.addAttribute("a",a);
 		
 		//전공 그래프
 		List<Education_infoVo> em = corporationService.employee_major(corporationInfo.getCorp_name());
 		List<Integer> emc = corporationService.employee_major_count(corporationInfo.getCorp_name());
 		List<Integer> b = new ArrayList<>();
+		int size = em.size();
 		b.add(100*emc.get(0)/ecount);
 		b.add(100*emc.get(1)/ecount);
 		b.add(100*emc.get(2)/ecount);
-		b.add(100*emc.get(3)/ecount);
 		model.addAttribute("em", em);
 		model.addAttribute("emc", emc);
 		model.addAttribute("b",b);
+		model.addAttribute("size", size);
+		
+		
+		
+		
+		//직원 목록
+		List<Career_infoVo> ea =  corporationService.employee_all(corporationInfo.getCorp_name());
+		List<UsersVo> uvos = new ArrayList<UsersVo>();
+		for(int i = 0; i < ea.size(); i++) {
+			UsersVo uvo = corporationService.select_userInfo(ea.get(i).getUser_id());
+			System.out.println("유저 아이디 : " + uvo.getUser_id());
+			uvos.add(i, uvo);
+		}
+		model.addAttribute("uvos", uvos);
+		List<Education_infoVo> evos = new ArrayList<Education_infoVo>();
+		for(int i = 0; i < ea.size(); i++) {
+			Education_infoVo evo = corporationService.employee_education(ea.get(i).getUser_id());
+			evos.add(i, evo);
+		}
+		model.addAttribute("evos", evos);
 		
 		return "corporationEmployeeTiles";
 	}

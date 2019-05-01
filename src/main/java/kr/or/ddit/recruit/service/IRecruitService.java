@@ -124,6 +124,27 @@ public interface IRecruitService {
 	 * Method 설명 : 특정 회사 이름으로 검색한 채용공고 목록 조회.
 	 */
 	List<RecruitVo> searchRecrListByCorp_name(String search_word);
+
+	/**
+	 * 
+	 * Method : getNewList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 신규 채용공고 목록 조회.
+	 */
+	List<RecruitVo> getNewList();
+
+	/**
+	 * 
+	 * Method : searchRecrListByJob_local
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param search_local
+	 * @return
+	 * Method 설명 : 특정 지역으로 검색한 채용공고 목록 조회.
+	 */
+	List<RecruitVo> searchRecrListByJob_local(String search_local);
 	
 }
 

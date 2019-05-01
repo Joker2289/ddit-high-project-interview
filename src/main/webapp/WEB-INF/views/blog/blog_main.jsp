@@ -7,12 +7,31 @@
 <link href="/css/blog/blog.css" rel="stylesheet">
 <link href="/css/blog/blog_activity_modal.css" rel="stylesheet">
 <link href="/css/blog/blog_setting_form.css" rel="stylesheet">
+<link href="/css/blog/blog_comment_area.css" rel="stylesheet">
 <link href="/css/blog/blog_page_area.css" rel="stylesheet">
-
 <link href="/css/blog/blog_page.css" rel="stylesheet">
+
+<!-- include summernote css/js -->
+<link href="/dist/summernote.css" rel="stylesheet">
+<script src="/dist/summernote.js"></script>
 
 
 <!DOCTYPE html>
+
+<style>
+@CHARSET "UTF-8";
+
+@font-face { 
+   font-family: '한돈삼겹살체300g'; 
+   src: url(/font/한돈삼겹살체300g.ttf) format('truetype');
+}
+
+
+*{
+   font-family: 한돈삼겹살체300g;s
+}
+</style>
+
 <div class="container B_head">
 	<div id="head_area">
 		<%@ include file="/WEB-INF/views/blog/head_area.jsp"%><!-- /포트폴리오 영역 -->
@@ -36,9 +55,6 @@
 				
 				
 				<%@ include file="/WEB-INF/views/blog/content_area.jsp"%><!-- 타임라인 영역 -->
-				
-				
-				
 				
 			</div>
 
@@ -85,15 +101,12 @@
 		}
 	};
 	
-	$('#settingBtn').on('click', function(){
+
+	
+/* 	$('#settingBtn').on('click', function(){
 		
-		$.ajax({
-			url : "${cp}/blog/blogSettingForm",
-			data : {"user_id" : userId },
-			success : function(data) {
-				$('#content_area').html(data);			
-			}
-		});
-	});
+		
+	}); */
+	
 	
 </script>

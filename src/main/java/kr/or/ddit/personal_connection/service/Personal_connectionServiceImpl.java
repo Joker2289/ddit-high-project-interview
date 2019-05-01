@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.career_info.model.Career_infoVo;
+import kr.or.ddit.corporate_review.model.Corporate_reviewVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.follow.dao.IFollowDao;
@@ -225,6 +226,16 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	@Override
 	public int insert_followCorporation(FollowVo followVo) {
 		return personalDao.insert_followCorporation(followVo);
+	}
+
+	@Override
+	public int insert_companyReview(Corporate_reviewVo reviewVo) {
+		return personalDao.insert_companyReview(reviewVo);
+	}
+
+	@Override
+	public List<Corporate_reviewVo> select_companyReview(PaginationVo paginationVo) {
+		return personalDao.select_companyReview(paginationVo);
 	}
 
 	

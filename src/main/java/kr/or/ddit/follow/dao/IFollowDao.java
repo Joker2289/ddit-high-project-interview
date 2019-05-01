@@ -1,6 +1,7 @@
 package kr.or.ddit.follow.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.util.pagination.PaginationVo;
@@ -132,5 +133,22 @@ public interface IFollowDao {
 	* Method 설명 : 인맥 - 신선한 시각 팔로우
 	*/
 	int insert_feedFollow(FollowVo followVo);
+
+	/**
+	 * 회사 팔로우 언팔로우 유무확인
+	 * @param followVo
+	 * @return
+	 */
+	int follow_unfollow(FollowVo followVo);
+	
+	/**
+	 * Method : select_followChatList
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 채팅 초대할 유저의 팔로우들(회사,회원)
+	 */
+	List<Map<String, String>> select_followChatList(String mem_id);
 	
 }

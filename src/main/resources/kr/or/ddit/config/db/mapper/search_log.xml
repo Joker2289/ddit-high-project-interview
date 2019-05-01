@@ -28,6 +28,7 @@
 		   AND A.USER_ID = #{user_id}
 		   AND A.SEARCH_SAVE = #{search_save}
 		   AND A.DEL_FLAG = '1'
+		ORDER BY A.SEARCH_CODE DESC
 	</select>
 	
 	<!-- 특정 검색내역 조회. -->
@@ -127,12 +128,6 @@
   	
   	
 </mapper>
-
-
-
-
-
-
 
 
 

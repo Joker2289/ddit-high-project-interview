@@ -6,9 +6,18 @@
 <html>
 <head>
 	<title>채용공고｜111</title>
-		<!-- 지도 script. -->
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=21c4ce15b016e2f4c34196b944d9852b&libraries=services,clusterer,drawing"></script>	
 	
+	<style type="text/css">
+		.div_btn{
+			border: 0px solid; 
+			width: 50px; 
+			height: 50px; 
+			float: right;
+			padding-top: 10px;
+			padding-right: 14px;
+			border-radius: 25px;
+		}
+	</style>	
 </head>
 
 <body>
@@ -34,9 +43,38 @@
 							</tr>
 							<tr style="height: 40px;">
 								<td style="text-align: right; padding-top: 20px;">
-									<i class="far fa-share-square" style="color: #0174b0; font-size: 24px;"></i> 
-									<i class="far fa-flag" style="color: #0174b0; font-size: 24px;
-											margin-left: 22px; margin-right: 57px;"></i>
+									<c:choose>
+										<c:when test="${scrap_flag == 't' }">
+											<div class="div_btn" style="padding-top: 11px; margin-right: 46px;
+													margin-left: 2px; padding-right: 15px;" id="div_scrap">
+												<i class="fas fa-bookmark" style="color: #0174b0; font-size: 24px;
+														cursor: pointer;" onmouseover="" id="btn_scrap"></i> 
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="div_btn" style="padding-top: 11px; margin-right: 46px;
+													margin-left: 2px; padding-right: 15px;" id="div_scrap">
+												<i class="far fa-bookmark" style="color: #0174b0; font-size: 24px;
+														cursor: pointer;" onmouseover="" id="btn_scrap"></i> 
+											</div>
+										</c:otherwise>
+									</c:choose>
+									<c:choose>
+										<c:when test="${report_flag == 't' }">
+											<div class="div_btn" style="padding-right: 24px;" id="div_report">
+												<i class="fas fa-flag" style="color: #0174b0; font-size: 24px;
+														margin-left: 14px; margin-right: 10px; cursor: pointer;"
+														onmouseover="" id="btn_report"></i>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="div_btn" style="padding-right: 24px;" id="div_report">
+												<i class="far fa-flag" style="color: #0174b0; font-size: 24px;
+														margin-left: 14px; margin-right: 10px; cursor: pointer;"
+														onmouseover="" id="btn_report"></i>
+											</div>
+										</c:otherwise>
+									</c:choose>
 								</td>
 							</tr>
 							<tr>
@@ -49,21 +87,19 @@
 												<span style="font-size: 17px;">게시일: xx일 전 ｜ 지원자 수: xx명 미만</span><br>
 											</td>
 											<td>
-												<input type="button" value="저장" style="border: 1px solid; border-color: #0174b0;
-														width: 60px; background-color: white; font-size: 18px; height: 38px;
-														color: #0174b0; font-weight: bold; margin-right: 15px; margin-top: 15px;">
 												<c:choose>
 													<c:when test="${recr_app == 't' }">
 														<input type="button" value="지원 취소" style="border: 0px;
 																width: auto; background-color: #0174b0; font-size: 18px; height: 38px;
 																color: white; font-weight: bold; margin-top: 15px; padding-left: 10px;
-																padding-right: 10px;" id="btn_app">
+																padding-right: 10px; margin-left: 47px;" id="btn_app">
 													</c:when>
 													<c:otherwise>
 														<input type="button" value="지원하기" style="border: 0px;
-																width: auto; background-color: #0174b0; font-size: 18px; height: 38px;
-																color: white; font-weight: bold; margin-top: 15px; padding-left: 10px;
-																padding-right: 10px;" id="btn_app">
+																width: auto; background-color: white; font-size: 18px; height: 38px;
+																color: #0174b0; font-weight: bold; margin-top: 15px; padding-left: 10px;
+																padding-right: 10px; border: 1px solid; border-color: #0174b0;
+																margin-left: 47px;" id="btn_app">
 													</c:otherwise>
 												</c:choose>
 											</td>
@@ -87,7 +123,7 @@
 												<strong>업계</strong><br>
 												...<br>
 												<strong>고용형태</strong><br>
-												...(등록:${recr.start_date })<br>
+												...<br>
 											</td>
 										</tr>
 									</table>								
@@ -139,87 +175,119 @@
 
 	<br><br>
 		
+<%@ include file="/WEB-INF/views/recruit/report_modal.jsp" %> <!-- 신고 modal -->		
 </div>		
 </div>		
 </div>		
 		
 <script type="text/javascript">
-	$(document).ready(function(){
-		console.log("req_page? : ${req_page }");
-		$("#div_back").on("click", function(){
-// 			alert("req page? : ${req_page }");
-			<c:choose>
-				<c:when test="${req_page == null }">
-					window.location.href = '${pageContext.request.contextPath }/srecr';
-				</c:when>
-				<c:when test="${req_page == 'recruit' }">
-					window.location.href = '${pageContext.request.contextPath }/recruit';
-				</c:when>
-				<c:otherwise>
-					window.location.href = '${pageContext.request.contextPath }/recrSearch';
-				</c:otherwise>
-			</c:choose>
-		});
+// 채용공고 신고 modal
+$(function () {
+	$("#btn_report").on("click", function(){
+		if('${report_flag }' == 't'){
+			alert("이미 신고처리 되었습니다.");
+		}else{
+			$("div.modal").modal();
+		}
+	});
+});
+
+$(document).ready(function(){
+// 	console.log("req_page? : ${req_page }");
+	
+	// msg 출력.
+	var msg_flag = "${msg_flag }";
+	
+	if(msg_flag == 't'){
+		alert("정상적으로 신고접수 되었습니다.");
 		
-		$("#btn_app").on("click", function(){
-			<c:choose>
-				<c:when test="${recr_app == 't' }">
-					if(confirm("채용공고 지원을 취소하시겠습니까?")){
-						window.location.href = '${pageContext.request.contextPath }/recr_app?recruit_code=${recr.recruit_code }&scrap_flag=${scrap_flag }';
-					}
-				</c:when>
-				<c:otherwise>
-					if(confirm("해당 채용공고에 지원하시겠습니까?")){
-						window.location.href = '${pageContext.request.contextPath }/recr_app?recruit_code=${recr.recruit_code }&scrap_flag=${scrap_flag }';
-					}
-				</c:otherwise>
-			</c:choose>
-		});
-		
+		<c:set var="msg_flag" value="f"></c:set>
+	}
+	
+	// modal 전송
+	$("#btn_save").on("click", function(){
+// 		alert("${recr.recruit_code }");
+		$("#report_contents").val($("#txt_report").val());
+		$("#recruit_code").val("${recr.recruit_code }");
+		$("#req_page").val("${req_page }");
+		$("#frm").submit();
 	});
 	
-	var data = "${corp.corp_location }";
-	var data1 = data.split("/")[0];
-	var data2 = data.split("/")[1];
+	// modal 취소
+	$("#btn_cancel").on("click", function(){
+		$("#btn_cancel_hidden").trigger("click");
+	});	
 	
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-	mapOption = { 
-	    center: new daum.maps.LatLng(data1, data2), // 지도의 중심좌표
-	    level: 5 // 지도의 확대 레벨  
-	};
-	
-	var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-	
-	// 마커가 표시될 위치입니다 
-	var markerPosition  = new daum.maps.LatLng(data1, data2); 
-
-	// 마커를 생성합니다
-	var marker = new daum.maps.Marker({
-	    position: markerPosition
+	// 신고 버튼
+	$("#btn_report").on("mouseover", function(){
+		$("#div_report").css("background-color", "#e5f5fb");
 	});
-
-	// 마커가 지도 위에 표시되도록 설정합니다
-	marker.setMap(map);	
-
-	// 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-// 	var content = "${recr.recruit_title }";
-// 	if(content.length > 21){
-// 		content = content.substr(0, 21) + "...";
-// 	}
-	
-	var iwContent = '<div style="padding:5px;">${corp.corp_name }<br>${recr.recruit_title } </div>', 
-    iwPosition = new daum.maps.LatLng(data1, data2); //인포윈도우 표시 위치입니다
-
-	// 인포윈도우를 생성합니다
-	var infowindow = new daum.maps.InfoWindow({
-	    position : iwPosition, 
-	    content : iwContent 
+	$("#btn_report").on("mouseout", function(){
+		$("#div_report").css("background-color", "white");
 	});
-	  
-	// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-	infowindow.open(map, marker); 	
 	
-
+	// 스크랩 버튼
+	$("#btn_scrap").on("click", function(){
+		if('${scrap_flag }' == 'f'){
+			if(confirm("채용공고를 스크랩하시겠습니까?")){
+				window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=t${recr.recruit_code }&req_page=recr_detail';
+			}
+		}else{
+			if(confirm("채용공고 스크랩을 취소하시겠습니까?")){
+				window.location.href = '${pageContext.request.contextPath }/scrap?scrap_flag=f${recr.recruit_code }&req_page=recr_detail';
+			}
+		}
+	});
+	$("#btn_scrap").on("mouseover", function(){
+		$("#div_scrap").css("background-color", "#e5f5fb");
+	});
+	$("#btn_scrap").on("mouseout", function(){
+		$("#div_scrap").css("background-color", "white");
+	});
+	
+	$("#div_back").on("click", function(){
+// 		alert("req page? : ${req_page }");
+		<c:choose>
+			<c:when test="${req_page == null }">
+				window.location.href = '${pageContext.request.contextPath }/srecr';
+			</c:when>
+			<c:when test="${req_page == 'recruit' }">
+				window.location.href = '${pageContext.request.contextPath }/recruit';
+			</c:when>
+			<c:when test="${req_page == 'timeline' }">
+				window.location.href = '${pageContext.request.contextPath }/timeline';
+			</c:when>
+			<c:when test="${req_page == 'mail' }">
+				window.location.href = '${pageContext.request.contextPath }/mailHome';
+			</c:when>
+			<c:when test="${req_page == 'personal' }">
+				window.location.href = '${pageContext.request.contextPath }/personalConnection';
+			</c:when>
+			<c:when test="${req_page == 'alarm' }">
+				window.location.href = '${pageContext.request.contextPath }/alarm';
+			</c:when>
+			<c:otherwise>
+				window.location.href = '${pageContext.request.contextPath }/recrSearch';
+			</c:otherwise>
+		</c:choose>
+	});
+	
+	$("#btn_app").on("click", function(){
+		<c:choose>
+			<c:when test="${recr_app == 't' }">
+				if(confirm("채용공고 지원을 취소하시겠습니까?")){
+					window.location.href = '${pageContext.request.contextPath }/recr_app?recruit_code=${recr.recruit_code }&scrap_flag=${scrap_flag }';
+				}
+			</c:when>
+			<c:otherwise>
+				if(confirm("해당 채용공고에 지원하시겠습니까?")){
+					window.location.href = '${pageContext.request.contextPath }/recr_app?recruit_code=${recr.recruit_code }&scrap_flag=${scrap_flag }';
+				}
+			</c:otherwise>
+		</c:choose>
+	});
+	
+});
 </script>	
 	
 </body>

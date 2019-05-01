@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -297,7 +297,7 @@
             <div id="textPage" role="tabpanel" class="tab-pane active">
             
                 <!-- 텍스트 추가 버튼-->
-                <button id="addText" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="텍스트 추가">
+                <button id="addText" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="텍스트 추가">
                		<div class="btn_icon">
                			<i class="fas fa-font"></i>
                		</div>
@@ -345,7 +345,7 @@
                 <!-- 텍스트 컬러픽커 드롭다운 -->
                	<div class="btn-group">
                   <!-- 글자 배경색 변경 --> 	
-                  <button id="bgColor" class="btn btn-default menu_btn" data-toggle="dropdown" title="텍스트 배경색" disabled>
+                  <button id="bgColor" class="btn btn-primary menu_btn" data-toggle="dropdown" title="텍스트 배경색" disabled>
 					  	<i class="material-icons" style="font-size:50px">font_download</i>
 					  	<div class="btn_name">
 	               			<span>배경색 변경</span>
@@ -353,7 +353,7 @@
 				  </button>
 				  
 				  <!-- 글자색 번경 -->
-				  <button id="fontColor" class="btn btn-default menu_btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-placement="bottom" title="글씨 색" disabled>
+				  <button id="fontColor" class="btn btn-primary menu_btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-placement="bottom" title="글씨 색" disabled>
 	                    <i class="material-icons" style="font-size:50px">format_color_text</i>
 	                    <div class="btn_name">
 	               			<span>글자색 변경</span>
@@ -368,7 +368,7 @@
 
                     
 				<!-- Bold체 버튼-->
-                <button id="fontBold" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="굵게" disabled>
+                <button id="fontBold" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="굵게" disabled>
                 	<div class="btn_icon">
                 		<i class="fas fa-bold"></i>
                 	</div>
@@ -378,7 +378,7 @@
                 </button>
                 
                 <!-- Itaric체 버튼 -->
-                <button id="fontItalic" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="기울게" disabled>
+                <button id="fontItalic" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="기울게" disabled>
                 	<div class="btn_icon">
                 		<i class="fas fa-italic"></i>
                 	</div>
@@ -388,7 +388,7 @@
                 </button>
                 
                 <!-- 밑줄 버튼 -->
-                <button id="fontUnderLine" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="밑줄" disabled>
+                <button id="fontUnderLine" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="밑줄" disabled>
                 	<div class="btn_icon">
                 		<i class="fas fa-underline"></i>
                 	</div>
@@ -398,7 +398,7 @@
                 </button>
                 
                 <!-- 취소선 버튼 -->
-                <button id="fontDeleteLine" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="취소선" disabled>
+                <button id="fontDeleteLine" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="취소선" disabled>
                 	<div class="btn_icon">
                 		<i class="fas fa-strikethrough"></i>
                 	</div>
@@ -408,7 +408,7 @@
 				</button>
                 
                 <!-- 왼쪽 정렬 -->
-				<button id="alignLeft" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="왼쪽 정렬" disabled>
+				<button id="alignLeft" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="왼쪽 정렬" disabled>
 					<div class="btn_icon">
 						<i class="fas fa-align-left"></i>
 					</div>
@@ -418,7 +418,7 @@
 				</button>
 				
 				<!-- 가운데 정렬 -->
-                <button id="alignCenter" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="가운데 정렬" disabled>
+                <button id="alignCenter" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="가운데 정렬" disabled>
                 	<div class="btn_icon">
                 		<i class="fas fa-align-center"></i>
                 	</div>
@@ -428,7 +428,7 @@
                 </button>
                 
                	<!-- 오른쪽 정렬 -->
-                <button id="alignRight" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="오른쪽 정렬" disabled>
+                <button id="alignRight" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="오른쪽 정렬" disabled>
                 	<div class="btn_icon">
                 		<i class="fas fa-align-right"></i>
                 	</div>
@@ -445,7 +445,7 @@
             <div id="drawingPage" role="tabpanel" class="tab-pane">
                 
                 <!-- 사각형 그리기 -->
-                <button id="addSquare" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="사각형">
+                <button id="addSquare" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="사각형">
                 	<div class="btn_icon">
                 		<i class="far fa-square"></i>
                 	</div>
@@ -455,7 +455,7 @@
                 </button>
 
 				<!-- 삼각형 그리기 -->
-                <button id="addTriangle" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="삼각형">
+                <button id="addTriangle" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="삼각형">
                 	<span style="font-size: 40px; font-weight: bold">△</span>
                 	<div class="btn_name">
                 		<span>삼각형 그리기</span>
@@ -463,7 +463,7 @@
                 </button>
 
 				<!-- 원 그리기 -->
-                <button id="addCircle" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="원">
+                <button id="addCircle" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="원">
                 	<div class="btn_icon">
                 		<i class="far fa-circle"></i>
                 	</div>
@@ -473,7 +473,7 @@
                 </button>
 
 				<!-- 선 그리기 -->
-                <button id="addLine" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="선">
+                <button id="addLine" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="선">
                 	<span style="font-size: 40px; font-weight: bold">/</span>
                 	<div class="btn_name">
                 		<span>선 그리기</span>
@@ -481,7 +481,7 @@
                 </button>
 				
 				<!-- 한쪽 화살표 -->
-                <button id="addArrow" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="한쪽 화살표" style="font-size:15px">
+                <button id="addArrow" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="한쪽 화살표" style="font-size:15px">
                 	<span style="font-size: 40px; font-weight: bold">↗</span>
 	               	<div class="btn_name">
 	               		<span>한쪽 화살표</span>
@@ -489,7 +489,7 @@
                 </button>
 
 				<!-- 양쪽 화살표 -->
-                <button id="addDArrow" class="btn btn-default menu_btn" data-toggle="tooltip" data-placement="bottom" title="양쪽 화살표">
+                <button id="addDArrow" class="btn btn-primary menu_btn" data-toggle="tooltip" data-placement="bottom" title="양쪽 화살표">
 					<span style="font-size: 40px; font-weight: bold">⤢</span>
                 	<div class="btn_name">
                 		<span>양쪽 화살표</span>
@@ -498,7 +498,7 @@
                 
 				<!-- 도형 색변경 -->
                 <div class="btn-group">
-                	<button id="strokeColor" class="btn btn-default menu_btn" data-toggle="dropdown" title="텍스트 배경색" disabled>
+                	<button id="strokeColor" class="btn btn-primary menu_btn" data-toggle="dropdown" title="텍스트 배경색" disabled>
 						<div class="btn_icon">
 							<i class="fas fa-fill-drip"></i>
 						</div>
@@ -561,10 +561,11 @@
 
                 <button id="videoBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="동영상 링크 삽입">
                     <div class="btn_icon">
-                    	<i class="fas fa-video"></i>
+                    	<!-- <i class="fas fa-video"></i> -->
+                    	<i class="fab fa-youtube"></i>
                     </div>
                     <div class="btn_name">
-                    	<span>비디오 추가</span>
+                    	<span>Youtube</span>
                     </div>
                 </button>
 
@@ -585,7 +586,7 @@
 			
 				<button id="imageSaveBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="이미지 저장" onclick="stage_save_img();">
                     <div class="btn_icon">
-                    	<i class="fas fa-link"></i>
+                    	<i class="fas fa-file-download"></i>
                     </div>
                     <div class="btn_name">
                     	이미지 저장
@@ -593,9 +594,9 @@
                 </button>
                 
                 
-                <button id="pageSaveBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="페이지 저장" onclick="input_page_title();">
+                <button id="pageSaveBtn" class="btn btn-primary menu_btn" type="button" data-toggle="tooltip" data-placement="bottom" title="페이지 저장" onclick="input_page_title('${ pVo.page_title }');">
                     <div class="btn_icon">
-                    	<i class="fas fa-link"></i>
+                    	<i class="far fa-save"></i>
                     </div>
                     <div class="btn_name">
                     	페이지 저장
@@ -605,7 +606,7 @@
                 <button id="stageColorBtn" class="btn btn-primary menu_btn" type="button" data-toggle="popover" data-container="body"
 				data-toggle="popover" data-placement="bottom" data-content=" " data-trigger="focus" data-placement="bottom" onclick="updateStageColor();">
                     <div class="btn_icon">
-                    	<i class="fas fa-link"></i>
+                    	<i class="fas fa-fill-drip"></i>
                     </div>
                     <div class="btn_name">
                     	배경색 변경
@@ -659,16 +660,18 @@
 
 	<%@ include file="/WEB-INF/views/onenote/onenote_modal.jsp"%>
 	
-	
-	<form id="saveForm" action="/page/savePage" method="post"> 
+	<!-- 페이지 저장 form -->
+	<form id="saveForm" action="/page/savePage" method="post">
+		<input type="hidden" id="page_code" name="page_code"/> 
 		<input type="hidden" id="section_code" name="section_code" value="${ section_code }"/>
 		<input type="hidden" id="page_title" name="page_title"/>
 		<input type="hidden" id="page_contents" name="page_contents"/>
 		<input type="hidden" id="page_thumbnail" name="page_thumbnail"/>
+		<input type="hidden" id="bg_color" name="bg_color"/>
 		<input type="hidden" id="user_id" name="user_id"/>
 	</form>
 	
-	
+	<!-- 썸네일 이미지 data form -->
 	<form id="thumnailForm">
 		<input type="hidden" id="thumnail_data" name="thumnail_data"/>
 	</form>
@@ -677,6 +680,23 @@
 </body>
 
 <script>
+
+	/* 저장 배열 */
+	//소스코드 데이터 저장 배열 
+	var code_id_array = new Array;				//소스코드 ID
+	var code_mode_array = new Array();			//소스코드 언어
+	var code_theme_array = new Array();			//소스코드 테마
+	
+	//비디오 데이터 저장 배열 
+	var video_id_array = new Array;				//비디오 ID
+	var video_link_array = new Array();			//비디오 링크
+
+	//link 데이터 저장 배열
+	var link_id_array = new Array;				//링크 ID
+	var link_address_array = new Array();		//링크 주소
+
+
+
 	$('#stageColorBtn').popover('enable');
 	
 	// 버튼 툴팁
@@ -714,6 +734,44 @@
 
 
     var data = '';
+	
+	/* 페이지 수정 시 data에 이전 페이지 stage 정보 setting */
+	if(${ pVo != null}){
+		data = '${ pVo.page_contents }';
+		
+		/* 페이지 수정시 saveForm 의 요청경로를 수정요청 경로로 변경 */
+		$('#saveForm').attr('action', '/page/update_page');
+		
+		//섹션코드 setting
+		$('#section_code').val('${ pVo.section_code }');
+		//페이지코드 setting
+		$('#page_code').val('${ pVo.page_code }');
+		
+		
+		/* 배경색 setting */
+		if(${ pVo.bg_color != null}){
+			$('#container').css('background-color', '${ pVo.bg_color }');
+		}
+		
+		//DB에 저장한 Code Data 그려주기
+	    if(${ page_sourceList != null }){
+	    	drawCodeTemplate();	//div, textarea  생성
+	    	drawCodeMirror();	//textarea CodeMirror 로 변환
+	    }
+		
+	  	//DB에 저장한 Video 그려주기
+	    if(${ page_videoList != null }){
+	    	drawVideoTemplate();	//div, handle 생성
+	    	drawVideo();			//iframe 그려주기
+	    }
+	  	
+	  	//DB에 저장한 link 그려주기
+	    if(${ page_linkList != null }){
+	    	drawLinkTemplate();	//div 생성
+	    	drawLink();			//link 그려주기
+	    }
+		
+	}
 
     var node_num = 0;
     var state = '';
@@ -955,9 +1013,9 @@
 
         if (fontAlign != 'left') {
             selectNode.align('left');
-            $("#alignLeft").css('background-color', 'gray');
+           /*  $("#alignLeft").css('background-color', 'gray');
             $("#alignCenter").css('background-color', 'white');
-            $("#alignRight").css('background-color', 'white');
+            $("#alignRight").css('background-color', 'white'); */
         }
 
         layer.draw();
@@ -970,9 +1028,9 @@
 
         if (fontAlign != 'center') {
             selectNode.align('center');
-            $("#alignLeft").css('background-color', 'white');
+            /* $("#alignLeft").css('background-color', 'white');
             $("#alignCenter").css('background-color', 'gray');
-            $("#alignRight").css('background-color', 'white');
+            $("#alignRight").css('background-color', 'white'); */
         }
 
         layer.draw();
@@ -985,9 +1043,9 @@
 
         if (fontAlign != 'right') {
             selectNode.align('right');
-            $("#alignLeft").css('background-color', 'white');
+           /*  $("#alignLeft").css('background-color', 'white');
             $("#alignCenter").css('background-color', 'white');
-            $("#alignRight").css('background-color', 'gray');
+            $("#alignRight").css('background-color', 'gray'); */
         }
 
         layer.draw();
@@ -1082,14 +1140,19 @@
 
     //insertPage
     
-    //이미지 첨부 - 미완
+    //이미지 첨부
     $('#imageBtn').on('click', function() {
         $('#imageStorage').click();
     });
 	
 	//비디오 삽입
     $('#videoBtn').on('click', function() {
-        addVideo();
+    	input_youtube_link();
+    });
+	
+	//링크 삽입
+    $('#linkBtn').on('click', function() {
+    	input_link_address();
     });
 
     //이모티콘 버튼 
@@ -1272,12 +1335,12 @@
         $("#fontDeleteLine").attr('disabled', true);
 
         //버튼 색
-        $('#fontColor').attr('background-color', 'white');
+/*         $('#fontColor').attr('background-color', 'white');
         $('#bgColor').attr('background-color', 'white');
         $("#fontBold").css('background-color', 'white');
         $("#fontItalic").css('background-color', 'white');
         $("#fontUnderLine").css('background-color', 'white');
-        $("#fontDeleteLine").css('background-color', 'white');
+        $("#fontDeleteLine").css('background-color', 'white'); */
 
         //fontAlign
         //버튼 비활성화
@@ -1286,9 +1349,9 @@
         $("#alignRight").attr('disabled', true);
 
         //버튼 색
-        $("#alignLeft").css('background-color', 'white');
+/*         $("#alignLeft").css('background-color', 'white');
         $("#alignCenter").css('background-color', 'white');
-        $("#alignRight").css('background-color', 'white');
+        $("#alignRight").css('background-color', 'white'); */
 
         if (selectNode.hasName('text')) {
             //console.log(selectNode);
@@ -1317,7 +1380,7 @@
             var fontDecoration = selectNode.textDecoration();
             var fontAlign = selectNode.align();
 
-            if (fontStyle.search('bold') > -1) {
+            /* if (fontStyle.search('bold') > -1) {
                 $("#fontBold").css('background-color', 'gray');
             } else if (fontStyle.search('bold') == -1) {
                 $("#fontBold").css('background-color', 'white');
@@ -1347,7 +1410,7 @@
                 $("#alignCenter").css('background-color', 'gray');
             } else if (fontAlign == 'right') {
                 $("#alignRight").css('background-color', 'gray');
-            }
+            } */
 
         }
     }
@@ -1367,6 +1430,245 @@
             $('#strokeColor').attr('disabled', false);
 
         }
+    }
+    
+    
+    //코드작성 textarea, div 생성
+    function drawCodeTemplate(){
+    	
+    	var code_num = 1000;
+    	
+    	<c:forEach items='${ page_sourceList }' var="source">
+    	
+    		var code_contents = '${ source.source_contents }';
+    	
+    		code_num++;
+    		
+    		//textarea 생성 id 부여
+        	var textarea = document.createElement('textarea');
+        	textarea.id = 'textarea' + code_num;
+        	$(textarea).addClass('textarea');
+        	
+        	//줄바꿈 <br>태그로 치환된 데이터값 다시 줄바꿈으로 치환
+        	var render_contents = code_contents.split('<br/>').join("\r\n");
+        	$(textarea).val(render_contents);
+        	
+        	//div 생성
+        	var code_div = document.createElement('div');
+            code_div.id = 'code_div' + code_num;
+            $(code_div).addClass('code_div');
+            
+            
+            //view_div에 생성한 div 넣기
+            $('#view_div').append(code_div);
+        	
+            //div에 textarea 추가
+            $('#code_div'+code_num).append(textarea);
+            
+      	</c:forEach>
+    }
+
+    //drawCodeTemplate CodeMirror 변환
+    function drawCodeMirror(){
+    	
+    	var code_num2 = 1000;
+    	
+    	<c:forEach items='${ page_sourceList }' var="source">
+    		
+    		code_num2++;
+        	
+        	var code_mode = '${ source.source_mode }';
+        	var code_theme = '${ source.source_theme }';
+        	
+        	var css_top = '${ source.css_top }';
+        	var css_left = '${ source.css_left }';
+        	
+        	var code_editor = null;
+        	
+        	code_id_array.push(code_num2);
+        	code_theme_array.push(code_theme);
+        	code_mode_array.push(code_mode);
+        	
+        	//CodeMirror 생성
+            code_editor = CodeMirror.fromTextArea(document.getElementById('textarea' + code_num2), {
+                mode: code_mode, // text/html 추가 java
+                lineNumbers: true,
+                tabMode: 'indent',
+                styleActiveLine: true,
+                lineWrapping: true,
+                autoCloseTags: true,
+                theme: code_theme,
+                // tabSize: 10, //tab 몇칸 띄우는지
+            });
+        	
+        	code_editor.setSize(600, 500);
+        	code_editor.save();
+        	
+        	
+        	// css 위치 값으로 컨트롤 draggable효과 추가
+            $("#code_div" + code_num2).draggable({
+                containment: "#container",
+                scroll: true
+            });
+
+            // div가 생성될 위치값 
+            $("#code_div" + code_num2).css('left', css_left);
+            $("#code_div" + code_num2).css('top', css_top);
+            
+            //매우중요 block 
+            //block = width값 사이즈에 맞게 고정
+            //absolute = 영역에 속해 있지 않은 단독 고정 위치
+            $("#code_div" + code_num2).css('display', 'block');
+            $("#code_div" + code_num2).css('position', 'absolute');
+            
+           
+		</c:forEach>
+    }
+    
+ 	//비디오 div, handle 생성
+    function drawVideoTemplate(){
+    	
+    	var video_num = 1000;
+    	
+    	<c:forEach items='${ page_videoList }' var="video">
+    	
+    	video_num++;
+    	
+    	//video div 생성
+    	var video_div = document.createElement('div');
+    	video_div.id = 'video_div' + video_num;
+    	$(video_div).addClass('video_div');
+    	video_div.style = 'background-image: url(/page/onenoteImageView?src=video_img.png);';
+        
+        //view_div에 생성한 div 넣기
+        $('#view_div').append(video_div);
+        
+        //drag 핸들
+        var handle = document.createElement('div');
+        handle.id = 'handle' + video_num;
+    	$(handle).addClass('handle');
+        
+        $('#video_div' + video_num).append(handle);
+    	
+        </c:forEach>
+    }
+ 	
+  	//Youdute iframe 생성
+    function drawVideo(){
+    	
+    	var video_num2 = 1000;
+    	
+    	<c:forEach items='${ page_videoList }' var="video">
+    		
+    		video_num2++;
+    		
+    		var video_link = '${ video.video_link }';
+    		var video_css_top = '${ video.video_css_top }';
+    		var video_css_left = '${ video.video_css_left }';
+    		
+    		video_id_array.push(video_num2);
+    		video_link_array.push(video_link);
+        	
+    		var iframe = document.createElement('iframe');
+    	    iframe.id = "iframe" + video_num2;
+    	    iframe.width = 560;
+    	    iframe.height = 315;
+    	    iframe.src = video_link;
+    	    iframe.frameborder = 0;
+    	    iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+    	    iframe.allowfullscreen = true;
+    	    iframe.draggable = true;
+
+    	    $('#video_div'+video_num2).append(iframe);
+    	    
+    	    //css 위치 값으로 컨트롤 draggable효과 추가
+    	    $("#video_div" + video_num2).draggable({
+    	    	handle: '#handle'+video_num2,
+    	        containment: "#container",
+    	        scroll: true,
+    	        iframeFix: true, //필수
+    		});
+    	    
+    	    //위치조정 handle - show, hide 이벤트 속성 추가
+    	    $("#video_div" + video_num2).attr('onmouseenter', "showHandle("+video_num2+");");
+    	    $("#video_div" + video_num2).attr('onmouseleave', "hideHandle("+video_num2+");");
+    	    
+    	    // div가 생성될 위치값 
+    	    $("#video_div" + video_num2).css('left', video_css_left);
+    	    $("#video_div" + video_num2).css('top', video_css_top);
+    	    
+    	    //매우중요 block 
+    	    //block = width값 사이즈에 맞게 고정
+    	    //absolute = 영역에 속해 있지 않은 단독 고정 위치
+    	    $("#video_div" + video_num2).css('display', 'block');
+    	    $("#video_div" + video_num2).css('position', 'absolute');
+            
+           
+		</c:forEach>
+    }
+  	
+  	//링크 div 생성
+    function drawLinkTemplate(){
+    	
+    	var link_num = 1000;
+    	
+    	<c:forEach items='${ page_linkList }' var="link">
+    	
+    		link_num++;
+    	
+	    	//video div 생성
+	    	var link_div = document.createElement('div');
+	    	link_div.id = 'link_div' + link_num;
+	    	$(link_div).addClass('link_div');
+			
+	    	
+	        //view_div에 생성한 div 넣기
+	        $('#view_div').append(link_div);
+	        
+	    
+        </c:forEach>
+    }
+ 	
+  	//링크 생성
+    function drawLink(){
+    	
+    	var link_num2 = 1000;
+    	
+    	<c:forEach items='${ page_linkList }' var="link">
+    		
+    		link_num2++;
+    		
+    		var link_address = '${ link.link_address }';
+    		var link_css_top = '${ link.link_css_top }';
+    		var link_css_left = '${ link.link_css_left }';
+    		
+    		link_id_array.push(link_num2);
+    		link_address_array.push(link_address);
+    		
+    		var a = document.createElement('a');
+    	    a.id = "link" + link_num2;
+    	    a.href = link_address;
+    	    a.style = "font-size: 30px; color: #489BF0;";
+    	    a.text = link_address;
+    	    
+    	    $('#link_div'+link_num2).append(a);
+    	    
+    	    //css 위치 값으로 컨트롤 draggable효과 추가
+    	    $("#link_div" + link_num2).draggable({
+    	        containment: "#container",
+    	    });
+    	    
+    	    // div가 생성될 위치값 
+    	    $("#link_div" + link_num2).css('left', link_css_left);
+    	    $("#link_div" + link_num2).css('top', link_css_top);
+    	    
+    	    //매우중요 block 
+    	    //block = width값 사이즈에 맞게 고정
+    	    //absolute = 영역에 속해 있지 않은 단독 고정 위치
+    	    $("#link_div" + link_num2).css('display', 'block');
+    	    $("#link_div" + link_num2).css('position', 'absolute');
+           
+		</c:forEach>
     }
     
     

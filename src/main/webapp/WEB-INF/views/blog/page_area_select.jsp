@@ -10,6 +10,8 @@
 
 
 <div class="col-md-6">
+
+	<!-- 헤드 -->
 	<div class="panel panel-default">
 
 		<div id="page_area_select_head"
@@ -27,7 +29,7 @@
 			</c:if>
 		</div>
 	</div>
-	
+	<!-- 헤드 -->
 	
 		<!-- page -->
 		<c:forEach items="${ pageList }" var="page">
@@ -54,14 +56,14 @@
 								<i class="fas fa-ellipsis-h"></i>
 							</button>
 							<c:choose>
-								<c:when test="${ post.mem_id eq memberInfo.mem_id }">
+								<c:when test="${ pVo.user_id eq SESSION_MEMBERVO.mem_id }">
 									<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 									
-										<button type="button" class="btn_controll-list">
+										<button type="button" class="btn_controll-list" onclick='update_onenote_write("${ page.page_code }")'>
 											<i class="fas fa-edit icon"></i>글 수정
 										</button>
 										
-										<button type="button" class="btn_controll-list" onclick='delete_page(${ page.page_code })'>
+										<button type="button" class="btn_controll-list" onclick='delete_page("${ page.page_code }", "#")'>
 											<i class="fas fa-ban icon"></i>글 삭제
 										</button>
 									</ul>
@@ -90,20 +92,28 @@
 					
 					
 					<!-- 댓글수, 좋아요 수 출력 -->
-					<div class="post_socialCount">
+					<div class="post_socialCount" style="margin-bottom: 5px;">
 						<ul style="padding-left: 10px;">
 							<li style="list-style: none; float: left;">
-								<button class="btn_count btn_goodcount"
-									title="goodCount ${post.post_code }" style="font-size: 12px;">
-									추천 <span id="txt_good_count${post.post_code }">${post.goodcount }</span>
+								<button class="btn_count btn_goodcount" style="font-size: 15px;">
+									추천 
+									<c:if test="${ page.good_cnt != null }">
+										${ page.good_cnt }
+									</c:if>
+									<c:if test="${ page.good_cnt == null }">
+										0
+									</c:if>
 								</button>
 							</li>
 							<li style="list-style: none; float: left;">
-								<button class="btn_count btn_commentcount"
-									id="btn_commentcount${post.post_code }"
-									title="commentCount ${post.post_code }"
-									style="font-size: 12px;">
-									댓글 <span id="txt_comment_count${post.post_code }">${post.commentcount }</span>
+								<button class="btn_count btn_commentcount" style="font-size: 15px;">
+									댓글
+									<c:if test="${ page.comment_cnt != null }">
+										<span id="comment_cnt${ page.page_code }">${ page.comment_cnt }</span>
+									</c:if>
+									<c:if test="${ page.comment_cnt == null }">
+										<span id="comment_cnt${ page.page_code }">0</span>
+									</c:if>
 								</button>
 							</li>
 						</ul>
@@ -111,28 +121,36 @@
 					<!-- 댓글수, 좋아요 수 출력 -->
 					
 					
-					
+					<!-- 댓글, 좋아요버튼 구간 -->
 					<div class="col-post-social">
 						<!-- 좋아요 버튼 -->
-						<button class="btn-social btn_good"
-							style="margin-left: 10px; margin-top: 2px;"
-							title="${post.post_code }">
-							<span style="font-size: 18px;"> <i
-								id="icon_good${post.post_code }" class="far fa-thumbs-up"></i>
-							</span>
+						<button id="good_btn${ page.page_code }" class="btn-social good_btn" onclick="good_page('${ page.page_code }', '#');">
+							<i id="good_icon${ page.page_code }" class="far fa-thumbs-up"></i>
 						</button>
 						<!-- 댓글 출력 버튼 -->
-						<button class="btn-social btn_comment"
-							id="btn_comment${post.post_code }" data-code="${post.post_code }"
-							title="${post.post_code }">
-							<span style="font-size: 18px;"><i class="far fa-comments"></i></span>
+						<button class="btn-social" data-toggle="collapse" data-target="#comment_area${ page.page_code }" aria-expanded="false" aria-controls="collapseExample" onclick="page_commentList('${ page.page_code }');">
+							<i class="far fa-comments"></i>
 						</button>
 					</div>
+					<!-- 댓글, 좋아요버튼 구간 -->
+					
+					<!-- 댓글 출력 구간 -->
+					<div class="collapse" id="comment_area${ page.page_code }">
+					  <div class="well" id="comment_content${ page.page_code }">
+					    
+					    
+					    
+					  </div>
+					</div>
+					<!-- 댓글 출력 구간 -->
+					
 
 					<!-- comment -->
-					<div class="col-comment-area ${ post.post_code }" id="post_comment${ post.post_code }">
+					<%-- <div class="col-comment-area ${ post.post_code }" id="post_comment${ post.post_code }">
 					
-					</div>
+					
+					
+					</div> --%>
 					<!-- /comment --> 
 
 				</div>
@@ -141,39 +159,33 @@
 
 
 		</c:forEach>
-
-
-
-
-
-	
 </div>
 
 
 <script>
-	$('#page_area_select_head').css('background-color', '${ pVo.index_color }');
 
+	//bg index 컬러
+	$('#page_area_select_head').css('background-color', '${ pVo.index_color }');
+	
+	//테두리 index 컬러
+	/* $('#page_area_select_head').css('border', '5px solid ${ pVo.index_color }');
+	$('#writePageBtn').css('background-color', '${ pVo.index_color }'); */
+	
+	
+	/* 좋아요 효과 세팅 */
+	<c:forEach items="${ goodList }" var="good">
+		$('#good_btn' + ${ good.ref_code }).css('color', '#5386C5');
+		$('#good_btn' + ${ good.ref_code }).css('font-weight', 'bold');
+		$('#good_icon' + ${ good.ref_code }).attr('class', 'fas fa-thumbs-up');
+		$('#good_btn' + ${ good.ref_code }).attr('onclick', 'cancelGood_page("${ good.good_code }", "${ good.ref_code }", "#");');
+	</c:forEach>
+	
+	
+	//페이지 작성 페이지로 이동
 	function writePage(section_code) {
 		document.location.href = "/page/onenote?section_code=" + section_code;
 	}
 	
-	function delete_page(page_code){
-		
-		console.log('씨발');
-		
-		$.ajax({
-			url : "${cp}/page/delete_page",
-			data : {"page_code" : page_code },
-			success : function(data) {
-				
-				alert('페이지 삭제');
-				
-				$('#page_area').html(data);
-							
-			}
-		});
-		
-	}
 </script>
 
 
