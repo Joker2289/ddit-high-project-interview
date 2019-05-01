@@ -18,8 +18,8 @@
 			</div>
 		
 			<div class="search_div">
-				<input type="text" class="form-control search_TXT" placeholder="Search">
-				<div class="search_btn_div"><a class="search_btn"><i class="fas fa-search"></i></a></div>
+				<input id="seach_form" type="text" class="form-control search_TXT" placeholder="Search">
+				<div class="search_btn_div" onclick="page_search('${ user_id }');"><a class="search_btn"><i class="fas fa-search"></i></a></div>
 			</div>
 		</div>
 		
@@ -169,6 +169,50 @@
 		var goodCnt = '${ goodCnt }';
 		$('#good_cnt').text(goodCnt);
 	</c:if>
+	
+	/* 페이지 검색 */
+	function page_search(user_id){
+		
+		var search_word = $('#seach_form').val();
+		
+		$.ajax({
+			url : "${cp}/page/page_search",
+			data : { "search_word" : search_word, "user_id" : user_id},
+			success : function(data) {
+				
+				$('#page_area').html(data);
+				$('#seach_form').focus();			
+			}
+		});
+		
+	}
+	
+	/* 검색결과 alert */
+	if( '${searchCnt}' != ''){
+		<c:if test="${ searchCnt != 0 }">
+			var searchCnt = '${ searchCnt }';
+			alert("검색 결과 " + searchCnt + " 건");
+		</c:if>
+		
+		<c:if test="${ searchCnt == 0 }">
+			alert("검색 결과가 없습니다");
+		</c:if>
+	}	
+	
+	/* 검색창 입력후 ENTER */
+	$('#seach_form').on('keypress', function(e){
+		
+		var key = e.keyCode;
+		var user_id = '${ user_id }';
+		
+		if(key == 13){
+			page_search(user_id);
+		}
+		
+	});
+
+	
+
 
 </script>
 
