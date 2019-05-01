@@ -1076,6 +1076,24 @@ public class RecruitController {
 		// 뒤로가기를 할 때 req_page 확인을 위해 model에 넣기.
 		model.addAttribute("req_page", req_page);
 		
+		// 신고여부 넘기기.
+		ReportVo tempRVo = new ReportVo();
+		tempRVo.setRef_code(recruit_code);
+		tempRVo.setMem_id(mVo.getMem_id());
+		tempRVo.setDivision("34");
+		
+		// 신고내역이 없으면 rVo는 null.
+		ReportVo rVo = reportService.getReport(tempRVo);
+		String report_flag = "";
+		
+		if(rVo != null){
+			report_flag = "t";
+		}else{
+			report_flag = "f";
+		}
+		
+		model.addAttribute("report_flag", report_flag);
+		
 		return "recr_detailTiles";
 	}
 	
@@ -1242,13 +1260,23 @@ public class RecruitController {
 		RecruitVo rVo = recrService.getRecr(recruit_code);
 		String app_count = rVo.getApp_count();
 		
+		// apply_recruit - 지원하면 insert, 취소하면 delete
+		Apply_recruitVo aVo = new Apply_recruitVo();
+		aVo.setRecruit_code(recruit_code);
+		aVo.setUser_id(mVo.getMem_id());
+		
+		
 		// recr_app값이 t면 f로, f면 t로 수정.
 		if(sVo.getRecr_app().equals("t")){
 			recr_app = "f";
 			
+			appService.deleteApp(aVo);		
+			
 			app_count = String.valueOf(Integer.valueOf(app_count) - 1);
 		}else{
 			recr_app = "t";
+			
+			appService.insertApp(aVo);		
 			
 			app_count = String.valueOf(Integer.valueOf(app_count) + 1);
 		}
@@ -1270,13 +1298,6 @@ public class RecruitController {
 		CorporationVo corp = corpService.select_corpInfo(recr.getCorp_id());
 		model.addAttribute("recr", recr);
 		model.addAttribute("corp", corp);
-		
-		// apply_recruit insert
-		Apply_recruitVo aVo = new Apply_recruitVo();
-		aVo.setRecruit_code(recruit_code);
-		aVo.setUser_id(mVo.getMem_id());
-		
-		appService.insertApp(aVo);
 
 		return "recr_detailTiles";
 	}
