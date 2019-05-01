@@ -28,14 +28,12 @@ public class SearchResultDaoImpl implements ISearchResultDao {
 
 	@Override
 	public int corpCount(String search_word) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.selectOne("search_result.corpCount", search_word);
 	}
 
 	@Override
 	public int userCount(String search_word) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.selectOne("search_result.userCount", search_word);
 	}
 
 }

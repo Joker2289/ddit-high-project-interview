@@ -29,6 +29,17 @@ div.table_div, .div_alarm, .tb_alarm{
 	display: inline-block;
 }
 
+/* 공통 */
+.btn_more_result{
+	border: 0px solid #fff; 
+	background: #fff; 
+	font-size: 19px; 
+	font-weight: bold; 
+	color: #0073B1; 
+	display: inline-block; 
+	width: 9%;
+	outline: 0;
+}
 
 /* 회사 영역   */
 .corp_info{
@@ -49,7 +60,7 @@ div.table_div, .div_alarm, .tb_alarm{
 
 .col-corpInfomation{
 	display: inline-block;
-	width: 74%;
+	width: 70%;
 }
 
 .txt-corp_name{
@@ -61,6 +72,7 @@ div.table_div, .div_alarm, .tb_alarm{
 
 .txt-industry{
 	font-size: 16px;
+	color: #8D9191;
 }
 
 .col-corpbuttom{
@@ -90,20 +102,27 @@ div.table_div, .div_alarm, .tb_alarm{
 
 
 /* 회원영역  */
+
+.user_info{
+/* 	display: table; */
+	margin: 18px;
+	float: left;
+}
+
 .user_container{
 	border: 1px solid #ddd; 
 	border-radius: 8px; 
 	padding: 5px; 
-	margin: 15px; 
-	display: table-cell; 
-	width: 300px;
+	padding-top: 20px;
+/* 	display: table-cell;  */
+	width: 330px;
 	text-align: center;
-	vertical-align: middle;
+/* 	vertical-align: middle; */
 }
 
 .user_img{
 	border-radius: 100px;
-	border: 1px solid #ddd;
+	border: 0px solid #ddd;
 	width: 110px;
 	height: 110px;
 	max-width: 110px;
@@ -118,5 +137,7 @@ div.table_div, .div_alarm, .tb_alarm{
 	font-size: 20px;
 	font-weight: bold;
 	width: 100%;
+	height: 50px;
+	outline: 0;
 }
 
