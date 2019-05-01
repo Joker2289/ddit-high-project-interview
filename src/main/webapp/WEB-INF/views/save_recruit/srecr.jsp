@@ -134,20 +134,22 @@
 					</div>
 					<div class="whiteBox" style="width: 330px; margin-left: -14px; margin-top: -1px; padding-bottom: 2px;">
 						<table border="0" style="margin-left: 10px; width: 310px; margin-top: 10px;">
-							<c:forEach begin="1" end="${appList.size() }" varStatus="i">
-								<tr>
-									<td id="app${i.index }" onmouseover="" style="cursor: pointer; 
-											border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 10px; 
-											padding-top: 10px; padding-left: 4px;">
-										<img src="${corpImgList_app.get(i.index - 1) }" width="150"
-												style="margin-bottom: 10px;"><br><br>
-										<strong>${appList.get(i.index - 1).recruit_title }</strong><br>
-										${corpNmList_app.get(i.index - 1) }<br>
-										${appList.get(i.index - 1).job_local }<br>
-										지원일: xx일 전
-									</td>
-								</tr>
-							</c:forEach>
+							<c:if test="${appList.size() > 0}">
+								<c:forEach begin="1" end="${appList.size() }" varStatus="i">
+									<tr>
+										<td id="app${i.index }" onmouseover="" style="cursor: pointer; 
+												border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 10px; 
+												padding-top: 10px; padding-left: 4px;">
+											<img src="${corpImgList_app.get(i.index - 1) }" width="150"
+													style="margin-bottom: 10px;"><br><br>
+											<strong>${appList.get(i.index - 1).recruit_title }</strong><br>
+											${corpNmList_app.get(i.index - 1) }<br>
+											${appList.get(i.index - 1).job_local }<br>
+											지원일: xx일 전
+										</td>
+									</tr>
+								</c:forEach>
+							</c:if>
 						</table>						
 					</div>
 				</div>			

@@ -30,24 +30,49 @@
 				</div>
 				<div class="chatrooms">
 				<c:forEach items="${userChatroomsMap }" var="userChatroom">
-					<c:set var="profile_addrpath" value="/profile?mem_id=${userChatroom.mem_id }"/>
-						<c:if test="${fn:contains(userChatroom.profile_path, 'http')}">
-							<c:set var="profile_path" value="${userChatroom.profile_path }"/> 
-						</c:if>
-					<fmt:formatDate value="${userChatroom.write_date}" pattern="MM월 dd일" var="write_date"/>
+					<c:choose>
+						<c:when test="${not empty fn:split(userChatroom.PATH,',')[1] }">
+							<c:set var="room_img" value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKVGBZRHop7h5QXz8vP3CgarNIlJbDHcrX2IODVV-lyPd1j-lg"/>
+						</c:when>
+						<c:otherwise>
+							<c:set var="room_imgaddr" value="/profile?mem_id=${userChatroom.MEMBER }"/>
+							<c:if test="${fn:contains(userChatroom.PATH, 'http')}">
+								<c:set var="room_img" value="${userChatroom.PATH }"/> 
+							</c:if>
+						</c:otherwise>
+					</c:choose>
+					<fmt:formatDate value="${userChatroom.WRITE_DATE}" pattern="MM월 dd일" var="write_date"/>
 					<a class="chatRooms chatRoomBox" role="${userChatroom.CHAT_CODE }">
 						<div class="profileImageBox">
-							<div style="background-image: url(${not empty profile_path ? profile_path : profile_addrpath});"></div>
+							<div style="background-image: url(${not empty room_img ? room_img : room_imgaddr});"></div>
 						</div>
 						<div class="chatRoomContentsBox">
 							<div style="display: flex; color: rgba(0, 0, 0, .6);">
 								<label class="chatRoomMemberBox">${userChatroom.CHAT_NAME}</label>
 								<label style="font-size: 14px;">${write_date }</label>
 							</div>
-							<div class="chatContentsBox">${userChatroom.MEM_ID eq SESSION_MEMBERVO.mem_id ? "나": userChatroom.MEM_ID }
-								: ${not empty fn:split(userChatroom.CHAT_CONTENT,'▣')[1] ? '이미지를 보냈습니다.' : userChatroom.CHAT_CONTENT}</div>
-						</div>
-					</a>
+							<div class="chatContentsBox">${userChatroom.MEM_ID eq SESSION_MEMBERVO.mem_id ? "나": userChatroom.NAME }
+								: <c:choose>
+									<c:when test="${not empty fn:split(userChatroom.CHAT_CONTENT,'▣')[1]}">
+										<c:choose>
+											<c:when test="${fn:split(userChatroom.CHAT_CONTENT,'▣')[1] eq 'exit'}">
+												나가셨습니다.
+											</c:when>
+											<c:when test="${fn:split(userChatroom.CHAT_CONTENT,'▣')[1] eq 'image'}">
+												이미지를 보냈습니다.
+											</c:when>
+											<c:otherwise>
+												파일을 보냈습니다.
+											</c:otherwise>
+								 		 </c:choose>
+									</c:when>
+									<c:otherwise>
+										${userChatroom.CHAT_CONTENT}
+									</c:otherwise>
+								  </c:choose>
+							 </div>
+						  </div>
+					   </a>
 					</c:forEach>
 				</div>
 			</div>
@@ -67,17 +92,25 @@
 					<div style="width: 474px; margin-bottom: 10px; text-align: center;">${oldDate}</div> 
 					<c:forEach items="${chatContentsVoList }" var="chatContentsVo">
 						<fmt:formatDate value="${chatContentsVo.write_date}" pattern="MM월 dd일 a KK:mm" var="write_date"/>
-						<c:set var="profile_addrpath" value="/profile?mem_id=${chatContentsVo.mem_id }"/>
-						<c:if test="${fn:contains(chatContentsVo.profile_path, 'http')}">
-							<c:set var="profile_path" value="${chatContentsVo.profile_path }"/> 
-						</c:if>
+						<c:set var="contents_addrpath" value="/profile?mem_id=${chatContentsVo.mem_id }"/>
 						<c:choose>
 							<c:when test="${fn:split(chatContentsVo.chat_content,'▣')[1] eq 'exit'}">
 								<div style="width: 474px; margin-bottom: 10px; text-align: center;">${fn:split(chatContentsVo.chat_content,'▣')[0] } 님이 나가셨습니다.</div>
 							</c:when>
 							<c:otherwise>
 								<div style="width: 474px; min-height: 66px; display: flex; margin-bottom: 10px;">
-									<a href="/profileHome<c:if test="${chatContentsVo.mem_id != SESSION_MEMBERVO.mem_id}">?user_id=${chatContentsVo.mem_id }</c:if>" ><div style="margin-right: 20px; background-image: url(${not empty profile_path ? profile_path : profile_addrpath}); width: 40px; height: 40px; border-radius: 40px; background-size: cover; background-position: center; background-repeat: no-repeat;"></div></a>
+									<a href='<c:choose>
+												<c:when test="${chatContentsVo.type eq 'user'}">
+													/profileHome
+													<c:if test="${chatContentsVo.mem_id != SESSION_MEMBERVO.mem_id}">?user_id=${chatContentsVo.mem_id }</c:if>
+												</c:when>
+												<c:otherwise>
+													/corporation
+													<c:if test="${chatContentsVo.mem_id != SESSION_MEMBERVO.mem_id}">?corp_id=${chatContentsVo.mem_id }</c:if>
+												</c:otherwise>
+											 </c:choose>'>
+										<div class="profileImg" style="background-image: url(${fn:contains(chatContentsVo.path, 'http') ? chatContentsVo.path : contents_addrpath}); "></div>
+									</a>
 									<div>
 										<div>
 											<label style="font-size: 15px; font-weight: bold;">${chatContentsVo.name}</label>
@@ -103,7 +136,7 @@
 												</c:choose>
 											</c:when>
 											<c:otherwise>
-												<div style="word-break: break-all; word-wrap: break-word; width: 390px;">
+												<div style="word-break: break-all; word-wrap: break-word; width: 360px;">
 													${chatContentsVo.chat_content}
 												</div>
 											</c:otherwise>
@@ -342,21 +375,30 @@
 		// 보내기 버튼 클릭시 방만들기 및 서버에 메세지 보내기
 		$(document).on("click",".submitBtn",function(){ 
 				if($("#produceRoomBtn").hasClass('produceRoomBtnOn')){
+					var size = $("input[name='chat_member']").length;
+					var chat_member = new Array();
+					
 					if($("input[name='chat_name']").val().trim()=="") {
-						var size = $("input[name='chat_member']").length;
 						var chat_nameValue = "";
 						for(i=0;i<size;i++){
 							chat_nameValue = chat_nameValue + $("input[name='chat_member']").eq(i).attr('role') + (i == size-1 ? "" : ",");
 						}
-						console.log(chat_nameValue);
-						$("input[name='chat_name']").val(chat_nameValue);
+						
+						$("input[name='chat_name']").val(chat_nameValue+",${MYNAME}");
 					}
 					
+					
+					for(i=0;i<size;i++){
+						chat_member[i] = $("input[name='chat_member']").eq(i).val();
+					}
+					
+					jQuery.ajaxSettings.traditional = true;
+
 					 $.ajax({
 			   				type : "POST",
 			   		    		url : "/insertChatRoom", 
 			   		    		dataType : "JSON",
-			   		    		data : {"chat_code" : chat_code, "chat_member" : $("input[name='chat_member']").val(), "chat_name" : $("input[name='chat_name']").val(), "chat_content" : $("div[name='chat_content']").html()},
+			   		    		data : {"chat_code" : chat_code, "chat_member" : chat_member, "chat_name" : $("input[name='chat_name']").val(), "chat_content" : $("div[name='chat_content']").html()},
 			   				success : function(result) {
 			   					var str = result;
 			   					var contents = str.split("=")[1];

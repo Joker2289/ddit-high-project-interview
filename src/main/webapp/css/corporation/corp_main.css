@@ -1,0 +1,16 @@
+
+/* 메인 - 왼쪽 메뉴 */
+.left{
+	padding: 0px 0px 0px 0px !important;
+	margin-top: 20px; 
+	/* margin-right: 10px; */
+	background-color: yellow;
+	
+}
+
+/* 메인 - 내용 출력 부분 */
+.content{
+	padding: 0px 0px 0px 0px !important;
+	margin-top: 20px; 
+	/* background-color: red; */
+}

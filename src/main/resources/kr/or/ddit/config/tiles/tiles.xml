@@ -33,12 +33,7 @@
 
 	<definition name="corporationTiles" extends="layout">
 		<put-attribute name="content"
-			value="/WEB-INF/views/corporation/corporationHome.jsp" />
-	</definition>
-
-	<definition name="corporationIntroTiles" extends="layout">
-		<put-attribute name="content"
-			value="/WEB-INF/views/corporation/corporationIntroduction.jsp" />
+			value="/WEB-INF/views/corporation/corp_main.jsp"/>
 	</definition>
 
 	<definition name="corporationRecruitmentTiles" extends="layout">

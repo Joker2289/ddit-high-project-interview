@@ -24,13 +24,16 @@
 		       b.write_date, 
 		       c.chat_name, 
 		       d.memCount,
-		       a.name
+		       a.name,
+               a.path,
+               a.type
 		  from chat_contents b, (select chat_code, chat_name
 		                                    from chatroom) c, (select count(mem_id) as memCount, chat_code
 		                                                        from chat_member
 		                                                       group by chat_code ) d,(select a.mem_id,
-		                                                                                    case when a.mem_id = b.user_id then b.user_name
-		                                                                                         else c.corp_name end as name
+		                                                                                     decode(a.mem_id,b.user_id,b.user_name,c.corp_name) as name,
+                                                                                             decode(a.mem_id,b.user_id,b.PROFILE_PATH,c.LOGO_PATH) as path,
+                                                                                             decode(a.mem_id,b.user_id,'user','corp') as type
 		                                                                               from member a, users b, CORPORATION c
 		                                                                              where a.mem_id = b.user_id(+)
 		                                                                                and c.corp_id(+) = a.mem_id) a
@@ -39,6 +42,8 @@
 		   and a.mem_id = b.mem_id
 		   and b.chat_code = #{chat_code,jdbcType=VARCHAR}
 		 order by b.write_date asc , b.content_code asc
+		 
+		 
 	</select>
 	
 	<!-- 유저가 입력한 내용으로 검색 -->

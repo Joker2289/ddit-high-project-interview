@@ -73,6 +73,7 @@ import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.pagination.PaginationVo;
 
+@RequestMapping("/corp")
 @Controller
 public class CorporationController {
 
@@ -128,13 +129,23 @@ public class CorporationController {
 	
 
 	/**
-	 * 회사 홈(회사타임라인)
 	 * 
+	 * Method : postList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param request
 	 * @param model
+	 * @param paginationVo
+	 * @param post_contents
+	 * @param corp_id
+	 * @param session
 	 * @return
+	 * Method 설명 : 
 	 */
 	@RequestMapping(path = { "/corporation" })
-	public String postList(HttpServletRequest request,Model model, PaginationVo paginationVo, String post_contents,String corp_id, HttpSession session) {
+	public String corporation(HttpServletRequest request,Model model, PaginationVo paginationVo, String post_contents, String corp_id, HttpSession session) {
+		
+		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		CorporationVo corporationInfo = new CorporationVo();
 		if(corp_id==null){
@@ -209,6 +220,8 @@ public class CorporationController {
 		
 		logger.debug("goodList hahaha : {}", goodList.size());
 		logger.debug("saveList hahaha : {}", saveList.size());
+		
+		
 		return "corporationTiles";
 	}
 	
@@ -460,52 +473,25 @@ public class CorporationController {
 
 	
 	/**
-	 * 회사 소개
+	 * 
+	 * Method : insert_intro_page
+	 * 작성자 : pjk
+	 * 변경이력 :
 	 * @param model
-	 * @param paginationVo
 	 * @param request
+	 * @param corp_id
 	 * @return
+	 * Method 설명 : 회사 소개 페이지 출력
 	 */
-	@RequestMapping(path = { "/corporationIntroduction" })
-	public String corporationIntro(Model model, PaginationVo paginationVo, HttpServletRequest request, CorporationVo corporationVo,String corp_id) {
+	@RequestMapping("/insert_intro_page")
+	public String insert_intro_page(Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
 		
+		logger.debug("corp_id ddd :{}", corp_id);
 		
-		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-		CorporationVo corporationInfo = new CorporationVo();
-		if(corp_id==null){
-			corp_id = memberInfo.getMem_id();
-		}else{
-		}
-		corporationInfo = corporationService.select_corpInfo(corp_id);
-		paginationVo.setMem_id(corp_id);
-		
+		CorporationVo corporationInfo = corporationService.select_corpInfo(corp_id);
 		model.addAttribute("corporationInfo", corporationInfo);
-
 		
-
-		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(corp_id);
-
-			// 인맥 수 출력을 위한 세팅
-
-			// 팔로우 한 해쉬태그 출력을 위한 세팅
-
-			model.addAttribute("userInfo", userInfo);
-		} else if (memberInfo.getMem_division().equals("2")) { // 회사일 경우
-			CorporationVo corpInfo = corporationService.select_corpInfo(corp_id);
-
-			// 회사 회원 로그인 시 홈 화면 출력을 위한 세팅
-
-			model.addAttribute("corpInfo", corpInfo);
-		} else { // 관리자일 경우
-			// 관리자 로그인 시 홈 화면 출력을 위한 세팅
-
-		}
-
-		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
-		model.addAttribute("timelinePost", timelinePost);
-		model.addAttribute("corporationInfo", corporationInfo);
-		return "corporationIntroTiles";
+		return "corporation/corp_intro";
 	}
 	
 	

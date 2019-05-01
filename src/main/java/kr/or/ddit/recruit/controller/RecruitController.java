@@ -33,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import kr.or.ddit.alarm.model.AlarmVo;
 import kr.or.ddit.alarm.service.AlarmServiceImpl;
 import kr.or.ddit.alarm.service.IAlarmService;
+import kr.or.ddit.apply_recruit.model.Apply_recruitVo;
+import kr.or.ddit.apply_recruit.service.IApply_recruitService;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.interest.model.InterestVo;
@@ -85,6 +87,9 @@ public class RecruitController {
 
 	@Resource(name="reportService")
 	private IReportService reportService;
+	
+	@Resource(name="apply_recruitService")
+	private IApply_recruitService appService;
 	
 	private List<String> img_list;
 	private List<String> str_list;
@@ -1039,9 +1044,25 @@ public class RecruitController {
 		// 지원여부 넘기기.
 		model.addAttribute("recr_app", recr_app);
 		
-		// 스크랩여부. get방식은 저장한 채용공고 페이지에서 요청하므로 모두 스크랩 't'이다.
-		// recr_detail, post에는 스크랩여부를 파악해서 넘겨줘야됨.
-		String scrap_flag = "t";
+		// 스크랩여부.
+		tempSVo = new Save_recruitVo();
+		
+		tempSVo.setUser_id(mVo.getMem_id());
+		tempSVo.setSave_flag("t");		
+		
+		List<Save_recruitVo> sSrecrlist = srecrService.getSSrecrList(tempSVo);
+		String scrap_flag = "f";
+		
+		// 특정 유저가 스크랩한 채용공고 리스트에서 recruit_code와 일치하는 게 있으면 t.
+		for(int i=0; i < sSrecrlist.size(); i++){
+			tempSVo = sSrecrlist.get(i);
+			
+			if(tempSVo.getRecruit_code().equals(recruit_code)){
+				scrap_flag = "t";
+				break;
+			}
+		}
+		
 		model.addAttribute("scrap_flag", scrap_flag);
 		
 		sVo.setUser_id(mVo.getMem_id());
@@ -1054,6 +1075,24 @@ public class RecruitController {
 		
 		// 뒤로가기를 할 때 req_page 확인을 위해 model에 넣기.
 		model.addAttribute("req_page", req_page);
+		
+		// 신고여부 넘기기.
+		ReportVo tempRVo = new ReportVo();
+		tempRVo.setRef_code(recruit_code);
+		tempRVo.setMem_id(mVo.getMem_id());
+		tempRVo.setDivision("34");
+		
+		// 신고내역이 없으면 rVo는 null.
+		ReportVo rVo = reportService.getReport(tempRVo);
+		String report_flag = "";
+		
+		if(rVo != null){
+			report_flag = "t";
+		}else{
+			report_flag = "f";
+		}
+		
+		model.addAttribute("report_flag", report_flag);
 		
 		return "recr_detailTiles";
 	}
@@ -1221,13 +1260,23 @@ public class RecruitController {
 		RecruitVo rVo = recrService.getRecr(recruit_code);
 		String app_count = rVo.getApp_count();
 		
+		// apply_recruit - 지원하면 insert, 취소하면 delete
+		Apply_recruitVo aVo = new Apply_recruitVo();
+		aVo.setRecruit_code(recruit_code);
+		aVo.setUser_id(mVo.getMem_id());
+		
+		
 		// recr_app값이 t면 f로, f면 t로 수정.
 		if(sVo.getRecr_app().equals("t")){
 			recr_app = "f";
 			
+			appService.deleteApp(aVo);		
+			
 			app_count = String.valueOf(Integer.valueOf(app_count) - 1);
 		}else{
 			recr_app = "t";
+			
+			appService.insertApp(aVo);		
 			
 			app_count = String.valueOf(Integer.valueOf(app_count) + 1);
 		}

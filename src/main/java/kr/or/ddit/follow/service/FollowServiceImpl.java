@@ -1,6 +1,7 @@
 package kr.or.ddit.follow.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -97,6 +98,19 @@ public class FollowServiceImpl implements IFollowService {
 	@Override
 	public int delete_corpFollow(FollowVo followVo) {
 		return followDao.delete_corpFollow(followVo);
+	}
+
+	/**
+	 * Method : select_followChatList
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 채팅 초대할 유저의 팔로우들(회사,회원)
+	 */
+	@Override
+	public List<Map<String, String>> select_followChatList(String mem_id) {
+		return followDao.select_followChatList(mem_id);
 	}
 
 }

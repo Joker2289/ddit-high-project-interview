@@ -34,10 +34,10 @@
 						<td class="img_td">
 							<c:choose>
 								<c:when test="${ fn:contains(List.image_path, 'http') }">
-									<a href="/profileHome?user_id=${ List.ref_keyword }"><img src="${ List.image_path }" class="img-circle modal-img"></a>
+									<a href="/corp/corporation?corp_id=${ List.ref_keyword }"><img src="${ List.image_path }" class="img-circle modal-img"></a>
 								</c:when>
 								<c:otherwise>
-									<a href="/profileHome?user_id=${ List.ref_keyword }"><img src="${ cp }/view/imageView?mem_id=${ List.ref_keyword }&division=pf" class="img-circle modal-img"></a>
+									<a href="/corp/corporation?corp_id=${ List.ref_keyword }"><img src="${ cp }/view/imageView?mem_id=${ List.ref_keyword }&division=pf" class="img-circle modal-img"></a>
 								</c:otherwise>	
 							</c:choose>
 						</td>
