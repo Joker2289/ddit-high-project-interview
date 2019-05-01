@@ -88,6 +88,7 @@ div.table_div, .div_alarm, .tb_alarm{
 	color: #0073B; 
 	border-radius: 10px;
 	font-weight: bold;
+	outline: 0;
 }
 
 .btn_unfollow{
@@ -97,6 +98,7 @@ div.table_div, .div_alarm, .tb_alarm{
 	height: 35px; 
 	color: #fff; 
 	border-radius: 10px;
+	outline: 0;
 }
 
 
@@ -130,6 +132,30 @@ div.table_div, .div_alarm, .tb_alarm{
 }
 
 .btn_connect_controll{
+	border: 0px solid #fff;
+	border-top: 1px solid #ddd;
+	background: #fff; 
+	color: #0073B1;
+	font-size: 20px;
+	font-weight: bold;
+	width: 100%;
+	height: 50px;
+	outline: 0;
+}
+
+.btn_connect{
+	border: 0px solid #fff;
+	border-top: 1px solid #ddd;
+	background: #fff; 
+	color: #0073B1;
+	font-size: 20px;
+	font-weight: bold;
+	width: 100%;
+	height: 50px;
+	outline: 0;
+}
+
+.btn_disconnect{
 	border: 0px solid #fff;
 	border-top: 1px solid #ddd;
 	background: #fff; 

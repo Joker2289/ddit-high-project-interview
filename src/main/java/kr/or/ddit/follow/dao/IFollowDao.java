@@ -134,10 +134,23 @@ public interface IFollowDao {
 	int insert_feedFollow(FollowVo followVo);
 
 	/**
-	 * 회사 팔로우 언팔로우 유무확인
+	 * Method : inseret_corpFollow
+	 * 작성자 : goo84
+	 * 변경이력 :
 	 * @param followVo
 	 * @return
+	 * Method 설명 : 회사 팔로우
 	 */
-	int follow_unfollow(FollowVo followVo);
+	int insert_corpFollow(FollowVo followVo);
+	
+	/**
+	 * Method : delete_corpFollow
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param followVo
+	 * @return
+	 * Method 설명 : 회사 언팔로우
+	 */
+	int delete_corpFollow(FollowVo followVo);
 	
 }

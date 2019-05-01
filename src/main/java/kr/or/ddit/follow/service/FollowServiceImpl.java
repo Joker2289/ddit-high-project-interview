@@ -90,8 +90,13 @@ public class FollowServiceImpl implements IFollowService {
 	}
 	
 	@Override
-	public int follow_unfollow(FollowVo followVo) {
-		return followDao.follow_unfollow(followVo);
+	public int insert_corpFollow(FollowVo followVo) {
+		return followDao.insert_corpFollow(followVo);
+	}
+
+	@Override
+	public int delete_corpFollow(FollowVo followVo) {
+		return followDao.delete_corpFollow(followVo);
 	}
 
 }
