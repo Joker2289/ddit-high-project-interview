@@ -30,11 +30,11 @@
 					</tr>
 					<tr>
 						<td class="subject">총 게시글 수</td>
-						<td>${ pageCnt }개</td>
+						<td><span id="page_cnt">${ pageCnt }</span>개</td>
 					</tr>
 					<tr>
 						<td class="subject">받은 추천 수</td>
-						<td>${ goodCnt }개</td>
+						<td><span id="good_cnt">${ goodCnt }</span>개</td>
 					</tr>
 				</table>
 

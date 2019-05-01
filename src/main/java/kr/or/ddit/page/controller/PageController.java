@@ -86,13 +86,17 @@ public class PageController {
 
 	/**
 	 * 
-	 * Method : imageUpload 작성자 : pjk 변경이력 :
+	 * Method : imageUpload 
+	 * 작성자 : pjk 
+	 * 변경이력 :
 	 * 
 	 * @param imageStorage
 	 * @param req
 	 * @return
 	 * @throws IllegalStateException
-	 * @throws IOException           Method 설명 : 업로드 이미지 서버저장
+	 * @throws IOException         
+	 *   
+	 * Method 설명 : 업로드 이미지 서버저장
 	 */
 	@RequestMapping(path = "/imageUpload", consumes = { "multipart/form-data" })
 	@ResponseBody
@@ -124,11 +128,15 @@ public class PageController {
 
 	/**
 	 * 
-	 * Method : ImageView 작성자 : pjk 변경이력 :
+	 * Method : ImageView 
+	 * 
+	 * 작성자 : pjk 
+	 * 변경이력 :
 	 * 
 	 * @param src
 	 * @param model
-	 * @return Method 설명 : model에 이미지경로를 속성으로 저장해주고 servlte-context 에 등록한 imageView
+	 * @return 
+	 * Method 설명 : model에 이미지경로를 속성으로 저장해주고 servlte-context 에 등록한 imageView
 	 *         요청
 	 */
 	@RequestMapping("/onenoteImageView")
@@ -139,7 +147,9 @@ public class PageController {
 
 	/**
 	 * 
-	 * Method : code_modal_body 작성자 : pjk 변경이력 :
+	 * Method : code_modal_body 
+	 * 작성자 : pjk 
+	 * 변경이력 :
 	 * 
 	 * @param model
 	 * @return Method 설명 : 코드작성 페이지 body 출력
@@ -152,7 +162,9 @@ public class PageController {
 
 	/**
 	 * 
-	 * Method : color_menu 작성자 : pjk 변경이력 :
+	 * Method : color_menu 
+	 * 작성자 : pjk 
+	 * 변경이력 :
 	 * 
 	 * @param model
 	 * @return Method 설명 : 컬러 메뉴 페이지 body 출력
@@ -346,7 +358,9 @@ public class PageController {
 		List<GoodVo> goodList = goodService.select_goodList(gVo);
 		model.addAttribute("goodList", goodList);
 		
-		
+		//프로필 area의 총게시글 업데이트
+		int pageCnt = pageService.select_pageCnt(user_id);
+		model.addAttribute("pageCnt", pageCnt);
 		
 		//전체 페이지 조회 화면에서 요청일 경우
 		if(!user_id.equals("#")) {

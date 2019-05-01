@@ -158,9 +158,17 @@
 		$('#good_btn' + ${ good.ref_code }).attr('onclick', 'cancelGood_page("${ good.good_code }", "${ good.ref_code }", "${ user_id }");');
 	</c:forEach>
 
+	/* 프로필 area의 추천수 업데이트 */
+	<c:if test="${ pageCnt != null }">
+		var pageCnt = '${ pageCnt }';
+		$('#page_cnt').text(pageCnt);
+	</c:if>
 	
-
-	
+	/* 프로필 area의 추천수 업데이트 */
+	<c:if test="${ goodCnt != null }">
+		var goodCnt = '${ goodCnt }';
+		$('#good_cnt').text(goodCnt);
+	</c:if>
 
 </script>
 
