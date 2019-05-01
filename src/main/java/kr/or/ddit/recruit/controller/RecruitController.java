@@ -33,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import kr.or.ddit.alarm.model.AlarmVo;
 import kr.or.ddit.alarm.service.AlarmServiceImpl;
 import kr.or.ddit.alarm.service.IAlarmService;
+import kr.or.ddit.apply_recruit.model.Apply_recruitVo;
+import kr.or.ddit.apply_recruit.service.IApply_recruitService;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
 import kr.or.ddit.interest.model.InterestVo;
@@ -85,6 +87,9 @@ public class RecruitController {
 
 	@Resource(name="reportService")
 	private IReportService reportService;
+	
+	@Resource(name="apply_recruitService")
+	private IApply_recruitService appService;
 	
 	private List<String> img_list;
 	private List<String> str_list;
@@ -1265,6 +1270,13 @@ public class RecruitController {
 		CorporationVo corp = corpService.select_corpInfo(recr.getCorp_id());
 		model.addAttribute("recr", recr);
 		model.addAttribute("corp", corp);
+		
+		// apply_recruit insert
+		Apply_recruitVo aVo = new Apply_recruitVo();
+		aVo.setRecruit_code(recruit_code);
+		aVo.setUser_id(mVo.getMem_id());
+		
+		appService.insertApp(aVo);
 
 		return "recr_detailTiles";
 	}

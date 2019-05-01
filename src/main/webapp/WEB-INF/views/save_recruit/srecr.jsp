@@ -83,7 +83,7 @@
 				<div class="col-md-12">
 					<div class="whiteBox" style="width: 795px;">
 						<h4 id="txt_srList" style="font-size: 22px; margin-left: 25px; margin-top: 14px;">
-							1234저장한 채용공고 (${srList.size() })
+							저장한 채용공고 (${srList.size() })
 						</h4>
 					</div>
 					<div id="div_srList" class="whiteBox" style="width: 795px; border-top: 0px; margin-top: -2px;">

@@ -20,7 +20,7 @@
 				font-size: 22px;">
 			<span>
 				<img width="37" src="http://mblogthumb4.phinf.naver.net/20160920_175/kokoa2100_1474368430239vv9yY_PNG/mzl.xnmoezsr.png?type=w800">   	
-				 원하는 범위를 설정해서 채용공고를 검색해보세요.11
+				 원하는 범위를 설정해서 채용공고를 검색해보세요.
 			</span>
 		</div>
 	</div>
