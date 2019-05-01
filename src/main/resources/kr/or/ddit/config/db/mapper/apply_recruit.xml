@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+	
+	<!-- 채용공고지원 등록. -->
+	<insert id="insertApp" parameterType="apply_recruitVo">
+		INSERT INTO RECRUIT(APPLY_CODE, RECRUIT_CODE, USER_ID) 
+		VALUES(apply_code_seq.nextval, #{recruit_code}, #{user_id})	
+	</insert>
+
+
+
+
+  	
+  	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

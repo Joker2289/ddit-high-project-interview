@@ -162,7 +162,7 @@
 		
 		<div class="col-md-12" >
 			<!-- 260px, 525px, 790px -->
-			<div id="div_list_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: 790px; margin-bottom: 80px;
+			<div id="div_list_box" class="whiteBox" style="width: 1140px; margin-left: 10px; height: auto; margin-bottom: 80px;
 					text-align: center; padding-top: 20px; font-size: 18px; padding-left: 20px; overflow:hidden;">
 				<table>
 					<tr>
@@ -172,7 +172,7 @@
 					   				<td style="width: 800px; text-align: left;">
 							   			<strong>조회하신 항목을 참고하여..</strong> <br> 
 							   			<c:choose>
-							   				<c:when test="${lVRVo.recruit_title.substring(0, 9) == '원하는 채용공고를' }">
+							   				<c:when test="${lVRVo.recruit_title.substring(0, 3) == '원하는' }">
 									   			<a href="${pageContext.request.contextPath }/recrSearch">
 									   				${lVRVo.recruit_title } - ${lVRVo.job_local }
 									   			</a>
@@ -308,7 +308,7 @@
 	var list1_size = '';
 	
 	$(document).ready(function(){
-// 		console.log('lVRVo? : ${lVRVo.recruit_title }');
+		console.log('list1_size? : '+list1_size);
 
 		// 엔터키 눌렀을 때 검색되도록.
 		$("#txt_name").keypress(function(e){
@@ -350,13 +350,7 @@
 			$("#btn_search").css("background-color", "#026397");
 		});
 		
-		// 추천 리스트 whitebox height 조절.
-		if(list1_size == 0 && "${rRList2.size() }" == 0){
-			$("#div_list_box").css("height", "260px");
-		}else if($("#hidden_size").val() == 0 || "${rRList2.size() }" == 0){
-			$("#div_list_box").css("height", "525px");
-		}
-// 		console.log("size2? : " + "${rRList2.size() }");
+		// 추천 리스트 whitebox height 조절. -> heigth: auto;로 수정.
 		
 		// 검색어 슬라이드.
 		var divWidth  = "511"; 
@@ -716,6 +710,7 @@
 			success : function(data){
 				// rRList1 size값 넣기
 				list1_size = $("#hidden_size").val();
+				console.log('list1_size? : '+$("#hidden_size").val());
 				
 				// rRList1 출력.
 				$("#div_rRList1").html(data);
