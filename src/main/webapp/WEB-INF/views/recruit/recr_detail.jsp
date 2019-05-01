@@ -59,11 +59,22 @@
 											</div>
 										</c:otherwise>
 									</c:choose>
-									<div class="div_btn" style="padding-right: 24px;" id="div_report">
-										<i class="far fa-flag" style="color: #0174b0; font-size: 24px;
-												margin-left: 14px; margin-right: 10px; cursor: pointer;"
-												onmouseover="" id="btn_report"></i>
-									</div>
+									<c:choose>
+										<c:when test="${report_flag == 't' }">
+											<div class="div_btn" style="padding-right: 24px;" id="div_report">
+												<i class="fas fa-flag" style="color: #0174b0; font-size: 24px;
+														margin-left: 14px; margin-right: 10px; cursor: pointer;"
+														onmouseover="" id="btn_report"></i>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="div_btn" style="padding-right: 24px;" id="div_report">
+												<i class="far fa-flag" style="color: #0174b0; font-size: 24px;
+														margin-left: 14px; margin-right: 10px; cursor: pointer;"
+														onmouseover="" id="btn_report"></i>
+											</div>
+										</c:otherwise>
+									</c:choose>
 								</td>
 							</tr>
 							<tr>
@@ -173,7 +184,11 @@
 // 채용공고 신고 modal
 $(function () {
 	$("#btn_report").on("click", function(){
-		$("div.modal").modal();
+		if('${report_flag }' == 't'){
+			alert("이미 신고처리 되었습니다.");
+		}else{
+			$("div.modal").modal();
+		}
 	});
 });
 
@@ -191,7 +206,7 @@ $(document).ready(function(){
 	
 	// modal 전송
 	$("#btn_save").on("click", function(){
-		alert("${recr.recruit_code }");
+// 		alert("${recr.recruit_code }");
 		$("#report_contents").val($("#txt_report").val());
 		$("#recruit_code").val("${recr.recruit_code }");
 		$("#req_page").val("${req_page }");
