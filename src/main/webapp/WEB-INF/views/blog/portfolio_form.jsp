@@ -88,7 +88,6 @@ $('#addPortfolioBtn').on('click', function(){
 		data : {"user_id" : user_id },
 		success : function(data) {
 
-			console.log(data);
 			
 			$("#portfolio_form").html(data);
 			
@@ -110,8 +109,6 @@ function updatePortfolio(code){
 	$('#colorBtn'+code).hide();
 	
 	$('#portfolio_TXT').on('keypress', function(e){
-		
-		console.log(e.keyCode);
 		
 		if(e.keyCode == 13){
 			var portfolio_nm = $('#portfolio_TXT').val();
@@ -140,9 +137,10 @@ function deletePortfolio(code) {
 	if(result){
 		$.ajax({
 			url : "${cp}/blog/deletePortfolio",
-			data : {"portfolio_code" : code},
+			data : {"portfolio_code" : code, "user_id" : user_id},
 			success : function(data) {
-				$("#portfolio_area"+code).remove();
+				
+				$("#portfolio_form").html(data);
 				
 				/* 포트폴리오 메뉴 갱신 */
 				showPortfolio(user_id);
@@ -172,14 +170,16 @@ function showPortfolio(user_id){
 		data : {"user_id" : user_id },
 		success : function(data) {
 	
-			console.log(data);
 			$("#portfolio_area").html(data);						
 		}
 	});	
 }
 
-
-	
+/* 프로필 area의 추천수 업데이트 */
+<c:if test="${ pageCnt != null }">
+	var pageCnt = '${ pageCnt }';
+	$('#page_cnt').text(pageCnt);
+</c:if>
 
 
 	

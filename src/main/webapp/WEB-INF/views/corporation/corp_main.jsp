@@ -24,6 +24,7 @@
 <!-- css -->
 <link href="/css/corporation/corp_main.css" rel="stylesheet">
 <link href="/css/corporation/corp_intro.css" rel="stylesheet">
+<link href="/css/corporation/corp_recr.css" rel="stylesheet">
 
 <style>
 textarea {

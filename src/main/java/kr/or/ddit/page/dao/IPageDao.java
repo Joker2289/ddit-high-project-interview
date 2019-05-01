@@ -83,4 +83,15 @@ public interface IPageDao {
 	 */
 	int select_pageCnt(String user_id);
 	
+	/**
+	 * 
+	 * Method : search_page
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 페이지 검색
+	 */
+	List<PageVo> search_page(PageVo vo);
+	
 }

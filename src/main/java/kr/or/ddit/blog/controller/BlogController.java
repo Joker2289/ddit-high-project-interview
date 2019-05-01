@@ -268,8 +268,6 @@ public class BlogController {
 	public String uploadImg(@RequestParam(value = "imageStorage") MultipartFile imageStorage, 
 			HttpServletRequest req, Model model) throws IllegalStateException, IOException {
 		
-		logger.debug("imageStorage : {}", imageStorage);
-		
 		String realFileName = "";
 		String tmpFileName = UUID.randomUUID().toString(); 
 		
@@ -363,12 +361,20 @@ public class BlogController {
 	 * Method 설명 : 포트폴리오 삭제
 	 */
 	@RequestMapping("/deletePortfolio")
-	@ResponseBody
-	public String deletePortfolio(Model model, @RequestParam("portfolio_code")String portfolio_code) {
+	public String deletePortfolio(Model model, @RequestParam("portfolio_code")String portfolio_code,
+			 @RequestParam("user_id")String user_id) {
 		
 		portfolioService.delete_portfolio(portfolio_code);
 		
-		return "dd";
+		//프로필 총 페이지 개수 업데이트
+		int pageCnt = pageService.select_pageCnt(user_id);
+		model.addAttribute("pageCnt", pageCnt);
+		
+		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(user_id);
+		model.addAttribute("portfolioList", portfolioList);
+		model.addAttribute("user_id", user_id);
+		
+		return "blog/portfolio_form";
 	}
 	
 	/**
@@ -392,6 +398,7 @@ public class BlogController {
 		model.addAttribute("sectionList", sectionList);
 		model.addAttribute("portfolio_code", portfolio_code);
 		model.addAttribute("color", color);
+		model.addAttribute("user_id", user_id);
 		
 		return "blog/section_setting_form";
 	}
@@ -421,6 +428,9 @@ public class BlogController {
 		model.addAttribute("sectionList", sectionList);
 		model.addAttribute("portfolio_code", portfolio_code);
 		model.addAttribute("section_code", sVo.getSection_code());
+		
+		PortfolioVo pVo = portfolioService.select_portfolioInfo(portfolio_code);
+		model.addAttribute("color", pVo.getIndex_color());
 		
 		return "blog/section_setting_form";
 	}
@@ -453,6 +463,9 @@ public class BlogController {
 		model.addAttribute("portfolio_code", portfolio_code);
 		model.addAttribute("section_code", sVo.getSection_code());
 		
+		PortfolioVo pVo = portfolioService.select_portfolioInfo(portfolio_code);
+		model.addAttribute("color", pVo.getIndex_color());
+		
 		return "blog/section_setting_form";
 	}
 	
@@ -469,11 +482,13 @@ public class BlogController {
 	 */
 	@RequestMapping("/deleteSection")
 	@ResponseBody
-	public String deleteSection(Model model, @RequestParam("section_code")String section_code) {
+	public String deleteSection(Model model, @RequestParam("section_code")String section_code,
+			 @RequestParam("user_id")String user_id) {
 		
 		sectionService.delete_section(section_code);
 		
-		return "dd";
+		int pageCnt = pageService.select_pageCnt(user_id);
+		return pageCnt + "";
 	}
 	
 	/**
@@ -538,7 +553,6 @@ public class BlogController {
 	public String showPortfolio(Model model, @RequestParam("user_id")String user_id) {
 		
 		List<PortfolioVo> portfolioList = portfolioService.select_portfolioList(user_id);
-		
 		model.addAttribute("portfolioList", portfolioList);
 		
 		return "blog/portfolio_area";
@@ -642,11 +656,15 @@ public class BlogController {
 		gVo.setDivision("22");
 		goodService.insert_goodInfo(gVo);
 		
+		//프로필 area의 받은 추천수 업데이트
+		int goodCnt = goodService.select_goodCnt(user_id);
+		model.addAttribute("goodCnt", goodCnt);
 		
 		//goodList 담기
 		List<GoodVo> goodList = goodService.select_goodList(gVo);
 		model.addAttribute("goodList", goodList);
 		
+		//전체 페이지 일경우
 		if(!user_id.equals("#")) {
 			model.addAttribute("user_id", user_id);
 			
@@ -704,6 +722,10 @@ public class BlogController {
 		List<GoodVo> goodList = goodService.select_goodList(gVo);
 		model.addAttribute("goodList", goodList);
 		
+		
+		//프로필 area의 받은 추천수 업데이트
+		int goodCnt = goodService.select_goodCnt(user_id);
+		model.addAttribute("goodCnt", goodCnt);
 		
 		//전체 조회 페이지 일 경우
 		if(!user_id.equals("#")) {

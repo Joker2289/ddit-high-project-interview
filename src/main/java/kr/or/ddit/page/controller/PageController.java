@@ -79,20 +79,22 @@ public class PageController {
 
 		model.addAttribute("section_code", section_code);
 		
-		
-
 		return "onenote/onenote_write";
 	}
 
 	/**
 	 * 
-	 * Method : imageUpload 작성자 : pjk 변경이력 :
+	 * Method : imageUpload 
+	 * 작성자 : pjk 
+	 * 변경이력 :
 	 * 
 	 * @param imageStorage
 	 * @param req
 	 * @return
 	 * @throws IllegalStateException
-	 * @throws IOException           Method 설명 : 업로드 이미지 서버저장
+	 * @throws IOException         
+	 *   
+	 * Method 설명 : 업로드 이미지 서버저장
 	 */
 	@RequestMapping(path = "/imageUpload", consumes = { "multipart/form-data" })
 	@ResponseBody
@@ -124,11 +126,15 @@ public class PageController {
 
 	/**
 	 * 
-	 * Method : ImageView 작성자 : pjk 변경이력 :
+	 * Method : ImageView 
+	 * 
+	 * 작성자 : pjk 
+	 * 변경이력 :
 	 * 
 	 * @param src
 	 * @param model
-	 * @return Method 설명 : model에 이미지경로를 속성으로 저장해주고 servlte-context 에 등록한 imageView
+	 * @return 
+	 * Method 설명 : model에 이미지경로를 속성으로 저장해주고 servlte-context 에 등록한 imageView
 	 *         요청
 	 */
 	@RequestMapping("/onenoteImageView")
@@ -139,7 +145,9 @@ public class PageController {
 
 	/**
 	 * 
-	 * Method : code_modal_body 작성자 : pjk 변경이력 :
+	 * Method : code_modal_body 
+	 * 작성자 : pjk 
+	 * 변경이력 :
 	 * 
 	 * @param model
 	 * @return Method 설명 : 코드작성 페이지 body 출력
@@ -152,7 +160,9 @@ public class PageController {
 
 	/**
 	 * 
-	 * Method : color_menu 작성자 : pjk 변경이력 :
+	 * Method : color_menu 
+	 * 작성자 : pjk 
+	 * 변경이력 :
 	 * 
 	 * @param model
 	 * @return Method 설명 : 컬러 메뉴 페이지 body 출력
@@ -346,7 +356,9 @@ public class PageController {
 		List<GoodVo> goodList = goodService.select_goodList(gVo);
 		model.addAttribute("goodList", goodList);
 		
-		
+		//프로필 area의 총게시글 업데이트
+		int pageCnt = pageService.select_pageCnt(user_id);
+		model.addAttribute("pageCnt", pageCnt);
 		
 		//전체 페이지 조회 화면에서 요청일 경우
 		if(!user_id.equals("#")) {
@@ -484,9 +496,57 @@ public class PageController {
 			}
 		}
 		
-		
-		
 		return "redirect:/blog/blogMainView?user_id=" + mVo.getMem_id();
+	}
+	
+	/**
+	 * 
+	 * Method : color_menu 
+	 * 작성자 : pjk 
+	 * 변경이력 :
+	 * 
+	 * @param model
+	 * @return Method 설명 : 컬러 메뉴 페이지 body 출력
+	 */
+	@RequestMapping("/page_search")
+	public String page_search(HttpServletRequest req, Model model,
+			@RequestParam("search_word") String search_word,
+			@RequestParam("user_id") String user_id) {
+		
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		//goodList 담기
+		GoodVo gVo = new GoodVo();
+		gVo.setMem_id(mVo.getMem_id());
+		gVo.setDivision("22");
+		List<GoodVo> goodList = goodService.select_goodList(gVo);
+		model.addAttribute("goodList", goodList);
+		
+		// 검색결과 페이지리스트 담기
+		PageVo pVo = new PageVo();
+		pVo.setUser_id(user_id);
+		pVo.setSearch_word(search_word);
+		
+		List<PageVo> pageList = pageService.search_page(pVo);
+		
+		logger.debug("검색 결과 : {}", pageList.size());
+		
+		//검색 결과가 없을 경우
+		if(pageList.size() == 0){
+			List<PageVo> pageAllList = pageService.select_pageAllList(user_id);
+			model.addAttribute("pageList", pageAllList);
+			model.addAttribute("searchCnt", pageList.size());
+			model.addAttribute("user_id", user_id);
+			
+			return "blog/page_area";
+		}
+		
+		model.addAttribute("pageList", pageList);
+		model.addAttribute("searchCnt", pageList.size());
+		
+		//user_id 담기
+		model.addAttribute("user_id", user_id);
+		
+		return "blog/page_area";
 	}
 	
 	

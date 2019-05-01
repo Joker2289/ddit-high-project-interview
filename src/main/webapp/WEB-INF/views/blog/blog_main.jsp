@@ -70,6 +70,8 @@
 	
 	var userId = '${ uVo.user_id }';
 	
+	
+	
 	function activityClick(req) {
 		
 		if(req == 'follower'){
@@ -102,11 +104,6 @@
 	};
 	
 
-	
-/* 	$('#settingBtn').on('click', function(){
-		
-		
-	}); */
 	
 	
 </script>

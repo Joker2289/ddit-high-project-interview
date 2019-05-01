@@ -50,4 +50,9 @@ public class PageServiceImpl implements IPageService{
 		return pageDao.select_pageCnt(user_id);
 	}
 
+	@Override
+	public List<PageVo> search_page(PageVo vo) {
+		return pageDao.search_page(vo);
+	}
+
 }
