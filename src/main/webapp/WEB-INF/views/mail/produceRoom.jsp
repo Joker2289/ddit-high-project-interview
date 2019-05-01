@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<form action="/insertChatRoom" id="insertChatRoom" method="post">
 <div id="chatcontentsAjax">
 <div class="chatRoomTitleBox" style="padding: 12px 0 0 220px;">
 	<label>새 메일</label>
@@ -14,21 +13,21 @@
 	</div>
 	
 	<ul class="dropdown-menu searchConnectionDropDown">
-		<c:forEach items="${usersVoList }" var="usersVo"> 
-		<c:set var="profile_addrpath" value="/profile?mem_id=${usersVo.user_id }"/>
-		<c:if test="${fn:contains(usersVo.profile_path, 'http')}">
-			<c:set var="profile_path" value="${usersVo.profile_path }"/>
+		<c:forEach items="${memberList }" var="member"> 
+		<c:set var="profile_addrpath" value="/profile?mem_id=${member.MEM_ID }"/>
+		<c:if test="${fn:contains(member.PATH, 'http')}">
+			<c:set var="profile_path" value="${member.PATH }"/>
 		</c:if>
 		<li class="liUsersClick" style="padding: 4px 0 4px 0;">
 			<a style="width: 483px; height: 40px; display: flex;">
 				<div style="width:40px; height: 40px; background-image: url(${not empty profile_path ? profile_path : profile_addrpath}); background-repeat: no-repeat;background-size: cover;background-position: center;border-radius: 40px">
 				</div>
 				<div style="width: 433px; height: 40px;">
-					<label>${usersVo.user_name }</label><br>
-					<label>${usersVo.introduce }</label>
+					<label>${member.NAME }</label><br>
+					<label>${member.INTRODUCE }</label>
 				</div>
 			</a>
-			<input type="hidden" value="${usersVo.user_id }" role="${usersVo.user_name }">
+			<input type="hidden" value="${member.MEM_ID }" role="${member.NAME }">
 		</li>
 		</c:forEach>
 	</ul>
@@ -39,7 +38,6 @@
 	<div class="chatContentWriteBox">
 		<div class="form-control" id="sendMeseage" name="chat_content" rows="5" contenteditable="true"></div>
 	</div>
-</form>
 <div class="chatContentBtnBox">
 	<button class="btn btn-link smallChatBtn">
 		<span style="font-size:24px;">
