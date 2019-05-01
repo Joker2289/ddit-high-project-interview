@@ -752,17 +752,22 @@ public class BlogController {
 		//댓글리스트 뿌려주기
 		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		
-		PaginationVo pnVo = new PaginationVo(1, 10);
+		PaginationVo pnVo = new PaginationVo(1, 5);
 		pnVo.setDivision("22");
 		pnVo.setRef_code(page_code);
 		pnVo.setMem_id(mVo.getMem_id());
 		
 		Map<String, Object> commentMap = commentService.select_commentList(pnVo);
+		int commentCnt = (int) commentMap.get("commentCnt");
 		
-		
+		//페이지 코드, 댓글 리스트
 		List<Post_commentVo> commentList= (List<Post_commentVo>) commentMap.get("commentList");
 		model.addAttribute("page_code", page_code);
 		model.addAttribute("commentList", commentList);
+		
+		//총 댓글 갯수, 페이지번호
+		model.addAttribute("commentCnt", commentCnt);
+		model.addAttribute("page_num", pnVo.getPage());
 		
 		return "blog/comment_area";
 	}
@@ -779,13 +784,15 @@ public class BlogController {
 	 * @return
 	 * Method 설명 : 페이지에 댓글 추가
 	 */
-	@RequestMapping("/insert_comment")
+	@RequestMapping(path="/insert_comment", method=RequestMethod.POST)
 	public String insert_comment(HttpServletRequest req, Model model, 
 			@RequestParam("page_code")String page_code,
-			@RequestParam("comment_contents")String comment_contents) {
+			@RequestParam("comment_contents")String comment_contents,
+			@RequestParam("page_num")int page_num) {
 		
 		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		
+		//댓글 추가
 		Post_commentVo cVo = new Post_commentVo();
 		cVo.setMem_id(mVo.getMem_id());
 		cVo.setRef_code(page_code);
@@ -793,24 +800,111 @@ public class BlogController {
 		cVo.setComment_contents(comment_contents);
 		commentService.insert_comment(cVo);
 		
-		model.addAttribute("page_code", page_code);
 		
 		//댓글리스트 뿌려주기
-		PaginationVo pnVo = new PaginationVo(1, 10);
+		PaginationVo pnVo = new PaginationVo(1, page_num * 5);
 		pnVo.setDivision("22");
 		pnVo.setRef_code(page_code);
 		pnVo.setMem_id(mVo.getMem_id());
 		
 		Map<String, Object> commentMap = commentService.select_commentList(pnVo);
+		int commentCnt = (int) commentMap.get("commentCnt");
 		
-		
+		//페이지 코드, 댓글 리스트
 		List<Post_commentVo> commentList= (List<Post_commentVo>) commentMap.get("commentList");
 		model.addAttribute("page_code", page_code);
 		model.addAttribute("commentList", commentList);
 		
+		//총 댓글 갯수, 페이지번호
+		model.addAttribute("commentCnt", commentCnt);
+		model.addAttribute("page_num", page_num);
+		
 		return "blog/comment_area";
 	}
 	
+	/**
+	 * 
+	 * Method : delete_comment
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param req
+	 * @param model
+	 * @param comment_code
+	 * @param page_code
+	 * @return
+	 * Method 설명 : 댓글 삭제
+	 */
+	@RequestMapping("/delete_comment")
+	public String delete_comment(HttpServletRequest req, Model model, 
+			@RequestParam("comment_code")String comment_code,
+			@RequestParam("page_code")String page_code,
+			@RequestParam("page_num")int page_num) {
+		
+		//댓글 삭제
+		commentService.delete_comment(comment_code);
+		
+		//댓글리스트 뿌려주기
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		PaginationVo pnVo = new PaginationVo(1, page_num * 5);
+		pnVo.setDivision("22");
+		pnVo.setRef_code(page_code);
+		pnVo.setMem_id(mVo.getMem_id());
+		
+		Map<String, Object> commentMap = commentService.select_commentList(pnVo);
+		int commentCnt = (int) commentMap.get("commentCnt");
+		
+		//페이지 코드, 댓글 리스트
+		List<Post_commentVo> commentList= (List<Post_commentVo>) commentMap.get("commentList");
+		model.addAttribute("page_code", page_code);
+		model.addAttribute("commentList", commentList);
+		
+		//총 댓글 갯수, 페이지번호
+		model.addAttribute("commentCnt", commentCnt);
+		model.addAttribute("page_num", page_num);
+		
+		return "blog/comment_area";
+	}
+	
+	/**
+	 * 
+	 * Method : add_comment
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param req
+	 * @param model
+	 * @param page_num
+	 * @param page_code
+	 * @return
+	 * Method 설명 : 댓글 더보기
+	 */
+	@RequestMapping("/add_comment")
+	public String add_comment(HttpServletRequest req, Model model, 
+			@RequestParam("page_num")int page_num,
+			@RequestParam("page_code")String page_code) {
+		
+		page_num++;
+		
+		//댓글리스트 뿌려주기
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		PaginationVo pnVo = new PaginationVo(1, page_num * 5);
+		pnVo.setDivision("22");
+		pnVo.setRef_code(page_code);
+		pnVo.setMem_id(mVo.getMem_id());
+		
+		Map<String, Object> commentMap = commentService.select_commentList(pnVo);
+		int commentCnt = (int) commentMap.get("commentCnt");
+		
+		//페이지 코드, 댓글 리스트
+		List<Post_commentVo> commentList= (List<Post_commentVo>) commentMap.get("commentList");
+		model.addAttribute("page_code", page_code);
+		model.addAttribute("commentList", commentList);
+		
+		//총 댓글 갯수, 페이지번호
+		model.addAttribute("commentCnt", commentCnt);
+		model.addAttribute("page_num", page_num);
+		
+		return "blog/comment_area";
+	}
 	
 	
 }

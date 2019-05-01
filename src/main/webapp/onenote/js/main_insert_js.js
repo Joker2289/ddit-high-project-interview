@@ -206,7 +206,7 @@ function addVideo(Embed_link) {
     iframe.id = "iframe" + node_num;
     iframe.width = 560;
     iframe.height = 315;
-    iframe.src = Embed_link;
+    iframe.src = Embed_link + '?controls=1';
     iframe.frameborder = 0;
     iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
     iframe.allowfullscreen = true;
