@@ -10,6 +10,7 @@ import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
+import kr.or.ddit.salary_info.model.Salary_infoVo;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.util.pagination.PaginationVo;
 
@@ -396,6 +397,30 @@ public interface IPersonal_connectionDao {
 	 * Method 설명 : 수락대기 중인 일촌신청 삭제
 	 */
 	int delete_connections_waiting(Personal_connectionVo personalVo);
+	
+	
+	
+	/**
+	* Method : insert_companySalary
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param salaryVo
+	* @return
+	* Method 설명 : companyReview - 연봉 정보 작성
+	*/
+	int insert_companySalary(Salary_infoVo salaryVo);
+	
+	
+	
+	/**
+	* Method : select_companySalary
+	* 작성자 : PC09
+	* 변경이력 :
+	* @param paginationVo
+	* @return
+	* Method 설명 : companySalary - 기업 연봉 리스트 출력
+	*/
+	List<Salary_infoVo> select_companySalary(String corp_id);
 	
 	
 	

@@ -1,24 +1,73 @@
 
+/* 채용공고 리스트 div */
+.recr_All_div{
+	height: 400px !important;
+	width: 100%;
+	
+	list-style: none;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid rgba(0, 0, 0, .15);
+	border-radius: 4px;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	
+	padding: 20px 30px 20px 30px; 
+}
+
+.recr_list_div {
+	height: 350px !important;
+	background-color: #000;
+	border: 2px solid rgba(0, 0, 0, .15);
+}
+
+/* 채용공고 div */
+.recr_div{
+	list-style: none;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid rgba(0, 0, 0, .15);
+	border-radius: 4px;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	
+	float:left;
+	margin-left: 10px; 
+	width: 300px; 
+	height: 300px; 
+}
+
+/* 회사채용공고 첫번째 div(label과 버튼) */
+.recr_head {
+	margin: 10px;
+}
+
 /* 채용공고 방향키 */
 .btn-default{
 	border: 0px; 
 	font-size: 150%;
 }
 
+/* 채용공고 헤드 제목 */
+.recr_head_title{
+	padding-left: 10px !important;
+	font-weight: 1000;
+	font-size: 25px;
+	border-bottom: 1px solid #A0A0C8;
+	height: 50px;
+}
+
+.recr_head_title .fa-user{
+	font-size: 30px;
+	margin-right: 5px;
+}
+
+
 /* 채용공고 제목 */
 .recr_title{
-	font-size: 140%;
+	font-size: 150%; 
+	margin-left: 10px;
 }
 
-/* 회사채용공고 첫번째 div(label과 버튼) */
-.recr{
-	margin: 10px;
-}
-
-/* 채용공고반복문 */
-#all_recr{
-	float:left;
-	margin-left: 10px; 
-	width: 300px; 
-	height: 200px; 
+/* 채용공고 회사 이름 */
+.recr_corp_name{
+	
 }

@@ -228,6 +228,7 @@ public class RecruitController {
 			
 			List<String> corpImgList2 = new ArrayList<>();
 			List<String> corpNmList2 = new ArrayList<>();
+			List<String> corpIdList2 = new ArrayList<>();
 			List<String> timeList2 = new ArrayList<>();
 			
 			// 스크랩 데이터는 srecr에 있으니까 저장여부 리스트 scrapList 만들기. size는 rRList2에서 
@@ -240,6 +241,7 @@ public class RecruitController {
 				CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
 				corpImgList2.add(cVo.getLogo_path());
 				corpNmList2.add(cVo.getCorp_name());
+				corpIdList2.add(cVo.getCorp_id());
 				
 				boolean scrapCheck_flag = false;
 				for(Save_recruitVo scrapCheckSVo : uSRList2){
@@ -280,6 +282,7 @@ public class RecruitController {
 			
 			model.addAttribute("corpImgList2", corpImgList2);		
 			model.addAttribute("corpNmList2", corpNmList2);			
+			model.addAttribute("corpIdList2", corpIdList2);			
 			model.addAttribute("scrapList2", scrapList2);		
 			model.addAttribute("timeList2", timeList2);		
 			
@@ -462,6 +465,7 @@ public class RecruitController {
 			
 			List<String> corpImgList1 = new ArrayList<>();
 			List<String> corpNmList1 = new ArrayList<>();
+			List<String> corpIdList1 = new ArrayList<>();
 			List<String> timeList1 = new ArrayList<>();
 			
 			// 스크랩 데이터는 srecr에 있으니까 저장여부 리스트 scrapList 만들기. size는 rRList1에서 
@@ -474,6 +478,7 @@ public class RecruitController {
 				CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
 				corpImgList1.add(cVo.getLogo_path());
 				corpNmList1.add(cVo.getCorp_name());
+				corpIdList1.add(cVo.getCorp_id());
 				
 				boolean scrapCheck_flag = false;
 				for(Save_recruitVo scrapCheckSVo : uSRList1){
@@ -522,6 +527,7 @@ public class RecruitController {
 			
 			model.addAttribute("corpImgList1", corpImgList1);		
 			model.addAttribute("corpNmList1", corpNmList1);			
+			model.addAttribute("corpIdList1", corpIdList1);			
 			model.addAttribute("scrapList1", scrapList1);			
 			model.addAttribute("timeList1", timeList1);			
 		}
@@ -874,7 +880,7 @@ public class RecruitController {
 		
 		// 이어서. 수정
 		if(lSLog.getSearch_word().equals("전체") && lSLog.getSearch_local().equals("전국")){
-			recrList = recrService.getAllRecr();
+			recrList = recrService.getAllRecrDesc();
 		}else if(lSLog.getSearch_local().equals("전국")){
 			recrList = recrService.searchRecrListByCorp_name(lSLog.getSearch_word());
 		}else if(lSLog.getSearch_word().equals("전체")){
@@ -1350,8 +1356,6 @@ public class RecruitController {
 			
 			appService.insertApp(aVo);		
 			
-
-			
 			app_count = String.valueOf(Integer.valueOf(app_count) + 1);
 		}
 		
@@ -1372,15 +1376,6 @@ public class RecruitController {
 		CorporationVo corp = corpService.select_corpInfo(recr.getCorp_id());
 		model.addAttribute("recr", recr);
 		model.addAttribute("corp", corp);
-		
-		//알람 등록
-		AlarmVo alarmInfo = new AlarmVo();
-		alarmInfo.setMem_id(corp.getCorp_id());
-		alarmInfo.setAlarm_check("0");
-		alarmInfo.setDivision("2");
-		alarmInfo.setSend_id(mVo.getMem_id());
-		alarmInfo.setAlarm_separate("07");
-		alarmService.insert_alarmInfo(alarmInfo);
 
 		return "recr_detailTiles";
 	}

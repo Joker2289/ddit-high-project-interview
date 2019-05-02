@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,32 +88,7 @@
 						</h4>
 					</div>
 					<div id="div_srList" class="whiteBox" style="width: 795px; border-top: 0px; margin-top: -2px;">
-						<c:forEach begin="1" end="${srList.size() }" varStatus="i">
-							<table border="0" style="margin: 2px; margin-top: 2px;">
-								<tr>
-									<td id="img${i.index }" rowspan="6" onmouseover="" style="cursor: pointer; 
-											border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 7px; 
-											padding-top: 7px; padding-left: 4px;">
-										<img src="${corpImgList.get(i.index - 1) }" width="200"> 
-									</td>
-									<td id="srecr${i.index }" onmouseover="" style="cursor: pointer; width: 513px;
-											border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-left: 15px;">
-										<strong>${srList.get(i.index - 1).recruit_title }</strong><br>
-										${corpNmList.get(i.index - 1) }<br>
-										${srList.get(i.index - 1).job_local }<br>
-<!-- 										<span style="color: #d11124;">(xx일 전에 마감되었습니다.)</span> -->
-									</td>
-									<td style="width: 77px; text-align: center; border-bottom: 1px solid; border-bottom-color: #d9d9d9;">
-										<div style="width: 56px; height: 56px; border-radius: 28px; background-color: white;
-												padding-top: 7px;" id="div_scrap${i.index }">
-											<i id="scrap${i.index }" class="fas fa-bookmark" onmouseover="" 
-													style="margin-top: 10px; font-size: 22px; cursor: pointer; 
-											color: #0174b0;"></i>
-										</div>
-									</td>
-								</tr>
-							</table>			
-						</c:forEach>
+						<!-- srListAjax -->
 					</div>
 					
 					<div class="col-md-12">
@@ -131,7 +108,8 @@
 							padding-top: 7px; padding-left: 7px;">
 						지원한 채용공고 (${appList.size() })
 					</div>
-					<div class="whiteBox" style="width: 330px; margin-left: -14px; margin-top: -1px; padding-bottom: 2px;">
+					<div class="whiteBox" style="width: 330px; margin-left: -14px; margin-top: -1px; padding-bottom: 2px;
+							font-size: 16px;">
 						<table border="0" style="margin-left: 10px; width: 310px; margin-top: 10px;">
 							<c:if test="${appList.size() > 0}">
 								<c:forEach begin="1" end="${appList.size() }" varStatus="i">

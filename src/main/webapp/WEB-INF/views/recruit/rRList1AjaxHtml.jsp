@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!-- rRList1가 있으면 출력. -->
 <input type="hidden" id="hidden_size" value="${rRList1.size() }" data-listsize="${rRList1.size() }">
@@ -12,7 +13,16 @@
 			<div class="recr" onmouseover="" style="cursor: pointer; height: 215px; border-bottom: 1px solid;
 					border-bottom-color: #d9d9d9;" data-code="${rRVo.recruit_code }">
 				<div class="table_div" style="height: 80px; border: 0px solid; margin-left: 24px;">
-					<img src="${corpImgList1.get(i.index) }" width="200">
+					<%-- img 불러오기 http 들어있는 경우랑 아닐 때 구분 --%>
+					<c:choose>
+						<c:when test="${ fn:contains(corpImgList1.get(i.index), 'http') }">
+							<img src="${corpImgList1.get(i.index) }" width="200">
+						</c:when>
+						<c:otherwise>
+							<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${corpIdList1.get(i.index) }&division=pf" width="200">
+						</c:otherwise>	
+					</c:choose>
+					
 				</div> <br><br>
 				<strong style="padding-top: 50px;">
 					<c:choose>

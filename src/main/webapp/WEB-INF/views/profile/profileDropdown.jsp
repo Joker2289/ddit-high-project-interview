@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<ul class="dropdown-menu" style="display: block; top: 425px;left: 40px; width: 310px; min-height: 240px;" >
+<ul class="dropdown-menu" style="display: block; top: 425px;left: 40px; width: 310px; min-height: 193px;" >
    <li><a data-toggle="collapse" href="#introduction" aria-expanded="false" aria-controls="introduction">소개</a></li>
    <div class="collapse" id="introduction">
       <div class="well">
@@ -88,7 +88,7 @@
          <button class="btn btn-default modalBtn" data-toggle="modal" data-target="#myModal" title="language"><span style="color: #777a7d;"><i class="fas fa-plus"></i></span></button>
       </div>
    </div>
-   <li class="divider"></li>
+   <!-- <li class="divider"></li>
    <li><a data-toggle="collapse" href="#recommendation" aria-expanded="false" aria-controls="recommendation">추가정보</a></li>
    <div class="collapse" id=recommendation>
       <div class="well">
@@ -99,7 +99,7 @@
          </div>
          <button class="btn btn-default modalBtn" data-toggle="modal" data-target="#myModal" title="recommendation"><span style="color: #777a7d;"><i class="fas fa-plus"></i></span></button>
       </div>
-   </div>
+   </div> -->
 </ul>
 
 <script type="text/javascript">

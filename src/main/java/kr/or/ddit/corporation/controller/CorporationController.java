@@ -486,8 +486,6 @@ public class CorporationController {
 	@RequestMapping("/insert_intro_page")
 	public String insert_intro_page(Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
 		
-		logger.debug("corp_id ddd :{}", corp_id);
-		
 		CorporationVo corporationInfo = corporationService.select_corpInfo(corp_id);
 		model.addAttribute("corporationInfo", corporationInfo);
 		
@@ -495,67 +493,36 @@ public class CorporationController {
 	}
 	
 	
-
-
-	
 	/**
-	 * 채용정보
+	 * 
+	 * Method : corporationRecruit
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param session
 	 * @param model
 	 * @param paginationVo
 	 * @param request
+	 * @param corp_id
 	 * @return
+	 * Method 설명 : 회사 채용 페이지 출력
 	 */
 	@RequestMapping("/insert_recr_page")
-	public String corporationRecruit(HttpSession session, Model model, PaginationVo paginationVo, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
+	public String corporationRecruit(HttpSession session, Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
 		
-		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		//채용 공고 리스트 담기
+		List<RecruitVo> recruitList = recrService.getRecrListCorp_id(corp_id);
+		model.addAttribute("recruitList", recruitList);
 		
-		CorporationVo corporationInfo = new CorporationVo();
-		if(corp_id==null){
-			corp_id = memberInfo.getMem_id();
-		}else{
-		}
-		corporationInfo = corporationService.select_corpInfo(corp_id);
+		//회사 정보 담기
+		CorporationVo corporationInfo = corporationService.select_corpInfo(corp_id);
 		model.addAttribute("corporationInfo", corporationInfo);
-		
-		paginationVo.setMem_id(corp_id);
-		
-		List<RecruitVo> getRecruitInfo = recrService.getRecrListCorp_id(corporationInfo.getCorp_id());
-		
-		model.addAttribute("getRecruitInfo", getRecruitInfo);
-		
-		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(corp_id);
-			
-			// 인맥 수 출력을 위한 세팅
-			
-			// 팔로우 한 해쉬태그 출력을 위한 세팅
-			
-			model.addAttribute("userInfo", userInfo);
-		} else if (memberInfo.getMem_division().equals("2")) { // 회사일 경우
-			CorporationVo corpInfo = corporationService.select_corpInfo(corp_id);
-			
-			// 회사 회원 로그인 시 홈 화면 출력을 위한 세팅
-			
-			model.addAttribute("corpInfo", corpInfo);
-		} else { // 관리자일 경우
-			// 관리자 로그인 시 홈 화면 출력을 위한 세팅
-			
-		}
-		
-		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
-		model.addAttribute("timelinePost", timelinePost);
-		
-		
-
-	
 		
 		return "corporation/corp_recr";
 	}
 	
 	/**
 	 * 회사 직원
-	 * @param model
+	 * @param model 
 	 * @param paginationVo
 	 * @param request
 	 * @return

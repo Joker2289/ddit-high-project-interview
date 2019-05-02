@@ -528,7 +528,6 @@ public class PageController {
 		
 		List<PageVo> pageList = pageService.search_page(pVo);
 		
-		logger.debug("검색 결과 : {}", pageList.size());
 		
 		//검색 결과가 없을 경우
 		if(pageList.size() == 0){
