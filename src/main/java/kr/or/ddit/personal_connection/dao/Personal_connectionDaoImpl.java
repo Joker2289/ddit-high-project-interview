@@ -239,6 +239,10 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 		List<Corporate_reviewVo> reviewList = sqlSessionTemplate.selectList("personal.select_companyReview", paginationVo);
 		return reviewList;
 	}
+	
+	public int delete_connections_waiting(Personal_connectionVo personalVo){
+		return sqlSessionTemplate.delete("personal.delete_connections_waiting", personalVo);
+	}
 
 	@Override
 	public int insert_companySalary(Salary_infoVo salaryVo) {

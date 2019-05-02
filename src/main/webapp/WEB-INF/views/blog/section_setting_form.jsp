@@ -5,7 +5,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
 <button class="btn btn-primary addSectionBtn"
-	onclick="addSection(${ portfolio_code });">
+	onclick="addSection('${ portfolio_code }');">
 	<i class="far fas fa-plus"></i> 섹션 추가
 </button>
 
@@ -14,7 +14,7 @@
 
 		<a id="section${ section.section_code }"
 			class="btn sectionBtn" 
-			ondblclick="updateSection(${ section.section_code });">${ section.section_name }</a>
+			ondblclick="updateSection('${ section.section_code }');">${ section.section_name }</a>
 
 
 		<button id="sectionDeleteBtn${ section.section_code }"
@@ -32,12 +32,12 @@
 	$('#section${ section.section_code }').css('background-color', '${ color }');
 </c:forEach>
 
-
+var user_id = '${ user_id }'
 
 var portfolio_code = '${ portfolio_code }';
 
 /* 섹션 추가 */
-function addSection(portfolio_code){
+function addSection(portfolio_codem){
 
 	$.ajax({
 		url : "${cp}/blog/addSection",
@@ -85,8 +85,12 @@ function deleteSection(section_code) {
 	if(result){
 		$.ajax({
 			url : "${cp}/blog/deleteSection",
-			data : {"section_code" : section_code},
+			data : {"section_code" : section_code, "user_id" : user_id },
 			success : function(data) {
+				//프로필 총 페이지수 업데이트
+				$('#page_cnt').text(data);
+				
+				//섹션 삭제
 				$("#section_area"+section_code).remove();
 			}
 		});

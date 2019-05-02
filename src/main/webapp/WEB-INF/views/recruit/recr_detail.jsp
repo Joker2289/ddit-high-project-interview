@@ -33,10 +33,12 @@
 						<table border="0" style="width: 795px;">
 							<tr>
 								<td style="background-image: url('${corp.bg_path }'); height: 100px; background-color: #24a4be;">
-									<div style="position: relative; top: 40px; left: 25px;">
+									<div style="position: relative; top: 40px; left: 25px; background-color: white;
+											width: 175px;">
 										<a href="/corporation?corp_id=${corp.corp_id }">
-											<img src="${corp.logo_path }" width="155" style="border: 1px solid;
-													border-color: #a6a6a6; border-radius: 3px; border-bottom-width: 2px;">
+											<img src="${corp.logo_path }" width="175" style="border: 1px solid;
+													border-color: #a6a6a6; border-radius: 0px; border-bottom-width: 2px;
+													padding: 10px;">
 										</a>			
 									</div>
 								</td>
@@ -59,21 +61,47 @@
 											</div>
 										</c:otherwise>
 									</c:choose>
-									<div class="div_btn" style="padding-right: 24px;" id="div_report">
-										<i class="far fa-flag" style="color: #0174b0; font-size: 24px;
-												margin-left: 14px; margin-right: 10px; cursor: pointer;"
-												onmouseover="" id="btn_report"></i>
-									</div>
+									<c:choose>
+										<c:when test="${report_flag == 't' }">
+											<div class="div_btn" style="padding-right: 24px;" id="div_report">
+												<i class="fas fa-flag" style="color: #0174b0; font-size: 24px;
+														margin-left: 14px; margin-right: 10px; cursor: pointer;"
+														onmouseover="" id="btn_report"></i>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="div_btn" style="padding-right: 24px;" id="div_report">
+												<i class="far fa-flag" style="color: #0174b0; font-size: 24px;
+														margin-left: 14px; margin-right: 10px; cursor: pointer;"
+														onmouseover="" id="btn_report"></i>
+											</div>
+										</c:otherwise>
+									</c:choose>
 								</td>
 							</tr>
 							<tr>
 								<td>
 									<table border="0" style="width: 795px;">
 										<tr>
-											<td style="width: 600px; padding-left: 20px;">
+											<td style="width: 600px; padding-left: 20px; font-size: 17px;">
 												<strong style="font-size: 22px;">${recr.recruit_title }</strong><br>
-												<span style="font-size: 17px;">${corp.corp_name } ｜ ${recr.job_local }</span><br>
-												<span style="font-size: 17px;">게시일: xx일 전 ｜ 지원자 수: xx명 미만</span><br>
+												<span>${corp.corp_name } ｜ ${recr.job_local }</span><br>
+												<span style="color: #2f7b15;">
+													<i class="far fa-clock"></i> ${time_value } 전
+												</span> ｜ 
+													<c:choose>
+														<c:when test="${recr.app_count < 10 }">
+															<span style="color: #0174b0;">
+																<i class="fas fa-user-alt"></i> 지원자 수: 10 명 미만
+															</span>
+														</c:when>
+														<c:otherwise>
+															<span style="color: #0174b0;">
+																<i class="fas fa-user-alt"></i> 지원자 수: ${recr.app_count } 명
+															</span>
+														</c:otherwise>
+													</c:choose>
+												<br>
 											</td>
 											<td>
 												<c:choose>
@@ -108,11 +136,11 @@
 											</td>
 											<td style="vertical-align: top; padding: 20px; font-size: 17px;">
 												<strong>직급</strong><br>
-												...<br>
+												${recr.job_rank }<br>
 												<strong>업계</strong><br>
-												...<br>
+												${corp.industry_type }<br>
 												<strong>고용형태</strong><br>
-												...<br>
+												${recr.emp_type }<br>
 											</td>
 										</tr>
 									</table>								
@@ -173,7 +201,11 @@
 // 채용공고 신고 modal
 $(function () {
 	$("#btn_report").on("click", function(){
-		$("div.modal").modal();
+		if('${report_flag }' == 't'){
+			alert("이미 신고처리 되었습니다.");
+		}else{
+			$("div.modal").modal();
+		}
 	});
 });
 
@@ -191,7 +223,7 @@ $(document).ready(function(){
 	
 	// modal 전송
 	$("#btn_save").on("click", function(){
-		alert("${recr.recruit_code }");
+// 		alert("${recr.recruit_code }");
 		$("#report_contents").val($("#txt_report").val());
 		$("#recruit_code").val("${recr.recruit_code }");
 		$("#req_page").val("${req_page }");

@@ -181,6 +181,18 @@
 	</c:forEach>
 	
 	
+	/* 프로필 area의 추천수 업데이트 */
+	<c:if test="${ pageCnt != null }">
+		var pageCnt = '${ pageCnt }';
+		$('#page_cnt').text(pageCnt);
+	</c:if>
+	
+	/* 프로필 area의 추천수 업데이트 */
+	<c:if test="${ goodCnt != null }">
+		var goodCnt = '${ goodCnt }';
+		$('#good_cnt').text(goodCnt);
+	</c:if>
+	
 	//페이지 작성 페이지로 이동
 	function writePage(section_code) {
 		document.location.href = "/page/onenote?section_code=" + section_code;

@@ -250,7 +250,9 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	}
 
 	
-
-
+	@Override
+	public int delete_connections_waiting(Personal_connectionVo personalVo){
+		return personalDao.delete_connections_waiting(personalVo);
+	}
 	
 }

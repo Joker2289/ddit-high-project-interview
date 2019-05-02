@@ -5,17 +5,30 @@ public class SearchResultVo {
 	private String mem_id;          // 검색된 회원(회사/회원) 아이디
 	private String mem_name;        // 검색된 회원 이름
 	private String profile_path;    // 검색된 회원 프로필사진
-	private String corporate_name;  // 검색된 회원의 경력정보
+	private String introduce;  		// 검색된 회원의 학력경력 정보
 	private String industry_type;   // 검색된 회사의 사업유형
 	private String search_word;		// 검색어
 	private String addr1;
 	private String col_no;			// 검색 정렬번호
+	private String ref_keyword;
+	private String receive_accept;
 	
 	public SearchResultVo() {
 		
 	}
 	
-	
+	public String getReceive_accept() {
+		return receive_accept;
+	}
+	public void setReceive_accept(String receive_accept) {
+		this.receive_accept = receive_accept;
+	}
+	public String getRef_keyword() {
+		return ref_keyword;
+	}
+	public void setRef_keyword(String ref_keyword) {
+		this.ref_keyword = ref_keyword;
+	}
 	public String getAddr1() {
 		return addr1;
 	}
@@ -52,11 +65,11 @@ public class SearchResultVo {
 	public void setProfile_path(String profile_path) {
 		this.profile_path = profile_path;
 	}
-	public String getCorporate_name() {
-		return corporate_name;
+	public String getIntroduce() {
+		return introduce;
 	}
-	public void setCorporate_name(String corporate_name) {
-		this.corporate_name = corporate_name;
+	public void setIntroduce(String introduce) {
+		this.introduce = introduce;
 	}
 	public String getIndustry_type() {
 		return industry_type;
@@ -67,7 +80,8 @@ public class SearchResultVo {
 	@Override
 	public String toString() {
 		return "SearchResultVo [mem_id=" + mem_id + ", mem_name=" + mem_name + ", profile_path=" + profile_path
-				+ ", corporate_name=" + corporate_name + ", industry_type=" + industry_type + ", search_word="
-				+ search_word + ", addr1=" + addr1 + ", col_no=" + col_no + "]";
+				+ ", introduce=" + introduce + ", industry_type=" + industry_type + ", search_word=" + search_word
+				+ ", addr1=" + addr1 + ", col_no=" + col_no + ", ref_keyword=" + ref_keyword + ", receive_accept="
+				+ receive_accept + "]";
 	}
 }

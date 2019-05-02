@@ -46,4 +46,20 @@ public class ReportServiceImpl implements IReportService {
 		return deleteCnt;
 	}
 
+	/**
+	 * 
+	 * Method : getReport
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param tempRVo
+	 * @return
+	 * Method 설명 : 특정 유저의 신고여부 조회.
+	 */
+	@Override
+	public ReportVo getReport(ReportVo tempRVo) {
+		ReportVo rVo = reportDao.getReport(tempRVo);
+		
+		return rVo;
+	}
+
 }

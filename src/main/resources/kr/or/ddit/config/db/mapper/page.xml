@@ -113,6 +113,32 @@
 	</select>
 	
 	
+	<!-- 페이지 검색 -->
+	<select id="search_page" parameterType="pageVo" resultType="pageVo">
+		select  c.*, d.*, e.good_cnt, f.comment_cnt
+		  from  (select a.user_id, a.portfolio_code, b.section_code
+		        from portfolio a, section b
+		        where user_id = #{ user_id }
+		           and a.portfolio_code = b.portfolio_code) c, page d,
+		       
+		       (select count(*) as good_cnt, ref_code
+		          from good
+		         where division = 22
+		        group by ref_code) e,
+		        
+		       (select count(*) comment_cnt, ref_code
+		          from post_comment
+		         where division = 22
+		        group by ref_code) f
+		        
+		 where d.section_code = c.section_code
+		   and d.page_code = e.ref_code(+)
+		   and d.page_code = f.ref_code(+)
+		   and (d.page_title like '%' || #{ search_word } || '%'
+		    or d.page_contents like '%' || #{ search_word } || '%')
+		   
+		order by d.write_date desc
+	</select>
 	
 	
 	

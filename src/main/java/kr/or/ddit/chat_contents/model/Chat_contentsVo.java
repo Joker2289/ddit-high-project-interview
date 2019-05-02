@@ -15,6 +15,8 @@ public class Chat_contentsVo {
 	private String memCount;		// 채팅 방 사람수
 	private String name;		// 채팅보낸 유저 이름
 	private String currval;	
+	private String path;		// 이미지 
+	private String type;		// 회원 구분
 	
 	public Chat_contentsVo() {
 		
@@ -107,6 +109,26 @@ public class Chat_contentsVo {
 
 	public void setCurrval(String currval) {
 		this.currval = currval;
+	}
+	
+	
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+	
+	
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@Override

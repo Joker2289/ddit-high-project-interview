@@ -22,6 +22,13 @@
 		   and (ref_keyword = #{ref_keyword} or mem_id = #{ref_keyword})
 	</delete>
 	
+	<delete id="delete_corpFollw" parameterType="followVo">
+		delete follow
+		 where mem_id = #{mem_id}
+		   and ref_keyword = #{ref_keyword}
+		   and division = '11'
+	</delete>
+	
 	<!-- 회원의 전체 팔로우 목록 조회 -->
 	<select id="select_followList" parameterType="String" resultType="followVo">
 		select follow_code, mem_id, ref_keyword, division
@@ -137,8 +144,19 @@
 		   and ref_keyword = #{ref_keyword}	
 	</select>
 	
-	<!--  -->
-	<delete id="">
+	<!-- 회사 팔로우 -->
+	<insert id="insert_corpFollow" parameterType="followVo">
+		insert into follow
+		values(
+			follow_code_seq.nextval,
+			#{mem_id},
+			#{ref_keyword},
+			11
+		)
+	</insert>
+	
+	<!-- 회사 언팔로우 -->
+	<delete id="delete_corpFollow" parameterType="followVo">
 		delete from follow
 		 where mem_id = #{mem_id}
 		   and ref_keyword = #{ref_keyword}
@@ -178,4 +196,34 @@
 	and follow.ref_keyWord=#{corporInfo.corp_id}
 	</select>
 	
+	<!-- 채팅 초대할 유저의 팔로우들(회사,회원)  -->
+	<select id="select_followChatList" parameterType="String" resultType="map">
+		select a.mem_id,
+                   decode(a.mem_id,b.user_id,b.user_name,c.corp_name) as name,
+                   decode(a.mem_id,b.user_id,b.PROFILE_PATH,c.LOGO_PATH) as path,
+                   decode(a.mem_id,b.user_Id,d.introduce,c.INDUSTRY_TYPE) as introduce
+           from member a, users b, CORPORATION c, (select user_id,   
+                                                         substr(listagg(beintroduce, ' ') within group (order by graduation desc), 0, instr(listagg(beintroduce, ' ') within group (order by graduation desc), ' ', 1, 2)) as introduce
+                                                               
+                                                  from (select a.user_id,
+                                                          case when b.resign_date is null then b.corporate_name ||' ' ||job_position || ' '
+                                                               when b.resign_date is not null then a.school_name ||' ' || a.degree_name || ' '
+                                                           end as beintroduce,
+                                                               a.graduation
+                                                          from education_info a, career_info b
+                                                         where a.user_id = b.user_id
+                                                           and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select career_info.user_id,  max(nvl(career_info.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+                                                                                                                                        from career_info, education_info
+                                                                                                                                       where career_info.user_id = education_info.user_id
+                                                                                                                                       group by career_info.user_id)
+                                                         order by a.graduation desc)
+                                                 group by user_id) d
+          where a.mem_id = b.user_id(+)
+            and a.mem_id = d.user_id(+)
+            and c.corp_id(+) = a.mem_id
+            and a.mem_id in( select REF_KEYWORD
+                             from follow
+                            where mem_id = #{mem_id}
+                              and (division = '11' or division = '43'))
+	</select>
 </mapper> 

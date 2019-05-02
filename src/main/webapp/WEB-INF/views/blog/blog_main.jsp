@@ -28,7 +28,7 @@
 
 
 *{
-   font-family: 한돈삼겹살체300g;
+   font-family: 한돈삼겹살체300g;s
 }
 </style>
 
@@ -56,9 +56,6 @@
 				
 				<%@ include file="/WEB-INF/views/blog/content_area.jsp"%><!-- 타임라인 영역 -->
 				
-				
-				
-				
 			</div>
 
 		</div>
@@ -72,6 +69,8 @@
 <script>
 	
 	var userId = '${ uVo.user_id }';
+	
+	
 	
 	function activityClick(req) {
 		
@@ -104,16 +103,7 @@
 		}
 	};
 	
-	$('#settingBtn').on('click', function(){
-		
-		$.ajax({
-			url : "${cp}/blog/blogSettingForm",
-			data : {"user_id" : userId },
-			success : function(data) {
-				$('#content_area').html(data);			
-			}
-		});
-	});
+
 	
 	
 </script>

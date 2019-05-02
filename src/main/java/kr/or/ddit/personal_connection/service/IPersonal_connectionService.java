@@ -379,6 +379,18 @@ public interface IPersonal_connectionService {
 	* Method 설명 : companyReview - 기업 리뷰 리스트 출력
 	*/
 	List<Corporate_reviewVo> select_companyReview(PaginationVo paginationVo);
+
+
+
+	/**
+	 * Method : delete_connections_waiting
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param personalVo
+	 * @return
+	 * Method 설명 : 수락 대기중인 일촌신청 삭제
+	 */
+	int delete_connections_waiting(Personal_connectionVo personalVo);
 	
 	
 	
