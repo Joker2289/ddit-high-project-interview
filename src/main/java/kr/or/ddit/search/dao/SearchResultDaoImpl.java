@@ -27,13 +27,13 @@ public class SearchResultDaoImpl implements ISearchResultDao {
 	}
 
 	@Override
-	public int userCount(String search_word) {
-		return sqlSession.selectOne("search_result.userCount", search_word);
+	public int userCount(PaginationVo paginationVo) {
+		return sqlSession.selectOne("search_result.userCount", paginationVo);
 	}
 	
 	@Override
-	public int corpCount(String search_word) {
-		return sqlSession.selectOne("search_result.corpCount", search_word);
+	public int corpCount(PaginationVo paginationVo) {
+		return sqlSession.selectOne("search_result.corpCount", paginationVo);
 	}
 
 }

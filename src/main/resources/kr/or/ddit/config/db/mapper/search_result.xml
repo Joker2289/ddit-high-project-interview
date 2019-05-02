@@ -80,12 +80,13 @@
 		                     where user_id = #{mem_id}
 		                     union all
 		                     select user_id, receive_accept
-		                      from personal_connection
+		                      from personal_connection   
 		                     where receive_id = #{mem_id}) e
 		         where d.mem_id = e.receive_id(+)
 		           and (upper(mem_name) like '%' || upper(#{search_word}) || '%'
 		            or  upper(introduce) like '%' || upper(#{search_word}) || '%'))
 		 where mem_id != #{mem_id}
+		 
 	</select>
 	
 	<!-- 검색 회사수 -->

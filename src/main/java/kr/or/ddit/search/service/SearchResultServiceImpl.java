@@ -25,8 +25,8 @@ public class SearchResultServiceImpl implements ISearchResultService {
 		
 		List<SearchResultVo> userList = searchResultDao.search_allInfo_user(paginationVo);
 		List<SearchResultVo> corpList = searchResultDao.search_allInfo_corp(paginationVo);
-		int userCount = searchResultDao.userCount(paginationVo.getSearch_word());
-		int corpCount = searchResultDao.corpCount(paginationVo.getSearch_word());
+		int userCount = searchResultDao.userCount(paginationVo);
+		int corpCount = searchResultDao.corpCount(paginationVo);
 		
 		resultMap.put("userList", userList);
 		resultMap.put("corpList", corpList);

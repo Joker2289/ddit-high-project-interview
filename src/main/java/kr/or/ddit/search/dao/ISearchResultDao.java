@@ -35,7 +35,7 @@ public interface ISearchResultDao {
 	 * @return
 	 * Method 설명 : 검색결과 총 갯수(회사)
 	 */
-	int corpCount(String search_word);
+	int corpCount(PaginationVo paginationVo);
 	
 	/**
 	 * Method : userCount
@@ -45,6 +45,6 @@ public interface ISearchResultDao {
 	 * @return
 	 * Method 설명 : 검색결과 총 갯수(회원)
 	 */
-	int userCount(String search_word);
+	int userCount(PaginationVo paginationVo);
 	
 }

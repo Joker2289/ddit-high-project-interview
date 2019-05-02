@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.follow.model.FollowVo;
@@ -52,8 +53,6 @@ public class SearchResultController {
 		int userCount = (int) resultMap.get("userCount");
 		int corpCount = (int) resultMap.get("corpCount");
 		
-		logger.debug("userCount >>>>>>>>>>>>>>>>>>>>>>>>> {}", userCount);
-		
 		model.addAttribute("userCount", userCount);
 		model.addAttribute("userList", userList);
 		model.addAttribute("corpCount", corpCount);
@@ -61,6 +60,42 @@ public class SearchResultController {
 		model.addAttribute("search_word", search_word);
 		
 		return "searchResultTiles";
+	}
+	
+	@RequestMapping(path={"/corpsearchresult"}, method=RequestMethod.POST)
+	public String corpSearchResult(Model model, @RequestParam String search_word, HttpServletRequest request){
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		PaginationVo paginationVo = new PaginationVo(1, 99999999);
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		paginationVo.setSearch_word(search_word);
+		
+		Map<String, Object> resultMap = searchResultService.search_allInfo(paginationVo);
+		List<SearchResultVo> corpList = (List<SearchResultVo>) resultMap.get("corpList");
+		
+		model.addAttribute("corpList", corpList);
+		
+		return "search/corpSearchResult";
+	}
+	
+	@RequestMapping(path={"/usersearchresult"}, method=RequestMethod.POST)
+	public String userSearchResult(Model model, @RequestParam String search_word, HttpServletRequest request){
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		PaginationVo paginationVo = new PaginationVo(1, 99999999);
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		paginationVo.setSearch_word(search_word);
+		
+		Map<String, Object> resultMap = searchResultService.search_allInfo(paginationVo);
+		List<SearchResultVo> userList = (List<SearchResultVo>) resultMap.get("userList");
+		
+		for(SearchResultVo result : userList){
+			logger.debug(result.getMem_name());
+		}
+		
+		model.addAttribute("userList", userList);
+		
+		return "search/userSearchResult";
 	}
 	
 	/**
@@ -111,6 +146,15 @@ public class SearchResultController {
 		return "complate";
 	}
 	
+	/**
+	 * Method : user_connect
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param target_id
+	 * @param request
+	 * @return
+	 * Method 설명 : 회원 일촌맺기
+	 */
 	@RequestMapping(path={"/user_connect"}, method=RequestMethod.POST)
 	@ResponseBody
 	public String user_connect(String target_id, HttpServletRequest request){
@@ -126,6 +170,15 @@ public class SearchResultController {
 		return "complate";
 	}
 	
+	/**
+	 * Method : user_disconnect
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param target_id
+	 * @param request
+	 * @return
+	 * Method 설명 : 회원 일촌끊기
+	 */
 	@RequestMapping(path={"/user_disconnect"}, method=RequestMethod.POST)
 	@ResponseBody
 	public String user_disconnect(String target_id, HttpServletRequest request){
@@ -141,6 +194,15 @@ public class SearchResultController {
 		return "complate";
 	}
 	
+	/**
+	 * Method : user_waiting_delete
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param target_id
+	 * @param request
+	 * @return
+	 * Method 설명 : 회원 일촌신청 취소
+	 */
 	@RequestMapping(path={"/user_waiting_delete"}, method=RequestMethod.POST)
 	@ResponseBody
 	public String user_waiting_delete(String target_id, HttpServletRequest request){
