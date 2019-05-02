@@ -356,9 +356,7 @@ public class SignupController {
 	
 	@RequestMapping(path="/finalStep", consumes ={"multipart/form-data"})
 	@ResponseBody
-	public String finalStep(@RequestParam(value = "profile") MultipartFile profile, HttpServletRequest req) throws IllegalStateException, IOException {
-		
-		logger.debug("step5 : {}", profile);
+	public String finalStep(@RequestParam(value = "profile") MultipartFile profile, HttpServletRequest req, Model model) throws IllegalStateException, IOException {
 		
 		String realFileName = "";
 		String tmpFileName = UUID.randomUUID().toString(); 
@@ -378,23 +376,33 @@ public class SignupController {
 				uVo.setProfile_path(tmpFileName);
 				
 				userService.update_userInfo(uVo);
+				return "회원";
 			}
+			
 			
 			//기업 프로필 등록
 			else {
 				realFileName =  req.getServletContext().getRealPath("/upload/" + tmpFileName);
 				profile.transferTo(new File(realFileName));
 				
+				//업체코드 등록
+				String[] corp_code = UUID.randomUUID().toString().split("-");
+				model.addAttribute("corp_code", corp_code[0]);
+				
+				
 				CorporationVo cVo = new CorporationVo();
 				cVo.setCorp_id(id);
 				cVo.setCorp_logo(fileName);
 				cVo.setLogo_path(tmpFileName);
+				cVo.setCorp_code(corp_code[0]);
 				
 				corpService.update_corpInfo(cVo);
+				
+				return corp_code[0]; 
 			}
 			
 		}
-		return tmpFileName;
+		return "회원";
 	}
 	
 	/**
