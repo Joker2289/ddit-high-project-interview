@@ -6,50 +6,102 @@
 	
 	<!-- 검색어에 대한 모든 정보(회원) -->
 	<select id="search_allInfo_user" parameterType="paginationVo" resultType="search_resultVo">
-		select * 
-		  from (select c.*, rownum col_no
-		          from (select a.mem_id, a.mem_name, a.profile_path, a.addr1, b.corporate_name
-		                  from (select user_id as mem_id, user_name as mem_name, profile_path, addr1
-		                          from users) a, career_info b
-		                 where a.mem_id = b.user_id(+)
-		                   and (upper(a.mem_name) like '%'|| upper(#{search_word}) ||'%' 
-		                    or upper(b.corporate_name) like '%'|| upper(#{search_word}) ||'%') ) c)
+		select *
+		  from (select d.*, e.receive_accept, rownum col_no
+		          from (select mem_id, mem_name, profile_path, addr1, substr(listagg(beintroduce, ' ') within group (order by graduation desc), 0, instr(listagg(beintroduce, ' ') within group (order by graduation desc), ' ', 1, 2)) as introduce
+		                  from (select a.user_id as mem_id, c.user_name as mem_name, c.profile_path, c.addr1,
+		                          case when b.resign_date is null then b.corporate_name ||' ' ||job_position || ' '
+		                               when b.resign_date is not null then a.school_name ||' ' || a.degree_name || ' '
+		                           end as beintroduce,
+		                               a.graduation
+		                          from education_info a, career_info b, users c
+		                         where c.user_id = a.user_id(+)
+		                           and c.user_id = b.user_id(+)
+		                           and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select career_info.user_id,  max(nvl(career_info.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+		                                                                                                        from career_info, education_info
+		                                                                                                       where career_info.user_id = education_info.user_id
+		                                                                                                       group by career_info.user_id)
+		                         order by a.graduation desc)
+		                 group by mem_id, mem_name, profile_path, addr1) d,
+		                 (select receive_id, receive_accept
+		                      from personal_connection
+		                     where user_id = #{mem_id}
+		                     union all
+		                     select user_id, receive_accept
+		                      from personal_connection
+		                     where receive_id = #{mem_id}) e
+		         where d.mem_id = e.receive_id(+)
+		         and ((upper(mem_name) like '%' || upper(#{search_word}) || '%'
+		            or  upper(introduce) like '%' || upper(#{search_word}) || '%'))
+		            and d.mem_id != #{mem_id})
 		 where col_no between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
 	</select>
 
 	<!-- 검색어에 대한 모든 정보(회사) -->
 	<select id="search_allInfo_corp" parameterType="paginationVo" resultType="search_resultVo">
 		select *
-		  from (select c.*, rownum col_no
-		          from (select a.mem_id, a.mem_name, a.profile_path, a.industry_type, a.addr1
-		                  from (select corp_id as mem_id, corp_name as mem_name, logo_path as profile_path, industry_type, addr1
-		                          from corporation) a
-		                 where (upper(a.mem_name) like '%'|| upper(#{search_word}) ||'%'
-		                    or  upper(a.industry_type) like '%'|| upper(#{search_word}) ||'%') ) c)
+		  from (select d.*, rownum col_no
+		          from (select c.*
+		                  from (select a.mem_id, a.mem_name, a.profile_path, a.industry_type, a.addr1, b.ref_keyword
+		                          from (select corp_id as mem_id, corp_name as mem_name, logo_path as profile_path, industry_type, addr1
+		                                  from corporation) a, 
+		                               (select ref_keyword
+		                                  from follow
+		                                 where division = '11'
+		                                   and mem_id = #{mem_id}) b
+		                         where a.mem_id = b.ref_keyword(+)
+		                           and (upper(a.mem_name) like '%'|| upper(#{search_word}) ||'%'
+		                            or  upper(a.industry_type) like '%'|| upper(#{search_word}) ||'%') ) c) d)
 		 where col_no between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
 	</select>
 	
-	<!-- 검색 유저수 -->
+	<!-- 검색 회원수 -->
 	<select id="userCount" parameterType="String" resultType="int">
-		select count(*) 
-		  from (select c.*, rownum col_no
-		          from (select a.mem_id, a.mem_name, a.profile_path, b.corporate_name
-		                  from (select user_id as mem_id, user_name as mem_name, profile_path
-		                          from users) a, career_info b
-		                 where a.mem_id = b.user_id(+)
-		                   and (upper(a.mem_name) like '%'|| upper(#{search_word}) ||'%' 
-		                    or upper(b.corporate_name) like '%'|| upper(#{search_word}) ||'%') ) c)
+		select count(mem_id)
+		  from (select d.*, e.receive_accept, rownum col_no
+		          from (select mem_id, mem_name, profile_path, addr1, substr(listagg(beintroduce, ' ') within group (order by graduation desc), 0, instr(listagg(beintroduce, ' ') within group (order by graduation desc), ' ', 1, 2)) as introduce
+		                  from (select a.user_id as mem_id, c.user_name as mem_name, c.profile_path, c.addr1,
+		                          case when b.resign_date is null then b.corporate_name ||' ' ||job_position || ' '
+		                               when b.resign_date is not null then a.school_name ||' ' || a.degree_name || ' '
+		                           end as beintroduce,
+		                               a.graduation
+		                          from education_info a, career_info b, users c
+		                         where c.user_id = a.user_id(+)
+		                           and c.user_id = b.user_id(+)
+		                           and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select career_info.user_id,  max(nvl(career_info.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
+		                                                                                                        from career_info, education_info
+		                                                                                                       where career_info.user_id = education_info.user_id
+		                                                                                                       group by career_info.user_id)
+		                         order by a.graduation desc)
+		                 group by mem_id, mem_name, profile_path, addr1) d,
+		                 (select receive_id, receive_accept
+		                      from personal_connection
+		                     where user_id = #{mem_id}
+		                     union all
+		                     select user_id, receive_accept
+		                      from personal_connection
+		                     where receive_id = #{mem_id}) e
+		         where d.mem_id = e.receive_id(+)
+		           and (upper(mem_name) like '%' || upper(#{search_word}) || '%'
+		            or  upper(introduce) like '%' || upper(#{search_word}) || '%')
+		           and d.mem_id != #{mem_id})
 	</select>
 	
 	<!-- 검색 회사수 -->
 	<select id="corpCount" parameterType="String" resultType="int">
-		select count(*)
-		  from (select c.*, rownum col_no
-		          from (select a.mem_id, a.mem_name, a.profile_path, a.industry_type
-		                  from (select corp_id as mem_id, corp_name as mem_name, logo_path as profile_path, industry_type
-		                          from corporation) a
-		                 where (upper(a.mem_name) like '%'|| upper(#{search_word}) ||'%'
-		                    or  upper(a.industry_type) like '%'|| upper(#{search_word}) ||'%') ) c)
+		select count(mem_id)
+		  from (select d.*, rownum col_no
+		          from (select c.*
+		                  from (select a.mem_id, a.mem_name, a.profile_path, a.industry_type, a.addr1, b.ref_keyword
+		                          from (select corp_id as mem_id, corp_name as mem_name, logo_path as profile_path, industry_type, addr1
+		                                  from corporation) a, 
+		                               (select ref_keyword
+		                                  from follow
+		                                 where division = '11'
+		                                   and mem_id = #{mem_id}) b
+		                         where a.mem_id = b.ref_keyword(+)
+		                           and (upper(a.mem_name) like '%'|| upper(#{search_word}) ||'%'
+		                            or  upper(a.industry_type) like '%'|| upper(#{search_word}) ||'%') ) c) d)
 	</select>
 	
 </mapper>

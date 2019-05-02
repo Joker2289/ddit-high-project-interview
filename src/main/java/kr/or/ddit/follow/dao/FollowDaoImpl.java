@@ -103,8 +103,13 @@ public class FollowDaoImpl implements IFollowDao {
 		return sqlSession.selectList("follow.select_followChatList", mem_id);
 	}
 	@Override
-	public int follow_unfollow(FollowVo followVo) {
-		return sqlSession.selectOne("follow.follow_unfollow", followVo);
+	public int insert_corpFollow(FollowVo followVo) {
+		return sqlSession.insert("follow.insert_corpFollow", followVo);
+	}
+
+	@Override
+	public int delete_corpFollow(FollowVo followVo) {
+		return sqlSession.delete("follow.delete_corpFollow", followVo);
 	}
 
 }

@@ -59,6 +59,8 @@ public interface IFollowService {
 	int insert_feedFollow(FollowVo followVo);
 	
 	/**
+	 * Method : inseret_corpFollow
+	 * 작성자 : goo84
 	 * Method : select_followChatList
 	 * 작성자 : jin
 	 * 변경이력 :
@@ -74,9 +76,18 @@ public interface IFollowService {
 	 * 변경이력 :
 	 * @param followVo
 	 * @return
+	 * Method 설명 : 회사 팔로우
 	 * Method 설명 :회사 팔로우 언팔로우 유무체크
 	 */
-	int follow_unfollow(FollowVo followVo);
+	int insert_corpFollow(FollowVo followVo);
 	
-	
+	/**
+	 * Method : delete_corpFollow
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param followVo
+	 * @return
+	 * Method 설명 : 회사 언팔로우
+	 */
+	int delete_corpFollow(FollowVo followVo);	
 }

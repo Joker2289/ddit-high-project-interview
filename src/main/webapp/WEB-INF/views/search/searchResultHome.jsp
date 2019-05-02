@@ -37,7 +37,10 @@
 									<span class="txt-industry" style="width: 68%;display: inline-block;">${corp.industry_type } ${corp.addr1 }</span>
 								</div>
 								<div class="col-corpbuttom">
-									<button class="btn_follow">팔로우</button>
+									<!-- 회사 팔로우 버튼 -->
+									<input type="button" id="btn_follow${corp.col_no }" data-corp="${corp.mem_id }"
+										<c:if test="${corp.mem_id eq corp.ref_keyword }">class="btn_unfollow" value="팔로우 중"</c:if>
+										<c:if test="${corp.mem_id != corp.ref_keyword }">class="btn_follow" value="팔로우"</c:if>/>
 								</div>
 								
 							</div>
@@ -63,16 +66,27 @@
 													<img class="user_img" src="${ cp }/view/imageView?mem_id=${user.mem_id }&division=pf">
 												</c:when>
 											</c:choose>
-											<h4 style="font-size: 20px; color: #0073B1; font-weight: bold;">${user.mem_name }</h4>
-											<p style="font-size: 16px; color: #8D9191; font-weight: bold;">${user.corporate_name }</p><br>
-											<p style="font-size: 15px; color: #8D9191; font-weight: bold;">
-												${fn:split(user.addr1, ' ')[0] } ${fn:split(user.addr1, ' ')[1] }
-											</p>
+											<h4 style="font-size: 20px; color: #0073B1; font-weight: bold; margin-top: 20px;">${user.mem_name }</h4>
+											<pre style="height: 80px;">
+												<p style="font-size: 16px; color: #8D9191; font-weight: bold; height: 50px;">
+													${user.introduce }
+													${fn:split(user.addr1, ' ')[0] } ${fn:split(user.addr1, ' ')[1] }
+												</p>
+											</pre>
 										</a>
 									</a>
 									
 									<div class="col-connect_controll">
-										<button class="btn_connect_controll">1촌 맺기</button>
+										<!-- 일촌버튼 -->
+										<input type="button" id="btn_connection${user.col_no }" data-user="${user.mem_id }"
+											<c:choose>
+												<c:when test="${user.receive_accept eq 'Y' }">
+													class="btn_disconnect" value="일촌 끊기"
+												</c:when>
+												<c:when test="${user.receive_accept != 'Y' }">
+													class="btn_connect" value="일촌 맺기"
+												</c:when>
+											</c:choose>/>
 									</div>
 								
 								</div>
@@ -87,16 +101,71 @@
 </div>
 
 <script>
-
-	var search_word = $("#search_word").val();
-	console.log(search_word);
-
-	$("#btn_allCorp").on("click", function () {
+	var userCount = ${userCount};
+	var corpCount = ${corpCount};
+	var currUserCount = $(".user_info").length;
+	var currCropCount = $(".corp_info").length;	
+	
+	if(userCount == currUserCount){
+		$("#btn_allUser").hide();
+	}
+	if(corpCount == currCropCount){
+		$("#btn_allCorp").hide();
+	}
+	
+	//회사 팔로우
+	var corp_id = "";
+	$(document).on("click", ".btn_follow", function() {
+		corp_id = $(this).attr("data-corp");
 		
+		$.ajax({
+			type : 'POST',
+			url : '/corp_follow',
+			data : {"target_id" : corp_id}
+		});
+		$(this).attr('class', 'btn_unfollow');
+		$(this).attr('value', '팔로우 중');
+
 	});
 	
-	$("#btn_allUser").on("click", function () {
+	//회사 언팔로우
+	$(document).on("click", ".btn_unfollow", function() {
+		corp_id = $(this).attr("data-corp");
 		
+		$.ajax({
+			type : 'POST',
+			url : '/corp_unfollow',
+			data : {"target_id" : corp_id}
+		});
+		$(this).attr('class', 'btn_follow');
+		$(this).attr('value', '팔로우');
+	});
+	
+	//일촌맺기
+	var user_id = "";
+	$(document).on("click", ".btn_connect", function() {
+		user_id = $(this).attr("data-user");
+		
+		$.ajax({
+			type : 'POST',
+			url : '/user_connect',
+			data : {"target_id" : user_id}
+		});
+		$(this).attr('class', 'btn_disconnect');
+		$(this).attr('value', '일촌 끊기');
+	});
+
+	//일촌끊기
+	$(document).on("click", ".btn_disconnect", function() {
+		user_id = $(this).attr("data-user");
+		
+		$.ajax({
+			type : 'POST',
+			url : '/user_disconnect',
+			data : {"target_id" : user_id}
+		});
+		$(this).attr('class', 'btn_connect');
+		$(this).attr('value', '일촌 맺기');
 	});
 	
 </script>
