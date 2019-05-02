@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,9 +38,18 @@
 									<div style="position: relative; top: 40px; left: 25px; background-color: white;
 											width: 175px;">
 										<a href="/corporation?corp_id=${corp.corp_id }">
-											<img src="${corp.logo_path }" width="175" style="border: 1px solid;
-													border-color: #a6a6a6; border-radius: 0px; border-bottom-width: 2px;
-													padding: 10px;">
+											<c:choose>
+												<c:when test="${ fn:contains(corp.logo_path, 'http') }">
+													<img src="${corp.logo_path }" width="175" style="border: 1px solid;
+															border-color: #a6a6a6; border-radius: 0px; border-bottom-width: 2px;
+															padding: 10px;">
+												</c:when>
+												<c:otherwise>
+													<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${corp.corp_id }&division=pf" 
+															width="175" style="border: 1px solid; border-color: #a6a6a6; border-radius: 0px; 
+															border-bottom-width: 2px; padding: 10px;">
+												</c:otherwise>	
+											</c:choose>													
 										</a>			
 									</div>
 								</td>
