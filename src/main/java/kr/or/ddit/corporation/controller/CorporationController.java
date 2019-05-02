@@ -520,16 +520,23 @@ public class CorporationController {
 		return "corporation/corp_recr";
 	}
 	
+	
 	/**
-	 * 회사 직원
+	 * 
+	 * Method : corporationEmployee
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param corp_id
+	 * @param session
 	 * @param model
 	 * @param paginationVo
 	 * @param request
 	 * @return
+	 * Method 설명 : 회사 직원 페이지 클릭
 	 */
 	@RequestMapping("/insert_empl_page")
 	public String corporationEmployee(String corp_id,HttpSession session, Model model, PaginationVo paginationVo, HttpServletRequest request) {
-MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+			MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		CorporationVo corporationInfo = new CorporationVo();
 		Career_infoVo careerinfo = new Career_infoVo();
@@ -614,7 +621,9 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		
 		return "corporation/corp_empl";
 	}
-
+	
+	
+	
 	/**
 	 * 회사타임라인게시글생성
 	 * 
