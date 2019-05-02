@@ -84,13 +84,21 @@
 }
 
 .writer_profile{
-/* 	style="width: 40px; max-width: 40px; height: 40px; max-height: 40px; border: 0px solid #fff; border-radius: 100px; margin-right: 5px;" */
 	width: 40px;
 	max-width: 40px;
 	height: 40px;
 	max-height: 40px;
 	border: 0px solid #fff;
 	border-radius: 100px;
+	margin-right: 5px;
+}
+
+.writer_profile_corp{
+	width: 100px;
+	max-width: 100px;
+	height: 40px;
+	max-height: 40px;
+	border: 0px solid #fff;
 	margin-right: 5px;
 }
 
@@ -395,33 +403,6 @@
 	border-top-width: 0px;
 }
 
-.comment-profile-img{
-/* 	display: inline-block; */
-/* 	width: 10%; */
-/* 	padding: 10px; */
-}
-
-.input_comment_contents{
-	resize: none;
-	border: 0px solid;
-	width: 100%;
-	height: 0px;
-	outline: 0;
-}
-
-.comment-input-text{
-	border-top-left-radius: 0px;
-	border-top-right-radius: 20px;
-	border-bottom-left-radius : 20px;
-	border-bottom-right-radius : 20px;
-	background: #f3f6f8;
-	padding: 5px;
-	margin: 2px;
-}
-
-.comment-input-text div, textarea{
-	background: #f3f6f8;
-}
 
 .contents_writer_image{
 	border: 0px solid #fff;
@@ -432,11 +413,6 @@
 	height: 35px;
 }
 
-.btn_commentWrite{
-	margin-left: 65px;
-	margin-top: 3px;
-	margin-bottom: 3px;
-}
 
 .btn_followTag{
 	background: #3c7ee8;
@@ -452,14 +428,4 @@
 
 .btn_followTag:hover{
 	background-color: #0073b1;
-}
-
-.comment-text{
-	border-top-left-radius: 0px;
-	border-top-right-radius: 20px;
-	border-bottom-left-radius : 20px;
-	border-bottom-right-radius : 20px;
-	background: #f3f6f8;
-	padding: 5px;
-	margin: 2px;
 }
