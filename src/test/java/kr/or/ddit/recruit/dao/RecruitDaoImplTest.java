@@ -193,6 +193,24 @@ public class RecruitDaoImplTest extends LogicTestConfig{
 		assertNotNull(recrList);
 	}
 	
+	/**
+	 * 
+	 * Method : testGetAllRecrDesc
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 날짜 역순으로 전체 채용공고 조회 테스트.
+	 */
+	@Test
+	public void testGetAllRecrDesc() {
+		/***Given***/
+
+		/***When***/
+		List<RecruitVo> recrList = recrDao.getAllRecrDesc();
+
+		/***Then***/
+		assertNotNull(recrList);
+	}
+	
 	
 	
 	

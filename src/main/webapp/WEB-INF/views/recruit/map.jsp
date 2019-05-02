@@ -218,7 +218,7 @@
 				// 안에 이벤트 핸들러를 작성한다.
 				$(".recrBox").on("mouseover", function(){
 // 					alert($(".recrBox").length);
-// 					panTo($(this).data("idx"));
+					setCenter($(this).data("idx"));
 					newinfos[$(this).data("idx")].open(map, markers[($(this).data("recruit_code"))-1]);
 					$(this).css("border-color", "#666666");
 				});
@@ -231,7 +231,7 @@
 		});
 	}
 	
-	function panTo(idx) {
+	function setCenter(idx) {
 	    // 이동할 위도 경도 위치를 생성합니다 
 	    var moveLatLon = markerPositions[($(".recrBox:eq("+ idx +")").data("recruit_code"))-1];
 	    

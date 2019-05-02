@@ -131,7 +131,8 @@
 							padding-top: 7px; padding-left: 7px;">
 						지원한 채용공고 (${appList.size() })
 					</div>
-					<div class="whiteBox" style="width: 330px; margin-left: -14px; margin-top: -1px; padding-bottom: 2px;">
+					<div class="whiteBox" style="width: 330px; margin-left: -14px; margin-top: -1px; padding-bottom: 2px;
+							font-size: 16px;">
 						<table border="0" style="margin-left: 10px; width: 310px; margin-top: 10px;">
 							<c:if test="${appList.size() > 0}">
 								<c:forEach begin="1" end="${appList.size() }" varStatus="i">

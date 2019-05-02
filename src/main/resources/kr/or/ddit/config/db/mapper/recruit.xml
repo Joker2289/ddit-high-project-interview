@@ -34,6 +34,15 @@
 		ORDER BY RECRUIT_CODE
 	</select>
 	
+	<!-- 날짜 역순으로 전체 채용공고 조회. -->
+	<select id="getAllRecrDesc" resultType="recruitVo">
+		SELECT RECRUIT_CODE, CORP_ID, RECRUIT_TITLE, JOB_TYPE, RECRUIT_CONTENTS, 
+			TO_CHAR(START_DATE, 'YY/MM/DD HH24:MI') START_DATE, END_DATE, PERSONNEL, JOB_RANK, 
+			EMP_TYPE, APP_TYPE, APP_COUNT, JOB_LOCAL
+		  FROM RECRUIT	
+		ORDER BY RECRUIT_CODE DESC
+	</select>
+	
 	<!-- 특정 채용공고 조회. -->
 	<select id="getRecr" parameterType="String" resultType="recruitVo">
 		SELECT RECRUIT_CODE, CORP_ID, RECRUIT_TITLE, JOB_TYPE, RECRUIT_CONTENTS, 
