@@ -56,7 +56,7 @@ import kr.or.ddit.users.service.IUsersService;
 
 @Controller
 public class RecruitController {
-	private Logger logger = LoggerFactory.getLogger(RecruitController2.class);
+	private Logger logger = LoggerFactory.getLogger(RecruitController.class);
 	
 	@Resource(name="search_logService")
 	private ISearch_logService sLogService;
