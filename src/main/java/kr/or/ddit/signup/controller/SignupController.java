@@ -164,7 +164,7 @@ public class SignupController {
 		return positionList;
 	}
 	
-	//이메일 인증
+	//이메일 검사
 	@RequestMapping(path="/error_email")
 	@ResponseBody
 	public String error_email(@RequestBody SignupVo vo) {
@@ -197,7 +197,7 @@ public class SignupController {
 		return "success";
 	}
 	
-	//Step2
+	//Step2 - ID 중복 검사, 패스워드 입력, 이메일 입력
 	@RequestMapping("/goStep2")
 	public String goStep2(@RequestBody SignupVo vo, Model model) {
 
@@ -270,7 +270,38 @@ public class SignupController {
 	}
 	
 	
-	@RequestMapping("/goStep5From3")
+	// step4
+	@RequestMapping("/goStep4")
+	public String goStep4(@RequestBody SignupVo vo, HttpServletRequest req) {
+		
+		
+		UsersVo uVo = new UsersVo();
+		uVo.setTelno(vo.getTelno());
+		uVo.setAddr1(vo.getAddr1());
+		uVo.setAddr2(vo.getAddr2());
+		uVo.setZipcode(vo.getZipcode());
+		uVo.setUser_id(id);
+		
+		userService.update_userInfo(uVo);
+		
+		return "login/step4_career";
+	}
+	
+	//학력사항으로 이동
+	@RequestMapping("/returnStepEducation")
+	public String returnStep4() {
+		return "login/step4_education";
+	}
+	
+	//경력사항으로 이동
+	@RequestMapping("/returnStepCareer")
+	public String returnStep3() {
+		return "login/step4_career";
+	}
+	
+	
+	// 경력사항에서 바로 step5
+	@RequestMapping("/goStep5FromCareer")
 	public String goStep5From3(@RequestBody SignupVo vo, HttpServletRequest req) {
 		
 		logger.debug("step3 : {}", vo);
@@ -290,7 +321,8 @@ public class SignupController {
 		return "login/step5";
 	}
 	
-	@RequestMapping("/goStep5From4")
+	// 학력사항에서 바로 step5
+	@RequestMapping("/goStep5FromEducation")
 	public String goStep5From4(@RequestBody SignupVo vo, HttpServletRequest req) {
 		
 		logger.debug("step4 : {}", vo);
@@ -309,15 +341,6 @@ public class SignupController {
 		return "login/step5";
 	}
 	
-	@RequestMapping("/returnStep4")
-	public String returnStep4() {
-		return "login/step4";
-	}
-	
-	@RequestMapping("/returnStep3")
-	public String returnStep3() {
-		return "login/step3";
-	}
 	
 	@RequestMapping("/goStep4_corp")
 	public String goStep4_corp(@RequestBody SignupVo vo) {
@@ -333,6 +356,7 @@ public class SignupController {
 		
 		return "login/step4_corp";
 	}
+	
 	
 	@RequestMapping("/goStep5_corp")
 	public String goStep5_corp(@RequestBody SignupVo vo) {
@@ -357,6 +381,9 @@ public class SignupController {
 	@RequestMapping(path="/finalStep", consumes ={"multipart/form-data"})
 	@ResponseBody
 	public String finalStep(@RequestParam(value = "profile") MultipartFile profile, HttpServletRequest req, Model model) throws IllegalStateException, IOException {
+		
+		
+		logger.debug(">>>>>>>>>>>>>>>>>>>>>> profile : {}", profile);
 		
 		String realFileName = "";
 		String tmpFileName = UUID.randomUUID().toString(); 
@@ -389,7 +416,6 @@ public class SignupController {
 				String[] corp_code = UUID.randomUUID().toString().split("-");
 				model.addAttribute("corp_code", corp_code[0]);
 				
-				
 				CorporationVo cVo = new CorporationVo();
 				cVo.setCorp_id(id);
 				cVo.setCorp_logo(fileName);
@@ -397,7 +423,6 @@ public class SignupController {
 				cVo.setCorp_code(corp_code[0]);
 				
 				corpService.update_corpInfo(cVo);
-				
 				return corp_code[0]; 
 			}
 			

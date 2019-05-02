@@ -24,12 +24,12 @@
 						
 						<div class="wrap-input-custom validate-input m-b-50">
 							<span class="label-input100">우편번호</span>
-							<input class="input100" type="text" id="zipcode" name="zipcode" placeholder=" 우편번호">
+							<input class="input100" type="text" id="zipcode" name="zipcode" placeholder=" 우편번호" readonly>
 							<span class="focus-input100" data-symbol="&#xf206;"></span>
 						</div>
 						
 						<div class="wrap-input-custom2">
-							<button id="zipcodeBtn" class="jk-btn-long" type="button">우편번호</button>
+							<button id="zipcodeBtn" class="jk-btn-long" type="button">조회</button>
 						</div>			
 						
 						<div class="wrap-input-custom validate-input m-b-50">

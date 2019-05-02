@@ -6,7 +6,7 @@
 		<div class="jk-row">
 	  	 	<div id="modal-head" class="jk-modal-head">
 	  	 		
-	  	 		<img src="${ cp }/images/step4.png"  width="500" height="80">
+	  	 		<img src="${ cp }/images/step4_education.png"  width="500" height="80">
 	  	 		
 	  	 	</div>
   	 	</div>
@@ -67,7 +67,7 @@
 							</select>
 						</div>
 						<div class="wrap-input-custom2">
-							<button id="step3" class="jk-btn-long3" type="button">학생이 아닙니다</button>
+							<button id="step_career" class="jk-btn-long3" type="button">학생이 아닙니다</button>
 						</div>
 					</form>
 					
@@ -141,7 +141,7 @@
 				
 				$.ajax({
 		  			
-		  			url : "${cp}/signUp/goStep5From4",
+		  			url : "${cp}/signUp/goStep5FromEducation",
 		  			method : "post",
 		  			data : JSON.stringify(step4),
 		  			contentType : "application/json; charset=uft-8",
@@ -179,14 +179,13 @@
 			});
 			
 		  	//경력정보 입력 단계로 이동
-			$("#step3").on('click', function(){
+			$("#step_career").on('click', function(){
 				
 		  		$.ajax({
 		  			
-		  			url : "${cp}/signUp/returnStep3",
+		  			url : "${cp}/signUp/returnStepCareer",
 		  			method : "post",
 		  			success : function(data){
-		  				console.log(data);
 		  				$(".jk-modal").html(data);
 		  			}
 		  		});

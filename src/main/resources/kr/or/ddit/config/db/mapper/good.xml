@@ -110,7 +110,7 @@
 		select count(*)
   			from (select a.user_id, a.portfolio_code, b.section_code
           			from portfolio a, section b
-         			where user_id = 'joker'
+         			where user_id = #{ user_id }
            			and a.portfolio_code = b.portfolio_code) c, page d,
        
        				(select *
