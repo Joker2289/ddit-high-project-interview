@@ -447,12 +447,12 @@
 					if(confirm("채용공고 알림을 끄시겠습니까?")) {
 						// alarm_flag를 우선 save_flag로 변경. 저장되어있는 항목은 flag 't'를 보낸다.
 						// 컨트롤러에서 't'를 받으면 search_save를 '1'로 변경(저장을 해제).
-// 						window.location.href = 'http://localhost${pageContext.request.contextPath }/updateSave?save_flag=t&search_code=${saveList.get(i.index).search_code }';					
-						window.location.href = 'http://localhost${pageContext.request.contextPath }/updateAlarm?search_alarm=${saveList.get(i.index).search_alarm }&search_code=${saveList.get(i.index).search_code }';					
+						// mac은 포트번호 8080입력하므로 오류. - http 제거.
+						window.location.href = '${pageContext.request.contextPath }/updateAlarm?search_alarm=${saveList.get(i.index).search_alarm }&search_code=${saveList.get(i.index).search_code }';					
 					}					
 				}else{
 					if(confirm("채용공고 알림을 받으시겠습니까?")) {
-						window.location.href = 'http://localhost${pageContext.request.contextPath }/updateAlarm?search_alarm=${saveList.get(i.index).search_alarm }&search_code=${saveList.get(i.index).search_code }';					
+						window.location.href = '${pageContext.request.contextPath }/updateAlarm?search_alarm=${saveList.get(i.index).search_alarm }&search_code=${saveList.get(i.index).search_code }';					
 					}					
 				}
 			});
