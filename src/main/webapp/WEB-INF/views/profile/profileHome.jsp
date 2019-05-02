@@ -233,9 +233,9 @@ $(document).ready(function() {
 						<c:set var="profile_path" value="${usersMap.usersVo.profile_path }"/> 
 					</c:when>
 				</c:choose>
-				<div class="profileHomeBackgroundPicture" style="background-image: url(${not empty bg_path ? bg_path : bg_addrpath});"></div>
+				<div class="profileHomeBackgroundPicture" style="background-image: url(${fn:contains(usersMap.usersVo.bg_path, 'http') ? bg_path : bg_addrpath});"></div>
 				<div style="min-height: 328px;">
-					<div class="profileHomeProfilePicture" style="background-image: url(${not empty profile_path ? profile_path : profile_addrpath});"></div>
+					<div class="profileHomeProfilePicture" style="background-image: url(${fn:contains(usersMap.usersVo.profile_path, 'http') ? profile_path : profile_addrpath});"></div>
 					<div style="width: 791px; padding:24px; margin-top: -72px;">
 						 <c:choose>
 							<c:when test="${SESSION_MEMBERVO.mem_id == usersMap.usersVo.user_id }">
@@ -255,7 +255,7 @@ $(document).ready(function() {
 								</div>
 								<label class="member simpleInfo" style="font-size: 20px; font-weight: 100;">${usersMap.usersVo.introduce }</label>
 								<c:if test="${not empty usersMap.usersVo.persnal_url}">
-									<a href="http://${usersMap.usersVo.persnal_url}" style="font-size: 20px; font-weight: 100;">${usersMap.usersVo.persnal_url}</a>
+									<a href="http://${usersMap.usersVo.persnal_url}" target="_blank" style="font-size: 20px; font-weight: 100;">${usersMap.usersVo.persnal_url}</a>
 								</c:if>
 							</div>
 							
@@ -283,7 +283,7 @@ $(document).ready(function() {
 									<label class="memberRight">
 										<c:choose>
 											<c:when test="${SESSION_MEMBERVO.mem_id == usersMap.usersVo.user_id }">
-												<a href="/connections">1촌 (${peopleCount }명)</a>
+												<a href="/connections?sort=new">1촌 (${peopleCount }명)</a>
 											</c:when>
 											<c:otherwise>
 												1촌 ${peopleCount }명 보기
@@ -540,7 +540,7 @@ $(document).ready(function() {
 									<label style="font-size: 17px; color: rgba(0,0,0,.9);">${thesis_listVo.publisher }</label><br>
 									<label>${strDate }</label><br>
 									<c:if test='${not empty thesis_listVo.thesis_url}'>
-										<label style="font-size: 17px; color: rgba(0,0,0,.9);"><a href="http://${thesis_listVo.thesis_url }">${thesis_listVo.thesis_url }</a></label><br>
+										<label style="font-size: 17px; color: rgba(0,0,0,.9);"><a href="http://${thesis_listVo.thesis_url }" target="_blank">${thesis_listVo.thesis_url }</a></label><br>
 									</c:if>
 									<label>${thesis_listVo.writer }</label><br>
 								</div>
@@ -591,7 +591,7 @@ $(document).ready(function() {
 									<label>${patent_listVo.nation }</label><br>
 									<label>${strDate }</label><br>
 									<c:if test='${not empty patent_listVo.patent_url}'>
-										<label style="font-size: 17px; color: rgba(0,0,0,.9);"><a href="http://${patent_listVo.patent_url }">${patent_listVo.patent_url }</a></label><br>
+										<label style="font-size: 17px; color: rgba(0,0,0,.9);"><a href="http://${patent_listVo.patent_url }" target="_blank">${patent_listVo.patent_url }</a></label><br>
 									</c:if>
 									<label> ${patent_listVo.inventer }</label><br>
 								</div>
@@ -642,7 +642,7 @@ $(document).ready(function() {
 								<div style="width: 570px;">
 									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${project_careerVo.project_name }</h4>
 									<c:if test='${not empty project_careerVo.project_url}'>
-										<label style="font-size: 17px; color: rgba(0,0,0,.9);"><a href="http://${project_careerVo.project_url }">${project_careerVo.project_url }</a></label><br>
+										<label style="font-size: 17px; color: rgba(0,0,0,.9);"><a href="http://${project_careerVo.project_url }" target="_blank">${project_careerVo.project_url }</a></label><br>
 									</c:if>
 									<label>${project_careerVo.project_leader }</label><br>
 									<label>${strDate } - ${endDate  == null ? '현재' : endDate} · (${year > 1 ? year : ''}${year > 1 ? '년 ' : '' }${month > 1 ? month : '1'}개월)</label><br>
@@ -717,7 +717,7 @@ $(document).ready(function() {
 							<div style="display: flex;">
 								<label style="font-weight: 700; color: #0073B1; font-size: 30px; ">${fn:length(recordMap.languageVoList) }</label>
 								<div style="width: 700px;">
-									<label style="font-weight: 700; color: #0073B1; font-size: 15px; padding-left: 10px;">수상 경력</label><br>
+									<label style="font-weight: 700; color: #0073B1; font-size: 15px; padding-left: 10px;">외국어</label><br>
 									<label style="font-size: 15px; padding-left: 10px;">
 										<c:forEach items="${recordMap.languageVoList}" var="languageVo" varStatus="i">
 											${languageVo.lang_kind } <c:if test="${!i.last }">·</c:if>

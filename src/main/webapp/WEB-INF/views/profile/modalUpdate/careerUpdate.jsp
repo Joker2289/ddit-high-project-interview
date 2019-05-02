@@ -27,7 +27,7 @@
 			</ul>
 			<div class="modalHalfRight">
 				<label class="essential">회사코드 </label>
-				<input class="form-control" type="text" name="corp_code" value="${career_infoMap.career_infoVo.corp_code}">
+				<input class="form-control" type="text" name="corp_code" role="${career_infoMap.career_infoVo.corp_code}" value="${career_infoMap.career_infoVo.corp_code}">
 			</div>
 		</div>
 		<div class="modalRow">
