@@ -20,7 +20,7 @@
 		</c:if>
 		<li class="liUsersClick" style="padding: 4px 0 4px 0;">
 			<a style="width: 483px; height: 40px; display: flex;">
-				<div style="width:40px; height: 40px; background-image: url(${not empty profile_path ? profile_path : profile_addrpath}); background-repeat: no-repeat;background-size: cover;background-position: center;border-radius: 40px">
+				<div style="width:40px; height: 40px; background-image: url(${fn:contains(member.PATH, 'http') ? profile_path : profile_addrpath}); background-repeat: no-repeat;background-size: cover;background-position: center;border-radius: 40px">
 				</div>
 				<div style="width: 433px; height: 40px;">
 					<label>${member.NAME }</label><br>
@@ -39,12 +39,12 @@
 		<div class="form-control" id="sendMeseage" name="chat_content" rows="5" contenteditable="true"></div>
 	</div>
 <div class="chatContentBtnBox">
-	<button class="btn btn-link smallChatBtn">
+	<button class="btn btn-link smallChatBtn imageBtn" disabled="disabled">
 		<span style="font-size:24px;">
 			<i class="far fa-image"></i>
 		</span>
 	</button>
-	<button class="btn btn-link smallChatBtn">
+	<button class="btn btn-link smallChatBtn fileBtn" disabled="disabled">
 		<span style="font-size:24px;">
 			<i class="fas fa-paperclip"></i>
 		</span>

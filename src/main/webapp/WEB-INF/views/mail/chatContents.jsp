@@ -71,3 +71,4 @@
 		</c:choose>
 	</c:forEach>
 </div>
+

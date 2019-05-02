@@ -283,7 +283,7 @@ $(document).ready(function() {
 									<label class="memberRight">
 										<c:choose>
 											<c:when test="${SESSION_MEMBERVO.mem_id == usersMap.usersVo.user_id }">
-												<a href="/connections">1촌 ${peopleCount }명 보기</a>
+												<a href="/connections">1촌 (${peopleCount }명)</a>
 											</c:when>
 											<c:otherwise>
 												1촌 ${peopleCount }명 보기

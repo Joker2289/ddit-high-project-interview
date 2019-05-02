@@ -26,7 +26,7 @@
 					</button>
 				</div>
 				<div class="recruitMailBox">
-					<a >채용공고 메일함 ></a>
+					<a >채팅방 목록</a>
 				</div>
 				<div class="chatrooms">
 				<c:forEach items="${userChatroomsMap }" var="userChatroom">
@@ -44,7 +44,7 @@
 					<fmt:formatDate value="${userChatroom.WRITE_DATE}" pattern="MM월 dd일" var="write_date"/>
 					<a class="chatRooms chatRoomBox" role="${userChatroom.CHAT_CODE }">
 						<div class="profileImageBox">
-							<div style="background-image: url(${not empty room_img ? room_img : room_imgaddr});"></div>
+							<div style="background-image: url(${fn:contains(userChatroom.PATH, 'http') ? room_img : room_imgaddr});"></div>
 						</div>
 						<div class="chatRoomContentsBox">
 							<div style="display: flex; color: rgba(0, 0, 0, .6);">
@@ -79,74 +79,17 @@
 			<div class="rightMenuBox">
 				<div class="chatAjax">
 					<div id="chatcontentsAjax">
-					<div class="chatRoomTitleBox">
-						<div>
-							<label>${chatContentsVoList[0].chat_name }</label>
-							<label style="color:rgba(0,0,0,.6);"><c:if test="${not empty chatContentsVoList[0].memCount}">메일 상대 ${chatContentsVoList[0].memCount }명 </c:if></label>
+						<div class="chatRoomTitleBox">
+							<div>
+								<label></label>
+								<label style="color:rgba(0,0,0,.6);"></label>
+							</div>
+							<button class="btn btn-link exit">
+								<i class="fas fa-door-open"></i>
+							</button>
 						</div>
-					<button class="btn btn-link exit">
-						<i class="fas fa-door-open"></i>
-					</button>
-				</div>
-				<div class="chatContentBox">
-					<div style="width: 474px; margin-bottom: 10px; text-align: center;">${oldDate}</div> 
-					<c:forEach items="${chatContentsVoList }" var="chatContentsVo">
-						<fmt:formatDate value="${chatContentsVo.write_date}" pattern="MM월 dd일 a KK:mm" var="write_date"/>
-						<c:set var="contents_addrpath" value="/profile?mem_id=${chatContentsVo.mem_id }"/>
-						<c:choose>
-							<c:when test="${fn:split(chatContentsVo.chat_content,'▣')[1] eq 'exit'}">
-								<div style="width: 474px; margin-bottom: 10px; text-align: center;">${fn:split(chatContentsVo.chat_content,'▣')[0] } 님이 나가셨습니다.</div>
-							</c:when>
-							<c:otherwise>
-								<div style="width: 474px; min-height: 66px; display: flex; margin-bottom: 10px;">
-									<a href='<c:choose>
-												<c:when test="${chatContentsVo.type eq 'user'}">
-													/profileHome
-													<c:if test="${chatContentsVo.mem_id != SESSION_MEMBERVO.mem_id}">?user_id=${chatContentsVo.mem_id }</c:if>
-												</c:when>
-												<c:otherwise>
-													/corporation
-													<c:if test="${chatContentsVo.mem_id != SESSION_MEMBERVO.mem_id}">?corp_id=${chatContentsVo.mem_id }</c:if>
-												</c:otherwise>
-											 </c:choose>'>
-										<div class="profileImg" style="background-image: url(${fn:contains(chatContentsVo.path, 'http') ? chatContentsVo.path : contents_addrpath}); "></div>
-									</a>
-									<div>
-										<div>
-											<label style="font-size: 15px; font-weight: bold;">${chatContentsVo.name}</label>
-											<label style="color: rgba(0,0,0,.6); font-size: 13px;">${write_date}</label>
-										</div>
-										
-										<c:choose>
-											<c:when test="${not empty fn:split(chatContentsVo.chat_content,'▣')[1]}">
-												<c:choose>
-													<c:when test="${fn:split(chatContentsVo.chat_content,'▣')[1] eq 'image' }">
-														<a href="/chatContentsFileDownload?content_code=${chatContentsVo.content_code }">									
-															<div style="width: 250px; height: 300px; background-image:url('/chat_contentsImage?uuid=${fn:split(chatContentsVo.chat_content,'▣')[0]}'); background-repeat: no-repeat; background-size: contain; background-position: center;">
-															</div>
-														</a>
-													</c:when>
-													<c:otherwise>
-														<a href="/chatContentsFileDownload?content_code=${chatContentsVo.content_code }">									
-															<div style="width: 400px;">
-																${fn:split(chatContentsVo.chat_content,'▣')[2]}
-															</div>
-														</a>
-													</c:otherwise>
-												</c:choose>
-											</c:when>
-											<c:otherwise>
-												<div style="word-break: break-all; word-wrap: break-word; width: 360px;">
-													${chatContentsVo.chat_content}
-												</div>
-											</c:otherwise>
-										</c:choose>
-									</div>
-								</div>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</div>
+						<div class="chatContentBox">
+						</div>
 					</div>
 				<div class="chatContentWriteBox">
 					<div class="form-control" id="sendMeseage" rows="5" contenteditable="true"></div>
@@ -232,6 +175,7 @@
 		
 		// 기존에 접속한 방이 있는지 확인
 		var chat_code = Cookies.get('chat_code');
+		var roomsSize = ${fn:length(userChatroomsMap)};
 		// 접속
  		sock = new SockJS("http://192.168.206.19:80/mailHome");
  		
@@ -256,15 +200,15 @@
 		});
 		
 		// 기존에 접속한 방이 없고 현재 개설된 방이 하나라도 있을 시에 최근 메세지가 있는 방으로 선택
-		if(chat_code == undefined && ${fn:length(userChatroomsMap)} > 0){
+		if(chat_code == undefined && roomsSize > 0){
 			$(".chatRooms").get(0).click();
 		}else{
 			$('.chatRooms').attr('class', 'chatRooms chatRoomBox');
 			$(".chatRooms").each(function(index, item){
 				 if($(item).attr('role') == chat_code){
 					 $(item).attr('class', 'chatRooms chatRoomBoxOn');
+					 $(item).click();
 				 }
-				 
 			 });
 		}
 		
@@ -429,7 +373,8 @@
         function onMessage(msg) {
            var data = msg.data;
            console.log(data);
-          		
+          	if(data == "chat"){
+
         	   $.ajax({
 	   				type : "POST",
 	   		    		url : "/serverRecive",
@@ -441,7 +386,8 @@
 	   					 $(".chatContentBox").scrollTop(99999999);
 	   				}
    				});
-           
+        	}
+          	if(data == "room"){
         	   $.ajax({
 	   				type : "POST",
 	   		    		url : "/reflashChatRooms",
@@ -455,6 +401,7 @@
 						}
 	   				}
    				}); 
+          	}
            
         }
 

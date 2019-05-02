@@ -1,43 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <table id="profilemenu">
 	<thead>
 		<tr>
-			<td style="padding-bottom: 0px;"><div class="col-md-3"
-					style="padding-right: 0px; padding-left: 30px;">
-					<span style="font-size: 50px;"><i class="fas fa-user-circle"></i></span>
+			<td style="padding-bottom: 10px;display: flex;">
+				<c:set var="profile_addrpath" value="/profile?mem_id=${SESSION_MEMBERVO.mem_id }"/>
+				<c:if test="${fn:contains(PROFILE_REALPATH, 'http')}">
+					<c:set var="profile_path" value="${PROFILE_REALPATH }"/>
+				</c:if>
+				<div style="padding-right: 0px;">
+					<div style="width: 50px; height: 50px; margin-left: 95px; border-radius: 50px; background-repeat: no-repeat;background-size: cover;background-position: center; background-image: url(${fn:contains(PROFILE_REALPATH, 'http') ? profile_path : profile_addrpath});"></div>
+					<label style="width:240px; height:22px; text-align: center; text-overflow: ellipsis;overflow: hidden;-webkit-line-clamp: 1;-webkit-box-orient: vertical;">${MYNAME }</label>
 				</div>
-				<div class="col-md-6" style="padding-left: 30px;">
-					<div class="col-md-6"
-						style="width: 180px; padding-top: 12px; padding-left: 0px;">사용자이름</div>
-					<div class="col-md-6" style="width: 180px; padding-left: 0px;">간단프로필</div>
-				</div></td>
+				
+			</td>
 		</tr>
 		<c:if test="${SESSION_MEMBERVO.mem_division == '1' }">
 			<tr class="profiletr">
 					<td
-						style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;"
+						style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px; border-top: 1px solid #CFD1D3;"
 						onclick="javascript:location.href='/profileHome'">프로필보기</td>
 			</tr>
 			<tr class="profiletr">
-					<td
-						style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;"
+					<td style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #CFD1D3;"
 						onclick="javascript:location.href='/blog/blogMainView?user_id=${ SESSION_MEMBERVO.mem_id }'">블로그</td>
 			</tr>
 		</c:if>
 		<c:if test="${SESSION_MEMBERVO.mem_division == '2' }">
 			<tr class="profiletr">
 					<td
-						style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px;"
+						style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px; border-top: 1px solid #CFD1D3; border-bottom: 1px solid #CFD1D3;"
 						onclick="javascript:location.href='/corporation'">회사 페이지</td>
 			</tr>
 		</c:if>
 		
-		<tr class="profiletr"
-			style="border-top: 1px solid #CFD1D3; border-bottom: 1px solid #CFD1D3;">
-			<td style="color: #666666; text-align: center;">프리미엄1개월무료이용</td>
-		</tr>
 	</thead>
 	<tbody>
 		<tr class="profiletr">
