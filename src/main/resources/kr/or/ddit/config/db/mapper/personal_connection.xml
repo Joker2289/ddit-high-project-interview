@@ -682,6 +682,13 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 		   and receive_accept = 'Y'
 	</delete>
 	
+	<delete id="delete_connections_waiting" parameterType="personalVo">
+		delete from personal_connection
+		 where (user_id = #{user_id} or receive_id = #{user_id}) 
+		   and (receive_id = #{receive_id} or user_id = #{receive_id})
+		   and receive_accept = 'N'
+	</delete>
+	
 	
 	
 	<!-- 회사 필로우 -->
@@ -723,6 +730,34 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
                       and a.corp_id=#{corp_id}
                       order by a.write_date desc)a)
 		where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
+	</select>
+	
+	
+	
+	<!-- companyReview - 연봉 정보 작성 -->
+	<insert id="insert_companySalary" parameterType="salaryVo">
+		insert into
+			salary_info
+		values(
+				salary_code_seq.nextval,
+				#{user_id},
+				#{corp_id},
+				#{salary_info},
+				#{job_position},
+				#{job_rank},
+				sysdate
+				)
+	</insert>
+	
+	
+	
+	<!-- companySalary - 기업 연봉 리스트 출력 -->
+	<select id="select_companySalary" parameterType="String" resultType="salaryVo">
+		select corp_id, trunc(avg(salary_info)) avgSalary, job_rank, min(salary_info) minSalary, max(salary_info) maxSalary
+          from salary_info
+         where corp_id=#{corp_id}
+	     group by corp_id, job_rank
+         order by job_rank desc
 	</select>
 	
 	

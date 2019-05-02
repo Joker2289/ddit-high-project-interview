@@ -15,6 +15,7 @@ import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
+import kr.or.ddit.salary_info.model.Salary_infoVo;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.util.pagination.PaginationVo;
 
@@ -237,6 +238,22 @@ public class Personal_connectionDaoImpl implements IPersonal_connectionDao {
 	public List<Corporate_reviewVo> select_companyReview(PaginationVo paginationVo) {
 		List<Corporate_reviewVo> reviewList = sqlSessionTemplate.selectList("personal.select_companyReview", paginationVo);
 		return reviewList;
+	}
+	
+	public int delete_connections_waiting(Personal_connectionVo personalVo){
+		return sqlSessionTemplate.delete("personal.delete_connections_waiting", personalVo);
+	}
+
+	@Override
+	public int insert_companySalary(Salary_infoVo salaryVo) {
+		int insert_companySalary = sqlSessionTemplate.insert("personal.insert_companySalary", salaryVo);
+		return insert_companySalary;
+	}
+
+	@Override
+	public List<Salary_infoVo> select_companySalary(String corp_id) {
+		List<Salary_infoVo> salaryList = sqlSessionTemplate.selectList("personal.select_companySalary", corp_id);
+		return salaryList;
 	}
 
 

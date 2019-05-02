@@ -20,6 +20,7 @@
 
 <script>
 
+/* 소개 탭 클릭 */
 function insert_intro_page(corp_id){
 	
 	$.ajax({
@@ -32,16 +33,9 @@ function insert_intro_page(corp_id){
 	});
 }
 
-function insert_recr_page(corp_id){
-	
-	$.ajax({
-		url : "${cp}/corp/insert_recr_page",
-		data : {"corp_id" : corp_id },
-		success : function(data) {
-			$('#content_area').html(data);
-		}
-	});
-}
+
+
+/* 직원 탭 클릭 */
 function insert_empl_page(corp_id){
 	
 	$.ajax({
@@ -52,6 +46,8 @@ function insert_empl_page(corp_id){
 		}
 	});
 }
+
+/* 채용 탭 클릭 */
 function insert_recr_page(corp_id){
 	
 	$.ajax({

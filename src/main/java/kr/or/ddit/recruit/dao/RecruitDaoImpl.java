@@ -219,12 +219,27 @@ public class RecruitDaoImpl implements IRecruitDao{
 		
 		return recrList;
 	}
+
+	/**
+	 * 
+	 * Method : getAllRecrDesc
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 날짜 역순으로 전체 채용공고 조회.
+	 */
+	@Override
+	public List<RecruitVo> getAllRecrDesc() {
+		List<RecruitVo> recrList = sqlSessionTemplate.selectList("recr.getAllRecrDesc");
+		
+		return recrList;
+	}
 	
+	
+
 	
 	
 
 }
-
-
 
 

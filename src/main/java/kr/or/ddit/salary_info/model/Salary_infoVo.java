@@ -8,6 +8,10 @@ public class Salary_infoVo {
 	private String job_position;	// 직군
 	private String job_rank;		// 직급
 	private String write_date;		// 작성일
+	private String reviewCnt;		// 리뷰 총 갯수
+	private String avgSalary;		// 평균 연봉
+	private String minSalary;		// 최소 연봉
+	private String maxSalary;		// 최대 연봉
 	
 	public Salary_infoVo() {
 		// TODO Auto-generated constructor stub
@@ -67,6 +71,36 @@ public class Salary_infoVo {
 
 	public void setWrite_date(String write_date) {
 		this.write_date = write_date;
+	}
+	public String getReviewCnt() {
+		return reviewCnt;
+	}
+
+	public void setReviewCnt(String reviewCnt) {
+		this.reviewCnt = reviewCnt;
+	}
+	public String getAvgSalary() {
+		return avgSalary;
+	}
+
+	public void setAvgSalary(String avgSalary) {
+		this.avgSalary = avgSalary;
+	}
+
+	public String getMinSalary() {
+		return minSalary;
+	}
+
+	public void setMinSalary(String minSalary) {
+		this.minSalary = minSalary;
+	}
+
+	public String getMaxSalary() {
+		return maxSalary;
+	}
+
+	public void setMaxSalary(String maxSalary) {
+		this.maxSalary = maxSalary;
 	}
 
 	@Override

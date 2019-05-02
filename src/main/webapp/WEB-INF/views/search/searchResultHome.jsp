@@ -34,7 +34,9 @@
 								
 								<div class="col-corpInfomation">
 									<a class="txt-corp_name" style="width: 20%; display: inline-block;" href="/corporation?corp_id=${corp.mem_id }">${corp.mem_name }</a>
-									<span class="txt-industry" style="width: 68%;display: inline-block;">${corp.industry_type } ${corp.addr1 }</span>
+									<span class="txt-industry" style="width: 68%;display: inline-block;">
+										${corp.industry_type } ${corp.addr1 }
+									</span>
 								</div>
 								<div class="col-corpbuttom">
 									<!-- 회사 팔로우 버튼 -->
@@ -83,7 +85,10 @@
 												<c:when test="${user.receive_accept eq 'Y' }">
 													class="btn_disconnect" value="일촌 끊기"
 												</c:when>
-												<c:when test="${user.receive_accept != 'Y' }">
+												<c:when test="${user.receive_accept eq 'N' }">
+													class="btn_waiting" value="일촌수락 대기"
+												</c:when>
+												<c:when test="${user.receive_accept eq null }">
 													class="btn_connect" value="일촌 맺기"
 												</c:when>
 											</c:choose>/>
@@ -152,7 +157,7 @@
 			data : {"target_id" : user_id}
 		});
 		$(this).attr('class', 'btn_disconnect');
-		$(this).attr('value', '일촌 끊기');
+		$(this).attr('value', '일촌수락 대기');
 	});
 
 	//일촌끊기
@@ -162,6 +167,19 @@
 		$.ajax({
 			type : 'POST',
 			url : '/user_disconnect',
+			data : {"target_id" : user_id}
+		});
+		$(this).attr('class', 'btn_connect');
+		$(this).attr('value', '일촌 맺기');
+	});
+	
+	//일촌수락 대기 -> 취소
+	$(document).on("click", ".btn_waiting", function() {
+		user_id = $(this).attr("data-user");
+		
+		$.ajax({
+			type : 'POST',
+			url : '/user_waiting_delete',
 			data : {"target_id" : user_id}
 		});
 		$(this).attr('class', 'btn_connect');

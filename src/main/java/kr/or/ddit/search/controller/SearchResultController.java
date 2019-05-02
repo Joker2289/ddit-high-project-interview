@@ -141,4 +141,19 @@ public class SearchResultController {
 		return "complate";
 	}
 	
+	@RequestMapping(path={"/user_waiting_delete"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String user_waiting_delete(String target_id, HttpServletRequest request){
+		
+		Personal_connectionVo personalInfo = new Personal_connectionVo();
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+
+		personalInfo.setUser_id(memberInfo.getMem_id());
+		personalInfo.setReceive_id(target_id);
+		
+		personalService.delete_connections_waiting(personalInfo);
+		
+		return "complate";
+	}
+	
 }

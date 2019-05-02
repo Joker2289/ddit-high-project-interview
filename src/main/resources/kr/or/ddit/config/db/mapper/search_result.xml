@@ -32,9 +32,9 @@
 		                     where receive_id = #{mem_id}) e
 		         where d.mem_id = e.receive_id(+)
 		         and ((upper(mem_name) like '%' || upper(#{search_word}) || '%'
-		            or  upper(introduce) like '%' || upper(#{search_word}) || '%'))
-		            and d.mem_id != #{mem_id})
+		            or  upper(introduce) like '%' || upper(#{search_word}) || '%')))
 		 where col_no between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
+		   and mem_id != #{mem_id}
 	</select>
 
 	<!-- 검색어에 대한 모든 정보(회사) -->
@@ -53,11 +53,12 @@
 		                           and (upper(a.mem_name) like '%'|| upper(#{search_word}) ||'%'
 		                            or  upper(a.industry_type) like '%'|| upper(#{search_word}) ||'%') ) c) d)
 		 where col_no between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
+		   and mem_id != #{mem_id}
 	</select>
 	
 	<!-- 검색 회원수 -->
 	<select id="userCount" parameterType="String" resultType="int">
-		select count(mem_id)
+		select count(*)
 		  from (select d.*, e.receive_accept, rownum col_no
 		          from (select mem_id, mem_name, profile_path, addr1, substr(listagg(beintroduce, ' ') within group (order by graduation desc), 0, instr(listagg(beintroduce, ' ') within group (order by graduation desc), ' ', 1, 2)) as introduce
 		                  from (select a.user_id as mem_id, c.user_name as mem_name, c.profile_path, c.addr1,
@@ -83,13 +84,13 @@
 		                     where receive_id = #{mem_id}) e
 		         where d.mem_id = e.receive_id(+)
 		           and (upper(mem_name) like '%' || upper(#{search_word}) || '%'
-		            or  upper(introduce) like '%' || upper(#{search_word}) || '%')
-		           and d.mem_id != #{mem_id})
+		            or  upper(introduce) like '%' || upper(#{search_word}) || '%'))
+		 where mem_id != #{mem_id}
 	</select>
 	
 	<!-- 검색 회사수 -->
 	<select id="corpCount" parameterType="String" resultType="int">
-		select count(mem_id)
+		select count(*)
 		  from (select d.*, rownum col_no
 		          from (select c.*
 		                  from (select a.mem_id, a.mem_name, a.profile_path, a.industry_type, a.addr1, b.ref_keyword
@@ -102,6 +103,7 @@
 		                         where a.mem_id = b.ref_keyword(+)
 		                           and (upper(a.mem_name) like '%'|| upper(#{search_word}) ||'%'
 		                            or  upper(a.industry_type) like '%'|| upper(#{search_word}) ||'%') ) c) d)
+		 where mem_id != #{mem_id}
 	</select>
 	
 </mapper>

@@ -72,6 +72,7 @@ public class LoginController {
 			if(dbMemberVo.getMem_division().equals("1")) {
 				UsersVo uVo = usersService.select_userInfo(dbMemberVo.getMem_id());
 				req.getSession().setAttribute("SESSION_DETAILVO", uVo);
+				req.getSession().setAttribute("PROFILE_REALPATH", uVo.getProfile_path());
 				req.getSession().setAttribute("MYNAME", uVo.getUser_name());
 			}
 				
@@ -79,6 +80,7 @@ public class LoginController {
 			else if(dbMemberVo.getMem_division().equals("2")) {
 				CorporationVo cVo = corpService.select_corpInfo(dbMemberVo.getMem_id());
 				req.getSession().setAttribute("SESSION_DETAILVO", cVo);
+				req.getSession().setAttribute("PROFILE_REALPATH", cVo.getLogo_path());
 				req.getSession().setAttribute("MYNAME", cVo.getCorp_name());
 			}
 			//관리자 로그인
