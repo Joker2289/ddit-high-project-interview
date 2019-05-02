@@ -13,15 +13,15 @@
 			<div class="recr" onmouseover="" style="cursor: pointer; height: 215px; border-bottom: 1px solid;
 					border-bottom-color: #d9d9d9;" data-code="${rRVo.recruit_code }">
 				<div class="table_div" style="height: 80px; border: 0px solid; margin-left: 24px;">
-				
-				<c:choose>
-					<c:when test="${ fn:contains(corpImgList1.get(i.index), 'http') }">
-						<img src="${corpImgList1.get(i.index) }" width="200">
-					</c:when>
-					<c:otherwise>
-						<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${corpIdList1.get(i.index) }&division=pf" width="200">
-					</c:otherwise>	
-				</c:choose>
+					<%-- img 불러오기 http 들어있는 경우랑 아닐 때 구분 --%>
+					<c:choose>
+						<c:when test="${ fn:contains(corpImgList1.get(i.index), 'http') }">
+							<img src="${corpImgList1.get(i.index) }" width="200">
+						</c:when>
+						<c:otherwise>
+							<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${corpIdList1.get(i.index) }&division=pf" width="200">
+						</c:otherwise>	
+					</c:choose>
 					
 				</div> <br><br>
 				<strong style="padding-top: 50px;">

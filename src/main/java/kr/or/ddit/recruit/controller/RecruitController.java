@@ -228,6 +228,7 @@ public class RecruitController {
 			
 			List<String> corpImgList2 = new ArrayList<>();
 			List<String> corpNmList2 = new ArrayList<>();
+			List<String> corpIdList2 = new ArrayList<>();
 			List<String> timeList2 = new ArrayList<>();
 			
 			// 스크랩 데이터는 srecr에 있으니까 저장여부 리스트 scrapList 만들기. size는 rRList2에서 
@@ -240,6 +241,7 @@ public class RecruitController {
 				CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
 				corpImgList2.add(cVo.getLogo_path());
 				corpNmList2.add(cVo.getCorp_name());
+				corpIdList2.add(cVo.getCorp_id());
 				
 				boolean scrapCheck_flag = false;
 				for(Save_recruitVo scrapCheckSVo : uSRList2){
@@ -280,6 +282,7 @@ public class RecruitController {
 			
 			model.addAttribute("corpImgList2", corpImgList2);		
 			model.addAttribute("corpNmList2", corpNmList2);			
+			model.addAttribute("corpIdList2", corpIdList2);			
 			model.addAttribute("scrapList2", scrapList2);		
 			model.addAttribute("timeList2", timeList2);		
 			

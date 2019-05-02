@@ -228,6 +228,7 @@ public class Save_recruitController {
 		// srList에 맞는 corpImgList/corpNmList 보내기.
 		List<String> corpImgList = new ArrayList<>();
 		List<String> corpNmList = new ArrayList<>();
+		List<String> corpIdList = new ArrayList<>();
 		
 		for(int i=0; i < srList.size(); i++){
 			RecruitVo rVo = srList.get(i);
@@ -235,14 +236,17 @@ public class Save_recruitController {
 			
 			corpImgList.add(cVo.getLogo_path());
 			corpNmList.add(cVo.getCorp_name());
+			corpIdList.add(cVo.getCorp_id());
 		}
 		
 		model.addAttribute("srList", srList);
 		model.addAttribute("corpNmList", corpNmList);
 		model.addAttribute("corpImgList", corpImgList);		
+		model.addAttribute("corpIdList", corpIdList);		
 		
 		return "save_recruit/srListAjaxHtml";
 	}
+	
 	
 	
 	

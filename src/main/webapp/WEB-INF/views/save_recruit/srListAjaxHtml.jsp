@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <input type="hidden" id="listSize" value="${srList.size() }">
 
@@ -11,7 +12,14 @@
 					border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 7px; 
 					padding-top: 7px; width: 244px; text-align: center;" 
 					data-code="${srList.get(i.index - 1).recruit_code }">
-				<img src="${corpImgList.get(i.index - 1) }" width="200"> 
+				<c:choose>
+					<c:when test="${ fn:contains(corpImgList.get(i.index - 1), 'http') }">
+						<img src="${corpImgList.get(i.index - 1) }" width="200">
+					</c:when>
+					<c:otherwise>
+						<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${corpIdList.get(i.index - 1) }&division=pf" width="200">
+					</c:otherwise>	
+				</c:choose>					
 			</td>
 			<td class="srecr" onmouseover="" style="cursor: pointer; width: 473px;
 					border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-left: 15px;

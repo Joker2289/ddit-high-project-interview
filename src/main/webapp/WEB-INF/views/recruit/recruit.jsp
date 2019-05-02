@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -240,7 +241,15 @@
 										<div id="recr2${i.index }" onmouseover="" style="cursor: pointer; height: 215px;
 												border-bottom: 1px solid; border-bottom-color: #d9d9d9;">
 											<div class="table_div" style="margin-left: 24px;">
-												<img src="${corpImgList2.get(i.index) }" width="200"> 
+												<c:choose>
+													<c:when test="${ fn:contains(corpImgList2.get(i.index), 'http') }">
+														<img src="${corpImgList2.get(i.index) }" width="200">
+													</c:when>
+													<c:otherwise>
+														<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${corpIdList2.get(i.index) }&division=pf" width="200">
+													</c:otherwise>	
+												</c:choose>												
+												
 											</div> <br><br>
 											<strong>
 												<c:choose>

@@ -75,8 +75,8 @@
 	<select id="getAppList" parameterType="save_recruitVo" resultType="save_recruitVo">
 		SELECT *
 		  FROM SAVE_RECRUIT
-		 WHERE RECR_APP = 't'
-		   AND USER_ID = 'brown'
+		 WHERE RECR_APP = #{recr_app}
+		   AND USER_ID = #{user_id}
 		   AND ROWID IN (SELECT MAX(ROWID) 
 		                   FROM SAVE_RECRUIT
 		                 GROUP BY RECRUIT_CODE)	
