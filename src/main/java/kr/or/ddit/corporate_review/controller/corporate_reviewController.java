@@ -36,9 +36,6 @@ public class corporate_reviewController {
 		paginationVo.setPageSize(3);
 		paginationVo.setCorp_id(corp_id);
 		
-		
-	    
-		
 		CorporationVo corporationInfo = corporationService.select_corpInfo(corp_id);
 		List<Corporate_reviewVo> crVo = personalService.select_companyReview(paginationVo);
 		if (crVo.size() > 0){
@@ -66,7 +63,6 @@ public class corporate_reviewController {
 		personalService.insert_companyReview(reviewVo);
 		
 		return "redirect:/companyReview?corp_id="+reviewVo.getCorp_id();
-		
 	}
 
 }

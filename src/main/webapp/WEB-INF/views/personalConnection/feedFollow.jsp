@@ -40,7 +40,7 @@
 							</c:when>
 							
 							<c:when test="${not empty result.corp_id}">
-								<a href="/corporation?corp_id=${result.corp_id }">
+								<a href="/corp/corporation?corp_id=${result.corp_id }">
 								<div style="width: 120px;height: 59px;background-image:url(${result.imgPath});background-repeat: no-repeat;background-size: 120px;background-position: center;margin-left: 0px;margin-top: 15px; margin-bottom: 12px;">
 								</div>
 								</a>

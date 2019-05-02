@@ -113,12 +113,12 @@ $(document).ready(function() {
 					<c:forEach items="${corporationList}" var="corp">
 						<div style="width: 225px;">
 							<div class="corporation">
-								<a href="/corporation?corp_id=${corp.corp_id }"><div
+								<a href="/corp/corporation?corp_id=${corp.corp_id }"><div
 								style="width: 120px;height: 59px;background-image:url(${corp.logo_path});background-repeat: no-repeat;background-size: 120px;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;">
 								</div></a>
 								<div>
-									<a href="/corporation?corp_id=${corp.corp_id }"><label style="font-size: 18px;"><strong>${corp.corp_name}</strong></label><br/></a>
-									<a href="/corporation?corp_id=${corp.corp_id }"><label>${corp.industry_type }</label></a>
+									<a href="/corp/corporation?corp_id=${corp.corp_id }"><label style="font-size: 18px;"><strong>${corp.corp_name}</strong></label><br/></a>
+									<a href="/corp/corporation?corp_id=${corp.corp_id }"><label>${corp.industry_type }</label></a>
 								</div>
 							</div>
 							<div>
