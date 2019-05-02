@@ -71,7 +71,6 @@
 			<table>
 				<tr>
 					<td id="td_map">
-									
 						<%-- ajax. --%>
 					</td>
 				</tr>
@@ -219,7 +218,7 @@
 				// 안에 이벤트 핸들러를 작성한다.
 				$(".recrBox").on("mouseover", function(){
 // 					alert($(".recrBox").length);
-					panTo($(this).data("idx"));
+// 					panTo($(this).data("idx"));
 					newinfos[$(this).data("idx")].open(map, markers[($(this).data("recruit_code"))-1]);
 					$(this).css("border-color", "#666666");
 				});

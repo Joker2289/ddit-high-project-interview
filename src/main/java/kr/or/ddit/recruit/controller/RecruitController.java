@@ -949,7 +949,7 @@ public class RecruitController {
 	// @채용공고 상세화면.
 	@RequestMapping(path="/recr_detail", method=RequestMethod.POST)
 	public String recr_detail(String recruit_code, HttpSession session, String req_page, 
-			String msg_flag, Model model){
+			String msg_flag, Model model) throws ParseException{
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		// 회원 정보를 가져와서 채용공고저장에 마지막으로 조회한 채용공고 저장. 마지막 채용공고를 따로 
@@ -1012,12 +1012,57 @@ public class RecruitController {
 		
 		model.addAttribute("msg_flag", msg_flag);
 		
+		// 신고여부 넘기기.
+		ReportVo tempRVo = new ReportVo();
+		tempRVo.setRef_code(recruit_code);
+		tempRVo.setMem_id(mVo.getMem_id());
+		tempRVo.setDivision("34");
+		
+		// 신고내역이 없으면 rVo는 null.
+		ReportVo rVo = reportService.getReport(tempRVo);
+		String report_flag = "";
+		
+		if(rVo != null){
+			report_flag = "t";
+		}else{
+			report_flag = "f";
+		}
+		
+		model.addAttribute("report_flag", report_flag);		
+		
+		// 게시 time 넘기기.
+		String start_date = recr.getStart_date();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+		Date start = sdf.parse(start_date);
+		Date now = new Date();
+		
+		long temp_time = now.getTime() - start.getTime();
+		
+		int time_diff = (int) (temp_time / (60*1000));
+		
+		String time_value = "";
+		
+		if(time_diff < 2){
+			time_value = "방금";
+		}else if(time_diff < 60){
+			time_value = time_diff + "분";
+		}else if(time_diff < 1440){
+			time_value = time_diff/60 + "시간";
+		}else if(time_diff < 43200){
+			time_value = time_diff/(60*24) + "일";
+		}else{
+			time_value = time_diff/(60*24*30) + "달";
+		}			
+		
+		model.addAttribute("time_value", time_value);
+		
 		return "recr_detailTiles";
 	}
 	
 	// @채용공고 상세화면 method - get
 	@RequestMapping(path="/recr_detail", method=RequestMethod.GET)
-	public String recr_detail(String recruit_code, String req_page, HttpSession session, Model model) {
+	public String recr_detail(String recruit_code, String req_page, HttpSession session, Model model) throws ParseException {
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		Save_recruitVo sVo = new Save_recruitVo();
@@ -1093,6 +1138,33 @@ public class RecruitController {
 		}
 		
 		model.addAttribute("report_flag", report_flag);
+		
+		// 게시 time 넘기기.
+		String start_date = recr.getStart_date();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+		Date start = sdf.parse(start_date);
+		Date now = new Date();
+		
+		long temp_time = now.getTime() - start.getTime();
+		
+		int time_diff = (int) (temp_time / (60*1000));
+		
+		String time_value = "";
+		
+		if(time_diff < 2){
+			time_value = "방금";
+		}else if(time_diff < 60){
+			time_value = time_diff + "분";
+		}else if(time_diff < 1440){
+			time_value = time_diff/60 + "시간";
+		}else if(time_diff < 43200){
+			time_value = time_diff/(60*24) + "일";
+		}else{
+			time_value = time_diff/(60*24*30) + "달";
+		}			
+		
+		model.addAttribute("time_value", time_value);		
 		
 		return "recr_detailTiles";
 	}
