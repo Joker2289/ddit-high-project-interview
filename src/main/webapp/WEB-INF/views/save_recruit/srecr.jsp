@@ -117,8 +117,16 @@
 										<td id="app${i.index }" onmouseover="" style="cursor: pointer; 
 												border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 10px; 
 												padding-top: 10px; padding-left: 4px;">
-											<img src="${corpImgList_app.get(i.index - 1) }" width="150"
-													style="margin-bottom: 10px;"><br><br>
+											<c:choose>
+												<c:when test="${ fn:contains(corpImgList_app.get(i.index - 1), 'http') }">
+													<img src="${corpImgList_app.get(i.index - 1) }" width="150"
+															style="margin-bottom: 10px;"><br><br>
+												</c:when>
+												<c:otherwise>
+													<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${corpIdList_app.get(i.index - 1) }&division=pf" 
+															width="150" style="margin-bottom: 10px;"><br><br>
+												</c:otherwise>	
+											</c:choose>													
 											<strong>${appList.get(i.index - 1).recruit_title }</strong><br>
 											${corpNmList_app.get(i.index - 1) }<br>
 											${appList.get(i.index - 1).job_local }<br>

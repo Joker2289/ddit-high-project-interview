@@ -19,8 +19,8 @@
 			<c:set var="profile_path" value="${member.PATH }"/>
 		</c:if>
 		<li class="liUsersClick" style="padding: 4px 0 4px 0;">
-			<a style="width: 483px; height: 40px; display: flex;">
-				<div style="width:40px; height: 40px; background-image: url(${fn:contains(member.PATH, 'http') ? profile_path : profile_addrpath}); background-repeat: no-repeat;background-size: cover;background-position: center;border-radius: 40px">
+			<a style="width: 483px; height: 80px; display: flex;">
+				<div style="width:40px; height: 0px; background-image: url(${fn:contains(member.PATH, 'http') ? profile_path : profile_addrpath}); background-repeat: no-repeat;background-size: contain;background-position: center;border-radius: 40px">
 				</div>
 				<div style="width: 433px; height: 40px;">
 					<label>${member.NAME }</label><br>
