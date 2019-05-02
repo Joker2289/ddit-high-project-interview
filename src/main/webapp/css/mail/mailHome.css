@@ -194,6 +194,9 @@
 .searchConnectionDropDown {
 	top: auto;
 	left: auto;
+	width: 485px;
+	height: 156px;
+	overflow: auto;
 }
 
 .chatRoomBoxOn {
@@ -220,3 +223,4 @@
 	background-position: center; 
 	background-repeat: no-repeat;
 }
+

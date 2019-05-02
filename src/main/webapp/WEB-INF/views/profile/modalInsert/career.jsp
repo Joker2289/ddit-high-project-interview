@@ -24,7 +24,7 @@
 			</ul>
 			<div class="modalHalfRight">
 				<label class="essential">회사코드 </label>
-				<input class="form-control" type="text" name="corp_code">
+				<input class="form-control" type="text" name="corp_code" role="">
 			</div>
 		</div>
 		<div class="modalRow">
@@ -136,7 +136,7 @@
 	$(".corp_nameClick").on("click",function(){
 		 $("input[name=corporate_name]").val($(this).text());
 		 $("input[name=corp_local]").val($(this).attr('title'));
-		 $("input[name=corp_code]").attr('role','$(this).attr("role")');
+		 $("input[name=corp_code]").attr('role',$(this).attr("role"));
 		 $(".searchDropDown").hide();
 	});
 		
@@ -187,7 +187,8 @@
 			alert("회사코드를 입력해주세요");
 			$("input[name=corp_code]").focus();
 			return false;
-		}else if($("input[name=corp_code]").val() == '$("input[name=corp_code]").attr("role")'){
+		}else if($("input[name=corp_code]").val() != $("input[name=corp_code]").attr("role")){
+			alert("회사코드를 잘못 기입하셨습니다.");
 			return false;
 		}
 		if($("input[name=corp_local]").val().trim()==""){

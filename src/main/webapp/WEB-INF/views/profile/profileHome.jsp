@@ -363,12 +363,12 @@ $(document).ready(function() {
 						<fmt:parseNumber var="month" integerOnly="true" value="${career_infoVo.month % 12}"/>
 						<li class="list-unstyled" style="margin-top: 20px; display: flex;position: relative;" <c:if test="${i.first}">id="careerFirst"</c:if>>
 							<div style="width: 720px;">
-								<a href="/corporation?corp_id=${career_infoVo.corp_id  }" style="display: flex; width: 720px;">
+								<a href="/corp/corporation?corp_id=${career_infoVo.corp_id  }" style="display: flex; width: 720px;">
 									<c:set var="profile_addrPath" value="/profile?mem_id=${career_infoVo.corp_id }"/>
 										<c:if test="${fn:contains(career_infoVo.logo_path, 'http')}">
 											<c:set var="logo_path" value="${career_infoVo.logo_path }"/> 
 										</c:if>
-									<div class="logoPicture" style="background-image: url(${not empty logo_path ? logo_path : profile_addrPath}); width: 120px; height: 50px;"></div>
+									<div class="logoPicture" style="background-image: url(${fn:contains(career_infoVo.logo_path, 'http') ? logo_path : profile_addrPath}); width: 120px; height: 50px;"></div>
 									<div style="margin-left: 30px; width: 570px;">
 										<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${career_infoVo.job_rank }</h4>
 										<label style="font-size: 17px; color: rgba(0,0,0,.9);">${career_infoVo.corporate_name }</label><br>
