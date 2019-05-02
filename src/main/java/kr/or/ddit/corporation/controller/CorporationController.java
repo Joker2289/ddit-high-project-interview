@@ -505,7 +505,7 @@ public class CorporationController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(path = { "/insert_recr_page" })
+	@RequestMapping("/insert_recr_page")
 	public String corporationRecruit(HttpSession session, Model model, PaginationVo paginationVo, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
@@ -560,7 +560,7 @@ public class CorporationController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(path = { "/corporationEmployee" })
+	@RequestMapping("/insert_empl_page")
 	public String corporationEmployee(String corp_id,HttpSession session, Model model, PaginationVo paginationVo, HttpServletRequest request) {
 MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
@@ -645,7 +645,7 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 		}
 		model.addAttribute("evos", evos);
 		
-		return "corporationEmployeeTiles";
+		return "corporation/corp_empl";
 	}
 
 	/**

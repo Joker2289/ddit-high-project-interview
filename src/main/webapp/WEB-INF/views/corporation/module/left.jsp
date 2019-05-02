@@ -13,7 +13,7 @@
 			<a href="javascript:insert_recr_page('${ corporationInfo.corp_id}')"> <label style="margin-top: 5px"> &emsp;채용</label></a><br>
 		</div>
 		<div style="background-color: #FFFFFFFF; margin-top: -1px; height: 35px;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;  border: 1px solid #AAAAAA;">
-			<a href="<%=request.getContextPath()%>/corporationEmployee?corp_id=${corporationInfo.corp_id }"><label style="margin-top: 5px"> &emsp;직원</label></a><br>
+			<a href="javascript:insert_empl_page('${ corporationInfo.corp_id}')"> <label style="margin-top: 5px"> &emsp;직원</label></a><br>
 		</div>
 	</div>
 	
@@ -32,6 +32,26 @@ function insert_intro_page(corp_id){
 	});
 }
 
+function insert_recr_page(corp_id){
+	
+	$.ajax({
+		url : "${cp}/corp/insert_recr_page",
+		data : {"corp_id" : corp_id },
+		success : function(data) {
+			$('#content_area').html(data);
+		}
+	});
+}
+function insert_empl_page(corp_id){
+	
+	$.ajax({
+		url : "${cp}/corp/insert_empl_page",
+		data : {"corp_id" : corp_id },
+		success : function(data) {
+			$('#content_area').html(data);
+		}
+	});
+}
 function insert_recr_page(corp_id){
 	
 	$.ajax({
