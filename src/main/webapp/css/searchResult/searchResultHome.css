@@ -167,3 +167,15 @@ div.table_div, .div_alarm, .tb_alarm{
 	outline: 0;
 }
 
+.btn_waiting{
+	border: 0px solid #fff;
+	border-top: 1px solid #ddd;
+	background: #fff; 
+	color: #0073B1;
+	font-size: 20px;
+	font-weight: bold;
+	width: 100%;
+	height: 50px;
+	outline: 0;
+}
+

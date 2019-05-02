@@ -238,7 +238,9 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 		return personalDao.select_companyReview(paginationVo);
 	}
 
-	
+	public int delete_connections_waiting(Personal_connectionVo personalVo){
+		return personalDao.delete_connections_waiting(personalVo);
+	}
 
 
 	

@@ -1350,6 +1350,8 @@ public class RecruitController {
 			
 			appService.insertApp(aVo);		
 			
+
+			
 			app_count = String.valueOf(Integer.valueOf(app_count) + 1);
 		}
 		
@@ -1370,6 +1372,15 @@ public class RecruitController {
 		CorporationVo corp = corpService.select_corpInfo(recr.getCorp_id());
 		model.addAttribute("recr", recr);
 		model.addAttribute("corp", corp);
+		
+		//알람 등록
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setMem_id(corp.getCorp_id());
+		alarmInfo.setAlarm_check("0");
+		alarmInfo.setDivision("2");
+		alarmInfo.setSend_id(mVo.getMem_id());
+		alarmInfo.setAlarm_separate("07");
+		alarmService.insert_alarmInfo(alarmInfo);
 
 		return "recr_detailTiles";
 	}
