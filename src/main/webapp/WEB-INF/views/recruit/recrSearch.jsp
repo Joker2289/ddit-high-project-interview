@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -140,8 +142,16 @@
 									margin-bottom: 5px;" onmouseover="">
 								<tr>
 									<td rowspan="6" style="width: 235px;">
-										<img src="${corpImgList.get(i.index - 1) }" width="200"
-											style="margin-left: 15px;">
+										<c:choose>
+											<c:when test="${ fn:contains(corpImgList.get(i.index - 1), 'http') }">
+												<img src="${corpImgList.get(i.index - 1) }" width="200"
+													style="margin-left: 15px;">
+											</c:when>
+											<c:otherwise>
+												<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${corpIdList.get(i.index - 1) }&division=pf" 
+														width="200" style="margin-left: 15px;">
+											</c:otherwise>	
+										</c:choose>											
 									</td>
 									<td style="padding-left: 10px; color: #0174b0; font-size: 17px; 
 											padding-bottom: 2px; padding-top: 7px;">
