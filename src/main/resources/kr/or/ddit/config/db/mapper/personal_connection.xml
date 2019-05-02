@@ -726,4 +726,32 @@ where rn between (#{page} -1) * #{pageSize} + 1 and #{page} * #{pageSize}
 	</select>
 	
 	
+	
+	<!-- companyReview - 연봉 정보 작성 -->
+	<insert id="insert_companySalary" parameterType="salaryVo">
+		insert into
+			salary_info
+		values(
+				salary_code_seq.nextval,
+				#{user_id},
+				#{corp_id},
+				#{salary_info},
+				#{job_position},
+				#{job_rank},
+				sysdate
+				)
+	</insert>
+	
+	
+	
+	<!-- companySalary - 기업 연봉 리스트 출력 -->
+	<select id="select_companySalary" parameterType="String" resultType="salaryVo">
+		select corp_id, trunc(avg(salary_info)) avgSalary, job_rank, min(salary_info) minSalary, max(salary_info) maxSalary
+          from salary_info
+         where corp_id=#{corp_id}
+	     group by corp_id, job_rank
+         order by job_rank desc
+	</select>
+	
+	
 </mapper>

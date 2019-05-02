@@ -16,6 +16,7 @@ import kr.or.ddit.hashtag.model.HashtagVo;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.personal_connection.dao.IPersonal_connectionDao;
 import kr.or.ddit.personal_connection.model.Personal_connectionVo;
+import kr.or.ddit.salary_info.model.Salary_infoVo;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.util.pagination.PaginationVo;
 
@@ -236,6 +237,16 @@ public class Personal_connectionServiceImpl implements IPersonal_connectionServi
 	@Override
 	public List<Corporate_reviewVo> select_companyReview(PaginationVo paginationVo) {
 		return personalDao.select_companyReview(paginationVo);
+	}
+
+	@Override
+	public int insert_companySalary(Salary_infoVo salaryVo) {
+		return personalDao.insert_companySalary(salaryVo);
+	}
+
+	@Override
+	public List<Salary_infoVo> select_companySalary(String corp_id) {
+		return personalDao.select_companySalary(corp_id);
 	}
 
 	
