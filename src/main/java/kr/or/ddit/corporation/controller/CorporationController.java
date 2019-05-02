@@ -555,7 +555,7 @@ public class CorporationController {
 	
 	/**
 	 * 회사 직원
-	 * @param model
+	 * @param model 
 	 * @param paginationVo
 	 * @param request
 	 * @return
