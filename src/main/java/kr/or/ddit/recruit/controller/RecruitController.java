@@ -899,6 +899,7 @@ public class RecruitController {
 		
 		List<String> corpImgList = new ArrayList<>();
 		List<String> corpNmList = new ArrayList<>();
+		List<String> corpIdList = new ArrayList<>();
 		List<String> timeList = new ArrayList<>();
 		
 		for(int i=0; i < recrList.size(); i++){
@@ -906,6 +907,7 @@ public class RecruitController {
 			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
 			corpImgList.add(cVo.getLogo_path());
 			corpNmList.add(cVo.getCorp_name());
+			corpIdList.add(cVo.getCorp_id());
 			
 			String start_date = rVo.getStart_date();
 			
@@ -934,6 +936,7 @@ public class RecruitController {
 		model.addAttribute("recrList", recrList);
 		model.addAttribute("corpImgList", corpImgList);
 		model.addAttribute("corpNmList", corpNmList);
+		model.addAttribute("corpIdList", corpIdList);
 		model.addAttribute("timeList", timeList);
 		
 		// 저장한 검색어 리스트 (saveList) 넘기기.

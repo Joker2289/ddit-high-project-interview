@@ -70,6 +70,7 @@ public class Save_recruitController {
 		List<Apply_recruitVo> tempList = appService.getAppList(mVo.getMem_id());
 		List<RecruitVo> appList = new ArrayList<>();
 		List<String> corpImgList_app = new ArrayList<>();
+		List<String> corpIdList_app = new ArrayList<>();
 		List<String> corpNmList_app = new ArrayList<>();
 		
 		if(tempList != null){
@@ -83,6 +84,7 @@ public class Save_recruitController {
 				CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
 				
 				corpImgList_app.add(cVo.getLogo_path());
+				corpIdList_app.add(cVo.getCorp_id());
 				corpNmList_app.add(cVo.getCorp_name());				
 			}
 		}
@@ -90,6 +92,7 @@ public class Save_recruitController {
 		model.addAttribute("appList", appList);
 		model.addAttribute("corpNmList_app", corpNmList_app);
 		model.addAttribute("corpImgList_app", corpImgList_app);
+		model.addAttribute("corpIdList_app", corpIdList_app);
 		
 		return "srecrTiles";
 	}

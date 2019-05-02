@@ -8,7 +8,7 @@
 
 <!-- 페이지 출력 구역 -->
 <div id="page_area">
-	<%@ include file="/WEB-INF/views/blog/page_area.jsp"%><!-- /포트폴리오 영역 -->
+	<%@ include file="/WEB-INF/views/blog/page_area.jsp"%><!-- 전체 페이지 영역 -->
 </div>
 
 <div id="right_area">

@@ -100,8 +100,14 @@
 		  			success : function(data){
 		  				console.log(data);
 		  				
+		  				if(data == '회원'){
+		  					alert("회원가입을 축하드립니다!!");
+		  				} else{
+		  					alert("업체코드는  " + data + "  입니다");
+		  				}
+		  				
 		  				$('.jk-modalsasun').css('display','none');
-		  				alert("회원가입을 축하드립니다!!");
+		  				
 		  			}
 		  		});
 		});
