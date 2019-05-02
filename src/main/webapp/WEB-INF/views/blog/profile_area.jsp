@@ -18,9 +18,6 @@
 
 				<table class="act_table">
 					<tr>
-						<td class="title" colspan='2'>Activity</td>
-					</tr>
-					<tr>
 						<td class="subject">팔로워</td>
 						<td><a href="javascript:activityClick('follower');">${ followerCnt }명</a></td>
 					</tr>
