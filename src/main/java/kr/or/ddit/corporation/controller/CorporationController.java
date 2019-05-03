@@ -71,6 +71,7 @@ import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
+import kr.or.ddit.util.graph.GraphVo;
 import kr.or.ddit.util.pagination.PaginationVo;
 
 @RequestMapping("/corp")
@@ -528,89 +529,100 @@ public class CorporationController {
 	 * @return
 	 */
 	@RequestMapping("/insert_empl_page")
-	public String corporationEmployee(String corp_id,HttpSession session, Model model, PaginationVo paginationVo, HttpServletRequest request) {
-MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+	public String corporationEmployee(HttpSession session, Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		CorporationVo corporationInfo = new CorporationVo();
-		Career_infoVo careerinfo = new Career_infoVo();
-		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
+		corporationInfo = corporationService.select_corpInfo(corp_id);
 		model.addAttribute("corporationInfo", corporationInfo);
 		
-		paginationVo.setMem_id(memberInfo.getMem_id());
+		logger.debug("corp_code >>>>>>>>>>>>>>>>>>>>>>>>>>>>> : {}", corporationInfo.getCorp_code());
 		
-		List<RecruitVo> getRecruitInfo = recrService.getRecrListCorp_id(corporationInfo.getCorp_id());
+//----------------------------------------------------------------------		
+//		//회사직원들 user_id,position 
+//		List<Career_infoVo> empl_list = corporationService.corp_code_user_list(corporationInfo.getCorp_code());
+//		System.out.println("1111111111111111"+empl_list);
+//		
+//		
+//		//직원들의 대학 수 (대학복수 소유 인정 직원의 합보다 많을 수 있음)
+//		List<Integer> eec = corporationService.empl_education_count(corporationInfo.getCorp_code());		
+//		System.out.println("222222222          "+ eec);
+//
+//-----------------------------------------------------------------------
+		//회사직원들의 수
+		int empl_count = corporationService.corp_code_user_count(corporationInfo.getCorp_code());
+		model.addAttribute("empl_count",empl_count);
 		
-		model.addAttribute("getRecruitInfo", getRecruitInfo);
+		//회사코드에 불러온 직원의 학교명,전공,직책,이름(그래프에 필요한 정보)
+		List<GraphVo> graphInfo = corporationService.graphInfo(corporationInfo.getCorp_code());
 		
-		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
-			
-			// 인맥 수 출력을 위한 세팅
-			
-			// 팔로우 한 해쉬태그 출력을 위한 세팅
-			
-			model.addAttribute("userInfo", userInfo);
-		} else if (memberInfo.getMem_division().equals("2")) { // 회사일 경우
-			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
-			
-			// 회사 회원 로그인 시 홈 화면 출력을 위한 세팅
-			
-			model.addAttribute("corpInfo", corpInfo);
-		} else { // 관리자일 경우
-			// 관리자 로그인 시 홈 화면 출력을 위한 세팅
-		
-		}
-		
-		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
-		model.addAttribute("timelinePost", timelinePost);
-		
-		
-		
-		int ecount = careerService.employee_count(corporationInfo.getCorp_name());
-		model.addAttribute("ecount", ecount);
+		//출신 학교 그래프
+			//학교 수
+		List<Integer> eec = corporationService.empl_education_count(corporationInfo.getCorp_code());		
+		model.addAttribute("eec",eec); 
+			//직원들 대학교 리스트
+		List<Education_infoVo> university_list = corporationService.empl_university_list(corporationInfo.getCorp_code());
+		model.addAttribute("university_list",university_list);
 
-//		출신 학교 그래프
-//		List<Education_infoVo> eec = careerService.employee_education_count(corporationInfo.getCorp_name());		
-//		List<Integer> eec2 = careerService.employee_education_count2(corporationInfo.getCorp_name());		
-//		List<Integer> a = new ArrayList<>();
-//		a.add(100*eec2.get(0)/ecount);
-//		a.add(100*eec2.get(1)/ecount);
-//		a.add(100*eec2.get(2)/ecount);
-//		model.addAttribute("eec", eec);
-//		model.addAttribute("eec2", eec2);
-//		model.addAttribute("a",a);
+		//전공
+			//전공 수(중복 수증가)
+		List<Integer> major_count = corporationService.major_count(corporationInfo.getCorp_code());
+		model.addAttribute("major_count",major_count);
+			//전공 리스트(중복 제외)
+		List<Education_infoVo> major_list = corporationService.major_list(corporationInfo.getCorp_code());
+		model.addAttribute("major_list",major_list);
+		
+		//직책
+			//직책 수(중복 수 증가)
+		List<Integer> job_position_count = corporationService.job_position_count(corporationInfo.getCorp_code());
+		model.addAttribute("job_position_count", job_position_count);
+			//직책 리스트(중복 제외)
+		List<Career_infoVo> job_position_list = corporationService.job_position_list(corporationInfo.getCorp_code());
+		model.addAttribute("job_position_list", job_position_list);
 		
 		//전공 그래프
-		List<Education_infoVo> em = corporationService.employee_major(corporationInfo.getCorp_name());
-		List<Integer> emc = corporationService.employee_major_count(corporationInfo.getCorp_name());
-		List<Integer> b = new ArrayList<>();
-		int size = em.size();
-		b.add(100*emc.get(0)/ecount);
-		b.add(100*emc.get(1)/ecount);
-		b.add(100*emc.get(2)/ecount);
-		model.addAttribute("em", em);
-		model.addAttribute("emc", emc);
-		model.addAttribute("b",b);
-		model.addAttribute("size", size);
-		
+//		List<Education_infoVo> em = corporationService.employee_major(corporationInfo.getCorp_name());
+//		List<Integer> emc = corporationService.employee_major_count(corporationInfo.getCorp_name());
+//		List<Integer> b = new ArrayList<>();
+//		int size = em.size();
+//		b.add(100*emc.get(0)/ecount);
+//		b.add(100*emc.get(1)/ecount);
+//		b.add(100*emc.get(2)/ecount);
+//		model.addAttribute("em", em);
+//		model.addAttribute("emc", emc);
+//		model.addAttribute("b",b);
+//		model.addAttribute("size", size);
+//		
 		
 		
 		
 		//직원 목록
-		List<Career_infoVo> ea =  corporationService.employee_all(corporationInfo.getCorp_name());
-		List<UsersVo> uvos = new ArrayList<UsersVo>();
-		for(int i = 0; i < ea.size(); i++) {
-			UsersVo uvo = corporationService.select_userInfo(ea.get(i).getUser_id());
-			System.out.println("유저 아이디 : " + uvo.getUser_id());
-			uvos.add(i, uvo);
-		}
-		model.addAttribute("uvos", uvos);
-		List<Education_infoVo> evos = new ArrayList<Education_infoVo>();
-		for(int i = 0; i < ea.size(); i++) {
-			Education_infoVo evo = corporationService.employee_education(ea.get(i).getUser_id());
-			evos.add(i, evo);
-		}
-		model.addAttribute("evos", evos);
+//		List<Career_infoVo> ea =  corporationService.employee_all(corporationInfo.getCorp_name());
+//		List<UsersVo> uvos = new ArrayList<UsersVo>();
+//		for(int i = 0; i < ea.size(); i++) {
+//			UsersVo uvo = corporationService.select_userInfo(ea.get(i).getUser_id());
+//			System.out.println("유저 아이디 : " + uvo.getUser_id());
+//			uvos.add(i, uvo);
+//		}
+//		model.addAttribute("uvos", uvos);
+//		List<Education_infoVo> evos = new ArrayList<Education_infoVo>();
+//		for(int i = 0; i < ea.size(); i++) {
+//			Education_infoVo evo = corporationService.employee_education(ea.get(i).getUser_id());
+//			evos.add(i, evo);
+//		}
+//		model.addAttribute("evos", evos);
+		
+		
+		//회사코드로 불러온 직원정보(직원프로필에 필요한 정보)
+		GraphVo param = new GraphVo();
+		param.setUser_id(memberInfo.getMem_id());
+		param.setCorp_code(corporationInfo.getCorp_code());
+		
+		List<GraphVo> empl_list = corporationService.empl_list(param);
+		System.out.println("777777777777777777"+empl_list);
+		
+		
 		
 		return "corporation/corp_empl";
 	}

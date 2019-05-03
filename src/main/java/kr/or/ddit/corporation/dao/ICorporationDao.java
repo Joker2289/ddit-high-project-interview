@@ -7,6 +7,7 @@ import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.users.model.UsersVo;
+import kr.or.ddit.util.graph.GraphVo;
 
 public interface ICorporationDao {
 	
@@ -129,6 +130,78 @@ public interface ICorporationDao {
 	 * @return
 	 */
 	Education_infoVo employee_education(String user_id);
+
+	/**
+	 * 회사코드를 가진 유저 전체 리스트
+	 * @param corp_code
+	 * @return
+	 */
+	List<Career_infoVo> corp_code_user_list(String corp_code);
+
+	/**
+	 * 회사 코드를 가진 유저 수
+	 * @param corp_code
+	 * @return
+	 */
+	int corp_code_user_count(String corp_code);
+
+	/**
+	 * 직원 대학 수 합
+	 * @param corp_code
+	 * @return
+	 */
+	List<Integer> empl_education_count(String corp_code);
+
+	/**
+	 * 직원 학교,전공 리스트
+	 * @param corp_code
+	 * @return
+	 */
+	List<Education_infoVo> empl_university_list(String corp_code);
+
+	/**
+	 * 회사 정보로 grpahinfo
+	 * @param corp_code
+	 * @return
+	 */
+	List<GraphVo> graphInfo(String corp_code);
+
+	/**
+	 * 회사 직원 리스트
+	 * @param param
+	 * @return
+	 */
+	List<GraphVo> empl_list(GraphVo param);
+
+	/**
+	 * 회사 전공 (중복 수 증가)
+	 * @param corp_code
+	 * @return
+	 */
+	List<Integer> major_count(String corp_code);
+
+	/**
+	 * 회사 전공 리스트(중복제외)
+	 * @param corp_code
+	 * @return
+	 */
+	List<Education_infoVo> major_list(String corp_code);
+
+	/**
+	 * 직책 수 (중복 수 증가)
+	 * @param corp_code
+	 * @return
+	 */
+	List<Integer> job_position_count(String corp_code);
+
+	/**
+	 * 직책 리스트 (중복 제외)
+	 * @param corp_code
+	 * @return
+	 */
+	List<Career_infoVo> job_position_list(String corp_code);
+
+
 	
 }
 
