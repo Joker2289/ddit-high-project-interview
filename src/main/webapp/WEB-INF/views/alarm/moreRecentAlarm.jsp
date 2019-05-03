@@ -9,21 +9,28 @@
      <div class="profile_img" style="float: left;">
        <c:choose>
 		  	          
-		   <c:when test="${nextrecentAlarm.mem_division == '1' }">
-		   		<img class="user_profile_img" style="border: 1px solid #ddd;" src="${ cp }/view/imageView?mem_id=${nextrecentAlarm.send_id }&division=pf">
-		   </c:when>
-		   
-		   <c:when test="${nextrecentAlarm.mem_division == '2' }">
-			   <c:choose>
-			   		<c:when test="${fn:contains(nextrecentAlarm.profile_path, 'http') }">
-			   			<img class="corp_profile_img" src="${nextrecentAlarm.profile_path }">
-			   		</c:when>
-			   		<c:otherwise>
-			   			<img class="corp_profile_img" src="${ cp }/view/imageView?mem_id=${nextrecentAlarm.send_id }&division=pf">
-		   			</c:otherwise>
-			   </c:choose>
-		   </c:when>
-	   
+	       <c:when test="${nextrecentAlarm.mem_division == '1' }">
+	       		<c:choose>
+	       			<c:when test="${fn:contains(nextrecentAlarm.profile_path, 'http') }">
+	       				<img class="user_profile_img" style="border: 1px solid #ddd;" src="${nextrecentAlarm.profile_path }">
+	       			</c:when>
+	       			<c:otherwise>
+	       				<img class="user_profile_img" style="border: 1px solid #ddd;" src="${ cp }/view/imageView?mem_id=${nextrecentAlarm.send_id }&division=pf">
+	       			</c:otherwise>
+	       		</c:choose>
+	       </c:when>
+	       
+	       <c:when test="${nextrecentAlarm.mem_division == '2' }">
+	       		<c:choose>
+	       			<c:when test="${fn:contains(nextrecentAlarm.profile_path, 'http') }">
+	       				<img class="corp_profile_img" style="border: 1px solid #ddd;" src="${nextrecentAlarm.profile_path }">
+	       			</c:when>
+	       			<c:otherwise>
+	       				<img class="corp_profile_img" style="border: 1px solid #ddd;" src="${ cp }/view/imageView?mem_id=${nextrecentAlarm.send_id }&division=pf">
+	       			</c:otherwise>
+	       		</c:choose>
+	       </c:when>
+	       
 	   </c:choose>
 
      </div>

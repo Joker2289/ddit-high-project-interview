@@ -28,7 +28,14 @@
 		  	          <c:choose>
 		  	          
 		  	          	<c:when test="${recentAlarm.mem_division == '1' }">
-		  	          		<img class="user_profile_img" style="border: 1px solid #ddd;" src="${ cp }/view/imageView?mem_id=${recentAlarm.send_id }&division=pf">
+		  	          		<c:choose>
+		  	          			<c:when test="${fn:contains(recentAlarm.profile_path, 'http') }">
+		  	          				<img class="user_profile_img" style="border: 1px solid #ddd;" src="${recentAlarm.profile_path }">
+		  	          			</c:when>
+		  	          			<c:otherwise>
+		  	          				<img class="user_profile_img" style="border: 1px solid #ddd;" src="${ cp }/view/imageView?mem_id=${recentAlarm.send_id }&division=pf">
+		  	          			</c:otherwise>
+		  	          		</c:choose>
 		  	          	</c:when>
 		  	          	
 		  	          	<c:when test="${recentAlarm.mem_division == '2' }">
