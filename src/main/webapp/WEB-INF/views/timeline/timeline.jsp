@@ -238,6 +238,8 @@
       var currentTop = $(window).scrollTop();
       
       if($(window).scrollTop() > 50){
+    	 console.log(currentTop);
+    	  
          $("#col-add").stop().animate({top: (currentTop-20) + "px"}, 250);
          $("#col-info").stop().animate({top: (currentTop-20) + "px"}, 250);
       } else {
@@ -264,8 +266,23 @@
          });
       }
     });
-	
    
+    //글이 5개 이하일 경우 권유용 화면 요청
+    var postcnt = $(".post-group").children().length;
+    if(postcnt < 5){
+    	$.ajax({
+    		type : 'POST',
+    		url : "/recommendpost",
+			data : {"param" : "param" },
+			success : function(data) {
+				$('.post-group').append(data);
+			}
+		});
+    	
+    	
+    }
+
+
 	$(document).ready(function() {
 	  <c:forEach items="${ saveList }" var="savepost"> 
 	     $('#icon_save${savepost.save_post_code}').attr('class', 'fas fa-bookmark');   

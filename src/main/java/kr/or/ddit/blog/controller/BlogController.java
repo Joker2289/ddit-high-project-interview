@@ -92,10 +92,12 @@ public class BlogController {
 		//블로그 설정
 		BlogVo bVo = blogService.select_blogInfo(user_id);
 		
+		UsersVo userInfo = usersService.select_userInfo(user_id);
+		
 		if(bVo == null) {
 			BlogVo blogInfo = new BlogVo();
 			blogInfo.setUser_id(user_id);
-			blogInfo.setBlog_name(user_id + " 님의 블로그");
+			blogInfo.setBlog_name(userInfo.getUser_name() + " 님의 블로그");
 			blogInfo.setCover_color("#99B4CF");
 			blogInfo.setQna_act("y");
 			blogInfo.setImg_act("n");

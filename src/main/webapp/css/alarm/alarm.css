@@ -83,14 +83,27 @@
 	vertical-align: middle;
 }
 
+.profile_img{
+	padding-right: 10px;
+	text-align: center;
+	width: 105px;
+}
+
 .user_profile_img{
 	border-radius: 100px;
 	width: 50px;
 	height: 50px;
 }
 
-.profile_img{
-	padding-right: 10px;
+.corp_profile_img{
+	width: 90px;
+	border: 0px solid #fff;
+}
+
+.txt_alarm_contents{
+	height: 30px; 
+	padding-top: 5px; 
+	font-size: 16px;
 }
 
 .recentAlarm_contents{
