@@ -114,8 +114,8 @@
 		<!-- newList -->
 		<div id="div_newList" class="whiteBox" style="width: 296px; margin-left: 10px; height: 370px; margin-bottom: 20px;
 				text-align: center; padding-top: 10px; font-size: 22px;">
-			<div style="text-align: left; padding-left: 15px; padding-bottom: 7px;">
-				신규 채용공고
+			<div style="text-align: left; padding-left: 15px; padding-bottom: 7px; font-weight: bold; color: #0073b1;">
+				<i class="fas fa-check" style="margin-right: 15px;"></i>신규 채용공고
 			</div>
 			<div style="border: 0px solid; height: 270px; overflow: hidden; padding-left: 2px;" >
 		   		<c:if test="${newList.size() >= 1 }">

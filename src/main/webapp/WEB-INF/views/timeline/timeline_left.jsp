@@ -32,10 +32,10 @@
            <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
            	  <c:choose>
            	  	<c:when test="${fn:contains(SESSION_DETAILVO.logo_path, 'http') }">
-           	  	  <span><a href="/profileHome"><img class="profile_img" src="${SESSION_DETAILVO.logo_path }"></a></span>
+           	  	  <span><a href="/profileHome"><img class="logo_img" src="${SESSION_DETAILVO.logo_path }"></a></span>
            	  	</c:when>
            	  	<c:otherwise>
-           	  	  <span><a href="/profileHome"><img class="profile_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=pf"></a></span>
+           	  	  <span><a href="/profileHome"><img class="logo_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=pf"></a></span>
            	  	</c:otherwise>
            	  </c:choose>
            </c:when>
@@ -50,10 +50,6 @@
             <h4>${SESSION_DETAILVO.corp_name }님!</h4>
             <h4>어서오세요!</h4>
           </c:when>
-          <c:otherwise>
-            <h4>금일 업데이트된 신고 목록을</h4>
-            <h4>확인해주세요</h4>
-          </c:otherwise>
         </c:choose>
       </div>
       <div class="col-etcinfo">
@@ -76,21 +72,23 @@
   <!-- friend requests -->
   <div class="panel panel-default" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">
     <div class="panel-body">
-      <a href="#"><h4 style="color: #0073b1; font-weight: bold;">팔로우한 해시태그</h4></a>
+      <h4 style="color: #0073b1; font-weight: bold;"><i class="fas fa-hashtag" style="margin-right: 5px;"></i>팔로우한 해시태그</h4>
       <ul>
         <c:choose>
           <c:when test="${followHashtag eq 'notfollow'}">
-               <li>팔로우한 태그가 없다요.</li>
-               <li>해시태그를 팔로우 해보세요!</li>
-           </c:when>
-           <c:otherwise>
+            <li style="margin-top: 15px;">
+              <p>팔로우한 태그가 없습니다.<p>
+              <p>해시태그를 팔로우 해보세요!</p>
+            </li>
+          </c:when>
+          <c:otherwise>
             <c:forEach items="${followHashtag }" var="hashtags">
                <li>
                  <a href="/hashtagpost?hashtag_name=${fn:split(hashtags.ref_keyword,'#')[0] }">${hashtags.ref_keyword }</a>
                </li>
              </c:forEach>
-           </c:otherwise>
-         </c:choose>     
+          </c:otherwise>
+        </c:choose>     
       </ul>
     </div>
     <div>

@@ -344,8 +344,7 @@ public class PostController {
 				param_hashtag = tagList.get(i).split("#")[1];
 				logger.debug("param_hashtag : {}", param_hashtag);
 				
-				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";	
-									   //"<a href='/hashtag/" + tagList.get(i).split("#")[0] + "'>" + tagList.get(i) + "</a>";
+				replacedPost_contents += "<a class='hashtag' href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";	
 				post_contents = temp[0];
 			} else {
 				replacedPost_contents += temp[0];
@@ -353,7 +352,7 @@ public class PostController {
 				param_hashtag = tagList.get(i).split("#")[1];
 				logger.debug("param_hashtag : {}", param_hashtag);
 				
-				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";
+				replacedPost_contents += "<a class='hashtag' href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[1];
 			}
 			
@@ -795,8 +794,7 @@ public class PostController {
 				param_hashtag = tagList.get(i).split("#")[1];
 				logger.debug("param_hashtag : {}", param_hashtag);
 				
-				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";	
-									   //"<a href='/hashtag/" + tagList.get(i).split("#")[0] + "'>" + tagList.get(i) + "</a>";
+				replacedPost_contents += "<a class='hashtag' href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";	
 				post_contents = temp[0];
 			} else {
 				replacedPost_contents += temp[0];
@@ -804,7 +802,7 @@ public class PostController {
 				param_hashtag = tagList.get(i).split("#")[1];
 				logger.debug("param_hashtag : {}", param_hashtag);
 				
-				replacedPost_contents += "<a href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";
+				replacedPost_contents += "<a class='hashtag' href='/hashtagpost?hashtag_name=" + param_hashtag + "'>" + tagList.get(i) + "</a>";
 				post_contents = temp[1];
 			}
 			
@@ -1341,32 +1339,32 @@ public class PostController {
 		List<String> newTimeList = new ArrayList<>();
 		
 		for(int i=0; i < newList.size(); i++){
-		RecruitVo rVo = newList.get(i);
-		CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
-		newImgList.add(cVo.getLogo_path());
-		newNmList.add(cVo.getCorp_name());
-		
-		String start_date = rVo.getStart_date();
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
-		Date start = sdf.parse(start_date);
-		Date now = new Date();
-		
-		long temp_time = now.getTime() - start.getTime();
-		
-		int time_diff = (int) (temp_time / (60*1000));
-		
-		if(time_diff < 2){
-		newTimeList.add("방금");
-		}else if(time_diff < 60){
-		newTimeList.add(time_diff + "분");
-		}else if(time_diff < 1440){
-		newTimeList.add(time_diff/60 + "시간");
-		}else if(time_diff < 43200){
-		newTimeList.add(time_diff/(60*24) + "일");
-		}else{
-		newTimeList.add(time_diff/(60*24*30) + "달");
-		}				
+			RecruitVo rVo = newList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			newImgList.add(cVo.getLogo_path());
+			newNmList.add(cVo.getCorp_name());
+			
+			String start_date = rVo.getStart_date();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+			Date start = sdf.parse(start_date);
+			Date now = new Date();
+			
+			long temp_time = now.getTime() - start.getTime();
+			
+			int time_diff = (int) (temp_time / (60*1000));
+			
+			if(time_diff < 2){
+				newTimeList.add("방금");
+			}else if(time_diff < 60){
+				newTimeList.add(time_diff + "분");
+			}else if(time_diff < 1440){
+				newTimeList.add(time_diff/60 + "시간");
+			}else if(time_diff < 43200){
+				newTimeList.add(time_diff/(60*24) + "일");
+			}else{
+				newTimeList.add(time_diff/(60*24*30) + "달");
+			}				
 		}		
 		
 		model.addAttribute("newList", newList);
@@ -1377,6 +1375,12 @@ public class PostController {
 		/////////////////////////////// newList
 		
 		return "postDetailTiles";
+	}
+	
+	@RequestMapping(path={"/recommendpost"}, method=RequestMethod.POST)
+	public String recommendPost(String param){
+		
+		return "timeline/recommendPost";
 	}
 	
 }

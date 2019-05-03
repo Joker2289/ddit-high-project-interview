@@ -25,6 +25,17 @@
 	border-radius: 100px;
 }
 
+.logo_img{
+	width: 175px;
+	max-width: 175px;
+	height: 70px;
+	max-height: 70px;
+	border: 2px solid #fff;
+	margin-left: 30px;
+	margin-top: -20px;
+	border-radius: 18px;
+}
+
 .btn_moretag{
 	border: 0px solid #fff;
 	border-top: 1px solid #ddd;
@@ -105,16 +116,14 @@
 .writer-info{
 	border-style: 1px solid;
 	border-color: #ddd;
-/* 	margin: 200px; */
 }
 
-/* .writer-info a{ */
-/* 	float: left; */
-/* } */
-	
-/* .writer-info button{ */
-/* 	float: right; */
-/* }	 */
+.hashtag{
+	font-weight: bold;
+	color: #0073b1;
+	font-size: 17px;
+}
+
 .btn-write_modal{
 	background:#ffffff;
 	background-size: auto;
