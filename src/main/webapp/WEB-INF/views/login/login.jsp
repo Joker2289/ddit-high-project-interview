@@ -212,7 +212,6 @@
                 url: '/v2/user/me',
                 success: function(res) {
                 	 
-                	/* if (Session.getCurrentSession().checkAndImplicitOpen()) {
                	
                 	 
                     
