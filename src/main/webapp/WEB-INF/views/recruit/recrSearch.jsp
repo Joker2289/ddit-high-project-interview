@@ -81,43 +81,55 @@
 </form>
 
 <!-- 필터 nav. -->
-<nav style="text-align: center; height: 60px; background-color: white; font-size: 19px; 
-		border: 1px solid rgba(0, 0, 0, .15); box-shadow: 0 6px 12px rgba(0, 0, 0, .175);">
-	<table border="0" style="height: 60px; text-align: left;
-			margin-left: 260px; vertical-align: top;">
-		<tr>
-			<td style="padding: 5px; width: auto; padding-right: 0px; padding-top: 3px;">
-				채용공고 &nbsp;｜
-			</td>
-			<td style="padding: 15px; padding-top: 13px;">
-				<select style="padding: 5px;">
-					<option>올린날</option>
-				</select>
-			</td>
-			<td style="padding: 15px; padding-top: 13px;">
-				<select style="padding: 5px;">
-					<option>기능</option>
-				</select>
-			</td>
-			<td style="padding: 15px; padding-top: 13px;">
-				<select style="padding: 5px;">
-					<option>회사</option>
-				</select>
-			</td>
-			<td style="padding: 15px; padding-top: 13px;">
-				<select style="padding: 5px;">
-					<option>경력수준</option>
-				</select>
-			</td>
-			<td style="padding: 15px; padding-top: 13px;">
-				<a href="">전체필터</a>
-			</td>
-			<td style="padding: 15px; padding-top: 13px;">
-				<a href="">지우기</a>
-			</td>
-		</tr>
-	</table>
-</nav>
+<form action="${pageContext.request.contextPath }/recrSearch" method="post" id="frm_filter">
+	<input type="hidden" name="period_value" id="period_value">
+	<input type="hidden" name="function_value" id="function_value">
+
+	<nav style="text-align: center; height: 60px; background-color: white; font-size: 19px; 
+			border: 1px solid rgba(0, 0, 0, .15); box-shadow: 0 6px 12px rgba(0, 0, 0, .175);">
+		<table border="0" style="height: 60px; text-align: left;
+				margin-left: 260px; vertical-align: top;">
+			<tr>
+				<td style="padding: 5px; width: auto; padding-right: 0px; padding-top: 3px;">
+					채용공고 &nbsp;｜
+				</td>
+				<td style="padding: 15px; padding-top: 13px;">
+					<select id="sel_period" style="padding: 5px;">
+						<option value="all_period">올린날</option>
+						<option value="day">최근 24시간</option>
+						<option value="week">지난 주</option>
+						<option value="month">지난 달</option>
+						<option value="all_period">전체 기간</option>
+					</select>
+				</td>
+				<td id="sel_function" style="padding: 15px; padding-top: 13px;">
+					<select style="padding: 5px;">
+						<option value="0">기능</option>
+						<option value="person">인맥</option>
+						<option value="easy">간편 지원</option>
+						<option value="apply">지원자가 10명 미만</option>
+					</select>
+				</td>
+				<td style="padding: 15px; padding-top: 13px;">
+					<select style="padding: 5px;">
+						<option>회사</option>
+					</select>
+				</td>
+				<td style="padding: 15px; padding-top: 13px;">
+					<select style="padding: 5px;">
+						<option>경력수준</option>
+					</select>
+				</td>
+				<td style="padding: 15px; padding-top: 13px;">
+					<input type="button" value="필터 적용" id="btn_filter">
+				</td>
+				<td style="padding: 15px; padding-top: 13px;">
+					<input type="button" value="지우기" id="btn_remove">
+				</td>
+			</tr>
+		</table>
+	</nav>
+</form>
 
 <div class="container">
 <div class="row">
@@ -188,6 +200,13 @@
 											 · <img src="/images/logo/linkedin.png" width="17">
 											 간편 지원
 										</c:if>
+										<c:if test="${function_value == 'person'}">
+											 · 1촌: 
+<%-- 											<c:forEach begin="1" end="${personalUserIdList.get(i.index - 1).size() }" --%>
+<%-- 													varStatus="i"> --%>
+<%-- 												${personalUserIdList.get(i.index - 1).get(i.index - 1) }님 --%>
+<%-- 											</c:forEach> --%>
+										</c:if>
 									</td>
 								</tr>
 							</table>			
@@ -249,7 +268,32 @@
 	});
 
 	$(document).ready(function(){
-		console.log("docu");
+		console.log("${personalUserIdList }");
+
+		// 필터 sel_period 기본값 설정 / 선택
+		if('${period_value }' != ''){
+			$("#sel_period").val("${period_value }").prop("selected", true);
+		}
+		$("#sel_period").on("change", function(){
+// 			alert("val : " + $("#sel_period option:selected").val());
+			$("#period_value").val($("#sel_period option:selected").val());
+		});
+		
+		// 필터 sel_function 기본값 설정 / 선택
+		if('${function_value }' != ''){
+			$("#sel_function").val("${function_value }").prop("selected", true);
+		}
+		$("#sel_function").on("change", function(){
+// 			alert("val : " + $("#sel_function option:selected").val());
+			$("#function_value").val($("#sel_function option:selected").val());
+		});
+		
+		// 필터 적용 버튼
+		$("#btn_filter").on("click", function(){
+			$("#frm_filter").submit();			
+		});
+		// 필터 지우기 버튼
+		
 
 		// 모달창 jQuery
 		var arr_save = new Array();

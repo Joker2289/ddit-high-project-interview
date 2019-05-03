@@ -856,7 +856,8 @@ public class RecruitController {
 
 	// @검색결과 저장 후 채용공고 검색 페이지 요청. -> 검색내역 저장은 Search_logController로 이동.
 	@RequestMapping("/recrSearch")
-	public String recrSearch(HttpSession session, Model model) throws ParseException{
+	public String recrSearch(HttpSession session, String period_value, String sel_function, 
+			String function_value, Model model) throws ParseException{
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		// 회원이 검색한 값 가져오기. (getLSLog - get last search_log)
@@ -878,7 +879,6 @@ public class RecruitController {
 		// 검색어를 통한 결과 리스트를 넘기기. search_word가 '전체'이면 전체 채용공고 리스트 넘기기.
 		List<RecruitVo> recrList = new ArrayList<>();
 		
-		// 이어서. 수정
 		if(lSLog.getSearch_word().equals("전체") && lSLog.getSearch_local().equals("전국")){
 			recrList = recrService.getAllRecrDesc();
 		}else if(lSLog.getSearch_local().equals("전국")){
@@ -896,19 +896,14 @@ public class RecruitController {
 				}
 			}
 		}
-		
-		List<String> corpImgList = new ArrayList<>();
-		List<String> corpNmList = new ArrayList<>();
-		List<String> corpIdList = new ArrayList<>();
+
 		List<String> timeList = new ArrayList<>();
 		
+		List<RecruitVo> tempRecrList = new ArrayList<>();
+		List<String> tempTimeList = new ArrayList<>();
+		
 		for(int i=0; i < recrList.size(); i++){
-			RecruitVo rVo = recrList.get(i);
-			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
-			corpImgList.add(cVo.getLogo_path());
-			corpNmList.add(cVo.getCorp_name());
-			corpIdList.add(cVo.getCorp_id());
-			
+			RecruitVo rVo = recrList.get(i);			
 			String start_date = rVo.getStart_date();
 			
 			// 문자열을 날짜로 바꾸려면 sdf.parse([문자열])
@@ -930,8 +925,91 @@ public class RecruitController {
 				timeList.add(time_diff/(60*24) + "일");
 			}else{
 				timeList.add(time_diff/(60*24*30) + "달");
+			}		
+			
+			// 필터 적용한 경우. sel_period. (all_period, month, week, day)
+			// period_value null이면 건너뛰도록 설정해야함.
+			if(period_value != null && !period_value.equals("") && !period_value.equals("all_period")){
+				if(period_value.equals("day")){
+					if(time_diff < 1440){
+						tempRecrList.add(rVo);
+						tempTimeList.add(timeList.get(i));
+					}
+				}else if(period_value.equals("week")){
+					if(time_diff < 10080){
+						tempRecrList.add(rVo);
+						tempTimeList.add(timeList.get(i));
+					}
+				}else if(period_value.equals("month")){
+					if(time_diff < 43200){
+						tempRecrList.add(rVo);
+						tempTimeList.add(timeList.get(i));
+					}
+				}
 			}
 		}
+		
+		// period_value 값을 받았을 때만 적용해야 함.
+		if(period_value != null && !period_value.equals("") && !period_value.equals("all_period")){
+			logger.debug("period?? : {}", period_value);
+			recrList = tempRecrList;
+			timeList = tempTimeList;
+		}
+		
+		// function_value 필터 적용.
+		if(function_value != null){
+			if(function_value.equals("person")){
+				List<String> personalCorpIdList = recrService.getPersonalCorpId(mVo.getMem_id());
+//				logger.debug("recrlist size? : {}", recrList.size());
+				List<List<String>> personalUserIdList = new ArrayList<>();
+				
+				tempRecrList = new ArrayList<>();
+				tempTimeList = new ArrayList<>();
+				
+				boolean add_flag = false;
+				
+				for(int i=0; i < personalCorpIdList.size(); i++){
+					String corp_id = personalCorpIdList.get(i);
+					
+					for(int j=0; j < recrList.size(); j++){
+						if( corp_id.equals( recrList.get(j).getCorp_id() ) ){
+							logger.debug("corp add!");
+							tempRecrList.add(recrList.get(j));
+							tempTimeList.add(timeList.get(j));
+							
+							add_flag = true;
+						}
+					}
+					
+					if(add_flag == true){
+						add_flag = false;
+						break;
+					}
+					
+					personalUserIdList.add(recrService.getPersonalUserId(corp_id + "/" + mVo.getMem_id()));
+				}
+				
+				recrList = tempRecrList;
+				timeList = tempTimeList;
+				
+				model.addAttribute("personalUserIdList", personalUserIdList);
+			}
+		}
+		
+		List<String> corpImgList = new ArrayList<>();
+		List<String> corpNmList = new ArrayList<>();
+		List<String> corpIdList = new ArrayList<>();
+		
+		for(int i=0; i < recrList.size(); i++){
+			RecruitVo rVo = recrList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			corpImgList.add(cVo.getLogo_path());
+			corpNmList.add(cVo.getCorp_name());
+			corpIdList.add(cVo.getCorp_id());
+		}
+		
+		model.addAttribute("period_value", period_value);
+		model.addAttribute("function_value", function_value);
 		
 		model.addAttribute("recrList", recrList);
 		model.addAttribute("corpImgList", corpImgList);
