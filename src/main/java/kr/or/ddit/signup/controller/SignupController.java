@@ -97,7 +97,7 @@ public class SignupController {
 				
 				userService.insert_users(uVo);
 				
-				division = "1";
+				division = "kakaoSignUp";
 				id = vo.getKakaoId();
 				
 				req.getSession().setAttribute("SESSION_MEMBERVO", search_member);
@@ -318,10 +318,7 @@ public class SignupController {
 	
 	// 경력사항에서 바로 step5
 	@RequestMapping("/goStep5FromCareer")
-	public String goStep5From3(@RequestBody SignupVo vo, HttpServletRequest req) {
-		
-		
-		
+	public String goStep5From3(@RequestBody SignupVo vo, HttpServletRequest req, Model model) {
 		
 		Career_infoVo career_infoVo = new Career_infoVo();
 		career_infoVo.setUser_id(id);
@@ -334,6 +331,9 @@ public class SignupController {
 		careerService.insert_career_info(career_infoVo);
 		
 		if(division.equals("kakaoSignUp")) {
+			
+			model.addAttribute("kakao_id", career_infoVo.getUser_id());
+			
 			return "login/kakao_sign_up";
 		}
 		
@@ -342,11 +342,7 @@ public class SignupController {
 	
 	// 학력사항에서 바로 step5
 	@RequestMapping("/goStep5FromEducation")
-	public String goStep5From4(@RequestBody SignupVo vo, HttpServletRequest req) {
-		
-		
-		
-		logger.debug("step4 : {}", vo);
+	public String goStep5From4(@RequestBody SignupVo vo, HttpServletRequest req, Model model) {
 		
 		Education_infoVo eVo = new Education_infoVo();
 		eVo.setUser_id(id);
@@ -360,6 +356,9 @@ public class SignupController {
 		educationService.insert_education_info(eVo);
 		
 		if(division.equals("kakaoSignUp")) {
+			
+			model.addAttribute("kakao_id", eVo.getUser_id());
+			
 			return "login/kakao_sign_up";
 		}
 		return "login/step5";
@@ -391,7 +390,6 @@ public class SignupController {
 		cVo.setZipcode(vo.getZipcode());
 		cVo.setAddr1(vo.getAddr1());
 		cVo.setAddr2(vo.getAddr2());
-		logger.debug("location? : {}", vo.getLocation_data());
 		cVo.setCorp_location(vo.getLocation_data());
 		
 		corpService.update_corpInfo(cVo);
@@ -407,7 +405,6 @@ public class SignupController {
 	public String finalStep(@RequestParam(value = "profile") MultipartFile profile, HttpServletRequest req, Model model) throws IllegalStateException, IOException {
 		
 		
-		logger.debug(">>>>>>>>>>>>>>>>>>>>>> profile : {}", profile);
 		
 		String realFileName = "";
 		String tmpFileName = UUID.randomUUID().toString(); 

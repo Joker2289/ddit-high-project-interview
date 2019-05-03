@@ -54,7 +54,7 @@ public class MemberVo {
 
 	@Override
 	public String toString() {
-		return "LanguageVo [mem_id=" + mem_id + ", mem_division=" + mem_division + ", pass=" + pass + ", report_count="
+		return "MemberVo [mem_id=" + mem_id + ", mem_division=" + mem_division + ", pass=" + pass + ", report_count="
 				+ report_count + ", mem_status=" + mem_status + "]";
 	}
 }

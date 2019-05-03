@@ -104,8 +104,11 @@ public class LoginController {
 		logger.debug("---------------------- :{}", memVo.getMem_id());
 		
 		MemberVo dbMemberVo = memberService.select_memberInfo(memVo.getMem_id());
-			
+		logger.debug("---------------------- :{}", dbMemberVo);	
+		
 		if(dbMemberVo.getMem_division().equals("1")) {
+			logger.debug("---------------------- :{}", dbMemberVo);
+			
 			UsersVo uVo = usersService.select_userInfo(dbMemberVo.getMem_id());
 			req.getSession().setAttribute("SESSION_DETAILVO", uVo);
 			req.getSession().setAttribute("PROFILE_REALPATH", uVo.getProfile_path());
@@ -113,9 +116,10 @@ public class LoginController {
 			req.getSession().setAttribute("SESSION_MEMBERVO", dbMemberVo);
 			
 			return "redirect:/timeline";
+		} else {
+			return "login/login";
 		}
 				
-		return "login/login";
 	}
 
 }
