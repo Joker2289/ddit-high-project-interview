@@ -10,47 +10,35 @@
       <div class="col-user-bgimg">
          <c:choose>
            <c:when test="${memberInfo.mem_division == '1' }"><!-- 일반회원일 경우 -->
-             <c:if test="${sessionScope.SESSION_DETAILVO.bg_path == null }">
-               <span><a href="/profileHome"><img class="bg_img" src="/images/blog/cover_img/basicBackground.png"></a></span>
-             </c:if>
-             <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }">
-               <span><a href="/profileHome"><img class="bg_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=bg"></a></span>
-             </c:if>
+           	 <span><a href="/profileHome"><img class="bg_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=bg"></a></span>
            </c:when>
            <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
-              <c:if test="${sessionScope.SESSION_DETAILVO.bg_path == null }">
-                <span><a href="/profileHome"><img class="bg_img" src="/images/profile/basicBackground.png"></a></span>
-             </c:if>
-             <c:if test="${sessionScope.SESSION_DETAILVO.bg_path != null }">
-                <span><a href="/profileHome"><img class="bg_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=bg"></a></span>
-             </c:if>
+           	  <c:choose>
+           	  	<c:when test="${fn:contains(SESSION_DETAILVO.bg_path, 'http') }">
+           	  	  <span><a href="/profileHome"><img class="bg_img" src="${SESSION_DETAILVO.bg_path }"></a></span>
+           	  	</c:when>
+           	  	<c:otherwise>
+           	  	  <span><a href="/profileHome"><img class="bg_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=bg"></a></span>
+           	  	</c:otherwise>
+           	  </c:choose>
            </c:when>
-           <c:otherwise>
-              <span>관리자 화면용 image(background)</span>
-           </c:otherwise>
          </c:choose>
       </div>
       <div class="col-user-profileimg">
          <c:choose>
            <c:when test="${memberInfo.mem_division == '1' }"><!-- 일반회원일 경우 -->
-             <c:if test="${sessionScope.SESSION_DETAILVO.profile_path == null }">
-                <span><a href="/profileHome"><img class="profile_img"  src="/images/profile/profile_noimage.jpg" ></a></span>
-             </c:if>
-             <c:if test="${sessionScope.SESSION_DETAILVO.profile_path != null }">
-               <span><a href="/profileHome"><img class="profile_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=pf"></a></span>
-             </c:if>
+           	 <span><a href="/profileHome"><img class="profile_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=pf"></a></span>
            </c:when>
            <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
-              <c:if test="${sessionScope.SESSION_DETAILVO.logo_path == null }">
-               <span><a href="/profileHome"><img class="profile_img" src="/images/profile/profile_noimage.jpg" ></a></span>
-             </c:if>
-             <c:if test="${sessionScope.SESSION_DETAILVO.logo_path != null }">
-               <span><a href="/profileHome"><img class="profile_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=pf"></a></span>
-             </c:if>
+           	  <c:choose>
+           	  	<c:when test="${fn:contains(SESSION_DETAILVO.logo_path, 'http') }">
+           	  	  <span><a href="/profileHome"><img class="profile_img" src="${SESSION_DETAILVO.logo_path }"></a></span>
+           	  	</c:when>
+           	  	<c:otherwise>
+           	  	  <span><a href="/profileHome"><img class="profile_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=pf"></a></span>
+           	  	</c:otherwise>
+           	  </c:choose>
            </c:when>
-           <c:otherwise>
-              <span>관리자 화면용 image(profile)</span>
-           </c:otherwise>
          </c:choose>
       </div>
       <div style="text-align: center;">
