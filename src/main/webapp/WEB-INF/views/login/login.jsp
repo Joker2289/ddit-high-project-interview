@@ -76,16 +76,19 @@
             </form>   
             
             
-            
-            <form id="kakaoForm">
+            <!-- 카카오 정보 담을 폼 -->
+           	<form id="kakaoForm">
                <input type="hidden" id="kakaoId" name="kakaoId">
                <input type="hidden" id="kakaoName" name="kakaoName">
                <input type="hidden" id="kakaoProfile" name="kakaoProfile">
             </form>
             
-            <form id="kakaoLoginGo" action="/timeline" method="get">
-               
+            
+            <!-- 로그인시 전송 폼 -->
+            <form id="kakaoLoginGo" action="/kakaoLogin" method="post">
+            	 <input type="hidden" id="mem_id_kakao" name="mem_id">
             </form>
+            
             
                <!-- 체크박스 -->
                <div class="row">
@@ -230,6 +233,8 @@
                    var kakaoForm = $("#kakaoForm").serializeObject();  
                    console.log("kakaoForm : " + JSON.stringify(kakaoForm));
                    
+                   
+                   
                    $.ajax({
                       
                        url : "${cp}/signUp/kakaoLogin",
@@ -237,9 +242,28 @@
                        contentType : "application/json; charset=uft-8",
                        data : JSON.stringify(kakaoForm),
                        success : function(data){
-                          console.log(data);
-                          //location.href = data;
-                     	  $("#kakaoLoginGo").submit();                          
+                    	   
+                    	  	console.log(data);
+                    	   
+                    	    if(data == "회원가입"){
+                    			//모달창 키지   
+                    		   	$('.jk-modalsasun').css('display','block');
+                    		   
+                    		   	$.ajax({
+                   	            	url   : "${cp}/signUp/kakaoSignUp",
+                   	            	success : function(data){
+                   	               
+	                   	               	$(".jk-modal").html(data);
+                   	            	}
+                   	           	});
+                    	   }
+                    	   
+                    	   if(data == "로그인"){
+                    		   $("#mem_id_kakao").val(res.id);
+	                    	   $("#kakaoLoginGo").submit();                           
+                    	   }
+
+                    	   
                        }
                  });
              }

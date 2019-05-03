@@ -254,7 +254,15 @@
 	  			data : JSON.stringify(step3),
 	  			contentType : "application/json; charset=uft-8",
 	  			success : function(data){
-	  				console.log(data+"5페이지로 가자");
+	  				
+	  				/* 카카오 가입일 경우 step5 이동 하지않고 로그인 */
+					/* if(data = "kakaoSignUp"){
+						$("#kakaoLoginGo").submit();
+						
+						$('.jk-modalsasun').css('display','none');
+						return;
+					} */
+	  				
 	  				$(".jk-modal").html(data);
 	  			}
 	  		});

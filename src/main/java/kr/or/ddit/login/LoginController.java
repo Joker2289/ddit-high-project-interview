@@ -97,5 +97,25 @@ public class LoginController {
 			return "login/login";
 		}
 	}
+	
+	@RequestMapping(path= {"/kakaoLogin"}, method=RequestMethod.POST)
+	public String kakaoLogin(MemberVo memVo, HttpServletRequest req) {
+		
+		logger.debug("---------------------- :{}", memVo.getMem_id());
+		
+		MemberVo dbMemberVo = memberService.select_memberInfo(memVo.getMem_id());
+			
+		if(dbMemberVo.getMem_division().equals("1")) {
+			UsersVo uVo = usersService.select_userInfo(dbMemberVo.getMem_id());
+			req.getSession().setAttribute("SESSION_DETAILVO", uVo);
+			req.getSession().setAttribute("PROFILE_REALPATH", uVo.getProfile_path());
+			req.getSession().setAttribute("MYNAME", uVo.getUser_name());
+			req.getSession().setAttribute("SESSION_MEMBERVO", dbMemberVo);
+			
+			return "redirect:/timeline";
+		}
+				
+		return "login/login";
+	}
 
 }

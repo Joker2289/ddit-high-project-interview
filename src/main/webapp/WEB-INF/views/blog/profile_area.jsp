@@ -7,9 +7,18 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 		<div class="thumbnail">
-			<a href="/profileHome?user_id=${uVo.user_id}"><img
-				src="${ cp }/view/imageView?mem_id=${ uVo.user_id }&division=pf"
-				class="img-circle"></a>
+			<%-- <a href="/profileHome?user_id=${uVo.user_id}"><img src="${ cp }/view/imageView?mem_id=${ uVo.user_id }&division=pf" class="img-circle"></a> --%>
+			<c:choose>
+				<c:when test="${ fn:contains( uVo.profile_path, 'http') }">
+					<a href="/profileHome?user_id=${ uVo.user_id }"><img src="${ uVo.profile_path }" class="img-circle"></a>
+				</c:when>	
+			
+				<c:otherwise>
+					<a href="/profileHome?user_id=${ uVo.user_id }"><img src="${ cp }/view/imageView?mem_id=${ uVo.user_id }&division=pf"class="img-circle"></a>
+				</c:otherwise>	
+			</c:choose>
+			
+			
 			<div class="caption">
 
 				<span class="span-name"><a

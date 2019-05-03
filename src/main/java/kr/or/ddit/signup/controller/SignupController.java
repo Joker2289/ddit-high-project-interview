@@ -79,6 +79,8 @@ public class SignupController {
 		
 		MemberVo search_member = memService.select_memberInfo(vo.getKakaoId());
 		
+		
+		//최초 로그인시
 		if(search_member == null) {
 			MemberVo mVo = new MemberVo();
 			mVo.setMem_id(vo.getKakaoId());
@@ -95,15 +97,19 @@ public class SignupController {
 				
 				userService.insert_users(uVo);
 				
-				req.getSession().setAttribute("SESSION_MEMBERVO", mVo);
+				division = "1";
+				id = vo.getKakaoId();
 				
+				req.getSession().setAttribute("SESSION_MEMBERVO", search_member);
 				
-				return "redirect:/timeline";
+				return "회원가입";
 			}
 		}
+		//회원 가입 후 로그인 시
 		else {
 			UsersVo userInfo = userService.select_userInfo(vo.getKakaoId());
 			
+			//이전 정보와 다르면 update - kakao talk 에서 사진이나 별명을 바꿧을 시
 			if(userInfo.getUser_name().equals(vo.getKakaoName()) || userInfo.getProfile_path().equals(vo.getKakaoProfile())) {
 				UsersVo uVo = new UsersVo();
 				uVo.setUser_id(vo.getKakaoId());
@@ -112,12 +118,22 @@ public class SignupController {
 				userService.update_userInfo(uVo);
 			}
 			
+			req.getSession().setAttribute("SESSION_MEMBERVO", search_member);
+			
+//			return "redirect:/timeline";
+			return "로그인";
+		
 		}
 		
-		req.getSession().setAttribute("SESSION_MEMBERVO", search_member);
+		return "login/step3";
+	}
+	
+	@RequestMapping("/kakaoSignUp")
+	public String kakaoSignUp() {
 		
-		return "redirect:/timeline";
+		division = "kakaoSignUp";
 		
+		return "login/step3";
 	}
 	
 	@RequestMapping("/cancel")
@@ -304,7 +320,8 @@ public class SignupController {
 	@RequestMapping("/goStep5FromCareer")
 	public String goStep5From3(@RequestBody SignupVo vo, HttpServletRequest req) {
 		
-		logger.debug("step3 : {}", vo);
+		
+		
 		
 		Career_infoVo career_infoVo = new Career_infoVo();
 		career_infoVo.setUser_id(id);
@@ -316,7 +333,9 @@ public class SignupController {
 		
 		careerService.insert_career_info(career_infoVo);
 		
-		logger.debug("step4 : {}", vo);
+		if(division.equals("kakaoSignUp")) {
+			return "login/kakao_sign_up";
+		}
 		
 		return "login/step5";
 	}
@@ -324,6 +343,8 @@ public class SignupController {
 	// 학력사항에서 바로 step5
 	@RequestMapping("/goStep5FromEducation")
 	public String goStep5From4(@RequestBody SignupVo vo, HttpServletRequest req) {
+		
+		
 		
 		logger.debug("step4 : {}", vo);
 		
@@ -338,6 +359,9 @@ public class SignupController {
 		
 		educationService.insert_education_info(eVo);
 		
+		if(division.equals("kakaoSignUp")) {
+			return "login/kakao_sign_up";
+		}
 		return "login/step5";
 	}
 	
