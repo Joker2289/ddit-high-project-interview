@@ -129,7 +129,7 @@
 	</select>
 	
 	
-	<!-- 회사 전직원 usersVo -->
+	<!-- 회사 직원 usersVo -->
 	<select id="select_userInfo" parameterType="String" resultType="usersVo">
 		SELECT
 		    USER_ID,
@@ -227,7 +227,7 @@
 	</select>
 	
 	<!-- 직책 수 (중복 수 증가)-->
-	<select id="job_position_count" parameterType="String" resultType="career_infoVo">
+	<select id="job_position_count" parameterType="String" resultType="Integer">
     SELECT count (*)
 	FROM CAREER_INFO
 	WHERE corp_code =  #{corp_code}

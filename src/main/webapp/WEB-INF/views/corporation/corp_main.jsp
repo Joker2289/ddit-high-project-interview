@@ -51,7 +51,7 @@ textarea {
 <body>
 	
 	<!-- top -->
-	<div class="container">
+	<div class="container" style="margin-top: 70px;">
 		<div id="top_area">
 			<%@ include file="/WEB-INF/views/corporation/module/top.jsp"%>
 		</div>
