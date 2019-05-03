@@ -131,6 +131,53 @@
 		 WHERE JOB_LOCAL = #{job_local}
 	</select>
 
+	<!-- 특정 유저의 일촌의 경력에 있는 회사 목록 조회. -->
+	<select id="getPersonalCorpId" parameterType="String" resultType="String">
+		SELECT I.CORP_ID
+		  FROM RECRUIT I, (SELECT G.CORP_ID
+		                     FROM CORPORATION G, (SELECT C.CORPORATE_NAME
+		                                            FROM (SELECT A.*
+		                                                    FROM CAREER_INFO A, (SELECT USER_ID
+		                                                                           FROM (SELECT RECEIVE_ID AS USER_ID
+		                                                                                   FROM PERSONAL_CONNECTION
+		                                                                                  WHERE RECEIVE_ACCEPT = 'Y'
+		                                                                                    AND USER_ID = #{user_id}
+		                                                                                  UNION        
+		                                                                                 SELECT USER_ID
+		                                                                                   FROM PERSONAL_CONNECTION
+		                                                                                  WHERE RECEIVE_ACCEPT = 'Y'
+		                                                                                    AND RECEIVE_ID = #{user_id})) B
+		                                                   WHERE A.USER_ID = B.USER_ID) C, (SELECT CORP_NAME
+		                                                                                      FROM CORPORATION D, (SELECT CORP_ID
+		                                                                                                             FROM RECRUIT) E
+		                                                                                     WHERE D.CORP_ID = E.CORP_ID) F
+		                                           WHERE C.CORPORATE_NAME = F.CORP_NAME) H
+		                    WHERE G.CORP_NAME = H.CORPORATE_NAME) J
+		 WHERE I.CORP_ID = J.CORP_ID	
+	</select>
+
+	<!-- 특정 채용공고의 회사에 경력이 있는 일촌 목록 조회. -->
+	<select id="getPersonalUserId" parameterType="String" resultType="String">
+		SELECT USER_ID
+		  FROM CAREER_INFO
+		 WHERE CORPORATE_NAME = (SELECT CORP_NAME
+		                           FROM CORPORATION
+		                          WHERE CORP_ID = REGEXP_SUBSTR(#{param}, '[^/]+', 1, 1))
+		INTERSECT
+		SELECT USER_ID
+		  FROM (SELECT RECEIVE_ID AS USER_ID
+		         FROM PERSONAL_CONNECTION
+		        WHERE RECEIVE_ACCEPT = 'Y'
+		          AND USER_ID = REGEXP_SUBSTR(#{param}, '[^/]+', 1, 2)
+		        UNION        
+		       SELECT USER_ID
+		         FROM PERSONAL_CONNECTION
+		        WHERE RECEIVE_ACCEPT = 'Y'
+		          AND RECEIVE_ID = REGEXP_SUBSTR(#{param}, '[^/]+', 1, 2))	
+	</select>
+
+
+
 
   	
   	
