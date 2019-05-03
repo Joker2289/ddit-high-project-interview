@@ -15,6 +15,6 @@ public interface IBlog_visit_logDao {
 	 * @return
 	 * Method 설명 : 방문 기록 입력 
 	 */
-	List<Blog_visit_logVo> insert_visit_log(Blog_visit_logVo vo);
+	int insert_visit_log(Blog_visit_logVo vo);
 	
 }

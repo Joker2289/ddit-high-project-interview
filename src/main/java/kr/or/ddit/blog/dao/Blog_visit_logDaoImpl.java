@@ -17,8 +17,8 @@ public class Blog_visit_logDaoImpl implements IBlog_visit_logDao{
 	
 	
 	@Override
-	public List<Blog_visit_logVo> insert_visit_log(Blog_visit_logVo vo) {
-		return sqlSession.selectList("blog_visit_log.insert_visit_log", vo);
+	public int insert_visit_log(Blog_visit_logVo vo) {
+		return sqlSession.insert("blog_visit_log.insert_visit_log", vo);
 	}
 
 }

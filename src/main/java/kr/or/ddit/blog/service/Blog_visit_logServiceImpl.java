@@ -16,7 +16,7 @@ public class Blog_visit_logServiceImpl implements IBlog_visit_logService{
 	private IBlog_visit_logDao visitDao;
 	
 	@Override
-	public List<Blog_visit_logVo> insert_visit_log(Blog_visit_logVo vo) {
+	public int insert_visit_log(Blog_visit_logVo vo) {
 		return visitDao.insert_visit_log(vo);
 	}
 
