@@ -307,7 +307,14 @@
 												border-bottom: 1px solid; border-bottom-color: #d9d9d9;"
 												data-code="${rRVo.recruit_code }">
 											<div class="table_div" style="margin-left: 24px;">
-												<img src="${newImgList.get(i.index) }" width="200"> 
+												<c:choose>
+													<c:when test="${ fn:contains(newImgList.get(i.index), 'http') }">
+														<img src="${newImgList.get(i.index) }" width="200"> 
+													</c:when>
+													<c:otherwise>
+														<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${newIdList.get(i.index) }&division=pf" width="200">
+													</c:otherwise>	
+												</c:choose>												
 											</div> <br>
 											<strong>
 												<c:choose>

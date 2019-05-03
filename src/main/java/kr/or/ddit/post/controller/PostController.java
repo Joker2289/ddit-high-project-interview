@@ -138,7 +138,6 @@ public class PostController {
 				model.addAttribute("followHashtag","notfollow");
 			}
 			
-			
 			model.addAttribute("userInfo", userInfo);
 			model.addAttribute("connectionCnt", connectionCnt);
 			
@@ -181,6 +180,7 @@ public class PostController {
 		newList.add(0, newList.get(6));
 		
 		List<String> newImgList = new ArrayList<>();
+		List<String> newIdList = new ArrayList<>();
 		List<String> newNmList = new ArrayList<>();
 		List<String> newTimeList = new ArrayList<>();
 		
@@ -189,6 +189,7 @@ public class PostController {
 			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
 			newImgList.add(cVo.getLogo_path());
 			newNmList.add(cVo.getCorp_name());
+			newIdList.add(cVo.getCorp_id());
 			
 			String start_date = rVo.getStart_date();
 			
@@ -215,6 +216,7 @@ public class PostController {
 		
 		model.addAttribute("newList", newList);
 		model.addAttribute("newImgList", newImgList);
+		model.addAttribute("newIdList", newIdList);
 		model.addAttribute("newNmList", newNmList);
 		model.addAttribute("newTimeList", newTimeList);
 		
@@ -422,7 +424,7 @@ public class PostController {
 		return sb.toString();
 	}
 	
-	@RequestMapping(path={"/commentArea"}, method=RequestMethod.POST)
+	@RequestMapping(path={"/commentArea"})
 	public String commentArea(String ref_code, Model model, HttpServletRequest request){
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		
@@ -436,7 +438,7 @@ public class PostController {
 			
 		}
 		
-		PaginationVo paginationVo = new PaginationVo();
+		PaginationVo paginationVo = new PaginationVo(1, 5);
 		
 		paginationVo.setDivision("28");
 		paginationVo.setRef_code(ref_code);
@@ -447,41 +449,44 @@ public class PostController {
 		List<Post_commentVo> commentList = (List<Post_commentVo>) resultMap.get("commentList");
 		int commentCnt = (int) resultMap.get("commentCnt");
 		
-		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("commentCnt", commentCnt);
+		model.addAttribute("ref_code", ref_code);
+		model.addAttribute("page_num", paginationVo.getPage());
+		
+		return "timeline/postComment";
+	}
+	
+	@RequestMapping(path={"/addcomment"})
+	public String addComment(int page_num, String ref_code, Model model, HttpServletRequest request){
+		
+		page_num++;
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+
+		PaginationVo paginationVo = new PaginationVo(1, page_num * 5);
+		paginationVo.setDivision("28");
+		paginationVo.setRef_code(ref_code);
+		paginationVo.setMem_id(memberInfo.getMem_id());
+
+		Map<String, Object> resultMap = commentService.select_commentList(paginationVo);
+		int commentCnt = (int) resultMap.get("commentCnt");
+		List<Post_commentVo> commentList = (List<Post_commentVo>) resultMap.get("commentList");
+		
+		
+		model.addAttribute("commentList", commentList);
+		model.addAttribute("commentCnt", commentCnt);
+		model.addAttribute("page_num", page_num);
 		model.addAttribute("ref_code", ref_code);
 		
 		return "timeline/postComment";
 	}
 	
-	@RequestMapping(path={"/appendnextcomment"}, method=RequestMethod.POST)
-	public String appendnextcomment(String commentPageNum, String ref_code, String last_comment, Model model, HttpServletRequest request){
-		
-		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-		
-		int page = Integer.parseInt(commentPageNum);
-		
-		PaginationVo paginationVo = new PaginationVo();
-		
-		paginationVo.setRef_code(ref_code);
-		paginationVo.setDivision("28");
-		paginationVo.setPage(page);
-		paginationVo.setCriteria_code(last_comment);
-		paginationVo.setMem_id(memberInfo.getMem_id());
-		
-		List<Post_commentVo> nextCommentList = commentService.select_nextComment(paginationVo);
-		
-		model.addAttribute("nextCommentList", nextCommentList);
-		model.addAttribute("ref_code", ref_code);
-		
-		return "timeline/appendComment";
-	}
-	
 	@RequestMapping(path={"/writecomment"}, method=RequestMethod.POST)
-	public String writecomment(String ref_code, String contents, Model model, HttpServletRequest request){
+	public String writecomment(String ref_code, String comment_contents, int page_num, Model model, HttpServletRequest request){
 		logger.debug("comment_ref_code : {}", ref_code);
-		logger.debug("contents : {}", contents);
+		logger.debug("contents : {}", comment_contents);
+		logger.debug("page_num", page_num);
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
 		PostVo postInfo = postService.select_postInfo(ref_code);
@@ -492,19 +497,17 @@ public class PostController {
 		} else if (memberInfo.getMem_division() == "2"){
 			CorporationVo corp = (CorporationVo) request.getSession().getAttribute("SESSION_DETAILVO");
 			model.addAttribute("commentwriter", corp);
-		} else {
-			
 		}
 		
 		Post_commentVo commentVo = new Post_commentVo();
-		PaginationVo paginationVo = new PaginationVo();
 		
 		commentVo.setMem_id(memberInfo.getMem_id());
-		commentVo.setComment_contents(contents);
+		commentVo.setComment_contents(comment_contents);
 		commentVo.setRef_code(ref_code);
 		commentVo.setDivision("28");
 		commentService.insert_comment(commentVo);
 		
+		PaginationVo paginationVo = new PaginationVo(1, page_num * 5);
 		paginationVo.setMem_id(postInfo.getMem_id());
 		paginationVo.setRef_code(ref_code);
 		paginationVo.setDivision("28");
@@ -514,10 +517,10 @@ public class PostController {
 		
 		int commentCnt = (int) resultMap.get("commentCnt");
 		
-		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("commentCnt", commentCnt);
 		model.addAttribute("ref_code", ref_code);
+		model.addAttribute("page_num", page_num);
 		
 		//댓글 작성 -> 알림 등록
 		AlarmVo alarmInfo = new AlarmVo();
@@ -531,6 +534,41 @@ public class PostController {
 		if(!memberInfo.getMem_id().equals(postInfo.getMem_id())){
 			alarmService.insert_alarmInfo(alarmInfo);
 		}
+		
+		return "timeline/postComment";
+	}
+	
+	
+	
+	/**
+	 * Method : deleteComment
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param comment_code
+	 * @return
+	 * Method 설명 : 댓글 삭제
+	 */
+	@RequestMapping(path={"/deletecomment"})
+	public String deleteComment(String comment_code, String ref_code, int page_num, HttpServletRequest request, Model model){
+		
+		commentService.delete_comment(comment_code);
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		PaginationVo paginationVo = new PaginationVo(1, page_num * 5);
+		paginationVo.setDivision("28");
+		paginationVo.setRef_code(ref_code);
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		
+		Map<String, Object> resultMap = commentService.select_commentList(paginationVo);
+		int commentCnt = (int) resultMap.get("commentCnt");
+		
+		List<Post_commentVo> commentList = (List<Post_commentVo>) resultMap.get("commentList");
+		
+		model.addAttribute("ref_code", ref_code);
+		model.addAttribute("commentList", commentList);
+		model.addAttribute("commentCnt", commentCnt);
+		model.addAttribute("page_num", page_num);
+		
 		
 		return "timeline/postComment";
 	}
@@ -912,23 +950,6 @@ public class PostController {
 		return "complate";
 	}
 	
-	
-	/**
-	 * Method : deleteComment
-	 * 작성자 : goo84
-	 * 변경이력 :
-	 * @param comment_code
-	 * @return
-	 * Method 설명 : 댓글 삭제
-	 */
-	@RequestMapping(path={"/deletecomment"},method=RequestMethod.POST)
-	@ResponseBody
-	public String deleteComment(String comment_code){
-		
-		commentService.delete_comment(comment_code);
-		
-		return "complate";
-	}
 	
 	/**
 	 * Method : hidePost

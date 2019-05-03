@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <link href="/css/timeline/writemodal.css" rel="stylesheet">
+<link href="/css/timeline/comment.css" rel="stylesheet">
 <div class="container">
    <div class="row">
       <div>
@@ -39,13 +40,28 @@
                          <c:when test="${post.mem_division eq '2'}">href='/corporation?corp_id=${post.mem_id }'</c:when>
                        </c:choose>
                      >
+                       <!-- 작성자 사진 -->
                        <c:choose>
+                       
                          <c:when test="${post.mem_division eq '1'}">
 	                       <img src="${ cp }/view/imageView?mem_id=${post.mem_id }&division=pf" class="writer_profile">
                          </c:when>
+                         
                          <c:when test="${post.mem_division eq '2'}">
-	                       <img src="${post.profile_path }" class="writer_profile">
+                         
+                           <c:choose>
+                           
+                             <c:when test="${fn:contains(post.profile_path, 'http') }">
+                               <img src="${post.profile_path }" class="writer_profile_corp">
+                             </c:when>
+                             
+                             <c:otherwise>
+                               <img src="${ cp }/view/imageView?mem_id=${post.mem_id }&division=pf" class="writer_profile_corp">
+                             </c:otherwise>
+                           </c:choose>
+                           
                          </c:when>
+                         
                        </c:choose>
                      </a>
                   	 <a style="font-size: 20px;" 
@@ -150,7 +166,9 @@
                    </span>
                  </button>
                  <!-- 댓글 출력 버튼 -->
-                 <button class="btn-social btn_comment" id="btn_comment${post.post_code }" data-code="${post.post_code }" title="${post.post_code }"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
+                 <button class="btn-social btn_comment" data-toggle="collapse" data-target="#comment_area${post.post_code }" aria-expanded="false" aria-controls="collapseExample" onclick="post_commentList('${post.post_code }');">
+                 	<span style="font-size: 18px;"><i class="far fa-comments"></i></span>
+                 </button>
                  <!-- 글 저장 버튼 -->
                  <button class="btn-social btn_save" title="${post.post_code }">
                    <span style="font-size: 18px;">
@@ -160,7 +178,17 @@
                </div>
                
                <!-- comment -->
-               <div class="col-comment-area ${post.post_code }" id="post_comment ${post.post_code }"></div>
+<%--                <div class="col-comment-area ${post.post_code }" id="post_comment ${post.post_code }"></div> --%>
+               
+               
+               <!-- 콜랩스 적용 -->
+               <div class="collapse" id="comment_area${ post.post_code }">
+				  <div class="well" id="comment_content${ post.post_code }">
+				    
+				  </div>
+				</div>
+				
+				
                <!-- /comment -->
             
               </div>
@@ -183,6 +211,17 @@
 <script src="/js/timeline.js"></script>
 <script type="text/javascript">
 
+	//페이지 댓글 버튼 클릭
+	function post_commentList(post_code){
+		$.ajax({
+			url : "/commentArea",
+			data : {"ref_code" : post_code },
+			success : function(data) {
+				
+				$('#comment_content'+post_code).html(data);
+			}
+		});
+	}
 
    
    //현재 스크롤 위치에서 화면 최상단으로 이동
@@ -225,8 +264,20 @@
          });
       }
     });
-	
    
+    var postcnt = $(".post-group").children().length;
+
+    if(postcnt < 5){
+    	$('.post-group').append('<div id="col-post${post.post_code }" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">'
+    									  +'<div style="padding: 15px; background: #fff; border : 1px solid #ddd; border-radius: 4px; box-shadow: 0 6px 12px rgba(0, 0, 0, .15);">'
+    									  +'<a href="/personalConnection" style="color: #0073B1;">' 
+    									  +'<h4 style="font-weight: bold; padding:5px; margin-top: 20px; margin-bottom: 20px;">새로운 인맥을 찾고싶으세요?</h4>'
+    									  +'<h4 style="font-weight: bold; padding:5px; margin-top: 20px; margin-bottom: 20px;">새 소식을 받아보고 싶다면 팔로우를 활용하세요!</h4>' 
+    									  +'<h4 style="font-weight: bold; padding:5px; margin-top: 20px; margin-bottom: 20px;">아는 사람을 찾아 친구가 되면 소식을 받아볼 수 있어요!</h4>'
+    									  +'</a></div></div>');
+    }
+
+
 	$(document).ready(function() {
 	  <c:forEach items="${ saveList }" var="savepost"> 
 	     $('#icon_save${savepost.save_post_code}').attr('class', 'fas fa-bookmark');   

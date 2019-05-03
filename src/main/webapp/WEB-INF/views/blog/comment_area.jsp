@@ -14,10 +14,10 @@
 		          <img src="/view/imageView?mem_id=${ SESSION_MEMBERVO.mem_id }&division=pf" alt="..." class="img-circle head_profile_img">
 		        </c:when>
 		        <c:when test="${ SESSION_MEMBERVO.mem_division eq 2 }">
-		        	<c:if test="${ fn:contains(SESSION_DETAILVO.logo_path, 'http') } }">
+		        	<c:if test="${ fn:contains(SESSION_DETAILVO.logo_path, 'http') }">
 		        		 <img src="${ SESSION_DETAILVO.logo_path }" alt="..." class="img-circle head_profile_img">
 		        	</c:if>
-		        	<c:if test="${ !fn:contains(SESSION_DETAILVO.logo_path, 'http') } }">
+		        	<c:if test="${ !fn:contains(SESSION_DETAILVO.logo_path, 'http') }">
 		        		 <img src="/view/imageView?mem_id=${ SESSION_MEMBERVO.mem_id }&division=pf" alt="..." class="img-circle head_profile_img">
 		        	</c:if>
 		        </c:when>
