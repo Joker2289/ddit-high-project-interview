@@ -92,6 +92,7 @@ public class Personal_connectionController {
 		newList.add(0, newList.get(6));
 		
 		List<String> newImgList = new ArrayList<>();
+		List<String> newIdList = new ArrayList<>();
 		List<String> newNmList = new ArrayList<>();
 		List<String> newTimeList = new ArrayList<>();
 		
@@ -99,6 +100,7 @@ public class Personal_connectionController {
 			RecruitVo rVo = newList.get(i);
 			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
 			newImgList.add(cVo.getLogo_path());
+			newIdList.add(cVo.getCorp_id());
 			newNmList.add(cVo.getCorp_name());
 			
 			String start_date = rVo.getStart_date();
@@ -126,6 +128,7 @@ public class Personal_connectionController {
 		
 		model.addAttribute("newList", newList);
 		model.addAttribute("newImgList", newImgList);
+		model.addAttribute("newIdList", newIdList);
 		model.addAttribute("newNmList", newNmList);
 		model.addAttribute("newTimeList", newTimeList);
 		
