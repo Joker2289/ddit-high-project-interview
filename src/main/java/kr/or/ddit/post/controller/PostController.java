@@ -138,7 +138,6 @@ public class PostController {
 				model.addAttribute("followHashtag","notfollow");
 			}
 			
-			
 			model.addAttribute("userInfo", userInfo);
 			model.addAttribute("connectionCnt", connectionCnt);
 			
