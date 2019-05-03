@@ -180,6 +180,7 @@ public class PostController {
 		newList.add(0, newList.get(6));
 		
 		List<String> newImgList = new ArrayList<>();
+		List<String> newIdList = new ArrayList<>();
 		List<String> newNmList = new ArrayList<>();
 		List<String> newTimeList = new ArrayList<>();
 		
@@ -188,6 +189,7 @@ public class PostController {
 			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
 			newImgList.add(cVo.getLogo_path());
 			newNmList.add(cVo.getCorp_name());
+			newIdList.add(cVo.getCorp_id());
 			
 			String start_date = rVo.getStart_date();
 			
@@ -214,6 +216,7 @@ public class PostController {
 		
 		model.addAttribute("newList", newList);
 		model.addAttribute("newImgList", newImgList);
+		model.addAttribute("newIdList", newIdList);
 		model.addAttribute("newNmList", newNmList);
 		model.addAttribute("newTimeList", newTimeList);
 		
