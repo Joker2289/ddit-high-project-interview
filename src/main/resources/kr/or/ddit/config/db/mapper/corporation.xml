@@ -158,4 +158,116 @@
 		 order by graduation desc
 	</select>
 	
+	<!-- 회사코드로 직원수 불러오기 -->
+	<select id="corp_code_user_count" parameterType="String" resultType="Integer">
+	SELECT count (*)
+		FROM CAREER_INFO
+	WHERE corp_code = #{corp_code}
+	</select>
+	
+	<!-- 회사코드로 직원 id,position 불러오기 -->
+	<select id="corp_code_user_list" parameterType="String" resultType="career_infoVo">
+		SELECT user_id, job_position
+			FROM CAREER_INFO
+		WHERE corp_code = #{corp_code}
+	</select>
+	
+	
+	<!-- 회사코드로 직원들의 각 대학 수 (중복은 숫자증가) -->
+	<select id="empl_education_count" parameterType="String" resultType="Integer">
+		select count (*)
+			FROM education_info A, (
+								SELECT USER_ID
+								FROM CAREER_INFO
+								WHERE corp_code = #{corp_code}
+							) B
+			WHERE A.USER_ID = B.USER_ID
+	group by a.school_name
+    order by count(*) desc
+	</select>
+	
+	<!-- 코드로 직원들 대학리스트(중복제외) -->
+	<select id="empl_university_list" parameterType="String" resultType="education_infoVo">
+	    select A.SCHOOL_NAME 
+			FROM EDUCATION_INFO A, (
+									SELECT USER_ID
+									FROM CAREER_INFO
+									WHERE corp_code = #{corp_code}
+									) B
+			WHERE A.USER_ID = B.USER_ID
+	group by a.school_name
+	order by count(*) desc
+	</select>
+	
+	
+	<!-- 회사코드로 직원들의 각 전공 수(중복은 숫자 증가) -->
+	<select id="major_count" parameterType="String" resultType="Integer">
+		    select count (*)
+			FROM education_info A, (
+								SELECT USER_ID
+								FROM CAREER_INFO
+								WHERE corp_code = #{corp_code}
+							) B
+			WHERE A.USER_ID = B.USER_ID
+	group by a.major
+    order by count(*) desc
+	</select>
+	
+	<!-- 코드로 직원들 전공(중복제외) -->
+	<select id="major_list" parameterType="String" resultType="education_infoVo">
+    select A.major
+			FROM EDUCATION_INFO A, (
+									SELECT USER_ID
+									FROM CAREER_INFO
+									WHERE corp_code = #{corp_code}
+									) B
+			WHERE A.USER_ID = B.USER_ID
+	group by A.major
+	order by count(*) desc
+	</select>
+	
+	<!-- 직책 수 (중복 수 증가)-->
+	<select id="job_position_count" parameterType="String" resultType="career_infoVo">
+    SELECT count (*)
+	FROM CAREER_INFO
+	WHERE corp_code =  #{corp_code}
+    group by job_position
+    order by count(*) desc
+	</select>
+	
+	<!-- 직책 리스트 (중복 제외) -->
+	<select id="job_position_list" parameterType="String" resultType="career_infoVo">
+    SELECT job_position
+	FROM CAREER_INFO
+	WHERE corp_code = #{corp_code}
+    group by job_position
+    order by count(*) desc
+	</select>
+	
+	<!-- 회사 직원들 그래프 정보 -->
+	<select id="graphInfo" parameterType="String" resultType="graphVo">
+		select *
+		  from (select b.user_id, c.job_position, d.school_name, d.major,b.profile_contents
+				  from corporation a, users b, career_info c, education_info d
+			     where a.corp_code = c.corp_code
+			 	   and b.user_id = c.user_id
+				   and b.user_id = d.user_id
+				   and a.corp_code = #{corp_code})
+	</select>
+	
+	<!-- 회사 직원들 프로필 정보와 팔로우 언팔로우 -->
+	<select id="empl_list" parameterType="graphVo" resultType="graphVo">
+		select a.user_id, a.user_name, a.profile_path, b.corporate_name ||' '|| b.job_position as job_position, d.receive_accept,A.PROFILE_CONTENTS
+	 	  from users a, career_info b, corporation c, (select receive_id, receive_accept
+		                                                 from personal_connection
+		                                                where user_id = #{user_id}
+		                                                union all
+		                                               select user_id, receive_accept
+		                                                 from personal_connection   
+		                                                where receive_id = #{user_id}) d
+		 where a.user_id = b.user_id
+		   and b.corp_code = c.corp_code
+		   and a.user_id = d.receive_id(+)
+		   and b.corp_code = #{corp_code}
+	</select>
 </mapper>

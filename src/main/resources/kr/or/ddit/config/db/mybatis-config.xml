@@ -50,6 +50,7 @@
 		<typeAlias alias="search_resultVo" 	  type="kr.or.ddit.search.model.SearchResultVo"/>
 		<typeAlias alias="salaryVo" 		  type="kr.or.ddit.salary_info.model.Salary_infoVo"/>
 		<typeAlias alias="apply_recruitVo" 	  type="kr.or.ddit.apply_recruit.model.Apply_recruitVo"/>
+		<typeAlias alias="graphVo" 	  		  type="kr.or.ddit.util.graph.GraphVo"/>
 	</typeAliases> 
   
 	<mappers>

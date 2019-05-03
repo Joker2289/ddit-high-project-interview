@@ -14,6 +14,7 @@ import kr.or.ddit.corporation.dao.ICorporationDao;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.users.model.UsersVo;
+import kr.or.ddit.util.graph.GraphVo;
 
 @Service("corporationService")
 public class CorporationServiceImpl implements ICorporationService{
@@ -171,6 +172,93 @@ public class CorporationServiceImpl implements ICorporationService{
 	public Education_infoVo employee_education(String user_id) {
 		Education_infoVo employee_education = corporationDao.employee_education(user_id);
 		return employee_education;
+	}
+
+	/**
+	 * 회사 코드를 가진 유저 리스트
+	 */
+	@Override
+	public List<Career_infoVo> corp_code_user_list(String corp_code) {
+		List<Career_infoVo> corp_code_user_list = corporationDao.corp_code_user_list(corp_code);
+		return corp_code_user_list;
+	}
+
+	/**
+	 * 회사 코드를 가진 유저 수
+	 */
+	@Override
+	public int corp_code_user_count(String corp_code) {
+		int corp_code_user_count = corporationDao.corp_code_user_count(corp_code);
+		return corp_code_user_count;
+	}
+
+	/**
+	 * 직원들의 대학교 수 합
+	 */
+	@Override
+	public List<Integer> empl_education_count(String corp_code) {
+		List<Integer> empl_education_count = corporationDao.empl_education_count(corp_code);
+		return empl_education_count;
+	}
+
+	@Override
+	public List<Education_infoVo> empl_university_list(String corp_code) {
+		List<Education_infoVo> empl_university_list = corporationDao.empl_university_list(corp_code);
+		return empl_university_list;
+	}
+
+	/**
+	 * 회사 정보로  graphinfo
+	 */
+	@Override
+	public List<GraphVo> graphInfo(String corp_code) {
+		List<GraphVo> graphInfo = corporationDao.graphInfo(corp_code);
+		return graphInfo;
+	}
+
+	/**
+	 * 회사 직원 리스트
+	 */
+	@Override
+	public List<GraphVo> empl_list(GraphVo param) {
+		List<GraphVo> empl_list = corporationDao.empl_list(param);
+		return empl_list;
+	}
+
+	/**
+	 * 전공 수 (중복 수 증가)
+	 */
+	@Override
+	public List<Integer> major_count(String corp_code) {
+		List<Integer> major_count = corporationDao.major_count(corp_code);
+		return major_count;
+	}
+
+	/**
+	 * 전공 리스트 (중복제외)
+	 */
+	@Override
+	public List<Education_infoVo> major_list(String corp_code) {
+		List<Education_infoVo> major_list = corporationDao.major_list(corp_code);
+		return major_list;
+	}
+
+	/**
+	 * 직책 수 (중복 수 증가)
+	 */
+	@Override
+	public List<Integer> job_position_count(String corp_code) {
+		List<Integer> job_position_count = corporationDao.job_position_count(corp_code);
+		return job_position_count;
+	}
+
+	/**
+	 * 직책 리스트(중복 제외)
+	 */
+	@Override
+	public List<Career_infoVo> job_position_list(String corp_code) {
+		List<Career_infoVo> job_position_list = corporationDao.job_position_list(corp_code);
+		return job_position_list;
 	}
 
 

@@ -33,7 +33,5 @@
 			</div>
 		</c:forEach>
 
-	
-
 </div>
 
