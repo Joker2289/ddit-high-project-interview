@@ -205,14 +205,19 @@
          // 로그인 창을 띄웁니다.
          Kakao.Auth.login({
           
-           success: function(authObj) {
+           	success: function(authObj) {
               
-              Kakao.API.request({
+        	  Kakao.API.request({
+            	  
                 url: '/v2/user/me',
-                 success: function(res) {
+                success: function(res) {
+                	 
+                	/* if (Session.getCurrentSession().checkAndImplicitOpen()) {
+               	
+                	 
                     
-                console.log(JSON.stringify(res));       // kakao.api.request 에서 불러온 결과값 json형태로 출력
-                console.log(JSON.stringify(authObj));    // Kakao.Auth.createLoginButton에서 불러온 결과값 json형태로 출력
+                 console.log(JSON.stringify(res));       // kakao.api.request 에서 불러온 결과값 json형태로 출력
+                 console.log(JSON.stringify(authObj));    // Kakao.Auth.createLoginButton에서 불러온 결과값 json형태로 출력
                  console.log(res.id);                  // id출력
                  console.log(res.kakao_account.has_email);    
                  console.log(res.properties['nickname']);   // 닉네임 출력 
@@ -363,7 +368,6 @@
      });
      
      
-
   </script>
 
 
