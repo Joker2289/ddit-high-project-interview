@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<!DOCTYPE html>
+
 
 <link href="/css/blog/blog.css" rel="stylesheet">
 <link href="/css/blog/blog_activity_modal.css" rel="stylesheet">
@@ -14,10 +16,6 @@
 <!-- include summernote css/js -->
 <link href="/dist/summernote.css" rel="stylesheet">
 <script src="/dist/summernote.js"></script>
-
-
-<!DOCTYPE html>
-
 <style>
 @CHARSET "UTF-8";
 
@@ -43,14 +41,14 @@
 	<div class="row">
 		<div>
 
-			<div class="col-md-3">
+			<div id="dd" class="col-md-3">
 				<%@ include file="/WEB-INF/views/blog/profile_area.jsp"%><!-- /프로필영역 -->
 				
-				<div id=portfolio_area>
+				<div id="portfolio_area" style="position:relative;">
 					<%@ include file="/WEB-INF/views/blog/portfolio_area.jsp"%><!-- /포트폴리오 영역 -->
 				</div>
 			</div>
-
+			
 			<div id="content_area">
 				
 				
@@ -103,6 +101,25 @@
 		}
 	};
 	
+	   //스크롤 이벤트 발생 시
+	   $(window).scroll(function () {
+	      
+	      var currentTop = $(window).scrollTop();
+	      
+	      console.log(currentTop);
+	      
+	      
+	      /* 왼쪽 portfolio_area 스크롤 따라오기 */
+	      if($(window).scrollTop() > 1300){
+	    	  
+	         $("#portfolio_area").stop().animate({top: (currentTop-1130) + "px"}, 800);
+	         
+	      } else {
+	         $("#portfolio_area").stop().animate({top: 0 + "px"}, 800);
+	      }
+	      
+	     
+	   });
 
 	
 	

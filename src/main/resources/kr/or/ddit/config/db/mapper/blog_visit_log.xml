@@ -4,40 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="blog_visit_log">
 
-	<!-- 블로그 추가 -->
-	<insert id="insert_blog" parameterType="blogVo">
+	<!-- 방문 기록 추가 -->
+	<insert id="insert_visit_log" parameterType="blog_visit_logVo">
 	
-		insert into blog
-		values (
-			#{user_id},
-			#{blog_name},
-			nvl(#{cover_img, jdbcType=VARCHAR}, null),
-			nvl(#{cover_color, jdbcType=VARCHAR}, null),
-			nvl(#{profile_contents, jdbcType=VARCHAR}, null),
-			#{qna_act},
-			#{img_act},
-			#{name_act}
-		)
+		<!-- 방문기록이 있으면 날짜만 업데이트 -->
+		<!-- 방문기록이 없으면 새로 등록 -->
+		merge into visit_log
+			using dual
+			on(visitor_id = #{ visitor_id })
+			when matched then
+			    update set visit_date = sysdate
+			    where visitor_id = #{ visitor_id }
+			when not matched then 
+			    insert(VISIT_CODE, USER_ID, VISITOR_ID, VISIT_DATE)
+			    values(visit_code_seq.nextval, #{user_id}, #{ visitor_id }, sysdate)
 	</insert>
 	
-	<!-- 블로그 수정 -->
-	<update id="update_blog" parameterType="blogVo">
-		update blog
-		   set 	blog_name 			= nvl(#{blog_name, jdbcType=VARCHAR}, blog_name),
-		   		cover_img			= nvl(#{cover_img, jdbcType=VARCHAR}, cover_img),
-		   		cover_color			= nvl(#{cover_color, jdbcType=VARCHAR}, cover_color),
-		   		profile_contents	= nvl(#{profile_contents, jdbcType=VARCHAR}, profile_contents),
-		   		qna_act				= nvl(#{qna_act, jdbcType=VARCHAR}, qna_act),
-		   		img_act				= nvl(#{img_act, jdbcType=VARCHAR}, img_act),
-		   		name_act			= nvl(#{name_act, jdbcType=VARCHAR}, name_act)
-		 where user_id = #{user_id}  
-	</update>
 	
-	<!-- 회원의 블로그 설정 내용 조회 -->
-	<select id="select_blogInfo" parameterType="String" resultType="blogVo">
-		select *
-		  from blog
-		 where user_id = #{user_id}
-	</select>
 
 </mapper> 

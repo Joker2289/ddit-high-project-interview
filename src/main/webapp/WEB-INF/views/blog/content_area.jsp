@@ -11,36 +11,9 @@
 	<%@ include file="/WEB-INF/views/blog/page_area.jsp"%><!-- 전체 페이지 영역 -->
 </div>
 
+<!-- 오른쪽 메뉴 구역 -->
 <div id="right_area">
-	<!-- 오른쪽 메뉴 구역 -->
-	<div class="col-md-3">
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<a href="#"><h4>최근 게시물</h4></a>
-				<ul>
-					<li><a href="#">앙 광고띠</a></li>
-				</ul>
-			</div>
-		</div>
-	
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<a href="#"><h4>인기 게시물</h4></a>
-				<ul>
-					<li><a href="#">앙 광고띠</a></li>
-				</ul>
-			</div>
-		</div>
-	
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<a href="#"><h4>질문 게시판</h4></a>
-				<ul>
-					<li><a href="#">앙 광고띠</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
+	<%@ include file="/WEB-INF/views/blog/right_area.jsp"%><!-- 오른쪽 메뉴 영역 -->
 </div>
 
 
