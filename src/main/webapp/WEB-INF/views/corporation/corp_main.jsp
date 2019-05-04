@@ -20,14 +20,13 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <!-- <link href="/css/timeline/writemodal.css" rel="stylesheet"> -->
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- css -->
 <link href="/css/corporation/corp_main.css" rel="stylesheet">
 <link href="/css/corporation/corp_intro.css" rel="stylesheet">
 <link href="/css/corporation/corp_recr.css" rel="stylesheet">
+<link href="/css/corporation/corp_empl.css" rel="stylesheet">
 
 <style>
 textarea {
@@ -36,6 +35,7 @@ textarea {
 }
 
 textarea {
+
 	padding: 10px;
 	line-height: 1.5;
 	border-radius: 5px;

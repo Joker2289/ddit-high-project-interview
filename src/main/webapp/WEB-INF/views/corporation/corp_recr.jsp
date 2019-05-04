@@ -11,8 +11,6 @@
 
 	<div class="recr_head">
 		<h4 class="recr_head_title"><i class="fas fa-user"></i> 회사 채용공고</h4>
-		<!-- <button id="btnslidelt" class="btn btn-default">&lt;</button>
-		<button id="btnSlidegt" class="btn btn-default">&gt;</button> -->
 	</div>
 	
 		<c:forEach items="${ recruitList }" var="list">
