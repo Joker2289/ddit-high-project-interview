@@ -289,7 +289,13 @@ public class CorporationController {
 		int employeeCnt = corporationService.corp_code_user_count(corpInfo.getCorp_code());
 		model.addAttribute("employeeCnt", employeeCnt);
 		
-		//회사의 
+		//
+		PaginationVo pnVo = new PaginationVo(1, 4);
+		pnVo.setCorp_code(corpInfo.getCorp_code());
+		
+		List<Career_infoVo> job_positionList = corporationService.job_position_list(pnVo);
+		
+		
 		
 		
 		return "corporation/corp_empl";

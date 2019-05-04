@@ -15,6 +15,7 @@ import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.util.graph.GraphVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 @Repository("corporationDao")
 public class CorporationDaoImpl implements ICorporationDao{
@@ -257,8 +258,8 @@ public class CorporationDaoImpl implements ICorporationDao{
 	 * 직책 리스트 (중복 제외)
 	 */
 	@Override
-	public List<Career_infoVo> job_position_list(String corp_code) {
-		return sqlSessionTemplate.selectList("corp.job_position_list", corp_code);
+	public List<Career_infoVo> job_position_list(PaginationVo vo) {
+		return sqlSessionTemplate.selectList("corp.job_position_list", vo);
 	}
 
 }

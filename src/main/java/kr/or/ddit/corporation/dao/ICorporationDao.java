@@ -8,6 +8,7 @@ import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.util.graph.GraphVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 public interface ICorporationDao {
 	
@@ -194,12 +195,17 @@ public interface ICorporationDao {
 	 */
 	List<Integer> job_position_count(String corp_code);
 
+	
 	/**
-	 * 직책 리스트 (중복 제외)
-	 * @param corp_code
+	 * 
+	 * Method : job_position_list
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
 	 * @return
+	 * Method 설명 : 회사의 직책 리스트와 해당 직책의 직원수 리스트 조회
 	 */
-	List<Career_infoVo> job_position_list(String corp_code);
+	List<Career_infoVo> job_position_list(PaginationVo vo);
 
 
 	

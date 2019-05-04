@@ -15,6 +15,7 @@ import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.util.graph.GraphVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 @Service("corporationService")
 public class CorporationServiceImpl implements ICorporationService{
@@ -256,8 +257,8 @@ public class CorporationServiceImpl implements ICorporationService{
 	 * 직책 리스트(중복 제외)
 	 */
 	@Override
-	public List<Career_infoVo> job_position_list(String corp_code) {
-		List<Career_infoVo> job_position_list = corporationDao.job_position_list(corp_code);
+	public List<Career_infoVo> job_position_list(PaginationVo vo) {
+		List<Career_infoVo> job_position_list = corporationDao.job_position_list(vo);
 		return job_position_list;
 	}
 
