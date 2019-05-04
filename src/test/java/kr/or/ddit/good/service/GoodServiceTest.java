@@ -175,23 +175,4 @@ public class GoodServiceTest extends LogicTestConfig {
 		assertNotNull(good_code);
 	}
 
-	@Test
-	public void testtestest(){
-		List<String> testList = new ArrayList<String>();
-
-		testList.add("test1");
-		testList.add("test1");
-		testList.add("test1");
-		testList.add("test1");
-		testList.add("test1");
-		testList.add("test");
-		testList.add("test");
-		testList.add("test");
-		testList.add("test");
-		testList.add("test");
-		
-		
-		
-		
-	}
 }

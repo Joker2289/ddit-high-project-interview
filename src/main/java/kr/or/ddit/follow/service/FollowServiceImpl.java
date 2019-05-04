@@ -113,4 +113,13 @@ public class FollowServiceImpl implements IFollowService {
 		return followDao.select_followChatList(mem_id);
 	}
 
+	@Override
+	public int insert_userFollow(FollowVo followVo) {
+		return followDao.insert_userFollow(followVo);
+	}
+
+	@Override
+	public int delete_userFollow(FollowVo followVo) {
+		return followDao.delete_userFollow(followVo);
+	}
 }

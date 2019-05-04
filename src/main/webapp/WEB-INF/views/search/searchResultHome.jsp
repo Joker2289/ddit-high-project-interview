@@ -78,6 +78,34 @@
 		$(this).attr('value', '팔로우');
 	});
 	
+	//회원 팔로우
+	var user_id = "";
+	$(document).on("click", ".btn_follow_user", function() {
+		user_id = $(this).attr("data-user");
+		
+		$.ajax({
+			type : 'POST',
+			url : '/user_follow',
+			data : {"target_id" : user_id}
+		});
+		$(this).attr('class', 'btn_unfollow_user');
+		$(this).attr('value', '팔로우 중');
+
+	});
+	
+	//회원 언팔로우
+	$(document).on("click", ".btn_unfollow_user", function() {
+		user_id = $(this).attr("data-user");
+		
+		$.ajax({
+			type : 'POST',
+			url : '/user_unfollow',
+			data : {"target_id" : user_id}
+		});
+		$(this).attr('class', 'btn_follow_user');
+		$(this).attr('value', '팔로우');
+	});
+	
 	//일촌맺기
 	var user_id = "";
 	$(document).on("click", ".btn_connect", function() {
