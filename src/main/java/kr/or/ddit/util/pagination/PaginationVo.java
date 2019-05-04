@@ -12,6 +12,8 @@ public class PaginationVo {
 	private String hashtag_name;
 	private String search_word; // 검색어
 	
+	private String corp_code;
+	
 	public PaginationVo() {
 		
 	}
@@ -81,10 +83,20 @@ public class PaginationVo {
 	public void setCorp_id(String corp_id) {
 		this.corp_id = corp_id;
 	}
+	
+	
+	public String getCorp_code() {
+		return corp_code;
+	}
+	public void setCorp_code(String corp_code) {
+		this.corp_code = corp_code;
+	}
 	@Override
 	public String toString() {
 		return "PaginationVo [page=" + page + ", pageSize=" + pageSize + ", mem_id=" + mem_id + ", criteria_code="
 				+ criteria_code + ", ref_code=" + ref_code + ", division=" + division + ", user_id=" + user_id
-				+ ", corp_id=" + corp_id + ", hashtag_name=" + hashtag_name + ", search_word=" + search_word + "]";
+				+ ", corp_id=" + corp_id + ", hashtag_name=" + hashtag_name + ", search_word=" + search_word
+				+ ", corp_code=" + corp_code + "]";
 	}
+	
 }
