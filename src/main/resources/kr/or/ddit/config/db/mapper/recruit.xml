@@ -152,7 +152,8 @@
 		                                                                                                             FROM RECRUIT) E
 		                                                                                     WHERE D.CORP_ID = E.CORP_ID) F
 		                                           WHERE C.CORPORATE_NAME = F.CORP_NAME) H
-		                    WHERE G.CORP_NAME = H.CORPORATE_NAME) J
+		                    WHERE G.CORP_NAME = H.CORPORATE_NAME
+		                    GROUP BY G.CORP_ID) J
 		 WHERE I.CORP_ID = J.CORP_ID	
 	</select>
 

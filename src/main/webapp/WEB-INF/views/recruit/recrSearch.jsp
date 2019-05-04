@@ -95,15 +95,16 @@
 				</td>
 				<td style="padding: 15px; padding-top: 13px;">
 					<select id="sel_period" style="padding: 5px;">
-						<option value="all_period">올린날</option>
+						<option value="">올린 날</option>
 						<option value="day">최근 24시간</option>
 						<option value="week">지난 주</option>
 						<option value="month">지난 달</option>
 						<option value="all_period">전체 기간</option>
 					</select>
 				</td>
-				<td id="sel_function" style="padding: 15px; padding-top: 13px;">
-					<select style="padding: 5px;">
+				<td style="padding: 15px; padding-top: 13px;">
+					<select style="padding: 5px; -moz-user-select: none; -khtml-user-select: none;
+							-webkit-user-select: none; user-select: none;" id="sel_function">
 						<option value="0">기능</option>
 						<option value="person">인맥</option>
 						<option value="easy">간편 지원</option>
@@ -111,20 +112,36 @@
 					</select>
 				</td>
 				<td style="padding: 15px; padding-top: 13px;">
-					<select style="padding: 5px;">
+					<select style="padding: 5px;" id="sel_com">
 						<option>회사</option>
 					</select>
 				</td>
+<!-- 				<td style="padding: 15px; padding-top: 13px;"> -->
+<!-- 					<table border="1" style="height: 33px;"> -->
+<!-- 						<tr> -->
+<!-- 							<td> -->
+<!-- 								<input type="text" placeholder="회사"> -->
+<!-- 							</td> -->
+<!-- 							<td> -->
+<!-- 								<i class="fas fa-caret-down"></i> -->
+<!-- 							</td> -->
+<!-- 						</tr> -->
+<!-- 					</table> -->
+<!-- 				</td> -->
 				<td style="padding: 15px; padding-top: 13px;">
 					<select style="padding: 5px;">
 						<option>경력수준</option>
 					</select>
 				</td>
 				<td style="padding: 15px; padding-top: 13px;">
-					<input type="button" value="필터 적용" id="btn_filter">
+					<input type="button" value="필터 적용" id="btn_filter" style="background-color: white;
+							border: 1px solid; border-color: #0174b0; color: #0174b0; border-radius: 1px;
+							padding: 3px; padding-left: 9px; padding-right: 9px;">
 				</td>
-				<td style="padding: 15px; padding-top: 13px;">
-					<input type="button" value="지우기" id="btn_remove">
+				<td style="padding: 15px; padding-top: 13px; padding-left: 5px;">
+					<input type="button" value="지우기" id="btn_remove" style="background-color: white;
+							border: 1px solid; border-color: #0174b0; color: #0174b0; border-radius: 1px;
+							padding: 3px; padding-left: 9px; padding-right: 9px;">
 				</td>
 			</tr>
 		</table>
@@ -200,12 +217,10 @@
 											 · <img src="/images/logo/linkedin.png" width="17">
 											 간편 지원
 										</c:if>
-										<c:if test="${function_value == 'person'}">
-											 · 1촌: 
-<%-- 											<c:forEach begin="1" end="${personalUserIdList.get(i.index - 1).size() }" --%>
-<%-- 													varStatus="i"> --%>
-<%-- 												${personalUserIdList.get(i.index - 1).get(i.index - 1) }님 --%>
-<%-- 											</c:forEach> --%>
+										<c:if test="${function_value == 'person'}"> · 
+											<span style="color: #0174b0;">
+												1촌: ${personalUserIdList.get(i.index - 1) }
+											</span>
 										</c:if>
 									</td>
 								</tr>
@@ -268,32 +283,77 @@
 	});
 
 	$(document).ready(function(){
-		console.log("${personalUserIdList }");
+		console.log($("#sel_period option:selected").text());
 
 		// 필터 sel_period 기본값 설정 / 선택
 		if('${period_value }' != ''){
 			$("#sel_period").val("${period_value }").prop("selected", true);
+			$("#period_value").val($("#sel_period option:selected").val());
 		}
 		$("#sel_period").on("change", function(){
 // 			alert("val : " + $("#sel_period option:selected").val());
 			$("#period_value").val($("#sel_period option:selected").val());
+			
+			if($("#sel_period option:selected").text() != '올린 날'){
+				$("#sel_period").css("background-color", "#0174b0");
+				$("#sel_period").css("color", "white");
+			}else{
+				$("#sel_period").css("background-color", "white");
+				$("#sel_period").css("color", "black");
+			}
 		});
+		if($("#sel_period option:selected").text() != '올린 날'){
+			$("#sel_period").css("background-color", "#0174b0");
+			$("#sel_period").css("color", "white");
+		}
 		
 		// 필터 sel_function 기본값 설정 / 선택
 		if('${function_value }' != ''){
 			$("#sel_function").val("${function_value }").prop("selected", true);
+			$("#function_value").val($("#sel_function option:selected").val());
 		}
 		$("#sel_function").on("change", function(){
 // 			alert("val : " + $("#sel_function option:selected").val());
 			$("#function_value").val($("#sel_function option:selected").val());
+			
+			if($("#sel_function option:selected").text() != '기능'){
+				$("#sel_function").css("background-color", "#0174b0");
+				$("#sel_function").css("color", "white");
+			}else{
+				$("#sel_function").css("background-color", "white");
+				$("#sel_function").css("color", "black");
+			}			
+		});
+		if($("#sel_function option:selected").text() != '기능'){
+			$("#sel_function").css("background-color", "#0174b0");
+			$("#sel_function").css("color", "white");
+		}
+		
+		// 필터 sel_com.
+		$("#sel_com").on("click", function(){
+// 			$("#sel_com").preventDefault();
 		});
 		
 		// 필터 적용 버튼
 		$("#btn_filter").on("click", function(){
 			$("#frm_filter").submit();			
 		});
+		$("#btn_filter").on("mouseover", function(){
+			$(this).css("background-color", "#cdedfe");
+		});
+		$("#btn_filter").on("mouseout", function(){
+			$(this).css("background-color", "white");
+		});
 		// 필터 지우기 버튼
-		
+		$("#btn_remove").on("click", function(){
+			window.location.href = '${pageContext.request.contextPath }/recrSearch';
+		});
+		$("#btn_remove").on("mouseover", function(){
+			$(this).css("background-color", "#cdedfe");
+		});
+		$("#btn_remove").on("mouseout", function(){
+			$(this).css("background-color", "white");
+		});		
 
 		// 모달창 jQuery
 		var arr_save = new Array();

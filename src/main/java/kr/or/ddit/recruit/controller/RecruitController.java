@@ -856,8 +856,8 @@ public class RecruitController {
 
 	// @검색결과 저장 후 채용공고 검색 페이지 요청. -> 검색내역 저장은 Search_logController로 이동.
 	@RequestMapping("/recrSearch")
-	public String recrSearch(HttpSession session, String period_value, String sel_function, 
-			String function_value, Model model) throws ParseException{
+	public String recrSearch(HttpSession session, String period_value, String function_value, 
+			Model model) throws ParseException{
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		// 회원이 검색한 값 가져오기. (getLSLog - get last search_log)
@@ -961,38 +961,79 @@ public class RecruitController {
 			if(function_value.equals("person")){
 				List<String> personalCorpIdList = recrService.getPersonalCorpId(mVo.getMem_id());
 //				logger.debug("recrlist size? : {}", recrList.size());
-				List<List<String>> personalUserIdList = new ArrayList<>();
+				List<String> personalUserIdList = new ArrayList<>();
 				
 				tempRecrList = new ArrayList<>();
 				tempTimeList = new ArrayList<>();
 				
 				boolean add_flag = false;
+				logger.debug("corp list size? : {}", personalCorpIdList.size());
 				
 				for(int i=0; i < personalCorpIdList.size(); i++){
 					String corp_id = personalCorpIdList.get(i);
 					
 					for(int j=0; j < recrList.size(); j++){
 						if( corp_id.equals( recrList.get(j).getCorp_id() ) ){
-							logger.debug("corp add!");
 							tempRecrList.add(recrList.get(j));
 							tempTimeList.add(timeList.get(j));
 							
 							add_flag = true;
+							break;
 						}
 					}
 					
 					if(add_flag == true){
 						add_flag = false;
-						break;
+						
+						List<String> tempUserIdList = recrService.getPersonalUserId(corp_id + "/" + mVo.getMem_id());
+						String result_str = null;
+						
+						for(int k=0; k < tempUserIdList.size(); k++){
+							if(result_str == null){
+								result_str = tempUserIdList.get(k)+"님";
+							}else{
+								result_str += ", " + tempUserIdList.get(k)+"님";
+							}
+						}
+						
+						personalUserIdList.add(result_str);
 					}
-					
-					personalUserIdList.add(recrService.getPersonalUserId(corp_id + "/" + mVo.getMem_id()));
 				}
 				
 				recrList = tempRecrList;
 				timeList = tempTimeList;
 				
 				model.addAttribute("personalUserIdList", personalUserIdList);
+			}else if(function_value.equals("easy")){ // 간편지원
+				tempRecrList = new ArrayList<>();
+				tempTimeList = new ArrayList<>();				
+				
+				for(int i=0; i < recrList.size(); i++){
+					RecruitVo rVo = recrList.get(i);
+					
+					if(rVo.getApp_type().equals("t")){
+						tempRecrList.add(rVo);
+						tempTimeList.add(timeList.get(i));
+					}
+				}
+				
+				recrList = tempRecrList;
+				timeList = tempTimeList;				
+			}else if(function_value.equals("apply")){ // 지원자 10명 미만
+				tempRecrList = new ArrayList<>();
+				tempTimeList = new ArrayList<>();				
+				
+				for(int i=0; i < recrList.size(); i++){
+					RecruitVo rVo = recrList.get(i);
+					
+					if(Integer.valueOf(rVo.getApp_count()) < 10){
+						tempRecrList.add(rVo);
+						tempTimeList.add(timeList.get(i));
+					}
+				}
+				
+				recrList = tempRecrList;
+				timeList = tempTimeList;				
 			}
 		}
 		
