@@ -229,7 +229,7 @@
 	</select>
 	
 	<!-- 회사 직원들 그래프 정보 -->
-	<select id="graphInfo" parameterType="String" resultType="graphVo">
+	<select id="graphInfo" parameterType="String" resultType="chartVo">
 		select *
 		  from (select b.user_id, c.job_position, d.school_name, d.major, b.profile_contents
 				  from corporation a, users b, career_info c, education_info d
@@ -240,7 +240,7 @@
 	</select>
 	
 	<!-- 회사 직원들 프로필 정보와 팔로우 언팔로우 -->
-	<select id="empl_list" parameterType="graphVo" resultType="graphVo">
+	<select id="empl_list" parameterType="chartVo" resultType="chartVo">
 		select a.user_id, a.user_name, a.profile_path, b.corporate_name ||' '|| b.job_position as job_position, d.receive_accept,A.PROFILE_CONTENTS
 	 	  from users a, career_info b, corporation c, (select receive_id, receive_accept
 		                                                 from personal_connection
@@ -267,7 +267,7 @@
 	
 	
 	<!-- 직책 리스트 (중복 제외) -->
-	<select id="job_position_list" parameterType="String" resultType="career_infoVo">
+	<select id="job_position_list" parameterType="String" resultType="chartVo">
 	
 	    SELECT job_position as chart_subject, count(job_position) as chart_value
 		FROM CAREER_INFO
@@ -287,29 +287,10 @@
 	    
 	</select>
 	
-	<!-- 회사에 등록된 직원(경력의 corp_code가 인증된 사원)의 직책(job_position)과 그에 해당하는 사원수 --> 
-	<select id="job_position_list" parameterType="String" resultType="career_infoVo">
-	
-	    SELECT job_position as chart_subject, count(job_position) as chart_value
-		FROM CAREER_INFO
-		WHERE corp_code = #{corp_code}
-	    group by job_position
-	    order by count(*) desc
-	    
-	   <!--  select *
 
-		from (SELECT job_position, count(job_position) as employee_cnt, ROW_NUMBER() OVER (ORDER BY job_position,count(job_position) desc) rn
-		        FROM CAREER_INFO
-		        WHERE corp_code = #{ corp_code }
-		        group by job_position
-		        order by count(*) desc)
-		        
-		where rn between ((#{page}-1) * #{pageSize}) + 1 and #{page}*#{pageSize} -->
-	    
-	</select>
 	
-	<!-- 회사에 등록된 직원(경력의 corp_code가 인증된 사원)의 출신학교와 그에 해당하는 사원수 --> 
-	<select id="school_name_list" parameterType="String" resultType="career_infoVo">
+	 <!-- 회사에 등록된 직원(경력의 corp_code가 인증된 사원)의 출신학교와 그에 해당하는 사원수 --> 
+	<select id="school_name_list" parameterType="String" resultType="chartVo">
 	
 	    select school_name as chart_subject, count(school_name) as chart_value
 		from    (

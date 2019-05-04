@@ -325,7 +325,7 @@ public class CorporationController {
 				model.addAttribute("chart_title", "직무");
 				break;
 			case 2:
-				chart_List  = corporationService.job_position_list(corp_code);
+				chart_List  = corporationService.school_name_list(corp_code);
 				model.addAttribute("chart_title", "출신학교");
 				break;
 			case 3:
