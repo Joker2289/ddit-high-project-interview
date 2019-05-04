@@ -7,7 +7,7 @@ import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.users.model.UsersVo;
-import kr.or.ddit.util.graph.GraphVo;
+import kr.or.ddit.util.chart.ChartVo;
 import kr.or.ddit.util.pagination.PaginationVo;
 
 public interface ICorporationDao {
@@ -165,14 +165,14 @@ public interface ICorporationDao {
 	 * @param corp_code
 	 * @return
 	 */
-	List<GraphVo> graphInfo(String corp_code);
+	List<ChartVo> graphInfo(String corp_code);
 
 	/**
 	 * 회사 직원 리스트
 	 * @param param
 	 * @return
 	 */
-	List<GraphVo> empl_list(GraphVo param);
+	List<ChartVo> empl_list(ChartVo param);
 
 	/**
 	 * 회사 전공 (중복 수 증가)
@@ -196,6 +196,9 @@ public interface ICorporationDao {
 	List<Integer> job_position_count(String corp_code);
 
 	
+	//정권--------------------------------------------------
+	
+	
 	/**
 	 * 
 	 * Method : job_position_list
@@ -203,11 +206,23 @@ public interface ICorporationDao {
 	 * 변경이력 :
 	 * @param vo
 	 * @return
-	 * Method 설명 : 회사의 직책 리스트와 해당 직책의 직원수 리스트 조회
+	 * Method 설명 :  회사에 등록된 직원(경력의 corp_code가 인증된 사원)의 
+	 *				직책(job_position)과 그에 해당하는 사원수
 	 */
-	List<Career_infoVo> job_position_list(String corp_code);
-
-
+	List<ChartVo> job_position_list(String corp_code);
+	
+	/**
+	 * 
+	 * Method : school_name_list
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param corp_code
+	 * @return
+	 * Method 설명 :  회사에 등록된 직원(경력의 corp_code가 인증된 사원)의 
+	 * 				출신학교와 그에 해당하는 사원수
+	 */
+	List<ChartVo> school_name_list(String corp_code);
+	
 	
 }
 

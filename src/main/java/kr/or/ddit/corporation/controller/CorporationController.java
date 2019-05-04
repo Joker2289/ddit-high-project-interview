@@ -71,7 +71,7 @@ import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
-import kr.or.ddit.util.graph.GraphVo;
+import kr.or.ddit.util.chart.ChartVo;
 import kr.or.ddit.util.pagination.PaginationVo;
 
 @RequestMapping("/corp")
@@ -289,18 +289,73 @@ public class CorporationController {
 		int employeeCnt = corporationService.corp_code_user_count(corpInfo.getCorp_code());
 		model.addAttribute("employeeCnt", employeeCnt);
 		
-		//
-		PaginationVo pnVo = new PaginationVo(1, 4);
-		pnVo.setCorp_code(corpInfo.getCorp_code());
+		//직책 리스트 조회
+		List<ChartVo> chart_List = corporationService.job_position_list(corpInfo.getCorp_code());
 		
-		List<Career_infoVo> job_positionList = corporationService.job_position_list(pnVo);
+		//전체 값
+		int sum_value = 0;
+		for(ChartVo vo : chart_List) {
+			sum_value += vo.getChart_value();
+		}
 		
+		model.addAttribute("chart_title", "직무");
+		model.addAttribute("chart_List", chart_List);
+		model.addAttribute("sum_value", sum_value);
 		
+		model.addAttribute("corp_id", corp_id);
+		model.addAttribute("corp_code", corpInfo.getCorp_code());
 		
+		int list_index = 1;
+		model.addAttribute("list_index", list_index);
 		
 		return "corporation/corp_empl";
 	}
 	
+	
+	@RequestMapping("/showChart")
+	public String showChart(Model model, @RequestParam("corp_id")String corp_id,
+			@RequestParam("corp_code")String corp_code,
+			@RequestParam("list_index")int list_index) {
+		
+		List<ChartVo> chart_List = new ArrayList<ChartVo>();
+		
+		switch(list_index) {
+			case 1:
+				chart_List  = corporationService.job_position_list(corp_code);
+				model.addAttribute("chart_title", "직무");
+				break;
+			case 2:
+				chart_List  = corporationService.job_position_list(corp_code);
+				model.addAttribute("chart_title", "출신학교");
+				break;
+			case 3:
+				chart_List  = corporationService.job_position_list(corp_code);
+				model.addAttribute("chart_title", "전공");
+				break;
+			case 4:
+				chart_List  = corporationService.job_position_list(corp_code);
+				model.addAttribute("chart_title", "보유기술");
+				break;
+		}
+		
+		model.addAttribute("chart_List", chart_List);
+		
+		
+		//전체 값
+		int sum_value = 0;
+		for(ChartVo vo : chart_List) {
+			sum_value += vo.getChart_value();
+		}
+		model.addAttribute("sum_value", sum_value);
+		model.addAttribute("chart_List", chart_List);
+		
+		//고정
+		model.addAttribute("corp_id", corp_id);
+		model.addAttribute("corp_code", corp_code);
+		model.addAttribute("list_index", list_index);
+		
+		return "corporation/module/chart";
+	}
 	
 	
 	

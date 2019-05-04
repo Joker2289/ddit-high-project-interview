@@ -14,7 +14,7 @@ import kr.or.ddit.corporation.dao.ICorporationDao;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.users.model.UsersVo;
-import kr.or.ddit.util.graph.GraphVo;
+import kr.or.ddit.util.chart.ChartVo;
 import kr.or.ddit.util.pagination.PaginationVo;
 
 @Service("corporationService")
@@ -212,8 +212,8 @@ public class CorporationServiceImpl implements ICorporationService{
 	 * 회사 정보로  graphinfo
 	 */
 	@Override
-	public List<GraphVo> graphInfo(String corp_code) {
-		List<GraphVo> graphInfo = corporationDao.graphInfo(corp_code);
+	public List<ChartVo> graphInfo(String corp_code) {
+		List<ChartVo> graphInfo = corporationDao.graphInfo(corp_code);
 		return graphInfo;
 	}
 
@@ -221,8 +221,8 @@ public class CorporationServiceImpl implements ICorporationService{
 	 * 회사 직원 리스트
 	 */
 	@Override
-	public List<GraphVo> empl_list(GraphVo param) {
-		List<GraphVo> empl_list = corporationDao.empl_list(param);
+	public List<ChartVo> empl_list(ChartVo param) {
+		List<ChartVo> empl_list = corporationDao.empl_list(param);
 		return empl_list;
 	}
 
@@ -253,13 +253,17 @@ public class CorporationServiceImpl implements ICorporationService{
 		return job_position_count;
 	}
 
-	/**
-	 * 직책 리스트(중복 제외)
-	 */
+	
+	
+	//정권----------------------------------------------------------
 	@Override
-	public List<Career_infoVo> job_position_list(String corp_code) {
-		List<Career_infoVo> job_position_list = corporationDao.job_position_list(corp_code);
-		return job_position_list;
+	public List<ChartVo> job_position_list(String corp_code) {
+		return corporationDao.job_position_list(corp_code);
+	}
+
+	@Override
+	public List<ChartVo> school_name_list(String corp_code) {
+		return corporationDao.school_name_list(corp_code);
 	}
 
 

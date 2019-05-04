@@ -287,6 +287,42 @@
 	    
 	</select>
 	
+	<!-- 회사에 등록된 직원(경력의 corp_code가 인증된 사원)의 직책(job_position)과 그에 해당하는 사원수 --> 
+	<select id="job_position_list" parameterType="String" resultType="career_infoVo">
+	
+	    SELECT job_position as chart_subject, count(job_position) as chart_value
+		FROM CAREER_INFO
+		WHERE corp_code = #{corp_code}
+	    group by job_position
+	    order by count(*) desc
+	    
+	   <!--  select *
+
+		from (SELECT job_position, count(job_position) as employee_cnt, ROW_NUMBER() OVER (ORDER BY job_position,count(job_position) desc) rn
+		        FROM CAREER_INFO
+		        WHERE corp_code = #{ corp_code }
+		        group by job_position
+		        order by count(*) desc)
+		        
+		where rn between ((#{page}-1) * #{pageSize}) + 1 and #{page}*#{pageSize} -->
+	    
+	</select>
+	
+	<!-- 회사에 등록된 직원(경력의 corp_code가 인증된 사원)의 출신학교와 그에 해당하는 사원수 --> 
+	<select id="school_name_list" parameterType="String" resultType="career_infoVo">
+	
+	    select school_name as chart_subject, count(school_name) as chart_value
+		from    (
+		        select user_id
+		        from career_info
+		        where corp_code = #{corp_code}
+		        ) a, education_info b
+		where a.user_id = b.user_id
+		group by school_name
+		order by count(*) desc
+	
+	</select>
+	
 	
 	
 	

@@ -27,6 +27,14 @@
 	height: 50px;
 }
 
+.empl_head_title .fa-user-tie {
+	margin-right: 10px;
+}
+
+.employeeCnt{
+	margin-left: 20px;
+}
+
 /* 차트 조작 버튼 div */
 .chart_button_div {
 	text-align: right;
@@ -50,18 +58,30 @@
 }
 /* 차트 div */
 .chart_div{
-	padding: 10px;
+	padding: 10px 30px 10px 30px;
 }
 
 /* 차트 제목 */
 .chart_title{
 	font-weight: bold;
 	font-size: 20px;
-	margin: 10px 0px 0px 10px;
+	margin: 10px 0px 10px 10px;
 }
 
-/* 차트 항목 div */
+/* 차트 그래프 div */
 .progress {
 	margin-top: 10px;
 	margin-bottom: 10px;
+}
+
+.chart_subject_div{
+	
+}
+
+.chart_subject{
+	
+}
+
+.chart_value{
+	
 }

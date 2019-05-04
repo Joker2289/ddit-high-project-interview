@@ -14,7 +14,7 @@ import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.users.model.UsersVo;
-import kr.or.ddit.util.graph.GraphVo;
+import kr.or.ddit.util.chart.ChartVo;
 import kr.or.ddit.util.pagination.PaginationVo;
 
 @Repository("corporationDao")
@@ -218,7 +218,7 @@ public class CorporationDaoImpl implements ICorporationDao{
 	 * 회사정보로 graphinfo
 	 */
 	@Override
-	public List<GraphVo> graphInfo(String corp_code) {
+	public List<ChartVo> graphInfo(String corp_code) {
 		return sqlSessionTemplate.selectList("corp.graphInfo", corp_code);
 	}
 
@@ -226,7 +226,7 @@ public class CorporationDaoImpl implements ICorporationDao{
 	 * 회사 직원 리스트
 	 */
 	@Override
-	public List<GraphVo> empl_list(GraphVo param) {
+	public List<ChartVo> empl_list(ChartVo param) {
 		return sqlSessionTemplate.selectList("corp.empl_list", param);
 	}
 
@@ -254,12 +254,18 @@ public class CorporationDaoImpl implements ICorporationDao{
 		return sqlSessionTemplate.selectList("corp.job_position_count", corp_code);
 	}
 
-	/**
-	 * 직책 리스트 (중복 제외)
-	 */
+	
+	
+	//정권
+	
 	@Override
-	public List<Career_infoVo> job_position_list(String corp_code) {
+	public List<ChartVo> job_position_list(String corp_code) {
 		return sqlSessionTemplate.selectList("corp.job_position_list", corp_code);
+	}
+
+	@Override
+	public List<ChartVo> school_name_list(String corp_code) {
+		return sqlSessionTemplate.selectList("corp.school_name_list", corp_code);
 	}
 
 }

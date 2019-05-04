@@ -13,13 +13,13 @@
 <div class="empl_div">
 
 	<div class="empl_head_div">
-		<h4 class="empl_head_title"><i class="fas fa-user-tie"></i> 사원     ${ employeeCnt }명</h4> 
+		<h4 class="empl_head_title"><i class="fas fa-user-tie"></i> 사원 <a class="employeeCnt">${ employeeCnt }명</a></h4> 
 	</div>
 	
 	<!-- 차트 조작 버튼 div -->
 	<div class="chart_button_div">
-		<button class="btn btn-primary chart_button"> <i class="fas fa-chevron-left"></i> 이전 </button>
-		<button class="btn btn-primary chart_button">다음 <i class="fas fa-chevron-right"></i> </button>
+		<button class="btn btn-primary chart_button" onclick="beforeChart('${ corp_id }', '${ corp_code }', '${ list_index }');"> <i class="fas fa-chevron-left"></i> 이전 </button>
+		<button class="btn btn-primary chart_button" onclick="nextChart('${ corp_id }', '${ corp_code }', '${ list_index }');">다음 <i class="fas fa-chevron-right"></i> </button>
 	</div>
 	
 	<!-- 차트 div -->
@@ -30,13 +30,34 @@
 </div>
 
 <script>
+
+/* 이전 차트 */
+function beforeChart(corp_id, corp_code, list_index){
+	list_index--;
+	showChart(corp_id, corp_code, list_index);
+}
 	
+/* 다음 차트 */
+function nextList(corp_id, corp_code, list_index){
+	list_index++;
+	showChart(corp_id, corp_code, list_index);
+}
+
+/* 차트 조회 */
+function showChart(corp_id, corp_code, list_index){
+	$.ajax({
+	  url : '/corp/showChart',
+      data : {"corp_id" : corp_id, "corp_code" : corp_code, "list_index" : list_index },
+      success : function(data) {
+    	  
+    	  $('#chart_area').html(data);
+    	  
+      }
+    });
+}
+
+
 
 
 </script>
 
-<!-- <div class="progress">
-		  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-		    60%
-		  </div>
-		</div> -->
