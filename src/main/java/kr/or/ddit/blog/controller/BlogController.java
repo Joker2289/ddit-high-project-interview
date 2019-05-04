@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.blog.model.BlogVo;
+import kr.or.ddit.blog.model.Blog_visit_logVo;
 import kr.or.ddit.blog.service.IBlogService;
+import kr.or.ddit.blog.service.IBlog_visit_logService;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.follow.service.IFollowService;
@@ -74,6 +76,9 @@ public class BlogController {
 	
 	@Resource(name="commentService")
 	private ICommentService commentService;
+	
+	@Resource(name="visit_logService")
+	private IBlog_visit_logService visit_Service;
 	
 	
 	/**
@@ -141,6 +146,18 @@ public class BlogController {
 		gVo.setDivision("22");
 		List<GoodVo> goodList = goodService.select_goodList(gVo);
 		model.addAttribute("goodList", goodList);
+		
+		
+		//방문기록 추가
+		if(!user_id.equals(mVo.getMem_id())) {
+			Blog_visit_logVo visit_logVo = new Blog_visit_logVo();
+			visit_logVo.setUser_id(user_id);
+			visit_logVo.setVisitor_id(mVo.getMem_id());
+			visit_Service.insert_visit_log(visit_logVo);
+		}
+		
+		List<Blog_visit_logVo> visit_logList = visit_Service.select_today_visit_log(user_id);
+		model.addAttribute("visit_logList", visit_logList);
 		
 		return "blogTiles";
 	}

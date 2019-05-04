@@ -17,9 +17,8 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=21c4ce15b016e2f4c34196b944d9852b&libraries=services,clusterer,drawing"></script>
 
 <!-- 외부 css -->
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link href="/css/timeline/writemodal.css" rel="stylesheet">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<!-- <link href="/css/timeline/writemodal.css" rel="stylesheet"> -->
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -51,7 +50,7 @@ textarea {
 <body>
 	
 	<!-- top -->
-	<div class="container">
+	<div class="container" style="margin-top: 70px;">
 		<div id="top_area">
 			<%@ include file="/WEB-INF/views/corporation/module/top.jsp"%>
 		</div>

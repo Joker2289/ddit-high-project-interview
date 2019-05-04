@@ -210,6 +210,24 @@ public class RecruitDaoImplTest extends LogicTestConfig{
 		/***Then***/
 		assertNotNull(recrList);
 	}
+
+	/**
+	 * 
+	 * Method : testGetPersonalUserId
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 특정 채용공고의 회사에 경력이 있는 일촌 목록 조회 테스트.
+	 */
+	@Test
+	public void testGetPersonalUserId() {
+		/***Given***/
+
+		/***When***/
+		List<String> personalUserIdList = recrDao.getPersonalUserId("5/joker");
+
+		/***Then***/
+		assertNotNull(personalUserIdList);
+	}
 	
 	
 	

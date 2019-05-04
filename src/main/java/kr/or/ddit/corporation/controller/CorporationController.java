@@ -539,17 +539,6 @@ public class CorporationController {
 		
 		logger.debug("corp_code >>>>>>>>>>>>>>>>>>>>>>>>>>>>> : {}", corporationInfo.getCorp_code());
 		
-//----------------------------------------------------------------------		
-//		//회사직원들 user_id,position 
-//		List<Career_infoVo> empl_list = corporationService.corp_code_user_list(corporationInfo.getCorp_code());
-//		System.out.println("1111111111111111"+empl_list);
-//		
-//		
-//		//직원들의 대학 수 (대학복수 소유 인정 직원의 합보다 많을 수 있음)
-//		List<Integer> eec = corporationService.empl_education_count(corporationInfo.getCorp_code());		
-//		System.out.println("222222222          "+ eec);
-//
-//-----------------------------------------------------------------------
 		//회사직원들의 수
 		int empl_count = corporationService.corp_code_user_count(corporationInfo.getCorp_code());
 		model.addAttribute("empl_count",empl_count);
@@ -557,7 +546,7 @@ public class CorporationController {
 		//회사코드에 불러온 직원의 학교명,전공,직책,이름(그래프에 필요한 정보)
 		List<GraphVo> graphInfo = corporationService.graphInfo(corporationInfo.getCorp_code());
 		
-		//출신 학교 그래프
+		//출신 학교 그래프--------
 			//학교 수
 		List<Integer> eec = corporationService.empl_education_count(corporationInfo.getCorp_code());		
 		model.addAttribute("eec",eec); 
@@ -565,7 +554,7 @@ public class CorporationController {
 		List<Education_infoVo> university_list = corporationService.empl_university_list(corporationInfo.getCorp_code());
 		model.addAttribute("university_list",university_list);
 
-		//전공
+		//전공 그래프----------------
 			//전공 수(중복 수증가)
 		List<Integer> major_count = corporationService.major_count(corporationInfo.getCorp_code());
 		model.addAttribute("major_count",major_count);
@@ -573,47 +562,18 @@ public class CorporationController {
 		List<Education_infoVo> major_list = corporationService.major_list(corporationInfo.getCorp_code());
 		model.addAttribute("major_list",major_list);
 		
-		//직책
+		//직책 그래프--------------
 			//직책 수(중복 수 증가)
 		List<Integer> job_position_count = corporationService.job_position_count(corporationInfo.getCorp_code());
 		model.addAttribute("job_position_count", job_position_count);
+		System.out.println("1111111111111111111111111"+job_position_count);
 			//직책 리스트(중복 제외)
 		List<Career_infoVo> job_position_list = corporationService.job_position_list(corporationInfo.getCorp_code());
 		model.addAttribute("job_position_list", job_position_list);
-		
-		//전공 그래프
-//		List<Education_infoVo> em = corporationService.employee_major(corporationInfo.getCorp_name());
-//		List<Integer> emc = corporationService.employee_major_count(corporationInfo.getCorp_name());
-//		List<Integer> b = new ArrayList<>();
-//		int size = em.size();
-//		b.add(100*emc.get(0)/ecount);
-//		b.add(100*emc.get(1)/ecount);
-//		b.add(100*emc.get(2)/ecount);
-//		model.addAttribute("em", em);
-//		model.addAttribute("emc", emc);
-//		model.addAttribute("b",b);
-//		model.addAttribute("size", size);
-//		
+		System.out.println("1111111111111111111111111"+job_position_list);
 		
 		
-		
-		//직원 목록
-//		List<Career_infoVo> ea =  corporationService.employee_all(corporationInfo.getCorp_name());
-//		List<UsersVo> uvos = new ArrayList<UsersVo>();
-//		for(int i = 0; i < ea.size(); i++) {
-//			UsersVo uvo = corporationService.select_userInfo(ea.get(i).getUser_id());
-//			System.out.println("유저 아이디 : " + uvo.getUser_id());
-//			uvos.add(i, uvo);
-//		}
-//		model.addAttribute("uvos", uvos);
-//		List<Education_infoVo> evos = new ArrayList<Education_infoVo>();
-//		for(int i = 0; i < ea.size(); i++) {
-//			Education_infoVo evo = corporationService.employee_education(ea.get(i).getUser_id());
-//			evos.add(i, evo);
-//		}
-//		model.addAttribute("evos", evos);
-		
-		
+				
 		//회사코드로 불러온 직원정보(직원프로필에 필요한 정보)
 		GraphVo param = new GraphVo();
 		param.setUser_id(memberInfo.getMem_id());
@@ -621,8 +581,7 @@ public class CorporationController {
 		
 		List<GraphVo> empl_list = corporationService.empl_list(param);
 		System.out.println("777777777777777777"+empl_list);
-		
-		
+		model.addAttribute("empl_list",empl_list);
 		
 		return "corporation/corp_empl";
 	}
