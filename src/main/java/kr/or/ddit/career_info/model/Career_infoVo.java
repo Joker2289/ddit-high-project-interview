@@ -19,6 +19,10 @@ public class Career_infoVo {
 	private String logo_path;		// logo
 	private String corp_id;			// 회사아이디
 	
+	
+	private String employee_cnt;	// 직원 수
+	
+	
 	public Career_infoVo() {
 		
 	}
@@ -137,12 +141,23 @@ public class Career_infoVo {
 	public void setCorp_id(String corp_id) {
 		this.corp_id = corp_id;
 	}
+	
+	
+
+	public String getEmployee_cnt() {
+		return employee_cnt;
+	}
+
+	public void setEmployee_cnt(String employee_cnt) {
+		this.employee_cnt = employee_cnt;
+	}
 
 	@Override
 	public String toString() {
 		return "Career_infoVo [career_code=" + career_code + ", user_id=" + user_id + ", job_position=" + job_position
 				+ ", job_rank=" + job_rank + ", corporate_name=" + corporate_name + ", corp_local=" + corp_local
 				+ ", join_date=" + join_date + ", resign_date=" + resign_date + ", contents=" + contents
-				+ ", corp_code=" + corp_code + "]";
+				+ ", corp_code=" + corp_code + ", currval=" + currval + ", month=" + month + ", logo_path=" + logo_path
+				+ ", corp_id=" + corp_id + ", employee_cnt=" + employee_cnt + "]";
 	}
 }
