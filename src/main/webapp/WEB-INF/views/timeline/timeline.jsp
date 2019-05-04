@@ -178,17 +178,9 @@
                </div>
                
                <!-- comment -->
-<%--                <div class="col-comment-area ${post.post_code }" id="post_comment ${post.post_code }"></div> --%>
-               
-               
-               <!-- 콜랩스 적용 -->
                <div class="collapse" id="comment_area${ post.post_code }">
-				  <div class="well" id="comment_content${ post.post_code }">
-				    
-				  </div>
-				</div>
-				
-				
+				  <div class="well" id="comment_content${ post.post_code }"></div>
+			   </div>
                <!-- /comment -->
             
               </div>

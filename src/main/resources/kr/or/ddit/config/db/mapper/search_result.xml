@@ -32,7 +32,7 @@
 		                     where receive_id = #{mem_id}) e
 		         where d.mem_id = e.receive_id(+)
 		         and ((upper(mem_name) like '%' || upper(#{search_word}) || '%'
-		            or  upper(introduce) like '%' || upper(#{search_word}) || '%')))
+		          or  upper(introduce) like '%' || upper(#{search_word}) || '%')))
 		 where col_no between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
 		   and mem_id != #{mem_id}
 	</select>
@@ -51,7 +51,8 @@
 		                                   and mem_id = #{mem_id}) b
 		                         where a.mem_id = b.ref_keyword(+)
 		                           and (upper(a.mem_name) like '%'|| upper(#{search_word}) ||'%'
-		                            or  upper(a.industry_type) like '%'|| upper(#{search_word}) ||'%') ) c) d)
+		                            or  upper(a.industry_type) like '%'|| upper(#{search_word}) ||'%'
+		                            or  upper(a.addr1) like '%'|| upper(#{search_word}) ||'%') ) c) d)
 		 where col_no between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
 		   and mem_id != #{mem_id}
 	</select>

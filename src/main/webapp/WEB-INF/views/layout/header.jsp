@@ -32,12 +32,17 @@
             		<div>홈</div>
             	</a>
             </li>
-            <li class="menu">
-            	<a href="/personalConnection" class="menugroup" style="padding-top: 7px;">
-            		<div><span style="font-size: 20px;"><i class="fas fa-users"></i></span></div>
-            		<div>인맥</div>
-            	</a>
-            </li>
+            <c:choose>
+            	<c:when test="${SESSION_MEMBERVO.mem_division == '1' }">
+		            <li class="menu">
+		            	<a href="/personalConnection" class="menugroup" style="padding-top: 7px;">
+		            		<div><span style="font-size: 20px;"><i class="fas fa-users"></i></span></div>
+		            		<div>인맥</div>
+		            	</a>
+		            </li>
+            	
+            	</c:when>
+            </c:choose>
             <li class="menu">
             	<a href="/recruit" class="menugroup" style="padding-top: 7px;">
             		<div><span style="font-size: 20px;"><i class="fas fa-briefcase"></i></span></div>

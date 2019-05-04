@@ -170,7 +170,6 @@ public class PostController {
 		List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
 		model.addAttribute("saveList", saveList);
 		
-		
 		/////////////////////////////// newList
 		
 		// 광고 부분 -> 신규 채용공고 (newList)
@@ -1378,7 +1377,14 @@ public class PostController {
 	}
 	
 	@RequestMapping(path={"/recommendpost"}, method=RequestMethod.POST)
-	public String recommendPost(String param){
+	public String recommendPost(String param, HttpServletRequest request, Model model){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		PaginationVo paginationVo = new PaginationVo(1, 12);
+		paginationVo.setUser_id(memberInfo.getMem_id());
+
+		List<UsersVo> userList = personal_connectionService.recommendUsers(paginationVo);
+		model.addAttribute("userList", userList);
 		
 		return "timeline/recommendPost";
 	}
