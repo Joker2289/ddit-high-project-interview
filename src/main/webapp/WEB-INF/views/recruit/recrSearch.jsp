@@ -6,6 +6,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<style type="text/css">
+		#txt_com::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+		  color: black;
+		}
+		
+		#txt_com:focus {
+			border: 0px;
+		}
+	</style>
 </head>
 
 <body>
@@ -111,23 +120,6 @@
 						<option value="apply">지원자가 10명 미만</option>
 					</select>
 				</td>
-				<td style="padding: 15px; padding-top: 13px;">
-					<select style="padding: 5px;" id="sel_com">
-						<option>회사</option>
-					</select>
-				</td>
-<!-- 				<td style="padding: 15px; padding-top: 13px;"> -->
-<!-- 					<table border="1" style="height: 33px;"> -->
-<!-- 						<tr> -->
-<!-- 							<td> -->
-<!-- 								<input type="text" placeholder="회사"> -->
-<!-- 							</td> -->
-<!-- 							<td> -->
-<!-- 								<i class="fas fa-caret-down"></i> -->
-<!-- 							</td> -->
-<!-- 						</tr> -->
-<!-- 					</table> -->
-<!-- 				</td> -->
 				<td style="padding: 15px; padding-top: 13px;">
 					<select style="padding: 5px;">
 						<option>경력수준</option>
