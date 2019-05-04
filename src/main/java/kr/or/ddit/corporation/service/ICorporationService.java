@@ -183,12 +183,6 @@ public interface ICorporationService {
 	 */
 	List<Integer> major_count(String corp_code);
 
-	/**
-	 * 직원 전공 리스트 (중복제외)
-	 * @param corp_code
-	 * @return
-	 */
-	List<Education_infoVo> major_list(String corp_code);
 
 	/**
 	 * 직책 수 (중복 수 증가)
@@ -219,10 +213,22 @@ public interface ICorporationService {
 	 * 변경이력 :
 	 * @param corp_code
 	 * @return
-	 * Method 설명 :  회사에 등록된 직원(경력의 corp_code가 인증된 사원)의 
-	 * 				출신학교와 그에 해당하는 사원수
+	 * Method 설명 :  회사에 등록된 직원(경력의 corp_code가 인증된 사원의 
+	 * 				출신학교(school_name)와 그에 해당하는 사원수
 	 */
 	List<ChartVo> school_name_list(String corp_code);
+	
+	/**
+	 * 
+	 * Method : major_list
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param corp_code
+	 * @return
+	 * Method 설명 : 회사에 등록된 직원(경력의 corp_code가 인증된 
+	 * 				사원의 전공(major)과 그에 해당하는 사원수
+	 */
+	List<ChartVo> major_list(String corp_code);
 }
 
 

@@ -18,12 +18,12 @@
 	
 	<!-- 차트 조작 버튼 div -->
 	<div class="chart_button_div">
-		<button class="btn btn-primary chart_button" onclick="beforeChart('${ corp_id }', '${ corp_code }', '${ list_index }');"> <i class="fas fa-chevron-left"></i> 이전 </button>
-		<button class="btn btn-primary chart_button" onclick="nextChart('${ corp_id }', '${ corp_code }', '${ list_index }');">다음 <i class="fas fa-chevron-right"></i> </button>
+		<button class="btn btn-primary chart_button" onclick="beforeChart('${ corp_id }', '${ corp_code }');"> <i class="fas fa-chevron-left"></i> 이전 </button>
+		<button class="btn btn-primary chart_button" onclick="nextChart('${ corp_id }', '${ corp_code }');">다음 <i class="fas fa-chevron-right"></i> </button>
 	</div>
 	
 	<!-- 차트 div -->
-	<div class="chart_area">
+	<div id="chart_area" class="chart_area">
 		<%@ include file="/WEB-INF/views/corporation/module/chart.jsp"%>
 	</div>
 	
@@ -31,23 +31,27 @@
 
 <script>
 
+var chart_index = 1;
+
 /* 이전 차트 */
-function beforeChart(corp_id, corp_code, list_index){
-	list_index--;
-	showChart(corp_id, corp_code, list_index);
+function beforeChart(corp_id, corp_code){
+	chart_index--;
+	console.log(chart_index);
+	showChart(corp_id, corp_code);
 }
 	
 /* 다음 차트 */
-function nextList(corp_id, corp_code, list_index){
-	list_index++;
-	showChart(corp_id, corp_code, list_index);
+function nextChart(corp_id, corp_code){
+	chart_index++;
+	console.log(chart_index);
+	showChart(corp_id, corp_code);
 }
 
 /* 차트 조회 */
-function showChart(corp_id, corp_code, list_index){
+function showChart(corp_id, corp_code){
 	$.ajax({
 	  url : '/corp/showChart',
-      data : {"corp_id" : corp_id, "corp_code" : corp_code, "list_index" : list_index },
+      data : {"corp_id" : corp_id, "corp_code" : corp_code, "chart_index" : chart_index },
       success : function(data) {
     	  
     	  $('#chart_area').html(data);

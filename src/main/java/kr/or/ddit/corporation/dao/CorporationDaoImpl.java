@@ -238,13 +238,6 @@ public class CorporationDaoImpl implements ICorporationDao{
 		return sqlSessionTemplate.selectList("corp.major_count", corp_code);
 	}
 
-	/**
-	 * 직원 전공 리스트(중복 제외)
-	 */
-	@Override
-	public List<Education_infoVo> major_list(String corp_code) {
-		return sqlSessionTemplate.selectList("corp.major_list", corp_code);
-	}
 
 	/**
 	 * 직책 수 (중복 수 증가)
@@ -266,6 +259,11 @@ public class CorporationDaoImpl implements ICorporationDao{
 	@Override
 	public List<ChartVo> school_name_list(String corp_code) {
 		return sqlSessionTemplate.selectList("corp.school_name_list", corp_code);
+	}
+
+	@Override
+	public List<ChartVo> major_list(String corp_code) {
+		return sqlSessionTemplate.selectList("corp.major_list", corp_code);
 	}
 
 }

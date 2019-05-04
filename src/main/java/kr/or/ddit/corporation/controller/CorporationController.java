@@ -301,12 +301,10 @@ public class CorporationController {
 		model.addAttribute("chart_title", "직무");
 		model.addAttribute("chart_List", chart_List);
 		model.addAttribute("sum_value", sum_value);
+		model.addAttribute("chart_index", 1);
 		
 		model.addAttribute("corp_id", corp_id);
 		model.addAttribute("corp_code", corpInfo.getCorp_code());
-		
-		int list_index = 1;
-		model.addAttribute("list_index", list_index);
 		
 		return "corporation/corp_empl";
 	}
@@ -315,30 +313,33 @@ public class CorporationController {
 	@RequestMapping("/showChart")
 	public String showChart(Model model, @RequestParam("corp_id")String corp_id,
 			@RequestParam("corp_code")String corp_code,
-			@RequestParam("list_index")int list_index) {
+			@RequestParam("chart_index")String chart_index) {
+		
+		logger.debug("corp_id >>>>>>>>>>>> : {}", corp_id);
+		logger.debug("corp_code >>>>>>>>>>>> : {}", corp_code);
+		logger.debug("chart_index >>>>>>>>>>>> : {}", chart_index);
 		
 		List<ChartVo> chart_List = new ArrayList<ChartVo>();
 		
-		switch(list_index) {
-			case 1:
+		switch(chart_index) {
+			case "1":
 				chart_List  = corporationService.job_position_list(corp_code);
 				model.addAttribute("chart_title", "직무");
 				break;
-			case 2:
+			case "2":
 				chart_List  = corporationService.school_name_list(corp_code);
 				model.addAttribute("chart_title", "출신학교");
 				break;
-			case 3:
-				chart_List  = corporationService.job_position_list(corp_code);
+			case "3":
+				chart_List  = corporationService.major_list(corp_code);
 				model.addAttribute("chart_title", "전공");
 				break;
-			case 4:
+			case "4":
 				chart_List  = corporationService.job_position_list(corp_code);
 				model.addAttribute("chart_title", "보유기술");
 				break;
 		}
 		
-		model.addAttribute("chart_List", chart_List);
 		
 		
 		//전체 값
@@ -348,11 +349,11 @@ public class CorporationController {
 		}
 		model.addAttribute("sum_value", sum_value);
 		model.addAttribute("chart_List", chart_List);
+		model.addAttribute("chart_index", chart_index);
 		
 		//고정
 		model.addAttribute("corp_id", corp_id);
 		model.addAttribute("corp_code", corp_code);
-		model.addAttribute("list_index", list_index);
 		
 		return "corporation/module/chart";
 	}
