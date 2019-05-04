@@ -258,8 +258,8 @@ public class CorporationDaoImpl implements ICorporationDao{
 	 * 직책 리스트 (중복 제외)
 	 */
 	@Override
-	public List<Career_infoVo> job_position_list(PaginationVo vo) {
-		return sqlSessionTemplate.selectList("corp.job_position_list", vo);
+	public List<Career_infoVo> job_position_list(String corp_code) {
+		return sqlSessionTemplate.selectList("corp.job_position_list", corp_code);
 	}
 
 }

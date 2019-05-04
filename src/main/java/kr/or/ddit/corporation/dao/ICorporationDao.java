@@ -205,7 +205,7 @@ public interface ICorporationDao {
 	 * @return
 	 * Method 설명 : 회사의 직책 리스트와 해당 직책의 직원수 리스트 조회
 	 */
-	List<Career_infoVo> job_position_list(PaginationVo vo);
+	List<Career_infoVo> job_position_list(String corp_code);
 
 
 	
