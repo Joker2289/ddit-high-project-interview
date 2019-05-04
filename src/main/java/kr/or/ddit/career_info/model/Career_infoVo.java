@@ -20,7 +20,8 @@ public class Career_infoVo {
 	private String corp_id;			// 회사아이디
 	
 	
-	private String employee_cnt;	// 직원 수
+	private String chart_subject;	//차트 제목	
+	private String chart_value;		// 직원 수
 	
 	
 	public Career_infoVo() {
@@ -141,15 +142,21 @@ public class Career_infoVo {
 	public void setCorp_id(String corp_id) {
 		this.corp_id = corp_id;
 	}
-	
-	
 
-	public String getEmployee_cnt() {
-		return employee_cnt;
+	public String getChart_subject() {
+		return chart_subject;
 	}
 
-	public void setEmployee_cnt(String employee_cnt) {
-		this.employee_cnt = employee_cnt;
+	public void setChart_subject(String chart_subject) {
+		this.chart_subject = chart_subject;
+	}
+
+	public String getChart_value() {
+		return chart_value;
+	}
+
+	public void setChart_value(String chart_value) {
+		this.chart_value = chart_value;
 	}
 
 	@Override
@@ -158,6 +165,7 @@ public class Career_infoVo {
 				+ ", job_rank=" + job_rank + ", corporate_name=" + corporate_name + ", corp_local=" + corp_local
 				+ ", join_date=" + join_date + ", resign_date=" + resign_date + ", contents=" + contents
 				+ ", corp_code=" + corp_code + ", currval=" + currval + ", month=" + month + ", logo_path=" + logo_path
-				+ ", corp_id=" + corp_id + ", employee_cnt=" + employee_cnt + "]";
+				+ ", corp_id=" + corp_id + ", chart_subject=" + chart_subject + ", chart_value=" + chart_value + "]";
 	}
+
 }
