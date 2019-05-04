@@ -89,5 +89,9 @@ public interface IFollowService {
 	 * @return
 	 * Method 설명 : 회사 언팔로우
 	 */
-	int delete_corpFollow(FollowVo followVo);	
+	int delete_corpFollow(FollowVo followVo);
+	
+	int insert_userFollow(FollowVo followVo);
+
+	int delete_userFollow(FollowVo followVo);
 }

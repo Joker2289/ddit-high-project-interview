@@ -163,5 +163,9 @@ public interface IFollowDao {
 	 * Method 설명 : 채팅 초대할 유저의 팔로우들(회사,회원)
 	 */
 	List<Map<String, String>> select_followChatList(String mem_id);
+
+	int insert_userFollow(FollowVo followVo);
+
+	int delete_userFollow(FollowVo followVo);
 	
 }

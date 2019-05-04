@@ -307,10 +307,7 @@
 	
 	//////////////////////////// newList	  
 
-
-
-////////////////////////////newList
-
+	
 // div_newList 마우스오버 시 false - 슬라이드 멈춤.
 var newSlide_flag = true;	
 
