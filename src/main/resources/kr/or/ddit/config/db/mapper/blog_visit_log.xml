@@ -9,7 +9,7 @@
 	
 		<!-- 방문기록이 있으면 날짜만 업데이트 -->
 		<!-- 방문기록이 없으면 새로 등록 -->
-		merge into visit_log
+		merge into blog_visit_log
 			using dual
 			on(visitor_id = #{ visitor_id })
 			when matched then
@@ -19,6 +19,43 @@
 			    insert(VISIT_CODE, USER_ID, VISITOR_ID, VISIT_DATE)
 			    values(visit_code_seq.nextval, #{user_id}, #{ visitor_id }, sysdate)
 	</insert>
+	
+	<select id="select_today_visit_log" parameterType="String" resultType="blog_visit_logVo">
+	
+		select * 
+			from
+			    (
+			        select a.user_id,
+			               a.visit_date,
+			               b.user_name as visitor_name,
+			               b.profile_path as image_path,
+			               ( d.corporate_name || ' / ' || d.job_position ) as visitor_info,
+			               c.mem_division
+			        from blog_visit_log a, users b, member c, career_info d
+			        where a.user_id = #{ user_id }
+			        and  a.visitor_id = b.user_id
+			        and  b.user_id = c.mem_id
+			        and  b.user_id = d.user_id
+			        and  d.resign_date in (select max(resign_date) from career_info group by user_id)   
+			        
+			        union all
+			        
+			        select a.user_id,
+			               a.visit_date,
+			               b.corp_name,
+			               b.logo_path,
+			               b.industry_type as visitor_info,
+			               c.mem_division
+			        from blog_visit_log a, corporation b, member c
+			        where a.user_id = #{ user_id }
+			        and  a.visitor_id = b.corp_id
+			        and  b.corp_id = c.mem_id
+			    )
+			where to_char(visit_date, 'yyyymmdd' ) = to_char(sysdate, 'yyyymmdd')
+			order by visit_date desc
+	
+	
+	</select>
 	
 	
 

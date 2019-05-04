@@ -18,7 +18,7 @@
 	<div  style="border: 1px solid;border-color: red;">
 		<div class="charts" style="border: 1px solid;width: 280px;display: inline-block;">
 			<label>출신학교||${eec.size()}</label>
-			<c:forEach begin="0" end="${eec.size()-1}" var="i">
+			<c:forEach begin="0" end="${ eec.size()-1}" var="i">
 				${university_list.get(i).getSchool_name()} || ${eec.get(i)} 
 				<div class="charts__chart chart--p${Integer(100*eec.get(i)/eec.size())} chart--blue chart--hover" ></div>
 			</c:forEach>

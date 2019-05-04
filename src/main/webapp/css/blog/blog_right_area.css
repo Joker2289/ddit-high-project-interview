@@ -1,2 +1,18 @@
-style="width: 296px; margin-left: 0px; height: 370px; margin-bottom: 20px;
-			text-align: center; padding-top: 10px; font-size: 22px; box-shadow: 0 6px 12px rgba(0, 0, 0, .15);"s
+/* 방문기록 리스트 div */
+.visit_log_list_div {
+	width: 296px; /* 296px */
+	margin-left: 0px; 
+	height: 370px; 
+	margin-bottom: 20px;
+	text-align: center; 
+	padding-top: 10px; 
+	font-size: 22px; 
+	/* box-shadow: 0 6px 12px rgba(0, 0, 0, .15); */
+}
+
+/* 방문기록 리스트 제목 */
+.list_title_div {
+	text-align: center; 
+	font-weight: bold;
+	font-size: 22px !important;
+}

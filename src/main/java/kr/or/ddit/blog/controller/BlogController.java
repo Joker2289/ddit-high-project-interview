@@ -148,13 +148,16 @@ public class BlogController {
 		model.addAttribute("goodList", goodList);
 		
 		
-		//방문기록 담기
-		if(user_id.equals(mVo.getMem_id())) {
+		//방문기록 추가
+		if(!user_id.equals(mVo.getMem_id())) {
 			Blog_visit_logVo visit_logVo = new Blog_visit_logVo();
 			visit_logVo.setUser_id(user_id);
 			visit_logVo.setVisitor_id(mVo.getMem_id());
 			visit_Service.insert_visit_log(visit_logVo);
 		}
+		
+		List<Blog_visit_logVo> visit_logList = visit_Service.select_today_visit_log(user_id);
+		model.addAttribute("visit_logList", visit_logList);
 		
 		return "blogTiles";
 	}

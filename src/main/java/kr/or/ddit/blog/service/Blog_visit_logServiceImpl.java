@@ -1,5 +1,6 @@
 package kr.or.ddit.blog.service;
 
+
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import kr.or.ddit.blog.dao.IBlog_visit_logDao;
 import kr.or.ddit.blog.model.Blog_visit_logVo;
 
-@Service("/visit_logService")
+@Service("visit_logService")
 public class Blog_visit_logServiceImpl implements IBlog_visit_logService{
 
 	@Resource(name="visit_logDao")
@@ -18,6 +19,11 @@ public class Blog_visit_logServiceImpl implements IBlog_visit_logService{
 	@Override
 	public int insert_visit_log(Blog_visit_logVo vo) {
 		return visitDao.insert_visit_log(vo);
+	}
+
+	@Override
+	public List<Blog_visit_logVo> select_today_visit_log(String user_id) {
+		return visitDao.select_today_visit_log(user_id);
 	}
 
 }
