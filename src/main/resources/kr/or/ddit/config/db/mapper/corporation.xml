@@ -267,15 +267,15 @@
 	
 	
 	<!-- 직책 리스트 (중복 제외) -->
-	<select id="job_position_list" parameterType="paginationVo" resultType="career_infoVo">
+	<select id="job_position_list" parameterType="String" resultType="career_infoVo">
 	
-	    <!-- SELECT job_position, count(job_position) as employee_cnt
+	    SELECT job_position as chart_subject, count(job_position) as chart_value
 		FROM CAREER_INFO
 		WHERE corp_code = #{corp_code}
 	    group by job_position
-	    order by count(*) desc -->
+	    order by count(*) desc
 	    
-	    select *
+	   <!--  select *
 
 		from (SELECT job_position, count(job_position) as employee_cnt, ROW_NUMBER() OVER (ORDER BY job_position,count(job_position) desc) rn
 		        FROM CAREER_INFO
@@ -283,7 +283,7 @@
 		        group by job_position
 		        order by count(*) desc)
 		        
-		where rn between ((#{page}-1) * #{pageSize}) + 1 and #{page}*#{pageSize}
+		where rn between ((#{page}-1) * #{pageSize}) + 1 and #{page}*#{pageSize} -->
 	    
 	</select>
 	
