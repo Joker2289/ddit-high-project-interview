@@ -29,7 +29,7 @@
 	
 </div>
 
-<div class="empl_area_div">
+<div id="empl_area_div" class="empl_area_div">
 	<%@ include file="/WEB-INF/views/corporation/module/employee_list.jsp"%>
 </div>
 
@@ -75,6 +75,21 @@ function showChart(corp_id, corp_code){
     	  
       }
     });
+}
+
+
+/* 직원 리스트 조회 */
+function showEmployeeList(corp_id, corp_code, parameter) {
+	$.ajax({
+	  url : '/corp/showEmployeeList',
+      data : {"corp_id" : corp_id, "corp_code" : corp_code, "chart_index" : chart_index, "parameter" : parameter },
+      success : function(data) {
+    	  
+    	  $('#empl_area_div').html(data);
+    	  
+      }
+    });
+	
 }
 
 

@@ -13,6 +13,17 @@ public class Employee_listVo {
 	private String corp_code;
 	private String parameter;
 	
+	
+	
+	
+	public Employee_listVo() {
+		super();
+	}
+	public Employee_listVo(String corp_code, String parameter) {
+		super();
+		this.corp_code = corp_code;
+		this.parameter = parameter;
+	}
 	public String getUser_id() {
 		return user_id;
 	}

@@ -316,16 +316,24 @@ public class CorporationController {
 		return "corporation/corp_empl";
 	}
 	
-	
+	/**
+	 * 
+	 * Method : showChart
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param corp_id
+	 * @param corp_code
+	 * @param chart_index
+	 * @return
+	 * Method 설명 : 차트 조회
+	 */
 	@RequestMapping("/showChart")
 	public String showChart(Model model, @RequestParam("corp_id")String corp_id,
 			@RequestParam("corp_code")String corp_code,
 			@RequestParam("chart_index")String chart_index) {
 		
-		logger.debug("corp_id >>>>>>>>>>>> : {}", corp_id);
-		logger.debug("corp_code >>>>>>>>>>>> : {}", corp_code);
-		logger.debug("chart_index >>>>>>>>>>>> : {}", chart_index);
-		
+	
 		List<ChartVo> chart_List = new ArrayList<ChartVo>();
 		
 		switch(chart_index) {
@@ -363,6 +371,53 @@ public class CorporationController {
 		model.addAttribute("corp_code", corp_code);
 		
 		return "corporation/module/chart";
+	}
+	
+	/**
+	 * 
+	 * Method : showEmployeeList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param corp_id
+	 * @param corp_code
+	 * @param chart_index
+	 * @return
+	 * Method 설명 : 직원 리스트 조회
+	 */
+	@RequestMapping("/showEmployeeList")
+	public String showEmployeeList(Model model, @RequestParam("corp_id")String corp_id,
+			@RequestParam("corp_code")String corp_code,
+			@RequestParam("chart_index")String chart_index,
+			@RequestParam("parameter")String parameter) {
+		
+		
+		List<Employee_listVo> employ_List = new ArrayList<Employee_listVo>();
+		
+		Employee_listVo elVo = new Employee_listVo(corp_code, parameter);
+		
+		switch(chart_index) {
+			case "1":
+				employ_List  = corporationService.select_employJobPositionList(elVo);
+				break;
+			case "2":
+				employ_List  = corporationService.select_employSchoolNameList(elVo);
+				break;
+			case "3":
+				employ_List  = corporationService.select_employMajorList(elVo);
+				break;
+			case "4":
+				employ_List  = corporationService.select_employJobPositionList(elVo);
+				break;
+		}
+		
+		model.addAttribute("employ_List", employ_List);
+		
+		//고정
+		model.addAttribute("corp_id", corp_id);
+		model.addAttribute("corp_code", corp_code);
+		
+		return "corporation/module/employee_list";
 	}
 	
 	
