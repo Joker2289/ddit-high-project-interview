@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <link href="/css/timeline/writemodal.css" rel="stylesheet">
+<link href="/css/timeline/comment.css" rel="stylesheet">
 <div class="container">
    <div class="row">
       <div>
@@ -212,8 +213,17 @@
 <script src="/js/timeline.js"></script>
 <script type="text/javascript">
 
-	console.log($(".btn_followTag").text());
-	console.log($(".btn_followTag").attr('data-tag'));
+	//댓글 버튼 클릭
+	function post_commentList(post_code){
+		$.ajax({
+			url : "/commentArea",
+			data : {"ref_code" : post_code },
+			success : function(data) {
+				
+				$('#comment_content'+post_code).html(data);
+			}
+		});
+	}	
 	
 	var tag_name = "";
 	

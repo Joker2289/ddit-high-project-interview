@@ -191,6 +191,18 @@
 <script src="/js/timeline.js"></script>
 <script>
 
+	//댓글 버튼 클릭
+	function post_commentList(post_code){
+		$.ajax({
+			url : "/commentArea",
+			data : {"ref_code" : post_code },
+			success : function(data) {
+				
+				$('#comment_content'+post_code).html(data);
+			}
+		});
+	}
+
 	$(document).ready(function() {
 	  <c:forEach items="${ saveList }" var="savepost"> 
 	     $('#icon_save${savepost.save_post_code}').attr('class', 'fas fa-bookmark');
@@ -236,7 +248,6 @@
 	
 	// 채용공고 클릭.
 	$(".recr").on("click", function(){
-//			alert($(this).data("code"));
 		window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code='+ $(this).data("code") +'&req_page=timeline';
 	});
 	
