@@ -15,6 +15,7 @@ import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.util.chart.ChartVo;
+import kr.or.ddit.util.chart.Employee_listVo;
 import kr.or.ddit.util.pagination.PaginationVo;
 
 @Repository("corporationDao")
@@ -264,6 +265,11 @@ public class CorporationDaoImpl implements ICorporationDao{
 	@Override
 	public List<ChartVo> major_list(String corp_code) {
 		return sqlSessionTemplate.selectList("corp.major_list", corp_code);
+	}
+
+	@Override
+	public List<Employee_listVo> select_employAllList(String corp_code) {
+		return sqlSessionTemplate.selectList("corp.select_employAllList", corp_code);
 	}
 
 }

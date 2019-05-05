@@ -10,16 +10,16 @@
 
 
 
-<div class="empl_div">
+<div class="chart_area_div">
 
-	<div class="empl_head_div">
-		<h4 class="empl_head_title"><i class="fas fa-user-tie"></i> 사원 <a class="employeeCnt">${ employeeCnt }명</a></h4> 
+	<div class="chart_head_div">
+		<h4 class="chart_head_title"><i class="fas fa-user-tie"></i> 사원 <a class="employeeCnt">${ employeeCnt }명</a></h4> 
 	</div>
 	
 	<!-- 차트 조작 버튼 div -->
 	<div class="chart_button_div">
-		<button class="btn btn-primary chart_button" onclick="beforeChart('${ corp_id }', '${ corp_code }');"> <i class="fas fa-chevron-left"></i> 이전 </button>
-		<button class="btn btn-primary chart_button" onclick="nextChart('${ corp_id }', '${ corp_code }');">다음 <i class="fas fa-chevron-right"></i> </button>
+		<a class="btn btn-primary chart_button" onclick="beforeChart('${ corp_id }', '${ corp_code }');"> <i class="fas fa-chevron-left"></i> 이전 </a>
+		<a class="btn btn-primary chart_button" onclick="nextChart('${ corp_id }', '${ corp_code }');">다음 <i class="fas fa-chevron-right"></i> </a>
 	</div>
 	
 	<!-- 차트 div -->
@@ -29,20 +29,37 @@
 	
 </div>
 
+<div class="empl_area_div">
+	<%@ include file="/WEB-INF/views/corporation/module/employee_list.jsp"%>
+</div>
+
 <script>
 
 var chart_index = 1;
 
 /* 이전 차트 */
 function beforeChart(corp_id, corp_code){
-	chart_index--;
+	
+	if(chart_index == 1){
+		chart_index = 3;
+	} else {
+		chart_index--;
+	}
+	
+	
 	console.log(chart_index);
 	showChart(corp_id, corp_code);
 }
 	
 /* 다음 차트 */
 function nextChart(corp_id, corp_code){
-	chart_index++;
+	
+	if(chart_index == 3) {
+		chart_index = 1;		
+	} else {
+		chart_index++;
+	}
+	
 	console.log(chart_index);
 	showChart(corp_id, corp_code);
 }

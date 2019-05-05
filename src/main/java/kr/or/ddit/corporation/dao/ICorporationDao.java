@@ -8,6 +8,7 @@ import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.util.chart.ChartVo;
+import kr.or.ddit.util.chart.Employee_listVo;
 import kr.or.ddit.util.pagination.PaginationVo;
 
 public interface ICorporationDao {
@@ -228,7 +229,16 @@ public interface ICorporationDao {
 	 */
 	List<ChartVo> major_list(String corp_code);
 	
-	
+	/**
+	 * 
+	 * Method : select_employAllList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param corp_code
+	 * @return
+	 * Method 설명 : 회사에 등록된 모든 직원의 정보 리스트 조회
+	 */
+	List<Employee_listVo> select_employAllList(String corp_code);
 }
 
 

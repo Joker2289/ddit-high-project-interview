@@ -72,6 +72,7 @@ import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
 import kr.or.ddit.util.chart.ChartVo;
+import kr.or.ddit.util.chart.Employee_listVo;
 import kr.or.ddit.util.pagination.PaginationVo;
 
 @RequestMapping("/corp")
@@ -298,11 +299,17 @@ public class CorporationController {
 			sum_value += vo.getChart_value();
 		}
 		
+		//chart 관련
 		model.addAttribute("chart_title", "직무");
 		model.addAttribute("chart_List", chart_List);
 		model.addAttribute("sum_value", sum_value);
 		model.addAttribute("chart_index", 1);
 		
+		//employee_list 관련
+		List<Employee_listVo> employ_List = corporationService.select_employAllList(corpInfo.getCorp_code());
+		model.addAttribute("employ_List", employ_List);
+		
+		//util
 		model.addAttribute("corp_id", corp_id);
 		model.addAttribute("corp_code", corpInfo.getCorp_code());
 		
