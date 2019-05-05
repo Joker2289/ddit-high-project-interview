@@ -72,7 +72,13 @@
 	
 	<div class="corp_btn_div">
 		<c:if test="${ SESSION_MEMBERVO.mem_id != corporationInfo.corp_id }">
-			<button class="btn btn-primary corp_follow_btn"><i class="fas fa-plus"></i> 팔로우</button>
+			<c:if test="${ followInfo == null }">
+				<button class="btn btn-primary corp_follow_btn" onclick="corporation_follow('${ SESSION_MEMBERVO.mem_id}', '${ corporationInfo.corp_id }');"><i class="fas fa-plus"></i> 팔로우</button>
+			</c:if>
+			<c:if test="${ followInfo != null }">
+				<button class="btn btn-primary corp_unfollow_btn" onclick="corporation_unfollow('${ SESSION_MEMBERVO.mem_id}', '${ corporationInfo.corp_id }');">팔로우 취소</button>
+			</c:if>
+		
 		</c:if>
 		
 		<button class="btn btn-primary corp_review_btn" onclick="location.href='/companyReview?corp_id=${ corporationInfo.corp_id }'"><strong>기업 리뷰</strong></button>
@@ -184,20 +190,33 @@ function bg_img_update(){
 
 
 
-/* follow */
+/* 회사 팔로우 버튼 클릭 */
 function corporation_follow(mem_id, ref_keyword) {
 	
 	$.ajax({
 		url : "/corp/corporation_follow",
-		data : {"mem_id" : mem_id, "ref_keyword" : ref_keyword, "division" : "11" },
+		data : {"mem_id" : mem_id, "ref_keyword" : ref_keyword },
 		success : function(data) {
 			
 			$('#top_area').html(data);
-			console.log(data);
 		}
 	});
 	
-}		
+}	
+
+/* 회사 언팔로우 버튼 클릭 */
+function corporation_unfollow(mem_id, ref_keyword) {
+	
+	$.ajax({
+		url : "/corp/corporation_unfollow",
+		data : {"mem_id" : mem_id, "ref_keyword" : ref_keyword },
+		success : function(data) {
+			
+			$('#top_area').html(data);
+		}
+	});
+	
+}	
 
 </script>
 

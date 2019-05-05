@@ -92,12 +92,38 @@
 /* 회사 팔로우 버튼 */
 .corp_follow_btn {
 	margin-right: 10px;
-	width: 150px;
-	font-size: 15px;
+	width: 200px;
+	font-size: 17px;
+}
+
+.corp_follow_btn:hover {
+	font-weight: bold !important;
+	color: #4779B2;
+	background-color: #fff;
+}
+
+.corp_follow_btn .fa-plus {
+	margin-right: 5px;
+}
+
+/* 회사 언팔로우 버튼 */
+.corp_unfollow_btn {
+	margin-right: 10px;
+	width: 200px;
+	font-size: 17px;
+	font-weight: bold !important;
+	color: #4779B2;
+	background-color: #fff;
 }
 
 /* 기업리뷰 버튼 */
 .corp_review_btn {
-	width: 150px;
-	font-size: 15px;
+	width: 200px;
+	font-size: 17px;
+}
+
+.corp_review_btn:hover {
+	font-weight: bold !important;
+	color: #4779B2;
+	background-color: #fff;
 }

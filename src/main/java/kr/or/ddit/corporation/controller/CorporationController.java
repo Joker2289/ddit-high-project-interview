@@ -84,16 +84,16 @@ public class CorporationController {
 	@Resource(name="alarmService")
 	private IAlarmService alarmService;
 	
-	@Resource(name = "postService")
+	@Resource(name="postService")
 	private IPostService postService;
 	
-	@Resource(name = "memberService")
+	@Resource(name="memberService")
 	private IMemberService memberService;
 
-	@Resource(name = "usersService")
+	@Resource(name="usersService")
 	private IUsersService usersService;
 
-	@Resource(name = "corporationService")
+	@Resource(name="corporationService")
 	private ICorporationService corporationService;
 	
 	@Resource(name="personalService")
@@ -145,78 +145,31 @@ public class CorporationController {
 	 * Method 설명 : 회사 페이지 이동
 	 */
 	@RequestMapping(path = { "/corporation" })
-	public String corporation(HttpServletRequest request,Model model, PaginationVo paginationVo, String post_contents, String corp_id, HttpSession session) {
+	public String corporation(HttpServletRequest req, Model model, String corp_id) {
 		
 		
-		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		MemberVo memberInfo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		
 		CorporationVo corporationInfo = new CorporationVo();
 		if(corp_id==null){
 			corp_id = memberInfo.getMem_id();
-		}else{
 		}
+		
+		//팔로우 정보 조회
+		FollowVo fVo = new FollowVo();
+		fVo.setMem_id(memberInfo.getMem_id());
+		fVo.setRef_keyword(corp_id);
+		fVo.setDivision("11");
+		FollowVo followInfo = followService.select_followLog(fVo);
+		if(followInfo != null) {
+			model.addAttribute("followInfo", followInfo);
+		}
+		
+		//회사 정보 조회
 		corporationInfo = corporationService.select_corpInfo(corp_id);
-		
-		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
-		tagCountPageVo.setMem_id(memberInfo.getMem_id());
-		tagCountPageVo.setDivision("16");
-		
-		//저장글 갯수 
-		int savepostCnt = savepostService.savepost_count(corp_id);
-		model.addAttribute("savepostCnt", savepostCnt);
-
-		
-		paginationVo.setMem_id(corp_id);
-		
-		
-		if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(corp_id);
-			
-			//인맥 수 출력을 위한 세팅
-			int connectionCnt = personal_connectionService.connections_count(memberInfo);
-			
-			//팔로우 한 해쉬태그 출력을 위한 세팅
-			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
-			
-			if(!followHashtag.isEmpty()){
-				model.addAttribute("followHashtag", followHashtag);
-			} else {
-				model.addAttribute("followHashtag","notfollow");
-			}
-			
-			
-			model.addAttribute("userInfo", userInfo);
-			model.addAttribute("connectionCnt", connectionCnt);
-			
-		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
-			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
-			CorporationVo corpInfo = corporationService.select_corpInfo(corp_id);
-			
-			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
-	         
-	         if(!followHashtag.isEmpty()){
-	            model.addAttribute("followHashtag", followHashtag);
-	         } else {
-	            model.addAttribute("followHashtag","notfollow");
-	         }
-			
-			model.addAttribute("corpInfo", corpInfo);
-			
-		} else { //관리자일 경우
-			//관리자 로그인 시 홈 화면 출력을 위한 세팅
-			
-		}
 		model.addAttribute("corporationInfo", corporationInfo);
-		model.addAttribute("memberInfo", memberInfo);
 		
-		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		model.addAttribute("memberInfo", memberInfo);
-		model.addAttribute("timelinePost", timelinePost);
-
-		List<GoodVo> goodList = goodService.select_pushedGoodPost(corp_id);
-		model.addAttribute("goodList", goodList);
-		
-		List<Save_postVo> saveList = savepostService.select_savepostData(corp_id);
-		model.addAttribute("saveList", saveList);
 		
 		return "corporationTiles";
 	}
@@ -453,6 +406,17 @@ public class CorporationController {
 		return tmpFileName;
 	}
 	
+	/**
+	 * 
+	 * Method : retun_toparea
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param request
+	 * @param corp_id
+	 * @return
+	 * Method 설명 : top 페이지 리턴
+	 */
 	@RequestMapping("/retun_toparea")
 	public String retun_toparea(Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
 		
@@ -462,9 +426,18 @@ public class CorporationController {
 		return "corporation/module/top";
 	}
 	
+	/**
+	 * 
+	 * Method : imageView
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param path
+	 * @param model
+	 * @return
+	 * Method 설명 : 이미지 뷰
+	 */
 	@RequestMapping("/ImageView")
 	public String imageView(@RequestParam(name="path") String path, Model model) {
-		
 		model.addAttribute("path", path);
 		return "ImageView";
 	}
@@ -484,9 +457,12 @@ public class CorporationController {
 	 * Method 설명 : 회사페이지 팔로우 
 	 */
 	@RequestMapping("/corporation_follow")
-	public String corporation_follow(FollowVo followVo){
-		followService.insert_follow(followVo);
+	public String corporation_follow(FollowVo followVo, Model model){
 		
+		//팔로우 등록
+		followService.insert_corpFollow(followVo);
+		
+		//알람 넣기
 		AlarmVo alarmInfo = new AlarmVo();
 		alarmInfo.setMem_id(followVo.getRef_keyword());
 		alarmInfo.setAlarm_check("0");
@@ -494,10 +470,57 @@ public class CorporationController {
 		alarmInfo.setSend_id(followVo.getMem_id());
 		alarmInfo.setAlarm_separate("06");
 		alarmInfo.setRef_code(followVo.getFollow_code());
-		
 		alarmService.insert_alarmInfo(alarmInfo);
 		
-		return "/corporation/module/top";
+		//고정값
+		CorporationVo corporationInfo = corporationService.select_corpInfo(followVo.getRef_keyword());
+		model.addAttribute("corporationInfo", corporationInfo);
+		
+		//팔로우 정보 조회
+		FollowVo fVo = new FollowVo();
+		fVo.setMem_id(followVo.getMem_id());
+		fVo.setRef_keyword(followVo.getRef_keyword());
+		fVo.setDivision("11");
+		FollowVo followInfo = followService.select_followLog(fVo);
+		if(followInfo != null) {
+			model.addAttribute("followInfo", followInfo);
+		}
+		
+		
+		return "corporation/module/top";
+	}
+	
+	/**
+	 * 
+	 * Method : corporation_unfollow
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param followVo
+	 * @param model
+	 * @return
+	 * Method 설명 : 회사 언팔로우
+	 */
+	@RequestMapping("/corporation_unfollow")
+	public String corporation_unfollow(FollowVo followVo, Model model){
+		
+		//팔로우 취소
+		followService.delete_corpFollow(followVo);
+		
+		//고정값
+		CorporationVo corporationInfo = corporationService.select_corpInfo(followVo.getRef_keyword());
+		model.addAttribute("corporationInfo", corporationInfo);
+		
+		//팔로우 정보 조회
+		FollowVo fVo = new FollowVo();
+		fVo.setMem_id(followVo.getMem_id());
+		fVo.setRef_keyword(followVo.getRef_keyword());
+		fVo.setDivision("11");
+		FollowVo followInfo = followService.select_followLog(fVo);
+		if(followInfo != null) {
+			model.addAttribute("followInfo", followInfo);
+		}
+		
+		return "corporation/module/top";
 	}
 	
 	
