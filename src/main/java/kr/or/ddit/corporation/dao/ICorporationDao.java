@@ -239,6 +239,39 @@ public interface ICorporationDao {
 	 * Method 설명 : 회사에 등록된 모든 직원의 정보 리스트 조회
 	 */
 	List<Employee_listVo> select_employAllList(String corp_code);
+	
+	/**
+	 * 
+	 * Method : select_employJobPositionList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 회사에 등록되고 직무: 조건추가된 직원의 정보 리스트
+	 */
+	List<Employee_listVo> select_employJobPositionList(Employee_listVo vo);
+	
+	/**
+	 * 
+	 * Method : select_employSchoolNameList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 회사에 등록되고 출신학교: 조건추가된 직원의 정보 리스트
+	 */
+	List<Employee_listVo> select_employSchoolNameList(Employee_listVo vo);
+	
+	/**
+	 * 
+	 * Method : select_employMajorList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 회사에 등록되고 전공: 조건추가된 직원의 정보 리스트
+	 */
+	List<Employee_listVo> select_employMajorList(Employee_listVo vo);
 }
 
 

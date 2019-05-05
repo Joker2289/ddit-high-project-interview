@@ -272,4 +272,19 @@ public class CorporationDaoImpl implements ICorporationDao{
 		return sqlSessionTemplate.selectList("corp.select_employAllList", corp_code);
 	}
 
+	@Override
+	public List<Employee_listVo> select_employJobPositionList(Employee_listVo vo) {
+		return sqlSessionTemplate.selectList("corp.select_employJobPositionList", vo);
+	}
+
+	@Override
+	public List<Employee_listVo> select_employSchoolNameList(Employee_listVo vo) {
+		return sqlSessionTemplate.selectList("corp.select_employSchoolNameList", vo);
+	}
+
+	@Override
+	public List<Employee_listVo> select_employMajorList(Employee_listVo vo) {
+		return sqlSessionTemplate.selectList("corp.select_employMajorList", vo);
+	}
+
 }
