@@ -23,27 +23,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- css -->
+<link href="/css/corporation/top.css" rel="stylesheet">
 <link href="/css/corporation/corp_main.css" rel="stylesheet">
 <link href="/css/corporation/corp_intro.css" rel="stylesheet">
 <link href="/css/corporation/corp_recr.css" rel="stylesheet">
 <link href="/css/corporation/corp_empl.css" rel="stylesheet">
-
-<style>
-textarea {
-	font-size: 100%;
-	letter-spacing: 1px;
-}
-
-textarea {
-
-	padding: 10px;
-	line-height: 1.5;
-	border-radius: 5px;
-	border: 1px solid #ccc;
-	box-shadow: 1px 1px 1px #999;
-}
-</style>
-
 
 
 </head>
@@ -61,7 +45,7 @@ textarea {
 	<div class="container">
 		
 		<div class="col-md-3 left">
-			<div class="left_area">
+			<div id="left_area" class="left_area" style="position:relative;">
 				<%@ include file="/WEB-INF/views/corporation/module/left.jsp"%>
 			</div>
 		</div>
@@ -76,50 +60,31 @@ textarea {
 
 
 
-<!--     Wrapper for slides -->
-<!--     <div class="carousel-inner"> -->
-<!--       <div class="item active"> -->
-<%--         <img src="${corporationInfo.logo_path}" alt="Los Angeles" style="width:100%;"> --%>
-<!--       </div> -->
-
-<!--       <div class="item"> -->
-<%--         <img src="${corporationInfo.logo_path}" alt="Chicago" style="width:100%;"> --%>
-<!--       </div> -->
-    
-<!--       <div class="item"> -->
-<%--         <img src="${corporationInfo.logo_path}" alt="New york" style="width:100%;"> --%>
-<!--       </div> -->
-<!--     </div> -->
-
-<!--     Left and right controls -->
-<!--     <a class="left carousel-control" href="#myCarousel" data-slide="prev"> -->
-<!--       <span class="glyphicon glyphicon-chevron-left"></span> -->
-<!--       <span class="sr-only">Previous</span> -->
-<!--     </a> -->
-<!--     <a class="right carousel-control" href="#myCarousel" data-slide="next"> -->
-<!--       <span class="glyphicon glyphicon-chevron-right"></span> -->
-<!--       <span class="sr-only">Next</span> -->
-<!--     </a> -->
 
 
 	
 <script>	
 
-            
-$(function () {
-	$("#btn_write_upload").on("click", function () {
-		$("#post_contents2").val($("#post_contents").val());
-				$("#frm_writePost").submit();
-		});
+//스크롤 이벤트 발생 시
+$(window).scroll(function () {
+   
+   var currentTop = $(window).scrollTop();
+   
+   console.log(currentTop);
+   
+   
+   /* 왼쪽 left_area 스크롤 따라오기 */
+   if($(window).scrollTop() > 520){
+ 	  
+	   console.log('dd');
+      $("#left_area").stop().animate({top: (currentTop-450) + "px"}, 800);
+      
+   } else {
+      $("#left_area").stop().animate({top: 0 + "px"}, 800);
+   }
+   
+  
 });
-
-$(function () {
-	$("#btn_video_path").on("click", function () {
-		$("#video_path").val();
-				$("#frm_video").submit();
-		});
-});
-
 
 </script>
 

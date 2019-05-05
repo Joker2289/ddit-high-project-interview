@@ -159,6 +159,7 @@ public class CorporationController {
 		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
 		tagCountPageVo.setMem_id(memberInfo.getMem_id());
 		tagCountPageVo.setDivision("16");
+		
 		//저장글 갯수 
 		int savepostCnt = savepostService.savepost_count(corp_id);
 		model.addAttribute("savepostCnt", savepostCnt);
@@ -419,6 +420,87 @@ public class CorporationController {
 		
 		return "corporation/module/employee_list";
 	}
+	
+	@RequestMapping(path = "/imageUpload", consumes = { "multipart/form-data" })
+	@ResponseBody
+	public String imageUpload(@RequestParam(value = "img_form") MultipartFile img_form, HttpServletRequest req,
+			String division, String corp_id)
+			throws IllegalStateException, IOException {
+
+		String realFileName = "";
+		String tmpFileName = "";
+
+		if (img_form.getSize() > 0) {
+//			String fileName = img_form.getOriginalFilename();
+
+			tmpFileName = UUID.randomUUID().toString();
+
+			realFileName = req.getServletContext().getRealPath("/upload/" + tmpFileName);
+			
+			img_form.transferTo(new File(realFileName));
+
+			CorporationVo cVo = new CorporationVo();
+			if(division.equals("logo")) {
+				cVo.setLogo_path(tmpFileName);
+			} else if(division.equals("bg")) {
+				cVo.setBg_path(tmpFileName);
+			}
+			cVo.setCorp_id(corp_id);
+			corporationService.update_corpInfo(cVo);
+			
+		}
+		
+		return tmpFileName;
+	}
+	
+	@RequestMapping("/retun_toparea")
+	public String retun_toparea(Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
+		
+		CorporationVo corporationInfo = corporationService.select_corpInfo(corp_id);
+		model.addAttribute("corporationInfo", corporationInfo);
+		
+		return "corporation/module/top";
+	}
+	
+	@RequestMapping("/ImageView")
+	public String imageView(@RequestParam(name="path") String path, Model model) {
+		
+		model.addAttribute("path", path);
+		return "ImageView";
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * 
+	 * Method : corporation_follow
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param followVo
+	 * @return
+	 * Method 설명 : 회사페이지 팔로우 
+	 */
+	@RequestMapping("/corporation_follow")
+	public String corporation_follow(FollowVo followVo){
+		followService.insert_follow(followVo);
+		
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setMem_id(followVo.getRef_keyword());
+		alarmInfo.setAlarm_check("0");
+		alarmInfo.setDivision("14");
+		alarmInfo.setSend_id(followVo.getMem_id());
+		alarmInfo.setAlarm_separate("06");
+		alarmInfo.setRef_code(followVo.getFollow_code());
+		
+		alarmService.insert_alarmInfo(alarmInfo);
+		
+		return "/corporation/module/top";
+	}
+	
+	
 	
 	
 	
@@ -709,23 +791,7 @@ public class CorporationController {
 
 	}
 	
-	@RequestMapping("/corporation_follow")
-	public String corporation_follow(FollowVo followVo){
-		logger.debug("followVo : {}", followVo);
-		followService.insert_follow(followVo);
-		
-		AlarmVo alarmInfo = new AlarmVo();
-		alarmInfo.setMem_id(followVo.getRef_keyword());
-		alarmInfo.setAlarm_check("0");
-		alarmInfo.setDivision("14");
-		alarmInfo.setSend_id(followVo.getMem_id());
-		alarmInfo.setAlarm_separate("06");
-		alarmInfo.setRef_code(followVo.getFollow_code());
-		
-		alarmService.insert_alarmInfo(alarmInfo);
-		
-		return "corporation/module/top";
-	}
+	
 	
 
 	
