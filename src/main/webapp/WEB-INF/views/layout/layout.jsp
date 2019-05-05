@@ -23,8 +23,8 @@
 <script src="/SE2/js/HuskyEZCreator.js"></script>
 
 <!-- include summernote css/js -->
-<link href="dist/summernote.css" rel="stylesheet">
-<script src="dist/summernote.js"></script>
+<link href="/dist/summernote.css" rel="stylesheet">
+<script src="/dist/summernote.js"></script>
 
 <script>
 $(document).ready(function() {

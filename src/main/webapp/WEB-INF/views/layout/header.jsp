@@ -134,6 +134,6 @@
 // 		setInterval("send_message()", 60000);
 // 	});
 
-	$("#txt_content").summernote();
+	/* $("#txt_content").summernote(); */
 	
 </script>
