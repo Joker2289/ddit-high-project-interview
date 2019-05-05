@@ -190,7 +190,7 @@
 
 <script src="/js/timeline.js"></script>
 <script>
-
+	
 	//댓글 버튼 클릭
 	function post_commentList(post_code){
 		$.ajax({

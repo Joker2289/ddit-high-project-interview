@@ -8,14 +8,14 @@
 		aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	</button>
-	<h4 class="modal-title">보유기술</h4>
+	<h4 class="modal-title">자격증</h4>
 </div>
 <div class="modal-body">
 <form action="/possesion_skillsUpdate" method="post" id="possesion_skillsUpdateFrm" enctype="multipart/form-data">
 	<div>
 		<div class="modalRow">
 			<div class="modalHalfLeft">
-				<label class="essential">보유기술 </label>
+				<label class="essential">자격증 </label>
 				<input class="form-control" type="text" name="pskill_name" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" value="${possesion_skillsVo.pskill_name }">
 			</div>
 			<ul class="dropdown-menu searchDropDown">

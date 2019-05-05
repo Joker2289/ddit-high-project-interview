@@ -270,8 +270,6 @@
 				$('.post-group').append(data);
 			}
 		});
-    	
-    	
     }
 
 

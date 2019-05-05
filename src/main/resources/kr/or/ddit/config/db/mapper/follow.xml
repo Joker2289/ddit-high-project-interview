@@ -245,4 +245,12 @@
                             where mem_id = #{mem_id}
                               and (division = '11' or division = '43'))
 	</select>
+	
+	<select id="select_hashtagFollowList" parameterType="String" resultType="followVo">
+		select follow_code, mem_id, ref_keyword, division
+		  from follow
+		 where mem_id = #{user_id}
+		   and division = '16'
+	
+	</select>
 </mapper> 

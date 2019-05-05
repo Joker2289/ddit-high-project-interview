@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ability">
+	
+	<!-- 보유기술 등록 -->
+	<insert id="insert_ability" parameterType="abilityVo">
+		insert into ability
+		values(
+			ability_code_seq.nextval,
+			#{user_id},
+			nvl(#{ability_item, jdbcType=VARCHAR}, null)
+		)
+	</insert>
+	
+	<!-- 사용자의 보유기술 조회 -->
+	<select id="select_ability" parameterType="String" resultType="abilityVo">
+		select ability_code, user_id, ability_item
+		  from ability
+		 where user_id = #{user_id}
+	</select>
+	
+	<!-- 사용자의 한 건의 보유기술 조회 -->
+	<select id="select_oneAbility" parameterType="String" resultType="abilityVo">
+		 select ability_code, user_id, ability_item
+		  from ability
+		 where ability_code = #{ability_code}
+	</select>
+	
+	<!-- 사용자의 보유기술 업데이트 -->
+	<update id="update_ability" parameterType="abilityVo">
+		update ability
+		   set ability_item = nvl(#{ability_item, jdbcType=VARCHAR}, null)
+		 where ability_code = #{ability_code}
+	</update>
+	
+	<!-- 사용자의 보유기술 삭제 -->
+	<delete id="delete_ability" parameterType="String">
+		delete from ability
+			  where ability_code = #{ability_code}
+	</delete>
+</mapper>

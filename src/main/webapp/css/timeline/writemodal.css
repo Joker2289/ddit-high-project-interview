@@ -109,6 +109,33 @@
 	margin-bottom: 20px;
 }
 
+.btn_recommend_connect_waiting{
+	background: #fff;
+	border-color: #0073b1;
+	border-style: solid;
+	padding-left: 40px;
+	padding-right: 40px;
+	margin-bottom: 20px;
+}
+
+.btn_recommend_disconnect{
+	background: #0073b1;
+	border-color: #0073b1;
+	border-style: solid;
+	padding-left: 40px;
+	padding-right: 40px;
+	margin-bottom: 20px;
+}
+
+.btn_recommend_follow{
+	background: #fff;
+	border-color: #0073b1;
+	border-style: solid;
+	padding-left: 40px;
+	padding-right: 40px;
+	margin-bottom: 20px;
+}
+
 .col-post-body{
 	border-bottom : 1px solid #ddd;
 	padding-left : 10px;
