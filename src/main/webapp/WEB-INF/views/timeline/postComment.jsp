@@ -2,9 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
-
 
 <div class="comment_area">
 	<div class="comment_head_div">
@@ -26,7 +23,7 @@
 	    <div class="textarea_div">
 			<textarea id="comment_TXT${ref_code }" class="comment_TXT" name="comment_TXT"></textarea>
 			<button class="btn btn-primary insert_img_btn" onclick="add_img();"><i class="far fa-image"></i></button>
-			<button class="btn btn-primary ok_btn" onclick="insert_comment('${ref_code }', '${page_num }');"><i class="fas fa-check"></i></button>
+			<button class="btn btn-primary ok_btn" onclick="insert_comment('${ref_code}', '${page_num}');"><i class="fas fa-check"></i></button>
 		</div>
 	</div>
 	
@@ -82,8 +79,6 @@
 			                  </c:when>
 			                </c:choose>
 			                
-<%-- 							<fmt:formatDate value="${ comment.comment_date }"pattern="yyyy-MM-dd" /> --%>
-							
 						</div>
 		
 						<!-- 삭제버튼 -->
@@ -192,8 +187,7 @@ function add_comment(ref_code, page_num){
 }
 
 /* 댓글 개수 출력 수정 */
-$('#comment_cnt${ref_code}').text(${commentCnt });
-
+$('#comment_cnt${ref_code}').text(${commentCnt});
 
 </script>
 

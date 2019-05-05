@@ -135,9 +135,34 @@
 	
 	<!-- 특정 게시물 조회 -->	
 	<select id="select_postInfo" parameterType="String" resultType="postVo">
-		select post_code, mem_id, post_contents, post_date, writer_name
-		  from post
-		 where post_code = #{post_code}
+		with t as (select a.*
+		          from post a               
+		         where a.post_code = #{ref_code})
+		select g.*, round((sysdate - post_date) * 24 * 60) resultminute, rownum rn
+		  from (select c.*, d.commentcount, e.goodcount, f.profile_path
+		        from (select a.*, b.mem_division
+		              from t a, member b
+		             where a.mem_id = b.mem_id) c, 
+		            (select ref_code, count(*) commentcount
+		             from post_comment 
+		            where ref_code in (select post_code from t)
+		            group by ref_code)d,
+		            (select ref_code, count(*) goodcount
+		              from good 
+		             where ref_code in (select post_code from t)
+		            group by ref_code) e,
+		            (select profile_path as profile_path, user_id as mem_id
+		              from users
+		             where user_id in (select mem_id from t)
+		            union all
+		            select logo_path as profile_path, corp_id as mem_id
+		              from corporation
+		             where corp_id in (select mem_id from t)
+		             ) f
+		       where c.post_code = d.ref_code(+)
+		         and c.post_code = e.ref_code(+)
+		         and c.mem_id = f.mem_id
+		      order by post_date desc) g
 	</select>
 	
 	<!-- 해시태그 목록 등록 -->
