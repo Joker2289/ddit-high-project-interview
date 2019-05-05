@@ -28,7 +28,14 @@
 						<a href="/profileHome?user_id=${user.user_id }"><div><strong class="txt_recommend_name">${user.user_name}</strong></div></a>
 						<a href="/profileHome?user_id=${user.user_id }"><div style="height: 70px;"><span class="txt_recommend_intro">${user.introduce}</span></div></a>
 					<div>
-						<div><button onclick="location.href='/recommendUser?user_id=${SESSION_MEMBERVO.mem_id}&receive_id=${user.user_id}'" class="btn btn_recommend_connect" type="button">1촌 맺기</button> </div>
+						<c:choose>
+							<c:when test="${SESSION_MEMBERVO.mem_division eq '1' }">
+								<div><button onclick="location.href='/recommendUser_post_connect?user_id=${SESSION_MEMBERVO.mem_id }&receive_id=${user.user_id}'" class="btn btn_recommend_connect" type="button">1촌 맺기</button> </div>
+							</c:when>
+							<c:when test="${SESSION_MEMBERVO.mem_division eq '2' }">
+								<div><button onclick="location.href='/recommendUser_post_follow?mem_id=${SESSION_MEMBERVO.mem_id }&ref_keyword=${user.user_id}'" class="btn btn_recommend_follow" type="button">팔로우</button> </div>
+							</c:when>
+						</c:choose>
 					</div>
 					</div>
 					
@@ -38,3 +45,6 @@
 	</ul>
 </div>
 
+<script>
+
+</script>

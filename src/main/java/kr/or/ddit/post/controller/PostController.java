@@ -37,6 +37,7 @@ import kr.or.ddit.hide_post.model.Hide_postVo;
 import kr.or.ddit.hide_post.service.IHide_postService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.personal_connection.model.Personal_connectionVo;
 import kr.or.ddit.personal_connection.service.IPersonal_connectionService;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IPostService;
@@ -1344,8 +1345,6 @@ public class PostController {
 		} else if (memberInfo.getMem_division() == "2"){
 			CorporationVo corp = (CorporationVo) request.getSession().getAttribute("SESSION_DETAILVO");
 			model.addAttribute("commentwriter", corp);
-		} else {
-			
 		}
 		
 		paginationVo.setDivision("28");
@@ -1433,6 +1432,38 @@ public class PostController {
 		model.addAttribute("userList", userList);
 		
 		return "timeline/recommendPost";
+	}
+	
+	@RequestMapping(path={"/recommendUser_post_connect"})
+	public String recommendUser_post_connect(Personal_connectionVo personalVo) {
+		
+		personal_connectionService.insert_connections(personalVo);
+		
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setMem_id(personalVo.getReceive_id());
+		alarmInfo.setAlarm_check("0");
+		alarmInfo.setDivision("25");
+		alarmInfo.setSend_id(personalVo.getUser_id());
+		alarmInfo.setAlarm_separate("04");
+		
+		alarmService.insert_alarmInfo(alarmInfo);
+		
+		return "redirect:/timeline";
+	}
+	
+	@RequestMapping(path={"/recommendUser_post_follow"})
+	public String recommendUser_post_follow(String ref_keyword, HttpServletRequest request){
+		
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		FollowVo followVo = new FollowVo();
+		followVo.setDivision("43");
+		followVo.setMem_id(memberInfo.getMem_id());
+		followVo.setRef_keyword(ref_keyword);
+		
+		
+		followService.insert_follow(followVo);
+		
+		return "redirect:/timeline";
 	}
 	
 }

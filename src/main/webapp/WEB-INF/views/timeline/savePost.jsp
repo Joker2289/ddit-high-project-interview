@@ -12,8 +12,10 @@
          <%@ include file="/WEB-INF/views/timeline/timeline_left.jsp" %>
          
          <div class="col-md-6">
-           <div class="input-group" style="padding-left: 15px; box-shadow: 0 0px 0 rgba(0,0,0,0);">
-             <h3>저장한 글</h3>
+           <div class="input-group">
+             <div  style="width: 555px; height: 100px; padding: 10px; padding-top: 35px; background: #fff; border-radius: 5px; box-shadow: 0 6px 12 rgba(0,0,0,.175);">
+               <h3 style="margin-top: 0px; font-weight: bold; color: #8D9191;">저장한 글</h3>
+             </div>
            </div><hr>
            
            <div class="post-group">
