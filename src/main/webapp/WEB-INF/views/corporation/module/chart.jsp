@@ -34,7 +34,7 @@
 		 <c:forEach items="${ chart_List }" var="chart">
 			i++;
 			
-		 	$('#progress-bar' + i).css('background-color', 'hsl( 480, 60%, '+ (10 + (i*5)) +'%)');
+		 	$('#progress-bar' + i).css('background-color', 'hsl( 480, 60%, '+ (15 + (i*4)) +'%)');
 			
 		 </c:forEach>
 	 }
@@ -46,7 +46,7 @@
 		 <c:forEach items="${ chart_List }" var="chart">
 			i++;
 			
-		 	$('#progress-bar' + i).css('background-color', 'hsl( 300, 60%, '+ (10 + (i*5)) +'%)');
+		 	$('#progress-bar' + i).css('background-color', 'hsl( 300, 60%, '+ (15 + (i*4)) +'%)');
 			
 		 </c:forEach>
 	 }
@@ -58,7 +58,7 @@
 		 <c:forEach items="${ chart_List }" var="chart">
 			i++;
 			
-		 	$('#progress-bar' + i).css('background-color', 'hsl( 0, 60%, '+ (10 + (i*5)) +'%)');
+		 	$('#progress-bar' + i).css('background-color', 'hsl( 0, 60%, '+ (15 + (i*4)) +'%)');
 			
 		 </c:forEach>
 	 }
@@ -70,7 +70,7 @@
 		 <c:forEach items="${ chart_List }" var="chart">
 			i++;
 			
-		 	$('#progress-bar' + i).css('background-color', 'hsl( 40, 60%, '+ (10 + (i*5)) +'%)');
+		 	$('#progress-bar' + i).css('background-color', 'hsl( 40, 60%, '+ (15 + (i*4)) +'%)');
 			
 		 </c:forEach>
 	 }

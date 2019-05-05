@@ -201,4 +201,15 @@ public interface IFollowDao {
 	 */
 	List<FollowVo> select_hashtagFollowList (String user_id);
 	
+	/**
+	 * 
+	 * Method : select_userFollowList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 회원의 팔로우리스트(회원) 조회
+	 */
+	List<FollowVo> select_userFollowList(String mem_id);
+	
 }
