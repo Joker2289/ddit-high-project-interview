@@ -8,13 +8,13 @@
 
 	<div class="chart_title"> ${ chart_title } </div>
 
-	<c:forEach items="${ chart_List }" var="chart">
+	<c:forEach items="${ chart_List }" var="chart" varStatus="index">
 	
 		<div class="chart_subject_div">
 			<a class="chart_subject">${ chart.chart_subject }</a> / <a class="chart_value">${ chart.chart_value }명</a>
 		</div>
 		<div class="progress">
-			<div class="progress-bar" role="progressbar" aria-valuenow="${ (chart.chart_value / sum_value) * 100 }"
+			<div id="progress-bar${ index.count }" class="progress-bar" role="progressbar" aria-valuenow="${ (chart.chart_value / sum_value) * 100 }"
 				aria-valuemin="0" aria-valuemax="${ sum_value }" style="width: ${ (chart.chart_value / sum_value) * 100 }%;">${ chart.chart_value }명</div>
 		</div>
 		
@@ -26,7 +26,42 @@
 </div>
 
 <script>
-	
+	 
+	 if( '${ chart_index }' == '1'){
+		 
+		 var i = 0;
+		 
+		 <c:forEach items="${ chart_List }" var="chart">
+			i++;
+			
+		 	$('#progress-bar' + i).css('background-color', 'hsl( 120, 100%, '+ (10 + (i*5)) +'%)');
+			
+		 </c:forEach>
+	 }
+	 
+	 if( '${ chart_index }' == '2'){
+		 
+		 var i = 0;
+		 
+		 <c:forEach items="${ chart_List }" var="chart">
+			i++;
+			
+		 	$('#progress-bar' + i).css('background-color', 'hsl( 280, 100%, '+ (10 + (i*5)) +'%)');
+			
+		 </c:forEach>
+	 }
+	 
+	if( '${ chart_index }' == '3'){
+		 
+		 var i = 0;
+		 
+		 <c:forEach items="${ chart_List }" var="chart">
+			i++;
+			
+		 	$('#progress-bar' + i).css('background-color', 'hsl( 0, 100%, '+ (10 + (i*5)) +'%)');
+			
+		 </c:forEach>
+	 }
 </script>
 
 

@@ -235,14 +235,6 @@ public class CorporationServiceImpl implements ICorporationService{
 		return major_count;
 	}
 
-	/**
-	 * 전공 리스트 (중복제외)
-	 */
-	@Override
-	public List<Education_infoVo> major_list(String corp_code) {
-		List<Education_infoVo> major_list = corporationDao.major_list(corp_code);
-		return major_list;
-	}
 
 	/**
 	 * 직책 수 (중복 수 증가)
@@ -264,6 +256,11 @@ public class CorporationServiceImpl implements ICorporationService{
 	@Override
 	public List<ChartVo> school_name_list(String corp_code) {
 		return corporationDao.school_name_list(corp_code);
+	}
+
+	@Override
+	public List<ChartVo> major_list(String corp_code) {
+		return corporationDao.major_list(corp_code);
 	}
 
 

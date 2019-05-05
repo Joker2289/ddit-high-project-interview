@@ -206,19 +206,6 @@
     order by count(*) desc
 	</select>
 	
-	<!-- 코드로 직원들 전공(중복제외) -->
-	<select id="major_list" parameterType="String" resultType="education_infoVo">
-    select A.major
-			FROM EDUCATION_INFO A, (
-									SELECT USER_ID
-									FROM CAREER_INFO
-									WHERE corp_code = #{corp_code}
-									) B
-			WHERE A.USER_ID = B.USER_ID
-	group by A.major
-	order by count(*) desc
-	</select>
-	
 	<!-- 직책 수 (중복 수 증가)-->
 	<select id="job_position_count" parameterType="String" resultType="Integer">
     SELECT count (*)
@@ -266,7 +253,7 @@
 	</select>
 	
 	
-	<!-- 직책 리스트 (중복 제외) -->
+	<!-- 회사에 등록된 직원(경력의 corp_code가 인증된 사원의 직책(job_position)과 그에 해당하는 사원수 --> 
 	<select id="job_position_list" parameterType="String" resultType="chartVo">
 	
 	    SELECT job_position as chart_subject, count(job_position) as chart_value
@@ -289,7 +276,7 @@
 	
 
 	
-	 <!-- 회사에 등록된 직원(경력의 corp_code가 인증된 사원)의 출신학교와 그에 해당하는 사원수 --> 
+	 <!-- 회사에 등록된 직원(경력의 corp_code가 인증된 사원의 출신학교(school_name)와 그에 해당하는 사원수 --> 
 	<select id="school_name_list" parameterType="String" resultType="chartVo">
 	
 	    select school_name as chart_subject, count(school_name) as chart_value
@@ -300,6 +287,21 @@
 		        ) a, education_info b
 		where a.user_id = b.user_id
 		group by school_name
+		order by count(*) desc
+	
+	</select>
+	
+	<!-- 회사에 등록된 직원(경력의 corp_code가 인증된 사원의 전공(major)과 그에 해당하는 사원수 --> 
+	<select id="major_list" parameterType="String" resultType="chartVo">
+	
+	    select major as chart_subject, count(major) as chart_value
+		from    (
+		        select user_id
+		        from career_info
+		        where corp_code = #{ corp_code }
+		        ) a, education_info b
+		where a.user_id = b.user_id
+		group by major
 		order by count(*) desc
 	
 	</select>
