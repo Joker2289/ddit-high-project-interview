@@ -672,6 +672,4 @@ MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMB
 
 	
 
-	
-
 }
