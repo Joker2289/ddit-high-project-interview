@@ -1,5 +1,7 @@
-/* 회사 직원 정보 div */
-.empl_div {
+/* 차트 css */
+
+/* 회사 직원 차트 정보 div */
+.chart_area_div {
 	width: 100%;
 	height: auto !important;
  	list-style: none;
@@ -14,12 +16,12 @@
 }
 
 /* head div */
-.empl_head_div {
+.chart_head_div {
 	margin: 10px;
 }
 
 /* head title */
-.empl_head_title {
+.chart_head_title {
 	padding-left: 10px !important;
 	font-weight: 1000;
 	font-size: 25px;
@@ -27,7 +29,7 @@
 	height: 50px;
 }
 
-.empl_head_title .fa-user-tie {
+.chart_head_title .fa-user-tie {
 	margin-right: 10px;
 }
 
@@ -50,6 +52,11 @@
 	font-size: 20px;
 }
 
+.chart_button:hover{
+	background-color: #E4E4E4 !important;
+	color: #0073b1 !important;
+}
+
 /* 차트 area */
 .chart_area {
 	margin: 15px auto;
@@ -65,7 +72,7 @@
 .chart_title{
 	font-weight: bold;
 	font-size: 20px;
-	margin: 10px 0px 10px 10px;
+	margin: 10px 0px 15px 0px;
 }
 
 /* 차트 그래프 div */
@@ -75,13 +82,94 @@
 }
 
 .chart_subject_div{
-	
 }
 
 .chart_subject{
-	
+	font-size: 15px;
+	margin-right: 5px;
 }
 
 .chart_value{
+	font-size: 15px;
+	margin-left: 5px;	
+}
+
+
+
+/* 직원 리스트 css */ 
+
+.empl_area_div {
 	
 }
+
+/* 직원 div */
+.employee_div {
+	display: inline-block;
+	width:31%;
+	height: 350px;
+	background-color:#fff;
+	margin-right: 8px;
+	margin-left: 8px;
+	margin-bottom: 20px;
+	
+	border: 1px solid rgba(0, 0, 0, .15);
+	border-radius: 4px;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	
+	padding: 10px;
+}
+
+/* div 내용 */
+.employee_content {
+	width: 100%;
+	height: 88%;
+	text-align: center;
+	padding: 10px;
+}
+
+/* 프로필 */
+.img-circle{
+	display: inline-block;
+	margin: 10px 0px 10px 0px;
+	width: 150px;
+	height: 150px;
+	border: 1px solid rgba(0, 0, 0, .15);
+}
+
+.employee_name {
+	display: inline-block;
+	width: 100%;
+	font-size: 25px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.employee_corp {
+	display: inline-block;
+	font-size: 15px;
+	color: #7F7F7F;
+	width: 100%;
+}
+
+.employee_job_position {
+	display: inline-block;
+	font-size: 15px;
+	color: #7F7F7F;
+	width: 100%;
+}
+
+
+/* div 바닥 */
+.employee_footer {
+	vertical-align: bottom;
+	height: 10%;
+	text-align: center;
+}
+
+/* 팔로우 버튼 */
+.footer_btn {
+	width: 50%;
+	font-size: 18px;
+	padding: 3px 6px 3px 6px !important;
+}
+
