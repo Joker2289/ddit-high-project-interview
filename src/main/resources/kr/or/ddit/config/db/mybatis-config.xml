@@ -52,6 +52,7 @@
 		<typeAlias alias="salaryVo" 		  type="kr.or.ddit.salary_info.model.Salary_infoVo"/>
 		<typeAlias alias="apply_recruitVo" 	  type="kr.or.ddit.apply_recruit.model.Apply_recruitVo"/>
 		<typeAlias alias="chartVo" 	  		  type="kr.or.ddit.util.chart.ChartVo"/>
+		<typeAlias alias="employee_listVo" 	  type="kr.or.ddit.util.chart.Employee_listVo"/>
 	</typeAliases> 
   
 	<mappers>
