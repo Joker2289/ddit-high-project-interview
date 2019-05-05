@@ -36,6 +36,10 @@
 <script>
 
 var chart_index = 1;
+var corp_id = "${ corp_id }";
+var corp_code = "${ corp_code }"; 
+var parameter = "allList";
+
 
 /* 이전 차트 */
 function beforeChart(corp_id, corp_code){
@@ -80,6 +84,10 @@ function showChart(corp_id, corp_code){
 
 /* 직원 리스트 조회 */
 function showEmployeeList(corp_id, corp_code, parameter) {
+	
+	//팔로우 시 직원리스트 페이지 다시 뿌려줘야하므로 parameter를 전역변수로 두고 넘겨줘야한다 - 그상태 그페이지를 다시 출력해야하므로
+	this.parameter = parameter
+	
 	$.ajax({
 	  url : '/corp/showEmployeeList',
       data : {"corp_id" : corp_id, "corp_code" : corp_code, "chart_index" : chart_index, "parameter" : parameter },

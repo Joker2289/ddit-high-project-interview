@@ -70,8 +70,6 @@ $(window).scroll(function () {
    
    var currentTop = $(window).scrollTop();
    
-   console.log(currentTop);
-   
    
    /* 왼쪽 left_area 스크롤 따라오기 */
    if($(window).scrollTop() > 520){

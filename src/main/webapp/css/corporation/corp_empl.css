@@ -171,9 +171,43 @@
 }
 
 /* 팔로우 버튼 */
-.footer_btn {
-	width: 50%;
-	font-size: 18px;
+.employee_follow_btn {
+	width: 70%;
+	font-size: 17px;
 	padding: 3px 6px 3px 6px !important;
+}
+
+.employee_follow_btn:hover {
+	color: #4779B2;
+	background-color: #fff;
+}
+
+.employee_follow_btn .fa-plus {
+	margin-right: 5px;
+}
+
+/* 언팔로우 버튼 */
+.employee_unfollow_btn {
+	width: 70%;
+	font-size: 17px;
+	padding: 3px 6px 3px 6px !important;
+	color: #4779B2;
+	background-color: #fff;
+}
+
+/* 로그인한 자신프로필의 숨김 버튼 */
+.hidden_my_btn {
+	color: #fff;
+	background-color: #fff;
+	border-color: #fff; 
+	width: 70%;
+	font-size: 17px;
+	padding: 3px 6px 3px 6px !important;
+}
+
+.hidden_my_btn:hover {
+	color: #fff;
+	background-color: #fff;
+	border-color: #fff; 
 }
 

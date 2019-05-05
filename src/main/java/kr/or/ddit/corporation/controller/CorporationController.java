@@ -236,7 +236,10 @@ public class CorporationController {
 	 * Method 설명 : left 메뉴에서 직원 탭 클릭
 	 */
 	@RequestMapping("/insert_empl_page")
-	public String insert_empl_page(HttpSession session, Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
+	public String insert_empl_page(HttpSession session, Model model, HttpServletRequest req, @RequestParam("corp_id")String corp_id) {
+		
+		
+		MemberVo memberVO = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		
 		CorporationVo corpInfo = corporationService.select_corpInfo(corp_id);
 		
@@ -262,6 +265,10 @@ public class CorporationController {
 		//employee_list 관련
 		List<Employee_listVo> employ_List = corporationService.select_employAllList(corpInfo.getCorp_code());
 		model.addAttribute("employ_List", employ_List);
+		
+		//employee_list follow 관련
+		List<FollowVo> followList = followService.select_userFollowList(memberVO.getMem_id());
+		model.addAttribute("followList", followList);
 		
 		//util
 		model.addAttribute("corp_id", corp_id);
@@ -340,10 +347,17 @@ public class CorporationController {
 	 * Method 설명 : 직원 리스트 조회
 	 */
 	@RequestMapping("/showEmployeeList")
-	public String showEmployeeList(Model model, @RequestParam("corp_id")String corp_id,
+	public String showEmployeeList(Model model, HttpServletRequest req,
+			@RequestParam("corp_id")String corp_id,
 			@RequestParam("corp_code")String corp_code,
 			@RequestParam("chart_index")String chart_index,
 			@RequestParam("parameter")String parameter) {
+		
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		//팔로우 리스트 담기
+		List<FollowVo> followList = followService.select_userFollowList(mVo.getMem_id());
+		model.addAttribute("followList", followList);
 		
 		
 		List<Employee_listVo> employ_List = new ArrayList<Employee_listVo>();
@@ -374,6 +388,20 @@ public class CorporationController {
 		return "corporation/module/employee_list";
 	}
 	
+	/**
+	 * 
+	 * Method : imageUpload
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param img_form
+	 * @param req
+	 * @param division
+	 * @param corp_id
+	 * @return
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 * Method 설명 : 회사 로고, 배경 이미지 업로드
+	 */
 	@RequestMapping(path = "/imageUpload", consumes = { "multipart/form-data" })
 	@ResponseBody
 	public String imageUpload(@RequestParam(value = "img_form") MultipartFile img_form, HttpServletRequest req,
@@ -418,7 +446,7 @@ public class CorporationController {
 	 * Method 설명 : top 페이지 리턴
 	 */
 	@RequestMapping("/retun_toparea")
-	public String retun_toparea(Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
+	public String retun_toparea(Model model, @RequestParam("corp_id")String corp_id) {
 		
 		CorporationVo corporationInfo = corporationService.select_corpInfo(corp_id);
 		model.addAttribute("corporationInfo", corporationInfo);
@@ -441,11 +469,6 @@ public class CorporationController {
 		model.addAttribute("path", path);
 		return "ImageView";
 	}
-	
-	
-	
-	
-	
 	
 	/**
 	 * 
@@ -522,7 +545,145 @@ public class CorporationController {
 		
 		return "corporation/module/top";
 	}
+
 	
+	/**
+	 * 
+	 * Method : employee_follow
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param req
+	 * @param corp_id
+	 * @param corp_code
+	 * @param chart_index
+	 * @param parameter
+	 * @param ref_keyword
+	 * @return
+	 * Method 설명 : 직원 리스트 팔로우
+	 */
+	@RequestMapping("/employee_follow")
+	public String employee_follow(Model model, HttpServletRequest req,
+			@RequestParam("corp_id")String corp_id,
+			@RequestParam("corp_code")String corp_code,
+			@RequestParam("chart_index")String chart_index,
+			@RequestParam("parameter")String parameter,
+			@RequestParam("ref_keyword")String ref_keyword) {
+		
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		//팔로우 추가
+		FollowVo followVo = new FollowVo();
+		followVo.setMem_id(mVo.getMem_id());
+		followVo.setRef_keyword(ref_keyword);
+		
+		followService.insert_userFollow(followVo);
+		
+		//팔로우 리스트 담기
+		List<FollowVo> followList = followService.select_userFollowList(mVo.getMem_id());
+		model.addAttribute("followList", followList);
+		
+		
+		List<Employee_listVo> employ_List = new ArrayList<Employee_listVo>();
+		Employee_listVo elVo = new Employee_listVo(corp_code, parameter);
+		
+		switch(chart_index) {
+			case "1":
+				if(parameter.equals("allList")) {
+					employ_List = corporationService.select_employAllList(corp_code);
+					model.addAttribute("employ_List", employ_List);
+				} else {
+					employ_List  = corporationService.select_employJobPositionList(elVo);
+				}
+				break;
+			case "2":
+				employ_List  = corporationService.select_employSchoolNameList(elVo);
+				break;
+			case "3":
+				employ_List  = corporationService.select_employMajorList(elVo);
+				break;
+			case "4":
+				employ_List  = corporationService.select_employAbilityList(elVo);
+				break;
+		}
+		
+		model.addAttribute("employ_List", employ_List);
+		
+		//고정
+		model.addAttribute("corp_id", corp_id);
+		model.addAttribute("corp_code", corp_code);
+		
+		return "corporation/module/employee_list";
+	}
+	
+	/**
+	 * 
+	 * Method : employee_unfollow
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param req
+	 * @param corp_id
+	 * @param corp_code
+	 * @param chart_index
+	 * @param parameter
+	 * @param ref_keyword
+	 * @return
+	 * Method 설명 : 직원 리스트 언팔로우
+	 */
+	@RequestMapping("/employee_unfollow")
+	public String employee_unfollow(Model model, HttpServletRequest req,
+			@RequestParam("corp_id")String corp_id,
+			@RequestParam("corp_code")String corp_code,
+			@RequestParam("chart_index")String chart_index,
+			@RequestParam("parameter")String parameter,
+			@RequestParam("ref_keyword")String ref_keyword) {
+		
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		//팔로우 추가
+		FollowVo followVo = new FollowVo();
+		followVo.setMem_id(mVo.getMem_id());
+		followVo.setRef_keyword(ref_keyword);
+		
+		followService.delete_userFollow(followVo);
+		
+		//팔로우 리스트 담기
+		List<FollowVo> followList = followService.select_userFollowList(mVo.getMem_id());
+		model.addAttribute("followList", followList);
+		
+		
+		List<Employee_listVo> employ_List = new ArrayList<Employee_listVo>();
+		Employee_listVo elVo = new Employee_listVo(corp_code, parameter);
+		
+		switch(chart_index) {
+			case "1":
+				if(parameter.equals("allList")) {
+					employ_List = corporationService.select_employAllList(corp_code);
+					model.addAttribute("employ_List", employ_List);
+				} else {
+					employ_List  = corporationService.select_employJobPositionList(elVo);
+				}
+				break;
+			case "2":
+				employ_List  = corporationService.select_employSchoolNameList(elVo);
+				break;
+			case "3":
+				employ_List  = corporationService.select_employMajorList(elVo);
+				break;
+			case "4":
+				employ_List  = corporationService.select_employAbilityList(elVo);
+				break;
+		}
+		
+		model.addAttribute("employ_List", employ_List);
+		
+		//고정
+		model.addAttribute("corp_id", corp_id);
+		model.addAttribute("corp_code", corp_code);
+		
+		return "corporation/module/employee_list";
+	}
 	
 	
 	
