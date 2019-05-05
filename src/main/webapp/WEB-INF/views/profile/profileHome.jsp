@@ -301,17 +301,12 @@ $(document).ready(function() {
 								   	프로필 항목 등록 <span class="caret"></span>
 								   	</button>
 							  	</c:when>
-							  	<c:when test="${not empty personalWaitVo.receive_accept }">
-							  		<button style="height: 40px;font-size: 18px; color: #469a1f;" type="button" class="btn btn-link" disabled="disabled">
-							  			<span style="font-size: 18px; color: #469a1f;"><i class="far fa-check-circle"></i></span>일촌 대기중
-							  		</button>
-							  	</c:when>
 							  	<c:otherwise>
 							  		<c:choose>
 							  			<c:when test="${SESSION_MEMBERVO.mem_division == 2 }">
 							  				<c:choose>
 							  					<c:when test="${empty followVo.mem_id }">
-							  						<button style="height: 40px;font-size: 18px;" type="button" class="btn btn-primary" onclick="location.href='/profileDeleteFollow?mem_id=${SESSION_MEMBERVO.mem_id}&ref_keyword=${usersMap.usersVo.user_id }'">
+							  						<button style="height: 40px;font-size: 18px;" type="button" class="btn btn-primary" onclick="location.href='/profileInsertFollow?mem_id=${SESSION_MEMBERVO.mem_id}&ref_keyword=${param.user_id }&division=43'">
 											  		팔로우
 											  		</button>
 							  					</c:when>
@@ -323,9 +318,23 @@ $(document).ready(function() {
 							  				</c:choose>
 							  			</c:when>
 							  			<c:otherwise>
-							  				<button style="height: 40px;font-size: 18px;" type="button" class="btn btn-primary" onclick="location.href='/profileInsertConnection?user_id=${SESSION_MEMBERVO.mem_id}&receive_id=${usersMap.usersVo.user_id }'">
-									  		일촌맺기
-									  		</button>
+							  				<c:choose>
+								  				<c:when test="${empty personalWaitVo and empty personalVo }">
+								  					<button style="height: 40px;font-size: 18px;" type="button" class="btn btn-primary" onclick="location.href='/profileInsertConnection?user_id=${SESSION_MEMBERVO.mem_id}&receive_id=${usersMap.usersVo.user_id }'">
+											  		일촌맺기
+											  		</button>
+											  	</c:when>
+								  				<c:when test="${personalWaitVo.receive_accept eq 'N'}">
+									  				<button style="height: 40px;font-size: 18px; color: #469a1f;" type="button" class="btn btn-link" disabled="disabled">
+											  			<span style="font-size: 18px; color: #469a1f;"><i class="far fa-check-circle"></i></span>일촌 대기중
+											  		</button>
+								  				</c:when>
+								  				<c:otherwise>
+								  					<button style="height: 40px;font-size: 18px; color: #469a1f;" type="button" class="btn btn-link" disabled="disabled">
+											  			<span style="font-size: 18px; color: #469a1f;"><i class="far fa-check-circle"></i></span>일촌 중
+											  		</button>
+								  				</c:otherwise>
+									  		</c:choose>
 							  			</c:otherwise> 
 							  		</c:choose>
 							  	</c:otherwise>
