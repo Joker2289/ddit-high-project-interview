@@ -20,8 +20,29 @@ public interface IFollowService {
 	
 	int getFollowerCnt(String mem_id);
 	
+	
 	List<FollowVo> select_followerList(String mem_id);
 	
+	/**
+	 * 
+	 * Method : select_followLog
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 특정 팔로우 조회
+	 */
+	FollowVo select_followLog(FollowVo vo);
+	
+	/**
+	 * 
+	 * Method : select_followingList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 종류별 팔로우 목록 조회
+	 */
 	List<FollowVo> select_followingList(String mem_id);
 	
 	/**

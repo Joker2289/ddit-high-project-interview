@@ -135,4 +135,9 @@ public class FollowServiceImpl implements IFollowService {
 	public List<FollowVo> select_hashtagFollowList(String user_id) {
 		return followDao.select_hashtagFollowList(user_id);
 	}
+
+	@Override
+	public FollowVo select_followLog(FollowVo vo) {
+		return followDao.select_followLog(vo);
+	}
 }
