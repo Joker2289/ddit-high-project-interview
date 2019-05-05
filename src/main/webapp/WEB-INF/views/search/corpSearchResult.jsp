@@ -11,10 +11,10 @@
 			<a href="/corporation?corp_id=${corp.mem_id }">
 				<c:choose>
 					<c:when test="${fn:contains(corp.profile_path, 'http') }">
-						<img src="${corp.profile_path }" style="width: 150px;">
+						<img class="corp_logo" src="${corp.profile_path }" style="width: 150px;">
 					</c:when>
 					<c:otherwise>
-						<img src="${ cp }/view/imageView?mem_id=${corp.mem_id }&division=pf">
+						<img class="corp_logo" src="${ cp }/view/imageView?mem_id=${corp.mem_id }&division=pf">
 					</c:otherwise>
 				</c:choose>
 			</a>

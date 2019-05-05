@@ -17,18 +17,16 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=21c4ce15b016e2f4c34196b944d9852b&libraries=services,clusterer,drawing"></script>
 
 <!-- 외부 css -->
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link href="/css/timeline/writemodal.css" rel="stylesheet">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<!-- <link href="/css/timeline/writemodal.css" rel="stylesheet"> -->
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- css -->
 <link href="/css/corporation/corp_main.css" rel="stylesheet">
 <link href="/css/corporation/corp_intro.css" rel="stylesheet">
 <link href="/css/corporation/corp_recr.css" rel="stylesheet">
+<link href="/css/corporation/corp_empl.css" rel="stylesheet">
 
 <style>
 textarea {
@@ -37,6 +35,7 @@ textarea {
 }
 
 textarea {
+
 	padding: 10px;
 	line-height: 1.5;
 	border-radius: 5px;
@@ -51,7 +50,7 @@ textarea {
 <body>
 	
 	<!-- top -->
-	<div class="container">
+	<div class="container" style="margin-top: 70px;">
 		<div id="top_area">
 			<%@ include file="/WEB-INF/views/corporation/module/top.jsp"%>
 		</div>
@@ -77,30 +76,30 @@ textarea {
 
 
 
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner">
-      <div class="item active">
-        <img src="${corporationInfo.logo_path}" alt="Los Angeles" style="width:100%;">
-      </div>
+<!--     Wrapper for slides -->
+<!--     <div class="carousel-inner"> -->
+<!--       <div class="item active"> -->
+<%--         <img src="${corporationInfo.logo_path}" alt="Los Angeles" style="width:100%;"> --%>
+<!--       </div> -->
 
-      <div class="item">
-        <img src="${corporationInfo.logo_path}" alt="Chicago" style="width:100%;">
-      </div>
+<!--       <div class="item"> -->
+<%--         <img src="${corporationInfo.logo_path}" alt="Chicago" style="width:100%;"> --%>
+<!--       </div> -->
     
-      <div class="item">
-        <img src="${corporationInfo.logo_path}" alt="New york" style="width:100%;">
-      </div>
-    </div>
+<!--       <div class="item"> -->
+<%--         <img src="${corporationInfo.logo_path}" alt="New york" style="width:100%;"> --%>
+<!--       </div> -->
+<!--     </div> -->
 
-    <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right"></span>
-      <span class="sr-only">Next</span>
-    </a>
+<!--     Left and right controls -->
+<!--     <a class="left carousel-control" href="#myCarousel" data-slide="prev"> -->
+<!--       <span class="glyphicon glyphicon-chevron-left"></span> -->
+<!--       <span class="sr-only">Previous</span> -->
+<!--     </a> -->
+<!--     <a class="right carousel-control" href="#myCarousel" data-slide="next"> -->
+<!--       <span class="glyphicon glyphicon-chevron-right"></span> -->
+<!--       <span class="sr-only">Next</span> -->
+<!--     </a> -->
 
 
 	

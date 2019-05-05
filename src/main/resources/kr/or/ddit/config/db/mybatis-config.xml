@@ -35,6 +35,7 @@
 		<typeAlias alias="hideVo" 			  type="kr.or.ddit.hide_post.model.Hide_postVo"/>
 		<typeAlias alias="reportVo" 		  type="kr.or.ddit.report.model.ReportVo"/>
 		<typeAlias alias="blogVo" 			  type="kr.or.ddit.blog.model.BlogVo"/>
+		<typeAlias alias="blog_visit_logVo"   type="kr.or.ddit.blog.model.Blog_visit_logVo"/>
 		<typeAlias alias="portfolioVo" 		  type="kr.or.ddit.portfolio.model.PortfolioVo"/>
 		<typeAlias alias="alarmVo" 			  type="kr.or.ddit.alarm.model.AlarmVo"/>
 		<typeAlias alias="sectionVo" 		  type="kr.or.ddit.section.model.SectionVo"/>
@@ -50,6 +51,7 @@
 		<typeAlias alias="search_resultVo" 	  type="kr.or.ddit.search.model.SearchResultVo"/>
 		<typeAlias alias="salaryVo" 		  type="kr.or.ddit.salary_info.model.Salary_infoVo"/>
 		<typeAlias alias="apply_recruitVo" 	  type="kr.or.ddit.apply_recruit.model.Apply_recruitVo"/>
+		<typeAlias alias="chartVo" 	  		  type="kr.or.ddit.util.chart.ChartVo"/>
 	</typeAliases> 
   
 	<mappers>
@@ -81,6 +83,7 @@
 		<mapper resource="kr/or/ddit/config/db/mapper/hide_post.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/reportcontent.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/blog.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/blog_visit_log.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/portfolio.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/alarm.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/section.xml"/>

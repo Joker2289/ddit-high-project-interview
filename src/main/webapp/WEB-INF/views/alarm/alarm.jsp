@@ -26,101 +26,132 @@
 		          <div id="alarm${recentAlarm.alarm_code }">
 		  	        <div class="profile_img" style="float: left;">
 		  	          <c:choose>
-		  	            <c:when test="${recentAlarm.profile_path != null && recentAlarm.mem_division == '1' }">
-		  	              <img class="user_profile_img" style="border: 1px solid #ddd;" src="${ cp }/view/imageView?mem_id=${recentAlarm.send_id }&division=pf">
-		  	            </c:when>
-		  	            <c:when test="${recentAlarm.profile_path != null && recentAlarm.mem_division == '2' }">
-		  	              <img class="user_profile_img" style="border: 1px solid #ddd;" src="${recentAlarm.profile_path }">
-		  	            </c:when>
-		  	            <c:otherwise>
-		  	              <img class="user_profile_img" style="border: 1px solid #ddd;" src="/images/profile/basicProfile.png">
-		  	            </c:otherwise>
+		  	          
+		  	          	<c:when test="${recentAlarm.mem_division == '1' }">
+		  	          		<c:choose>
+		  	          			<c:when test="${fn:contains(recentAlarm.profile_path, 'http') }">
+		  	          				<img class="user_profile_img" style="border: 1px solid #ddd;" src="${recentAlarm.profile_path }">
+		  	          			</c:when>
+		  	          			<c:otherwise>
+		  	          				<img class="user_profile_img" style="border: 1px solid #ddd;" src="${ cp }/view/imageView?mem_id=${recentAlarm.send_id }&division=pf">
+		  	          			</c:otherwise>
+		  	          		</c:choose>
+		  	          	</c:when>
+		  	          	
+		  	          	<c:when test="${recentAlarm.mem_division == '2' }">
+							<c:choose>
+								<c:when test="${fn:contains(recentAlarm.profile_path, 'http') }">
+									<img class="corp_profile_img" style="border: 1px solid #ddd;" src="${recentAlarm.profile_path }">
+								</c:when>
+								<c:otherwise>
+									<img class="corp_profile_img" style="border: 1px solid #ddd;" src="${ cp }/view/imageView?mem_id=${recentAlarm.send_id }&division=pf">
+								</c:otherwise>
+							</c:choose>
+		  	          	</c:when>
+		  	          	
 		  	          </c:choose>
 		  	        </div>
 		  	        <div class="alarm_view" id="alarm_view${recentAlarm.alarm_code }" data-code="${recentAlarm.alarm_code }" style="float: left;">
 		  	          <c:choose>
+		  	          
 		  	            <c:when test="${recentAlarm.division == '28' && recentAlarm.alarm_separate == '01' }">
-		  	              <h4 style="height: 30px; padding-top: 5px;">
+		  	              <h4 class="txt_alarm_contents">
 		  	                <a href="/postdetail?post_code=${recentAlarm.ref_code }&mem_id=${recentAlarm.mem_id }&ref_code=${recentAlarm.ref_code }">
 		  	                  <c:if test="${fn:length(recentAlarm.send_name) >= 8 }">
-		  	                    ${fn:substring(recentAlarm.send_name,0, 8) }... 님이 회원님의 게시글을 추천함
+		  	                    <span style="font-weight: bold; color: #0073b1;">${fn:substring(recentAlarm.send_name,0, 8) }</span>... 님이 회원님의 게시글을 추천함
 		  	                  </c:if> 
 		  	                  <c:if test="${fn:length(recentAlarm.send_name) < 8 }">
-		  	                  	${recentAlarm.send_name }님이 회원님의 게시글을 추천함
+		  	                  	<span style="font-weight: bold; color: #0073b1;">${recentAlarm.send_name }</span> 님이 회원님의 게시글을 추천함
 		  	                  </c:if>
 		  	                </a>
 		  	              </h4>
 		  	            </c:when>
+		  	            
 		  	            <c:when test="${recentAlarm.division == '28' && recentAlarm.alarm_separate == '02' }">
-		  	              <h4 style="height: 30px; padding-top: 5px;">
+		  	              <h4 class="txt_alarm_contents">
 		  	                <a href="/postdetail?post_code=${recentAlarm.ref_code }&mem_id=${recentAlarm.mem_id }&ref_code=${recentAlarm.ref_code }">
 		  	                  <c:if test="${fn:length(recentAlarm.send_name) >= 8 }">
-		  	                    ${fn:substring(recentAlarm.send_name,0, 8) }... 님이 회원님의 게시글에 댓글을 남김
+		  	                    <span style="font-weight: bold; color: #0073b1;">${fn:substring(recentAlarm.send_name,0, 8) }</span>... 님이 회원님의 게시글에 댓글을 남김
 		  	                  </c:if> 
 		  	                  <c:if test="${fn:length(recentAlarm.send_name) < 8 }">
-		  	                  	${recentAlarm.send_name } 님이 회원님의 게시글에 댓글을 남김
+		  	                  	<span style="font-weight: bold; color: #0073b1;">${recentAlarm.send_name }</span> 님이 회원님의 게시글에 댓글을 남김
 		  	                  </c:if>
 		  	                </a>
 		  	              </h4>
 		  	            </c:when>
+		  	            
 		  	            <c:when test="${recentAlarm.division == '29' && recentAlarm.alarm_separate == '03' }">
-		  	              <h4 style="height: 30px; padding-top: 5px;">
+		  	              <h4 class="txt_alarm_contents">
 		  	                <a href="/postdetail?post_code=${recentAlarm.ref_code }&mem_id=${recentAlarm.mem_id }&ref_code=${recentAlarm.ref_code }">
 		  	                  <c:if test="${fn:length(recentAlarm.send_name) >= 8 }">
-		  	                    ${fn:substring(recentAlarm.send_name,0, 8) }... 님이 회원님의 댓글을 추천함
+		  	                    <span style="font-weight: bold; color: #0073b1;">${fn:substring(recentAlarm.send_name,0, 8) }</span>... 님이 회원님의 댓글을 추천함
 		  	                  </c:if> 
 		  	                  <c:if test="${fn:length(recentAlarm.send_name) < 8 }">
-		  	                  	${recentAlarm.send_name } 님이 회원님의 댓글을 추천함
+		  	                  	<span style="font-weight: bold; color: #0073b1;">${recentAlarm.send_name }</span> 님이 회원님의 댓글을 추천함
 		  	                  </c:if>
 		  	                </a>
 		  	              </h4>
 		  	            </c:when>
+		  	            
 		  	            <c:when test="${recentAlarm.division == '25' && recentAlarm.alarm_separate == '04' }">
-		  	              <h4 style="height: 30px; padding-top: 5px;">
-		  	                <a href="/profileHome?user_id=${recentAlarm.send_id }">${recentAlarm.send_name } 님이 회원님에게 일촌을 신청함</a>
+		  	              <h4 class="txt_alarm_contents">
+		  	                <a href="/profileHome?user_id=${recentAlarm.send_id }">
+		  	                  <span style="font-weight: bold; color: #0073b1;">${recentAlarm.send_name }</span> 님이 회원님에게 일촌을 신청함
+		  	                </a>
 		  	              </h4>
 		  	            </c:when>
+		  	            
 		  	            <c:when test="${recentAlarm.division == '25' && recentAlarm.alarm_separate == '05' }">
-		  	              <h4 style="height: 30px; padding-top: 5px;">
-		  	                <a href="/profileHome?user_id=${recentAlarm.send_id }">${recentAlarm.send_name } 님이 회원님의 일촌신청을 수락함</a>
+		  	              <h4 class="txt_alarm_contents">
+		  	                <a href="/profileHome?user_id=${recentAlarm.send_id }">
+		  	                  <span style="font-weight: bold; color: #0073b1;">${recentAlarm.send_name }</span> 님이 회원님의 일촌신청을 수락함
+		  	                </a>
 		  	              </h4>
 		  	            </c:when>
+		  	            
 		  	            <c:when test="${recentAlarm.division == '14' && recentAlarm.alarm_separate == '06' }">
 		  	              <!-- 회원일 경우 회원 프로필로 링크 연결 -->
 		  	              <c:if test="${recentAlarm.mem_division == 1 }">
-		  	                <h4 style="height: 30px; padding-top: 5px;">
-		  	                  <a href="/profileHome?user_id=${recentAlarm.send_id }">${recentAlarm.send_name } 님이 회원님을 팔로우함</a>
+		  	                <h4 class="txt_alarm_contents">
+		  	                  <a href="/profileHome?user_id=${recentAlarm.send_id }">
+		  	                    <span style="font-weight: bold; color: #0073b1;">${recentAlarm.send_name }</span> 님이 회원님을 팔로우함
+		  	                  </a>
 		  	                </h4>
 		  	              </c:if>
 		  	              <!-- 회사일 경우 회사 페이지로 링크 연결 -->
 		  	              <c:if test="${recentAlarm.mem_division == 2 }">
-		  	                <h4 style="height: 30px; padding-top: 5px;">
+		  	                <h4 class="txt_alarm_contents">
 		  	                  <a href="/corporation?corp_id=${recentAlarm.send_id }">
 		  	                    <c:if test="${fn:length(recentAlarm.send_name) >= 8 }">
-		  	                      ${fn:substring(recentAlarm.send_name, 0, 8) }... 님이 회원님을 팔로우함
+		  	                      <span style="font-weight: bold; color: #0073b1;">${fn:substring(recentAlarm.send_name, 0, 8) }</span>... 님이 회원님을 팔로우함
 		  	                  	</c:if> 
 		  	                    <c:if test="${fn:length(recentAlarm.send_name) < 8 }">
-		  	                  	  ${recentAlarm.send_name } 님이 회원님을 팔로우함
+		  	                  	  <span style="font-weight: bold; color: #0073b1;">${recentAlarm.send_name }</span> 님이 회원님을 팔로우함
 		  	                    </c:if>
 		  	                  </a>
 		  	                </h4>
 		  	              </c:if>
 		  	            </c:when>
+		  	            
 		  	            <c:when test="${recentAlarm.division == '2' && recentAlarm.alarm_separate == '07' }">
-		  	              <h4 style="height: 30px; padding-top: 5px;">${recentAlarm.send_name } 님이 채용공고에 지원함</h4>
+		  	              <h4 class="txt_alarm_contents">
+		  	                <span style="font-weight: bold; color: #0073b1;">${recentAlarm.send_name }</span> 님이 채용공고에 지원함
+		  	              </h4>
 		  	            </c:when>
+		  	            
 		  	            <c:when test="${recentAlarm.division == '34' && recentAlarm.alarm_separate == '08' }">
 		  	              <a href="/recr_detail?recruit_code=${recentAlarm.ref_code }">
-		  	                <h4 style="height: 30px; padding-top: 5px;">
+		  	                <h4 class="txt_alarm_contents">
 							  <c:if test="${fn:length(recentAlarm.send_name) >= 8 }">
-							    ${fn:substring(recentAlarm.send_name, 0, 8) }...님으로부터 새로운 채용공고가 검색됨
+							    <span style="font-weight: bold; color: #0073b1;">${fn:substring(recentAlarm.send_name, 0, 8) }</span>...으로부터 새로운 채용공고가 검색됨
 							  </c:if> 
 							  <c:if test="${fn:length(recentAlarm.send_name) < 8}">
-							    ${recentAlarm.send_name }님으로부터 새로운 채용공고가 검색됨
+							    <span style="font-weight: bold; color: #0073b1;">${recentAlarm.send_name }</span>으로부터 새로운 채용공고가 검색됨
 							  </c:if> 
 							</h4>
 		  	              </a>
 		  	            </c:when>
+		  	            
 		  	          </c:choose>
 		  	        </div>
 		  	        

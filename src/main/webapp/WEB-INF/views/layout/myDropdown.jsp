@@ -32,7 +32,7 @@
 			<tr class="profiletr">
 					<td
 						style="color: #0073B1; text-align: center; padding-top: 5px; padding-bottom: 5px; border-top: 1px solid #CFD1D3; border-bottom: 1px solid #CFD1D3;"
-						onclick="javascript:location.href='/corporation'">회사 페이지</td>
+						onclick="javascript:location.href='/corp/corporation?corp_id=${ SESSION_MEMBERVO.mem_id }'">회사 페이지</td>
 			</tr>
 		</c:if>
 		

@@ -146,6 +146,36 @@ public class SearchResultController {
 		return "complate";
 	}
 	
+	@RequestMapping(path={"/user_follow"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String user_follow(String target_id, HttpServletRequest request){
+		
+		FollowVo followInfo = new FollowVo();
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		followInfo.setMem_id(memberInfo.getMem_id());
+		followInfo.setRef_keyword(target_id);
+		
+		followService.insert_userFollow(followInfo);
+		
+		return "complate";
+	}
+	
+	@RequestMapping(path={"/user_unfollow"}, method=RequestMethod.POST)
+	@ResponseBody
+	public String user_unfollow(String target_id, HttpServletRequest request){
+		
+		FollowVo followInfo = new FollowVo();
+		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		followInfo.setMem_id(memberInfo.getMem_id());
+		followInfo.setRef_keyword(target_id);
+		
+		followService.delete_userFollow(followInfo);
+		
+		return "complate";
+	}
+	
 	/**
 	 * Method : user_connect
 	 * 작성자 : goo84

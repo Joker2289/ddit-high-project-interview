@@ -26,18 +26,25 @@
 					</div>
 				</div>
           	</li>
+          	
             <li class="menu">
             	<a href="/timeline" class="menugroup" style="padding-top: 7px;">
             		<div><span style="font-size: 20px;"><i class="fas fa-home"></i></span></div>
             		<div>홈</div>
             	</a>
             </li>
-            <li class="menu">
-            	<a href="/personalConnection" class="menugroup" style="padding-top: 7px;">
-            		<div><span style="font-size: 20px;"><i class="fas fa-users"></i></span></div>
-            		<div>인맥</div>
-            	</a>
-            </li>
+            
+            <c:choose>
+            	<c:when test="${SESSION_MEMBERVO.mem_division == '1' }">
+		            <li class="menu">
+		            	<a href="/personalConnection" class="menugroup" style="padding-top: 7px;">
+		            		<div><span style="font-size: 20px;"><i class="fas fa-users"></i></span></div>
+		            		<div>인맥</div>
+		            	</a>
+		            </li>
+            	</c:when>
+            </c:choose>
+            
             <li class="menu">
             	<a href="/recruit" class="menugroup" style="padding-top: 7px;">
             		<div><span style="font-size: 20px;"><i class="fas fa-briefcase"></i></span></div>
@@ -126,5 +133,7 @@
 // 		send_message();
 // 		setInterval("send_message()", 60000);
 // 	});
+
+	$("#txt_content").summernote();
 	
 </script>

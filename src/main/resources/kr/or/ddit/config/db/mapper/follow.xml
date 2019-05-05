@@ -160,7 +160,26 @@
 		delete from follow
 		 where mem_id = #{mem_id}
 		   and ref_keyword = #{ref_keyword}
-		   and division = '11'
+		   and division = 11
+	</delete>
+	
+	<!-- 회원 팔로우 -->
+	<insert id="insert_userFollow" parameterType="followVo">
+		insert into follow
+		values(
+			follow_code_seq.nextval,
+			#{mem_id},
+			#{ref_keyword},
+			43
+		)
+	</insert>
+	
+	<!-- 회원 언팔로우 -->
+	<delete id="delete_userFollow" parameterType="followVo">
+		delete from follow
+		 where mem_id = #{mem_id}
+		   and ref_keyword = #{ref_keyword}
+		   and division = 43
 	</delete>
 
 	<select id="select_followHashtagInfo" parameterType="followVo" resultType="int">

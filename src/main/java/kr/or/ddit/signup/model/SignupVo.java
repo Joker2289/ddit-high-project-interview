@@ -14,14 +14,14 @@ public class SignupVo {
 	//step2
 	private String securityCode;	// 인증코드
 	
-	//step3
+	//step4_career
 	private String job_position;	// 직군
 	private String job_rank;		// 직급
 	private String corporate_name;	// 회사
 	private Date   join_date;		// 입사일
 	private Date   resign_date;		// 퇴사일
 	
-	//step4
+	//step4_education
 	private String school_name;		// 학교명
 	private String degree_name;		// 학위
 	private String major;			// 전공
@@ -35,7 +35,7 @@ public class SignupVo {
 	private String industry_type;	// 업계
 	private String corp_size;		// 회사규모
 	
-	//step4_corp
+	//step4_corp, step3
 	private String addr1;			// 주소
 	private String addr2;			// 상세주소
 	private String zipcode;			// 우편번호

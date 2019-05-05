@@ -14,6 +14,8 @@ import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.users.model.UsersVo;
+import kr.or.ddit.util.chart.ChartVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 @Repository("corporationDao")
 public class CorporationDaoImpl implements ICorporationDao{
@@ -153,7 +155,7 @@ public class CorporationDaoImpl implements ICorporationDao{
 		return emc;
 	}
 
-	/**s
+	/**
 	 * 회사직원의 user_id
 	 */
 	@Override
@@ -175,6 +177,93 @@ public class CorporationDaoImpl implements ICorporationDao{
 		Education_infoVo employee_education = new Education_infoVo();
 		employee_education = sqlSessionTemplate.selectOne("corp.employee_education", user_id);
 		return employee_education;
+	}
+
+	/**
+	 * 회사코드를 가진 유저 전체리스트
+	 */
+	@Override
+	public List<Career_infoVo> corp_code_user_list(String corp_code) {
+		List<Career_infoVo> corp_code_user_list = new ArrayList<Career_infoVo>();
+		corp_code_user_list = sqlSessionTemplate.selectList("corp.corp_code_user_list", corp_code);
+		return corp_code_user_list;
+	}
+
+	/**
+	 * 회사코드를 가진 유저 수
+	 */
+	@Override
+	public int corp_code_user_count(String corp_code) {
+		int corp_code_user_count = sqlSessionTemplate.selectOne("corp.corp_code_user_count", corp_code);
+		return corp_code_user_count;
+	}
+
+	/**
+	 * 직원 대학교수
+	 */
+	@Override
+	public List<Integer> empl_education_count(String corp_code) {
+		List<Integer> empl_education_count =  sqlSessionTemplate.selectList("corp.empl_education_count", corp_code);
+		return empl_education_count;
+	}
+
+	@Override
+	public List<Education_infoVo> empl_university_list(String corp_code) {
+		List<Education_infoVo> empl_university_list = new ArrayList<Education_infoVo>();
+		empl_university_list = sqlSessionTemplate.selectList("corp.empl_university_list", corp_code);
+		return empl_university_list;
+	}
+
+	/**
+	 * 회사정보로 graphinfo
+	 */
+	@Override
+	public List<ChartVo> graphInfo(String corp_code) {
+		return sqlSessionTemplate.selectList("corp.graphInfo", corp_code);
+	}
+
+	/**
+	 * 회사 직원 리스트
+	 */
+	@Override
+	public List<ChartVo> empl_list(ChartVo param) {
+		return sqlSessionTemplate.selectList("corp.empl_list", param);
+	}
+
+	/**
+	 * 직원 전공 수 (중복 수 증가)
+	 */
+	@Override
+	public List<Integer> major_count(String corp_code) {
+		return sqlSessionTemplate.selectList("corp.major_count", corp_code);
+	}
+
+
+	/**
+	 * 직책 수 (중복 수 증가)
+	 */
+	@Override
+	public List<Integer> job_position_count(String corp_code) {
+		return sqlSessionTemplate.selectList("corp.job_position_count", corp_code);
+	}
+
+	
+	
+	//정권
+	
+	@Override
+	public List<ChartVo> job_position_list(String corp_code) {
+		return sqlSessionTemplate.selectList("corp.job_position_list", corp_code);
+	}
+
+	@Override
+	public List<ChartVo> school_name_list(String corp_code) {
+		return sqlSessionTemplate.selectList("corp.school_name_list", corp_code);
+	}
+
+	@Override
+	public List<ChartVo> major_list(String corp_code) {
+		return sqlSessionTemplate.selectList("corp.major_list", corp_code);
 	}
 
 }

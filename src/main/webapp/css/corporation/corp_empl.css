@@ -1,0 +1,87 @@
+/* 회사 직원 정보 div */
+.empl_div {
+	width: 100%;
+	height: auto !important;
+ 	list-style: none;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid rgba(0, 0, 0, .15);
+	border-radius: 4px;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	padding: 20px 30px 20px 30px;
+	
+	margin-bottom: 40px; 
+}
+
+/* head div */
+.empl_head_div {
+	margin: 10px;
+}
+
+/* head title */
+.empl_head_title {
+	padding-left: 10px !important;
+	font-weight: 1000;
+	font-size: 25px;
+	border-bottom: 1px solid #A0A0C8;
+	height: 50px;
+}
+
+.empl_head_title .fa-user-tie {
+	margin-right: 10px;
+}
+
+.employeeCnt{
+	margin-left: 20px;
+}
+
+/* 차트 조작 버튼 div */
+.chart_button_div {
+	text-align: right;
+}
+
+/* 차트 버튼 */
+.chart_button{
+	margin-right: 10px;
+	background-color: #fff;
+	color: #0073b1;
+	font-weight: bold;
+	border: 0px solid #fff !important;
+	font-size: 20px;
+}
+
+/* 차트 area */
+.chart_area {
+	margin: 15px auto;
+	width: 95%;
+	border: 1px solid rgba(0, 0, 0, .15) !important;
+}
+/* 차트 div */
+.chart_div{
+	padding: 10px 30px 10px 30px;
+}
+
+/* 차트 제목 */
+.chart_title{
+	font-weight: bold;
+	font-size: 20px;
+	margin: 10px 0px 10px 10px;
+}
+
+/* 차트 그래프 div */
+.progress {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.chart_subject_div{
+	
+}
+
+.chart_subject{
+	
+}
+
+.chart_value{
+	
+}

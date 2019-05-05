@@ -1,4 +1,4 @@
-<%@page import="com.sun.javafx.css.Style"%>
+<%-- <%@ page import="com.sun.javafx.css.Style"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -27,7 +27,6 @@ function insert_intro_page(corp_id){
 		url : "${cp}/corp/insert_intro_page",
 		data : {"corp_id" : corp_id },
 		success : function(data) {
-
 			$('#content_area').html(data);			
 		}
 	});
@@ -47,13 +46,12 @@ function insert_recr_page(corp_id){
 
 /* 직원 탭 클릭 */
 function insert_empl_page(corp_id){
+	
 	$.ajax({
 		url : "${cp}/corp/insert_empl_page",
 		data : { "corp_id" : corp_id },
 		success : function(data) {
-			
 			$('#content_area').html(data);
-			
 		}
 	});
 }

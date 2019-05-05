@@ -71,6 +71,7 @@ import kr.or.ddit.search_log.model.Search_logVo;
 import kr.or.ddit.search_log.service.ISearch_logService;
 import kr.or.ddit.users.model.UsersVo;
 import kr.or.ddit.users.service.IUsersService;
+import kr.or.ddit.util.chart.ChartVo;
 import kr.or.ddit.util.pagination.PaginationVo;
 
 @RequestMapping("/corp")
@@ -130,7 +131,7 @@ public class CorporationController {
 
 	/**
 	 * 
-	 * Method : postList
+	 * Method : corporation
 	 * 작성자 : pjk
 	 * 변경이력 :
 	 * @param request
@@ -140,7 +141,7 @@ public class CorporationController {
 	 * @param corp_id
 	 * @param session
 	 * @return
-	 * Method 설명 : 
+	 * Method 설명 : 회사 페이지 이동
 	 */
 	@RequestMapping(path = { "/corporation" })
 	public String corporation(HttpServletRequest request,Model model, PaginationVo paginationVo, String post_contents, String corp_id, HttpSession session) {
@@ -215,17 +216,153 @@ public class CorporationController {
 		List<Save_postVo> saveList = savepostService.select_savepostData(corp_id);
 		model.addAttribute("saveList", saveList);
 		
-		logger.debug("goodList hahaha : {}", goodList);
-		logger.debug("saveList hahaha : {}", saveList);
-		
-		logger.debug("goodList hahaha : {}", goodList.size());
-		logger.debug("saveList hahaha : {}", saveList.size());
-		
-		
 		return "corporationTiles";
 	}
 	
-
+	//left 메뉴탭 클릭 컨트롤러
+	/**
+	 * 
+	 * Method : insert_intro_page
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param model
+	 * @param request
+	 * @param corp_id
+	 * @return
+	 * Method 설명 : left 메뉴에서 소개 탭 클릭
+	 */
+	@RequestMapping("/insert_intro_page")
+	public String insert_intro_page(Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
+		
+		CorporationVo corporationInfo = corporationService.select_corpInfo(corp_id);
+		model.addAttribute("corporationInfo", corporationInfo);
+		
+		return "corporation/corp_intro";
+	}
+	
+	
+	/**
+	 * 
+	 * Method : corporationRecruit
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param session
+	 * @param model
+	 * @param paginationVo
+	 * @param request
+	 * @param corp_id
+	 * @return
+	 * Method 설명 : left 메뉴에서 채용 탭 클릭
+	 */
+	@RequestMapping("/insert_recr_page")
+	public String insert_recr_page(HttpSession session, Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
+		
+		//채용 공고 리스트 담기
+		List<RecruitVo> recruitList = recrService.getRecrListCorp_id(corp_id);
+		model.addAttribute("recruitList", recruitList);
+		
+		//회사 정보 담기
+		CorporationVo corporationInfo = corporationService.select_corpInfo(corp_id);
+		model.addAttribute("corporationInfo", corporationInfo);
+		
+		return "corporation/corp_recr";
+	}
+	
+	/**
+	 * 
+	 * Method : corporationEmployee
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param session
+	 * @param model
+	 * @param request
+	 * @param corp_id
+	 * @return
+	 * Method 설명 : left 메뉴에서 직원 탭 클릭
+	 */
+	@RequestMapping("/insert_empl_page")
+	public String insert_empl_page(HttpSession session, Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
+		
+		CorporationVo corpInfo = corporationService.select_corpInfo(corp_id);
+		
+		//회사의 전체 직원수 조회
+		int employeeCnt = corporationService.corp_code_user_count(corpInfo.getCorp_code());
+		model.addAttribute("employeeCnt", employeeCnt);
+		
+		//직책 리스트 조회
+		List<ChartVo> chart_List = corporationService.job_position_list(corpInfo.getCorp_code());
+		
+		//전체 값
+		int sum_value = 0;
+		for(ChartVo vo : chart_List) {
+			sum_value += vo.getChart_value();
+		}
+		
+		model.addAttribute("chart_title", "직무");
+		model.addAttribute("chart_List", chart_List);
+		model.addAttribute("sum_value", sum_value);
+		model.addAttribute("chart_index", 1);
+		
+		model.addAttribute("corp_id", corp_id);
+		model.addAttribute("corp_code", corpInfo.getCorp_code());
+		
+		return "corporation/corp_empl";
+	}
+	
+	
+	@RequestMapping("/showChart")
+	public String showChart(Model model, @RequestParam("corp_id")String corp_id,
+			@RequestParam("corp_code")String corp_code,
+			@RequestParam("chart_index")String chart_index) {
+		
+		logger.debug("corp_id >>>>>>>>>>>> : {}", corp_id);
+		logger.debug("corp_code >>>>>>>>>>>> : {}", corp_code);
+		logger.debug("chart_index >>>>>>>>>>>> : {}", chart_index);
+		
+		List<ChartVo> chart_List = new ArrayList<ChartVo>();
+		
+		switch(chart_index) {
+			case "1":
+				chart_List  = corporationService.job_position_list(corp_code);
+				model.addAttribute("chart_title", "직무");
+				break;
+			case "2":
+				chart_List  = corporationService.school_name_list(corp_code);
+				model.addAttribute("chart_title", "출신학교");
+				break;
+			case "3":
+				chart_List  = corporationService.major_list(corp_code);
+				model.addAttribute("chart_title", "전공");
+				break;
+			case "4":
+				chart_List  = corporationService.job_position_list(corp_code);
+				model.addAttribute("chart_title", "보유기술");
+				break;
+		}
+		
+		
+		
+		//전체 값
+		int sum_value = 0;
+		for(ChartVo vo : chart_List) {
+			sum_value += vo.getChart_value();
+		}
+		model.addAttribute("sum_value", sum_value);
+		model.addAttribute("chart_List", chart_List);
+		model.addAttribute("chart_index", chart_index);
+		
+		//고정
+		model.addAttribute("corp_id", corp_id);
+		model.addAttribute("corp_code", corp_code);
+		
+		return "corporation/module/chart";
+	}
+	
+	
+	
+	
+	//------------------------------- 수정 전 ---------------------------------//
+	
 	
 	/**
 	 * 타임라인 글쓰기
@@ -472,148 +609,7 @@ public class CorporationController {
 	}
 
 	
-	/**
-	 * 
-	 * Method : insert_intro_page
-	 * 작성자 : pjk
-	 * 변경이력 :
-	 * @param model
-	 * @param request
-	 * @param corp_id
-	 * @return
-	 * Method 설명 : 회사 소개 페이지 출력
-	 */
-	@RequestMapping("/insert_intro_page")
-	public String insert_intro_page(Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
-		
-		CorporationVo corporationInfo = corporationService.select_corpInfo(corp_id);
-		model.addAttribute("corporationInfo", corporationInfo);
-		
-		return "corporation/corp_intro";
-	}
 	
-	
-	/**
-	 * 
-	 * Method : corporationRecruit
-	 * 작성자 : pjk
-	 * 변경이력 :
-	 * @param session
-	 * @param model
-	 * @param paginationVo
-	 * @param request
-	 * @param corp_id
-	 * @return
-	 * Method 설명 : 회사 채용 페이지 출력
-	 */
-	@RequestMapping("/insert_recr_page")
-	public String corporationRecruit(HttpSession session, Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
-		
-		//채용 공고 리스트 담기
-		List<RecruitVo> recruitList = recrService.getRecrListCorp_id(corp_id);
-		model.addAttribute("recruitList", recruitList);
-		
-		//회사 정보 담기
-		CorporationVo corporationInfo = corporationService.select_corpInfo(corp_id);
-		model.addAttribute("corporationInfo", corporationInfo);
-		
-		return "corporation/corp_recr";
-	}
-	
-	/**
-	 * 회사 직원
-	 * @param model 
-	 * @param paginationVo
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("/insert_empl_page")
-	public String corporationEmployee(String corp_id,HttpSession session, Model model, PaginationVo paginationVo, HttpServletRequest request) {
-MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-		
-		CorporationVo corporationInfo = new CorporationVo();
-		Career_infoVo careerinfo = new Career_infoVo();
-		corporationInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
-		model.addAttribute("corporationInfo", corporationInfo);
-		
-		paginationVo.setMem_id(memberInfo.getMem_id());
-		
-		List<RecruitVo> getRecruitInfo = recrService.getRecrListCorp_id(corporationInfo.getCorp_id());
-		
-		model.addAttribute("getRecruitInfo", getRecruitInfo);
-		
-		if (memberInfo.getMem_division().equals("1")) { // 일반회원일 경우
-			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
-			
-			// 인맥 수 출력을 위한 세팅
-			
-			// 팔로우 한 해쉬태그 출력을 위한 세팅
-			
-			model.addAttribute("userInfo", userInfo);
-		} else if (memberInfo.getMem_division().equals("2")) { // 회사일 경우
-			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
-			
-			// 회사 회원 로그인 시 홈 화면 출력을 위한 세팅
-			
-			model.addAttribute("corpInfo", corpInfo);
-		} else { // 관리자일 경우
-			// 관리자 로그인 시 홈 화면 출력을 위한 세팅
-		
-		}
-		
-		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
-		model.addAttribute("timelinePost", timelinePost);
-		
-		
-		
-		int ecount = careerService.employee_count(corporationInfo.getCorp_name());
-		model.addAttribute("ecount", ecount);
-
-//		출신 학교 그래프
-//		List<Education_infoVo> eec = careerService.employee_education_count(corporationInfo.getCorp_name());		
-//		List<Integer> eec2 = careerService.employee_education_count2(corporationInfo.getCorp_name());		
-//		List<Integer> a = new ArrayList<>();
-//		a.add(100*eec2.get(0)/ecount);
-//		a.add(100*eec2.get(1)/ecount);
-//		a.add(100*eec2.get(2)/ecount);
-//		model.addAttribute("eec", eec);
-//		model.addAttribute("eec2", eec2);
-//		model.addAttribute("a",a);
-		
-		//전공 그래프
-		List<Education_infoVo> em = corporationService.employee_major(corporationInfo.getCorp_name());
-		List<Integer> emc = corporationService.employee_major_count(corporationInfo.getCorp_name());
-		List<Integer> b = new ArrayList<>();
-		int size = em.size();
-		b.add(100*emc.get(0)/ecount);
-		b.add(100*emc.get(1)/ecount);
-		b.add(100*emc.get(2)/ecount);
-		model.addAttribute("em", em);
-		model.addAttribute("emc", emc);
-		model.addAttribute("b",b);
-		model.addAttribute("size", size);
-		
-		
-		
-		
-		//직원 목록
-		List<Career_infoVo> ea =  corporationService.employee_all(corporationInfo.getCorp_name());
-		List<UsersVo> uvos = new ArrayList<UsersVo>();
-		for(int i = 0; i < ea.size(); i++) {
-			UsersVo uvo = corporationService.select_userInfo(ea.get(i).getUser_id());
-			System.out.println("유저 아이디 : " + uvo.getUser_id());
-			uvos.add(i, uvo);
-		}
-		model.addAttribute("uvos", uvos);
-		List<Education_infoVo> evos = new ArrayList<Education_infoVo>();
-		for(int i = 0; i < ea.size(); i++) {
-			Education_infoVo evo = corporationService.employee_education(ea.get(i).getUser_id());
-			evos.add(i, evo);
-		}
-		model.addAttribute("evos", evos);
-		
-		return "corporation/corp_empl";
-	}
 
 	/**
 	 * 회사타임라인게시글생성

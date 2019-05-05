@@ -143,6 +143,10 @@ public class Career_infoVo {
 		return "Career_infoVo [career_code=" + career_code + ", user_id=" + user_id + ", job_position=" + job_position
 				+ ", job_rank=" + job_rank + ", corporate_name=" + corporate_name + ", corp_local=" + corp_local
 				+ ", join_date=" + join_date + ", resign_date=" + resign_date + ", contents=" + contents
-				+ ", corp_code=" + corp_code + "]";
+				+ ", corp_code=" + corp_code + ", currval=" + currval + ", month=" + month + ", logo_path=" + logo_path
+				+ ", corp_id=" + corp_id + "]";
 	}
+
+	
+
 }

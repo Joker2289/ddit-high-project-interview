@@ -183,6 +183,25 @@ public class RecruitServiceImplTest extends LogicTestConfig{
 		assertNotNull(aaa);
 	}
 
+	/**
+	 * 
+	 * Method : testGetPersonalCorpId
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 특정 유저의 일촌의 경력에 있는 회사 목록 조회 테스트.
+	 */
+	@Test
+	public void testGetPersonalCorpId() {
+		/***Given***/
+
+		/***When***/
+		List<String> personalCorpIdList = recrService.getPersonalCorpId("joker");
+		logger.debug("person list? : {}", personalCorpIdList.toString());
+
+		/***Then***/
+		assertNotNull(personalCorpIdList);
+	}
+	
 	
 	
 
