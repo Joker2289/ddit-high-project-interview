@@ -11,7 +11,7 @@
 	<c:forEach items="${ chart_List }" var="chart" varStatus="index">
 	
 		<div class="chart_subject_div">
-			<a class="chart_subject">${ chart.chart_subject }</a> / <a class="chart_value">${ chart.chart_value }명</a>
+			<a class="chart_subject" onclick="showEmployeeList('${ corp_id }', '${ corp_code }', '${ chart.chart_subject }');">${ chart.chart_subject }</a> / <a class="chart_value">${ chart.chart_value }명</a>
 		</div>
 		<div class="progress">
 			<div id="progress-bar${ index.count }" class="progress-bar" role="progressbar" aria-valuenow="${ (chart.chart_value / sum_value) * 100 }"

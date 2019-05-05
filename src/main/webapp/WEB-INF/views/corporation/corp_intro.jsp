@@ -25,7 +25,7 @@
 		<tr>
 			<td><label class="info_label"><i class="fas fa-check"></i> 웹사이트</label></td>
 			<td>
-				<label class="info_content">${ corporationInfo.corp_url }</label>
+				<label class="info_content"><a href="${ corporationInfo.corp_url }" style="color:#0073b1;">${ corporationInfo.corp_url }</a></label>
 			</td>
 		</tr>
 		<tr>
@@ -107,7 +107,7 @@
 		// 마커가 지도 위에 표시되도록 설정합니다
 		marker.setMap(map);
 
-		var iwContent = '<div style="padding:5px;">${ corpInfo.corp_name } </div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		var iwContent = '<div style="padding:5px; padding-left:10px;"> ${ corporationInfo.corp_name } </div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 		iwPosition = new daum.maps.LatLng(data1, data2); //인포윈도우 표시 위치입니다
 
 		// 인포윈도우를 생성합니다

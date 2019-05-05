@@ -53,6 +53,7 @@
 		<typeAlias alias="apply_recruitVo" 	  type="kr.or.ddit.apply_recruit.model.Apply_recruitVo"/>
 		<typeAlias alias="chartVo" 	  		  type="kr.or.ddit.util.chart.ChartVo"/>
 		<typeAlias alias="abilityVo" 	      type="kr.or.ddit.ability.model.AbilityVo"/>
+		<typeAlias alias="employee_listVo" 	  type="kr.or.ddit.util.chart.Employee_listVo"/>
 	</typeAliases> 
   
 	<mappers>

@@ -245,7 +245,7 @@
 	
 	<!-- 정권 -->
 	
-	<!-- 회사코드로 직원수 불러오기 -->
+	<!-- 회사코드로 등록된 직원수 -->
 	<select id="corp_code_user_count" parameterType="String" resultType="Integer">
 		SELECT count (*)
 			FROM CAREER_INFO
@@ -303,6 +303,59 @@
 		where a.user_id = b.user_id
 		group by major
 		order by count(*) desc
+	
+	</select>
+	
+	<!-- 회사에 등록된 모든 직원의 정보 리스트 -->
+	<select id="select_employAllList" parameterType="String" resultType="employee_listVo">
+
+		select a.user_id as user_id, b.user_name as user_name, a.corporate_name as info2, a.job_position as info1, b.profile_path as img_path
+		from CAREER_INFO a, users b
+		where corp_code = #{ corp_code } 
+		and a.user_id = b.user_id
+	
+	</select>
+	
+	<!-- 회사에 등록되고 직무: 조건추가된 직원의 정보 리스트 --> 
+	<select id="select_employJobPositionList" parameterType="employee_listVo" resultType="employee_listVo">
+
+		select a.user_id as user_id, b.user_name as user_name, a.corporate_name as info2, a.job_position as info1, b.profile_path as img_path
+		from CAREER_INFO a, users b
+		where corp_code = #{ corp_code }    
+		and a.user_id = b.user_id
+		and a.job_position = #{ parameter }
+	
+	</select>
+	
+	<!-- 회사에 등록되고 출신학교: 조건추가된 직원의 정보 리스트  -->
+	<select id="select_employSchoolNameList" parameterType="employee_listVo" resultType="employee_listVo">
+
+		select c.*
+		from 
+		    (
+		    select a.user_id as user_id, b.user_name as user_name, a.corporate_name as info2, a.job_position as info1, b.profile_path as img_path
+		    from CAREER_INFO a, users b
+		    where corp_code = #{ corp_code }   
+		    and a.user_id = b.user_id
+		    ) c, education_info d
+		where c.user_id = d.user_id
+		and d.school_name = #{ parameter }
+	
+	</select>
+	
+	<!-- 회사에 등록되고 전공: 조건추가된 직원의 정보 리스트  -->
+	<select id="select_employMajorList" parameterType="employee_listVo" resultType="employee_listVo">
+
+		select c.*
+		from 
+		    (
+		    select a.user_id as user_id, b.user_name as user_name, a.corporate_name as info2, a.job_position as info1, b.profile_path as img_path
+		    from CAREER_INFO a, users b
+		    where corp_code = #{ corp_code }   
+		    and a.user_id = b.user_id
+		    ) c, education_info d
+		where c.user_id = d.user_id
+		and d.major = #{ parameter }
 	
 	</select>
 	

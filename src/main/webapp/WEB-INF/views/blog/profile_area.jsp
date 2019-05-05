@@ -10,11 +10,21 @@
 			<%-- <a href="/profileHome?user_id=${uVo.user_id}"><img src="${ cp }/view/imageView?mem_id=${ uVo.user_id }&division=pf" class="img-circle"></a> --%>
 			<c:choose>
 				<c:when test="${ fn:contains( uVo.profile_path, 'http') }">
-					<a href="/profileHome?user_id=${ uVo.user_id }"><img src="${ uVo.profile_path }" class="img-circle"></a>
+					<c:if test="${ uVo.user_id == SESSION_MEMBERVO.mem_id }">
+						<a href="/profileHome"><img src="${ uVo.profile_path }" class="img-circle"></a>
+					</c:if>
+					<c:if test="${ uVo.user_id != SESSION_MEMBERVO.mem_id }">
+						<a href="/profileHome?user_id=${ uVo.user_id }"><img src="${ uVo.profile_path }" class="img-circle"></a>
+					</c:if>
 				</c:when>	
 			
 				<c:otherwise>
-					<a href="/profileHome?user_id=${ uVo.user_id }"><img src="${ cp }/view/imageView?mem_id=${ uVo.user_id }&division=pf"class="img-circle"></a>
+					<c:if test="${ uVo.user_id == SESSION_MEMBERVO.mem_id }">
+						<a href="/profileHome"><img src="${ cp }/view/imageView?mem_id=${ uVo.user_id }&division=pf"class="img-circle"></a>
+					</c:if>
+					<c:if test="${ uVo.user_id != SESSION_MEMBERVO.mem_id }">
+						<a href="/profileHome?user_id=${ uVo.user_id }"><img src="${ cp }/view/imageView?mem_id=${ uVo.user_id }&division=pf"class="img-circle"></a>
+					</c:if>
 				</c:otherwise>	
 			</c:choose>
 			
