@@ -14,6 +14,12 @@
 <script type="text/javascript" src="/js/printThis.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	if('${usersMap.usersVo.user_id}' == '${SESSION_MEMBERVO.mem_id}'){
+		$("#HomeGO").attr('href','/profileHome');
+	}else{
+		$("#HomeGO").attr('href','/profileHome?user_id='+'${usersMap.usersVo.user_id}');
+	}
+	
 	    html2canvas(document.body, {
 		  onrendered: function(canvas) {
 		 
@@ -39,7 +45,7 @@ $(document).ready(function() {
 		        } */
 		 
 		        // 파일 저장
-		        doc.save('sample_A4.pdf');
+		        doc.save('profile_'+'${usersMap.usersVo.user_name}'+'.pdf');
 		  }
 	});  
 	    

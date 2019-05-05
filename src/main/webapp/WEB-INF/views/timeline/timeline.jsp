@@ -203,7 +203,7 @@
 <script src="/js/timeline.js"></script>
 <script type="text/javascript">
 
-	//페이지 댓글 버튼 클릭
+	//댓글 버튼 클릭
 	function post_commentList(post_code){
 		$.ajax({
 			url : "/commentArea",

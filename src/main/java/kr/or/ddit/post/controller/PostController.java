@@ -991,7 +991,7 @@ public class PostController {
 	}
 	
 	@RequestMapping(path={"/savepost"}, method=RequestMethod.GET)
-	   public String savePost(Model model, HttpServletRequest request){
+	   public String savePost(Model model, HttpServletRequest request) throws ParseException{
 	      
 	      PaginationVo paginationVo = new PaginationVo();
 	      
@@ -1046,9 +1046,6 @@ public class PostController {
 	         
 	         model.addAttribute("corpInfo", corpInfo);
 	         
-	      } else { //관리자일 경우
-	         //관리자 로그인 시 홈 화면 출력을 위한 세팅
-	         
 	      }
 	      
 	      
@@ -1060,10 +1057,51 @@ public class PostController {
 	      model.addAttribute("goodList", goodList);
 	      
 	      List<Save_postVo> saveList = savepostService.select_savepostData(memberInfo.getMem_id());
-	      
-	      
 	      model.addAttribute("saveList", saveList);
-	      
+
+			/////////////////////////////// newList
+			
+			// 광고 부분 -> 신규 채용공고 (newList)
+			List<RecruitVo> newList = recrService.getNewList();
+			
+			// newList size : 7. index 6 -> index 0에 add.
+			newList.add(0, newList.get(6));
+			
+			List<String> newImgList = new ArrayList<>();
+			List<String> newIdList = new ArrayList<>();
+			List<String> newNmList = new ArrayList<>();
+			List<String> newTimeList = new ArrayList<>();
+			
+			for(int i=0; i < newList.size(); i++){
+				RecruitVo rVo = newList.get(i);
+				CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+				newImgList.add(cVo.getLogo_path());
+				newNmList.add(cVo.getCorp_name());
+				newIdList.add(cVo.getCorp_id());
+				
+				String start_date = rVo.getStart_date();
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+				Date start = sdf.parse(start_date);
+				Date now = new Date();
+				
+				long temp_time = now.getTime() - start.getTime();
+				
+				int time_diff = (int) (temp_time / (60*1000));
+				
+				if(time_diff < 2){
+					newTimeList.add("방금");
+				}else if(time_diff < 60){
+					newTimeList.add(time_diff + "분");
+				}else if(time_diff < 1440){
+					newTimeList.add(time_diff/60 + "시간");
+				}else if(time_diff < 43200){
+					newTimeList.add(time_diff/(60*24) + "일");
+				}else{
+					newTimeList.add(time_diff/(60*24*30) + "달");
+				}				
+			}
+			
 	      return "savePostTiles";
 	   }
 	
@@ -1099,7 +1137,6 @@ public class PostController {
 		PaginationVo paginationVo = new PaginationVo();
 		
 		MemberVo memberInfo = (MemberVo) request.getSession().getAttribute("SESSION_MEMBERVO");
-		logger.debug("asdasdasd {}", memberInfo);
 		
 		PaginationVo tagCountPageVo = new PaginationVo(1, 10);
 		tagCountPageVo.setMem_id(memberInfo.getMem_id());
@@ -1259,7 +1296,7 @@ public class PostController {
 		int savepostCnt = savepostService.savepost_count(memberInfo.getMem_id());
 		model.addAttribute("savepostCnt", savepostCnt);
 		
-		PaginationVo paginationVo = new PaginationVo(1, 999999);
+		PaginationVo paginationVo = new PaginationVo(1, 5);
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
 		
@@ -1285,7 +1322,6 @@ public class PostController {
 		} else if(memberInfo.getMem_division().equals("2")){ //회사일 경우
 			//회사 회원 로그인 시 홈 화면 출력을 위한 세팅
 			CorporationVo corpInfo = corporationService.select_corpInfo(memberInfo.getMem_id());
-			
 			List<FollowVo> followHashtag = followService.select_followKindList(tagCountPageVo);
 	         
 	         if(!followHashtag.isEmpty()){
@@ -1296,18 +1332,25 @@ public class PostController {
 			
 			model.addAttribute("corpInfo", corpInfo);
 			
-		} else { //관리자일 경우
-			//관리자 로그인 시 홈 화면 출력을 위한 세팅
-			
 		}
+		
 
-		List<PostVo> timelinePost = postService.select_timelinePost(paginationVo);
 		PostVo postInfo = postService.select_postInfo(post_code);
 		model.addAttribute("post", postInfo);
 		
+		if(memberInfo.getMem_division() == "1"){
+			UsersVo user = (UsersVo) request.getSession().getAttribute("SESSION_DETAILVO");
+			model.addAttribute("commentwriter", user);
+		} else if (memberInfo.getMem_division() == "2"){
+			CorporationVo corp = (CorporationVo) request.getSession().getAttribute("SESSION_DETAILVO");
+			model.addAttribute("commentwriter", corp);
+		} else {
+			
+		}
+		
 		paginationVo.setDivision("28");
 		paginationVo.setRef_code(ref_code);
-		paginationVo.setMem_id(postInfo.getMem_id());
+		paginationVo.setMem_id(memberInfo.getMem_id());
 		
 		Map<String, Object> resultMap = commentService.select_commentList(paginationVo);
 		
@@ -1316,6 +1359,9 @@ public class PostController {
 		
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("commentCnt", commentCnt);
+		model.addAttribute("ref_code", ref_code);
+		model.addAttribute("page_num", paginationVo.getPage());
+		
 		
 		model.addAttribute("memberInfo", memberInfo);
 

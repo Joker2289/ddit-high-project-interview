@@ -675,6 +675,4 @@ public class CorporationController {
 
 	
 
-	
-
 }

@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <link href="/css/timeline/writemodal.css" rel="stylesheet">
+<link href="/css/timeline/comment.css" rel="stylesheet">
 <div class="container">
    <div class="row">
       <div>
@@ -15,7 +16,6 @@
              <h3>저장한 글</h3>
            </div><hr>
            
-           <!-- feed -->
            <div class="post-group">
              <!-- post -->
              <c:forEach items="${savePost }" var="post">
@@ -29,46 +29,61 @@
                      <c:when test="${post.mem_division eq 2 }">href="/corporation?corp_id=${post.mem_id }"</c:when>
                    </c:choose>>
                    <div class="writer_info" style="display: inline-block;">
-                      <a 
-                        <c:choose>
-                          <c:when test="${post.mem_division eq '1' && post.mem_id eq SESSION_MEMBERVO.mem_id}">href='/profileHome'</c:when>
-                          <c:when test="${post.mem_division eq '1' && post.mem_id != SESSION_MEMBERVO.mem_id}">href='/profileHome?user_id=${post.mem_id }'</c:when>
-                          <c:when test="${post.mem_division eq '2'}">href='/corporation?corp_id=${post.mem_id }'</c:when>
-                        </c:choose>
-                      >
-                        <c:choose>
-                          <c:when test="${post.mem_division eq '1'}">
-	                        <img src="${ cp }/view/imageView?mem_id=${post.mem_id }&division=pf" class="writer_profile">
-                          </c:when>
-                          <c:when test="${post.mem_division eq '2'}">
-	                        <img src="${post.profile_path }" class="writer_profile">
-                          </c:when>
-                        </c:choose>
-                      </a>
-                  	  <a style="font-size: 20px;" 
-                  	    <c:choose>
-                  	      <c:when test="${post.mem_division eq 1 && !post.mem_id eq memberInfo.mem_id}">href="/profileHome?user_id=${post.mem_id }"</c:when>
-                  	      <c:when test="${post.mem_division eq 1 && post.mem_id eq memberInfo.mem_id}">href="/profileHome"</c:when>
-                  	      <c:when test="${post.mem_division eq 2 }">href="/corporation?corp_id=${post.mem_id }"</c:when>
-                  	    </c:choose>>${post.writer_name }</a>
-                    <c:choose>
-                      <c:when test="${post.resultMinute <= 1 }">
-                        <span>방금 전</span>
-                      </c:when>
-                      <c:when test="${post.resultMinute < 60 }">
-                          <span>${post.resultMinute }분 전</span>
-                        </c:when>
-                        <c:when test="${post.resultMinute < 1440 }">
-                          <span>${fn:split((post.resultMinute/60), '.')[0] }시간 전</span>
-                        </c:when>
-                        <c:when test="${post.resultMinute < 43200 }">
-                          <span>${fn:split((post.resultMinute/1440),'.')[0] }일 전</span>
-                        </c:when>
-                        <c:when test="${post.resultMinute < 518400 }">
-                          <span>${fn:split((post.resultMinute/43200),'.')[0] }달 전</span>
-                        </c:when>
-                    </c:choose>
-                  </div>
+                     <a 
+                       <c:choose>
+                         <c:when test="${post.mem_division eq '1' && post.mem_id eq SESSION_MEMBERVO.mem_id}">href='/profileHome'</c:when>
+                         <c:when test="${post.mem_division eq '1' && post.mem_id != SESSION_MEMBERVO.mem_id}">href='/profileHome?user_id=${post.mem_id }'</c:when>
+                         <c:when test="${post.mem_division eq '2'}">href='/corporation?corp_id=${post.mem_id }'</c:when>
+                       </c:choose>
+                     >
+                       <!-- 작성자 사진 -->
+                       <c:choose>
+                       
+                         <c:when test="${post.mem_division eq '1'}">
+	                       <img src="${ cp }/view/imageView?mem_id=${post.mem_id }&division=pf" class="writer_profile">
+                         </c:when>
+                         
+                         <c:when test="${post.mem_division eq '2'}">
+                         
+                           <c:choose>
+                           
+                             <c:when test="${fn:contains(post.profile_path, 'http') }">
+                               <img src="${post.profile_path }" class="writer_profile_corp">
+                             </c:when>
+                             
+                             <c:otherwise>
+                               <img src="${ cp }/view/imageView?mem_id=${post.mem_id }&division=pf" class="writer_profile_corp">
+                             </c:otherwise>
+                           </c:choose>
+                           
+                         </c:when>
+                         
+                       </c:choose>
+                     </a>
+                  	 <a style="font-size: 20px;" 
+                  	   <c:choose>
+                  	     <c:when test="${post.mem_division eq 1 && !post.mem_id eq memberInfo.mem_id}">href="/profileHome?user_id=${post.mem_id }"</c:when>
+                  	     <c:when test="${post.mem_division eq 1 && post.mem_id eq memberInfo.mem_id}">href="/profileHome"</c:when>
+                  	     <c:when test="${post.mem_division eq 2 }">href="/corporation?corp_id=${post.mem_id }"</c:when>
+                  	   </c:choose>>${post.writer_name }</a>
+                     <c:choose>
+                       <c:when test="${post.resultMinute <= 1 }">
+                         <span>방금 전</span>
+                       </c:when>
+                       <c:when test="${post.resultMinute < 60 }">
+                           <span>${post.resultMinute }분 전</span>
+                         </c:when>
+                         <c:when test="${post.resultMinute < 1440 }">
+                           <span>${fn:split((post.resultMinute/60), '.')[0] }시간 전</span>
+                         </c:when>
+                         <c:when test="${post.resultMinute < 43200 }">
+                           <span>${fn:split((post.resultMinute/1440),'.')[0] }일 전</span>
+                         </c:when>
+                         <c:when test="${post.resultMinute < 518400 }">
+                           <span>${fn:split((post.resultMinute/43200),'.')[0] }달 전</span>
+                         </c:when>
+                     </c:choose>
+                   </div>
                  </a>
                  <!-- 게시물 관리버튼(dropdown) -->
                   <div class="dropdown" style="float: right;">
@@ -120,21 +135,21 @@
                     <li style="list-style: none; float: left;">
                        <button class="btn_count btn_goodcount" title="goodCount ${post.post_code }" style="font-size: 12px;">추천 
                          <span id="txt_good_count${post.post_code }">
-		                   <c:choose>
-		                     <c:when test="${post.goodcount eq null }">0</c:when>
-		                     <c:otherwise>${post.goodcount }</c:otherwise>
-		                   </c:choose>
-		                 </span>
+                           <c:choose>
+                             <c:when test="${post.goodcount eq null }">0</c:when>
+                             <c:otherwise>${post.goodcount }</c:otherwise>
+                           </c:choose>
+                         </span>
                        </button>
                     </li>
                     <li style="list-style: none; float: left;">
                        <button class="btn_count btn_commentcount" id="btn_commentcount${post.post_code }" title="commentCount ${post.post_code }" style="font-size: 12px;">댓글 
                          <span id="txt_comment_count${post.post_code }">
-		                   <c:choose>
-		                 	 <c:when test="${post.commentcount eq null }">0</c:when>
-		                 	 <c:otherwise>${post.commentcount }</c:otherwise>
-		                   </c:choose>
-		                 </span>
+                           <c:choose>
+                         	 <c:when test="${post.commentcount eq null }">0</c:when>
+                         	 <c:otherwise>${post.commentcount }</c:otherwise>
+                           </c:choose>
+                         </span>
                        </button>
                     </li>
                  </ul>
@@ -143,41 +158,25 @@
                  <!-- 좋아요 버튼 -->
                  <button class="btn-social btn_good" style="margin-left: 10px; margin-top: 2px;" title="${post.post_code }">
                    <span style="font-size: 18px;">
-                     <i id="icon_good${post.post_code }"
-                         <c:if test="${not empty goodList}"> 
-                           <c:forEach items="${goodList }" var="goodpost">
-                             <c:choose>
-                               <c:when test="${goodpost.ref_code == post.post_code }">class="fas fa-thumbs-up"</c:when>
-                               <c:otherwise>class="far fa-thumbs-up"</c:otherwise>
-                             </c:choose>
-                           </c:forEach>
-                         </c:if>
-                         <c:if test="${empty goodList}">class="far fa-thumbs-up"</c:if>>
-                     </i>
+                     <i id="icon_good${post.post_code }" class="far fa-thumbs-up"></i>
                    </span>
                  </button>
                  <!-- 댓글 출력 버튼 -->
-                 <button class="btn-social btn_comment" id="btn_comment${post.post_code }" data-code="${post.post_code }" title="${post.post_code }"><span style="font-size: 18px;"><i class="far fa-comments"></i></span></button>
+                 <button class="btn-social btn_comment" data-toggle="collapse" data-target="#comment_area${post.post_code }" aria-expanded="false" aria-controls="collapseExample" onclick="post_commentList('${post.post_code }');">
+                 	<span style="font-size: 18px;"><i class="far fa-comments"></i></span>
+                 </button>
                  <!-- 글 저장 버튼 -->
                  <button class="btn-social btn_save" title="${post.post_code }">
                    <span style="font-size: 18px;">
-                     <i id="icon_save${post.post_code }"
-                       <c:if test="${not empty saveList}">
-                         <c:forEach items="${saveList }" var="savepost">
-                           <c:choose>
-                             <c:when test="${savepost.save_post_code eq post.post_code }">class="fas fa-bookmark"</c:when>
-                             <c:when test="${!savepost.save_post_code eq post.post_code }">class="far fa-bookmark"</c:when>
-                           </c:choose>
-                         </c:forEach>
-                       </c:if>
-                       <c:if test="${empty saveList}">class="far fa-bookmark"</c:if>>
-                     </i>
+                     <i id="icon_save${ post.post_code }" class="far fa-bookmark"></i>
                    </span>
                  </button>
                </div>
                
                <!-- comment -->
-               <div class="col-comment-area ${post.post_code }" id="post_comment ${post.post_code }"></div>
+               <div class="collapse" id="comment_area${ post.post_code }">
+				  <div class="well" id="comment_content${ post.post_code }"></div>
+			   </div>
                <!-- /comment -->
             
               </div>
@@ -186,8 +185,8 @@
              </c:forEach>
              <!-- ./post -->
            </div>
+           </div>
            <!-- ./feed -->
-         </div>
          <%@ include file="/WEB-INF/views/timeline/timeline_right.jsp" %>
      <!-- ./main -->
 	     <%@ include file="/WEB-INF/views/timeline/writeModal.jsp" %><!-- 글 작성 모달창 -->
@@ -201,11 +200,17 @@
 <script src="/js/timeline.js"></script>
 <script type="text/javascript">
 	
-   //현재 스크롤 위치에서 화면 최상단으로 이동
-   $("#scroll-top").on("click", function() {
-      $(window).scrollTop() = $(window).height();
-   });
-   
+	//댓글 버튼 클릭
+	function post_commentList(post_code){
+		$.ajax({
+			url : "/commentArea",
+			data : {"ref_code" : post_code },
+			success : function(data) {
+				
+				$('#comment_content'+post_code).html(data);
+			}
+		});
+	}
    
    var pageNum = 2;
    var lastPost;
@@ -252,5 +257,89 @@
 	       $('#icon_good${ goodpost.ref_code}').attr('class', 'fas fa-thumbs-up');   
 	    </c:forEach> 
   });
+   
+	//////////////////////////// newList
+	// newList 슬라이드
+	newList_slide = setInterval("fn_newSlide()", 4000);
+	
+	// newList 마우스오버 - 슬라이드 멈춤.
+	$("#div_newList").on("mouseover", function(){
+		newSlide_flag = false;
+	});
+	$("#div_newList").on("mouseout", function(){
+		newSlide_flag = true;
+	});		
+	
+	// newList 슬라이드 버튼 클릭.
+	$(".fa-circle").on("click", function(){
+//		alert($(this).index());
+		$(".fa-circle:eq("+ (newList_num-1) +")").attr("class", "far fa-circle");
+		$(this).attr("class", "fas fa-circle");	
+		
+		// 이동할 칸 수. (move_page)
+		var move_page = ($(this).index()) - (newList_num-1);
+		
+		// newList_num 변경.
+		newList_num = ($(this).index())+1;
+		
+		// 슬라이드 이동.
+		$("#content_newList").stop(true, true);
+		var moveX = parseInt($("#content_newList").css("margin-left"));
+		
+		if( moveX > -3000 ){
+			$("#content_newList").animate({"margin-left":"-=" + newSlide_width*move_page + "px"}, 500);
+		}
+	});
+	
+	// 채용공고 클릭.
+	$(".recr").on("click", function(){
+//		alert($(this).data("code"));
+		window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code='+ $(this).data("code") +'&req_page=timeline';
+	});
+	
+	//////////////////////////// newList	  
+
+
+
+////////////////////////////newList
+
+// div_newList 마우스오버 시 false - 슬라이드 멈춤.
+var newSlide_flag = true;	
+
+// 자동 슬라이드
+var newSlide_width = 290;
+var newList_num = 1;
+
+function fn_newSlide(){
+	if(newSlide_flag == false){
+		return;
+	}
+	
+	if(newList_num > 6){
+//		clearInterval(slide_switch);
+		$("#content_newList").css("margin-left", "0px");
+		newList_num = 0;
+	}
+	
+	newList_num++;
+	
+	$("#content_newList").stop(true, true);
+	var moveX = parseInt($("#content_newList").css("margin-left"));
+	
+	if( moveX > -2000 ){
+		// 버튼 class 바꾸기.
+		if(newList_num == 1){
+			$(".fa-circle:eq(6)").attr("class", "far fa-circle");
+			$(".fa-circle:eq("+ (newList_num-1) +")").attr("class", "fas fa-circle");
+		}else{
+			$(".fa-circle:eq("+ (newList_num-2) +")").attr("class", "far fa-circle");
+			$(".fa-circle:eq("+ (newList_num-1) +")").attr("class", "fas fa-circle");
+		}
+		
+		$("#content_newList").animate({"margin-left":"-=" + newSlide_width + "px"}, 500);
+	}
+}	
+
+//////////////////////////// newList	
    
 </script>

@@ -267,6 +267,11 @@ public class profileController {
 			personalVo.setReceive_id(SESSION_MEMBERVO.getMem_id());
 			Personal_connectionVo  personalWaitVo = personalService.select_oneConnectionsWait(personalVo);
 			personalVo = personalService.select_oneConnections(personalVo);
+			FollowVo followVo = new FollowVo(); 
+			followVo.setMem_id(SESSION_MEMBERVO.getMem_id());
+			followVo.setRef_keyword(user_id);
+			followVo = followService.select_oneFollow(followVo);
+			model.addAttribute("followVo", followVo);
 			model.addAttribute("personalVo", personalVo);
 			model.addAttribute("personalWaitVo", personalWaitVo);
 		}

@@ -29,7 +29,7 @@
 <script>
 $(document).ready(function() {
 	
-	// 검색창
+	/* // 검색창
 	$("#search").on("click", function(){
 		
 		var str = "search";
@@ -51,17 +51,17 @@ $(document).ready(function() {
 		$(document).on("mouseup", function(){
 			$("#dropdownSearch").empty();
 		});
-	});
+	}); */
 	
 	// append이후에 #search.on 메서드 실행이 안되므로 
 	// document.on 메서드로 실행
-	$(document).on('mouseover', '#searchmenu tbody tr', function(e) {
+	/* $(document).on('mouseover', '#searchmenu tbody tr', function(e) {
 		$( this ).css( "background-color", "#F3F6F8" ); 
 	    $( this).children("td").css( "cursor", "pointer" ); 
 	});
 	$(document).on('mouseleave', '#searchmenu tbody  tr', function(e) {
 		$( this ).css( "background-color", "white" ); 
-	});
+	}); */
 	
 	$(document).on('mouseleave', '.profiletr', function(e) {
 		$( this ).css( "background-color", "white" ); 
