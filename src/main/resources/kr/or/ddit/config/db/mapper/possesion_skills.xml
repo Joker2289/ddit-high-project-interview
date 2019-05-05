@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="possesion_skills">
 	
-	<!-- 보유기술 등록 -->
+	<!-- 자격증 등록 -->
 	<insert id="insert_possesion_skills" parameterType="possesion_skillsVo">
 		insert into possesion_skills
 		values(
@@ -17,7 +17,7 @@
 		)
 	</insert>
 	
-	<!-- 사용자의 보유기술 조회 -->
+	<!-- 사용자의 자격증 조회 -->
 	<select id="select_possesion_skills" parameterType="String" resultType="possesion_skillsVo">
 		select pskill_code,
 			   user_id,
@@ -30,7 +30,7 @@
 		 order by issue_date desc
 	</select>
 	
-	<!-- 사용자의 한 건의 보유기술 조회 -->
+	<!-- 사용자의 한 건의 자격증 조회 -->
 	<select id="select_onePossesion_skills" parameterType="String" resultType="possesion_skillsVo">
 		 select pskill_code,
 			    user_id,
@@ -42,7 +42,7 @@
 		 where pskill_code = #{pskill_code}
 	</select>
 	
-	<!-- 사용자의 보유기술 업데이트 -->
+	<!-- 사용자의 자격증 업데이트 -->
 	<update id="update_possesion_skills" parameterType="possesion_skillsVo">
 		update possesion_skills
 		   set pskill_name = nvl(#{pskill_name, jdbcType=VARCHAR}, null),
@@ -52,7 +52,7 @@
 		 where pskill_code = #{pskill_code}
 	</update>
 	
-	<!-- 사용자의 보유기술 삭제 -->
+	<!-- 사용자의 자격증 삭제 -->
 	<delete id="delete_possesion_skills" parameterType="String">
 		delete from possesion_skills
 			  where pskill_code = #{pskill_code}

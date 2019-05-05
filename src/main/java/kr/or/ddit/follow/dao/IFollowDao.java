@@ -168,4 +168,14 @@ public interface IFollowDao {
 
 	int delete_userFollow(FollowVo followVo);
 	
+	/**
+	 * Method : select_hashtagFollowList
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 유저가 팔로우한 해쉬태그 리스트 조회
+	 */
+	List<FollowVo> select_hashtagFollowList (String user_id);
+	
 }
