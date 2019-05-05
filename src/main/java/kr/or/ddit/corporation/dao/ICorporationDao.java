@@ -212,7 +212,7 @@ public interface ICorporationDao {
 	 * 변경이력 :
 	 * @param corp_code
 	 * @return
-	 * Method 설명 :  회사에 등록된 직원(경력의 corp_code가 인증된 사원의 
+	 * Method 설명 :  회사에 등록된 직원경력의 corp_code가 인증된 사원의 
 	 * 				출신학교(school_name)와 그에 해당하는 사원수
 	 */
 	List<ChartVo> school_name_list(String corp_code);
@@ -224,10 +224,22 @@ public interface ICorporationDao {
 	 * 변경이력 :
 	 * @param corp_code
 	 * @return
-	 * Method 설명 : 회사에 등록된 직원(경력의 corp_code가 인증된 
+	 * Method 설명 : 회사에 등록된 직원경력의 corp_code가 인증된 
 	 * 				사원의 전공(major)과 그에 해당하는 사원수
 	 */
 	List<ChartVo> major_list(String corp_code);
+	
+	/**
+	 * 
+	 * Method : ability_list
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param corp_code
+	 * @return
+	 * Method 설명 : 회사에 등록된 직원 경력의 corp_code가 인증된 
+	 * 				사원의 보유기술(ability)과 그에 해당하는 사원수
+	 */
+	List<ChartVo> ability_list(String corp_code);
 	
 	/**
 	 * 
@@ -272,6 +284,17 @@ public interface ICorporationDao {
 	 * Method 설명 : 회사에 등록되고 전공: 조건추가된 직원의 정보 리스트
 	 */
 	List<Employee_listVo> select_employMajorList(Employee_listVo vo);
+	
+	/**
+	 * 
+	 * Method : select_employAbilityList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 회사에 등록되고 보유기술: 조건추가된 직원의 정보 리스트
+	 */
+	List<Employee_listVo> select_employAbilityList(Employee_listVo vo);
 }
 
 

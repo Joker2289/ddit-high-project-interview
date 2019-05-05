@@ -41,7 +41,7 @@ var chart_index = 1;
 function beforeChart(corp_id, corp_code){
 	
 	if(chart_index == 1){
-		chart_index = 3;
+		chart_index = 4;
 	} else {
 		chart_index--;
 	}
@@ -54,7 +54,7 @@ function beforeChart(corp_id, corp_code){
 /* 다음 차트 */
 function nextChart(corp_id, corp_code){
 	
-	if(chart_index == 3) {
+	if(chart_index == 4) {
 		chart_index = 1;		
 	} else {
 		chart_index++;

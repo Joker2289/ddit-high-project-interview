@@ -304,7 +304,7 @@ public class CorporationController {
 				model.addAttribute("chart_title", "전공");
 				break;
 			case "4":
-				chart_List  = corporationService.job_position_list(corp_code);
+				chart_List  = corporationService.ability_list(corp_code);
 				model.addAttribute("chart_title", "보유기술");
 				break;
 		}
@@ -361,7 +361,7 @@ public class CorporationController {
 				employ_List  = corporationService.select_employMajorList(elVo);
 				break;
 			case "4":
-				employ_List  = corporationService.select_employJobPositionList(elVo);
+				employ_List  = corporationService.select_employAbilityList(elVo);
 				break;
 		}
 		
