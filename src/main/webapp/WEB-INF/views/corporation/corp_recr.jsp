@@ -19,7 +19,7 @@
 				
 				<c:choose>
 					<c:when test="${ fn:contains( corporationInfo.logo_path, 'http') }">
-						<a href="/recr_detail?crecruit_code=${ list.recruit_code }"><img src="${ corporationInfo.logo_path }"></a>
+						<a href="/recr_detail?recruit_code=${ list.recruit_code }"><img src="${ corporationInfo.logo_path }"></a>
 					</c:when>
 					<c:otherwise>
 						<a href="/recr_detail?recruit_code=${ list.recruit_code }"><img src="${ cp }/view/imageView?mem_id=${ corporationInfo.corp_id }&division=pf"></a>
