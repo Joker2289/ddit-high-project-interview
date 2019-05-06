@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.apply_recruit.dao.IApply_recruitDao;
 import kr.or.ddit.apply_recruit.model.Apply_recruitVo;
+import kr.or.ddit.users.model.UsersVo;
 
 @Service("apply_recruitService")
 public class Apply_recruitServiceImpl implements IApply_recruitService{
@@ -61,6 +62,22 @@ public class Apply_recruitServiceImpl implements IApply_recruitService{
 		List<Apply_recruitVo> appList = appDao.getAppList(mem_id);
 		
 		return appList;
+	}
+
+	/**
+	 * 
+	 * Method : getAUList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param recruit_code
+	 * @return
+	 * Method 설명 : 특정 채용공고에 지원한 유저 목록 조회.
+	 */
+	@Override
+	public List<UsersVo> getAUList(String recruit_code) {
+		List<UsersVo> aUList = appDao.getAUList(recruit_code);
+		
+		return aUList;
 	}
 
 	
