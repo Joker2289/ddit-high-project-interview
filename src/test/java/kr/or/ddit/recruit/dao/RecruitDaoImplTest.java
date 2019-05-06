@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.recruit.model.RecruitVo;
 import kr.or.ddit.test.LogicTestConfig;
+import kr.or.ddit.users.model.UsersVo;
 
 public class RecruitDaoImplTest extends LogicTestConfig{
 	private Logger logger = LoggerFactory.getLogger(RecruitDaoImplTest.class);
@@ -228,14 +229,14 @@ public class RecruitDaoImplTest extends LogicTestConfig{
 		/***Then***/
 		assertNotNull(personalUserIdList);
 	}
-	
+
+
 	
 	
 	
 	
 	
 }
-
 
 
 

@@ -37,6 +37,7 @@ import kr.or.ddit.apply_recruit.model.Apply_recruitVo;
 import kr.or.ddit.apply_recruit.service.IApply_recruitService;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
+import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.interest.model.InterestVo;
 import kr.or.ddit.interest.service.IInterestService;
 import kr.or.ddit.item.model.ItemVo;
@@ -1185,6 +1186,12 @@ public class RecruitController {
 		
 		model.addAttribute("time_value", time_value);
 		
+		// mem_division 넘기기. '2'이면 회사회원 - 지원 X.
+		model.addAttribute("mem_division", mVo.getMem_division());
+		
+		// mem_id 넘기기. 해당 채용공고의 corp_id랑 같을 때만 지원자 목록 조회 가능.
+		model.addAttribute("mem_id", mVo.getMem_id());		
+		
 		return "recr_detailTiles";
 	}
 	
@@ -1293,6 +1300,12 @@ public class RecruitController {
 		}			
 		
 		model.addAttribute("time_value", time_value);		
+		
+		// mem_division 넘기기. '2'이면 회사회원 - 지원 X.
+		model.addAttribute("mem_division", mVo.getMem_division());
+		
+		// mem_id 넘기기. 해당 채용공고의 corp_id랑 같을 때만 지원자 목록 조회 가능.
+		model.addAttribute("mem_id", mVo.getMem_id());
 		
 		return "recr_detailTiles";
 	}
@@ -1657,8 +1670,15 @@ public class RecruitController {
 	
 	// @채용공고 지원자 목록 조회 페이지.
 	@RequestMapping("/applyUser")
-	public String applyUser() {
+	public String applyUser(HttpSession session, String recruit_code, Model model) {
+		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 
+		model.addAttribute("recruit_code", recruit_code);
+		
+		List<UsersVo> aUList = appService.getAUList(recruit_code);
+		
+		model.addAttribute("aUList", aUList);
+		
 		return "applyUserTiles";
 	}
 	

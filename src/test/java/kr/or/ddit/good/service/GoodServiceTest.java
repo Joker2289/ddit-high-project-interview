@@ -99,50 +99,8 @@ public class GoodServiceTest extends LogicTestConfig {
 		assertTrue(goodCnt > 0);
 	}
 	
-	@Test
-	public void testSelect_pushGoodMember(){
-		//회사까지 조회되는 쿼리 및 테스트코드 적용 필요 (미완성)
-		
-		/***Given***/
-		GoodVo goodVo 	   = new GoodVo();
-		MemberVo member    = new MemberVo();
-		UsersVo users	   = new UsersVo();
-		CorporationVo corp = new CorporationVo();
-		
-		String introduce   = "";
-		String member_name = "";
-		
-		/***When***/
-		goodVo.setDivision("28");
-		goodVo.setRef_code("138");
-		
-		List<UsersVo> goodinfo = goodService.select_pushGoodMember(goodVo);
-		for(int i=0; i<goodinfo.size(); i++){
-			logger.debug("good push member : {}", goodinfo.get(i).getUser_name());
-			
-			member = memberSerivce.select_memberInfo(goodinfo.get(i).getUser_id());
-			if(member.getMem_division().equals("1")){
-				Map<String, Object> map = usersService.select_introduce(member.getMem_id());
-				UsersVo usersVo = (UsersVo) map.get("usersVo");
-				introduce 	= usersVo.getIntroduce();
-				users = usersService.select_userInfo(member.getMem_id());
-				member_name = users.getUser_name();
-				
-				
-				logger.debug("user info : {}, {}", member_name, introduce);
-			} else if(member.getMem_division().equals("2")) {
-				corp = corpService.select_corpInfo(member.getMem_id());
-				member_name = corp.getCorp_name();
-				
-				logger.debug("corp info : {}", member_name);
-			} else {
-				
-			}
-		}
-		
-		/***Then***/
-		assertTrue(goodinfo.size() > 0);
-	}
+
+
 	
 	@Test
 	public void testSelect_pushedGoodPost(){

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.apply_recruit.model.Apply_recruitVo;
+import kr.or.ddit.users.model.UsersVo;
 
 public interface IApply_recruitService {
 
@@ -40,6 +41,17 @@ public interface IApply_recruitService {
 	 * Method 설명 : 특정 유저의 채용공고지원 목록 조회.
 	 */
 	List<Apply_recruitVo> getAppList(String mem_id);
+
+	/**
+	 * 
+	 * Method : getAUList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param recruit_code
+	 * @return
+	 * Method 설명 : 특정 채용공고에 지원한 유저 목록 조회.
+	 */
+	List<UsersVo> getAUList(String recruit_code);
 	
 	
 	

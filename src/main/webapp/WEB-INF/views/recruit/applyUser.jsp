@@ -30,69 +30,49 @@
 				<div class="whiteBox" style="width: 795px; vertical-align: middle;">
 					<h4 id="txt_srList" style="font-size: 22px; margin-left: 25px; margin-top: 14px;
 							margin-bottom: 14px;">
-						채용공고 지원자 (${recrList.size() })
+						<!-- applyUserList -->
+						채용공고 지원자 (${aUList.size() })
 					</h4>
 				</div>
 				<div id="div_srList" class="whiteBox" style="width: 795px; border-top: 0px; margin-top: -2px;
 						font-size: 15px;">
-					<c:if test="${recrList.size() > 0 }">
-						<c:forEach begin="1" end="${recrList.size() }" varStatus="i">
-							<table id="recr${i.index }" border="0" style="margin: 2px; cursor: pointer;
+					<c:if test="${aUList.size() > 0 }">
+						<c:forEach begin="1" end="${aUList.size() }" varStatus="i">
+							<table id="recr${i.index }" border="1" style="margin: 2px; cursor: pointer;
 									width: 790px; border-bottom: 1px solid; border-color: #d9d9d9;
 									margin-bottom: 5px;" onmouseover="">
 								<tr>
 									<td rowspan="6" style="width: 235px;">
-										<c:choose>
-											<c:when test="${ fn:contains(corpImgList.get(i.index - 1), 'http') }">
-												<img src="${corpImgList.get(i.index - 1) }" width="200"
-													style="margin-left: 15px;">
-											</c:when>
-											<c:otherwise>
-												<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${corpIdList.get(i.index - 1) }&division=pf" 
-														width="200" style="margin-left: 15px;">
-											</c:otherwise>	
-										</c:choose>											
+										<table border="1">
+											<tr>
+												<td>
+													<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${aUList.get(i.index - 1).user_id }&division=pf" 
+															width="60" style="margin-left: 15px;">
+												</td>
+												<td style="font-size: 16px; padding-left: 15px; padding-right: 15px;">
+													<strong>${aUList.get(i.index - 1).user_id }</strong>
+												</td>
+											</tr>
+										</table>
 									</td>
-									<td style="padding-left: 10px; color: #0174b0; font-size: 17px; 
+									<td style="padding-left: 10px; font-size: 16px; 
 											padding-bottom: 2px; padding-top: 7px;">
-										<strong>${recrList.get(i.index - 1).recruit_title }</strong>
+										<strong>${aUList.get(i.index - 1).user_id }</strong>
+									</td>
+									<td style="width: 150px; cursor: default;" rowspan="3">
+										<input type="button" value="이력서 저장" style="color: #0174b0; 
+												border: 1px solid; border-color: #0174b0;
+												background-color: white;">
 									</td>
 								</tr>
 								<tr>
 									<td style="padding-left: 10px; font-size: 16px; padding-bottom: 2px; padding-top: 2px;">
-										<strong>${corpNmList.get(i.index - 1) }</strong>
+										<strong>${aUList.get(i.index - 1).user_id }</strong>
 									</td>
 								</tr>
 								<tr>
 									<td style="padding-left: 10px; padding-bottom: 2px; padding-top: 2px;">
-										${recrList.get(i.index - 1).job_local }
-									</td>
-								</tr>
-								<tr>
-									<td style="padding-left: 10px; padding-bottom: 2px; padding-top: 2px;">
-										<c:choose>
-											<c:when test="${recrList.get(i.index - 1).app_count == '0'}">
-												<i class="far fa-clock" style="color: #2f7b15;"></i>
-												 가장 먼저 지원하세요.
-											</c:when>
-											<c:otherwise>
-												${recrList.get(i.index - 1).app_count }명 지원
-											</c:otherwise>
-										</c:choose>
-									</td>
-								</tr>
-								<tr style="border-bottom: 1px solid; border-color: #d9d9d9;">
-									<td style="padding-left: 10px; padding-bottom: 7px; padding-top: 2px;">
-										<span style="color: #2f7b15;">${timeList.get(i.index - 1) } 전</span>
-										<c:if test="${recrList.get(i.index - 1).app_type == 't'}">
-											 · <img src="/images/logo/linkedin.png" width="17">
-											 간편 지원
-										</c:if>
-										<c:if test="${function_value == 'person'}"> · 
-											<span style="color: #0174b0;">
-												1촌: ${personalUserIdList.get(i.index - 1) }
-											</span>
-										</c:if>
+										${aUList.get(i.index - 1).user_id }
 									</td>
 								</tr>
 							</table>			
@@ -103,9 +83,9 @@
 				<div class="col-md-12">
 					<div class="whiteBox" style="width: 795px; margin-bottom: 100px; height: 50px; padding: 10px;
 							padding-left: 20px; font-size: 20px; margin-left: -15px; margin-top: -5px;">
-						<a href="${pageContext.request.contextPath }/recruit">
+						<a href="${pageContext.request.contextPath }/recr_detail?recruit_code=${recruit_code }">
 							<i class="fas fa-chevron-left" style="font-size: 19px;"></i>
-							<strong>&nbsp; &nbsp;채용공고 페이지로</strong>
+							<strong>&nbsp; &nbsp;채용공고 상세 페이지로</strong>
 						</a>
 					</div>
 				</div>												
