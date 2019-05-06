@@ -3,6 +3,7 @@ package kr.or.ddit.corporate_review.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporate_review.model.Corporate_reviewVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
@@ -31,7 +33,7 @@ public class corporate_reviewController {
 	
 	
 	@RequestMapping(path={"/companyReview"})
-	public String companyReviewView(String corp_id, Model model, PaginationVo paginationVo) {
+	public String companyReviewView(String corp_id, Model model, PaginationVo paginationVo, HttpServletRequest req) {
 		
 		paginationVo.setPageSize(3);
 		paginationVo.setCorp_id(corp_id);
@@ -49,7 +51,23 @@ public class corporate_reviewController {
 		model.addAttribute("corporationInfo", corporationInfo);
 		model.addAttribute("paginationVo", paginationVo);
 		
+		//접속자가 회사에 등록된 직원인지 판별
+		
+		//접속자정보
+		MemberVo mVo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
+		
+		//회사정보
+		CorporationVo corpInfo = corporationService.select_corpInfo(corp_id);
+		
+		//회사의 직원이면 정보가져오고, 직원이 아닐경우 null
+		Career_infoVo career_infoVo = new Career_infoVo();
+		career_infoVo.setCorp_code(corpInfo.getCorp_code());
+		career_infoVo.setUser_id(mVo.getMem_id());
+		Career_infoVo employInfo = corporationService.select_employInfo(career_infoVo);
+		model.addAttribute("employInfo", employInfo);
+		
 		return "companyReviewTiles";
+		
 	}
 	
 	

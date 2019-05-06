@@ -156,13 +156,21 @@ public class CorporationController {
 		}
 		
 		
+		
+		
 		if(!memberInfo.getMem_id().equals(corp_id)) {
+			
+			logger.debug("memberInfo >>>>>>>>>>> :{} ", memberInfo);
+			logger.debug("corp_id >>>>>>>>>>> :{} ", corp_id);
+			
 			//팔로우 정보 조회
 			FollowVo fVo = new FollowVo();
 			fVo.setMem_id(memberInfo.getMem_id());
-			fVo.setRef_keyword(corp_id);
+			fVo.setRef_keyword(corp_id+"");
 			fVo.setDivision("11");
+			logger.debug("ddddd >>>>>> : {}");
 			FollowVo followInfo = followService.select_followLog(fVo);
+			
 			if(followInfo != null) {
 				model.addAttribute("followInfo", followInfo);
 			}
