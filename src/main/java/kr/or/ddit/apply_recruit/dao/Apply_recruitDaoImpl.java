@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.apply_recruit.model.Apply_recruitVo;
+import kr.or.ddit.users.model.UsersVo;
 
 @Repository("apply_recruitDao")
 public class Apply_recruitDaoImpl implements IApply_recruitDao{
@@ -54,9 +55,26 @@ public class Apply_recruitDaoImpl implements IApply_recruitDao{
 		return appList;
 	}
 
+	/**
+	 * 
+	 * Method : getAUList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param recruit_code
+	 * @return
+	 * Method 설명 : 특정 채용공고에 지원한 유저 목록 조회.
+	 */
+	@Override
+	public List<UsersVo> getAUList(String recruit_code) {
+		List<UsersVo> aUList = sqlSessionTemplate.selectList("app.getAUList", recruit_code);
+		
+		return aUList;
+	}
+
+
 	
 	
-	
+		
 	
 	
 	

@@ -25,6 +25,16 @@
 		ORDER BY APPLY_CODE DESC 
 	</select>
 
+	<!-- 특정 채용공고에 지원한 유저 목록 조회. -->
+	<select id="getAUList" parameterType="String" resultType="usersVo">
+		SELECT *
+		  FROM USERS A, (SELECT USER_ID
+		                   FROM APPLY_RECRUIT
+		                  WHERE RECRUIT_CODE = #{recruit_code}
+		                 ORDER BY APPLY_CODE) B
+		 WHERE A.USER_ID = B.USER_ID	
+	</select>
+
 
 
   	
