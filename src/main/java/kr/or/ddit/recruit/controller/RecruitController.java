@@ -1612,6 +1612,7 @@ public class RecruitController {
 		alarmInfo.setDivision("34");
 		alarmInfo.setRef_code(recruit_code);
 		alarmInfo.setSend_id(corp_id);
+		logger.debug("corpid? : {}", corp_id);
 
 		Map<String, List<String>> resultMap = new HashMap<>();
 		
@@ -1652,6 +1653,13 @@ public class RecruitController {
 		model.addAttribute("req_page", req_page);
 		
 		return "redirect:" + req.getContextPath() + "/recr_detail";
+	}
+	
+	// @채용공고 지원자 목록 조회 페이지.
+	@RequestMapping("/applyUser")
+	public String applyUser() {
+
+		return "applyUserTiles";
 	}
 	
 	
