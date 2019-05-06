@@ -102,7 +102,8 @@
 												</span> ｜ 
 													<c:choose>
 														<c:when test="${recr.app_count < 10 }">
-															<span style="color: #0174b0;">
+															<span id="btn_applyUser" onmouseover="" style="color: #0174b0;
+																	cursor: pointer;">
 																<i class="fas fa-user-alt"></i> 지원자 수: 10 명 미만
 															</span>
 														</c:when>
@@ -222,6 +223,11 @@ $(function () {
 
 $(document).ready(function(){
 // 	console.log("req_page? : ${req_page }");
+	
+	// 채용공고 지원자 클릭.
+	$("#btn_applyUser").on("click", function(){
+		window.location.href = '${pageContext.request.contextPath }/applyUser?recruit_code=${recr.recruit_code }';
+	});
 	
 	// msg 출력.
 	var msg_flag = "${msg_flag }";
