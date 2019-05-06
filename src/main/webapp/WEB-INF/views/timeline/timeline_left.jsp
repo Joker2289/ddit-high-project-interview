@@ -61,7 +61,7 @@
               <pre style="background: #fff; border-color: #fff;"><a href="/savepost"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
           </c:when>
           <c:when test="${memberInfo.mem_division == '2' }">
-              <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
+              <pre style="background: #fff; border-color: #fff;"><a href="/savepost"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
           </c:when>
         </c:choose>
       </div>
