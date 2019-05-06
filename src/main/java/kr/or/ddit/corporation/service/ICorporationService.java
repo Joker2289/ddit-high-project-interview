@@ -7,6 +7,9 @@ import kr.or.ddit.career_info.model.Career_infoVo;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.education_info.model.Education_infoVo;
 import kr.or.ddit.users.model.UsersVo;
+import kr.or.ddit.util.chart.ChartVo;
+import kr.or.ddit.util.chart.Employee_listVo;
+import kr.or.ddit.util.pagination.PaginationVo;
 
 public interface ICorporationService {
 	
@@ -131,6 +134,169 @@ public interface ICorporationService {
 	 * @return
 	 */
 	Education_infoVo employee_education(String user_id);
+
+	/**
+	 * 회사코드를 가진 유저 전체 리스트
+	 * @param corp_code
+	 * @return
+	 */
+	List<Career_infoVo> corp_code_user_list(String corp_code);
+
+	/**
+	 * 회사코드를 가진 유저 수
+	 * @param corp_code
+	 * @return
+	 */
+	int corp_code_user_count(String corp_code);
+
+	/**
+	 * 직원들의 대학 수 합
+	 * @param corp_code
+	 * @return
+	 */
+	List<Integer> empl_education_count(String corp_code);
+
+	/**
+	 * 직원 학교,전공 리스트
+	 * @param corp_code
+	 * @return
+	 */
+	List<Education_infoVo> empl_university_list(String corp_code);
+
+	/**
+	 * 회사코드로 graph 정보 
+	 * @param corp_code
+	 * @return
+	 */
+	List<ChartVo> graphInfo(String corp_code);
+
+	/**
+	 * 회사직원 리스트
+	 * @param param
+	 * @return
+	 */
+	List<ChartVo> empl_list(ChartVo param);
+
+	/**
+	 * 직원 전공 수(중복 수 증가)
+	 * @param corp_code
+	 * @return
+	 */
+	List<Integer> major_count(String corp_code);
+
+
+	/**
+	 * 직책 수 (중복 수 증가)
+	 * @param corp_code
+	 * @return
+	 */
+	List<Integer> job_position_count(String corp_code);
+
+	
+	//정권------------------------------------------------------
+	
+	/**
+	 * 
+	 * Method : job_position_list
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 :  회사에 등록된 직원(경력의 corp_code가 인증된 사원)의 
+	 *				직책(job_position)과 그에 해당하는 사원수
+	 */
+	List<ChartVo> job_position_list(String corp_code);
+	
+	/**
+	 * 
+	 * Method : school_name_list
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param corp_code
+	 * @return
+	 * Method 설명 :  회사에 등록된 직원경력의 corp_code가 인증된 사원의 
+	 * 				출신학교(school_name)와 그에 해당하는 사원수
+	 */
+	List<ChartVo> school_name_list(String corp_code);
+	
+	/**
+	 * 
+	 * Method : major_list
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param corp_code
+	 * @return
+	 * Method 설명 : 회사에 등록된 직원경력의 corp_code가 인증된 
+	 * 				사원의 전공(major)과 그에 해당하는 사원수
+	 */
+	List<ChartVo> major_list(String corp_code);
+	
+	/**
+	 * 
+	 * Method : ability_list
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param corp_code
+	 * @return
+	 * Method 설명 : 회사에 등록된 직원 경력의 corp_code가 인증된 
+	 * 				사원의 보유기술(ability)과 그에 해당하는 사원수
+	 */
+	List<ChartVo> ability_list(String corp_code);
+	
+	/**
+	 * 
+	 * Method : select_employAllList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param corp_code
+	 * @return
+	 * Method 설명 : 회사에 등록된 모든 직원의 정보 리스트 조회
+	 */
+	List<Employee_listVo> select_employAllList(String corp_code);
+	
+	/**
+	 * 
+	 * Method : select_employJobPositionList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 회사에 등록되고 직무: 조건추가된 직원의 정보 리스트
+	 */
+	List<Employee_listVo> select_employJobPositionList(Employee_listVo vo);
+	
+	/**
+	 * 
+	 * Method : select_employSchoolNameList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 회사에 등록되고 출신학교: 조건추가된 직원의 정보 리스트
+	 */
+	List<Employee_listVo> select_employSchoolNameList(Employee_listVo vo);
+	
+	/**
+	 * 
+	 * Method : select_employMajorList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 회사에 등록되고 전공: 조건추가된 직원의 정보 리스트
+	 */
+	List<Employee_listVo> select_employMajorList(Employee_listVo vo);
+	
+	/**
+	 * 
+	 * Method : select_employAbilityList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 회사에 등록되고 보유기술: 조건추가된 직원의 정보 리스트
+	 */
+	List<Employee_listVo> select_employAbilityList(Employee_listVo vo);
 }
 
 

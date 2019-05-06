@@ -113,4 +113,36 @@ public class FollowServiceImpl implements IFollowService {
 		return followDao.select_followChatList(mem_id);
 	}
 
+	@Override
+	public int insert_userFollow(FollowVo followVo) {
+		return followDao.insert_userFollow(followVo);
+	}
+
+	@Override
+	public int delete_userFollow(FollowVo followVo) {
+		return followDao.delete_userFollow(followVo);
+	}
+
+	/**
+	 * Method : select_hashtagFollowList
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 유저가 팔로우한 해쉬태그 리스트 조회
+	 */
+	@Override
+	public List<FollowVo> select_hashtagFollowList(String user_id) {
+		return followDao.select_hashtagFollowList(user_id);
+	}
+
+	@Override
+	public FollowVo select_followLog(FollowVo vo) {
+		return followDao.select_followLog(vo);
+	}
+
+	@Override
+	public List<FollowVo> select_userFollowList(String mem_id) {
+		return followDao.select_userFollowList(mem_id);
+	}
 }

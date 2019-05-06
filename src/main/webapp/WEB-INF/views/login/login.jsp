@@ -45,16 +45,14 @@
      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
    
-   <!-- kakao 로그인    script -->
+   <!-- kakao 로그인 script -->
    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-   
-   
    
 </head>
 <body>
    
    <div class="limiter">
-      <div class="container-login100" style="background-image: url('/css/login/images/bg4.jpg');">
+      <div class="container-login100" style="background-image: url('/css/login/images/jumokdajim.jpeg');">
          <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
             <form id="login"class="login100-form validate-form" action="/login" method="post">
                <span class="login100-form-title p-b-49">

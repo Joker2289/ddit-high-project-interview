@@ -10,7 +10,8 @@
 <link href="/css/profile/profileHome.css" rel="stylesheet"> 
 <script type="text/javascript">
 $(document).ready(function() {
-	
+	$(".followHashtag").hide();
+	$(".ability").hide();
 	$(".skils").hide();
 	$(".thesis").hide();
 	$(".patent").hide();
@@ -75,16 +76,46 @@ $(document).ready(function() {
 		}
 	});
 	
+	$(".hashtagFollowVoShow").on("click",function(e){
+		if ($(e.target).closest(".hashtagFollowVoShowSkip").hasClass('hashtagFollowVoShowSkip')) {
+			$(".hashtagFollowVoShow").empty();
+			$(".hashtagFollowVoShow").append('더 보기 취소 <i class="fas fa-angle-up"></i>');
+			$(".hashtagFollowVoShowSkip").attr('class', 'hashtagFollowVoShowSkipOn');
+			$(".followHashtag").show();
+			
+		}else {
+			$(".hashtagFollowVoShow").empty();
+			$(".hashtagFollowVoShow").append('더 보기 <i class="fas fa-angle-down"></i>');
+			$(".hashtagFollowVoShowSkipOn").attr('class', 'hashtagFollowVoShowSkip');
+			$(".followHashtag").hide();
+		}
+	});
+	
+	$(".abilityVoShow").on("click",function(e){
+		if ($(e.target).closest(".abilityVoShowSkip").hasClass('abilityVoShowSkip')) {
+			$(".abilityVoShow").empty();
+			$(".abilityVoShow").append('더 보기 취소 <i class="fas fa-angle-up"></i>');
+			$(".abilityVoShowSkip").attr('class', 'abilityVoShowSkipOn');
+			$(".ability").show();
+			
+		}else {
+			$(".abilityVoShow").empty();
+			$(".abilityVoShow").append('더 보기 <i class="fas fa-angle-down"></i>');
+			$(".abilityVoShowSkipOn").attr('class', 'abilityVoShowSkip');
+			$(".ability").hide();
+		}
+	});
+	
 	$(".possesion_skillsVoShow").on("click",function(e){
 		if ($(e.target).closest(".possesion_skillsVoShowSkip").hasClass('possesion_skillsVoShowSkip')) {
 			$(".possesion_skillsVoShow").empty();
-			$(".possesion_skillsVoShow").append('더 보기 취소 <i class="fas fa-angle-up"></i>');
+			$(".possesion_skillsVoShow").append('<i class="fas fa-angle-up"></i>');
 			$(".possesion_skillsVoShowSkip").attr('class', 'possesion_skillsVoShowSkipOn');
 			$(".skils").show();
 			
 		}else {
 			$(".possesion_skillsVoShow").empty();
-			$(".possesion_skillsVoShow").append('더 보기 <i class="fas fa-angle-down"></i>');
+			$(".possesion_skillsVoShow").append('<i class="fas fa-angle-down"></i>');
 			$(".possesion_skillsVoShowSkipOn").attr('class', 'possesion_skillsVoShowSkip');
 			$(".skils").hide();
 		}
@@ -248,14 +279,14 @@ $(document).ready(function() {
 						<div class="memberBox" style="display: flex;">
 							<div style="width: 500px;">
 								<div style="display:flex;"> 
-									<label class="member" style="width: auto;">${usersMap.usersVo.user_name }</label>
+									<label class="member" style="width: auto; color: black;">${usersMap.usersVo.user_name }</label>
 									<button class="btn btn-default" style="border:0px; height: 32px; font-weight: bold; padding: 0 12px 6px 12px;">
 										<span style="color: #337ab7; font-size: 25px;">Blog</span>
 									</button>
 								</div>
 								<label class="member simpleInfo" style="font-size: 20px; font-weight: 100;">${usersMap.usersVo.introduce }</label>
-								<c:if test="${not empty usersMap.usersVo.persnal_url}">
-									<a href="http://${usersMap.usersVo.persnal_url}" target="_blank" style="font-size: 20px; font-weight: 100;">${usersMap.usersVo.persnal_url}</a>
+								<c:if test="${not empty usersMap.usersVo.addr1}">
+									<label style="font-size: 17px; font-weight: 100;">${fn:split(usersMap.usersVo.addr1,' ')[0]}</label>
 								</c:if>
 							</div>
 							
@@ -263,20 +294,20 @@ $(document).ready(function() {
 								<c:if test="${not empty career_infoMap.career_infoVoList}">
 									<div>
 										<a href="#careerFirst"><span style="color: #B3B6B9;font-size: 18px;"><i style="width:30px;" class="fas fa-building"></i></span>
-										<label class="memberRight">${career_infoMap.career_infoVoList[0].corporate_name }</label></a>
+										<label class="memberRight" style="color: black;">${career_infoMap.career_infoVoList[0].corporate_name }</label></a>
 									</div>
 								</c:if>
 								
 								<c:if test="${not empty education_infoMap.education_infoVoList}">
 								<div>
 									<a href="#educationFirst"><span style="color: #B3B6B9;font-size: 18px;"><i style="width:30px;" class="fas fa-graduation-cap"></i></span>
-									<label class="memberRight">${education_infoMap.education_infoVoList[0].school_name }</label></a>
+									<label class="memberRight" style="color: black;">${education_infoMap.education_infoVoList[0].school_name }</label></a>
 								</div>
 								</c:if>
 								
 								<div>
 									<span style="color: #B3B6B9;font-size: 18px;"> <i style="width:30px;" class="fas fa-address-card"></i></span>
-									<a class="telInfoA" data-toggle="modal" data-target="#myModal" title="${usersMap.usersVo.user_id }" ><label class="memberRight">연락처 보기</label></a>
+									<a class="telInfoA" data-toggle="modal" data-target="#myModal" title="${usersMap.usersVo.user_id }" ><label class="memberRight" style="color: black;">연락처 보기</label></a>
 								</div>
 								<div>
 									<span style="color: #B3B6B9;font-size: 18px;"><i style="width:30px;" class="fas fa-users"></i></span>
@@ -293,7 +324,7 @@ $(document).ready(function() {
 								</div>
 							</div>
 						</div>
-						<div>
+						<div style="margin-top: 133px;">
 							<div class="btn-group" role="group" aria-label="...">
 							  <c:choose>
 							  	<c:when test="${SESSION_MEMBERVO.mem_id == usersMap.usersVo.user_id }">
@@ -301,20 +332,42 @@ $(document).ready(function() {
 								   	프로필 항목 등록 <span class="caret"></span>
 								   	</button>
 							  	</c:when>
-							  	<c:when test="${not empty personalVo.receive_accept }">
-							  		<button style="height: 40px;font-size: 18px;" type="button" class="btn btn-primary">
-							  		메일 보내기
-							  		</button>
-							  	</c:when>
-							  	<c:when test="${not empty personalWaitVo.receive_accept }">
-							  		<button style="height: 40px;font-size: 18px; color: #469a1f;" type="button" class="btn btn-link" disabled="disabled">
-							  			<span style="font-size: 18px; color: #469a1f;"><i class="far fa-check-circle"></i></span>일촌 대기중
-							  		</button>
-							  	</c:when>
 							  	<c:otherwise>
-							  		<button style="height: 40px;font-size: 18px;" type="button" class="btn btn-primary" onclick="location.href='/profileInsertConnection?user_id=${SESSION_MEMBERVO.mem_id}&receive_id=${usersMap.usersVo.user_id }'">
-							  		일촌맺기
-							  		</button>
+							  		<c:choose>
+							  			<c:when test="${SESSION_MEMBERVO.mem_division == 2 }">
+							  				<c:choose>
+							  					<c:when test="${empty followVo.mem_id }">
+							  						<button style="height: 40px;font-size: 18px;" type="button" class="btn btn-primary" onclick="location.href='/profileInsertFollow?mem_id=${SESSION_MEMBERVO.mem_id}&ref_keyword=${param.user_id }&division=43'">
+											  		팔로우
+											  		</button>
+							  					</c:when>
+							  					<c:otherwise>
+							  						<button style="height: 40px;font-size: 18px; color: #469a1f;" type="button" class="btn btn-link" disabled="disabled">
+											  			<span style="font-size: 18px; color: #469a1f;"><i class="far fa-check-circle"></i></span>팔로우 중
+											  		</button>
+							  					</c:otherwise>
+							  				</c:choose>
+							  			</c:when>
+							  			<c:otherwise>
+							  				<c:choose>
+								  				<c:when test="${empty personalWaitVo and empty personalVo }">
+								  					<button style="height: 40px;font-size: 18px;" type="button" class="btn btn-primary" onclick="location.href='/profileInsertConnection?user_id=${SESSION_MEMBERVO.mem_id}&receive_id=${usersMap.usersVo.user_id }'">
+											  		일촌맺기
+											  		</button>
+											  	</c:when>
+								  				<c:when test="${personalWaitVo.receive_accept eq 'N'}">
+									  				<button style="height: 40px;font-size: 18px; color: #469a1f;" type="button" class="btn btn-link" disabled="disabled">
+											  			<span style="font-size: 18px; color: #469a1f;"><i class="far fa-check-circle"></i></span>일촌 대기중
+											  		</button>
+								  				</c:when>
+								  				<c:otherwise>
+								  					<button style="height: 40px;font-size: 18px; color: #469a1f;" type="button" class="btn btn-link" disabled="disabled">
+											  			<span style="font-size: 18px; color: #469a1f;"><i class="far fa-check-circle"></i></span>일촌 중
+											  		</button>
+								  				</c:otherwise>
+									  		</c:choose>
+							  			</c:otherwise> 
+							  		</c:choose>
 							  	</c:otherwise>
 							  </c:choose>
 							 
@@ -371,7 +424,7 @@ $(document).ready(function() {
 									<div class="logoPicture" style="background-image: url(${fn:contains(career_infoVo.logo_path, 'http') ? logo_path : profile_addrPath}); width: 120px; height: 50px;"></div>
 									<div style="margin-left: 30px; width: 570px;">
 										<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${career_infoVo.job_rank }</h4>
-										<label style="font-size: 17px; color: rgba(0,0,0,.9);">${career_infoVo.corporate_name }</label><br>
+										<label style="font-size: 17px; color: rgba(0,0,0,.6);">${career_infoVo.corporate_name }</label><br>
 										<label>${strDate } - ${endDate  == null ? '현재' : endDate} · (${year > 1 ? year : ''}${year > 1 ? '년 ' : '' }${month > 1 ? month : '1'}개월)</label><br>
 										<label>${career_infoVo.corp_local }</label><br>
 										<label>${career_infoVo.job_position }</label><br>
@@ -425,7 +478,7 @@ $(document).ready(function() {
 									<div class="logoPicture" style="background-image: url(/images/corporation/basic/basicShool.png); width: 120px; height: 50px;"></div>
 									<div style="margin-left: 30px; width: 570px;">
 										<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${education_infoVo.school_name }</h4>
-										<label style="font-size: 17px; color: rgba(0,0,0,.9);">${education_infoVo.degree_name }, ${education_infoVo.major }, ${education_infoVo.grade }</label><br>
+										<label style="font-size: 17px; color: rgba(0,0,0,.6);">${education_infoVo.degree_name }, ${education_infoVo.major }, ${education_infoVo.grade }</label><br>
 										<label>${strDate } - ${endDate}</label><br>
 									</div>
 								</a>
@@ -464,41 +517,29 @@ $(document).ready(function() {
 			
 		
 			<!-- 보유 기술  -->
-			<c:if test="${not empty possesion_skillsVoList }">
+			<c:if test="${not empty abilityVoList }">
 			<div class="whiteBox" style="padding: 20px 20px 20px 20px; margin-bottom: 20px;">
 				<h3 style="margin: 0 0 0 0 ">보유기술</h3>
 				<ul class="list-unstyled">
 					<li class="list-unstyled" style="margin-top: 20px;">
-						<c:forEach items="${possesion_skillsVoList}" var="possesion_skillsVo" varStatus="i">
-							<fmt:formatDate value="${possesion_skillsVo.issue_date }" var="strDate" pattern="yyyy년 MM월"/>
-							<li class="list-unstyled <c:if test='${!i.first}'>skils</c:if>" style="margin-top: 20px; display: flex;">
+						<c:forEach items="${abilityVoList}" var="abilityVo" varStatus="i">
+							<li class="list-unstyled <c:if test='${i.index > 2}'>ability</c:if>" style="margin-top: 20px; display: flex;">
 								<div style="width: 720px;">
 									<div style="width: 570px;">
-										<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${possesion_skillsVo.pskill_name }</h4>
-										<label style="font-size: 17px; color: rgba(0,0,0,.9);">${possesion_skillsVo.issue_org }</label><br>
-										<label>${strDate }</label><br>
+										<h4 style="font-weight: 700; margin: 0 0 10px 10px; color: #0073B1;">${abilityVo.ability_item}</h4>
 									</div>
-									<!-- 보유기술 내용 -->
-									<c:if test="${not empty possesion_skillsVo.contents }">
-										<div class="contentsDiv" style="padding: 10px 30px 0 0; width: 720px;">
-											<pre class="contents" style="width: 700px; margin: 0 0 0 0;">${possesion_skillsVo.contents }</pre>
-												<c:if test="${fn:length(possesion_skillsVo.contents) > 91 }">
-										 			<span class="contentsBtn" style="color: #0073B1; cursor: pointer;">더 보기 </span>
-										 		</c:if>
-										</div>
-									</c:if>
 								</div>
 								<c:if test="${usersMap.usersVo.user_id == SESSION_MEMBERVO.mem_id}">
 									<div>
-										<a class="modalA" role="${possesion_skillsVo.pskill_code}" data-toggle="modal" data-target="#myModal" title="skills"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
+										<a class="modalA" role="${abilityVo.ability_code}" data-toggle="modal" data-target="#myModal" title="ability"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
 									</div>
 								</c:if>
 							</li>
 						</c:forEach>
 					</li>
-					<c:if test="${fn:length(possesion_skillsVoList) > 1}">
-					<li class="possesion_skillsVoShowSkip" >
-						<button class="btn btn-link possesion_skillsVoShow" style="outline: 0; text-decoration: none;">더 보기 <i class="fas fa-angle-down"></i></button>
+					<c:if test="${fn:length(abilityVoList) > 3}">
+					<li class="abilityVoShowSkip" >
+						<button class="btn btn-link abilityVoShow" style="outline: 0; text-decoration: none;">더 보기 <i class="fas fa-angle-down"></i></button>
 					</li>
 					</c:if>
 				</ul>
@@ -508,12 +549,59 @@ $(document).ready(function() {
 			<!-- 이력   -->
 			<c:if test="${not empty recordMap.thesis_listVoList or not empty recordMap.patent_listVoList 
 							or not empty recordMap.project_careerList or not empty recordMap.award_historyList 
-							or not empty recordMap.languageVoList}">
+							or not empty recordMap.languageVoList or not empty recordMap.possesion_skillsVoList}">
 			<div class="whiteBox" style="padding: 20px 20px 20px 20px; margin-bottom: 20px;">
 				<h3 style="margin: 0 0 10px 0;">이력</h3>
 				<ul class="list-unstyled" style="padding-left: 10px;">
-					<!-- 논문저서 -->
+					<!-- 자격증 -->
 					<li>
+						<c:if test="${not empty recordMap.possesion_skillsVoList }">
+							<div style="display: flex;">
+								<label style="font-weight: 700; color: #0073B1; font-size: 30px; ">${fn:length(recordMap.possesion_skillsVoList) }</label>
+								<div style="width: 700px;">
+									<label style="font-weight: 700; color: #0073B1; font-size: 15px; padding-left: 10px;">자격증</label><br>
+									<label id="" style="font-size: 15px; padding-left: 10px;">
+										<c:forEach items="${recordMap.possesion_skillsVoList}" var="possesion_skillsVo" varStatus="i">
+											${possesion_skillsVo.pskill_name } <c:if test="${!i.last }">·</c:if>
+										</c:forEach>
+									</label>
+								</div>
+								<div class="possesion_skillsVoShowSkip">
+									<span class="possesion_skillsVoShow" style="font-size: 24px;color: #0073B1;"><i class="fas fa-angle-down"></i></span>
+								</div>
+							</div>
+						</c:if>
+					</li>
+					<c:forEach items="${recordMap.possesion_skillsVoList}" var="possesion_skillsVo" varStatus="i">
+						<fmt:formatDate value="${possesion_skillsVo.issue_date }" var="strDate" pattern="yyyy년 MM월"/>
+						<li class="list-unstyled skils" style="padding: 10px 0 0 30px; margin-bottom : 10px; display: flex; <c:if test='${!i.first}'>border-top: 2px solid #CDCFD2;</c:if>">
+							<div style="width: 690px;">
+								<div style="width: 570px;">
+									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${possesion_skillsVo.pskill_name }</h4>
+									<label style="font-size: 17px; color: rgba(0,0,0,.6);">${possesion_skillsVo.issue_org }</label><br>
+									<label>${strDate }</label><br>
+								</div>
+								<!-- 자격증 내용 -->
+								<c:if test="${not empty possesion_skillsVo.contents }">
+									<div class="contentsDiv" style="padding: 10px 30px 0 0; width: 720px;">
+										<pre class="contents" style="width: 700px; margin: 0 0 0 0;">${possesion_skillsVo.contents }</pre>
+										<c:if test="${fn:length(possesion_skillsVo.contents) > 50 }">
+									 		<span class="contentsBtn" style="color: #0073B1; cursor: pointer;">더 보기 </span>
+									 	</c:if>
+									</div>
+								</c:if>
+							</div>
+							<c:if test="${usersMap.usersVo.user_id == SESSION_MEMBERVO.mem_id}">
+								<div>
+									<a class="modalA" role="${possesion_skillsVo.pskill_code}" data-toggle="modal" data-target="#myModal" title="skills"><span style="font-size: 20px;color: #0073B1; height: 20px;"><i class="fas fa-pencil-alt"></i></span></a>
+								</div>
+							</c:if>
+						</li>
+					</c:forEach>
+					
+					
+					<!-- 논문저서 -->
+					<li style="margin-top: 20px;">
 						<c:if test="${not empty recordMap.thesis_listVoList }">
 							<div style="display: flex;">
 								<label style="font-weight: 700; color: #0073B1; font-size: 30px; ">${fn:length(recordMap.thesis_listVoList) }</label>
@@ -537,10 +625,10 @@ $(document).ready(function() {
 							<div style="width: 690px;">
 								<div style="width: 570px;">
 									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${thesis_listVo.thesis_name }</h4>
-									<label style="font-size: 17px; color: rgba(0,0,0,.9);">${thesis_listVo.publisher }</label><br>
+									<label style="font-size: 17px; color: rgba(0,0,0,.6);">${thesis_listVo.publisher }</label><br>
 									<label>${strDate }</label><br>
 									<c:if test='${not empty thesis_listVo.thesis_url}'>
-										<label style="font-size: 17px; color: rgba(0,0,0,.9);"><a href="http://${thesis_listVo.thesis_url }" target="_blank">${thesis_listVo.thesis_url }</a></label><br>
+										<label style="font-size: 17px; color: rgba(0,0,0,.6);"><a href="http://${thesis_listVo.thesis_url }" target="_blank">${thesis_listVo.thesis_url }</a></label><br>
 									</c:if>
 									<label>${thesis_listVo.writer }</label><br>
 								</div>
@@ -587,11 +675,11 @@ $(document).ready(function() {
 							<div style="width: 690px;">
 								<div style="width: 570px;">
 									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${patent_listVo.patent_name }</h4>
-									<label style="font-size: 17px; color: rgba(0,0,0,.9);">특허 출원 번호 : ${patent_listVo.patent_no }</label><br>
+									<label style="font-size: 17px; color: rgba(0,0,0,.6);">특허 출원 번호 : ${patent_listVo.patent_no }</label><br>
 									<label>${patent_listVo.nation }</label><br>
 									<label>${strDate }</label><br>
 									<c:if test='${not empty patent_listVo.patent_url}'>
-										<label style="font-size: 17px; color: rgba(0,0,0,.9);"><a href="http://${patent_listVo.patent_url }" target="_blank">${patent_listVo.patent_url }</a></label><br>
+										<label style="font-size: 17px; color: rgba(0,0,0,.6);"><a href="http://${patent_listVo.patent_url }" target="_blank">${patent_listVo.patent_url }</a></label><br>
 									</c:if>
 									<label> ${patent_listVo.inventer }</label><br>
 								</div>
@@ -642,7 +730,7 @@ $(document).ready(function() {
 								<div style="width: 570px;">
 									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${project_careerVo.project_name }</h4>
 									<c:if test='${not empty project_careerVo.project_url}'>
-										<label style="font-size: 17px; color: rgba(0,0,0,.9);"><a href="http://${project_careerVo.project_url }" target="_blank">${project_careerVo.project_url }</a></label><br>
+										<label style="font-size: 17px; color: rgba(0,0,0,.6);"><a href="http://${project_careerVo.project_url }" target="_blank">${project_careerVo.project_url }</a></label><br>
 									</c:if>
 									<label>${project_careerVo.project_leader }</label><br>
 									<label>${strDate } - ${endDate  == null ? '현재' : endDate} · (${year > 1 ? year : ''}${year > 1 ? '년 ' : '' }${month > 1 ? month : '1'}개월)</label><br>
@@ -690,7 +778,7 @@ $(document).ready(function() {
 							<div style="width: 690px;">
 								<div style="width: 570px;">
 									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${award_historyVo.award_name }</h4>
-									<label style="font-size: 17px; color: rgba(0,0,0,.9);">${award_historyVo.award_org }</label><br>
+									<label style="font-size: 17px; color: rgba(0,0,0,.6);">${award_historyVo.award_org }</label><br>
 									<label>${strDate }</label><br>
 								</div>
 								<!-- 수상 경력 내용 -->
@@ -735,7 +823,7 @@ $(document).ready(function() {
 							<div style="width: 690px;">
 								<div style="width: 570px;">
 									<h4 style="font-weight: 700; margin: 0 0 10px 0 ">${languageVo.lang_kind }</h4>
-									<label style="font-size: 17px; color: rgba(0,0,0,.9);">${languageVo.grade }</label><br>
+									<label style="font-size: 17px; color: rgba(0,0,0,.6);">${languageVo.grade }</label><br>
 								</div>
 							</div>
 							<c:if test="${usersMap.usersVo.user_id == SESSION_MEMBERVO.mem_id}">
@@ -752,8 +840,23 @@ $(document).ready(function() {
 			
 		</div>
 		<div class="col-md-3" style="padding-left: 5px;">
-			<div class="whiteBox" style="width: 314px; min-height: 481px;">
-			asdfasdfasdfasdffffffd.sfasdfasfdasfasd
+			<div class="whiteBox" style="width: 314px; text-align: center;">
+				<h3 style="margin-bottom: 15px;">관심분야</h3>
+				<c:choose>
+					<c:when test="${not empty hashtagFollowVoList }">
+						<c:forEach items="${hashtagFollowVoList }" var="followVo" varStatus="i">
+							<a href="/hashtagpost?hashtag_name=${fn:split(followVo.ref_keyword,'#')[0] }" <c:if test="${i.index > 4 }">class="followHashtag"</c:if>><h4 style="color: #337ab7;"><i class="fas fa-hashtag" style="margin-right: 5px;"></i>${fn:split(followVo.ref_keyword,'#')[0] }</h4></a>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<h4 style="color: #337ab7;">관심분야가 없습니다.</h4>
+					</c:otherwise>
+				</c:choose>
+				<c:if test="${fn:length(hashtagFollowVoList) > 5 }">
+					<li class="hashtagFollowVoShowSkip" >
+						<button class="btn btn-link hashtagFollowVoShow" style="outline: 0; text-decoration: none; font-size: 17px;">더 보기 <i class="fas fa-angle-down"></i></button>
+					</li>
+				</c:if>
 			</div>
 		</div>
 	</div>

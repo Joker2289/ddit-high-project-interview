@@ -38,4 +38,10 @@
 		   and division = #{division}
 	</select>
 	
+	<!-- 해시태그 목록 조회 -->
+	<select id="select_hashtag" resultType="String">
+		select substr(hashtag_name,2)
+		  from hashtag
+	</select>
+	
 </mapper>

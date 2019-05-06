@@ -1,0 +1,129 @@
+
+/* 회사 배경, 로고 div */
+.corp_img_div {
+	
+	list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 2px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    box-shadow: 3px 3px rgba(0, 0, 0, .175);
+	
+	
+	width: 1140px; 
+	height: 170px; 
+	border-radius: 4px;
+}
+
+/* 로고 div */
+.logo_div {
+	position: relative;
+	top: -50px; 
+	left: 30px; 
+	height: 105px; 
+	width: 172px; 
+	border-radius: 4px; 
+	border: 1px solid #AAAAAA;
+}
+
+/* 이미지 변경 버튼 */
+.camera {
+	font-size: 30px;
+	color: #4779B2;
+	background-color: #fff;
+	border-radius: 100px;
+	border: 0px solid #AAAAAA; 
+}
+
+/* 회사 정보 div */
+.corp_info_div {
+	
+	list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 2px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    box-shadow: 3px 3px rgba(0, 0, 0, .175);	
+    
+    
+    margin-top:1px; 
+    width: 1140px; 
+    height: 185px;
+}
+
+.corp_info{
+	margin-left: 220px; 
+	margin-top: 10px; 
+}
+
+
+/* 숨김 버튼 div */ 
+.hidden_btn_div {
+	float: right; 
+	margin-right: 10px;
+}
+
+/* 회사 이름 라벨 */
+.corp_name_lbl {
+	font-size: 200%;
+	font-weight: bold;
+	margin-right: 20px;
+}
+
+/* 회사 타입 라벨 */
+.corp_type_lbl {
+	font-size: 120%;
+	font-weight: bold;
+	color: #4779B2;
+}
+
+.corp_lbl {
+	margin-top: 5px;
+	font-size: 15px;
+}
+
+/* 회사 버튼 div */ 
+.corp_btn_div {
+	display: flex;
+	margin-top: 15px; 
+	margin-left: 30px;
+}
+
+/* 회사 팔로우 버튼 */
+.corp_follow_btn {
+	margin-right: 10px;
+	width: 200px;
+	font-size: 17px;
+}
+
+.corp_follow_btn:hover {
+	font-weight: bold !important;
+	color: #4779B2;
+	background-color: #fff;
+}
+
+.corp_follow_btn .fa-plus {
+	margin-right: 5px;
+}
+
+/* 회사 언팔로우 버튼 */
+.corp_unfollow_btn {
+	margin-right: 10px;
+	width: 200px;
+	font-size: 17px;
+	font-weight: bold !important;
+	color: #4779B2;
+	background-color: #fff;
+}
+
+/* 기업리뷰 버튼 */
+.corp_review_btn {
+	width: 200px;
+	font-size: 17px;
+}
+
+.corp_review_btn:hover {
+	font-weight: bold !important;
+	color: #4779B2;
+	background-color: #fff;
+}

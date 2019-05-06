@@ -28,6 +28,7 @@
    
    <!-- ImageView 등록 -->
    <bean id="onenoteImageView" class="kr.or.ddit.util.view.OnenoteImageView"></bean>
+   <bean id="ImageView" class="kr.or.ddit.util.view.ImageView"></bean>
    
    <bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
       <property name="order" value="1"/>

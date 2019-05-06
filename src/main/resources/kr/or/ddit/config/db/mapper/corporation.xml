@@ -121,7 +121,7 @@
     order by count(*) desc
 	</select>
 	
-		<!-- 회사 전직원의 id -->
+	<!-- 회사 전직원의 id -->
 	<select id="employee_all" parameterType="String" resultType="Career_infoVo">
 		 SELECT USER_ID
 			FROM CAREER_INFO
@@ -129,7 +129,7 @@
 	</select>
 	
 	
-	<!-- 회사 전직원 usersVo -->
+	<!-- 회사 직원 usersVo -->
 	<select id="select_userInfo" parameterType="String" resultType="usersVo">
 		SELECT
 		    USER_ID,
@@ -157,5 +157,245 @@
 		 where user_id = #{user_id}
 		 order by graduation desc
 	</select>
+	
+	<!-- 회사코드로 직원 id,position 불러오기 -->
+	<select id="corp_code_user_list" parameterType="String" resultType="career_infoVo">
+		SELECT user_id, job_position
+			FROM CAREER_INFO
+		WHERE corp_code = #{corp_code}
+	</select>
+	
+	
+	<!-- 회사코드로 직원들의 각 대학 수 (중복은 숫자증가) -->
+	<select id="empl_education_count" parameterType="String" resultType="Integer">
+		select count (*)
+			FROM education_info A, (
+								SELECT USER_ID
+								FROM CAREER_INFO
+								WHERE corp_code = #{corp_code}
+							) B
+			WHERE A.USER_ID = B.USER_ID
+	group by a.school_name
+    order by count(*) desc
+	</select>
+	
+	<!-- 코드로 직원들 대학리스트(중복제외) -->
+	<select id="empl_university_list" parameterType="String" resultType="education_infoVo">
+	    select A.SCHOOL_NAME 
+			FROM EDUCATION_INFO A, (
+									SELECT USER_ID
+									FROM CAREER_INFO
+									WHERE corp_code = #{corp_code}
+									) B
+			WHERE A.USER_ID = B.USER_ID
+	group by a.school_name
+	order by count(*) desc
+	</select>
+	
+	
+	<!-- 회사코드로 직원들의 각 전공 수(중복은 숫자 증가) -->
+	<select id="major_count" parameterType="String" resultType="Integer">
+		    select count (*)
+			FROM education_info A, (
+								SELECT USER_ID
+								FROM CAREER_INFO
+								WHERE corp_code = #{corp_code}
+							) B
+			WHERE A.USER_ID = B.USER_ID
+	group by a.major
+    order by count(*) desc
+	</select>
+	
+	<!-- 직책 수 (중복 수 증가)-->
+	<select id="job_position_count" parameterType="String" resultType="Integer">
+    SELECT count (*)
+	FROM CAREER_INFO
+	WHERE corp_code =  #{corp_code}
+    group by job_position
+    order by count(*) desc
+	</select>
+	
+	<!-- 회사 직원들 그래프 정보 -->
+	<select id="graphInfo" parameterType="String" resultType="chartVo">
+		select *
+		  from (select b.user_id, c.job_position, d.school_name, d.major, b.profile_contents
+				  from corporation a, users b, career_info c, education_info d
+			     where a.corp_code = c.corp_code
+			 	   and b.user_id = c.user_id
+				   and b.user_id = d.user_id
+				   and a.corp_code = #{corp_code})
+	</select>
+	
+	<!-- 회사 직원들 프로필 정보와 팔로우 언팔로우 -->
+	<select id="empl_list" parameterType="chartVo" resultType="chartVo">
+		select a.user_id, a.user_name, a.profile_path, b.corporate_name ||' '|| b.job_position as job_position, d.receive_accept,A.PROFILE_CONTENTS
+	 	  from users a, career_info b, corporation c, (select receive_id, receive_accept
+		                                                 from personal_connection
+		                                                where user_id = #{user_id}
+		                                                union all
+		                                               select user_id, receive_accept
+		                                                 from personal_connection   
+		                                                where receive_id = #{user_id}) d
+		 where a.user_id = b.user_id
+		   and b.corp_code = c.corp_code
+		   and a.user_id = d.receive_id(+)
+		   and b.corp_code = #{corp_code}
+	</select>
+	
+	
+	<!-- 정권 -->
+	
+	<!-- 회사코드로 등록된 직원수 -->
+	<select id="corp_code_user_count" parameterType="String" resultType="Integer">
+		SELECT count (*)
+			FROM CAREER_INFO
+		WHERE corp_code = #{corp_code}
+	</select>
+	
+	
+	<!-- 회사에 등록된 직원(경력의 corp_code가 인증된 사원의 직책(job_position)과 그에 해당하는 사원수 --> 
+	<select id="job_position_list" parameterType="String" resultType="chartVo">
+	
+	    SELECT job_position as chart_subject, count(job_position) as chart_value
+		FROM CAREER_INFO
+		WHERE corp_code = #{corp_code}
+	    group by job_position
+	    order by count(*) desc
+	    
+	   <!--  select *
+
+		from (SELECT job_position, count(job_position) as employee_cnt, ROW_NUMBER() OVER (ORDER BY job_position,count(job_position) desc) rn
+		        FROM CAREER_INFO
+		        WHERE corp_code = #{ corp_code }
+		        group by job_position
+		        order by count(*) desc)
+		        
+		where rn between ((#{page}-1) * #{pageSize}) + 1 and #{page}*#{pageSize} -->
+	    
+	</select>
+	
+
+	
+	 <!-- 회사에 등록된 직원(경력의 corp_code가 인증된 사원의 출신학교(school_name)와 그에 해당하는 사원수 --> 
+	<select id="school_name_list" parameterType="String" resultType="chartVo">
+	
+	    select school_name as chart_subject, count(school_name) as chart_value
+		from    (
+		        select user_id
+		        from career_info
+		        where corp_code = #{corp_code}
+		        ) a, education_info b
+		where a.user_id = b.user_id
+		group by school_name
+		order by count(*) desc
+	
+	</select>
+	
+	<!-- 회사에 등록된 직원(경력의 corp_code가 인증된 사원의 전공(major)과 그에 해당하는 사원수 --> 
+	<select id="major_list" parameterType="String" resultType="chartVo">
+	
+	    select major as chart_subject, count(major) as chart_value
+		from    (
+		        select user_id
+		        from career_info
+		        where corp_code = #{ corp_code }
+		        ) a, education_info b
+		where a.user_id = b.user_id
+		group by major
+		order by count(*) desc
+	
+	</select>
+	
+	<select id="ability_list" parameterType="String" resultType="chartVo">
+	
+	    select ability_item as chart_subject, count(ability_item) as chart_value
+		from    (
+		        select user_id
+		        from career_info
+		        where corp_code = #{ corp_code }
+		        ) a, ability b
+		where a.user_id = b.user_id
+		group by ability_item
+		order by count(*) desc
+	
+	</select>
+	
+	
+	
+	
+	<!-- 회사에 등록된 모든 직원의 정보 리스트 -->
+	<select id="select_employAllList" parameterType="String" resultType="employee_listVo">
+
+		select a.user_id as user_id, b.user_name as user_name, a.corporate_name as info2, a.job_position as info1, b.profile_path as img_path
+		from CAREER_INFO a, users b
+		where corp_code = #{ corp_code } 
+		and a.user_id = b.user_id
+	
+	</select>
+	
+	<!-- 회사에 등록되고 직무: 조건추가된 직원의 정보 리스트 --> 
+	<select id="select_employJobPositionList" parameterType="employee_listVo" resultType="employee_listVo">
+
+		select a.user_id as user_id, b.user_name as user_name, a.corporate_name as info2, a.job_position as info1, b.profile_path as img_path
+		from CAREER_INFO a, users b
+		where corp_code = #{ corp_code }    
+		and a.user_id = b.user_id
+		and a.job_position = #{ parameter }
+	
+	</select>
+	
+	<!-- 회사에 등록되고 출신학교: 조건추가된 직원의 정보 리스트  -->
+	<select id="select_employSchoolNameList" parameterType="employee_listVo" resultType="employee_listVo">
+
+		select c.*
+		from 
+		    (
+		    select a.user_id as user_id, b.user_name as user_name, a.corporate_name as info2, a.job_position as info1, b.profile_path as img_path
+		    from CAREER_INFO a, users b
+		    where corp_code = #{ corp_code }   
+		    and a.user_id = b.user_id
+		    ) c, education_info d
+		where c.user_id = d.user_id
+		and d.school_name = #{ parameter }
+	
+	</select>
+	
+	<!-- 회사에 등록되고 전공: 조건추가된 직원의 정보 리스트  -->
+	<select id="select_employMajorList" parameterType="employee_listVo" resultType="employee_listVo">
+
+		select c.*
+		from 
+		    (
+		    select a.user_id as user_id, b.user_name as user_name, a.corporate_name as info2, a.job_position as info1, b.profile_path as img_path
+		    from CAREER_INFO a, users b
+		    where corp_code = #{ corp_code }   
+		    and a.user_id = b.user_id
+		    ) c, education_info d
+		where c.user_id = d.user_id
+		and d.major = #{ parameter }
+	
+	</select>
+	
+	<!-- 회사에 등록되고 보유기술: 조건추가된 직원의 정보 리스트  -->
+	<select id="select_employAbilityList" parameterType="employee_listVo" resultType="employee_listVo">
+
+		select c.*
+		from 
+		    (
+		    select a.user_id as user_id, b.user_name as user_name, a.corporate_name as info2, a.job_position as info1, b.profile_path as img_path
+		    from CAREER_INFO a, users b
+		    where corp_code = #{ corp_code }     
+		    and a.user_id = b.user_id
+		    ) c, ability d
+		where c.user_id = d.user_id
+		and d.ability_item = #{ parameter }
+	
+	</select>
+	
+	
+	
+	
+	
+	
 	
 </mapper>

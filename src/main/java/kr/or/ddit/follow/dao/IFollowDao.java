@@ -38,6 +38,29 @@ public interface IFollowDao {
 	 */
 	List<FollowVo> select_followList(String mem_id);
 	
+	
+	/**
+	 * 
+	 * Method : select_followLog
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 특정 팔로우 조회
+	 */
+	FollowVo select_followLog(FollowVo vo);
+	
+	
+	
+	/**
+	 * 
+	 * Method : select_followKindList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param paginationVo
+	 * @return
+	 * Method 설명 : 종류별 팔로우 목록 조회
+	 */
 	List<FollowVo> select_followKindList(PaginationVo paginationVo);
 	
 	/**
@@ -163,5 +186,30 @@ public interface IFollowDao {
 	 * Method 설명 : 채팅 초대할 유저의 팔로우들(회사,회원)
 	 */
 	List<Map<String, String>> select_followChatList(String mem_id);
+
+	int insert_userFollow(FollowVo followVo);
+
+	int delete_userFollow(FollowVo followVo);
+	
+	/**
+	 * Method : select_hashtagFollowList
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 유저가 팔로우한 해쉬태그 리스트 조회
+	 */
+	List<FollowVo> select_hashtagFollowList (String user_id);
+	
+	/**
+	 * 
+	 * Method : select_userFollowList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 회원의 팔로우리스트(회원) 조회
+	 */
+	List<FollowVo> select_userFollowList(String mem_id);
 	
 }

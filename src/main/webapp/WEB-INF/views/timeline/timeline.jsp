@@ -178,17 +178,9 @@
                </div>
                
                <!-- comment -->
-<%--                <div class="col-comment-area ${post.post_code }" id="post_comment ${post.post_code }"></div> --%>
-               
-               
-               <!-- 콜랩스 적용 -->
                <div class="collapse" id="comment_area${ post.post_code }">
-				  <div class="well" id="comment_content${ post.post_code }">
-				    
-				  </div>
-				</div>
-				
-				
+				  <div class="well" id="comment_content${ post.post_code }"></div>
+			   </div>
                <!-- /comment -->
             
               </div>
@@ -211,7 +203,7 @@
 <script src="/js/timeline.js"></script>
 <script type="text/javascript">
 
-	//페이지 댓글 버튼 클릭
+	//댓글 버튼 클릭
 	function post_commentList(post_code){
 		$.ajax({
 			url : "/commentArea",
@@ -238,6 +230,8 @@
       var currentTop = $(window).scrollTop();
       
       if($(window).scrollTop() > 50){
+    	 console.log(currentTop);
+    	  
          $("#col-add").stop().animate({top: (currentTop-20) + "px"}, 250);
          $("#col-info").stop().animate({top: (currentTop-20) + "px"}, 250);
       } else {
@@ -265,16 +259,17 @@
       }
     });
    
+    //글이 5개 이하일 경우 권유용 화면 요청
     var postcnt = $(".post-group").children().length;
-
     if(postcnt < 5){
-    	$('.post-group').append('<div id="col-post${post.post_code }" class="scrolling" data-post="${post.post_code }" style="box-shadow: 0 6px 12 rgba(0, 0, 0, .15);">'
-    									  +'<div style="padding: 15px; background: #fff; border : 1px solid #ddd; border-radius: 4px; box-shadow: 0 6px 12px rgba(0, 0, 0, .15);">'
-    									  +'<a href="/personalConnection" style="color: #0073B1;">' 
-    									  +'<h4 style="font-weight: bold; padding:5px; margin-top: 20px; margin-bottom: 20px;">새로운 인맥을 찾고싶으세요?</h4>'
-    									  +'<h4 style="font-weight: bold; padding:5px; margin-top: 20px; margin-bottom: 20px;">새 소식을 받아보고 싶다면 팔로우를 활용하세요!</h4>' 
-    									  +'<h4 style="font-weight: bold; padding:5px; margin-top: 20px; margin-bottom: 20px;">아는 사람을 찾아 친구가 되면 소식을 받아볼 수 있어요!</h4>'
-    									  +'</a></div></div>');
+    	$.ajax({
+    		type : 'POST',
+    		url : "/recommendpost",
+			data : {"param" : "param" },
+			success : function(data) {
+				$('.post-group').append(data);
+			}
+		});
     }
 
 

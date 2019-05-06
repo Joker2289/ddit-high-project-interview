@@ -22,6 +22,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.or.ddit.ability.model.AbilityVo;
+import kr.or.ddit.ability.service.IAbilityService;
 import kr.or.ddit.alarm.model.AlarmVo;
 import kr.or.ddit.alarm.service.IAlarmService;
 import kr.or.ddit.award_history.model.Award_historyVo;
@@ -36,6 +38,7 @@ import kr.or.ddit.files.model.FilesVo;
 import kr.or.ddit.files.service.IFilesService;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.follow.service.IFollowService;
+import kr.or.ddit.hashtag.service.IHashtagService;
 import kr.or.ddit.language.model.LanguageVo;
 import kr.or.ddit.language.service.ILanguageService;
 import kr.or.ddit.member.model.MemberVo;
@@ -99,6 +102,12 @@ public class profileController {
 	@Resource(name="alarmService")
 	private IAlarmService alarmService;
 	
+	@Resource(name="abilityService")
+	private IAbilityService abilityService;
+	
+	@Resource(name="hashtagService")
+	private IHashtagService hashtagService;
+	
 	@RequestMapping("/menu")
 	public String menuDropdownView(String str) {
 		
@@ -133,8 +142,9 @@ public class profileController {
 			case "education":
 				result="/profile/modalInsert/education";
 				break;
-			case "skills":
-				result="/profile/modalInsert/skills";
+			case "ability":
+				model.addAttribute("hashtagVoList", hashtagService.selelct_hashtag());
+				result="/profile/modalInsert/ability";
 				break;
 			case "Thesis":
 				result="/profile/modalInsert/Thesis";
@@ -150,6 +160,9 @@ public class profileController {
 				break;
 			case "language":
 				result="/profile/modalInsert/language";
+				break;
+			case "skills":
+				result="/profile/modalInsert/skills";
 				break;
 			default:
 				break;
@@ -182,10 +195,11 @@ public class profileController {
 				model.addAttribute("education_infoMap", education_infoMap);
 				result="/profile/modalUpdate/educationUpdate";
 				break;
-			case "skills":
-				Possesion_skillsVo possesion_skillsVo = possesion_skillsService.select_onePossesion_skills(code);
-				model.addAttribute("possesion_skillsVo", possesion_skillsVo);
-				result="/profile/modalUpdate/skillsUpdate";
+			case "ability":
+				AbilityVo abilityVo = abilityService.select_oneAbility(code);
+				model.addAttribute("abilityVo", abilityVo);
+				model.addAttribute("hashtagVoList", hashtagService.selelct_hashtag());
+				result="/profile/modalUpdate/abilityUpdate";
 				break;
 			case "Thesis":
 				Thesis_listVo thesis_listVo = thesis_listService.select_oneThesis_list(code);
@@ -211,6 +225,11 @@ public class profileController {
 				LanguageVo languageVo = languageService.select_oneLanguage(code);
 				model.addAttribute("languageVo", languageVo);
 				result="/profile/modalUpdate/languageUpdate";
+				break;
+			case "skills":
+				Possesion_skillsVo possesion_skillsVo = possesion_skillsService.select_onePossesion_skills(code);
+				model.addAttribute("possesion_skillsVo", possesion_skillsVo);
+				result="/profile/modalUpdate/skillsUpdate";
 				break;
 			default:
 				break;
@@ -267,6 +286,11 @@ public class profileController {
 			personalVo.setReceive_id(SESSION_MEMBERVO.getMem_id());
 			Personal_connectionVo  personalWaitVo = personalService.select_oneConnectionsWait(personalVo);
 			personalVo = personalService.select_oneConnections(personalVo);
+			FollowVo followVo = new FollowVo(); 
+			followVo.setMem_id(SESSION_MEMBERVO.getMem_id());
+			followVo.setRef_keyword(user_id);
+			followVo = followService.select_oneFollow(followVo);
+			model.addAttribute("followVo", followVo);
 			model.addAttribute("personalVo", personalVo);
 			model.addAttribute("personalWaitVo", personalWaitVo);
 		}
@@ -278,7 +302,6 @@ public class profileController {
 		Map<String, Object> usersMap = usersService.select_introduce(user_id);
 		Map<String, Object> career_infoMap = carService.select_careerInfo(user_id);
 		Map<String, Object> education_infoMap = eduService.select_educationInfo(user_id);
-		List<Possesion_skillsVo> possesion_skillsVoList =  possesion_skillsService.select_possesion_skills(user_id);
 		Map<String, Object> recordMap = new HashMap<String, Object>();
 		
 		
@@ -287,13 +310,15 @@ public class profileController {
 		recordMap.put("project_careerList", project_careerService.select_project_career(user_id));
 		recordMap.put("award_historyList", award_historyService.select_award_history(user_id));
 		recordMap.put("languageVoList", languageService.select_language(user_id));
+		recordMap.put("possesion_skillsVoList", possesion_skillsService.select_possesion_skills(user_id));
 		
 		model.addAttribute("peopleCount", peopleCount);
 		model.addAttribute("usersMap", usersMap);
 		model.addAttribute("career_infoMap", career_infoMap);
 		model.addAttribute("education_infoMap", education_infoMap);
-		model.addAttribute("possesion_skillsVoList", possesion_skillsVoList);
+		model.addAttribute("abilityVoList", abilityService.select_ability(user_id));
 		model.addAttribute("recordMap", recordMap);
+		model.addAttribute("hashtagFollowVoList", followService.select_hashtagFollowList(user_id));
 		
 		return "profileHomeTiles";
 	}
@@ -424,7 +449,6 @@ public class profileController {
 		Map<String, Object> usersMap = usersService.select_introduce(user_id);
 		Map<String, Object> career_infoMap = carService.select_careerInfo(user_id);
 		Map<String, Object> education_infoMap = eduService.select_educationInfo(user_id);
-		List<Possesion_skillsVo> possesion_skillsVoList =  possesion_skillsService.select_possesion_skills(user_id);
 		Map<String, Object> recordMap = new HashMap<String, Object>();
 		
 		recordMap.put("thesis_listVoList", thesis_listService.select_thesis_list(user_id));
@@ -432,11 +456,12 @@ public class profileController {
 		recordMap.put("project_careerList", project_careerService.select_project_career(user_id));
 		recordMap.put("award_historyList", award_historyService.select_award_history(user_id));
 		recordMap.put("languageVoList", languageService.select_language(user_id));
+		recordMap.put("possesion_skillsVoList", possesion_skillsService.select_possesion_skills(user_id));
 		
 		model.addAttribute("usersMap", usersMap);
 		model.addAttribute("career_infoMap", career_infoMap);
 		model.addAttribute("education_infoMap", education_infoMap);
-		model.addAttribute("possesion_skillsVoList", possesion_skillsVoList);
+		model.addAttribute("abilityVoList", abilityService.select_ability(user_id));
 		model.addAttribute("recordMap", recordMap);
 		
 		return "/profile/profilePDF";

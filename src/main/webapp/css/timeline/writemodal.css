@@ -25,6 +25,17 @@
 	border-radius: 100px;
 }
 
+.logo_img{
+	width: 175px;
+	max-width: 175px;
+	height: 70px;
+	max-height: 70px;
+	border: 2px solid #fff;
+	margin-left: 30px;
+	margin-top: -20px;
+	border-radius: 18px;
+}
+
 .btn_moretag{
 	border: 0px solid #fff;
 	border-top: 1px solid #ddd;
@@ -48,6 +59,81 @@
 	margin-left: 0px;
 	margin-right: 0px;
 	box-shadow: 0 6px 12px rgba(0, 0, 0, .15);
+}
+
+.txt_recommend{
+	font-weight: bold; 
+	padding: 10px;
+	padding-left: 15px;	
+	margin-top: 0px;
+	margin-bottom: 0px; 
+	color: #0073b1;
+}
+
+.recommend_user_container{
+	list-style:none; width: 100%; padding: 10px;
+}
+
+.recommend_user_info{
+	text-align: center;
+	width: 30.9%;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 10px;
+	display: inline-block;
+}
+
+.col-recommend_word{
+	padding-top: 10px;
+	padding-bottom: 10px; 
+	border-bottom: 1px solid #ddd;
+}
+
+.txt_recommend_name{
+	font-size: 18px; 
+	color: #0073b1;
+}
+
+.txt_recommend_intro{
+	 font-size: 15px; 
+	 font-weight: bold; 
+	 color: #8D9191;
+}
+
+.btn_recommend_connect{
+	background: #fff;
+	border-color: #0073b1;
+	border-style: solid;
+	padding-left: 40px;
+	padding-right: 40px;
+	margin-bottom: 20px;
+}
+
+.btn_recommend_connect_waiting{
+	background: #fff;
+	border-color: #0073b1;
+	border-style: solid;
+	padding-left: 40px;
+	padding-right: 40px;
+	margin-bottom: 20px;
+}
+
+.btn_recommend_disconnect{
+	background: #0073b1;
+	border-color: #0073b1;
+	border-style: solid;
+	padding-left: 40px;
+	padding-right: 40px;
+	margin-bottom: 20px;
+}
+
+.btn_recommend_follow{
+	background: #fff;
+	border-color: #0073b1;
+	border-style: solid;
+	padding-left: 40px;
+	padding-right: 40px;
+	margin-bottom: 20px;
 }
 
 .col-post-body{
@@ -105,16 +191,14 @@
 .writer-info{
 	border-style: 1px solid;
 	border-color: #ddd;
-/* 	margin: 200px; */
 }
 
-/* .writer-info a{ */
-/* 	float: left; */
-/* } */
-	
-/* .writer-info button{ */
-/* 	float: right; */
-/* }	 */
+.hashtag{
+	font-weight: bold;
+	color: #0073b1;
+	font-size: 17px;
+}
+
 .btn-write_modal{
 	background:#ffffff;
 	background-size: auto;

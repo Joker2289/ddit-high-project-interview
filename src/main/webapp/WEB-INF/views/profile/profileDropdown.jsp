@@ -33,15 +33,15 @@
       </div>
    </div>
    <li class="divider"></li>
-   <li><a data-toggle="collapse" href="#skills" aria-expanded="false" aria-controls="skills">보유기술</a></li>
-   <div class="collapse" id="skills">
+   <li><a data-toggle="collapse" href="#ability" aria-expanded="false" aria-controls="ability">보유기술</a></li>
+   <div class="collapse" id="ability">
       <div class="well">
-         <span><i class="fas fa-medal"></i></span>
+         <span><i class="fas fa-wrench"></i></span>
          <div style="margin-right: 12px; ">
             <div class="dropdownAccordion">보유 기술</div>
             <p class="dropdownAccordion">프로필에 등록된 보유 기술<p>
          </div>
-         <button class="btn btn-default modalBtn" data-toggle="modal" data-target="#myModal" title="skills"><span style="color: #777a7d;"><i class="fas fa-plus"></i></span></button>
+         <button class="btn btn-default modalBtn" data-toggle="modal" data-target="#myModal" title="ability"><span style="color: #777a7d;"><i class="fas fa-plus"></i></span></button>
       </div>
    </div>
    <li class="divider"></li>
@@ -87,19 +87,16 @@
          </div>
          <button class="btn btn-default modalBtn" data-toggle="modal" data-target="#myModal" title="language"><span style="color: #777a7d;"><i class="fas fa-plus"></i></span></button>
       </div>
-   </div>
-   <!-- <li class="divider"></li>
-   <li><a data-toggle="collapse" href="#recommendation" aria-expanded="false" aria-controls="recommendation">추가정보</a></li>
-   <div class="collapse" id=recommendation>
       <div class="well">
-         <span><i class="fas fa-edit"></i></span>
+         <span><i class="fas fa-medal"></i></span>
          <div style="margin-right: 12px; ">
-            <div class="dropdownAccordion">추천서</div>
-            <p class="dropdownAccordion">1촌에게 추천서를 써달라고 부탁하기<p>
+            <div class="dropdownAccordion">자격증</div>
+            <p class="dropdownAccordion">자신의 자격증을 증명해주세요.<p>
          </div>
-         <button class="btn btn-default modalBtn" data-toggle="modal" data-target="#myModal" title="recommendation"><span style="color: #777a7d;"><i class="fas fa-plus"></i></span></button>
+         <button class="btn btn-default modalBtn" data-toggle="modal" data-target="#myModal" title="skills"><span style="color: #777a7d;"><i class="fas fa-plus"></i></span></button>
       </div>
-   </div> -->
+   </div>
+   
 </ul>
 
 <script type="text/javascript">

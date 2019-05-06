@@ -7,7 +7,7 @@
 
 <div class="jumbotron">
 	<c:if test="${ bVo.name_act == 'y' }">
-		<h1 class="head_title">${ bVo.blog_name }</h1>
+		<div class="head_title"><h1>${ bVo.blog_name }</h1></div>
 	</c:if>
 </div>
 

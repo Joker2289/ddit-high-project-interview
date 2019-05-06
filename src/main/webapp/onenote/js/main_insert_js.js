@@ -10,7 +10,6 @@ function addEmoticon() {
     
     con.addEventListener('dragover', function (e) {
     	e.preventDefault(); // !important 
-        
     });
 
     
@@ -125,13 +124,10 @@ function addImage(data) {
 	         name: 'image group ' + node_num,
 	         draggable: true
 	     });
+
+		 shape_group.add(square);
 	     
-		 console.log();
-		 
-		 
-	     shape_group.add(square);
-	     
-	     // anchor 추가
+		 // anchor 추가
 	     addAnchor(shape_group, 300, 300, 'anchor topLeft');
 	     addAnchor(shape_group, (300 + imageObj.width), 300, 'anchor topRight');
 	     addAnchor(shape_group, (300 + imageObj.width), (300 + imageObj.height), 'anchor bottomRight');

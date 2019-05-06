@@ -234,6 +234,38 @@ public class RecruitDaoImpl implements IRecruitDao{
 		
 		return recrList;
 	}
+
+	/**
+	 * 
+	 * Method : getPersonalCorpId
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 특정 유저의 일촌의 경력에 있는 회사 목록 조회.
+	 */
+	@Override
+	public List<String> getPersonalCorpId(String mem_id) {
+		List<String> personalCorpIdList = sqlSessionTemplate.selectList("recr.getPersonalCorpId", mem_id);
+		
+		return personalCorpIdList;
+	}
+
+	/**
+	 * 
+	 * Method : getPersonalUserId
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param string
+	 * @return
+	 * Method 설명 : 특정 채용공고의 회사에 경력이 있는 일촌 목록 조회.
+	 */
+	@Override
+	public List<String> getPersonalUserId(String param) {
+		List<String> personalUserIdList = sqlSessionTemplate.selectList("recr.getPersonalUserId", param);
+		
+		return personalUserIdList;
+	}
 	
 	
 

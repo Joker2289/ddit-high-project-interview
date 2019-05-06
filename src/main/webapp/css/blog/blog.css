@@ -41,6 +41,7 @@
 .head_title {
 	color: #fff !important;
 	font-size: 100px !important;
+	inline-block: 400px;
 }
 
 .thumbnail {
@@ -55,7 +56,7 @@
 	height: 300px;
 	margin-top: 10px;
 	margin-bottom: 10px;
-	border: 7px solid #7DB150 ;
+	border: 4px solid #gray !important;
 }
 
 .span-name {

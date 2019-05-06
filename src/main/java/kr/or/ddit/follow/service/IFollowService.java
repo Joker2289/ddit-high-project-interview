@@ -20,8 +20,29 @@ public interface IFollowService {
 	
 	int getFollowerCnt(String mem_id);
 	
+	
 	List<FollowVo> select_followerList(String mem_id);
 	
+	/**
+	 * 
+	 * Method : select_followLog
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 특정 팔로우 조회
+	 */
+	FollowVo select_followLog(FollowVo vo);
+	
+	/**
+	 * 
+	 * Method : select_followingList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 종류별 팔로우 목록 조회
+	 */
 	List<FollowVo> select_followingList(String mem_id);
 	
 	/**
@@ -89,5 +110,30 @@ public interface IFollowService {
 	 * @return
 	 * Method 설명 : 회사 언팔로우
 	 */
-	int delete_corpFollow(FollowVo followVo);	
+	int delete_corpFollow(FollowVo followVo);
+	
+	int insert_userFollow(FollowVo followVo);
+
+	int delete_userFollow(FollowVo followVo);
+	
+	/**
+	 * Method : select_hashtagFollowList
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 유저가 팔로우한 해쉬태그 리스트 조회
+	 */
+	List<FollowVo> select_hashtagFollowList (String user_id);
+	
+	/**
+	 * 
+	 * Method : select_userFollowList
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param mem_id
+	 * @return
+	 * Method 설명 : 회원의 팔로우리스트(회원) 조회
+	 */
+	List<FollowVo> select_userFollowList(String mem_id);
 }
