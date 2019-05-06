@@ -61,7 +61,7 @@
 	</div>
 </div>
 
-<%@ include file="/WEB-INF/views/blog/blog_activity_modal.jsp"%><!-- 글 작성 모달창 -->
+<%@ include file="/WEB-INF/views/blog/blog_activity_modal.jsp"%> <!-- 팔로워 모달 -->
 
 
 

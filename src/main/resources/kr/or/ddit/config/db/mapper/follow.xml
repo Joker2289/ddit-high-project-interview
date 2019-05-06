@@ -33,9 +33,9 @@
 	<select id="select_followLog" parameterType="followVo" resultType="followVo">
 		select follow_code, mem_id, ref_keyword, division
 		  from follow
-		 where mem_id = #{ mem_id }
-		   and ref_keyword = ${ ref_keyword }
-		   and division = #{ division } 
+		 where mem_id = #{mem_id}
+		   and ref_keyword = #{ref_keyword}
+		   and division = #{division} 
 	</select>
 	
 	

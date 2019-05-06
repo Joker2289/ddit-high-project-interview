@@ -393,7 +393,7 @@
 	</select>
 	
 	<!-- 회사에 등록된 사원인지 판별 -->
-	<select id="select_employInfo" parameterType="employee_listVo" resultType="employee_listVo">
+	<select id="select_employInfo" parameterType="career_infoVo" resultType="career_infoVo">
 		select *
 		from CAREER_INFO
 		where corp_code = #{ corp_code }

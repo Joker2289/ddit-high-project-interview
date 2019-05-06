@@ -29,7 +29,10 @@
 				<div style="margin-left: 10px;margin-top: 6px;">
 					<button onclick="location.href='companyReview?corp_id=${corporationInfo.corp_id }'" class="btn btn-primary"><strong>기업리뷰</strong></button>
 					<button onclick="location.href='companySalary?corp_id=${corporationInfo.corp_id }'" class="btn btn-primary" style="margin-left: 10px;"><strong>연봉정보</strong></button>
-					<button class="btn btn-default" data-toggle="modal" data-target="#myModal" style="margin-left: 10px;border: hidden;">연봉정보 작성</button>
+					
+					<c:if test="${ employInfo != null}">
+						<button class="btn btn-default" data-toggle="modal" data-target="#myModal" style="margin-left: 10px;border: hidden;">연봉정보 작성</button>
+					</c:if>
 				</div>
 			</div>
 		</div>

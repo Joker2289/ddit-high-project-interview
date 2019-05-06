@@ -280,9 +280,9 @@ $(document).ready(function() {
 							<div style="width: 500px;">
 								<div style="display:flex;"> 
 									<label class="member" style="width: auto; color: black;">${usersMap.usersVo.user_name }</label>
-									<button class="btn btn-default" style="border:0px; height: 32px; font-weight: bold; padding: 0 12px 6px 12px;">
+									<a href="/blog/blogMainView?user_id=${ usersMap.usersVo.user_id }" class="btn btn-default" style="border:0px; height: 32px; font-weight: bold; padding: 0 12px 6px 12px;">
 										<span style="color: #337ab7; font-size: 25px;">Blog</span>
-									</button>
+									</a>
 								</div>
 								<label class="member simpleInfo" style="font-size: 20px; font-weight: 100;">${usersMap.usersVo.introduce }</label>
 								<c:if test="${not empty usersMap.usersVo.addr1}">
