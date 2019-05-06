@@ -294,6 +294,11 @@ public class CorporationServiceImpl implements ICorporationService{
 		return corporationDao.select_employAbilityList(vo);
 	}
 
+	@Override
+	public Career_infoVo select_employInfo(Career_infoVo vo) {
+		return corporationDao.select_employInfo(vo);
+	}
+
 	
 
 

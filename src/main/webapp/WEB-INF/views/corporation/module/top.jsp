@@ -78,10 +78,13 @@
 			<c:if test="${ followInfo != null }">
 				<button class="btn btn-primary corp_unfollow_btn" onclick="corporation_unfollow('${ SESSION_MEMBERVO.mem_id}', '${ corporationInfo.corp_id }');">팔로우 취소</button>
 			</c:if>
-		
+			
+			<!-- 회원에게만 기업리뷰 버튼이 보여야함 -->
+			<c:if test="${ SESSION_MEMBERVO.mem_division == '1' }">
+				<button class="btn btn-primary corp_review_btn" onclick="location.href='/companyReview?corp_id=${ corporationInfo.corp_id }'"><strong>기업 리뷰</strong></button>
+			</c:if>
 		</c:if>
 		
-		<button class="btn btn-primary corp_review_btn" onclick="location.href='/companyReview?corp_id=${ corporationInfo.corp_id }'"><strong>기업 리뷰</strong></button>
 	</div>
 	
 </div>
