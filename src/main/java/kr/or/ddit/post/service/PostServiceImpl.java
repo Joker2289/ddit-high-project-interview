@@ -72,4 +72,9 @@ public class PostServiceImpl implements IPostService {
 		return postDao.select_nextHashtagPost(paginationVo);
 	}
 
+	@Override
+	public List<PostVo> select_corpPagePost(PaginationVo paginationVo) {
+		return postDao.select_corpPagePost(paginationVo);
+	}
+
 }

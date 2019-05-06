@@ -156,8 +156,6 @@ public class CorporationController {
 		}
 		
 		
-		
-		
 		if(!memberInfo.getMem_id().equals(corp_id)) {
 			
 			logger.debug("memberInfo >>>>>>>>>>> :{} ", memberInfo);
@@ -181,6 +179,16 @@ public class CorporationController {
 		model.addAttribute("corporationInfo", corporationInfo);
 		
 		model.addAttribute("memberInfo", memberInfo);
+		
+		PaginationVo paginationVo = new PaginationVo();
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		List<PostVo> corpPost = postService.select_corpPagePost(paginationVo);
+		
+		model.addAttribute("corpPost", corpPost);
+		model.addAttribute("memberInfo", memberInfo);
+		
+		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+		model.addAttribute("goodList", goodList);
 		
 		return "corporationTiles";
 	}
