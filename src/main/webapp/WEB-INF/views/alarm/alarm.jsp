@@ -95,7 +95,7 @@
 		  	            
 		  	            <c:when test="${recentAlarm.division == '25' && recentAlarm.alarm_separate == '04' }">
 		  	              <h4 class="txt_alarm_contents">
-		  	                <a href="/profileHome?user_id=${recentAlarm.send_id }">
+		  	                <a href="/connectionReceiveApply">
 		  	                  <span style="font-weight: bold; color: #0073b1;">${recentAlarm.send_name }</span> 님이 회원님에게 일촌을 신청함
 		  	                </a>
 		  	              </h4>

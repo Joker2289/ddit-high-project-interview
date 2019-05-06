@@ -37,7 +37,7 @@ public class GoodDaoImpl implements IGoodDao {
 	}
 
 	@Override
-	public List<UsersVo> select_pushGoodMember(GoodVo goodVo) {
+	public List<GoodVo> select_pushGoodMember(GoodVo goodVo) {
 		return sqlSession.selectList("good.select_pushGoodMember", goodVo);
 	}
 

@@ -321,4 +321,19 @@
    $("#btn-upload-document").on("click", function () {
       pushModal();
    });
+
    
+   function activityClick(ref_code) {
+	   
+		$.ajax({
+			url : "/pushGoodMember",
+			data : {"ref_code" : ref_code },
+			success : function(data) {
+
+				console.log(data);
+				$('#modal-body').html(data);
+				$('.jk-modalsasun').css('display', 'block');			
+			}
+		});
+		
+	};
