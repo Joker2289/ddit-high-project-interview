@@ -21,8 +21,11 @@
 		                                                  from education_info
 		                                                group by user_id) a, education_info b
 		                                                 where  a.education_code = b.education_code)  c,
-		                                        (select user_id, ability_item
-		                                           from ability) d,
+		                                        (select b.*
+		                                           from (select max(ability_code) as ability_code
+		                                                   from ability
+		                                                 group by user_id) a, ability b
+		                                          where a.ability_code in b.ability_code) d,
 		                                        (select receive_id, receive_accept
 		                                           from personal_connection
 		                                          where user_id = #{mem_id}
