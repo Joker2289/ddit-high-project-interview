@@ -21,11 +21,11 @@
 		                                                  from education_info
 		                                                group by user_id) a, education_info b
 		                                                 where  a.education_code = b.education_code)  c,
-		                                        (select b.*
-		                                           from (select max(ability_code) as ability_code
-		                                                   from ability
-		                                                 group by user_id) a, ability b
-		                                          where a.ability_code in b.ability_code) d,
+		                                        (select user_id, listagg(ability_item, ',') within group (order by user_id) as ability_item
+                                                   from ability
+                                                  where user_id in (select user_id
+                                                                     from ability)
+                                                 group by user_id) d,
 		                                        (select receive_id, receive_accept
 		                                           from personal_connection
 		                                          where user_id = #{mem_id}
@@ -43,12 +43,12 @@
 		                           and a.user_id = d.user_id(+) 
 		                           and a.user_id = e.receive_id(+) 
 		                           and a.user_id = f.ref_keyword(+) )
-		                 where (upper(mem_name) like '%' || upper(#{search_word}) || '%'
-		                    or  upper(addr1) like '%' || upper(#{search_word}) || '%'
-		                    or  upper(career_info) like '%' || upper(#{search_word}) || '%'
-		                    or  upper(school_info) like '%' || upper(#{search_word}) || '%'
-		                    or  upper(ability_item) = upper(#{search_word})) ) aa )
-		 where col_no between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
+		                 where (upper(mem_name) 	like '%' || upper(#{search_word}) || '%'
+		                    or  upper(addr1) 	    like '%' || upper(#{search_word}) || '%'
+		                    or  upper(career_info)  like '%' || upper(#{search_word}) || '%'
+		                    or  upper(school_info)  like '%' || upper(#{search_word}) || '%'
+		                    or  upper(ability_item) like '%' || upper(#{search_word}) || '%' ) ) aa)
+         where col_no between ((#{page}-1) * #{pageSize}) + 1 and #{page} * #{pageSize}
 	</select>
 
 	<!-- 검색어에 대한 모든 정보(회사) -->
@@ -76,7 +76,8 @@
 		select count(*)
 		  from (select aa.*, rownum col_no
 		          from (select *
-		                  from (select a.user_id, a.user_name, a.profile_path, a.addr1, (b.corporate_name||' '|| b.job_position) as career_infomation, (c.school_name||' '||c.major||' '||c.degree_name) as school_infomation, d.ability_item, e.receive_accept
+		                  from (select a.user_id as mem_id, a.user_name as mem_name, a.profile_path, a.addr1, (b.corporate_name||' '|| b.job_position) as career_info, 
+		                  		(c.school_name||' '||c.major||' '||c.degree_name) as school_info, d.ability_item, e.receive_accept, f.ref_keyword
 		                          from users a, (select b.*
 		                                           from (select max(career_code) career_code
 		                                                   from career_info
@@ -87,26 +88,33 @@
 		                                                  from education_info
 		                                                group by user_id) a, education_info b
 		                                                 where  a.education_code = b.education_code)  c,
-		                                        (select user_id, ability_item
-		                                           from ability) d,
+		                                        (select user_id, listagg(ability_item, ',') within group (order by user_id) as ability_item
+                                                   from ability
+                                                  where user_id in (select user_id
+                                                                     from ability)
+                                                 group by user_id) d,
 		                                        (select receive_id, receive_accept
 		                                           from personal_connection
 		                                          where user_id = #{mem_id}
 		                                         union all
 		                                         select user_id, receive_accept
 		                                           from personal_connection
-		                                          where receive_id = #{mem_id}) e
+		                                          where receive_id = #{mem_id}) e,
+		                                        (select ref_keyword
+		                                           from follow
+		                                          where division = 43
+		                                            and mem_id = #{mem_id}) f
 		                         where a.user_id != #{mem_id}
 		                           and a.user_id = b.user_id(+)
 		                           and a.user_id = c.user_id(+)
 		                           and a.user_id = d.user_id(+) 
-		                           and a.user_id = e.receive_id(+) )
-		                 where (upper(user_name) like '%' || upper(#{search_word}) || '%'
+		                           and a.user_id = e.receive_id(+) 
+		                           and a.user_id = f.ref_keyword(+) )
+		                 where (upper(mem_name) like '%' || upper(#{search_word}) || '%'
 		                    or  upper(addr1) like '%' || upper(#{search_word}) || '%'
-		                    or  upper(career_infomation) like '%' || upper(#{search_word}) || '%'
-		                    or  upper(school_infomation) like '%' || upper(#{search_word}) || '%'
-		                    or  upper(ability_item) = upper(#{search_word})) ) aa )
-		 
+		                    or  upper(career_info) like '%' || upper(#{search_word}) || '%'
+		                    or  upper(school_info) like '%' || upper(#{search_word}) || '%'
+		                    or  upper(ability_item) like '%'|| upper(#{search_word}) || '%' ) ) aa )
 	</select>
 	
 	<!-- 검색 회사수 -->
