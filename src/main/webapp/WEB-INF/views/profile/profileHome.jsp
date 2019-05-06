@@ -855,7 +855,7 @@ $(document).ready(function() {
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
-						<h4 style="color: #337ab7; margin: 20px 0 15px 80px;">관심분야가 없습니다.</h4>
+						<h4 style="color: #337ab7; margin: 20px 0 15px 49px;">관심분야가 없습니다.</h4>
 					</c:otherwise>
 				</c:choose>
 				<c:if test="${fn:length(hashtagFollowVoList) > 5 }">
