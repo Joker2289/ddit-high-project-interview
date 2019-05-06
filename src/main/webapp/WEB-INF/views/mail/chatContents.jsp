@@ -19,7 +19,7 @@
 		<c:set var="contents_addrpath" value="/profile?mem_id=${chatContentsVo.mem_id }"/>
 		<c:choose>
 			<c:when test="${fn:split(chatContentsVo.chat_content,'▣')[1] eq 'exit'}">
-				<div style="width: 474px; margin-bottom: 10px; text-align: center;">${fn:split(chatContentsVo.chat_content,'▣')[0] } 님이 나가셨습니다.</div>
+				<div style="width: 450px;margin-bottom: 10px;text-align: center;background-color: mistyrose;border-radius: 10px;font-weight: bold;">${fn:split(chatContentsVo.chat_content,'▣')[0] } 님이 나가셨습니다.</div>
 			</c:when>
 			<c:otherwise>
 				<div style="width: 474px; min-height: 66px; display: flex; margin-bottom: 10px;">
@@ -46,13 +46,13 @@
 								<c:choose>
 									<c:when test="${fn:split(chatContentsVo.chat_content,'▣')[1] eq 'image' }">
 										<a href="/chatContentsFileDownload?content_code=${chatContentsVo.content_code }">									
-											<div style="width: 250px; height: 300px; background-image:url('/chat_contentsImage?uuid=${fn:split(chatContentsVo.chat_content,'▣')[0]}'); background-repeat: no-repeat; background-size: contain; background-position: center;">
+											<div style="width: 250px; height: 300px; background-image:url('/chat_contentsImage?uuid=${fn:split(chatContentsVo.chat_content,'▣')[0]}'); background-repeat: no-repeat; background-size: contain; background-position: center;border-radius: 5px;background-color: lightgray">
 											</div>
 										</a>
 									</c:when>
 									<c:otherwise>
 										<a href="/chatContentsFileDownload?content_code=${chatContentsVo.content_code }">									
-											<div style="width: 400px;">
+											<div style="max-width: 400px; background-color: lightgray; border-radius: 5px; font-weight: bold;">
 												${fn:split(chatContentsVo.chat_content,'▣')[2]}
 											</div>
 										</a>
