@@ -19,7 +19,7 @@
 		<c:set var="contents_addrpath" value="/profile?mem_id=${chatContentsVo.mem_id }"/>
 		<c:choose>
 			<c:when test="${fn:split(chatContentsVo.chat_content,'▣')[1] eq 'exit'}">
-				<div style="width: 474px; margin-bottom: 10px; text-align: center;">${fn:split(chatContentsVo.chat_content,'▣')[0] } 님이 나가셨습니다.</div>
+				<div style="width: 450px;margin-bottom: 10px;text-align: center;background-color: mistyrose;border-radius: 10px;font-weight: bold;">${fn:split(chatContentsVo.chat_content,'▣')[0] } 님이 나가셨습니다.</div>
 			</c:when>
 			<c:otherwise>
 				<div style="width: 474px; min-height: 66px; display: flex; margin-bottom: 10px;">
