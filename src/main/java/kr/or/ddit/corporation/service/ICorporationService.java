@@ -297,6 +297,17 @@ public interface ICorporationService {
 	 * Method 설명 : 회사에 등록되고 보유기술: 조건추가된 직원의 정보 리스트
 	 */
 	List<Employee_listVo> select_employAbilityList(Employee_listVo vo);
+	
+	/**
+	 * 
+	 * Method : select_employInfo
+	 * 작성자 : pjk
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 회사에 등록된 사원 정보 조회
+	 */
+	Career_infoVo select_employInfo(Career_infoVo vo);
 }
 
 

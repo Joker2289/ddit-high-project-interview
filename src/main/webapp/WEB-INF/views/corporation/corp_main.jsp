@@ -52,7 +52,7 @@
 		
 		<div class="col-md-9 content">
 			<div id="content_area" class="content_area">
-				<%@ include file="/WEB-INF/views/corporation/module/left.jsp"%>
+				<%@ include file="/WEB-INF/views/corporation/module/home.jsp"%>
 			</div>
 		</div>
 		

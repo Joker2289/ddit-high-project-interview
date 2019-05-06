@@ -151,7 +151,7 @@
 								${rRVo.job_local } <br>
 								${rRVo.job_type }
 							</div>
-							<div style="padding-top: 10px;">
+							<div style="padding-top: 10px; color: #2f7b15;">
 								${newTimeList.get(i.index) } 전
 							</div>
 						</div></li>
