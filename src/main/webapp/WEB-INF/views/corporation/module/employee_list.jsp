@@ -38,13 +38,56 @@
 			
 			
 			<div class="employee_footer">
-				<button class="btn btn-primary footer_btn"> <i class="fas fa-plus"></i> 팔로우 </button>
+				<c:if test="${ employee.user_id != SESSION_MEMBERVO.mem_id }">
+					<button id=${ employee.user_id } class="btn btn-primary employee_follow_btn" onclick="employee_follow('${ employee.user_id }');"> <i class="fas fa-plus"></i> 팔로우 </button>
+				</c:if>
+				<c:if test="${ employee.user_id == SESSION_MEMBERVO.mem_id }">
+					<button class="btn btn-primary hidden_my_btn" hidden><i class="fas fa-plus"></i> 나 </button>
+				</c:if>
 			</div>
 		</div>
 	</c:forEach>
 
 <script>
-	 
+
+/* <!-- <button class="btn btn-primary employee_unfollow_btn"> 팔로우 취소 </button> --> */
+<c:forEach items="${ followList }" var="follow">
+	/* console.log("${ follow.ref_keyword }"); */
+	$('#${ follow.ref_keyword }').removeClass('employee_follow_btn');
+	$('#${ follow.ref_keyword }').addClass('employee_unfollow_btn');
+	$('#${ follow.ref_keyword }').text('팔로우 취소');
+	$('#${ follow.ref_keyword }').attr('onclick', "employee_unfollow('${ follow.ref_keyword }');");
+	
+</c:forEach>
+
+/* 직원 팔로우 */
+function employee_follow(ref_keyword) {
+	
+	$.ajax({
+	  url : '/corp/employee_follow',
+      data : {"corp_id" : corp_id, "corp_code" : corp_code, "chart_index" : chart_index, "parameter" : parameter, "ref_keyword" : ref_keyword },
+      success : function(data) {
+    	  
+    	  $('#empl_area_div').html(data);
+    	  
+      }
+    });
+}
+
+/* 직원 언팔로우 */
+function employee_unfollow(ref_keyword) {
+	
+	$.ajax({
+	  url : '/corp/employee_unfollow',
+      data : {"corp_id" : corp_id, "corp_code" : corp_code, "chart_index" : chart_index, "parameter" : parameter, "ref_keyword" : ref_keyword },
+      success : function(data) {
+    	  
+    	  $('#empl_area_div').html(data);
+    	  
+      }
+    });
+}
+
 
 </script>
 

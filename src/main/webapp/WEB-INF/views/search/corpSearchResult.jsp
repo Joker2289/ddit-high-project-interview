@@ -8,7 +8,7 @@
 	<div class="corp_info">
 	
 		<div class="corp_img">
-			<a href="/corporation?corp_id=${corp.mem_id }">
+			<a href="/corp/corporation?corp_id=${ corp.mem_id }">
 				<c:choose>
 					<c:when test="${fn:contains(corp.profile_path, 'http') }">
 						<img class="corp_logo" src="${corp.profile_path }" style="width: 150px;">
@@ -21,7 +21,7 @@
 		</div>
 		
 		<div class="col-corpInfomation">
-			<a class="txt-corp_name" style="width: 20%; display: inline-block;" href="/corporation?corp_id=${corp.mem_id }">${corp.mem_name }</a>
+			<a class="txt-corp_name" style="width: 20%; display: inline-block;" href="/corp/corporation?corp_id=${corp.mem_id }">${corp.mem_name }</a>
 			<span class="txt-industry" style="width: 68%;display: inline-block;">
 				${corp.industry_type } ${corp.addr1 }
 			</span>

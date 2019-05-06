@@ -123,6 +123,29 @@ public class FollowDaoImpl implements IFollowDao {
 		return sqlSession.delete("follow.delete_userFollow", followVo);
 	}
 
+	/**
+	 * Method : select_hashtagFJollowList
+	 * 작성자 : jin
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 유저가 팔로우한 해쉬태그 리스트 조회
+	 */
+	@Override
+	public List<FollowVo> select_hashtagFollowList(String user_id) {
+		return sqlSession.selectList("follow.select_hashtagFollowList", user_id);
+	}
+
+	@Override
+	public FollowVo select_followLog(FollowVo vo) {
+		return sqlSession.selectOne("follow.select_followLog", vo);
+	}
+
+	@Override
+	public List<FollowVo> select_userFollowList(String mem_id) {
+		return sqlSession.selectList("follow.select_userFollowList", mem_id);
+	}
+
 }
 
 

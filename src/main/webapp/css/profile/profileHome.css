@@ -148,14 +148,14 @@
     
 }
 
-.possesion_skillsVoShow{
+.abilityVoShow{
 	width: 793px;
     padding-left: 0px;
     padding-right: 0px;
     margin-left: -25px;
     color: #0073b1; 
     font-size: 17px;
-}
+} 
 
 .essential:after{
 	content: '*';
@@ -247,5 +247,9 @@
 	background-size: contain;
 	background-position: center;
 	box-shadow: 0 1.5px 4px 3px rgba(0,0,0,.15);
+}
+
+label{
+	color:rgba(0,0,0,.6);
 }
 

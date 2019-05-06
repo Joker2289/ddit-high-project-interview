@@ -263,6 +263,11 @@ public class CorporationServiceImpl implements ICorporationService{
 	public List<ChartVo> major_list(String corp_code) {
 		return corporationDao.major_list(corp_code);
 	}
+	
+	@Override
+	public List<ChartVo> ability_list(String corp_code) {
+		return corporationDao.ability_list(corp_code);
+	}
 
 	@Override
 	public List<Employee_listVo> select_employAllList(String corp_code) {
@@ -283,6 +288,13 @@ public class CorporationServiceImpl implements ICorporationService{
 	public List<Employee_listVo> select_employMajorList(Employee_listVo vo) {
 		return corporationDao.select_employMajorList(vo);
 	}
+
+	@Override
+	public List<Employee_listVo> select_employAbilityList(Employee_listVo vo) {
+		return corporationDao.select_employAbilityList(vo);
+	}
+
+	
 
 
 }

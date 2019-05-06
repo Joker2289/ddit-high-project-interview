@@ -65,10 +65,22 @@ $(document).ready(function() {
 	<label style="font-size: 15px; font-weight: 500;">${usersMap.usersVo.telno }</label><br>
 	<br>
 	
-	<c:if test="${not empty possesion_skillsVoList }">
-		<label style="font-size: 20px; font-weight: 500; ">보유 기술</label><br>
+	<c:if test="${not empty abilityVoList }">
+		<label style="font-size: 20px; font-weight: 500; ">보유기술</label><br>
 		<div style="margin-bottom: 5px;"></div>
-		<c:forEach items="${possesion_skillsVoList}" var="possesion_skillsVo" varStatus="i">
+		<c:forEach items="${abilityVoList}" var="abilityVo" varStatus="i">
+			<label style="font-size: 15px; font-weight: 500;">${abilityVo.ability_item }</label><br>
+			<c:if test='${!i.last}'>
+				<div style="margin-bottom: 5px;"></div>
+			</c:if>
+		</c:forEach>
+		<br>
+	</c:if>
+	
+	<c:if test="${not empty recordMap.possesion_skillsVoList }">
+		<label style="font-size: 20px; font-weight: 500; ">자격증</label><br>
+		<div style="margin-bottom: 5px;"></div>
+		<c:forEach items="${recordMap.possesion_skillsVoList}" var="possesion_skillsVo" varStatus="i">
 			<label style="font-size: 15px; font-weight: 500;">${possesion_skillsVo.pskill_name }</label><br>
 			<c:if test='${!i.last}'>
 				<div style="margin-bottom: 5px;"></div>

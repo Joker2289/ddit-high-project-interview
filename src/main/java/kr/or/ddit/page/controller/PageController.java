@@ -139,6 +139,7 @@ public class PageController {
 	 */
 	@RequestMapping("/onenoteImageView")
 	public String imageView(@RequestParam(name = "src") String src, Model model) {
+		
 		model.addAttribute("src", src);
 		return "onenoteImageView";
 	}

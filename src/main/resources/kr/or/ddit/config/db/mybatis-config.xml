@@ -52,6 +52,7 @@
 		<typeAlias alias="salaryVo" 		  type="kr.or.ddit.salary_info.model.Salary_infoVo"/>
 		<typeAlias alias="apply_recruitVo" 	  type="kr.or.ddit.apply_recruit.model.Apply_recruitVo"/>
 		<typeAlias alias="chartVo" 	  		  type="kr.or.ddit.util.chart.ChartVo"/>
+		<typeAlias alias="abilityVo" 	      type="kr.or.ddit.ability.model.AbilityVo"/>
 		<typeAlias alias="employee_listVo" 	  type="kr.or.ddit.util.chart.Employee_listVo"/>
 	</typeAliases> 
   
@@ -98,6 +99,7 @@
 		<mapper resource="kr/or/ddit/config/db/mapper/page_link.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/search_result.xml"/>
 		<mapper resource="kr/or/ddit/config/db/mapper/apply_recruit.xml"/>
+		<mapper resource="kr/or/ddit/config/db/mapper/ability.xml"/>
 	</mappers>
 </configuration>
 
