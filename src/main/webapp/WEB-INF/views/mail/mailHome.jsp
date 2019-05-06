@@ -393,6 +393,18 @@
 	   					 $(".chatContentBox").scrollTop(99999999);
 	   				}
    				});
+        	   
+        	   $.ajax({
+	   				type : "POST",
+	   		    		url : "/reflashChatRooms",
+	   		    		dataType : "HTML",
+	   		    		data : {"chat_code" : chat_code},
+	   				success : function(result) {
+	   					$(".chatrooms").empty();
+	   					$(".chatrooms").html(result);
+						
+	   				}
+  				}); 
         	}
           	if(data == "room"){
         	   $.ajax({

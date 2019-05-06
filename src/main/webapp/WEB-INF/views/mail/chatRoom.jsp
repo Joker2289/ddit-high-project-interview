@@ -17,7 +17,7 @@
 <fmt:formatDate value="${userChatroom.WRITE_DATE}" pattern="MM월 dd일" var="write_date"/>
 <a class="chatRooms chatRoomBox" role="${userChatroom.CHAT_CODE }">
 	<div class="profileImageBox">
-		<div style="background-image: url(${not empty room_img ? room_img : room_imgaddr});"></div>
+		<div style="background-image: url(${fn:contains(userChatroom.PATH, 'http') ? room_img : room_imgaddr});"></div>
 	</div>
 	<div class="chatRoomContentsBox">
 		<div style="display: flex; color: rgba(0, 0, 0, .6);">
