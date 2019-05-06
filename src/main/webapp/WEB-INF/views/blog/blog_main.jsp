@@ -42,7 +42,7 @@
 	<div class="row">
 		<div>
 
-			<div id="dd" class="col-md-3">
+			<div class="col-md-3">
 				<%@ include file="/WEB-INF/views/blog/profile_area.jsp"%><!-- /프로필영역 -->
 				
 				<div id="portfolio_area" style="position:relative;">

@@ -268,6 +268,11 @@ public class CorporationDaoImpl implements ICorporationDao{
 	}
 
 	@Override
+	public List<ChartVo> ability_list(String corp_code) {
+		return sqlSessionTemplate.selectList("corp.ability_list", corp_code);
+	}
+	
+	@Override
 	public List<Employee_listVo> select_employAllList(String corp_code) {
 		return sqlSessionTemplate.selectList("corp.select_employAllList", corp_code);
 	}
@@ -286,5 +291,11 @@ public class CorporationDaoImpl implements ICorporationDao{
 	public List<Employee_listVo> select_employMajorList(Employee_listVo vo) {
 		return sqlSessionTemplate.selectList("corp.select_employMajorList", vo);
 	}
+
+	@Override
+	public List<Employee_listVo> select_employAbilityList(Employee_listVo vo) {
+		return sqlSessionTemplate.selectList("corp.select_employAbilityList", vo);
+	}
+
 
 }

@@ -3,8 +3,6 @@
 .left{
 	padding: 0px 0px 0px 0px !important;
 	margin-top: 20px; 
-	/* margin-right: 10px; */
-	background-color: yellow;
 	
 }
 
@@ -12,5 +10,4 @@
 .content{
 	padding: 0px 0px 0px 0px !important;
 	margin-top: 20px; 
-	/* background-color: red; */
 }
