@@ -29,26 +29,27 @@
 								style="width: 280px; box-shadow: 0 3px 3px rgba(0, 0, 0, .175); margin-right: 10px; padding: 13px; font-size: 16px; height: 270px;">
 								<div class="recr" onmouseover=""
 									style="cursor: pointer; height: 215px; border-bottom: 1px solid; border-bottom-color: #d9d9d9;">
-									<div class="table_div" style="margin-left: 24px;">
+									<div class="table_div">
 										<c:choose>
 											<c:when test="${ fn:contains( rRVo.image_path, 'http') }">
 												<img src="${ rRVo.image_path }" width="200">
 											</c:when>
 											<c:otherwise>
-												<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${ rRVo.visitor_id }&division=pf" width="100">
+												<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${ rRVo.visitor_id }&division=pf" class="img-circle visit_img">
 											</c:otherwise>
 										</c:choose>
+										
 									</div>
 									<br> <strong> <c:choose>
 											<c:when test="${ rRVo.visitor_name.length() > 18 }">
-										${rRVo.visitor_name.substring(0, 18) }...
-									</c:when>
+												<label class="visit_lbl">${rRVo.visitor_name.substring(0, 18) }...</label>
+											</c:when>
 											<c:otherwise>
-										${rRVo.visitor_name }
+										<label class="visit_lbl">${rRVo.visitor_name }</label>
 									</c:otherwise>
 										</c:choose>
 									</strong> <br> 
-									${ rRVo.visitor_info } <br> 
+									<label class="visit_info">${ rRVo.visitor_info }</label> <br> 
 								</div>
 								<div style="padding-top: 10px;"></div>
 							</div></li>
@@ -99,6 +100,10 @@
 
 
 <script>
+<c:if test="${ visit_logList.size() != 0 }">
+	console.log('${visit_logList.size()}');
+</c:if>
+
 
 $(document).ready(function() {
 	  

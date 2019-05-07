@@ -16,3 +16,24 @@
 	font-weight: bold;
 	font-size: 22px !important;
 }
+.table_div {
+	text-align: center !important;
+	
+}
+.visit_img{
+	width:120px !important; 
+	height:120px !important;
+}
+
+.visit_lbl{
+	font-size:20px !important;
+	width:100%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.visit_info{
+	width:100%;
+	margin: 0 auto;
+	text-align: center;
+}

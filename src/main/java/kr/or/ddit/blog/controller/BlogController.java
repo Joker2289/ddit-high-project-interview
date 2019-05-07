@@ -159,6 +159,8 @@ public class BlogController {
 		List<Blog_visit_logVo> visit_logList = visit_Service.select_today_visit_log(user_id);
 		model.addAttribute("visit_logList", visit_logList);
 		
+		logger.debug(">>>>>>>>>>>: {}", visit_logList);
+		
 		return "blogTiles";
 	}
 	
