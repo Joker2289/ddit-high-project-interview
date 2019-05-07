@@ -27,7 +27,7 @@
 						</c:otherwise>
 					</c:choose>
 				</strong> <br>
-				${corpNmList.get(i.index) } <br>
+				${corpNmList.get(i.index) }<br>
 				${rRVo.job_local } <br>
 				${rRVo.job_type }
 			</div>

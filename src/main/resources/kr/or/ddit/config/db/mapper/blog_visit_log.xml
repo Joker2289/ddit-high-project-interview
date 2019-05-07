@@ -27,6 +27,7 @@
 			    (
 			        select a.user_id,
 			               a.visit_date,
+			               a.visitor_id,
 			               b.user_name as visitor_name,
 			               b.profile_path as image_path,
 			               ( d.corporate_name || ' / ' || d.job_position ) as visitor_info,
@@ -42,6 +43,7 @@
 			        
 			        select a.user_id,
 			               a.visit_date,
+			               a.visitor_id,
 			               b.corp_name,
 			               b.logo_path,
 			               b.industry_type as visitor_info,

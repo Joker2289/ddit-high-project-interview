@@ -66,7 +66,7 @@
 .jk-modal-footer button {
 	margin: 0 10px;
 	padding: 10px 30px 10px 30px;
-	background: #000;
+	background: #00a4f2;
 	opacity: 0.9;
 	color: #fff;
 	border-radius: 5px;
@@ -75,7 +75,7 @@
 .jk-btn {
 	margin: 0 10px;
 	padding: 10px 30px 10px 30px;
-	background: #000;
+	background: #00a4f2;
 	opacity: 0.9;
 	color: #fff;
 	border-radius: 5px;
@@ -84,7 +84,7 @@
 .jk-btn-long {
 	margin: 0 10px;
 	padding: 6px 169px 6px 169px;
-	background: #000;
+	background: #00a4f2;
 	opacity: 0.9;
 	color: #fff;
 	border-radius: 5px;
@@ -93,7 +93,7 @@
 .jk-btn-long2 {
 	margin: 20px 10px;
 	padding: 10px 139px 10px 139px;
-	background: #000;
+	background: #00a4f2;
 	opacity: 0.9;
 	color: #fff;
 	border-radius: 5px;
@@ -102,23 +102,23 @@
 .jk-btn-long3 {
 	margin: 10px 10px;
 	padding: 10px 144px 10px 144px;
-	background: #000;
+	background: #00a4f2;
 	opacity: 0.9;
 	color: #fff;
 	border-radius: 5px;
 }
 
 .jk-join-btn {
-	background: #323ad3;
+	background: #00a4f2;
 }
 
 .jk-modal-footer button:hover {
-	background: #8546B3;
+	background: #00a4f2;
 	/* opacity:0.4; */
 }
 
 .jk-modal-body button:hover {
-	background: #8546B3;
+	background: #00a4f2;
 	/* opacity:0.4; */
 }
 

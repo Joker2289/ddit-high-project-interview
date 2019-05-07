@@ -12,7 +12,7 @@
 	<li>
 		<div class="whiteBox">
 			<a href="/corp/corporation?corp_id=${corpor.corp_id }"><div
-				style="width: 120px;height:78px;background-image:url(${not empty logo_path ? logo_path : profile_addrpath});background-repeat: no-repeat;background-size: 120px;background-position: center;margin: 15px 0 12px 22px;"></div></a>
+				style="width: 120px;height:78px;background-image:url(${fn:contains(corpor.logo_path, 'http') ? logo_path : profile_addrpath});background-repeat: no-repeat;background-size: 120px;background-position: center;margin: 15px 0 12px 22px;"></div></a>
 			<div style="white-space: nowrap;overflow: hidden;width: 165px;text-overflow: ellipsis;padding-left: 5px;padding-right: 5px;"><strong>${corpor.corp_name}</strong></div>
 			<div style="height: 70px;padding-left: 5px;padding-right: 5px;">${corpor.industry_type}</div>
 		<div>

@@ -220,6 +220,9 @@
 // 					alert($(".recrBox").length);
 					setCenter($(this).data("idx"));
 					newinfos[$(this).data("idx")].open(map, markers[($(this).data("recruit_code"))-1]);
+
+// 					console.log(markerPositions[($(this).data("recruit_code"))-1]);
+					console.log(markers.length);
 					$(this).css("border-color", "#666666");
 				});
 				$(".recrBox").on("mouseout", function(){
@@ -669,8 +672,9 @@
 	$("#btn_userAddr").on("click", function(){
 		var addr = "${uVo.addr1 }";
 		var user_id = "${uVo.user_id }";
+		var user_name = "${uVo.user_name }";
 		
-		changeUserAddr(addr, user_id);
+		changeUserAddr(addr, user_id, user_name);
 	});	
 	
 	// 주소 - 좌표 변환.
@@ -681,7 +685,7 @@
 	// 주소 - 좌표 변환 메서드.
 	var marker = null;	
 	var coords = null;
-	function changeUserAddrFirst(addr, user_id){
+	function changeUserAddrFirst(addr, user_id, user_name){
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new daum.maps.services.Geocoder();
 
@@ -700,7 +704,7 @@
 
 		        // 인포윈도우로 장소에 대한 설명을 표시합니다
 		        var infowindow = new daum.maps.InfoWindow({
-		            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + user_id + '님의 주소</div>'
+		            content: '<div style="width:150px;text-align:center;padding:6px 0;">${uVo.user_name }님의 주소</div>'
 		        });
 		        
 		        infowindow.open(map, marker);

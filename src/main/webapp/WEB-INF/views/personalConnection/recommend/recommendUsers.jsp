@@ -15,7 +15,7 @@
 </c:choose>
 	<li>
 		<div class="whiteBox"><!-- ;background-image:url("http://www.naver.com"); ;background-image:url("/profile?mem_id=jin"); -->
-			<a href="/profileHome?user_id=${user.user_id }"><div style="width: 108px; height: 108px;background-image:url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 30px;border: 4px solid #E3EEF2;border-radius: 100px;"></div></a>
+			<a href="/profileHome?user_id=${user.user_id }"><div style="width: 108px; height: 108px;background-image:url(${fn:contains(user.profile_path, 'http') ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 30px;border: 4px solid #E3EEF2;border-radius: 100px;"></div></a>
 			<a href="/profileHome?user_id=${user.user_id }"><div><strong>${user.user_name}</strong></div></a>
 			<a href="/profileHome?user_id=${user.user_id }"><div style="height: 70px;">${user.introduce}</div></a>
 		<div>

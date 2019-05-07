@@ -10,15 +10,14 @@
 		<c:forEach items="${followConnections}" var="conn">
 		<c:set var="profile_addrpath" value="/profile?mem_id=${conn.user_id }"/> 
 		<c:choose>
-			<c:when test="${fn:contains(user.profile_path, 'http')}">
+			<c:when test="${fn:contains(conn.profile_path, 'http')}">
 				<c:set var="profile_path" value="${conn.profile_path }"/> 
 			</c:when>
 		</c:choose>
-		
 			<div style="width: 225px;">
 				<div class="corporation">
 					<a href="/profileHome?user_id=${conn.user_id }"><div
-						style="width: 85px;height: 85px;background-image:url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;border-radius: 100px;border: 2px solid #E3EEF2;"></div></a>
+						style="width: 85px;height: 85px;background-image:url(${fn:contains(conn.profile_path, 'http') ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 5px;margin-top: 15px; margin-bottom: 12px;border-radius: 100px;border: 2px solid #E3EEF2;"></div></a>
 					<a href="/profileHome?user_id=${conn.user_id }"><div>
 						<label style="font-size: 17px;"><strong>${conn.user_name}
 						</strong></label><br/> <label>${conn.introduce}</label>
