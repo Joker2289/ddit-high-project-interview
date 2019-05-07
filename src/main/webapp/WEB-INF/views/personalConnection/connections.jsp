@@ -17,8 +17,8 @@
 						<option value="new">최근순</option>
 						<option value="name">이름</option>
 					</select>
-					<input style="display:inline;width: 170px;margin-left: 305px;" type="text" class="form-control" id="searchName" placeholder="이름으로 검색">
-					<a href="/filterSearch" style="padding-left: 20px; font-size: 15px; color: blue">필터로 검색</a>
+					<input style="display:inline;width: 170px;margin-left: 406px;" type="text" class="form-control" id="searchName" placeholder="이름으로 검색">
+					<!-- <a href="/filterSearch" style="padding-left: 20px; font-size: 15px; color: blue">필터로 검색</a> -->
 			</div>
 			<div class="row" style="padding-left: 15px;">
 				<table class="table table-hover connectTable">

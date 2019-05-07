@@ -52,7 +52,7 @@
 <body>
    
    <div class="limiter">
-      <div class="container-login100" style="background-image: url('/css/login/images/jumokdajim.jpeg');">
+      <div class="container-login100" style="background-image: url('/css/login/images/bg2.jpeg');">
          <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
             <form id="login"class="login100-form validate-form" action="/login" method="post">
                <span class="login100-form-title p-b-49">

@@ -38,14 +38,14 @@
                  <a
                    <c:choose>
                      <c:when test="${post.mem_division eq 1 }">href="/profileHome?user_id=${post.mem_id }"</c:when>
-                     <c:when test="${post.mem_division eq 2 }">href="/corporation?corp_id=${post.mem_id }"</c:when>
+                     <c:when test="${post.mem_division eq 2 }">href="/corp/corporation?corp_id=${post.mem_id }"</c:when>
                    </c:choose>>
                    <div class="writer_info" style="display: inline-block;">
                      <a 
                        <c:choose>
                          <c:when test="${post.mem_division eq '1' && post.mem_id eq SESSION_MEMBERVO.mem_id}">href='/profileHome'</c:when>
                          <c:when test="${post.mem_division eq '1' && post.mem_id != SESSION_MEMBERVO.mem_id}">href='/profileHome?user_id=${post.mem_id }'</c:when>
-                         <c:when test="${post.mem_division eq '2'}">href='/corporation?corp_id=${post.mem_id }'</c:when>
+                         <c:when test="${post.mem_division eq '2'}">href='/corp/corporation?corp_id=${post.mem_id }'</c:when>
                        </c:choose>
                      >
                        <!-- 작성자 사진 -->
@@ -76,7 +76,7 @@
                   	   <c:choose>
                   	     <c:when test="${post.mem_division eq 1 && !post.mem_id eq memberInfo.mem_id}">href="/profileHome?user_id=${post.mem_id }"</c:when>
                   	     <c:when test="${post.mem_division eq 1 && post.mem_id eq memberInfo.mem_id}">href="/profileHome"</c:when>
-                  	     <c:when test="${post.mem_division eq 2 }">href="/corporation?corp_id=${post.mem_id }"</c:when>
+                  	     <c:when test="${post.mem_division eq 2 }">href="/corp/corporation?corp_id=${post.mem_id }"</c:when>
                   	   </c:choose>>${post.writer_name }</a>
                      <c:choose>
                        <c:when test="${post.resultMinute <= 1 }">

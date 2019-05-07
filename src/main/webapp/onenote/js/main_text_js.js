@@ -27,8 +27,16 @@ function rectResize(){
 
 //text 이동 했을때
 stage.on('dragmove', function (e) {
-    textGrouping(e);
-    rect.hide();
+	
+	//text 그룹핑
+	textGrouping(e);
+    
+    //글자 이동중 배경색 같이 이동
+    var move_point = textNode.absolutePosition();
+    rect.x(move_point.x);
+    rect.y(move_point.y);
+    rect.show();
+    			
     layer.draw();
 });
 
@@ -36,12 +44,8 @@ stage.on('dragmove', function (e) {
 stage.on('dragend', function (e) {
     selectNode = e.target;
     
-    textStyle();
+    textStyle(); //textStyle 메뉴 초기화
 
-    var move_point = textNode.absolutePosition();
-    rect.x(move_point.x);
-    rect.y(move_point.y);
-    rect.show();
 
     placeHolder.x(move_point.x);
     placeHolder.y(move_point.y);
@@ -59,7 +63,7 @@ stage.on('click', (e) => {
     if (target.nodeType === 'Stage') {
 
         tf.hide();
-        rect.hide();
+        //rect.hide();				%%
         textNode.zIndex(3);
         layer.draw();
         return;
@@ -346,9 +350,9 @@ function addText(position, node_num) {
         name: 'rect ' + node_num,
         width: textNode.width() * textNode.getAbsoluteScale().x,
         height: textNode.height() * textNode.getAbsoluteScale().y,
-        stroke: 'red',
-        strokeWidth: 2,
-        dash: [10, 2] //테두리 점선 표시
+        //stroke: 'red',
+        //strokeWidth: 2,
+        //dash: [10, 2] //테두리 점선 표시
 
     });
 

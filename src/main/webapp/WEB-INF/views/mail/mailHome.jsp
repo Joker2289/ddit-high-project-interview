@@ -151,7 +151,7 @@
 								${rRVo.job_local } <br>
 								${rRVo.job_type }
 							</div>
-							<div style="padding-top: 10px;">
+							<div style="padding-top: 10px; color: #2f7b15;">
 								${newTimeList.get(i.index) } 전
 							</div>
 						</div></li>
@@ -393,6 +393,18 @@
 	   					 $(".chatContentBox").scrollTop(99999999);
 	   				}
    				});
+        	   
+        	   $.ajax({
+	   				type : "POST",
+	   		    		url : "/reflashChatRooms",
+	   		    		dataType : "HTML",
+	   		    		data : {"chat_code" : chat_code},
+	   				success : function(result) {
+	   					$(".chatrooms").empty();
+	   					$(".chatrooms").html(result);
+						
+	   				}
+  				}); 
         	}
           	if(data == "room"){
         	   $.ajax({

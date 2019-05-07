@@ -37,7 +37,7 @@ public class GoodServiceImpl implements IGoodService {
 	}
 
 	@Override
-	public List<UsersVo> select_pushGoodMember(GoodVo goodVo) {
+	public List<GoodVo> select_pushGoodMember(GoodVo goodVo) {
 		return goodDao.select_pushGoodMember(goodVo);
 	}
 

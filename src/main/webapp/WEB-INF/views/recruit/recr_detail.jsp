@@ -101,6 +101,18 @@
 													<i class="far fa-clock"></i> ${time_value } 전
 												</span> ｜ 
 													<c:choose>
+														<c:when test="${mem_id == corp.corp_id && recr.app_count < 10 }">
+															<span id="btn_applyUser" onmouseover="" style="color: #0174b0;
+																	cursor: pointer;">
+																<i class="fas fa-user-alt"></i> 지원자 수: 10 명 미만
+															</span>
+														</c:when>
+														<c:when test="${mem_id == corp.corp_id }">
+															<span id="btn_applyUser" onmouseover="" style="color: #0174b0;
+																	cursor: pointer;">
+																<i class="fas fa-user-alt"></i> 지원자 수: ${recr.app_count } 명
+															</span>
+														</c:when>
 														<c:when test="${recr.app_count < 10 }">
 															<span style="color: #0174b0;">
 																<i class="fas fa-user-alt"></i> 지원자 수: 10 명 미만
@@ -223,6 +235,11 @@ $(function () {
 $(document).ready(function(){
 // 	console.log("req_page? : ${req_page }");
 	
+	// 채용공고 지원자 클릭.
+	$("#btn_applyUser").on("click", function(){
+		window.location.href = '${pageContext.request.contextPath }/applyUser?recruit_code=${recr.recruit_code }';
+	});
+	
 	// msg 출력.
 	var msg_flag = "${msg_flag }";
 	
@@ -300,7 +317,13 @@ $(document).ready(function(){
 		</c:choose>
 	});
 	
+	// 지원버튼 클릭.
 	$("#btn_app").on("click", function(){
+		if('${mem_division }' == '2'){ // 회사 회원 - 지원 불가.
+			alert("일반회원으로 로그인 후 이용해주세요.");
+			return;
+		}
+		
 		<c:choose>
 			<c:when test="${recr_app == 't' }">
 				if(confirm("채용공고 지원을 취소하시겠습니까?")){

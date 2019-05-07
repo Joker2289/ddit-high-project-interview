@@ -26,7 +26,10 @@
 				<div style="margin-left: 10px;margin-top: 6px;">
 					<button onclick="location.href='companyReview?corp_id=${corporationInfo.corp_id }'" class="btn btn-primary"><strong>기업리뷰</strong></button>
 					<button onclick="location.href='companySalary?corp_id=${corporationInfo.corp_id }'" class="btn btn-primary" style="margin-left: 10px;"><strong>연봉정보</strong></button>
-					<button class="btn btn-default" data-toggle="modal" data-target="#myModal" style="margin-left: 10px;border: hidden;">기업리뷰 작성</button>
+					
+					<c:if test="${ employInfo != null}">
+						<button class="btn btn-default" data-toggle="modal" data-target="#myModal" style="margin-left: 10px;border: hidden;">기업리뷰 작성</button>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -172,6 +175,7 @@
 							<option value="주임">		주임</option>
 							<option value="사원">		사원</option>
 							<option value="인턴">		인턴</option>
+							<option value="전 직원">	전 직원</option>
 			      		</select>
 		      		<label>장점</label>
 		      		<textarea name="cr_content" class="form-control" rows="3"></textarea>

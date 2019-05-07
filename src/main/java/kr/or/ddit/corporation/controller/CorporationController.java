@@ -150,26 +150,45 @@ public class CorporationController {
 		
 		MemberVo memberInfo = (MemberVo) req.getSession().getAttribute("SESSION_MEMBERVO");
 		
-		CorporationVo corporationInfo = new CorporationVo();
+		
 		if(corp_id==null){
 			corp_id = memberInfo.getMem_id();
 		}
 		
-		//팔로우 정보 조회
-		FollowVo fVo = new FollowVo();
-		fVo.setMem_id(memberInfo.getMem_id());
-		fVo.setRef_keyword(corp_id);
-		fVo.setDivision("11");
-		FollowVo followInfo = followService.select_followLog(fVo);
-		if(followInfo != null) {
-			model.addAttribute("followInfo", followInfo);
+		
+		if(!memberInfo.getMem_id().equals(corp_id)) {
+			
+			logger.debug("memberInfo >>>>>>>>>>> :{} ", memberInfo);
+			logger.debug("corp_id >>>>>>>>>>> :{} ", corp_id);
+			
+			//팔로우 정보 조회
+			FollowVo fVo = new FollowVo();
+			fVo.setMem_id(memberInfo.getMem_id());
+			fVo.setRef_keyword(corp_id+"");
+			fVo.setDivision("11");
+			logger.debug("ddddd >>>>>> : {}");
+			FollowVo followInfo = followService.select_followLog(fVo);
+			
+			if(followInfo != null) {
+				model.addAttribute("followInfo", followInfo);
+			}
 		}
 		
 		//회사 정보 조회
-		corporationInfo = corporationService.select_corpInfo(corp_id);
+		CorporationVo corporationInfo = corporationService.select_corpInfo(corp_id);
 		model.addAttribute("corporationInfo", corporationInfo);
 		
 		model.addAttribute("memberInfo", memberInfo);
+		
+		PaginationVo paginationVo = new PaginationVo();
+		paginationVo.setMem_id(memberInfo.getMem_id());
+		List<PostVo> corpPost = postService.select_corpPagePost(paginationVo);
+		
+		model.addAttribute("corpPost", corpPost);
+		model.addAttribute("memberInfo", memberInfo);
+		
+		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
+		model.addAttribute("goodList", goodList);
 		
 		return "corporationTiles";
 	}

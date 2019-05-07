@@ -2,12 +2,15 @@ package kr.or.ddit.apply_recruit.dao;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
 
 import kr.or.ddit.apply_recruit.model.Apply_recruitVo;
 import kr.or.ddit.test.LogicTestConfig;
+import kr.or.ddit.users.model.UsersVo;
 
 public class Apply_recruitDaoImplTest extends LogicTestConfig{
 
@@ -37,7 +40,25 @@ public class Apply_recruitDaoImplTest extends LogicTestConfig{
 		appDao.deleteApp(aVo);
 	}
 	
+	/**
+	 * 
+	 * Method : testGetAUList
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * Method 설명 : 특정 채용공고에 지원한 유저 목록 조회 테스트.
+	 */
+	@Test
+	public void testGetAUList() {
+		/***Given***/
 
+		/***When***/
+		List<UsersVo> aUList = appDao.getAUList("31");
+
+		/***Then***/
+		assertNotNull(aUList);
+	}
+	
+	
 	
 	
 	

@@ -15,10 +15,10 @@
            <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
            	  <c:choose>
            	  	<c:when test="${fn:contains(SESSION_DETAILVO.bg_path, 'http') }">
-           	  	  <span><a href="/profileHome"><img class="bg_img" src="${SESSION_DETAILVO.bg_path }"></a></span>
+           	  	  <span><a href="/corp/corporation?corp_id=${memberInfo.mem_id }"><img class="bg_img" src="${SESSION_DETAILVO.bg_path }"></a></span>
            	  	</c:when>
            	  	<c:otherwise>
-           	  	  <span><a href="/profileHome"><img class="bg_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=bg"></a></span>
+           	  	  <span><a href="/corp/corporation?corp_id=${memberInfo.mem_id }"><img class="bg_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=bg"></a></span>
            	  	</c:otherwise>
            	  </c:choose>
            </c:when>
@@ -32,10 +32,10 @@
            <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
            	  <c:choose>
            	  	<c:when test="${fn:contains(SESSION_DETAILVO.logo_path, 'http') }">
-           	  	  <span><a href="/profileHome"><img class="logo_img" src="${SESSION_DETAILVO.logo_path }"></a></span>
+           	  	  <span><a href="/corp/corporation?corp_id=${memberInfo.mem_id }"><img class="logo_img" src="${SESSION_DETAILVO.logo_path }"></a></span>
            	  	</c:when>
            	  	<c:otherwise>
-           	  	  <span><a href="/profileHome"><img class="logo_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=pf"></a></span>
+           	  	  <span><a href="/corp/corporation?corp_id=${memberInfo.mem_id }"><img class="logo_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=pf"></a></span>
            	  	</c:otherwise>
            	  </c:choose>
            </c:when>
@@ -61,7 +61,7 @@
               <pre style="background: #fff; border-color: #fff;"><a href="/savepost"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
           </c:when>
           <c:when test="${memberInfo.mem_division == '2' }">
-              <pre style="background: #fff; border-color: #fff;"><a href="#"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
+              <pre style="background: #fff; border-color: #fff;"><a href="/savepost"><span>저장한 글<span class="txt_save_count" style="float: right;">${savepostCnt }</span></span></a></pre>
           </c:when>
         </c:choose>
       </div>
@@ -91,9 +91,6 @@
         </c:choose>     
       </ul>
     </div>
-    <div>
-        <button type="button" class="btn_moretag">더보기</button>
-     </div>
   </div>
   <!-- ./friend requests -->
 </div>

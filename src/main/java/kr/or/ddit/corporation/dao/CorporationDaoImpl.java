@@ -297,5 +297,10 @@ public class CorporationDaoImpl implements ICorporationDao{
 		return sqlSessionTemplate.selectList("corp.select_employAbilityList", vo);
 	}
 
+	@Override
+	public Career_infoVo select_employInfo(Career_infoVo vo) {
+		return sqlSessionTemplate.selectOne("corp.select_employInfo", vo);
+	}
+
 
 }

@@ -10,10 +10,21 @@
 				<c:if test="${fn:contains(PROFILE_REALPATH, 'http')}">
 					<c:set var="profile_path" value="${PROFILE_REALPATH }"/>
 				</c:if>
-				<div style="padding-right: 0px;">
-					<div style="width: 50px; height: 50px; margin-left: 95px; border-radius: 50px; background-repeat: no-repeat;background-size: cover;background-position: center; background-image: url(${fn:contains(PROFILE_REALPATH, 'http') ? profile_path : profile_addrpath});"></div>
-					<label style="width:240px; height:22px; text-align: center; text-overflow: ellipsis;overflow: hidden;-webkit-line-clamp: 1;-webkit-box-orient: vertical;">${MYNAME }</label>
-				</div>
+				<c:choose>
+					<c:when test="${SESSION_MEMBERVO.mem_division == '2' }">
+						<div style="padding-right: 0px;">
+							<div style="width: 140px; height: 50px; margin-left: 49px; background-repeat: no-repeat;background-size: cover;background-position: center; background-image: url(${fn:contains(PROFILE_REALPATH, 'http') ? profile_path : profile_addrpath});"></div>
+							<label style="width:240px; height:22px; text-align: center; text-overflow: ellipsis;overflow: hidden;-webkit-line-clamp: 1;-webkit-box-orient: vertical;">${MYNAME }</label>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div style="padding-right: 0px;">
+							<div style="width: 50px; height: 50px; margin-left: 95px; border-radius: 50px; background-repeat: no-repeat;background-size: cover;background-position: center; background-image: url(${fn:contains(PROFILE_REALPATH, 'http') ? profile_path : profile_addrpath});"></div>
+							<label style="width:240px; height:22px; text-align: center; text-overflow: ellipsis;overflow: hidden;-webkit-line-clamp: 1;-webkit-box-orient: vertical;">${MYNAME }</label>
+						</div>
+					</c:otherwise>
+				</c:choose>
+				
 				
 			</td>
 		</tr>
