@@ -24,7 +24,7 @@
 								<i class="fas fa-search" style="font-size: 21px; margin-right: 5px;
 										color: #666666;"></i>
 								<input type="text" placeholder="채용공고 검색" style="width: 483px; border: 0px;
-										height: 37px; font-size: 19px;">
+										height: 37px; font-size: 19px;" id="txt_word">
 							</div>
 						</td>
 						<td>
@@ -32,7 +32,7 @@
 								<i class="fas fa-map-marker-alt" style="font-size: 21px; margin-right: 5px;
 										color: #666666"></i>
 								<input type="text" placeholder="지역 검색" style="width: 483px; border: 0px;
-										height: 37px; font-size: 19px;">
+										height: 37px; font-size: 19px;" id="txt_local">
 							</div>
 						</td>
 						<td>
@@ -254,8 +254,33 @@
 			});
 		</c:forEach>
 		
+		// 검색 버튼
+		$("#btn_search").on("click", function(){
+// 			alert($("#txt_word").val() + " + " + $("#txt_local").val());
+			search();
+		});
+		
+		// 엔터키 눌렀을 때 검색되도록.
+		$("#txt_local").keypress(function(e){
+			if(e.which == 13){
+				search();
+			}
+		});		
+		$("#txt_word").keypress(function(e){
+			if(e.which == 13){
+				search();
+			}
+		});		
 		
 	});
+	
+	function search(){
+		$("#search_word").val($("#txt_word").val());
+		$("#search_local").val($("#txt_local").val());
+		
+		$("#frm_search").submit();		
+	}		
+
 
 </script>	
 	

@@ -26,13 +26,19 @@
 			      <c:set var="profile_path" value="${result.profile_path }"/> 
 			   </c:when>
 			</c:choose>
+			<c:set var="addrimgPath" value="/profile?mem_id=${result.corp_id }"/> 
+			<c:choose>
+				<c:when test="${fn:contains(result.imgPath, 'http')}">
+			      <c:set var="imgPath" value="${result.imgPath }"/> 
+			   </c:when>
+			</c:choose>
 			
 				<div style="width: 225px;">
 					<div class="corporation">
 						<c:choose>
 							<c:when test="${not empty result.user_id}" >
 								<a href="/profileHome?user_id=${result.user_id }">
-								<div style="width: 85px;height: 85px;background-image:url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 0px;margin-top: 15px; margin-bottom: 12px;border-radius: 100px;">
+								<div style="width: 85px;height: 85px;background-image:url(${fn:contains(result.profile_path, 'http') ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 0px;margin-top: 15px; margin-bottom: 12px;border-radius: 100px;">
 								</div>
 								</a>
 								<c:set var="ref_keyword"  value="${result.user_id }"/>
@@ -41,7 +47,7 @@
 							
 							<c:when test="${not empty result.corp_id}">
 								<a href="/corp/corporation?corp_id=${result.corp_id }">
-								<div style="width: 120px;height: 59px;background-image:url(${result.imgPath});background-repeat: no-repeat;background-size: 120px;background-position: center;margin-left: 0px;margin-top: 15px; margin-bottom: 12px;">
+								<div style="width: 120px;height: 59px;background-image:url(${fn:contains(result.imgPath, 'http') ? imgPath : addrimgPath});background-repeat: no-repeat;background-size: 120px;background-position: center;margin-left: 0px;margin-top: 15px; margin-bottom: 12px;">
 								</div>
 								</a>
 								<c:set var="ref_keyword"  value="${result.corp_id }"/>
