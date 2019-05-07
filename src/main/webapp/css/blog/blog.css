@@ -25,7 +25,7 @@
 /* title div */
 .jumbotron {
 	background-color: #4B4B4B;
-	width: 1360px;
+	width: 1480px;
 	height: 400px;  /* 원래300 */
 	text-align: center;
 	padding: auto !important;
@@ -126,6 +126,14 @@
 	margin-bottom: 3px;
 	background-color: pink;
 	color: white;
+}
+
+.no_portfolio {
+	width: 100%;
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: 3px;
+	margin-bottom: 3px;
 }
 
 .portfolio:hover {
