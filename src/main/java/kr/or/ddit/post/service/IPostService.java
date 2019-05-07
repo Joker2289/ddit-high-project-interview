@@ -116,4 +116,14 @@ public interface IPostService {
 	 * Method 설명 : 해시태그를 공유하는 글 조회(스크롤 페이징 이벤트)
 	 */
 	List<PostVo> select_nextHashtagPost(PaginationVo paginationVo);
+	
+	/**
+	 * Method : select_corpPagePost
+	 * 작성자 : goo84
+	 * 변경이력 :
+	 * @param paginationVo
+	 * @return
+	 * Method 설명 : 회사페이지 게시물 목록
+	 */
+	List<PostVo> select_corpPagePost(PaginationVo paginationVo);
 }

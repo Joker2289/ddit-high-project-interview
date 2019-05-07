@@ -57,5 +57,16 @@ public interface IEducation_infoDao {
 	 * Method 설명 : 사용자의 학력정보 삭제
 	 */
 	int delete_educationInfo(String education_code);
+
+	/**
+	 * 
+	 * Method : getLastEdu
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 특정 유저의 마지막 학력정보 조회.
+	 */
+	Education_infoVo getLastEdu(String user_id);
 	
 }

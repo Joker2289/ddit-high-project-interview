@@ -41,11 +41,11 @@
 			  						<td>
 				               			<a href="/profileHome?user_id=${users.user_id }"><div style="width: 88px;height: 88px;background-image:url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 20px;border: 4px solid #E3EEF2;border-radius: 100px;"></div></a>
 			  						</td>
-			  						<td style="vertical-align: middle;width: 446px;">
+			  						<td style="vertical-align: middle;width: 546px;">
 			  							<a href="/profileHome?user_id=${users.user_id }"><div class="tableUserName">${users.user_name }</div></a>
 			  							<a href="/profileHome?user_id=${users.user_id }"><div class="row" style="margin-left: 0px;">${users.introduce }</div></a>
 			  						</td>
-			  						<td style="width:100px; vertical-align: middle;"><button class="btn btn-default">메일보내기</button> </td>
+			  						<!-- <td style="width:100px; vertical-align: middle;"><button class="btn btn-default">메일보내기</button> </td> -->
 			  						<td style="vertical-align: middle;">
 				  						<button class="btn btn-default trashBtn Off" style="border-style: hidden;">
 				  							<i class="fas fa-ellipsis-h"></i>

@@ -183,6 +183,7 @@
 			$("input[name=corporate_name]").focus();
 			return false;
 		}
+		
 		if($("input[name=corp_code]").val().trim()==""){
 			alert("회사코드를 입력해주세요");
 			$("input[name=corp_code]").focus();
@@ -191,21 +192,25 @@
 			alert("회사코드를 잘못 기입하셨습니다.");
 			return false;
 		}
+		
 		if($("input[name=corp_local]").val().trim()==""){
 			alert("회사 주소를 입력해주세요");
 			$("input[name=corp_local]").focus();
 			return false;
 		}
+		
 		if($("input[name=job_position]").val().trim()==""){
 			alert("직군을 입력해주세요");
 			$("input[name=job_position]").focus();
 			return false;
 		}
+		
 		if($("#job_rank option:selected").val() == "no"){
 			alert("직급을 입력해주세요");
-			$("input[name=job_position]").focus();
+			$("#job_rank").focus();
 			return false;
 		}
+		
 		if($("input[name=join_date]").val().trim()==""){
 			alert("시작일을 입력해주세요");
 			$("input[name=join_date]").focus();

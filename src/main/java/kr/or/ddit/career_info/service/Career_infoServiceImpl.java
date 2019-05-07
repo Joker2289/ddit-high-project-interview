@@ -136,4 +136,21 @@ public class Career_infoServiceImpl implements ICareer_infoService{
 		return ee;
 	}
 
+	/**
+	 * 
+	 * Method : getLastCareer
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 특정 유저의 마지막 경력정보 조회.
+	 */
+	@Override
+	public Career_infoVo getLastCareer(String user_id) {
+		Career_infoVo cVo = careerDao.getLastCareer(user_id);
+		
+		return cVo;
+	}
+
+	
 }
