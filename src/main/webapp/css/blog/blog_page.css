@@ -510,3 +510,18 @@
 	margin-top: 2px;
 }
 
+
+
+.no_page_area {
+	background-color: #F5F5F5;
+	border: 0px;
+	inline-height:300px;
+	box-shadow: 0 0px 0px rgba(0, 0, 0, 0) !important;
+	margin-top: 100px;
+}
+
+.no_page_area_comment {
+	
+	font-size: 30px;
+}
+
