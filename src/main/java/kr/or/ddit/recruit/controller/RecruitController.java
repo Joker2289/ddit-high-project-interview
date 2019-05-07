@@ -1082,6 +1082,42 @@ public class RecruitController {
 		List<Search_logVo> sList = sLogService.getSList(mVo.getMem_id());
 		model.addAttribute("sList", sList);		
 		
+		// 지원한 채용공고 리스트 (appList) 넘기기.
+		Save_recruitVo tempSVo = new Save_recruitVo();
+		tempSVo.setRecr_app("t");
+		tempSVo.setUser_id(mVo.getMem_id());
+		
+		List<Apply_recruitVo> tempList = appService.getAppList(mVo.getMem_id());
+		List<RecruitVo> appList = new ArrayList<>();
+		List<String> corpImgList_app = new ArrayList<>();
+		List<String> corpIdList_app = new ArrayList<>();
+		List<String> corpNmList_app = new ArrayList<>();
+		
+		if(tempList != null){
+			for(int i=0; i < tempList.size(); i++){
+				String recruit_code = tempList.get(i).getRecruit_code();
+				
+				appList.add(recrService.getRecr(recruit_code));
+				
+				RecruitVo rVo = recrService.getRecr(recruit_code);
+				
+				CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+				
+				corpImgList_app.add(cVo.getLogo_path());
+				corpIdList_app.add(cVo.getCorp_id());
+				corpNmList_app.add(cVo.getCorp_name());				
+			}
+		}
+		
+		model.addAttribute("appList", appList);
+		model.addAttribute("corpNmList_app", corpNmList_app);
+		model.addAttribute("corpImgList_app", corpImgList_app);
+		model.addAttribute("corpIdList_app", corpIdList_app);		
+		
+		// 직무 항목 넘기기.
+		List<String> rankList = itemService.getItemList("job_rank");
+		model.addAttribute("rankList", rankList);
+		
 		return "recrSearchTiles";
 	}	
 	
@@ -1200,7 +1236,58 @@ public class RecruitController {
 		model.addAttribute("mem_division", mVo.getMem_division());
 		
 		// mem_id 넘기기. 해당 채용공고의 corp_id랑 같을 때만 지원자 목록 조회 가능.
-		model.addAttribute("mem_id", mVo.getMem_id());		
+		model.addAttribute("mem_id", mVo.getMem_id());
+		
+		/////////////////////////////// newList
+		
+		// 광고 부분 -> 신규 채용공고 (newList)
+		List<RecruitVo> newList = recrService.getNewList();
+		
+		// newList size : 7. index 6 -> index 0에 add.
+		newList.add(0, newList.get(6));
+		
+		List<String> newImgList = new ArrayList<>();
+		List<String> newIdList = new ArrayList<>();
+		List<String> newNmList = new ArrayList<>();
+		List<String> newTimeList = new ArrayList<>();
+		
+		for(int i=0; i < newList.size(); i++){
+			RecruitVo rVo2 = newList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo2.getCorp_id());
+			newImgList.add(cVo.getLogo_path());
+			newIdList.add(cVo.getCorp_id());
+			newNmList.add(cVo.getCorp_name());
+			
+			String start_date2 = rVo2.getStart_date();
+			
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yy/MM/dd HH:mm");
+			Date start2 = sdf2.parse(start_date);
+			Date now2 = new Date();
+			
+			long temp_time2 = now2.getTime() - start2.getTime();
+			
+			int time_diff2 = (int) (temp_time / (60*1000));
+			
+			if(time_diff2 < 2){
+				newTimeList.add("방금");
+			}else if(time_diff2 < 60){
+				newTimeList.add(time_diff + "분");
+			}else if(time_diff2 < 1440){
+				newTimeList.add(time_diff/60 + "시간");
+			}else if(time_diff2 < 43200){
+				newTimeList.add(time_diff2/(60*24) + "일");
+			}else{
+				newTimeList.add(time_diff2/(60*24*30) + "달");
+			}				
+		}		
+		
+		model.addAttribute("newList", newList);
+		model.addAttribute("newImgList", newImgList);
+		model.addAttribute("newIdList", newIdList);
+		model.addAttribute("newNmList", newNmList);
+		model.addAttribute("newTimeList", newTimeList);
+		
+		/////////////////////////////// newList			
 		
 		return "recr_detailTiles";
 	}
@@ -1316,6 +1403,57 @@ public class RecruitController {
 		
 		// mem_id 넘기기. 해당 채용공고의 corp_id랑 같을 때만 지원자 목록 조회 가능.
 		model.addAttribute("mem_id", mVo.getMem_id());
+		
+		/////////////////////////////// newList
+		
+		// 광고 부분 -> 신규 채용공고 (newList)
+		List<RecruitVo> newList = recrService.getNewList();
+		
+		// newList size : 7. index 6 -> index 0에 add.
+		newList.add(0, newList.get(6));
+		
+		List<String> newImgList = new ArrayList<>();
+		List<String> newIdList = new ArrayList<>();
+		List<String> newNmList = new ArrayList<>();
+		List<String> newTimeList = new ArrayList<>();
+		
+		for(int i=0; i < newList.size(); i++){
+			RecruitVo rVo2 = newList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo2.getCorp_id());
+			newImgList.add(cVo.getLogo_path());
+			newIdList.add(cVo.getCorp_id());
+			newNmList.add(cVo.getCorp_name());
+			
+			String start_date2 = rVo2.getStart_date();
+			
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yy/MM/dd HH:mm");
+			Date start2 = sdf2.parse(start_date);
+			Date now2 = new Date();
+			
+			long temp_time2 = now2.getTime() - start2.getTime();
+			
+			int time_diff2 = (int) (temp_time / (60*1000));
+			
+			if(time_diff2 < 2){
+				newTimeList.add("방금");
+			}else if(time_diff2 < 60){
+				newTimeList.add(time_diff + "분");
+			}else if(time_diff2 < 1440){
+				newTimeList.add(time_diff/60 + "시간");
+			}else if(time_diff2 < 43200){
+				newTimeList.add(time_diff2/(60*24) + "일");
+			}else{
+				newTimeList.add(time_diff2/(60*24*30) + "달");
+			}				
+		}		
+		
+		model.addAttribute("newList", newList);
+		model.addAttribute("newImgList", newImgList);
+		model.addAttribute("newIdList", newIdList);
+		model.addAttribute("newNmList", newNmList);
+		model.addAttribute("newTimeList", newTimeList);
+		
+		/////////////////////////////// newList				
 		
 		return "recr_detailTiles";
 	}

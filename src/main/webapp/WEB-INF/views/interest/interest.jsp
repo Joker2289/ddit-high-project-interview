@@ -47,7 +47,7 @@
 				<tr>
 					<td style="padding-bottom: 20px;">
 						<strong>리크루터에게 이직할 의사가 있다고 밝히기</strong>
-						<div class="can-toggle demo-rebrand-2" style="float: right; margin-right: 60px;">
+						<div class="can-toggle demo-rebrand-2" style="float: right; margin-right: 380px;">
 							<input id="cb_move" type="checkbox">
 							<label for="cb_move">
 								<div class="can-toggle__switch" data-checked="2" data-unchecked="2"></div>
