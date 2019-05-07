@@ -27,7 +27,14 @@
       <div class="col-user-profileimg">
          <c:choose>
            <c:when test="${memberInfo.mem_division == '1' }"><!-- 일반회원일 경우 -->
-           	 <span><a href="/profileHome"><img class="profile_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=pf"></a></span>
+           		<c:choose>
+           			<c:when test="${fn:contains(SESSION_DETAILVO.profile_path, 'http') }">
+           				<span><a href="/profileHome"><img class="profile_img" src="${SESSION_DETAILVO.profile_path }"></a></span>
+           			</c:when>
+           			<c:otherwise>
+           				<span><a href="/profileHome"><img class="profile_img" src="${ cp }/view/imageView?mem_id=${memberInfo.mem_id }&division=pf"></a></span>		
+           			</c:otherwise>
+           		</c:choose>
            </c:when>
            <c:when test="${memberInfo.mem_division == '2' }"><!-- 회사일 경우ㅡ -->
            	  <c:choose>

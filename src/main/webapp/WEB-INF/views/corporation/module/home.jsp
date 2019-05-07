@@ -182,8 +182,13 @@
 	        </div>
     	
     	</div>
-
 <script>
+
+	console.log($(".post-group").children().length);
+	
+	if($(".post-group").children().length == 0){
+		$(".post-group").append('<div style="width: 555px; height: 80px; margin-left: 250px;"><h3 style="padding-left: 20px; color:#0073b1; font-weight: bold; font-size:30px;">게시글이 없습니다.</h3></div>');
+	}
 
 /* 소개 탭 클릭 */
 function insert_intro_page(corp_id){
