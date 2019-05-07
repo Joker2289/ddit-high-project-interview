@@ -9,9 +9,14 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
+
+
+
 
 <!-- Kakao map API -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=21c4ce15b016e2f4c34196b944d9852b&libraries=services,clusterer,drawing"></script>
@@ -52,7 +57,7 @@
 		
 		<div class="col-md-9 content">
 			<div id="content_area" class="content_area">
-				<%@ include file="/WEB-INF/views/corporation/module/home.jsp"%>
+				<%@ include file="/WEB-INF/views/corporation/module/left.jsp"%>
 			</div>
 		</div>
 		
