@@ -37,7 +37,7 @@
 								<td style="background-image: url('${corp.bg_path }'); height: 100px; background-color: #24a4be;">
 									<div style="position: relative; top: 40px; left: 25px; background-color: white;
 											width: 175px;">
-										<a href="/corporation?corp_id=${corp.corp_id }">
+										<a href="/corp/corporation?corp_id=${corp.corp_id }">
 											<c:choose>
 												<c:when test="${ fn:contains(corp.logo_path, 'http') }">
 													<img src="${corp.logo_path }" width="175" style="border: 1px solid;
