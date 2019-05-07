@@ -43,15 +43,15 @@
 									margin-bottom: 5px;" onmouseover="">
 								<tr style="">
 									<td rowspan="6" style="width: 235px;">
-										<table border="1">
+										<table border="0">
 											<tr>
 												<td class="td_user" data-id="${aUList.get(i.index - 1).user_id }">
 													<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${aUList.get(i.index - 1).user_id }&division=pf" 
-															width="60" style="margin-left: 15px;">
+															width="60" style="margin-left: 15px;" class="img-circle" height="60">
 												</td>
 												<td style="font-size: 16px; padding-left: 15px; padding-right: 15px; height: 88px;"
 														class="td_user" data-id="${aUList.get(i.index - 1).user_id }">
-													<strong>${aUList.get(i.index - 1).user_id }</strong>
+													<strong>${aUList.get(i.index - 1).user_name }</strong>
 												</td>
 											</tr>
 										</table>
