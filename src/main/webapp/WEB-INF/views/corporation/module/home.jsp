@@ -3,8 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<link href="/css/timeline/writemodal.css" rel="stylesheet">
-<link href="/css/timeline/comment.css" rel="stylesheet">
 <link href="/css/timeline/postGoodMembers.css" rel="stylesheet">
 
     <div class="row">
@@ -170,8 +168,8 @@
 	              
 	              <!-- comment -->
 	              <div class="collapse" id="comment_area${ post.post_code }">
-				  <div class="well" id="comment_content${ post.post_code }"></div>
-			   </div>
+				  	<div class="well" id="comment_content${ post.post_code }"></div>
+			   	  </div>
 	              <!-- /comment -->
 	           
 	             </div>

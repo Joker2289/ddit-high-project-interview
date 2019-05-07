@@ -25,6 +25,8 @@
 <link href="/css/corporation/corp_intro.css" rel="stylesheet">
 <link href="/css/corporation/corp_recr.css" rel="stylesheet">
 <link href="/css/corporation/corp_empl.css" rel="stylesheet">
+<link href="/css/corporation/corp_home.css" rel="stylesheet">
+<link href="/css/corporation/corp_home_comment.css" rel="stylesheet">
 
 
 	

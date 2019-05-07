@@ -1,0 +1,179 @@
+/* 댓글 collepse div */
+.comment_area {
+	background-color: #fff;
+	border-top: 1px solid #DDDDDD !important;
+	margin-bottom: 30px;
+}
+
+/* 댓글 헤드 div : 이미지 + TEXT + 버튼 */
+.comment_head_div{
+	width: 95%;
+	height: 70px;
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	
+}
+
+/* 프로필 이미지 div */
+.image_div{
+	display: inline-block;
+	vertical-align: top;
+	
+}
+
+/* 댓글창 헤드 프로필 이미지 */
+.head_profile_img {
+	width: 50px;
+	height: 50px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-right: 8px;
+	border: 1px solid #fff !important;
+}
+
+/* 텍스트 + 버튼 */ 
+.textarea_div {
+	display: inline-block;
+	width: 88.2%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+/* 댓글 텍스트 */
+.comment_TXT {
+	display: inline-block;
+	height: 35px;
+	font-size: 15px;
+	margin-right: 10px;
+	vertical-align: middle;
+	text-align: left !important;
+}
+
+/* 이미지 삽입 */
+.insert_img_btn {
+	display: inline-block;
+	margin-top: -30px;
+	margin-left: 10px;
+	width: 7%;
+	font-size: 20px !important;
+	padding: 5px 0px 0px 0px !important;
+}
+
+/* 댓글 작성 버튼 */
+.ok_btn{
+	display: inline-block;
+	margin-top: -30px;
+	margin-left: 5px;
+	width: 7%;
+	font-size: 20px !important;
+	padding: 5px 0px 0px 0px !important;
+}
+
+/* 에디터 */
+.note-editor{
+	display: inline-block !important;
+	margin-bottom: 0px !important;
+}
+
+.note-editable{
+	text-align:left;
+}
+
+/* 댓글 폼 */
+.comment_div{
+	width: 95%;
+	margin: 0 auto;
+}
+
+/* 댓글 정보 전체*/
+.comment_info_div {
+	height: 50px;
+}
+
+/* 댓글 프로필 이미지 */
+.comment_profile_img{
+	width: 50px;
+	height: 50px;
+	margin: 0px 8px 0px 0px !important;
+	border: 1px solid #fff !important;
+	
+}
+
+/* 회원 정보 출력 div */
+.info_div{
+	width: 88%;
+	height: 50px;
+	display: inline-block;
+	background-color: #C0D1DB;
+	padding-top: 5px;
+	padding-right: 25px;
+	padding-left: 20px;
+	
+	border-top-left-radius:20px;
+	border-top-right-radius:20px;
+}
+
+
+.info_div div{
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 50px;
+}
+
+/* 유저 이름 */
+.user_name {
+	vertical-align: middle;
+	font-size: 20px;
+	margin-right: 10px;
+	font-weight: bold !important;
+}
+
+/* 작성일 */
+.write_date {
+	vertical-align: middle !important;
+	font-size: 15px;
+}
+
+/* 삭제 버튼 */
+.delete_btn{
+	background-color: #C0D1DB;
+	float: right;
+	text-align: right !important;
+	vertical-align: middle !important;
+	font-size: 25px;
+}
+
+/* 댓글 내용 */
+.comment_contents{
+	background-color: #C0D1DB;
+	width: 88%;
+	margin-left: 62px;
+	margin-bottom: 15px;
+	padding-left: 20px;
+	padding-right: 25px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom-left-radius:20px;
+	border-bottom-right-radius:20px;
+	font-size: 17px !important;
+}
+
+/* 댓글 바닥 */
+.comment_footer{
+	width: 95%;
+	margin: 0 auto;
+	margin-top: 20px;
+	/* margin-bottom: 20px; */
+}
+
+.add_comment_btn {
+	color: #3072AC;
+	font-size: 20px !important;
+	font-weight: bold;
+}
+
+
+
+
+
