@@ -52,10 +52,10 @@
 <body>
    
    <div class="limiter">
-      <div class="container-login100" style="background-image: url('/css/login/images/bg2.jpeg');">
+      <div class="container-login100" style="background-image: url('/css/login/images/linkedin.png');">
          <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
             <form id="login"class="login100-form validate-form" action="/login" method="post">
-               <span class="login100-form-title p-b-49">
+               <span class="login100-form-title p-b-49" style="padding-bottom: 0px;">
                   <!-- InterView -->
                   <img src="${ cp }/images/INTERVIEW.png"  width="330" height="100" style="width: 400px;height: 200px;">
                </span> 
@@ -104,7 +104,7 @@
                   </div>
                </div>
                
-               <div class="flex-col-c p-t-70">
+               <div class="flex-col-c p-t-70" style="padding-top: 20px;">
                
                   <!-- <a href="#" class="txt3">
                      Sign Up
@@ -129,7 +129,7 @@
                   
                </div>
 
-               <div class="txt1 text-center p-t-54 p-b-20">
+               <div class="txt1 text-center p-t-54 p-b-20" style="padding-top: 18px;padding-bottom: 18px;">
                   <span>
                      Or Sign Up Using
                   </span>
