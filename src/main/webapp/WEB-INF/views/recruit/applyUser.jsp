@@ -182,6 +182,8 @@
 		
 		// 프로필 저장 버튼 클릭. / 마우스오버
 		$(".btn_pf").on("click", function(){
+			location.href="/recruitPDF?user_id="+$(this).data("id")+'&recruit_code=${param.recruit_code}';
+			
 			alert($(this).data("id"));
 		});
 		$(".btn_pf").on("mouseover", function(){
