@@ -91,9 +91,6 @@
         </c:choose>     
       </ul>
     </div>
-    <div>
-        <button type="button" class="btn_moretag">더보기</button>
-     </div>
   </div>
   <!-- ./friend requests -->
 </div>

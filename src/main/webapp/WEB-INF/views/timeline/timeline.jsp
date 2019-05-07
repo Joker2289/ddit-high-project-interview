@@ -5,6 +5,8 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <link href="/css/timeline/writemodal.css" rel="stylesheet">
 <link href="/css/timeline/comment.css" rel="stylesheet">
+<link href="/css/timeline/postGoodMembers.css" rel="stylesheet">
+
 <div class="container">
    <div class="row">
       <div>
@@ -30,14 +32,14 @@
                  <a
                    <c:choose>
                      <c:when test="${post.mem_division eq 1 }">href="/profileHome?user_id=${post.mem_id }"</c:when>
-                     <c:when test="${post.mem_division eq 2 }">href="/corporation?corp_id=${post.mem_id }"</c:when>
+                     <c:when test="${post.mem_division eq 2 }">href="/corp/corporation?corp_id=${post.mem_id }"</c:when>
                    </c:choose>>
                    <div class="writer_info" style="display: inline-block;">
                      <a 
                        <c:choose>
                          <c:when test="${post.mem_division eq '1' && post.mem_id eq SESSION_MEMBERVO.mem_id}">href='/profileHome'</c:when>
                          <c:when test="${post.mem_division eq '1' && post.mem_id != SESSION_MEMBERVO.mem_id}">href='/profileHome?user_id=${post.mem_id }'</c:when>
-                         <c:when test="${post.mem_division eq '2'}">href='/corporation?corp_id=${post.mem_id }'</c:when>
+                         <c:when test="${post.mem_division eq '2'}">href='/corp/corporation?corp_id=${post.mem_id }'</c:when>
                        </c:choose>
                      >
                        <!-- 작성자 사진 -->
@@ -68,7 +70,7 @@
                   	   <c:choose>
                   	     <c:when test="${post.mem_division eq 1 && !post.mem_id eq memberInfo.mem_id}">href="/profileHome?user_id=${post.mem_id }"</c:when>
                   	     <c:when test="${post.mem_division eq 1 && post.mem_id eq memberInfo.mem_id}">href="/profileHome"</c:when>
-                  	     <c:when test="${post.mem_division eq 2 }">href="/corporation?corp_id=${post.mem_id }"</c:when>
+                  	     <c:when test="${post.mem_division eq 2 }">href="/corp/corporation?corp_id=${post.mem_id }"</c:when>
                   	   </c:choose>>${post.writer_name }</a>
                      <c:choose>
                        <c:when test="${post.resultMinute <= 1 }">
@@ -137,14 +139,14 @@
                <div class="post_socialCount">
                  <ul style="padding-left: 10px;">
                     <li style="list-style: none; float: left;">
-                       <button class="btn_count btn_goodcount" title="goodCount ${post.post_code }" style="font-size: 12px;">추천 
+                       <a class="btn_count btn_goodcount" href="javascript:activityClick('${post.post_code}');" title="goodCount ${post.post_code }" style="font-size: 12px;">추천 
                          <span id="txt_good_count${post.post_code }">
                            <c:choose>
                              <c:when test="${post.goodcount eq null }">0</c:when>
                              <c:otherwise>${post.goodcount }</c:otherwise>
                            </c:choose>
                          </span>
-                       </button>
+                       </a>
                     </li>
                     <li style="list-style: none; float: left;">
                        <button class="btn_count btn_commentcount" id="btn_commentcount${post.post_code }" title="commentCount ${post.post_code }" style="font-size: 12px;">댓글 
@@ -196,12 +198,15 @@
 	     <%@ include file="/WEB-INF/views/timeline/writeModal.jsp" %> <!-- 글 작성 모달창 -->
 	     <%@ include file="/WEB-INF/views/timeline/updateModal.jsp" %><!-- 글 수정 모달창 -->
 	     <%@ include file="/WEB-INF/views/timeline/reportModal.jsp" %><!-- 글 신고 모달창 -->
+	     
       </div>
    </div>
 </div>
+<%@ include file="/WEB-INF/views/timeline/postGoodMembersModal.jsp" %>
 
 <script src="/js/timeline.js"></script>
 <script type="text/javascript">
+
 
 	//댓글 버튼 클릭
 	function post_commentList(post_code){
@@ -216,10 +221,6 @@
 	}
 
    
-   //현재 스크롤 위치에서 화면 최상단으로 이동
-   $("#scroll-top").on("click", function() {
-      $(window).scrollTop() = $(window).height();
-   });
    
    var pageNum = 2;
    var lastPost;

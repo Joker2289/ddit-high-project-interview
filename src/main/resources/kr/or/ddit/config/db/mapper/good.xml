@@ -48,28 +48,19 @@
 	</select>
 	
 	<!-- 좋아요 한 회원 조회 -->
-	<select id="select_pushGoodMember" parameterType="goodVo" resultType="usersVo">
-		select distinct b.*
-		  from good a,  (select user_id, user_name, profile_img, profile_path,
-		                        substr(listagg(beintroduce, ' ') within group (order by graduation desc), 0, instr(listagg(beintroduce, ' ') within group (order by graduation desc), ' ', 1, 2)) as introduce
-		                               
-		                   from (select a.user_id, c.user_name, c.profile_img, c.profile_path,
-		                                case when b.resign_date is null then b.corporate_name ||' ' ||job_position || ' '
-		                                     when b.resign_date is not null then a.school_name ||' ' || a.degree_name || ' '
-		                                end as beintroduce, a.graduation
-		                           from education_info a, career_info b, users c
-		                          where a.user_id = b.user_id
-		                            and c.user_id = b.user_id
-		                            and (b.user_id,nvl(b.resign_date,to_date('3000/01/01','yyyy/mm/dd'))) in ( select career_info.user_id,  max(nvl(career_info.resign_date,to_date('3000/01/01','yyyy/mm/dd')))
-		                                                                                                         from career_info, education_info
-		                                                                                                        where career_info.user_id = education_info.user_id
-		                                                                                                       group by career_info.user_id)
-		                         order by a.graduation desc)
-		                 group by user_id, user_name, profile_img, profile_path) b
-		 where a.mem_id = b.user_id(+)
-		   and a.division = #{division}
-		   and a.ref_code = #{ref_code}
-		order by b.user_name
+	<select id="select_pushGoodMember" parameterType="goodVo" resultType="goodVo">
+		select a.*, b.mem_name, b.profile_path, c.mem_division
+		  from good a, (select user_name as mem_name, user_id as mem_id, profile_path as profile_path
+		                  from users
+		                union all
+		                select corp_name as mem_name, corp_id as mem_id, logo_path as profile_path
+		                  from corporation) b,
+		               (select mem_id, mem_division
+                  		  from member) c
+		 where a.mem_id = b.mem_id
+		   and a.mem_id  = c.mem_id
+		   and division = #{division}
+		   and ref_code = #{ref_code}
 	</select>
 
 	<!-- 회원이 좋아요 한 글 번호 목록 조회 -->

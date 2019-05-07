@@ -1300,7 +1300,6 @@ public class PostController {
 		PaginationVo paginationVo = new PaginationVo(1, 5);
 		paginationVo.setMem_id(memberInfo.getMem_id());
 		
-		
 		if(memberInfo.getMem_division().equals("1")){ //일반회원일 경우
 			UsersVo userInfo = usersService.select_userInfo(memberInfo.getMem_id());
 			
@@ -1315,7 +1314,6 @@ public class PostController {
 			} else {
 				model.addAttribute("followHashtag","notfollow");
 			}
-			
 			
 			model.addAttribute("userInfo", userInfo);
 			model.addAttribute("connectionCnt", connectionCnt);
@@ -1332,10 +1330,8 @@ public class PostController {
 	         }
 			
 			model.addAttribute("corpInfo", corpInfo);
-			
 		}
 		
-
 		PostVo postInfo = postService.select_postInfo(post_code);
 		model.addAttribute("post", postInfo);
 		
@@ -1360,8 +1356,6 @@ public class PostController {
 		model.addAttribute("commentCnt", commentCnt);
 		model.addAttribute("ref_code", ref_code);
 		model.addAttribute("page_num", paginationVo.getPage());
-		
-		
 		model.addAttribute("memberInfo", memberInfo);
 
 		List<GoodVo> goodList = goodService.select_pushedGoodPost(memberInfo.getMem_id());
@@ -1460,10 +1454,24 @@ public class PostController {
 		followVo.setMem_id(memberInfo.getMem_id());
 		followVo.setRef_keyword(ref_keyword);
 		
-		
 		followService.insert_follow(followVo);
 		
 		return "redirect:/timeline";
+	}
+	
+	@RequestMapping("/pushGoodMember")
+	public String pushed_goodmamber(@RequestParam("ref_code") String ref_code, Model model){
+		
+		GoodVo goodInfo = new GoodVo();
+		goodInfo.setDivision("28");
+		goodInfo.setRef_code(ref_code);
+		
+		List<GoodVo> goodList = goodService.select_pushGoodMember(goodInfo);
+		
+		logger.debug("post good info >>>>>>>>>>>>>>>>>>>>>>> {}", goodList);		
+		model.addAttribute("goodList", goodList);
+		
+		return "timeline/pushedGoodMembers";
 	}
 	
 }

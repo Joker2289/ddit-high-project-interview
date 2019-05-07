@@ -55,7 +55,7 @@ public interface IGoodService {
 	 * @return
 	 * Method 설명 : 좋아요 한 회원 조회
 	 */
-	List<UsersVo> select_pushGoodMember(GoodVo goodVo);
+	List<GoodVo> select_pushGoodMember(GoodVo goodVo);
 	
 	/**
 	 * Method : select_pushedGoodPost
