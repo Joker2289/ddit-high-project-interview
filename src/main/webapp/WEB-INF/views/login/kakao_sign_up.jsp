@@ -17,12 +17,10 @@ $(document).ready(function(){
 	
 	<c:if test="${ kakao_id != null }">
 		
-		alert('${kakao_id}');
 	
 		$('#mem_id_kakao').val('${ kakao_id }');
 		
 		var test = $('#mem_id_kakao').val();
-		alert(test);
 		
 		$('#kakaoLoginGo').submit();
 		
