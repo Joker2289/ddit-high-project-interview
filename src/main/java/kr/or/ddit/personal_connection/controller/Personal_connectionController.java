@@ -230,10 +230,10 @@ public class Personal_connectionController {
 		personalService.update_connectionReceiveApply(personalVo);
 		
 		AlarmVo alarmInfo = new AlarmVo();
-		alarmInfo.setMem_id(personalVo.getReceive_id());
+		alarmInfo.setMem_id(personalVo.getUser_id());
 		alarmInfo.setAlarm_check("0");
 		alarmInfo.setDivision("25");
-		alarmInfo.setSend_id(personalVo.getUser_id());
+		alarmInfo.setSend_id(personalVo.getReceive_id());
 		alarmInfo.setAlarm_separate("05");
 		
 		alarmService.insert_alarmInfo(alarmInfo);

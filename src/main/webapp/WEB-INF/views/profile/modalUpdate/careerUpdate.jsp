@@ -281,6 +281,7 @@
     }); 
 	
 	$("input[name=join_date]").datepicker('setDate', '${fmtJoin_date}');
+	$("input[name=resign_date]").datepicker('setDate', '${fmtResign_date}');
 	
 	if ($("input[name=resign_date]").val().trim()==""){
 		$(".resign_dateIng").prop('checked', true);

@@ -110,6 +110,7 @@
 		  FROM RECRUIT A, CORPORATION B
 		 WHERE A.CORP_ID = B.CORP_ID
 		   AND UPPER(CORP_NAME) LIKE UPPER('%' || #{corp_name} || '%')	
+		ORDER BY START_DATE DESC
 	</select>
 
 	<!-- 신규 채용공고 목록 조회. -->
@@ -130,6 +131,7 @@
 			EMP_TYPE, APP_TYPE, APP_COUNT, JOB_LOCAL
 		  FROM RECRUIT
 		 WHERE JOB_LOCAL = #{job_local}
+		ORDER BY START_DATE DESC
 	</select>
 
 	<!-- 특정 유저의 일촌의 경력에 있는 회사 목록 조회. -->

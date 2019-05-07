@@ -466,6 +466,29 @@ public class profileController {
 		
 		return "/profile/profilePDF";
 	}
+	@RequestMapping(path={"/recruitPDF"})
+	public String recruitPDF(String user_id, Model model,String recruit_code){
+		Map<String, Object> usersMap = usersService.select_introduce(user_id);
+		Map<String, Object> career_infoMap = carService.select_careerInfo(user_id);
+		Map<String, Object> education_infoMap = eduService.select_educationInfo(user_id);
+		Map<String, Object> recordMap = new HashMap<String, Object>();
+		
+		recordMap.put("thesis_listVoList", thesis_listService.select_thesis_list(user_id));
+		recordMap.put("patent_listVoList", patent_listService.select_patent_list(user_id));
+		recordMap.put("project_careerList", project_careerService.select_project_career(user_id));
+		recordMap.put("award_historyList", award_historyService.select_award_history(user_id));
+		recordMap.put("languageVoList", languageService.select_language(user_id));
+		recordMap.put("possesion_skillsVoList", possesion_skillsService.select_possesion_skills(user_id));
+		
+		model.addAttribute("usersMap", usersMap);
+		model.addAttribute("career_infoMap", career_infoMap);
+		model.addAttribute("education_infoMap", education_infoMap);
+		model.addAttribute("abilityVoList", abilityService.select_ability(user_id));
+		model.addAttribute("recordMap", recordMap);
+		model.addAttribute("recruit_code",recruit_code);
+		
+		return "/profile/profilePDF";
+	}
 	
 	@RequestMapping(path={"/profileInsertConnection"})
 	public String profileInsertConnection(Personal_connectionVo personalVo){

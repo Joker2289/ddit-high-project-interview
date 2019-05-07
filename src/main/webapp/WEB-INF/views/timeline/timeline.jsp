@@ -52,11 +52,9 @@
                          <c:when test="${post.mem_division eq '2'}">
                          
                            <c:choose>
-                           
                              <c:when test="${fn:contains(post.profile_path, 'http') }">
                                <img src="${post.profile_path }" class="writer_profile_corp">
                              </c:when>
-                             
                              <c:otherwise>
                                <img src="${ cp }/view/imageView?mem_id=${post.mem_id }&division=pf" class="writer_profile_corp">
                              </c:otherwise>

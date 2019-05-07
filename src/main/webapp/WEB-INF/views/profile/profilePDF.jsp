@@ -19,6 +19,9 @@ $(document).ready(function() {
 	}else{
 		$("#HomeGO").attr('href','/profileHome?user_id='+'${usersMap.usersVo.user_id}');
 	}
+	if('${recruit_code}' != ''){
+		$("#HomeGO").attr('href','/applyUser?recruit_code='+'${recruit_code}');
+	}
 	
 	    html2canvas(document.body, {
 		  onrendered: function(canvas) {

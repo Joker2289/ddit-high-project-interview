@@ -67,7 +67,7 @@
 												border: 1px solid; border-color: #0174b0;
 												background-color: white; height: 40px; font-size: 18px;
 												padding-right: 10px; padding-left: 10px; border-radius: 3px;" class="btn_pf"
-												data-idx="${i.index - 1 }">
+												data-idx="${i.index - 1 }" data-id="${aUList.get(i.index - 1).user_id }">
 									</td>
 								</tr>
 								<tr>
@@ -182,7 +182,9 @@
 		
 		// 프로필 저장 버튼 클릭. / 마우스오버
 		$(".btn_pf").on("click", function(){
-// 			alert($(this).data("idx"));
+			location.href="/recruitPDF?user_id="+$(this).data("id")+'&recruit_code=${param.recruit_code}';
+			
+			alert($(this).data("id"));
 		});
 		$(".btn_pf").on("mouseover", function(){
 			$(this).css("background-color", "#e5f5fb");
