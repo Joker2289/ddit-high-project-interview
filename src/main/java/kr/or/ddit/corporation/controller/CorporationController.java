@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -227,9 +229,10 @@ public class CorporationController {
 	 * @param corp_id
 	 * @return
 	 * Method 설명 : left 메뉴에서 채용 탭 클릭
+	 * @throws ParseException 
 	 */
 	@RequestMapping("/insert_recr_page")
-	public String insert_recr_page(HttpSession session, Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) {
+	public String insert_recr_page(HttpSession session, Model model, HttpServletRequest request, @RequestParam("corp_id")String corp_id) throws ParseException {
 		
 		//채용 공고 리스트 담기
 		List<RecruitVo> recruitList = recrService.getRecrListCorp_id(corp_id);
@@ -238,6 +241,36 @@ public class CorporationController {
 		//회사 정보 담기
 		CorporationVo corporationInfo = corporationService.select_corpInfo(corp_id);
 		model.addAttribute("corporationInfo", corporationInfo);
+		
+		List<String> timeList2 = new ArrayList<>();
+		
+		for(int i=0; i < recruitList.size(); i++){
+			RecruitVo rVo = recruitList.get(i);
+			
+			String start_date = rVo.getStart_date();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+			Date start = sdf.parse(start_date);
+			Date now = new Date();
+			
+			long temp_time = now.getTime() - start.getTime();
+			
+			int time_diff = (int) (temp_time / (60*1000));
+			
+			if(time_diff < 2){
+				timeList2.add("방금");
+			}else if(time_diff < 60){
+				timeList2.add(time_diff + "분");
+			}else if(time_diff < 1440){
+				timeList2.add(time_diff/60 + "시간");
+			}else if(time_diff < 43200){
+				timeList2.add(time_diff/(60*24) + "일");
+			}else{
+				timeList2.add(time_diff/(60*24*30) + "달");
+			}			
+		}
+		
+		model.addAttribute("timeList2", timeList2);	
 		
 		return "corporation/corp_recr";
 	}
