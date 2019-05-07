@@ -98,7 +98,7 @@
 		<websocket:sockjs/>
 	</websocket:handlers>
 	
-	<!-- <bean id="alarmEcho" class="kr.or.ddit.util.alarm.AlarmEchoHandler" />
+	<bean id="alarmEcho" class="kr.or.ddit.util.alarm.AlarmEchoHandler" />
 	
 	<websocket:handlers>
 		<websocket:mapping handler="alarmEcho" path="alarm/alarmCount"/>
@@ -107,6 +107,6 @@
 		</websocket:handshake-interceptors>
 		<websocket:sockjs/>
 	</websocket:handlers>
- -->
+ 
 	
 </beans>

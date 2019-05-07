@@ -95,44 +95,44 @@
 	});
 	
 	
-// 	var path = window.location.pathname;
-// 	console.log(path);
-// 	var wsPath = "<c:url value='" + "alarm/alarmCount" + "'/>";
+	var path = window.location.pathname;
+	console.log(path);
+	var wsPath = "<c:url value='" + "alarm/alarmCount" + "'/>";
 
-// 	function onOpen(evt) {
-// 		console.log("connect");
-// 		websocket.send();
-// 	}
-// 	function onMessage(evt) {
-// 		console.log("message >> " + evt.data);
-// 		console.log(typeof evt.data);
+	function onOpen(evt) {
+		console.log("connect");
+		websocket.send();
+	}
+	function onMessage(evt) {
+		console.log("message >> " + evt.data);
+		console.log(typeof evt.data);
 		
-// 		if(evt.data != "0"){
-// 			$("#alarmcount").text(evt.data);
-// 		}
+		if(evt.data != "0"){
+			$("#alarmcount").text(evt.data);
+		}
 		
-// 	}
-// 	function onError(evt) {
-// 		console.log("websocket error!")
-// 	}
-// 	function send_message() {
-// 		websocket = new SockJS(wsPath);
+	}
+	function onError(evt) {
+		console.log("websocket error!")
+	}
+	function send_message() {
+		websocket = new SockJS(wsPath);
 		
-// 		websocket.onopen = function(evt) {
-// 			onOpen(evt);
-// 		};
-// 		websocket.onmessage = function(evt) {
-// 			onMessage(evt);
-// 		};
-// 		websocket.onerror = function(evt) {
-// 			onError(evt);
-// 		};
-// 	}
+		websocket.onopen = function(evt) {
+			onOpen(evt);
+		};
+		websocket.onmessage = function(evt) {
+			onMessage(evt);
+		};
+		websocket.onerror = function(evt) {
+			onError(evt);
+		};
+	}
 	
-// 	$(document).ready(function() {
-// 		send_message();
-// 		setInterval("send_message()", 60000);
-// 	});
+	$(document).ready(function() {
+		send_message();
+		setInterval("send_message()", 20000);
+	});
 
 	/* $("#txt_content").summernote(); */
 	
