@@ -69,7 +69,8 @@
 							<!-- 6개만 출력하기. -->
 							<c:forEach begin="1" end="${saveList.size() }" varStatus="i">
 								<td>
-									<a href="" style="color: white;">
+									<a style="color: white;" class="a_save" data-word="${saveList.get(i.index - 1).search_word }"
+											data-local="${saveList.get(i.index - 1).search_local }">
 										${saveList.get(i.index - 1).search_word } ${saveList.get(i.index - 1).search_local }&nbsp; &nbsp;
 									</a>
 								</td>
@@ -122,7 +123,12 @@
 				</td>
 				<td style="padding: 15px; padding-top: 13px;">
 					<select style="padding: 5px;">
-						<option>경력수준</option>
+						<option>직급</option>
+						<c:forEach begin="1" end="${rankList.size() }" varStatus="i">
+							<option value="${rankList.get(i.index - 1).item_content }">
+								${rankList.get(i.index - 1).item_content }
+							</option>
+						</c:forEach>
 					</select>
 				</td>
 				<td style="padding: 15px; padding-top: 13px;">
@@ -206,7 +212,7 @@
 									<td style="padding-left: 10px; padding-bottom: 7px; padding-top: 2px;">
 										<span style="color: #2f7b15;">${timeList.get(i.index - 1) } 전</span>
 										<c:if test="${recrList.get(i.index - 1).app_type == 't'}">
-											 · <img src="/images/logo/linkedin.png" width="17">
+											 · <img src="/images/logo/IV_LOGO.png" width="17">
 											 간편 지원
 										</c:if>
 										<c:if test="${function_value == 'person'}"> · 
@@ -235,25 +241,35 @@
 		<td style="vertical-align: top; margin-left: 0px;">
 			<div class="col-md-12">
 				<div class="whiteBox" style="width: 330px; margin-left: -14px; font-size: 20px; padding-bottom: 7px;
-						padding-top: 7px; padding-left: 7px;">
+						padding-top: 7px; padding-left: 15px;">
 					지원한 채용공고 (${appList.size() })
 				</div>
-				<div class="whiteBox" style="width: 330px; margin-left: -14px; margin-top: -1px; padding-bottom: 2px;">
+				<div class="whiteBox" style="width: 330px; margin-left: -14px; margin-top: -1px; padding-bottom: 2px;
+						font-size: 16px;">
 					<table border="0" style="margin-left: 10px; width: 310px; margin-top: 10px;">
-						<c:forEach begin="1" end="${appList.size() }" varStatus="i">
-							<tr>
-								<td id="app${i.index }" onmouseover="" style="cursor: pointer; 
-										border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 10px; 
-										padding-top: 10px; padding-left: 4px;">
-									<img src="${corpImgList_app.get(i.index - 1) }" width="150"
-											style="margin-bottom: 10px;"><br><br>
-									${appList.get(i.index - 1).recruit_title }<br>
-									${corpNmList_app.get(i.index - 1) }<br>
-									${appList.get(i.index - 1).job_local }<br>
-									지원일: xx일 전
-								</td>
-							</tr>
-						</c:forEach>
+						<c:if test="${appList.size() > 0}">
+							<c:forEach begin="1" end="${appList.size() }" varStatus="i">
+								<tr>
+									<td id="app${i.index }" onmouseover="" style="cursor: pointer; 
+											border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 10px; 
+											padding-top: 10px; padding-left: 4px;">
+										<c:choose>
+											<c:when test="${ fn:contains(corpImgList_app.get(i.index - 1), 'http') }">
+												<img src="${corpImgList_app.get(i.index - 1) }" width="150"
+														style="margin-bottom: 10px;"><br><br>
+											</c:when>
+											<c:otherwise>
+												<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${corpIdList_app.get(i.index - 1) }&division=pf" 
+														width="150" style="margin-bottom: 10px;"><br><br>
+											</c:otherwise>	
+										</c:choose>													
+										<strong>${appList.get(i.index - 1).recruit_title }</strong><br>
+										${corpNmList_app.get(i.index - 1) }<br>
+										${appList.get(i.index - 1).job_local }
+									</td>
+								</tr>
+							</c:forEach>
+						</c:if>
 					</table>						
 				</div>
 			</div>			
@@ -277,6 +293,23 @@
 	$(document).ready(function(){
 		console.log($("#sel_period option:selected").text());
 
+		// 저장한 검색어 클릭
+		$(".a_save").on("click", function(){
+// 			alert($(this).data("word"));
+			$("#search_word").val($(this).data("word"));
+			$("#search_local").val($(this).data("local"));
+			
+			$("#frm_search").submit();
+		});
+		
+		<c:forEach begin="1" end="${appList.size() }" varStatus="i">
+			// 지원한 채용공고 클릭
+			$("#app${i.index }").on("click", function(){
+	//				alert("${i.index }");
+				window.location.href = '${pageContext.request.contextPath}/recr_detail?recruit_code=${appList.get(i.index - 1).recruit_code }';
+			});
+		</c:forEach>		
+		
 		// 필터 sel_period 기본값 설정 / 선택
 		if('${period_value }' != ''){
 			$("#sel_period").val("${period_value }").prop("selected", true);
