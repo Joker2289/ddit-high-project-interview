@@ -1505,10 +1505,6 @@ public class RecruitController {
 		model.addAttribute("addrList", addrList);
 		model.addAttribute("locationList", locationList);
 		
-		// 회사 목록을 넘겨보자.
-		List<CorporationVo> corpList = corpService.select_allCorps();
-		model.addAttribute("corpList", corpList);
-		
 		return "mapTiles";
 	}
 	
@@ -1525,7 +1521,6 @@ public class RecruitController {
 	public String mapAjaxHtml(String result, String width_value, HttpSession session, Model model) throws ParseException {
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
-		List<CorporationVo> corpList = corpService.select_allCorps();
 		List<RecruitVo> recrList = recrService.getAllRecr();
 		
 		// 설정한 범위 내에 있는 회사(채용공고) - corpList2
@@ -1593,6 +1588,7 @@ public class RecruitController {
 			}			
 		}
 		
+		logger.debug("list size? : {}", recrList2.size());
 		model.addAttribute("recrList2", recrList2);
 		model.addAttribute("corpImgList", corpImgList);
 		model.addAttribute("corpNmList", corpNmList);
