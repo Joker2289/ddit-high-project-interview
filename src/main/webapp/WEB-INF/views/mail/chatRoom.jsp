@@ -3,21 +3,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:forEach items="${userChatroomsMap }" var="userChatroom">
-<c:choose>
-	<c:when test="${not empty fn:split(userChatroom.PATH,',')[1] }">
-		<c:set var="room_img" value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKVGBZRHop7h5QXz8vP3CgarNIlJbDHcrX2IODVV-lyPd1j-lg"/>
-	</c:when>
-	<c:otherwise>
-		<c:set var="room_imgaddr" value="/profile?mem_id=${userChatroom.MEMBER }"/>
-		<c:if test="${fn:contains(userChatroom.PATH, 'http')}">
-			<c:set var="room_img" value="${userChatroom.PATH }"/> 
-		</c:if>
-	</c:otherwise>
-</c:choose>
+<c:set var="room_imgaddr" value="/profile?mem_id=${userChatroom.MEMBER }"/>
+<c:if test="${fn:contains(userChatroom.PATH, 'http')}">
+	<c:set var="room_img" value="${userChatroom.PATH }"/> 
+</c:if>
 <fmt:formatDate value="${userChatroom.WRITE_DATE}" pattern="MM월 dd일" var="write_date"/>
 <a class="chatRooms chatRoomBox" role="${userChatroom.CHAT_CODE }">
 	<div class="profileImageBox">
-		<div style="background-image: url(${fn:contains(userChatroom.PATH, 'http') ? room_img : room_imgaddr});"></div>
+		<div style="background-image: url(${not empty fn:split(userChatroom.MEMBER,',')[1] ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKVGBZRHop7h5QXz8vP3CgarNIlJbDHcrX2IODVV-lyPd1j-lg' : (fn:contains(userChatroom.PATH, 'http') ? room_img : room_imgaddr)});"></div>
 	</div>
 	<div class="chatRoomContentsBox">
 		<div style="display: flex; color: rgba(0, 0, 0, .6);">

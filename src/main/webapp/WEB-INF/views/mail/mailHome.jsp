@@ -26,25 +26,18 @@
 					</button>
 				</div>
 				<div class="recruitMailBox">
-					<a >채팅방 목록</a>
+					<a>채팅방 목록</a>
 				</div>
 				<div class="chatrooms">
 				<c:forEach items="${userChatroomsMap }" var="userChatroom">
-					<c:choose>
-						<c:when test="${not empty fn:split(userChatroom.PATH,',')[1] }">
-							<c:set var="room_img" value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKVGBZRHop7h5QXz8vP3CgarNIlJbDHcrX2IODVV-lyPd1j-lg"/>
-						</c:when>
-						<c:otherwise>
-							<c:set var="room_imgaddr" value="/profile?mem_id=${userChatroom.MEMBER }"/>
-							<c:if test="${fn:contains(userChatroom.PATH, 'http')}">
-								<c:set var="room_img" value="${userChatroom.PATH }"/> 
-							</c:if>
-						</c:otherwise>
-					</c:choose>
+					<c:set var="room_imgaddr" value="/profile?mem_id=${userChatroom.MEMBER }"/>
+					<c:if test="${fn:contains(userChatroom.PATH, 'http')}">
+						<c:set var="room_img" value="${userChatroom.PATH }"/> 
+					</c:if>
 					<fmt:formatDate value="${userChatroom.WRITE_DATE}" pattern="MM월 dd일" var="write_date"/>
 					<a class="chatRooms chatRoomBox" role="${userChatroom.CHAT_CODE }">
 						<div class="profileImageBox">
-							<div style="background-image: url(${fn:contains(userChatroom.PATH, 'http') ? room_img : room_imgaddr});"></div>
+							<div style="background-image: url(${not empty fn:split(userChatroom.MEMBER,',')[1] ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKVGBZRHop7h5QXz8vP3CgarNIlJbDHcrX2IODVV-lyPd1j-lg' : (fn:contains(userChatroom.PATH, 'http') ? room_img : room_imgaddr)});"></div>
 						</div>
 						<div class="chatRoomContentsBox">
 							<div style="display: flex; color: rgba(0, 0, 0, .6);">
@@ -192,6 +185,11 @@
 			$('.chatRooms').attr('class', 'chatRooms chatRoomBox');
 			$(this).attr('class', 'chatRooms chatRoomBoxOn');
 			chat_code = $(this).attr('role');
+			$("#produceRoomBtn").attr('class','btn btn-link produceRoomBtn');
+			$(".smallChatBtn").prop("disabled", false);
+			$(".submitBtn").prop("disabled", false);
+			$("#sendMeseage").off();
+			
 			
 			 $.ajax({
    				type : "POST",
@@ -306,21 +304,21 @@
 		
 		// 방 html 불러오기
 		$(".produceRoomBtn").on("click",function(){
-			if($("#produceRoomBtn").hasClass('produceRoomBtn')){
+ 			if($("#produceRoomBtn").hasClass('produceRoomBtn')){
 				$.ajax({
 					type : "POST",
 			    		url : "/produceRoomView",
 			    		dataType : "HTML",
 			    		data : {},
 					success : function(result) {
-						$("#produceRoomBtn").attr('class','btn btn-link produceRoomBtnOn');
+ 						$("#produceRoomBtn").attr('class','btn btn-link produceRoomBtnOn');
 						$(".chatAjax").empty();
 						$(".chatAjax").html(result);
 						$(".chatAjax").show();
 						$(".submitBtn").prop("disabled", true);
 					}
 				}); 
-			}
+ 			}
 		});
 		
 		// 보내기 버튼 클릭시 방만들기 및 서버에 메세지 보내기

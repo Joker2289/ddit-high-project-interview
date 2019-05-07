@@ -23,7 +23,7 @@
 <div class="row">
 <div>
 
-<table border="0" style="margin-bottom: 0px; margin-top: 22px; padding: 0px; margin-left: -2px;">
+<table border="0" style="margin-bottom: 0px; margin-top: 10px; padding: 0px; margin-left: -2px;">
 	<tr>
 		<td style="vertical-align: top;">
 			<div class="col-md-12">
@@ -38,41 +38,49 @@
 						font-size: 15px;">
 					<c:if test="${aUList.size() > 0 }">
 						<c:forEach begin="1" end="${aUList.size() }" varStatus="i">
-							<table id="recr${i.index }" border="1" style="margin: 2px; cursor: pointer;
+							<table id="recr${i.index }" border="0" style="margin: 2px; cursor: pointer;
 									width: 790px; border-bottom: 1px solid; border-color: #d9d9d9;
 									margin-bottom: 5px;" onmouseover="">
-								<tr>
+								<tr style="">
 									<td rowspan="6" style="width: 235px;">
-										<table border="1">
+										<table border="0">
 											<tr>
-												<td>
+												<td class="td_user" data-id="${aUList.get(i.index - 1).user_id }">
 													<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${aUList.get(i.index - 1).user_id }&division=pf" 
-															width="60" style="margin-left: 15px;">
+															width="60" style="margin-left: 15px;" class="img-circle" height="60">
 												</td>
-												<td style="font-size: 16px; padding-left: 15px; padding-right: 15px;">
-													<strong>${aUList.get(i.index - 1).user_id }</strong>
+												<td style="font-size: 16px; padding-left: 15px; padding-right: 15px; height: 88px;"
+														class="td_user" data-id="${aUList.get(i.index - 1).user_id }">
+													<strong>${aUList.get(i.index - 1).user_name }</strong>
 												</td>
 											</tr>
 										</table>
 									</td>
 									<td style="padding-left: 10px; font-size: 16px; 
-											padding-bottom: 2px; padding-top: 7px;">
-										<strong>${aUList.get(i.index - 1).user_id }</strong>
+											padding-bottom: 2px; padding-top: 7px;" class="td_user"
+											data-id="${aUList.get(i.index - 1).user_id }">
+										<strong>${eduList.get(i.index - 1) }</strong>
 									</td>
-									<td style="width: 150px; cursor: default;" rowspan="3">
+									<td style="width: 150px; cursor: default; border-bottom: 1px solid;
+											border-color: #d9d9d9;" rowspan="3">
 										<input type="button" value="이력서 저장" style="color: #0174b0; 
 												border: 1px solid; border-color: #0174b0;
-												background-color: white;">
+												background-color: white; height: 40px; font-size: 18px;
+												padding-right: 10px; padding-left: 10px; border-radius: 3px;" class="btn_pf"
+												data-idx="${i.index - 1 }">
 									</td>
 								</tr>
 								<tr>
-									<td style="padding-left: 10px; font-size: 16px; padding-bottom: 2px; padding-top: 2px;">
-										<strong>${aUList.get(i.index - 1).user_id }</strong>
+									<td style="padding-left: 10px; font-size: 16px; padding-bottom: 2px; padding-top: 2px;"
+											class="td_user" data-id="${aUList.get(i.index - 1).user_id }">
+										<strong>${careerList.get(i.index - 1) }</strong>
 									</td>
 								</tr>
 								<tr>
-									<td style="padding-left: 10px; padding-bottom: 2px; padding-top: 2px;">
-										${aUList.get(i.index - 1).user_id }
+									<td style="padding-left: 10px; padding-bottom: 8px; padding-top: 2px; border-bottom: 1px solid;
+											border-color: #d9d9d9;"
+											class="td_user" data-id="${aUList.get(i.index - 1).user_id }">
+										<strong>${aUList.get(i.index - 1).addr1 }</strong>
 									</td>
 								</tr>
 							</table>			
@@ -93,28 +101,59 @@
 		</td>
 		<td style="vertical-align: top; margin-left: 0px;">
 			<div class="col-md-12">
-				<div class="whiteBox" style="width: 330px; margin-left: -14px; font-size: 20px; padding-bottom: 7px;
-						padding-top: 7px; padding-left: 7px;">
-					지원한 채용공고 (${appList.size() })
+				<!-- newList -->
+				<div id="div_newList" class="whiteBox" style="width: 296px; margin-left: 0px; height: 370px; margin-bottom: 20px;
+						text-align: center; padding-top: 10px; font-size: 22px;">
+					<div style="text-align: left; padding-left: 15px; padding-bottom: 7px; font-weight: bold; color: #0073b1;">
+						<i class="fas fa-check" style="margin-right: 15px;"></i>신규 채용공고
+					</div>
+					<div style="border: 0px solid; height: 270px; overflow: hidden; padding-left: 2px;">
+				   		<c:if test="${newList.size() >= 1 }">
+				   			<ul id="content_newList" style="list-style: none; width: 3000px; padding-left: 5px;
+				   					margin-left: -290px;">
+							<c:forEach items="${newList }" varStatus="i" var="rRVo">
+								<li style="float: left; text-align: left;"><div class="whiteBox" style="width: 280px; box-shadow: 0 3px 3px rgba(0, 0, 0, .175);
+										margin-right: 10px; padding: 13px; font-size: 16px; height: 270px;">
+									<div class="recr" onmouseover="" style="cursor: pointer; height: 215px;
+											border-bottom: 1px solid; border-bottom-color: #d9d9d9;"
+											data-code="${rRVo.recruit_code }">
+										<div class="table_div" style="margin-left: 24px;">
+											<c:choose>
+												<c:when test="${ fn:contains(newImgList.get(i.index), 'http') }">
+													<img src="${newImgList.get(i.index) }" width="200"> 
+												</c:when>
+												<c:otherwise>
+													<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${newIdList.get(i.index) }&division=pf" width="200">
+												</c:otherwise>	
+											</c:choose>												
+										</div> <br>
+										<strong>
+											<c:choose>
+												<c:when test="${rRVo.recruit_title.length() > 18 }">
+													${rRVo.recruit_title.substring(0, 18) }...
+												</c:when>
+												<c:otherwise>
+													${rRVo.recruit_title }
+												</c:otherwise>
+											</c:choose>
+										</strong> <br>
+										${newNmList.get(i.index) } <br>
+										${rRVo.job_local } <br>
+										${rRVo.job_type }
+									</div>
+									<div style="padding-top: 10px; color: #2f7b15;">
+										${newTimeList.get(i.index) } 전
+									</div>
+								</div></li>
+							</c:forEach>
+							</ul>
+						</c:if>
+					</div>
+					<div style="text-align: center; font-size: 13px; padding-top: 15px;">
+						<i onmouseover="" class="fas fa-circle"></i><i onmouseover="" class="far fa-circle"></i><i onmouseover="" class="far fa-circle"></i><i onmouseover="" class="far fa-circle"></i><i onmouseover="" class="far fa-circle"></i><i onmouseover="" class="far fa-circle"></i><i onmouseover="" class="far fa-circle"></i>				
+					</div>
 				</div>
-				<div class="whiteBox" style="width: 330px; margin-left: -14px; margin-top: -1px; padding-bottom: 2px;">
-					<table border="0" style="margin-left: 10px; width: 310px; margin-top: 10px;">
-						<c:forEach begin="1" end="${appList.size() }" varStatus="i">
-							<tr>
-								<td id="app${i.index }" onmouseover="" style="cursor: pointer; 
-										border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 10px; 
-										padding-top: 10px; padding-left: 4px;">
-									<img src="${corpImgList_app.get(i.index - 1) }" width="150"
-											style="margin-bottom: 10px;"><br><br>
-									${appList.get(i.index - 1).recruit_title }<br>
-									${corpNmList_app.get(i.index - 1) }<br>
-									${appList.get(i.index - 1).job_local }<br>
-									지원일: xx일 전
-								</td>
-							</tr>
-						</c:forEach>
-					</table>						
-				</div>
+				<!-- newList -->
 			</div>			
 		</td>
 	</tr>
@@ -136,307 +175,61 @@
 	$(document).ready(function(){
 		console.log($("#sel_period option:selected").text());
 
-		// 필터 sel_period 기본값 설정 / 선택
-		if('${period_value }' != ''){
-			$("#sel_period").val("${period_value }").prop("selected", true);
-			$("#period_value").val($("#sel_period option:selected").val());
-		}
-		$("#sel_period").on("change", function(){
-// 			alert("val : " + $("#sel_period option:selected").val());
-			$("#period_value").val($("#sel_period option:selected").val());
-			
-			if($("#sel_period option:selected").text() != '올린 날'){
-				$("#sel_period").css("background-color", "#0174b0");
-				$("#sel_period").css("color", "white");
-			}else{
-				$("#sel_period").css("background-color", "white");
-				$("#sel_period").css("color", "black");
-			}
-		});
-		if($("#sel_period option:selected").text() != '올린 날'){
-			$("#sel_period").css("background-color", "#0174b0");
-			$("#sel_period").css("color", "white");
-		}
-		
-		// 필터 sel_function 기본값 설정 / 선택
-		if('${function_value }' != ''){
-			$("#sel_function").val("${function_value }").prop("selected", true);
-			$("#function_value").val($("#sel_function option:selected").val());
-		}
-		$("#sel_function").on("change", function(){
-// 			alert("val : " + $("#sel_function option:selected").val());
-			$("#function_value").val($("#sel_function option:selected").val());
-			
-			if($("#sel_function option:selected").text() != '기능'){
-				$("#sel_function").css("background-color", "#0174b0");
-				$("#sel_function").css("color", "white");
-			}else{
-				$("#sel_function").css("background-color", "white");
-				$("#sel_function").css("color", "black");
-			}			
-		});
-		if($("#sel_function option:selected").text() != '기능'){
-			$("#sel_function").css("background-color", "#0174b0");
-			$("#sel_function").css("color", "white");
-		}
-		
-		// 필터 sel_com.
-		$("#sel_com").on("click", function(){
-// 			$("#sel_com").preventDefault();
+		// 유저 클릭 - 프로필 이동.
+		$(".td_user").on("click", function(){
+			window.location.href = '${pageContext.request.contextPath }/profileHome?user_id='+$(this).data("id");
 		});
 		
-		// 필터 적용 버튼
-		$("#btn_filter").on("click", function(){
-			$("#frm_filter").submit();			
-		});
-		$("#btn_filter").on("mouseover", function(){
-			$(this).css("background-color", "#cdedfe");
-		});
-		$("#btn_filter").on("mouseout", function(){
-			$(this).css("background-color", "white");
-		});
-		// 필터 지우기 버튼
-		$("#btn_remove").on("click", function(){
-			window.location.href = '${pageContext.request.contextPath }/recrSearch';
-		});
-		$("#btn_remove").on("mouseover", function(){
-			$(this).css("background-color", "#cdedfe");
-		});
-		$("#btn_remove").on("mouseout", function(){
-			$(this).css("background-color", "white");
-		});		
-
-		// 모달창 jQuery
-		var arr_save = new Array();
-		var arr_search = new Array();
-		var result_save = "";
-		var result_search = "";
-		var result = "";
-		
-		// 모달창 버튼
-		$("#btn_save").on("click", function(){
-			result_save = '';
-			result_search = '';
-			result = '';
-			
-			// 수정을 안했을 경우 컨트롤러에서 로직을 건너뛸 수 있게 설정. 'xxx/xxx/xxx::'
-			if(arr_save.length == 0){
-				result_save = 'xxx/xxx/xxx::';
-			}else{
-				for(var i=0; i < arr_save.length; i++){
-					result_save += $(".save_alarm:eq("+(arr_save[i]-1)+")").data("code")+"/"+$(".save_alarm:eq("+(arr_save[i]-1)+")").data("alarm")+"/"+$(".save_save:eq("+(arr_save[i]-1)+")").data("save")+"::"		
-				}
-			}
-			
-			if(arr_search.length == 0){
-				result_search = 'xxx/xxx/xxx::';
-			}else{
-				for(var i=0; i < arr_search.length; i++){
-					result_search += $(".search_save:eq("+(arr_search[i]-1)+")").data("code")+"/"+$(".search_save:eq("+(arr_search[i]-1)+")").data("save")+"/"+$(".search_del:eq("+(arr_search[i]-1)+")").data("del")+"::"		
-				}
-			}
-			
-			result = result_save + "???" + result_search;
-			
-			// 수정할 result 문자열 만들기
-			$("#result").val(result);
-			
-			// 요청 페이지 구분값 보내기.
-			$("#req_page").val("recrSearch");
-			
-			$("#frm").submit();			
-		});
-		$("#btn_cancel").on("click", function(){
-			if(confirm("저장하지 않고 나가시겠습니까?")){
-				$("#btn_cancel_hidden").trigger("click");
-			}
-		});
-		
-		// arr_save/search에 해당 search_code가 있는지 확인하고 추가하는 메서드.
-		// 구분 division(div): 'save'-저장한 검색어, 'search'-최근 검색어
-		function checkAdd(div, idx){
-			if(div == 'save'){
-				var add_flag = true;
-				
-				for(var i=0; i < arr_save.length; i++){
-					if(arr_save[i] == idx){
-						add_flag = false;						
-						break;
-					}
-				}
-				
-				if(add_flag){
-					arr_save[arr_save.length] = idx;
-				}
-			}else{
-				var add_flag = true;
-				
-				for(var i=0; i < arr_search.length; i++){
-					if(arr_search[i] == idx){
-						add_flag = false;						
-						break;
-					}
-				}
-				
-				if(add_flag){
-					arr_search[arr_search.length] = idx;
-				}
-			}		
-		}
-		
-		// 모달창 div
-		$("#div_save").on("mouseover", function(){
-			$("#lb_save").css("color", "#0174b0");
-			$("#lb_save").css("border-bottom", "2px solid");
-			$("#lb_save").css("border-bottom-color", "#0174b0");
-		});
-		$("#div_save").on("mouseout", function(){
-			$("#lb_save").css("color", "black");
-			$("#lb_save").css("border-bottom", "0px solid");
-		});
-		$("#div_search").on("mouseover", function(){
-			$("#lb_search").css("color", "#0174b0");
-			$("#lb_search").css("border-bottom", "2px solid");
-			$("#lb_search").css("border-bottom-color", "#0174b0");
-		});
-		$("#div_search").on("mouseout", function(){
-			$("#lb_search").css("color", "black");
-			$("#lb_search").css("border-bottom", "0px solid");
-		});
-		
-		// 모달창 save, search 마우스오버
-		var idx = 0;
-		
-		$(".save_alarm").on("mouseover", function(){
-			idx = $(".save_alarm").index(this);
-			$(".save_alarm:eq("+idx+")").css("background-color", "#f3f3f3");
+		// 프로필 저장 버튼 클릭. / 마우스오버
+		$(".btn_pf").on("click", function(){
 // 			alert($(this).data("idx"));
 		});
-		$(".save_alarm").on("mouseout", function(){
+		$(".btn_pf").on("mouseover", function(){
+			$(this).css("background-color", "#e5f5fb");
+		})
+		$(".btn_pf").on("mouseout", function(){
 			$(this).css("background-color", "white");
-		});
-		$(".save_save").on("mouseover", function(){
-			$(this).css("background-color", "#f3f3f3");
-		});
-		$(".save_save").on("mouseout", function(){
-			$(this).css("background-color", "white");
-		});
-		$(".search_save").on("mouseover", function(){
-			$(this).css("background-color", "#f3f3f3");
-		});
-		$(".search_save").on("mouseout", function(){
-			$(this).css("background-color", "white");
-		});
-		$(".search_del").on("mouseover", function(){
-			$(this).css("background-color", "#f3f3f3");
-		});
-		$(".search_del").on("mouseout", function(){
-			$(this).css("background-color", "white");
-		});
+		})
 		
-		// 모달창 save 클릭
-		$(".save_alarm").on("click", function(){
-// 			alert($(this).data("alarm"));
-			// 저장을 안했을때는 알림을 켤 수 없음.
-			if($(".save_save:eq("+ (($(this).data("idx"))-1) +")").text() == '저장하기'){
-				alert("먼저 검색어 저장을 해야합니다.");
-				return;
-			}
+		//////////////////////////// newList
+		// newList 슬라이드
+		newList_slide = setInterval("fn_newSlide()", 4000);
+		
+		// newList 마우스오버 - 슬라이드 멈춤.
+		$("#div_newList").on("mouseover", function(){
+			newSlide_flag = false;
+		});
+		$("#div_newList").on("mouseout", function(){
+			newSlide_flag = true;
+		});		
+		
+		// newList 슬라이드 버튼 클릭.
+		$(".fa-circle").on("click", function(){
+// 			alert($(this).index());
+			$(".fa-circle:eq("+ (newList_num-1) +")").attr("class", "far fa-circle");
+			$(this).attr("class", "fas fa-circle");	
 			
-			if( (($(this).text()).split("알림 ")[1]).startsWith("켜기")){
-// 				alert($(this).data("code") + "번 알림 켬");
-				$(this).html('<i class="fas fa-bell" style="margin-right: 5px; color: #0174b0;"></i>알림 끄기');
-				$(this).data("alarm", "2");
-				checkAdd("save", $(this).data("idx"));
-			}else{
-// 				alert($(this).data("code") + "번 알림 끔");
-				$(this).html('<i class="far fa-bell" style="margin-right: 5px; color: black;"></i>알림 켜기');
-				$(this).data("alarm", "1");
-				checkAdd("save", $(this).data("idx"));
-			}
-		});
-		$(".save_save").on("click", function(){
-// 			alert($(this).data("idx"));
-			if($(this).text() == '저장하기'){
-				$(this).html('<i class="far fa-save" style="margin-right: 5px; color: #0174b0;"></i>저장 취소');
-				$(this).data("save", "2");
-				
-				// 저장 취소를 하면 알림도 꺼지고 저장을 하면 알림도 자동으로 설정됨.
-				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").html('<i class="fas fa-bell" style="margin-right: 5px; color: #0174b0;"></i>알림 끄기');
-				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").data("alarm", "2");
-				checkAdd("save", $(this).data("idx"));
-			}else{
-				$(this).html('<i class="far fa-save" style="margin-right: 5px; color: black;"></i>저장하기');
-				$(this).data("save", "1");
-				
-				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").html('<i class="far fa-bell" style="margin-right: 5px; color: black;"></i>알림 켜기');
-				$(".save_alarm:eq("+ (($(this).data("idx"))-1) +")").data("alarm", "1");
-				checkAdd("save", $(this).data("idx"));
-			}
-		});
-		
-		// 모달창 search 클릭
-		$(".search_save").on("click", function(){
-// 			alert(arr_search.length);
-			// 삭제한 검색어는 저장할 수 없음.
-			if($(".search_del:eq("+ (($(this).data("idx"))-1) +")").text() == '삭제 취소'){
-				alert("삭제한 검색어는 저장할 수 없습니다.");
-				return;
-			}
+			// 이동할 칸 수. (move_page)
+			var move_page = ($(this).index()) - (newList_num-1);
 			
-			if( (($(this).text()).split("저장")[1]).startsWith("하기")){
-				$(this).html('<i class="fas fa-save" style="margin-right: 5px; color: #0174b0;"></i>저장 취소');
-				$(this).data("save", "2");
-				checkAdd("search", $(this).data("idx"));
-			}else{
-				$(this).html('<i class="far fa-save" style="margin-right: 5px;"></i>저장하기');
-				$(this).data("save", "1");
-				checkAdd("search", $(this).data("idx"));
+			// newList_num 변경.
+			newList_num = ($(this).index())+1;
+			
+			// 슬라이드 이동.
+			$("#content_newList").stop(true, true);
+			var moveX = parseInt($("#content_newList").css("margin-left"));
+			
+			if( moveX > -3000 ){
+				$("#content_newList").animate({"margin-left":"-=" + newSlide_width*move_page + "px"}, 500);
 			}
 		});
-		$(".search_del").on("click", function(){
-			if($(this).text() == '삭제 취소'){
-				$(this).html('<i class="far fa-times-circle" style="margin-right: 5px;"></i>기록 삭제');
-				$(this).data("del", "1");
-				checkAdd("search", $(this).data("idx"));
-			}else{
-				$(this).html('<i class="far fa-times-circle" style="margin-right: 5px; color: red;"></i>삭제 취소');
-				$(this).data("del", "2");
-				
-				$(".search_save:eq("+ (($(this).data("idx"))-1) +")").html('<i class="far fa-save" style="margin-right: 5px;"></i>저장하기');
-				$(".search_save:eq("+ (($(this).data("idx"))-1) +")").data("save", "1");
-				checkAdd("search", $(this).data("idx"));
-			}
+		
+		// 채용공고 클릭.
+		$(".recr").on("click", function(){
+			window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code='+ $(this).data("code") +'&req_page=personal';
 		});		
 		
-		<c:forEach begin="1" end="${recrList.size() }" varStatus="i">
-			$("#recr${i.index }").on("click", function(){
-// 				alert("${i.index }");
-				window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code=${recrList.get(i.index - 1).recruit_code }&req_page=recrSearch';
-			});
-		</c:forEach>
-		
-		// input text에 검색중인 값 출력하기.
-		$("#txt_word").val("${lSLog.search_word }");
-		$("#txt_local").val("${lSLog.search_local }");
-		
-		// 검색 버튼
-		$("#btn_search").on("click", function(){
-// 			alert($("#txt_word").val() + " + " + $("#txt_local").val());
-			search();
-		});
-		
-		// 엔터키 눌렀을 때 검색되도록.
-		$("#txt_local").keypress(function(e){
-			if(e.which == 13){
-				search();
-			}
-		});		
-		$("#txt_word").keypress(function(e){
-			if(e.which == 13){
-				search();
-			}
-		});		
+		//////////////////////////// newList			
 		
 	});
 	
@@ -447,6 +240,46 @@
 		$("#frm_search").submit();		
 	}
 
+	////////////////////////////newList
+	
+	// div_newList 마우스오버 시 false - 슬라이드 멈춤.
+	var newSlide_flag = true;	
+	
+	// 자동 슬라이드
+	var newSlide_width = 290;
+	var newList_num = 1;
+	
+	function fn_newSlide(){
+		if(newSlide_flag == false){
+			return;
+		}
+		
+		if(newList_num > 6){
+	//			clearInterval(slide_switch);
+			$("#content_newList").css("margin-left", "0px");
+			newList_num = 0;
+		}
+		
+		newList_num++;
+		
+		$("#content_newList").stop(true, true);
+		var moveX = parseInt($("#content_newList").css("margin-left"));
+		
+		if( moveX > -2000 ){
+			// 버튼 class 바꾸기.
+			if(newList_num == 1){
+				$(".fa-circle:eq(6)").attr("class", "far fa-circle");
+				$(".fa-circle:eq("+ (newList_num-1) +")").attr("class", "fas fa-circle");
+			}else{
+				$(".fa-circle:eq("+ (newList_num-2) +")").attr("class", "far fa-circle");
+				$(".fa-circle:eq("+ (newList_num-1) +")").attr("class", "fas fa-circle");
+			}
+			
+			$("#content_newList").animate({"margin-left":"-=" + newSlide_width + "px"}, 500);
+		}
+	}	
+	
+	//////////////////////////// newList
 </script>	
 	
 </body>

@@ -175,6 +175,7 @@
 							<option value="주임">		주임</option>
 							<option value="사원">		사원</option>
 							<option value="인턴">		인턴</option>
+							<option value="전 직원">	전 직원</option>
 			      		</select>
 		      		<label>장점</label>
 		      		<textarea name="cr_content" class="form-control" rows="3"></textarea>

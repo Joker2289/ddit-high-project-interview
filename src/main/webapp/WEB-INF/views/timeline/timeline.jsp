@@ -207,21 +207,6 @@
 <script src="/js/timeline.js"></script>
 <script type="text/javascript">
 
-// 	$(".btn_goodcount").on("click", function() {
-		
-// 		var ref_code = $(this).attr('title').split(' ')[1];
-// 		$.ajax({
-// 			type : 'POST',
-//             url : '/pushGoodMember',
-//             data : {"ref_code" : ref_code},
-//             success : function(data) {
-               
-// 				if(data != ""){
-// 					console.log(data);
-// 				}
-// 			}
-// 		});
-// 	});
 
 	//댓글 버튼 클릭
 	function post_commentList(post_code){
@@ -236,10 +221,6 @@
 	}
 
    
-   //현재 스크롤 위치에서 화면 최상단으로 이동
-   $("#scroll-top").on("click", function() {
-      $(window).scrollTop() = $(window).height();
-   });
    
    var pageNum = 2;
    var lastPost;

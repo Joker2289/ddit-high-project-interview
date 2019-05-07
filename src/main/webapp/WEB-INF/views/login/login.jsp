@@ -57,7 +57,7 @@
             <form id="login"class="login100-form validate-form" action="/login" method="post">
                <span class="login100-form-title p-b-49">
                   <!-- InterView -->
-                  <img src="${ cp }/images/interview_logo2.png"  width="330" height="100">
+                  <img src="${ cp }/images/INTERVIEW.png"  width="330" height="100" style="width: 400px;height: 200px;">
                </span> 
                
                <div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">

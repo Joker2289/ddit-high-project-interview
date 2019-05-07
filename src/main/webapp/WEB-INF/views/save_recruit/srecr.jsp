@@ -9,6 +9,9 @@
 </head>
 
 <body>
+<form action="${pageContext.request.contextPath }/insertSLog" id="frm_search">
+<input type="hidden" id="search_word" name="search_word">
+<input type="hidden" id="search_local" name="search_local">
 <!-- 검색창. -->
 <nav style="background-color: #5c6f7c; height: 97px; margin-top: -20px; text-align: center; padding-top: 7px;">
 	<table style="margin: 0 auto; height: 82px;">
@@ -56,7 +59,8 @@
 							<!-- 6개만 출력하기. -->
 							<c:forEach begin="1" end="${saveList.size() }" varStatus="i">
 								<td>
-									<a href="" style="color: white;">
+									<a style="color: white;" data-word="${saveList.get(i.index - 1).search_word }"
+											data-local="${saveList.get(i.index - 1).search_local }" class="a_save">
 										${saveList.get(i.index - 1).search_word } ${saveList.get(i.index - 1).search_local }&nbsp; &nbsp;
 									</a>
 								</td>
@@ -74,6 +78,7 @@
 		</tr>
 	</table>
 </nav>
+</form>
 
 <div class="container">
 <div class="row">
@@ -129,8 +134,7 @@
 											</c:choose>													
 											<strong>${appList.get(i.index - 1).recruit_title }</strong><br>
 											${corpNmList_app.get(i.index - 1) }<br>
-											${appList.get(i.index - 1).job_local }<br>
-											지원일: xx일 전
+											${appList.get(i.index - 1).job_local }
 										</td>
 									</tr>
 								</c:forEach>
@@ -161,6 +165,15 @@
 
 	$(document).ready(function(){
 // 		console.log("${saveList }");
+		
+		// 저장한 검색어 클릭
+		$(".a_save").on("click", function(){
+// 			alert($(this).data("word"));
+			$("#search_word").val($(this).data("word"));
+			$("#search_local").val($(this).data("local"));
+			
+			$("#frm_search").submit();
+		});		
 		
 		// 페이지 로딩시 ajax로 srList 가져오기
 		getSRListHtml(null, "srListAjax");

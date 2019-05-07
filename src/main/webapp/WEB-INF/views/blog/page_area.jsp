@@ -9,7 +9,7 @@
 
 
 
-<div class="col-md-6">
+<div id="no_page_area" class="col-md-6">
 	<div class="panel panel-default">
 
 		<div id="page_area_select_head" class="panel-body page_area_select_head">
@@ -212,7 +212,17 @@
 	});
 
 	
-
+	var i = 0;
+	<c:forEach items="${ pageList }" var="page">
+		i++;
+	</c:forEach>
+	
+	$(document).ready(function(){
+		if(i == 0){
+			$('#no_page_area').append('<div class="panel panel-default no_page_area"><a class="no_page_area_comment">작성된 페이지가 없습니다</a></div>');
+		}
+	});
+	
 
 </script>
 

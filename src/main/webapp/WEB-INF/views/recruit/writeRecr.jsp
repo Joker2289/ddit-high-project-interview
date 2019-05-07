@@ -185,18 +185,18 @@
 					<td style="padding-bottom: 50px; padding-top: 20px;">
 						<div style="margin-bottom: 10px;"> 
 							<div style="color: #0174b0; float: left;">
-								<div style="margin-bottom: 10px;">
-									<strong style="color: black;">간편지원 설정여부</strong><br>
+								<div style="margin-bottom: 20px;">
+									<strong style="color: black;">간편지원 설정여부</strong>
+									<div class="can-toggle demo-rebrand-2" style="float: right; margin-right: 440px;">
+										<input id="cb_move" type="checkbox">
+										<label for="cb_move">
+											<div class="can-toggle__switch" data-checked="2" data-unchecked="2"></div>
+										</label>
+									</div>				
 								</div>					<!-- 이어서. app_type val() 설정 -->
-								<img src="/images/logo/linkedin.png" width="22">
-								<strong>간편지원 기능을 이용해보세요. ( 99,000원/월 )</strong>
+								<img src="/images/logo/IV_LOGO.png" width="22">
+								<strong>간편지원 기능을 이용해보세요. ( 지원자의 프로필을 한 번에 확인할 수 있습니다. )</strong>
 							</div>
-							<div class="can-toggle demo-rebrand-2" style="float: right; margin-right: 190px;">
-								<input id="cb_move" type="checkbox">
-								<label for="cb_move">
-									<div class="can-toggle__switch" data-checked="2" data-unchecked="2"></div>
-								</label>
-							</div>							
 						</div>
 					</td>
 				</tr>

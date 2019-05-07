@@ -6,7 +6,7 @@
 
 
 <div class="panel panel-default">
-	<div class="panel-body">
+	<div id="left_portfolio_area" class="panel-body">
 		
 		<div class="portfolioTitle">포트폴리오</div>
 			
@@ -18,8 +18,12 @@
 			
 			
 		</c:forEach>
+			
 
- 
+	
+ 		
+ 		
+ 		
 	</div>
 </div>
 
@@ -28,16 +32,19 @@
 
 <script>
 
-
+var i = 0;
 <c:forEach items="${ portfolioList }" var="portfolio">
+	i++;
 	
 	var code = '${ portfolio.portfolio_code }';
 	$('#portfolio'+code).popover('enable');
 	
 	//포트폴리오 인덱스 컬러 셋팅
 	$('#portfolio'+code).css('background-color', '${ portfolio.index_color }');
-	
 </c:forEach>
+
+
+
 
 function portfolioClick(portfolio_code, color){
 	
@@ -54,7 +61,10 @@ function portfolioClick(portfolio_code, color){
 } 
 
 
-
+if(i==0){
+	$('#left_portfolio_area').append('<a class="no_portfolio">작성중인 포트폴리오가 없습니다</a>');
+	
+}
 
 
 
