@@ -215,7 +215,7 @@
 		
 		if($("#job_rank option:selected").val() == "no"){
 			alert("직급을 입력해주세요");
-			$("input[name=job_position]").focus();
+			$("#job_rank").focus();
 			return false;
 		}
 		
