@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.ddit.alarm.model.AlarmVo;
+import kr.or.ddit.alarm.service.IAlarmService;
 import kr.or.ddit.follow.model.FollowVo;
 import kr.or.ddit.follow.service.IFollowService;
 import kr.or.ddit.member.model.MemberVo;
@@ -36,7 +38,10 @@ public class SearchResultController {
 	IFollowService followService;
 	
 	@Resource(name="personalService")
-	private IPersonal_connectionService personalService; 
+	private IPersonal_connectionService personalService;
+	
+	@Resource(name="alarmService")
+	private IAlarmService alarmService;
 	
 	@RequestMapping(path={"/searchResult"}, method=RequestMethod.GET)
 	public String searchResult(Model model, String search_word, HttpServletRequest request){
@@ -196,6 +201,15 @@ public class SearchResultController {
 		personalInfo.setReceive_id(target_id);
 		
 		personalService.insert_connections(personalInfo);
+		
+		AlarmVo alarmInfo = new AlarmVo();
+		alarmInfo.setMem_id(personalInfo.getReceive_id());
+		alarmInfo.setAlarm_check("0");
+		alarmInfo.setDivision("25");
+		alarmInfo.setSend_id(personalInfo.getUser_id());
+		alarmInfo.setAlarm_separate("04");
+		
+		alarmService.insert_alarmInfo(alarmInfo);
 		
 		return "complate";
 	}

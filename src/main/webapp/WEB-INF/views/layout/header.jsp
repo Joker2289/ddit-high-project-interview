@@ -131,7 +131,7 @@
 	
 	$(document).ready(function() {
 		send_message();
-		setInterval("send_message()", 20000);
+		setInterval("send_message()", 15000);
 	});
 
 	/* $("#txt_content").summernote(); */
