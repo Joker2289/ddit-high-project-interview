@@ -107,4 +107,20 @@ public class Education_infoServiceImpl implements IEducation_infoService{
 		return educationDao.delete_educationInfo(education_code);
 	}
 
+	/**
+	 * 
+	 * Method : getLastEdu
+	 * 작성자 : PC19
+	 * 변경이력 :
+	 * @param user_id
+	 * @return
+	 * Method 설명 : 특정 유저의 마지막 학력정보 조회.
+	 */
+	@Override
+	public Education_infoVo getLastEdu(String user_id) {
+		Education_infoVo eVo = educationDao.getLastEdu(user_id);
+		
+		return eVo;
+	}
+
 }

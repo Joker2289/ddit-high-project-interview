@@ -35,9 +35,13 @@ import kr.or.ddit.alarm.service.AlarmServiceImpl;
 import kr.or.ddit.alarm.service.IAlarmService;
 import kr.or.ddit.apply_recruit.model.Apply_recruitVo;
 import kr.or.ddit.apply_recruit.service.IApply_recruitService;
+import kr.or.ddit.career_info.model.Career_infoVo;
+import kr.or.ddit.career_info.service.ICareer_infoService;
 import kr.or.ddit.corporation.model.CorporationVo;
 import kr.or.ddit.corporation.service.ICorporationService;
+import kr.or.ddit.education_info.dao.IEducation_infoDao;
 import kr.or.ddit.education_info.model.Education_infoVo;
+import kr.or.ddit.education_info.service.IEducation_infoService;
 import kr.or.ddit.interest.model.InterestVo;
 import kr.or.ddit.interest.service.IInterestService;
 import kr.or.ddit.item.model.ItemVo;
@@ -91,6 +95,12 @@ public class RecruitController {
 	
 	@Resource(name="apply_recruitService")
 	private IApply_recruitService appService;
+	
+	@Resource(name="education_infoService")
+	private IEducation_infoService eduService;
+	
+	@Resource(name="career_infoService")
+	private ICareer_infoService careerService;
 	
 	private List<String> img_list;
 	private List<String> str_list;
@@ -1459,7 +1469,7 @@ public class RecruitController {
 	
 	// @채용공고 지원
 	@RequestMapping("/recr_app")
-	public String recr_app(String recruit_code, String scrap_flag, HttpSession session, Model model) {
+	public String recr_app(String recruit_code, String scrap_flag, HttpSession session, Model model) throws ParseException {
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		
 		Save_recruitVo tempSVo = new Save_recruitVo();
@@ -1511,6 +1521,33 @@ public class RecruitController {
 		CorporationVo corp = corpService.select_corpInfo(recr.getCorp_id());
 		model.addAttribute("recr", recr);
 		model.addAttribute("corp", corp);
+		
+		// 게시 time 넘기기.
+		String start_date = recr.getStart_date();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+		Date start = sdf.parse(start_date);
+		Date now = new Date();
+		
+		long temp_time = now.getTime() - start.getTime();
+		
+		int time_diff = (int) (temp_time / (60*1000));
+		
+		String time_value = "";
+		
+		if(time_diff < 2){
+			time_value = "방금";
+		}else if(time_diff < 60){
+			time_value = time_diff + "분";
+		}else if(time_diff < 1440){
+			time_value = time_diff/60 + "시간";
+		}else if(time_diff < 43200){
+			time_value = time_diff/(60*24) + "일";
+		}else{
+			time_value = time_diff/(60*24*30) + "달";
+		}			
+		
+		model.addAttribute("time_value", time_value);		
 
 		return "recr_detailTiles";
 	}
@@ -1670,14 +1707,90 @@ public class RecruitController {
 	
 	// @채용공고 지원자 목록 조회 페이지.
 	@RequestMapping("/applyUser")
-	public String applyUser(HttpSession session, String recruit_code, Model model) {
+	public String applyUser(HttpSession session, String recruit_code, Model model) throws ParseException {
 		MemberVo mVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 
 		model.addAttribute("recruit_code", recruit_code);
 		
 		List<UsersVo> aUList = appService.getAUList(recruit_code);
 		
+		List<String> eduList = new ArrayList<>();
+		List<String> careerList = new ArrayList<>();
+		
+		for(int i=0; i < aUList.size(); i++){
+			Education_infoVo eVo = eduService.getLastEdu(aUList.get(i).getUser_id());
+			if(eVo == null){
+				String str_edu = " ";
+				eduList.add(str_edu);
+			}else{
+				String str_edu = eVo.getSchool_name() + " " + eVo.getMajor() + " " + eVo.getDegree_name();
+				eduList.add(str_edu);
+			}
+			
+			Career_infoVo cVo = careerService.getLastCareer(aUList.get(i).getUser_id());
+			if(cVo == null){
+				String str_career = cVo.getCorporate_name() + " " + cVo.getJob_position();
+				careerList.add(str_career);
+			}else{
+				String str_career = cVo.getCorporate_name() + " " + cVo.getJob_position();
+				careerList.add(str_career);
+			}
+		}
+		
 		model.addAttribute("aUList", aUList);
+		model.addAttribute("eduList", eduList);
+		model.addAttribute("careerList", careerList);
+		
+		/////////////////////////////// newList
+		
+		// 광고 부분 -> 신규 채용공고 (newList)
+		List<RecruitVo> newList = recrService.getNewList();
+		
+		// newList size : 7. index 6 -> index 0에 add.
+		newList.add(0, newList.get(6));
+		
+		List<String> newImgList = new ArrayList<>();
+		List<String> newIdList = new ArrayList<>();
+		List<String> newNmList = new ArrayList<>();
+		List<String> newTimeList = new ArrayList<>();
+		
+		for(int i=0; i < newList.size(); i++){
+			RecruitVo rVo = newList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			newImgList.add(cVo.getLogo_path());
+			newIdList.add(cVo.getCorp_id());
+			newNmList.add(cVo.getCorp_name());
+			
+			String start_date = rVo.getStart_date();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+			Date start = sdf.parse(start_date);
+			Date now = new Date();
+			
+			long temp_time = now.getTime() - start.getTime();
+			
+			int time_diff = (int) (temp_time / (60*1000));
+			
+			if(time_diff < 2){
+				newTimeList.add("방금");
+			}else if(time_diff < 60){
+				newTimeList.add(time_diff + "분");
+			}else if(time_diff < 1440){
+				newTimeList.add(time_diff/60 + "시간");
+			}else if(time_diff < 43200){
+				newTimeList.add(time_diff/(60*24) + "일");
+			}else{
+				newTimeList.add(time_diff/(60*24*30) + "달");
+			}				
+		}		
+		
+		model.addAttribute("newList", newList);
+		model.addAttribute("newImgList", newImgList);
+		model.addAttribute("newIdList", newIdList);
+		model.addAttribute("newNmList", newNmList);
+		model.addAttribute("newTimeList", newTimeList);
+		
+		/////////////////////////////// newList			
 		
 		return "applyUserTiles";
 	}
