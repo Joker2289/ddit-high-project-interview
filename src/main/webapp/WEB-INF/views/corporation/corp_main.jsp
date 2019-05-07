@@ -55,10 +55,6 @@
 		
 	</div>
 
-
-   	<%@ include file="/WEB-INF/views/timeline/updateModal.jsp" %><!-- 글 수정 모달창 -->
-    <%@ include file="/WEB-INF/views/timeline/reportModal.jsp" %><!-- 글 신고 모달창 -->
-	<%@ include file="/WEB-INF/views/timeline/postGoodMembersModal.jsp" %>
 <script src="/js/timeline.js"></script>
 <script>
 

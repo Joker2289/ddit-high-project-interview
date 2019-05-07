@@ -108,4 +108,15 @@
 		WHERE A.USER_ID = B.USER_ID
 	</select>
 	
+	<!-- 특정 유저의 마지막 경력정보 조회. -->
+	<select id="getLastCareer" parameterType="String" resultType="career_infoVo">
+		 SELECT A.CAREER_CODE, A.USER_ID, A.JOB_POSITION, A.JOB_RANK, A.CORPORATE_NAME, A.CORP_LOCAL, 
+		 	A.JOIN_DATE, A.RESIGN_DATE, A.CONTENTS, A.CORP_CODE
+		  FROM CAREER_INFO A, (SELECT MAX(CAREER_CODE) CODE
+		  							FROM CAREER_INFO
+		  						   WHERE USER_ID = #{user_id}
+		  						  GROUP BY USER_ID) B
+		 WHERE A.CAREER_CODE = B.CODE	
+	</select>
+	
 </mapper>
