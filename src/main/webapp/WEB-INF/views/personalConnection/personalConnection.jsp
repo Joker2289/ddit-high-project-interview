@@ -257,9 +257,9 @@
 								            </c:choose>
 												<li>
 													<div class="whiteBox">
-														<div style="background-image: url(${not empty bg_path ? bg_path : bg_addrpath});height: 70px; margin-top: -15px;"></div>
+														<div style="background-image: url(${fn:contains(friend.bg_path, 'http') ? bg_path : bg_addrpath});height: 70px; margin-top: -15px;"></div>
 														<div style=" margin-top: -50px;">
-															<a href="/profileHome?user_id=${friend.user_id }"><div style="width: 108px;height: 108px;background-image: url(${not empty profile_path ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 30px;border: 4px solid #E3EEF2;border-radius: 100px;"></div></a>
+															<a href="/profileHome?user_id=${friend.user_id }"><div style="width: 108px;height: 108px;background-image: url(${fn:contains(friend.profile_path, 'http') ? profile_path : profile_addrpath});background-repeat: no-repeat;background-size: cover;background-position: center;margin-left: 30px;border: 4px solid #E3EEF2;border-radius: 100px;"></div></a>
 															<a href="/profileHome?user_id=${friend.user_id }"><div style="margin-top: 5px;"><strong>${friend.user_name}</strong></div></a>
 															<a href="/profileHome?user_id=${friend.user_id }"><div style="font-size: 16px;padding-left: 5px;padding-right: 5px; text-overflow: ellipsis; display: inline-block; width: 146.97px; white-space: nowrap; overflow: hidden;margin-bottom: 50px;">${friend.introduce}</div></a>
 															<button class="btn btn-default" style="border-color: #0073b1;border-style: solid;padding-left: 40px;padding-right: 40px;"
