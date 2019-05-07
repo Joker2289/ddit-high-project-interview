@@ -467,7 +467,7 @@ $(document).ready(function() {
 		    <!-- 학력  -->
 			<c:if test="${not empty education_infoMap.education_infoVoList }">
 			<div class="whiteBox navbar-spy" style="padding: 20px 20px 20px 20px; margin-bottom: 20px;">
-				<h3 style="margin: 0 0 0 0 ">학력</h3>
+				<h3 style="margin: 0 0 0 0 ">학력 사항</h3>
 				<ul class="list-unstyled">
 					<c:forEach items="${education_infoMap.education_infoVoList }" var="education_infoVo" varStatus="i">
 						<fmt:formatDate value="${education_infoVo.admission }" var="strDate" pattern="yyyy년 MM월"/>
