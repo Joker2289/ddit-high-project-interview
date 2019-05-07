@@ -118,4 +118,30 @@ $(window).scroll(function () {
   
 });
 
+
+$(document).ready(function(){
+	console.log("${corporationInfo.corp_name }");
+	
+	var divWidth  = "511"; 
+	
+	// 추천리스트2 슬라이드.
+	$("#btn_slt2").on("click", function(){
+		alert(1);
+		$("#content2").stop(true, true);
+		   var moveX   = parseInt($("#content2").css("margin-left"));
+	
+		   if( moveX < 0 ){
+				$("#content2").animate({"margin-left":"+=" + divWidth + "px"},340);
+		   }
+	});	
+	$("#btn_sgt2").on("click", function(){
+		 $("#content2").stop(true, true);
+		   var moveX   = parseInt($("#content2").css("margin-left"));
+	
+		   if( -1022 < moveX ){
+		   		 $("#content2").animate({"margin-left":"-=" + divWidth + "px"},340);
+		   }
+	});			
+});
+
 </script>

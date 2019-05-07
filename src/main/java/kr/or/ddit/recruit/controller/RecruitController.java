@@ -1863,7 +1863,7 @@ public class RecruitController {
 			
 			Career_infoVo cVo = careerService.getLastCareer(aUList.get(i).getUser_id());
 			if(cVo == null){
-				String str_career = cVo.getCorporate_name() + " " + cVo.getJob_position();
+				String str_career = " ";
 				careerList.add(str_career);
 			}else{
 				String str_career = cVo.getCorporate_name() + " " + cVo.getJob_position();
