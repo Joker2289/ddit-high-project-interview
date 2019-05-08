@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -239,24 +241,34 @@
 <div class="col-md-12">
 	<div class="whiteBox" style="width: 330px; margin-left: -14px; font-size: 20px; padding-bottom: 7px;
 			padding-top: 7px; padding-left: 7px;">
-		지원한 채용공고?? (${appList.size() })
+		지원한 채용공고 (${appList.size() })
 	</div>
-	<div class="whiteBox" style="width: 330px; margin-left: -14px; margin-top: -1px; padding-bottom: 2px;">
+	<div class="whiteBox" style="width: 330px; margin-left: -14px; margin-top: -1px; padding-bottom: 2px;
+			font-size: 16px;">
 		<table border="0" style="margin-left: 10px; width: 310px; margin-top: 10px;">
-			<c:forEach begin="1" end="${appList.size() }" varStatus="i">
-				<tr>
-					<td id="app${i.index }" onmouseover="" style="cursor: pointer; 
-							border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 10px; 
-							padding-top: 10px; padding-left: 4px;">
-						<img src="${corpImgList_app.get(i.index - 1) }" width="150"
-								style="margin-bottom: 10px;"><br><br>
-						${appList.get(i.index - 1).recruit_title }<br>
-						${corpNmList_app.get(i.index - 1) }<br>
-						${appList.get(i.index - 1).job_local }<br>
-						지원일: xx일 전
-					</td>
-				</tr>
-			</c:forEach>
+			<c:if test="${appList.size() > 0}">
+				<c:forEach begin="1" end="${appList.size() }" varStatus="i">
+					<tr>
+						<td id="app${i.index }" onmouseover="" style="cursor: pointer; 
+								border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 10px; 
+								padding-top: 10px; padding-left: 4px;">
+							<c:choose>
+								<c:when test="${ fn:contains(corpImgList_app.get(i.index - 1), 'http') }">
+									<img src="${corpImgList_app.get(i.index - 1) }" width="150"
+											style="margin-bottom: 10px;"><br><br>
+								</c:when>
+								<c:otherwise>
+									<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${corpIdList_app.get(i.index - 1) }&division=pf" 
+											width="150" style="margin-bottom: 10px;"><br><br>
+								</c:otherwise>	
+							</c:choose>													
+							<strong>${appList.get(i.index - 1).recruit_title }</strong><br>
+							${corpNmList_app.get(i.index - 1) }<br>
+							${appList.get(i.index - 1).job_local }
+						</td>
+					</tr>
+				</c:forEach>
+			</c:if>
 		</table>						
 	</div>
 </div>			
@@ -271,6 +283,15 @@
 <script>
 $(document).ready(function(){
 // 	console.log("%4 ? : " + test);
+
+	<c:forEach begin="1" end="${appList.size() }" varStatus="i">
+		// 지원한 채용공고 클릭
+		$("#app${i.index }").on("click", function(){
+// 			alert("${i.index }");
+			window.location.href = '${pageContext.request.contextPath}/recr_detail?recruit_code=${appList.get(i.index - 1).recruit_code }';
+		});
+	</c:forEach>
+
 	// 업무분야 마우스오버.
 	$(".div_job").on("mouseover", function(){
 		$(this).css("background-color", "#f3f3f3");

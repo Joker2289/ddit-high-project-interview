@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -236,28 +238,59 @@
 </td>
 <td style="vertical-align: top; margin-left: 0px;">
 <div class="col-md-12">
-	<div class="whiteBox" style="width: 330px; margin-left: -14px; font-size: 20px; padding-bottom: 7px;
-			padding-top: 7px; padding-left: 7px;">
-		지원한 채용공고?? (${appList.size() })
+	<!-- newList -->
+	<div id="div_newList" class="whiteBox" style="width: 296px; margin-left: 10px; height: 370px; margin-bottom: 20px;
+			text-align: center; padding-top: 10px; font-size: 22px;">
+		<div style="text-align: left; padding-left: 15px; padding-bottom: 7px; font-weight: bold; color: #0073b1;">
+			<i class="fas fa-check" style="margin-right: 15px;"></i>신규 채용공고
+		</div>
+		<div style="border: 0px solid; height: 270px; overflow: hidden; padding-left: 2px;">
+	   		<c:if test="${newList.size() >= 1 }">
+	   			<ul id="content_newList" style="list-style: none; width: 3000px; padding-left: 5px;
+	   					margin-left: -290px;">
+				<c:forEach items="${newList }" varStatus="i" var="rRVo">
+					<li style="float: left; text-align: left;"><div class="whiteBox" style="width: 280px; box-shadow: 0 3px 3px rgba(0, 0, 0, .175);
+							margin-right: 10px; padding: 13px; font-size: 16px; height: 270px;">
+						<div class="recr" onmouseover="" style="cursor: pointer; height: 215px;
+								border-bottom: 1px solid; border-bottom-color: #d9d9d9;"
+								data-code="${rRVo.recruit_code }">
+							<div class="table_div" style="margin-left: 24px;">
+								<c:choose>
+									<c:when test="${ fn:contains(newImgList.get(i.index), 'http') }">
+										<img src="${newImgList.get(i.index) }" width="200"> 
+									</c:when>
+									<c:otherwise>
+										<img src="${pageContext.request.contextPath  }/view/imageView?mem_id=${newIdList.get(i.index) }&division=pf" width="200">
+									</c:otherwise>	
+								</c:choose>												
+							</div> <br>
+							<strong>
+								<c:choose>
+									<c:when test="${rRVo.recruit_title.length() > 18 }">
+										${rRVo.recruit_title.substring(0, 18) }...
+									</c:when>
+									<c:otherwise>
+										${rRVo.recruit_title }
+									</c:otherwise>
+								</c:choose>
+							</strong> <br>
+							${newNmList.get(i.index) } <br>
+							${rRVo.job_local } <br>
+							${rRVo.job_type }
+						</div>
+						<div style="padding-top: 10px; color: #2f7b15;">
+							${newTimeList.get(i.index) } 전
+						</div>
+					</div></li>
+				</c:forEach>
+				</ul>
+			</c:if>
+		</div>
+		<div style="text-align: center; font-size: 13px; padding-top: 15px;">
+			<i onmouseover="" class="fas fa-circle fafa"></i><i onmouseover="" class="far fa-circle fafa"></i><i onmouseover="" class="far fa-circle fafa"></i><i onmouseover="" class="far fa-circle fafa"></i><i onmouseover="" class="far fa-circle fafa"></i><i onmouseover="" class="far fa-circle fafa"></i><i onmouseover="" class="far fa-circle fafa"></i>				
+		</div>
 	</div>
-	<div class="whiteBox" style="width: 330px; margin-left: -14px; margin-top: -1px; padding-bottom: 2px;">
-		<table border="0" style="margin-left: 10px; width: 310px; margin-top: 10px;">
-			<c:forEach begin="1" end="${appList.size() }" varStatus="i">
-				<tr>
-					<td id="app${i.index }" onmouseover="" style="cursor: pointer; 
-							border-bottom: 1px solid; border-bottom-color: #d9d9d9; padding-bottom: 10px; 
-							padding-top: 10px; padding-left: 4px;">
-						<img src="${corpImgList_app.get(i.index - 1) }" width="150"
-								style="margin-bottom: 10px;"><br><br>
-						${appList.get(i.index - 1).recruit_title }<br>
-						${corpNmList_app.get(i.index - 1) }<br>
-						${appList.get(i.index - 1).job_local }<br>
-						지원일: xx일 전
-					</td>
-				</tr>
-			</c:forEach>
-		</table>						
-	</div>
+	<!-- newList -->
 </div>			
 </td>
 </tr>
@@ -268,9 +301,90 @@
 </div></div></div>		
 		
 <script type="text/javascript">
+////////////////////////////newList
+
+// div_newList 마우스오버 시 false - 슬라이드 멈춤.
+var newSlide_flag = true;	
+
+// 자동 슬라이드
+var newSlide_width = 290;
+var newList_num = 1;
+
+function fn_newSlide(){
+	if(newSlide_flag == false){
+		return;
+	}
+	
+	if(newList_num > 6){
+//			clearInterval(slide_switch);
+		$("#content_newList").css("margin-left", "0px");
+		newList_num = 0;
+	}
+	
+	newList_num++;
+	
+	$("#content_newList").stop(true, true);
+	var moveX = parseInt($("#content_newList").css("margin-left"));
+	
+	if( moveX > -2000 ){
+		// 버튼 class 바꾸기.
+		if(newList_num == 1){
+			$(".fafa:eq(6)").attr("class", "far fa-circle fafa");
+			$(".fafa:eq("+ (newList_num-1) +")").attr("class", "fas fa-circle fafa");
+		}else{
+			$(".fafa:eq("+ (newList_num-2) +")").attr("class", "far fa-circle fafa");
+			$(".fafa:eq("+ (newList_num-1) +")").attr("class", "fas fa-circle fafa");
+		}
+		
+		$("#content_newList").animate({"margin-left":"-=" + newSlide_width + "px"}, 500);
+	}
+}	
+
+//////////////////////////// newList
+
 $(document).ready(function(){
 // 	console.log("flag? : ${alphabet_flag }");
-	
+
+		//////////////////////////// newList
+		// newList 슬라이드
+		newList_slide = setInterval("fn_newSlide()", 4000);
+		
+		// newList 마우스오버 - 슬라이드 멈춤.
+		$("#div_newList").on("mouseover", function(){
+			newSlide_flag = false;
+		});
+		$("#div_newList").on("mouseout", function(){
+			newSlide_flag = true;
+		});		
+		
+		// newList 슬라이드 버튼 클릭.
+		$(".fafa").on("click", function(){
+// 			alert($(this).index());
+			$(".fafa:eq("+ (newList_num-1) +")").attr("class", "far fa-circle fafa");
+			$(this).attr("class", "fas fa-circle fafa");	
+			
+			// 이동할 칸 수. (move_page)
+			var move_page = ($(this).index()) - (newList_num-1);
+			
+			// newList_num 변경.
+			newList_num = ($(this).index())+1;
+			
+			// 슬라이드 이동.
+			$("#content_newList").stop(true, true);
+			var moveX = parseInt($("#content_newList").css("margin-left"));
+			
+			if( moveX > -3000 ){
+				$("#content_newList").animate({"margin-left":"-=" + newSlide_width*move_page + "px"}, 500);
+			}
+		});
+		
+		// 채용공고 클릭.
+		$(".recr").on("click", function(){
+			window.location.href = '${pageContext.request.contextPath }/recr_detail?recruit_code='+ $(this).data("code") +'&req_page=personal';
+		});		
+		
+		//////////////////////////// newList
+
 	$("#txt_com").on("click", function(){
 		$("#txt_com").css("border-color", "#0174b0");
 	});
