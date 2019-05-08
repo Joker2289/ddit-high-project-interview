@@ -184,7 +184,7 @@
 		$(".btn_pf").on("click", function(){
 			location.href="/recruitPDF?user_id="+$(this).data("id")+'&recruit_code=${param.recruit_code}';
 			
-			alert($(this).data("id"));
+// 			alert($(this).data("id"));
 		});
 		$(".btn_pf").on("mouseover", function(){
 			$(this).css("background-color", "#e5f5fb");
