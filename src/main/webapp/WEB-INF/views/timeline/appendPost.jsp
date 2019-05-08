@@ -61,17 +61,17 @@
 		    </button>
 		    <c:choose>
 		      <c:when test="${post.mem_id eq memberInfo.mem_id }">
-				<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-	      	    	<button class="btn_controll-list">
-		            	<i class="fas fa-edit"></i>&nbsp;<span>글 수정</span>
-		            </button>
-	      	    	<button class="btn_controll-list">
-		            	<i class="far fa-trash-alt"></i>&nbsp;<span>글 삭제</span>
-		        	</button>
-	      	    	<button class="btn_controll-list">
-		            	<i class="fas fa-comment-slash"></i>&nbsp;<span>댓글 차단</span>
-		            </button>
-		        </ul>
+				<ul class="dropdown-menu manage_mypost" role="menu" aria-labelledby="dLabel">
+					<button id="btn_modifyPost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list btn_modifyPost">
+                       <i class="fas fa-edit"></i>&nbsp;<span>글 수정</span>
+                    </button>
+					<button id="btn_deletePost${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list btn_deletePost">
+                       <i class="far fa-trash-alt"></i>&nbsp;<span>글 삭제</span>
+					</button>
+					<button id="btn_blockComment${post.post_code }" data-code="${post.post_code }" type="button" class="btn_controll-list btn_blockComment">
+                       <i class="fas fa-comment-slash"></i>&nbsp;<span>댓글 차단</span>
+                    </button>
+                </ul>
 		      </c:when>
 		      <c:otherwise>
 	        	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -168,7 +168,7 @@
 	</div>
 </c:forEach>
 
-
+<script src="/js/timeline.js"></script>
 <script>
 	//게시글 댓글 버튼 클릭 시 댓글 영역 출력
 	var flag = false;
