@@ -291,9 +291,9 @@ public class BlogController {
 		
 		String realFileName = "";
 		String tmpFileName = UUID.randomUUID().toString(); 
-		
+		///images/blog/cover_img/
 		if(imageStorage.getSize() > 0) {
-			realFileName =  req.getServletContext().getRealPath("/images/blog/cover_img/" + tmpFileName);
+			realFileName =  req.getServletContext().getRealPath("/upload/" + tmpFileName);
 			imageStorage.transferTo(new File(realFileName));
 			
 			BlogVo blogInfo = new BlogVo();
@@ -309,7 +309,11 @@ public class BlogController {
 		return "blog/head_area";
 	}
 	
-	
+	@RequestMapping("/ImageView")
+	public String imageView(@RequestParam(name="path") String path, Model model) {
+		model.addAttribute("path", path);
+		return "ImageView";
+	}
 	
 	/**
 	 * 

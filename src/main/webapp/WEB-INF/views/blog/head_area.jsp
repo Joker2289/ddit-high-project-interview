@@ -24,10 +24,10 @@
 		}
 
 		if( '${ bVo.img_act }' == 'y'){
-			$('.jumbotron').css('background-image', 'url(/view/imageView?mem_id=${bVo.user_id}&division=cover_img)');	
+			$('.jumbotron').css('background-image', 'url(/blog/ImageView?path=${bVo.cover_img})');	
 		} 
 	}
 </script>
 
-
+<%-- /view/imageView?mem_id=${bVo.user_id}&division=cover_img --%>
 
