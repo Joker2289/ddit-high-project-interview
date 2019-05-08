@@ -124,7 +124,7 @@
 
 			var moveX = parseInt($("#content").css("margin-left"));
 
-			if (-1022 < moveX) {
+			if (-2500 < moveX) {
 				$("#content").animate({"margin-left" : "-=" + divWidth + "px"}, 500);
 			}
 		});
