@@ -177,7 +177,7 @@
 		var chat_code = Cookies.get('chat_code');
 		var roomsSize = ${fn:length(userChatroomsMap)};
 		// 접속
- 		sock = new SockJS("http://192.168.206.20:8080/mailHome");
+ 		sock = new SockJS("http://192.168.206.15:8080/mailHome");
  		
 		// 접속할 방 클릭시 방 접속 및 내용 출력
 		$(document).on("click",".chatRooms",function(){
