@@ -1733,6 +1733,57 @@ public class RecruitController {
 		}			
 		
 		model.addAttribute("time_value", time_value);		
+		
+		/////////////////////////////// newList
+		
+		// 광고 부분 -> 신규 채용공고 (newList)
+		List<RecruitVo> newList = recrService.getNewList();
+		
+		// newList size : 7. index 6 -> index 0에 add.
+		newList.add(0, newList.get(6));
+		
+		List<String> newImgList = new ArrayList<>();
+		List<String> newIdList = new ArrayList<>();
+		List<String> newNmList = new ArrayList<>();
+		List<String> newTimeList = new ArrayList<>();
+		
+		for(int i=0; i < newList.size(); i++){
+			rVo = newList.get(i);
+			CorporationVo cVo = corpService.select_corpInfo(rVo.getCorp_id());
+			newImgList.add(cVo.getLogo_path());
+			newIdList.add(cVo.getCorp_id());
+			newNmList.add(cVo.getCorp_name());
+			
+			start_date = rVo.getStart_date();
+			
+			sdf = new SimpleDateFormat("yy/MM/dd HH:mm");
+			start = sdf.parse(start_date);
+			now = new Date();
+			
+			temp_time = now.getTime() - start.getTime();
+			
+			time_diff = (int) (temp_time / (60*1000));
+			
+			if(time_diff < 2){
+				newTimeList.add("방금");
+			}else if(time_diff < 60){
+				newTimeList.add(time_diff + "분");
+			}else if(time_diff < 1440){
+				newTimeList.add(time_diff/60 + "시간");
+			}else if(time_diff < 43200){
+				newTimeList.add(time_diff/(60*24) + "일");
+			}else{
+				newTimeList.add(time_diff/(60*24*30) + "달");
+			}				
+		}		
+		
+		model.addAttribute("newList", newList);
+		model.addAttribute("newImgList", newImgList);
+		model.addAttribute("newIdList", newIdList);
+		model.addAttribute("newNmList", newNmList);
+		model.addAttribute("newTimeList", newTimeList);
+		
+		/////////////////////////////// newList				
 
 		return "recr_detailTiles";
 	}
