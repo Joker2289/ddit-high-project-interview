@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.ddit.test.WebTestConfig;
 
-public class LoginControllerTest extends WebTestConfig{
+public class LoginControllerTest extends WebTestConfig {
 	
 	/**
 	 * 
