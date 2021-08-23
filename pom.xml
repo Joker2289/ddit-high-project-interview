@@ -213,7 +213,7 @@
 			<!-- 웹 크롤링 라이브러리. jsoup HTML parser library @ https://jsoup.org/ -->
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
-			<version>1.11.3</version>
+			<version>1.14.2</version>
 		</dependency>  
 		
 		<!-- 자바메일 -->
